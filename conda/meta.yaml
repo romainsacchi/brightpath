@@ -1,0 +1,31 @@
+package:
+  name: brightpath
+  version: {{ environ['VERSION'] }}
+
+source:
+  path: ..
+
+build:
+  noarch: python
+  number: 0
+  script: python -m pip install --no-deps --ignore-installed .
+  script_env:
+    - VERSION
+    - CONDA_BLD_PATH
+
+requirements:
+  build:
+    - python
+    - setuptools
+  run:
+    - bw2io
+
+test:
+  imports:
+    - brightpath
+
+about:
+  home: https://github.com/romainsacchi/brightpath
+  license: BSD License
+  summary: 'Convert Brightway2-3 life-cycle inventories to Simapro 9.x.'
+license_family: BSD
