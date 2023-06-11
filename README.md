@@ -1,7 +1,8 @@
 # BrightPath
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-BrightPath is a Python library designed to convert Brightway LCA inventories into a format that can be read and imported into Simapro.
+BrightPath is a Python library designed to convert Brightway2 LCA inventories 
+into a format that can be imported into Simapro 9.x.
 
 ## Installation
 
@@ -25,7 +26,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install BrightP
    # Convert the inventory to a format compatible with Simapro 9.x
    sima_inventory = converter.to_simapro()
    
-   # Save the converted inventory to a file
+   # Save the converted inventory to a CSV file
    sima_inventory.to_file('output_path')
 
 ```
