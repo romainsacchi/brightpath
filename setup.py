@@ -32,7 +32,7 @@ def package_files(directory):
 
 setup(
     name="brightpath",
-    version="1.5.2",
+    version="0.0.1",
     python_requires=">=3.9,<3.11",
     packages=packages,
     author="Romain Sacchi <romain.sacchi@psi.ch>",

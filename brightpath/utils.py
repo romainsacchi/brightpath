@@ -448,7 +448,7 @@ def get_technosphere_exchanges(activity: dict) -> list:
     :param activity:
     :return: technosphere exchanges
     """
-    return [exc for exc in activity["exchanges"] if exc["type"] == "technosphere"]
+    return [exc for exc in activity["exchanges"] if exc["type"] == "technosphere" and exc["amount"] != 0]
 
 
 def get_biosphere_exchanges(activity: dict, category: str = None) -> list:
@@ -461,7 +461,9 @@ def get_biosphere_exchanges(activity: dict, category: str = None) -> list:
     return [
         exc
         for exc in activity["exchanges"]
-        if exc["type"] == "biosphere" and exc.get("categories")[0] == category
+        if exc["type"] == "biosphere"
+           and exc.get("categories")[0] == category
+           and exc["amount"] != 0
     ]
 
 
@@ -638,7 +640,7 @@ def print_unused_exchanges(inventories: list) -> None:
     for activity in inventories:
         for exc in activity["exchanges"]:
             exc_counter += 1
-            if exc.get("used", False) is False:
+            if exc.get("used", False) is False and exc["amount"] != 0:
                 unused_exchanges.append(
                     [
                         activity["name"],

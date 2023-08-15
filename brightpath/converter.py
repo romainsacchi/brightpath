@@ -64,7 +64,8 @@ class Converter:
 
         # export directory is the current working
         # directory unless specified otherwise
-        self.export_dir = Path.cwd() or Path(export_dir)
+        self.export_dir = Path(export_dir) or Path.cwd()
+
 
     def format_inventories_for_simapro(self, database: str):
         """
