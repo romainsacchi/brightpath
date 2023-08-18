@@ -25,7 +25,8 @@ from .utils import (
     get_subcategory,
     flag_exchanges,
     print_unused_exchanges,
-    check_exchanges_for_conversion
+    check_exchanges_for_conversion,
+    add_distri_transport
 )
 
 import datetime
@@ -40,7 +41,8 @@ class Converter:
 
     def __init__(
             self,
-            filepath: str,
+            filepath: str = None,
+            data: list = None,
             metadata: str = None,
             ecoinvent_version: str = "3.9",
             export_dir: str = None
@@ -49,7 +51,7 @@ class Converter:
         :param filepath: path to the BW inventory spreadsheet file
         """
         self.filepath = filepath
-        self.inventories = import_bw_inventories(filepath)
+        self.inventories = import_bw_inventories(filepath) if self.filepath else data
         self.simapro_blacklist = get_simapro_ecoinvent_blacklist()
         self.simapro_fields = get_simapro_fields_list()
         self.simapro_units = get_simapro_units()
@@ -83,9 +85,14 @@ class Converter:
         rows.append([])
 
         for activity in self.inventories:
+
+            # first, add transport, if uvek
+            if database == "uvek":
+                activity = add_distri_transport(activity)
+            # and flag exchanges
             activity = flag_exchanges(activity)
             dataset_name = ""
-            is_a_waste_treatment_activity = is_activity_waste_treatment(activity)
+            is_a_waste_treatment_activity = is_activity_waste_treatment(activity, database)
 
             for field in self.simapro_fields:
 
@@ -258,6 +265,7 @@ class Converter:
                     prod_exchange["used"] = True
 
                 if field in ["Materials/fuels", "Electricity/heat"]:
+
                     if field == "Materials/fuels":
                         techno_excs = list(filter(lambda x: x["unit"] not in ["megajoule", "kilowatt hour"],
                                                   get_technosphere_exchanges(activity)))
@@ -268,7 +276,7 @@ class Converter:
                     techno_excs = list(filter(lambda x: is_blacklisted(x, database) is False, list(techno_excs)))
                     techno_excs = check_exchanges_for_conversion(techno_excs, database)
 
-                    for exc in filter(lambda x: is_a_waste_treatment(x["name"]) is not True, techno_excs):
+                    for exc in filter(lambda x: is_a_waste_treatment(x["name"], database=database) is not True, techno_excs):
                         exchange_name = format_exchange_name(
                             exc["name"],
                             exc["reference product"],
@@ -295,6 +303,8 @@ class Converter:
                             ]
                         )
                         exc["used"] = True
+
+
 
                     rows.append([])
 
@@ -361,7 +371,7 @@ class Converter:
                     techno_excs = list(filter(lambda x: is_blacklisted(x, database) is False, techno_excs))
                     techno_excs = check_exchanges_for_conversion(techno_excs, database)
 
-                    for exc in filter(lambda x: is_a_waste_treatment(x["name"]) is True, techno_excs):
+                    for exc in filter(lambda x: is_a_waste_treatment(x["name"], database=database) is True, techno_excs):
 
                         # In SimaPro, waste inputs are positive numbers
                         if exc["amount"] < 0:
@@ -420,7 +430,7 @@ class Converter:
 
         return rows
 
-    def convert_to_simapro(self, database: str = "ecoinvent"):
+    def convert_to_simapro(self, database: str = "ecoinvent", format: str = "csv") -> [str, list]:
         """
         Convert the inventories to Simapro CSV files.
         :param database: Name of the database to link to. Default is `ecoinvent`, but can be `uvek`.
@@ -430,6 +440,9 @@ class Converter:
             raise ValueError("Database must be either `ecoinvent` or `uvek`")
 
         data = self.format_inventories_for_simapro(database)
+
+        if format == "data":
+            return data
 
         # check that export direct exists
         # otherwise we create it

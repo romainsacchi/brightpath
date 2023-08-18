@@ -1,3 +1,5 @@
+import csv
+
 import bw2io
 
 from . import DATA_DIR
@@ -86,7 +88,9 @@ def get_simapro_ecoinvent_blacklist():
             print(exc)
     return data
 
+
 simapro_ecoinvent_blacklist = get_simapro_ecoinvent_blacklist()
+
 
 def get_simapro_uvek_blacklist():
     # Load the list of Simapro uvek flows that
@@ -102,7 +106,9 @@ def get_simapro_uvek_blacklist():
             print(exc)
     return data
 
+
 simapro_uvek_blacklist = get_simapro_uvek_blacklist()
+
 
 def get_ecoinvent_to_uvek_mapping():
     """
@@ -111,19 +117,39 @@ def get_ecoinvent_to_uvek_mapping():
     """
     filename = "ecoinvent_to_uvek_mapping.csv"
     filepath = DATA_DIR / "export" / filename
-    with open(filepath, encoding="utf-8") as f:
-        csv_list = [[val.strip() for val in r.split(";")] for r in f.readlines()]
-    (_, _, *header), *data = csv_list
+    with open(filepath, 'r') as file:
+        reader = csv.reader(file)
+        next(reader)
+        dictionary = {tuple(row[:4]): row[-1] for row in reader}
 
-    dict_tech = {}
-    for row in data:
-        name, location, unit, reference_product, _, _, _, _, uvek_name = row
-        dict_tech[(name, location, unit, reference_product)] = uvek_name
+    return dictionary
 
-    return dict_tech
+
+def get_ecoinvent_transport_distances():
+    """
+    Load ei_transport.csv into a dictionary.
+    :return: dictionary with tuples of ecoinvent flow name and location as keys
+    """
+    filename = "ei_transport.csv"
+    filepath = DATA_DIR / "export" / filename
+    with open(filepath, 'r') as file:
+        reader = csv.reader(file, delimiter=";")
+        next(reader)
+        dictionary = {
+            row[0]: {
+                "train - RER": row[3],
+                "lorry - RER": row[4],
+                "barge - RER": row[5],
+                "train - CH": row[6],
+                "lorry - CH": row[7],
+                "barge - CH": row[8],
+            } for row in reader}
+
+    return dictionary
 
 
 ecoinvent_uvek_mapping = get_ecoinvent_to_uvek_mapping()
+ecoinvent_transport_distances = get_ecoinvent_transport_distances()
 
 
 def get_simapro_fields_list() -> list[str]:
@@ -387,7 +413,7 @@ def load_inventory_metadata(filepath: str) -> dict:
     return data
 
 
-def is_activity_waste_treatment(activity: dict) -> bool:
+def is_activity_waste_treatment(activity: dict, database: str) -> bool:
     """
     Detect whether the given activity is a
     process or a waste treatment.
@@ -401,16 +427,17 @@ def is_activity_waste_treatment(activity: dict) -> bool:
         if activity["type"] == "waste treatment":
             return True
 
-    if is_a_waste_treatment(activity["name"]) is True:
+    if is_a_waste_treatment(activity["name"], database) is True:
         return True
 
     return False
 
 
-def is_a_waste_treatment(name: str) -> bool:
+def is_a_waste_treatment(name: str, database: str) -> bool:
     """
     Detect if name contains typical to waste treatment.
     :param name: exchange name
+    :param database: database to link to
     :return: bool.
     """
     WASTE_TERMS = get_waste_exchange_names()
@@ -421,9 +448,12 @@ def is_a_waste_treatment(name: str) -> bool:
 
     if any(term.lower() in name.lower() for term in WASTE_TERMS) is True:
         if any(term.lower() in name.lower() for term in NOT_WASTE_TERMS) is False:
-            if any(term.lower() in name.lower() for term in ecoinvent_exceptions["waste"]) is False:
-                return True
-
+            if database == "ecoinvent":
+                if not any(term.lower() in name.lower() for term in ecoinvent_exceptions["waste"]):
+                    return True
+                else:
+                    return False
+            return True
     return False
 
 
@@ -491,7 +521,7 @@ def format_exchange_name(name: str, reference_product: str, location: str, unit:
                 exchange_name = f"{reference_product} {{{location}}}"
                 reference_product = reference_product[0].lower() + reference_product[1:]
 
-                if reference_product in ecoinvent_exceptions["market"]:
+                if reference_product.lower() in ecoinvent_exceptions["market"] and location == "GLO":
                     exchange_name += f"| {i}"
                 else:
                     exchange_name += f"| {i} {reference_product}"
@@ -501,7 +531,7 @@ def format_exchange_name(name: str, reference_product: str, location: str, unit:
     else:
         # check first if name appears in ecoinvent-uvek mapping list
         if (name, location, unit, reference_product) in ecoinvent_uvek_mapping:
-            name = ecoinvent_uvek_mapping[(name, location, unit, reference_product)]
+            return ecoinvent_uvek_mapping[(name, location, unit, reference_product)]
         # database to link to is uvek.
         exchange_name = f"{name}/{location} U"
 
@@ -529,7 +559,7 @@ def get_simapro_uncertainty_type(uncertainty_type: int) -> str:
     return UNCERTAINITY_TYPES.get(uncertainty_type, "not defined")
 
 
-def is_blacklisted(name: str, database: str) -> bool:
+def is_blacklisted(exchange: dict, database: str) -> bool:
     """
     Check whether a name is blacklisted or not
     :param name: name
@@ -537,11 +567,11 @@ def is_blacklisted(name: str, database: str) -> bool:
     :return: bool
     """
 
-    if name in simapro_ecoinvent_blacklist:
+    if exchange["name"] in simapro_ecoinvent_blacklist:
         return True
 
     if database == "uvek":
-        if name in simapro_uvek_blacklist:
+        if exchange["name"] in simapro_uvek_blacklist:
             return True
 
     return False
@@ -587,7 +617,7 @@ def get_uvek_conversion_factors() -> dict:
 
 def round_floats_in_string(s):
     # Pattern to detect float numbers in a string
-    pattern = re.compile(r"[-+]?\d*\.\d+|\d+")
+    pattern = re.compile(r"[-+]?\d*\.\d+")
 
     # Function to apply to each match
     def round_match(match):
@@ -642,29 +672,25 @@ def print_unused_exchanges(inventories: list) -> None:
             exc_counter += 1
             if exc.get("used", False) is False and exc["amount"] != 0:
                 unused_exchanges.append(
-                    [
-                        activity["name"],
+                    (
                         exc["name"],
-                        exc["amount"],
                         exc["unit"],
                         exc.get("location", "GLO"),
-                        exc.get("categories", []),
-                    ]
+                        exc.get("categories", ),
+                    )
                 )
 
     if len(unused_exchanges) > 0:
         print("The following exchanges have not been used:")
         table = PrettyTable(
-            [
-                "Activity",
+            (
                 "Exchange",
                 "Amount",
-                "Unit",
                 "Location",
                 "Categories",
-            ]
+            )
         )
-        for row in unused_exchanges:
+        for row in list(set(unused_exchanges)):
             table.add_row(row)
         print(table)
     else:
@@ -688,3 +714,185 @@ def check_exchanges_for_conversion(exchanges: list, database: str) -> list:
                 exc["unit"] = conversion_factors[exc["name"]].get("unit", exc["unit"])
 
     return exchanges
+
+
+def fetch_transport_distance(name: str, location: str) -> tuple:
+    """
+    Depending on the exchange name `name`, return one or
+    several exchanges representing additional transport.
+    The uvek database does not have market datasets,
+    hence transport has to be added manually.
+    :param name: exchange name
+    :param location: location of the consuming activity
+    :return: one or several transport exchanges
+    """
+
+    if name in ecoinvent_transport_distances:
+        if location == "CH":
+            return (
+                float(ecoinvent_transport_distances[name]["train - CH"]),
+                float(ecoinvent_transport_distances[name]["lorry - CH"]),
+                float(ecoinvent_transport_distances[name]["barge - CH"]),
+            )
+        else:
+            return (
+                float(ecoinvent_transport_distances[name]["train - RER"]),
+                float(ecoinvent_transport_distances[name]["lorry - RER"]),
+                float(ecoinvent_transport_distances[name]["barge - RER"]),
+            )
+    else:
+        return 0.0, 0.0, 0.0
+
+
+def add_distri_transport(activity: dict) -> dict:
+    """
+    Add transport exchanges for distribution.
+    :param activity: activity
+    :return: activity with added transport exchanges.
+    """
+
+    train_ch, lorry_ch, barge_ch = (0.0, 0.0, 0.0)
+    train_rer, lorry_rer, barge_rer = (0.0, 0.0, 0.0)
+    distance_train_ch, distance_lorry_ch, distance_barge_ch = (0.0, 0.0, 0.0)
+    distance_train_rer, distance_lorry_rer, distance_barge_rer = (0.0, 0.0, 0.0)
+
+    for exc in get_technosphere_exchanges(activity):
+        if exc["unit"] == "kilogram":
+            train, lorry, barge = fetch_transport_distance(exc["name"], activity["location"])
+            if activity["location"] == "CH":
+                train_ch += (train * exc["amount"] / 1000.0)
+                lorry_ch += (lorry * exc["amount"] / 1000.0)
+                barge_ch += (barge * exc["amount"] / 1000.0)
+                distance_train_ch += train
+                distance_lorry_ch += lorry
+                distance_barge_ch += barge
+            else:
+                train_rer += (train * exc["amount"] / 1000.0)
+                lorry_rer += (lorry * exc["amount"] / 1000.0)
+                barge_rer += (barge * exc["amount"] / 1000.0)
+                distance_train_rer += train
+                distance_lorry_rer += lorry
+                distance_barge_rer += barge
+
+    if train_ch > 0:
+        activity["exchanges"].append(
+            {
+                "name": "market for transport, freight train",
+                "reference product": "transport, freight train",
+                "amount": train_ch,
+                "unit": "ton kilometer",
+                "type": "technosphere",
+                "location": "CH",
+                "uncertainty type": 2,
+                "loc": np.log(train_ch),
+                "scale": 0.396,
+                "used": False,
+                "comment": "Generic transport distances calculated based on "
+                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                            f"Distribution: {np.round((train_ch/distance_train_ch)*1000, 2)} kg "
+                           f"over {np.round(distance_train_ch, 2)} km."
+
+            }
+        )
+
+    if lorry_ch > 0:
+        activity["exchanges"].append(
+            {
+                "name": "market for transport, freight, lorry, unspecified",
+                "reference product": "transport, freight, lorry, unspecified",
+                "amount": lorry_ch,
+                "unit": "ton kilometer",
+                "type": "technosphere",
+                "location": "CH",
+                "uncertainty type": 2,
+                "loc": np.log(lorry_ch),
+                "scale": 0.396,
+                "used": False,
+                "comment": "Generic transport distances calculated based on "
+                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                            f"Distribution: {np.round((lorry_ch/distance_lorry_ch)*1000, 2)} kg "
+                           f"over {np.round(distance_lorry_ch, 2)} km."
+            }
+        )
+
+    if barge_ch > 0:
+        activity["exchanges"].append(
+            {
+                "name": "market for transport, freight, inland waterways, barge",
+                "reference product": "transport, freight, inland waterways, barge",
+                "amount": barge_ch,
+                "unit": "ton kilometer",
+                "type": "technosphere",
+                "location": "RER",
+                "uncertainty type": 2,
+                "loc": np.log(barge_ch),
+                "scale": 0.396,
+                "used": False,
+                "comment": "Generic transport distances calculated based on "
+                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                            f"Distribution: {np.round((barge_ch/distance_barge_ch)*1000, 2)} kg "
+                           f"over {np.round(distance_barge_ch, 2)} km."
+            }
+        )
+
+    if train_rer > 0:
+        activity["exchanges"].append(
+            {
+                "name": "market for transport, freight train",
+                "reference product": "transport, freight train",
+                "amount": train_rer,
+                "unit": "ton kilometer",
+                "type": "technosphere",
+                "location": "Europe without Switzerland",
+                "uncertainty type": 2,
+                "loc": np.log(train_rer),
+                "scale": 0.396,
+                "used": False,
+                "comment": "Generic transport distances calculated based on "
+                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                            f"Distribution: {np.round((train_rer/distance_train_rer)*1000, 2)} kg "
+                            f"over {np.round(distance_train_rer, 2)} km."
+            }
+        )
+
+    if lorry_rer > 0:
+        activity["exchanges"].append(
+            {
+                "name": "market for transport, freight, lorry, unspecified",
+                "reference product": "transport, freight, lorry, unspecified",
+                "amount": lorry_rer,
+                "unit": "ton kilometer",
+                "type": "technosphere",
+                "location": "RER",
+                "uncertainty type": 2,
+                "loc": np.log(lorry_rer),
+                "scale": 0.396,
+                "used": False,
+                "comment": "Generic transport distances calculated based on "
+                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                            f"Distribution: {np.round((lorry_rer/distance_lorry_rer)*1000, 2)} kg "
+                            f"over {np.round(distance_lorry_rer, 2)} km."
+            }
+        )
+
+    if barge_rer > 0:
+        activity["exchanges"].append(
+            {
+                "name": "market for transport, freight, inland waterways, barge",
+                "reference product": "transport, freight, inland waterways, barge",
+                "amount": barge_rer,
+                "unit": "ton kilometer",
+                "type": "technosphere",
+                "location": "RER",
+                "uncertainty type": 2,
+                "loc": np.log(barge_rer),
+                "scale": 0.396,
+                "used": False,
+                "comment": "Generic transport distances calculated based on "
+                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                            f"Distribution: {np.round((barge_rer/distance_barge_rer)*1000, 2)} kg "
+                            f"over {np.round(distance_barge_rer, 2)} km."
+            }
+        )
+
+    return activity
