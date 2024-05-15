@@ -33,7 +33,7 @@ def package_files(directory):
 setup(
     name="brightpath",
     version="0.0.1",
-    python_requires=">=3.9,<3.11",
+    python_requires=">=3.9,<3.12",
     packages=packages,
     author="Romain Sacchi <romain.sacchi@psi.ch>",
     license=open("LICENSE").read(),
@@ -41,7 +41,7 @@ setup(
     include_package_data=True,
     install_requires=[
         "bw2io",
-
+        "prettytable",
     ],
     url="https://github.com/polca/brightpath",
     description="Convert Brightway2 LCA data to Simapro 9.x format",

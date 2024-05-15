@@ -12,6 +12,15 @@ from voluptuous import Schema, Required, Optional, Url
 from prettytable import PrettyTable
 import numpy as np
 import re
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    filename="brightpath.log",  # Log file to save the entries
+    filemode="a",  # Append to the log file if it exists, 'w' to overwrite
+    format="%(asctime)s - %(levelname)s - %(module)s - %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+)
 
 
 def get_simapro_biosphere() -> Dict[str, str]:
@@ -442,7 +451,7 @@ def is_a_waste_treatment(name: str, database: str) -> bool:
     """
     WASTE_TERMS = get_waste_exchange_names()
     NOT_WASTE_TERMS = [
-        "plant",
+        #"plant",
         "incineration plant"
     ]
 
@@ -896,3 +905,77 @@ def add_distri_transport(activity: dict) -> dict:
         )
 
     return activity
+
+def search_for_forbidden_units(file):
+    """
+    Search for forbidden units.
+    Returns a new filepath.
+
+    :param file:
+    :return:
+    """
+    FORBIDDEN_UNITS = {
+        "min": "minute",
+    }
+
+    # read CSV file
+    new_file_data = []
+    with open(file, "r", encoding="latin-1") as f:
+        data = csv.reader(f, delimiter=';')
+        for r, row in enumerate(data):
+            for v, val in enumerate(row):
+                if val in FORBIDDEN_UNITS:
+                    logging.warning(
+                        f"Unit {val} replaced by {FORBIDDEN_UNITS[val]} in row {r}."
+                    )
+                    row[v] = FORBIDDEN_UNITS[val]
+            new_file_data.append(row)
+
+    # save new file
+    with open(file.lower().replace(".csv", "_edited.csv"), mode='w', encoding="latin-1") as e:
+        writer = csv.writer(e, delimiter=';')
+        for row in new_file_data:
+            writer.writerow(row)
+
+    logging.info(
+        f"New inventory file saved as: {file.lower().replace('.csv', '_edited.csv')}."
+    )
+    return file.lower().replace(".csv", "_edited.csv")
+
+
+def load_biosphere_correspondence():
+    filename = "correspondence_biosphere_flows.yaml"
+    filepath = DATA_DIR / "export" / filename
+    if not filepath.is_file():
+        raise FileNotFoundError(
+            "The dictionary of subcompartments match "
+            "between ecoinvent and Simapro could not be found."
+        )
+
+    # read YAML file
+    with open(filepath, "r") as stream:
+        try:
+            data = yaml.safe_load(stream)
+        except yaml.YAMLError as exc:
+            print(exc)
+
+    return data
+
+def load_ei_biosphere_flows():
+    filename = "flows_biosphere_39.csv"
+    filepath = DATA_DIR / "export" / filename
+    if not filepath.is_file():
+        raise FileNotFoundError(
+            "The dictionary of subcompartments match "
+            "between ecoinvent and Simapro could not be found."
+        )
+
+    with open(filepath, encoding="utf-8") as f:
+        data = [[val.strip() for val in r.split(";")] for r in f.readlines()]
+
+    return list(set([(r[0], r[1], r[2]) for r in data]))
+
+
+
+
+
