@@ -81,7 +81,8 @@ def format_technosphere_exchange(txt: str):
 
     name = name.strip()
 
-    name = name.lower().replace("cut-off, u", "")
+    name = name.replace("Cut-off, U", "",)
+    name = name.replace("cut-off, U", "",)
     if name == "":
         name = reference_product
 
