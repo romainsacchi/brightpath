@@ -7,10 +7,11 @@ from .utils import (
     get_simapro_technosphere,
     get_simapro_biosphere,
     get_simapro_subcompartments,
-    search_for_forbidden_units,
+    check_simapro_inventory,
     get_waste_exchange_names,
     load_ei_biosphere_flows,
-    load_biosphere_correspondence
+    load_biosphere_correspondence,
+    remove_duplicates
 )
 
 from pathlib import Path
@@ -79,10 +80,18 @@ def format_technosphere_exchange(txt: str):
     if location in ["French Guiana", "French Guinana"]:
         location = "FG"
 
-    name = name.strip()
 
     name = name.replace("Cut-off, U", "",)
     name = name.replace("cut-off, U", "",)
+
+    if name[-3:] in [", U", ", S"]:
+        name = name[:-3]
+
+    if "{" in name:
+        name = name.split("{")[0]
+
+    name = name.strip()
+
     if name == "":
         name = reference_product
 
@@ -122,11 +131,15 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
     )
 
     if key not in bio_flows:
-        if exc["name"] in bio_mapping[exc["categories"][0]]:
-            exc["name"] = bio_mapping[exc["categories"][0]][exc["name"]]
-            key = list(key)
-            key[0] = exc["name"]
-            key = tuple(key)
+        try:
+            if exc["name"] in bio_mapping[exc["categories"][0]]:
+                exc["name"] = bio_mapping[exc["categories"][0]][exc["name"]]
+                key = list(key)
+                key[0] = exc["name"]
+                key = tuple(key)
+        except:
+            logging.warning(f"Could not find biosphere flow for {exc['name']}.")
+            pass
 
     if key not in bio_flows:
         if exc["categories"][0] == "natural resource":
@@ -196,9 +209,10 @@ class SimaproConverter:
         if not Path(filepath).exists():
             raise FileNotFoundError(f"File {filepath} not found.")
 
-        self.filepath = search_for_forbidden_units(filepath)
+        self.filepath = check_simapro_inventory(filepath)
         self.i = bw2io.SimaProCSVImporter(self.filepath)
         self.i.apply_strategies()
+        self.i.data = remove_duplicates(self.i.data)
         self.ecoinvent_version = ecoinvent_version
         self.biosphere = get_simapro_biosphere()
         self.technosphere = get_simapro_technosphere()
@@ -223,6 +237,7 @@ class SimaproConverter:
                 if exc["type"] == "production":
                     exc["name"] = ds["name"]
                     exc["product"] = ds["reference product"]
+                    exc["reference product"] = ds["reference product"]
                     exc["location"] = ds["location"]
 
                 if exc["type"] in ["technosphere", "substitution"]:

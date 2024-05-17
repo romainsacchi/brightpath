@@ -906,29 +906,25 @@ def add_distri_transport(activity: dict) -> dict:
 
     return activity
 
-def search_for_forbidden_units(file):
-    """
-    Search for forbidden units.
-    Returns a new filepath.
-
-    :param file:
-    :return:
-    """
-    FORBIDDEN_UNITS = {
-        "min": "minute",
-    }
-
+def remove_duplicates(data):
+    a = []
+    acts = []
+    for x in data:
+        if x["name"] not in a:
+            a.append(x["name"])
+            acts.append(x)
+        else:
+            logging.warning(f"Duplicate found: {x['name']}")
+    return acts
+def check_simapro_inventory(file):
     # read CSV file
     new_file_data = []
     with open(file, "r", encoding="latin-1") as f:
         data = csv.reader(f, delimiter=';')
         for r, row in enumerate(data):
+            row = search_for_forbidden_units(row)
             for v, val in enumerate(row):
-                if val in FORBIDDEN_UNITS:
-                    logging.warning(
-                        f"Unit {val} replaced by {FORBIDDEN_UNITS[val]} in row {r}."
-                    )
-                    row[v] = FORBIDDEN_UNITS[val]
+                search_for_forbidden_units(val)
             new_file_data.append(row)
 
     # save new file
@@ -942,6 +938,28 @@ def search_for_forbidden_units(file):
     )
     return file.lower().replace(".csv", "_edited.csv")
 
+
+def search_for_forbidden_units(row: list) -> list:
+    """
+    Search for forbidden units.
+    Returns the csv row.
+
+    :param row: list of values
+    :return: list of values
+
+    """
+    FORBIDDEN_UNITS = {
+        "min": "minute",
+    }
+
+    for v, val in enumerate(row):
+        if val in FORBIDDEN_UNITS:
+            logging.warning(
+                f"Unit {val} replaced by {FORBIDDEN_UNITS[val]}."
+            )
+            row[v] = FORBIDDEN_UNITS[val]
+
+    return row
 
 def load_biosphere_correspondence():
     filename = "correspondence_biosphere_flows.yaml"
