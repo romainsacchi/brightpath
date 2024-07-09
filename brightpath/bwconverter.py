@@ -343,7 +343,7 @@ class BrigthwayConverter:
 
                         if exc["name"].lower() == "water":
                             exc["unit"] = "kilogram"
-                            exc["amount"] /= 1000
+                            exc["amount"] *= 1000
 
                         u_type = get_simapro_uncertainty_type(exc.get("uncertainty type"))
 
