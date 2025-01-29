@@ -34,7 +34,7 @@ import csv
 from pathlib import Path
 
 
-class BrigthwayConverter:
+class BrightwayConverter:
     """
     Convert Brightway2 inventories to Simapro CSV files.
     """

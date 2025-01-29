@@ -1,4 +1,5 @@
 import csv
+import re
 
 import bw2io
 
@@ -916,6 +917,7 @@ def remove_duplicates(data):
         else:
             logging.warning(f"Duplicate found: {x['name']}")
     return acts
+
 def check_simapro_inventory(file):
     # read CSV file
     new_file_data = []
@@ -994,6 +996,11 @@ def load_ei_biosphere_flows():
     return list(set([(r[0], r[1], r[2]) for r in data]))
 
 
+def lower_cap_first_letter(s):
+    # Check if the string starts with an acronym (all uppercase letters followed by a space, end of string, dash, or comma)
+    if re.match(r'^[A-Z]+(\s|$|-|,)', s):
+        return s  # Keep acronyms unchanged
+    return s[0].lower() + s[1:] if s else s  # Lowercase first letter otherwise
 
 
 

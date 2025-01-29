@@ -2,7 +2,7 @@
 This module contains the class SimaproConverter, which is used to convert
 Simapro inventories to Brightway inventory files.
 """
-
+from . import DATA_DIR
 from .utils import (
     get_simapro_technosphere,
     get_simapro_biosphere,
@@ -11,12 +11,14 @@ from .utils import (
     get_waste_exchange_names,
     load_ei_biosphere_flows,
     load_biosphere_correspondence,
-    remove_duplicates
+    remove_duplicates,
+    lower_cap_first_letter
 )
 
 from pathlib import Path
 import bw2io
 import logging
+import csv
 
 WASTE_TERMS = get_waste_exchange_names()
 
@@ -36,7 +38,9 @@ def format_technosphere_exchange(txt: str):
         "SERC": "US-SERC",
         "RFC": "US-RFC",
         "ASCC": "US-ASCC",
-        "TRE": "US-TRE"
+        "TRE": "US-TRE",
+        "FRCC": "US-FRCC",
+        "SPP": "US-SPP",
     }
 
     correct_name = [
@@ -44,6 +48,7 @@ def format_technosphere_exchange(txt: str):
         "production mix",
         "processing",
         "market for",
+        "market group for",
         "production, at grid",
         "at market",
         "cut-off, U",
@@ -51,6 +56,8 @@ def format_technosphere_exchange(txt: str):
         "market",
         "processing, mass based",
         "transport",
+        "treatment of",
+        "purification"
     ]
 
     reference_product, name, location = "", "", ""
@@ -67,6 +74,8 @@ def format_technosphere_exchange(txt: str):
     if len(txt.split("|")) == 4:
         reference_product, name, _, _ = txt.split("|")
 
+    reference_product = lower_cap_first_letter(reference_product)
+
     if "{" in reference_product:
         reference_product, location = reference_product.split("{")
         location, reference_product_ = location.split("}")
@@ -79,7 +88,6 @@ def format_technosphere_exchange(txt: str):
 
     if location in ["French Guiana", "French Guinana"]:
         location = "FG"
-
 
     name = name.replace("Cut-off, U", "",)
     name = name.replace("cut-off, U", "",)
@@ -100,27 +108,62 @@ def format_technosphere_exchange(txt: str):
         reference_product = reference_product[:-1]
 
     if name in correct_name:
-        if name in ["market for", "market group for"]:
+        if name in ["market for", "market group for", "treatment of"]:
             name = f"{name} {reference_product}"
         elif name == "market":
             name = f"market for {reference_product}"
+        elif name == "production":
+            if ", " in reference_product:
+                name = f"{reference_product.split(', ')[0]} production, {', '.join(reference_product.split(', ')[1:])}"
+            else:
+                name = f"{reference_product} production"
+        elif name == "processing":
+            name = reference_product
         else:
-            name = f"{reference_product} ({name})"
+            name = f"{reference_product} {name}"
+
+    if name.startswith("treatment of,"):
+        name = f"treatment of {reference_product}, {name.split(', ')[-1]}"
+
+    if name == "construction":
+        if ", " in reference_product:
+            name = f"{reference_product.split(', ')[0]} construction, {', '.join(reference_product.split(', ')[1:])}"
+        else:
+            name = f"{reference_product} construction"
+
+    if name.startswith("production, from") or name.startswith("production from"):
+        name = f"{reference_product} {name}"
+
     location = location.replace("}", "").strip()
     location = location_correction.get(location, location)
 
     return name, reference_product, location
 
+def load_ecoinvent_activities(version: str) -> list:
+    with open(DATA_DIR/ "export" / f"list_ei{version}_cutoff_activities.csv") as f:
+        reader = csv.reader(f)
+        next(reader)
+        return [l for l in reader]
+
 
 def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
-
-    if ei_version == "3.9":
-        if "in ground" in exc["name"]:
+    if "in ground" in exc["name"]:
+        if ei_version not in ["3.5", "3.6", "3.7", "3.8"]:
             exc["name"] = exc["name"].replace(", in ground", "")
-            exc["categories"] = ("natural resource", "in ground")
+        exc["categories"] = ("natural resource", "in ground")
 
     if exc["name"].startswith("Water, well"):
         exc["name"] = "Water, well, in ground"
+
+    if exc["name"].startswith("Water, lake"):
+        exc["name"] = "Water, lake"
+
+    if exc["name"].startswith("Water, cooling"):
+        exc["name"] = "Water, cooling, unspecified natural origin"
+
+    if exc["name"].startswith("Water,"):
+        if "in air" not in exc["name"]:
+            exc["categories"] = ("natural resource", "in water")
 
     key = (
         exc["name"],
@@ -183,7 +226,15 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
                 if key in bio_flows:
                     exc["categories"] = (exc["categories"][0], i)
                     break
+
+    if exc["categories"] == ('natural resource', 'in ground'):
+        if ei_version in ["3.5", "3.6", "3.7", "3.8"]:
+            if "in ground" not in exc["name"]:
+                exc["name"] += ", in ground"
+
+
     return exc
+
 
 class SimaproConverter:
     def __init__(
@@ -209,10 +260,11 @@ class SimaproConverter:
         if not Path(filepath).exists():
             raise FileNotFoundError(f"File {filepath} not found.")
 
-        self.filepath = check_simapro_inventory(filepath)
+        self.filepath = Path(check_simapro_inventory(filepath))
         self.i = bw2io.SimaProCSVImporter(self.filepath)
         self.i.apply_strategies()
         self.i.data = remove_duplicates(self.i.data)
+
         self.ecoinvent_version = ecoinvent_version
         self.biosphere = get_simapro_biosphere()
         self.technosphere = get_simapro_technosphere()
@@ -221,11 +273,30 @@ class SimaproConverter:
         self.ei_biosphere_flows = load_ei_biosphere_flows()
         self.biosphere_flows_correspondence = load_biosphere_correspondence()
 
+    def check_database_name(self):
+
+        if self.i.db_name is None:
+            self.i.db_name = self.filepath.stem
+
+            for act in self.i.data:
+                act["database"] = self.i.db_name
+
+                for exc in act["exchanges"]:
+                    if "input" in exc:
+                        if exc["input"][0] is None:
+                            exc["input"] = (self.i.db_name, exc["input"][1])
+
     def convert_to_brightway(self):
 
         print("- format exchanges")
         internal_datasets = []
         for ds in self.i.data:
+
+            if "Comment" in ds.get("simapro metadata", {}).keys():
+                # rename "Comment" to "comment"
+                ds["comment"] = ds["simapro metadata"]["Comment"]
+                del ds["simapro metadata"]["Comment"]
+
             ds["name"], ds["reference product"], ds["location"] = format_technosphere_exchange(ds["name"])
             internal_datasets.append(
                 (
@@ -234,6 +305,8 @@ class SimaproConverter:
             )
 
             for exc in ds["exchanges"]:
+                exc["simapro name"] = exc["name"]
+
                 if exc["type"] == "production":
                     exc["name"] = ds["name"]
                     exc["product"] = ds["reference product"]
@@ -241,7 +314,6 @@ class SimaproConverter:
                     exc["location"] = ds["location"]
 
                 if exc["type"] in ["technosphere", "substitution"]:
-
                     exc["name"], exc["product"], exc["location"] = format_technosphere_exchange(exc["name"])
                     exc["reference product"] = exc["product"]
 
@@ -263,6 +335,9 @@ class SimaproConverter:
                         self.ei_biosphere_flows,
                         self.biosphere_flows_correspondence
                     )
+
+        self.check_database_name()
+
         print("- remove empty datasets")
         self.remove_empty_datasets()
         print("- remove empty exchanges")

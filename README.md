@@ -21,7 +21,7 @@ Use the package manager [pip](https://pip.pypa.io/en/stable/) to install BrightP
 import brightpath
 
 # Create a converter object with the path to the Brightway LCA inventory
-converter = brightpath.BrigthwayConverter('path_to_inventory')
+converter = brightpath.BrightwayConverter('path_to_inventory')
 
 # Convert the inventory to a format compatible with Simapro 9.x
 sima_inventory = converter.to_simapro()

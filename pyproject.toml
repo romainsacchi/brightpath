@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "brightpath"
+version = "0.0.1"
+description = "Convert Brightway2 LCI data to Simapro and back."
+dynamic = ["dependencies"]
+authors = [
+    { name = "Romain Sacchi", email = "romain.sacchi@psi.ch" }
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.9,<3.12"
+classifiers = [
+    "Intended Audience :: End Users/Desktop",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: MacOS :: MacOS X",
+    "Operating System :: Microsoft :: Windows",
+    "Operating System :: POSIX",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Scientific/Engineering :: Information Analysis",
+    "Topic :: Scientific/Engineering :: Mathematics",
+    "Topic :: Scientific/Engineering :: Visualization"
+]
+urls = {"Homepage" = "https://github.com/polca/brightpath"}
+
+[tool.setuptools.dynamic]
+dependencies = {file = "requirements.txt" }
+
+
+[tool.setuptools]
+packages = ["brightpath"]
+include-package-data = true
+
