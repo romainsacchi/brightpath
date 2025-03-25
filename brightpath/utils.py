@@ -930,7 +930,7 @@ def check_simapro_inventory(file):
             new_file_data.append(row)
 
     # save new file
-    with open(file.lower().replace(".csv", "_edited.csv"), mode='w', encoding="latin-1") as e:
+    with open(file.lower().replace(".csv", "_edited.csv"), mode='w', encoding="latin-1", newline='') as e:
         writer = csv.writer(e, delimiter=';')
         for row in new_file_data:
             writer.writerow(row)
