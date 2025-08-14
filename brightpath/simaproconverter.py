@@ -318,6 +318,14 @@ class SimaproConverter:
                     exc["reference product"] = ds["reference product"]
                     exc["location"] = ds["location"]
 
+                    if any(x in exc["name"] for x in WASTE_TERMS):
+                        logging.info(
+                            msg=f"{exc['name']} considered waste treatment "
+                                f"(input amount made negative)."
+                        )
+                        print(f"{exc['name']} considered waste treatment: sign of production exchange made negative.")
+                        exc["amount"] *= -1
+
                 if exc["type"] in ["technosphere", "substitution"]:
                     exc["name"], exc["product"], exc["location"] = format_technosphere_exchange(exc["name"])
                     exc["reference product"] = exc["product"]
