@@ -241,6 +241,7 @@ class SimaproConverter:
             self,
             filepath: str,
             ecoinvent_version: str = "3.9",
+            db_name: str = None
     ):
         """
         Initialize the SimaproConverter object.
@@ -261,7 +262,7 @@ class SimaproConverter:
             raise FileNotFoundError(f"File {filepath} not found.")
 
         self.filepath = Path(check_simapro_inventory(filepath))
-        self.i = bw2io.SimaProCSVImporter(self.filepath)
+        self.i = bw2io.SimaProCSVImporter(filepath=self.filepath, name=db_name)
         self.i.apply_strategies()
         self.i.data = remove_duplicates(self.i.data)
 
