@@ -19,6 +19,7 @@ from pathlib import Path
 import bw2io
 import logging
 import csv
+from datetime import datetime
 
 WASTE_TERMS = get_waste_exchange_names()
 
@@ -263,6 +264,8 @@ class SimaproConverter:
 
         self.filepath = Path(check_simapro_inventory(filepath))
         self.i = bw2io.SimaProCSVImporter(filepath=self.filepath, name=db_name)
+        self.db_name = db_name or self.filepath.stem
+        self.i = bw2io.SimaProCSVImporter(filepath=self.filepath, name=self.db_name)
         self.i.apply_strategies()
         self.i.data = remove_duplicates(self.i.data)
 
@@ -274,15 +277,17 @@ class SimaproConverter:
         self.ei_biosphere_flows = load_ei_biosphere_flows()
         self.biosphere_flows_correspondence = load_biosphere_correspondence()
 
+
+        self.i.db_name = self.db_name
+
+
     def check_database_name(self):
 
-        if self.i.db_name is None:
-            self.i.db_name = self.filepath.stem
+        for act in self.i.data:
+            act["database"] = self.i.db_name
 
-            for act in self.i.data:
-                act["database"] = self.i.db_name
-
-                for exc in act["exchanges"]:
+            for exc in act["exchanges"]:
+                if exc.get("type") in ["production", "technosphere"]:
                     if "input" in exc:
                         if exc["input"][0] is None:
                             exc["input"] = (self.i.db_name, exc["input"][1])
@@ -313,6 +318,14 @@ class SimaproConverter:
                     exc["product"] = ds["reference product"]
                     exc["reference product"] = ds["reference product"]
                     exc["location"] = ds["location"]
+
+                    if any(x in exc["name"] for x in WASTE_TERMS):
+                        logging.info(
+                            msg=f"{exc['name']} considered waste treatment "
+                                f"(input amount made negative)."
+                        )
+                        print(f"{exc['name']} considered waste treatment: sign of production exchange made negative.")
+                        exc["amount"] *= -1
 
                 if exc["type"] in ["technosphere", "substitution"]:
                     exc["name"], exc["product"], exc["location"] = format_technosphere_exchange(exc["name"])
