@@ -81,4 +81,142 @@ jobs:
         run: coveralls --verbose --service=github
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COVERALLS_REPO_TOKEN: $
+          COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS }}
+
+      - name: Export secrets for tests
+        if: always()
+        run: echo "IAM_FILES_KEY is set for downstream jobs"
+        env:
+          IAM_FILES_KEY: ${{ secrets.IAM_FILES_KEY }}
+
+  pypi:
+    name: PyPI publish
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest]
+        python-version: ["3.9", "3.10"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install build
+        run: |
+          python -m pip install --upgrade pip
+          pip install build
+
+      - name: Build sdist and wheel
+        run: python -m build --sdist --wheel --outdir dist/
+
+      # Publish to TestPyPI on pushes to branches (not tags)
+      - name: Publish to TestPyPI on push
+        if: github.event_name == 'push' && !startsWith(github.ref, 'refs/tags/')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          user: __token__
+          password: ${{ secrets.TEST_PYPI_API_TOKEN }}
+          skip-existing: true
+
+      # Publish to PyPI on tags
+      - name: Publish to PyPI on tag
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          user: __token__
+          password: ${{ secrets.PYPI_API_TOKEN }}
+          skip-existing: true
+
+  conda:
+    name: Conda build (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    needs: build
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          channels: conda-forge,cmutel,konstantinstadler,haasad,pascallesage,romainsacchi
+          channel-priority: strict
+          auto-update-conda: true
+          activate-environment: test
+
+      - name: Conda info
+        shell: bash -l {0}
+        run: conda info
+
+      - name: Branch name
+        run: echo "running on branch ${GITHUB_REF##*/}"
+
+      - name: Publish to Anaconda if push from non-master branch
+        if: github.ref != 'refs/heads/master'
+        shell: bash -l {0}
+        env:
+          ANACONDA_TOKEN: ${{ secrets.ANACONDA_CLOUD }}
+        run: |
+          PKG_NAME=brightpath
+          USER=romainsacchi
+          conda install anaconda-client conda-build conda-verify pytest -y
+          mkdir -p ~/conda-bld
+          conda config --set anaconda_upload no
+          export CONDA_BLD_PATH=~/conda-bld
+          export VERSION=$(date +%Y.%m.%d)
+          conda build conda/ --old-build-string
+          conda-verify $CONDA_BLD_PATH/noarch/$PKG_NAME-$VERSION-py_0.tar.bz2
+          ls $CONDA_BLD_PATH/noarch/
+          anaconda -t "$ANACONDA_TOKEN" upload -u "$USER" "$CONDA_BLD_PATH/noarch/$PKG_NAME-$VERSION-py_0.tar.bz2" --force
+
+  testconda:
+    name: Test conda pkg (${{ matrix.python-version }})
+    runs-on: ubuntu-latest
+    needs: conda
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9", "3.10"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: conda-incubator/setup-miniconda@v3
+        with:
+          python-version: ${{ matrix.python-version }}
+          channels: conda-forge,cmutel,konstantinstadler,haasad,pascallesage,romainsacchi
+          channel-priority: strict
+          auto-update-conda: true
+          activate-environment: test
+
+      - name: Pull and test (master)
+        if: github.ref == 'refs/heads/master'
+        shell: bash -l {0}
+        env:
+          IAM_FILES_KEY: ${{ secrets.IAM_FILES_KEY }}
+        run: |
+          conda install -y -c romainsacchi brightpath
+          conda update -y brightpath
+          conda install -y pytest bottleneck
+          pytest -m "not ecoinvent"
+
+      - name: Pull and test (non-master)
+        if: github.ref != 'refs/heads/master'
+        shell: bash -l {0}
+        env:
+          IAM_FILES_KEY: ${{ secrets.IAM_FILES_KEY }}
+        run: |
+          conda install -y -c romainsacchi brightpath-dev
+          conda update -y brightpath-dev
+          conda install -y pytest bottleneck
+          pytest -m "not ecoinvent"
