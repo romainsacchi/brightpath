@@ -1,6 +1,8 @@
+{% set version = environ.get("VERSION", "0.0.0") %}
+
 package:
   name: brightpath
-  version: {{ environ['VERSION'] }}
+  version: {{ version }}
 
 source:
   path: ..
@@ -8,28 +10,34 @@ source:
 build:
   noarch: python
   number: 0
-  script: python -m pip install --no-deps --ignore-installed .
+  script: {{ PYTHON }} -m pip install --no-deps --ignore-installed . -vv
   script_env:
     - VERSION
     - CONDA_BLD_PATH
 
 requirements:
-  build:
-    - python
+  host:
+    - python >=3.9
+    - pip
     - setuptools
+    - wheel
     - prettytable >=3
-  run:
-    - bw2io
     - pyyaml
+  run:
+    - python >=3.9
     - prettytable >=3
+    - pyyaml
+    # keep optional deps (e.g., bw2io) OUT of run unless needed at import time
 
 test:
   imports:
     - brightpath
-    - pyyaml
+    - yaml  # <-- module name, not "pyyaml"
+  requires:
+    - pytest  # lightweight, optional
 
 about:
   home: https://github.com/romainsacchi/brightpath
-  license: BSD License
-  summary: 'Convert Brightway2-3 life-cycle inventories to Simapro 9.x.'
-license_family: BSD
+  license: BSD-3-Clause
+  license_family: BSD
+  summary: 'Convert Brightway2/3 life-cycle inventories to SimaPro 9.x.'
