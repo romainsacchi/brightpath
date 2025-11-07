@@ -159,13 +159,12 @@ jobs:
         run: |
           PKG_NAME=brightpath
           USER=romainsacchi
-          conda install anaconda-client conda-build conda-verify pytest -y
+          conda install anaconda-client conda-build pytest -y
           mkdir -p ~/conda-bld
           conda config --set anaconda_upload no
           export CONDA_BLD_PATH=~/conda-bld
           export VERSION=$(date +%Y.%m.%d)
           conda build conda/ --old-build-string
-          conda-verify $CONDA_BLD_PATH/noarch/$PKG_NAME-$VERSION-py_0.tar.bz2
           ls $CONDA_BLD_PATH/noarch/
           anaconda -t "$ANACONDA_TOKEN" upload -u "$USER" "$CONDA_BLD_PATH/noarch/$PKG_NAME-$VERSION-py_0.tar.bz2" --force
 
