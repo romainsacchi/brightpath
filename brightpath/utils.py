@@ -2,8 +2,9 @@ import csv
 import json
 import logging
 import re
+from collections import Counter
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Dict, Optional as TypingOptional, Tuple, Union
 
 import bw2io
 import numpy as np
@@ -23,12 +24,14 @@ logging.basicConfig(
 )
 
 
-def get_simapro_biosphere() -> Dict[str, str]:
+def get_simapro_biosphere() -> Dict[str, Union[str, Dict[TypingOptional[str], str]]]:
     """Load the correspondence between ecoinvent and SimaPro biosphere flows.
 
     :return: Mapping from an ecoinvent biosphere flow name to its SimaPro
-        equivalent name.
-    :rtype: dict[str, str]
+        equivalent names. The mapping contains either a single string when the
+        flow is not regionalised, or a dictionary keyed by location codes for
+        flows that require regionalisation.
+    :rtype: dict[str, str | dict[str | None, str]]
     :raises FileNotFoundError: If the mapping file is missing from
         ``brightpath/data/export``.
     :raises json.JSONDecodeError: If the mapping file cannot be parsed.
@@ -43,9 +46,33 @@ def get_simapro_biosphere() -> Dict[str, str]:
         )
     with open(filepath, encoding="utf-8") as json_file:
         data = json.load(json_file)
-    dict_bio = {}
-    for d in data:
-        dict_bio[d[2]] = d[1]
+
+    def _extract_location(simapro_name: str) -> TypingOptional[str]:
+        """Extract the regional suffix from a SimaPro biosphere flow name."""
+
+        base, separator, suffix = simapro_name.rpartition(",")
+        if not separator or not base:
+            return None
+        return suffix.strip() or None
+
+    counts = Counter(entry[2] for entry in data)
+    dict_bio: Dict[str, Union[str, Dict[TypingOptional[str], str]]] = {}
+
+    for _, simapro_name, bw_name in data:
+        if counts[bw_name] == 1:
+            dict_bio[bw_name] = simapro_name
+            continue
+
+        location = _extract_location(simapro_name)
+        biosphere_entry = dict_bio.setdefault(bw_name, {})
+        if not isinstance(biosphere_entry, dict):
+            biosphere_entry = {}
+            dict_bio[bw_name] = biosphere_entry
+
+        if location is None:
+            biosphere_entry.setdefault(None, simapro_name)
+        else:
+            biosphere_entry[location] = simapro_name
 
     return dict_bio
 
