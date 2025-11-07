@@ -32,9 +32,7 @@ def test_resolve_uses_direct_string_mapping():
 
 def test_resolve_prefers_exact_exchange_location():
     converter = make_converter()
-    converter.simapro_biosphere = {
-        "Water": {"CH": "Water, CH", "GLO": "Water, GLO"}
-    }
+    converter.simapro_biosphere = {"Water": {"CH": "Water, CH", "GLO": "Water, GLO"}}
     exchange = {"name": "Water", "location": "CH"}
 
     assert (
@@ -45,9 +43,7 @@ def test_resolve_prefers_exact_exchange_location():
 
 def test_resolve_supports_hierarchical_locations():
     converter = make_converter()
-    converter.simapro_biosphere = {
-        "Water": {"CH": "Water, CH", "GLO": "Water, GLO"}
-    }
+    converter.simapro_biosphere = {"Water": {"CH": "Water, CH", "GLO": "Water, GLO"}}
     exchange = {"name": "Water", "location": "CH-01"}
 
     assert (
@@ -58,9 +54,7 @@ def test_resolve_supports_hierarchical_locations():
 
 def test_resolve_falls_back_to_activity_location():
     converter = make_converter()
-    converter.simapro_biosphere = {
-        "Water": {"BR": "Water, BR", "GLO": "Water, GLO"}
-    }
+    converter.simapro_biosphere = {"Water": {"BR": "Water, BR", "GLO": "Water, GLO"}}
     exchange = {"name": "Water"}
 
     assert (
@@ -71,9 +65,7 @@ def test_resolve_falls_back_to_activity_location():
 
 def test_resolve_defaults_to_global_and_none():
     converter = make_converter()
-    converter.simapro_biosphere = {
-        "Water": {"GLO": "Water, GLO", None: "Water"}
-    }
+    converter.simapro_biosphere = {"Water": {"GLO": "Water, GLO", None: "Water"}}
     exchange = {"name": "Water"}
 
     assert (

@@ -4,7 +4,9 @@ import logging
 import re
 from collections import Counter
 from pathlib import Path
-from typing import Dict, Optional as TypingOptional, Tuple, Union
+from typing import Dict
+from typing import Optional as TypingOptional
+from typing import Tuple, Union
 
 import bw2io
 import numpy as np

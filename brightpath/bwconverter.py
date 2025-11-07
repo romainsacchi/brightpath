@@ -148,7 +148,9 @@ class BrightwayConverter:
         if exchange_location:
             candidates.append(exchange_location)
             if "-" in exchange_location:
-                candidates.extend([part for part in exchange_location.split("-") if part])
+                candidates.extend(
+                    [part for part in exchange_location.split("-") if part]
+                )
         if activity_location and activity_location not in candidates:
             candidates.append(activity_location)
         candidates.extend(["GLO", "RoW", "RER", "WEU", None])
