@@ -23,19 +23,21 @@ requirements:
     - wheel
     - prettytable >=3
     - pyyaml
-    - bw2io
   run:
     - python >=3.9
     - prettytable >=3
     - pyyaml
-    - bw2io
+    # bw2io intentionally NOT in runtime to keep the package light
 
 test:
   imports:
     - brightpath
     - yaml
   requires:
+    # Ensure the test env uses a Python version where bw2io wheels/conda pkgs exist
+    - python >=3.9,<3.13
     - pytest
+    - bw2io
 
 about:
   home: https://github.com/romainsacchi/brightpath
