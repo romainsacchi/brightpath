@@ -2,32 +2,35 @@
 This module contains the class SimaproConverter, which is used to convert
 Simapro inventories to Brightway inventory files.
 """
+
+import csv
+import logging
+from datetime import datetime
+from pathlib import Path
+
+import bw2io
+
 from . import DATA_DIR
 from .utils import (
-    get_simapro_technosphere,
+    check_simapro_inventory,
     get_simapro_biosphere,
     get_simapro_subcompartments,
-    check_simapro_inventory,
+    get_simapro_technosphere,
     get_waste_exchange_names,
-    load_ei_biosphere_flows,
     load_biosphere_correspondence,
+    load_ei_biosphere_flows,
+    lower_cap_first_letter,
     remove_duplicates,
-    lower_cap_first_letter
 )
 
-from pathlib import Path
-import bw2io
-import logging
-import csv
-from datetime import datetime
-
 WASTE_TERMS = get_waste_exchange_names()
+
 
 def format_technosphere_exchange(txt: str):
 
     location_correction = {
         "WECC, US only": "US-WECC",
-        "ASCC, US only" : "US-ASCC",
+        "ASCC, US only": "US-ASCC",
         "HICC, US only": "US-HICC",
         "MRO, US only": "US-MRO",
         "NPCC, US only": "US-NPCC",
@@ -58,7 +61,7 @@ def format_technosphere_exchange(txt: str):
         "processing, mass based",
         "transport",
         "treatment of",
-        "purification"
+        "purification",
     ]
 
     reference_product, name, location = "", "", ""
@@ -90,8 +93,14 @@ def format_technosphere_exchange(txt: str):
     if location in ["French Guiana", "French Guinana"]:
         location = "FG"
 
-    name = name.replace("Cut-off, U", "",)
-    name = name.replace("cut-off, U", "",)
+    name = name.replace(
+        "Cut-off, U",
+        "",
+    )
+    name = name.replace(
+        "cut-off, U",
+        "",
+    )
 
     if name[-3:] in [", U", ", S"]:
         name = name[:-3]
@@ -140,8 +149,9 @@ def format_technosphere_exchange(txt: str):
 
     return name, reference_product, location
 
+
 def load_ecoinvent_activities(version: str) -> list:
-    with open(DATA_DIR/ "export" / f"list_ei{version}_cutoff_activities.csv") as f:
+    with open(DATA_DIR / "export" / f"list_ei{version}_cutoff_activities.csv") as f:
         reader = csv.reader(f)
         next(reader)
         return [l for l in reader]
@@ -169,9 +179,7 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
     key = (
         exc["name"],
         exc["categories"][0],
-        "unspecified"
-        if len(exc["categories"]) == 1
-        else exc["categories"][1]
+        "unspecified" if len(exc["categories"]) == 1 else exc["categories"][1],
     )
 
     if key not in bio_flows:
@@ -192,7 +200,6 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
                 "biotic",
                 "in air",
                 "land",
-
             ]:
                 key = list(key)
                 key[2] = i
@@ -219,7 +226,7 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
                 "low population density, long-term",
                 "lower stratosphere + upper troposphere",
                 "non-urban air or from high stacks",
-                "urban air close to ground"
+                "urban air close to ground",
             ]:
                 key = list(key)
                 key[2] = i
@@ -228,21 +235,17 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
                     exc["categories"] = (exc["categories"][0], i)
                     break
 
-    if exc["categories"] == ('natural resource', 'in ground'):
+    if exc["categories"] == ("natural resource", "in ground"):
         if ei_version in ["3.5", "3.6", "3.7", "3.8"]:
             if "in ground" not in exc["name"]:
                 exc["name"] += ", in ground"
-
 
     return exc
 
 
 class SimaproConverter:
     def __init__(
-            self,
-            filepath: str,
-            ecoinvent_version: str = "3.9",
-            db_name: str = None
+        self, filepath: str, ecoinvent_version: str = "3.9", db_name: str = None
     ):
         """
         Initialize the SimaproConverter object.
@@ -277,9 +280,7 @@ class SimaproConverter:
         self.ei_biosphere_flows = load_ei_biosphere_flows()
         self.biosphere_flows_correspondence = load_biosphere_correspondence()
 
-
         self.i.db_name = self.db_name
-
 
     def check_database_name(self):
 
@@ -303,11 +304,11 @@ class SimaproConverter:
                 ds["comment"] = ds["simapro metadata"]["Comment"]
                 del ds["simapro metadata"]["Comment"]
 
-            ds["name"], ds["reference product"], ds["location"] = format_technosphere_exchange(ds["name"])
+            ds["name"], ds["reference product"], ds["location"] = (
+                format_technosphere_exchange(ds["name"])
+            )
             internal_datasets.append(
-                (
-                    ds["name"], ds["reference product"], ds["location"]
-                )
+                (ds["name"], ds["reference product"], ds["location"])
             )
 
             for exc in ds["exchanges"]:
@@ -322,19 +323,23 @@ class SimaproConverter:
                     if any(x in exc["name"] for x in WASTE_TERMS):
                         logging.info(
                             msg=f"{exc['name']} considered waste treatment "
-                                f"(input amount made negative)."
+                            f"(input amount made negative)."
                         )
-                        print(f"{exc['name']} considered waste treatment: sign of production exchange made negative.")
+                        print(
+                            f"{exc['name']} considered waste treatment: sign of production exchange made negative."
+                        )
                         exc["amount"] *= -1
 
                 if exc["type"] in ["technosphere", "substitution"]:
-                    exc["name"], exc["product"], exc["location"] = format_technosphere_exchange(exc["name"])
+                    exc["name"], exc["product"], exc["location"] = (
+                        format_technosphere_exchange(exc["name"])
+                    )
                     exc["reference product"] = exc["product"]
 
                     if any(x in exc["name"] for x in WASTE_TERMS):
                         logging.info(
                             msg=f"{exc['name']} considered waste treatment "
-                                f"(input amount made negative)."
+                            f"(input amount made negative)."
                         )
                         exc["amount"] *= -1
 
@@ -347,7 +352,7 @@ class SimaproConverter:
                         exc,
                         self.ecoinvent_version,
                         self.ei_biosphere_flows,
-                        self.biosphere_flows_correspondence
+                        self.biosphere_flows_correspondence,
                     )
 
         self.check_database_name()
@@ -361,10 +366,7 @@ class SimaproConverter:
         print("Done!")
 
     def remove_empty_datasets(self):
-        self.i.data = [
-            ds for ds in self.i.data
-            if len(ds["exchanges"]) >= 1
-        ]
+        self.i.data = [ds for ds in self.i.data if len(ds["exchanges"]) >= 1]
 
     def remove_empty_exchanges(self):
         for ds in self.i.data:
@@ -374,17 +376,25 @@ class SimaproConverter:
 
         for ds in self.i.data:
             if len([x for x in ds["exchanges"] if x["type"] == "production"]) != 1:
-                print(f"WARNING: {ds['name'], ds['reference product'], ds['location']} has more"
-                      f"than one production flow.")
+                print(
+                    f"WARNING: {ds['name'], ds['reference product'], ds['location']} has more"
+                    f"than one production flow."
+                )
 
             for e in ds["exchanges"]:
                 if e["type"] not in ["production", "technosphere", "biosphere"]:
-                    print(f"WARNING: {ds['name'], ds['reference product'], ds['location']} has an"
-                          f"unknown flow type {e['type']}.")
+                    print(
+                        f"WARNING: {ds['name'], ds['reference product'], ds['location']} has an"
+                        f"unknown flow type {e['type']}."
+                    )
 
                 if e["type"] == "production":
                     if (e["name"], e["product"], e["location"]) != (
-                            ds["name"], ds["reference product"], ds["location"]
+                        ds["name"],
+                        ds["reference product"],
+                        ds["location"],
                     ):
-                        print(f"WARNING: {ds['name'], ds['reference product'], ds['location']} has an"
-                              f"incorrect production flow {e}.")
+                        print(
+                            f"WARNING: {ds['name'], ds['reference product'], ds['location']} has an"
+                            f"incorrect production flow {e}."
+                        )
