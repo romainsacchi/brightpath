@@ -24,8 +24,15 @@ logging.basicConfig(
 
 
 def get_simapro_biosphere() -> Dict[str, str]:
-    # Load the matching dictionary between ecoinvent and Simapro biosphere flows
-    # for each ecoinvent biosphere flow name, it gives the corresponding Simapro name
+    """Load the correspondence between ecoinvent and SimaPro biosphere flows.
+
+    :return: Mapping from an ecoinvent biosphere flow name to its SimaPro
+        equivalent name.
+    :rtype: dict[str, str]
+    :raises FileNotFoundError: If the mapping file is missing from
+        ``brightpath/data/export``.
+    :raises json.JSONDecodeError: If the mapping file cannot be parsed.
+    """
 
     filename = "simapro-biosphere.json"
     filepath = DATA_DIR / "export" / filename
@@ -44,8 +51,14 @@ def get_simapro_biosphere() -> Dict[str, str]:
 
 
 def get_simapro_subcompartments() -> Dict[str, str]:
-    # Load the matching dictionary between ecoinvent and Simapro subcompartments
-    # contained in simapro_subcompartments.yaml
+    """Load the mapping of biosphere sub-compartments.
+
+    :return: Mapping from ecoinvent sub-compartment names to their SimaPro
+        equivalents.
+    :rtype: dict[str, str]
+    :raises FileNotFoundError: If the YAML file with the mapping is missing.
+    :raises yaml.YAMLError: If the YAML file cannot be parsed.
+    """
 
     filename = "simapro_subcompartments.yaml"
     filepath = DATA_DIR / "export" / filename
@@ -66,7 +79,14 @@ def get_simapro_subcompartments() -> Dict[str, str]:
 
 
 def get_simapro_technosphere() -> Dict[Tuple[str, str], str]:
-    # Load the matching dictionary between ecoinvent and Simapro product flows
+    """Load the correspondence between ecoinvent and SimaPro product flows.
+
+    :return: Mapping where the key is the pair ``(name, location)`` of an
+        ecoinvent technosphere exchange and the value is the SimaPro exchange
+        name.
+    :rtype: dict[tuple[str, str], str]
+    :raises FileNotFoundError: If the CSV mapping file is missing.
+    """
 
     filename = "simapro-technosphere-3.5.csv"
     filepath = DATA_DIR / "export" / filename
@@ -84,8 +104,14 @@ def get_simapro_technosphere() -> Dict[Tuple[str, str], str]:
 
 
 def get_simapro_ecoinvent_blacklist():
-    # Load the list of Simapro biosphere flows that
-    # should be excluded from the export
+    """Load the list of exchanges to exclude when exporting to SimaPro.
+
+    :return: Dictionary describing exchanges that must be skipped for the
+        ecoinvent export.
+    :rtype: dict
+    :raises FileNotFoundError: If the blacklist file is missing.
+    :raises yaml.YAMLError: If the blacklist file cannot be parsed.
+    """
 
     filename = "simapro_blacklist.yaml"
     filepath = DATA_DIR / "export" / filename
@@ -102,8 +128,14 @@ simapro_ecoinvent_blacklist = get_simapro_ecoinvent_blacklist()
 
 
 def get_simapro_uvek_blacklist():
-    # Load the list of Simapro uvek flows that
-    # should be excluded from the export
+    """Load the blacklist of SimaPro UVEK exchanges.
+
+    :return: Dictionary describing exchanges that must be skipped when
+        targeting the UVEK database.
+    :rtype: dict
+    :raises FileNotFoundError: If the blacklist YAML file cannot be found.
+    :raises yaml.YAMLError: If the blacklist file cannot be parsed.
+    """
 
     filename = "uvek_blacklist.yaml"
     filepath = DATA_DIR / "export" / filename
@@ -120,9 +152,13 @@ simapro_uvek_blacklist = get_simapro_uvek_blacklist()
 
 
 def get_ecoinvent_to_uvek_mapping():
-    """
-    Load ecoinvent_to_uvek_mapping.csv into a dictionary.
-    :return: dictionary with tuples of ecoinvent flow name and location as keys
+    """Load the mapping between ecoinvent flows and UVEK identifiers.
+
+    :return: Dictionary keyed by a tuple consisting of the ecoinvent flow
+        name, location and additional qualifiers, pointing to the UVEK
+        identifier.
+    :rtype: dict[tuple[str, str, str, str], str]
+    :raises FileNotFoundError: If the CSV mapping file cannot be found.
     """
     filename = "ecoinvent_to_uvek_mapping.csv"
     filepath = DATA_DIR / "export" / filename
@@ -135,9 +171,12 @@ def get_ecoinvent_to_uvek_mapping():
 
 
 def get_ecoinvent_transport_distances():
-    """
-    Load ei_transport.csv into a dictionary.
-    :return: dictionary with tuples of ecoinvent flow name and location as keys
+    """Load default transport distances for ecoinvent flows.
+
+    :return: Mapping from exchange name to a dictionary containing transport
+        distances per mode and region.
+    :rtype: dict[str, dict[str, str]]
+    :raises FileNotFoundError: If the CSV with transport distances is missing.
     """
     filename = "ei_transport.csv"
     filepath = DATA_DIR / "export" / filename
@@ -164,13 +203,14 @@ ecoinvent_transport_distances = get_ecoinvent_transport_distances()
 
 
 def get_simapro_fields_list() -> list[str]:
+    """Return the ordered list of SimaPro section names.
+
+    :return: Sequence of field names that describes the structure of a
+        SimaPro CSV export.
+    :rtype: list[str]
+    :raises FileNotFoundError: If the YAML definition file is missing.
+    :raises yaml.YAMLError: If the YAML file cannot be parsed.
     """
-    Load the list of Simapro fields that
-    should be included in the export.
-    :return: list of Simapro fields
-    """
-    # Load the list of Simapro fields that
-    # should be included in the export
 
     filename = "simapro_fields.yaml"
     filepath = DATA_DIR / "export" / filename
@@ -185,13 +225,13 @@ def get_simapro_fields_list() -> list[str]:
 
 
 def get_simapro_units():
+    """Load the mapping of Brightway units to SimaPro units.
+
+    :return: Dictionary mapping source units to their SimaPro counterparts.
+    :rtype: dict[str, str]
+    :raises FileNotFoundError: If the YAML definition file is missing.
+    :raises yaml.YAMLError: If the YAML file cannot be parsed.
     """
-    Load the list of Simapro fields that
-    should be included in the export.
-    :return: list of Simapro fields
-    """
-    # Load the list of Simapro fields that
-    # should be included in the export
 
     filename = "simapro_units.yaml"
     filepath = DATA_DIR / "export" / filename
@@ -206,13 +246,13 @@ def get_simapro_units():
 
 
 def get_simapro_headers():
+    """Load the SimaPro header rows that precede each export.
+
+    :return: List of header strings used when generating SimaPro CSV files.
+    :rtype: list[str]
+    :raises FileNotFoundError: If the YAML definition file is missing.
+    :raises yaml.YAMLError: If the YAML file cannot be parsed.
     """
-    Load the list of Simapro fields that
-    should be included in the export.
-    :return: list of Simapro fields
-    """
-    # Load the list of Simapro fields that
-    # should be included in the export
 
     filename = "simapro_headers.yaml"
     filepath = DATA_DIR / "export" / filename
@@ -228,10 +268,13 @@ def get_simapro_headers():
 
 
 def get_simapro_ecoinvent_exceptions():
-    """
-    Load the YAML file "simapro_ei_exceptions.yaml"
-    and return it as a dictionary.
-    :return:
+    """Load the list of special-case ecoinvent flows.
+
+    :return: Dictionary describing exchanges that require bespoke handling
+        during the conversion.
+    :rtype: dict
+    :raises FileNotFoundError: If the YAML exception file is missing.
+    :raises yaml.YAMLError: If the YAML file cannot be parsed.
     """
 
     filename = "simapro_ei_exceptions.yaml"
@@ -251,11 +294,13 @@ ecoinvent_exceptions = get_simapro_ecoinvent_exceptions()
 
 
 def get_waste_exchange_names():
-    """
-    Load the list of names that
-    indicate that the input is a
-    waste treatment.
-    :return: list of name
+    """Return the keywords that identify waste-treatment exchanges.
+
+    :return: List of strings that indicate an exchange represents waste
+        treatment.
+    :rtype: list[str]
+    :raises FileNotFoundError: If the YAML file cannot be found.
+    :raises yaml.YAMLError: If the YAML file cannot be parsed.
     """
 
     filename = "waste_exchange_names.yaml"
@@ -271,11 +316,15 @@ def get_waste_exchange_names():
 
 
 def check_inventories(data: list) -> None:
-    """
-    Check that inventories, and the exchanges they contain
-    have all the mandatory fields.
-    :param data: list of activities
-    :return: list of activities or error
+    """Validate that inventories contain the required information.
+
+    The function verifies that each exchange includes the mandatory keys
+    expected by the conversion logic. A :class:`ValueError` is raised when
+    missing data is detected and the offending exchanges are displayed.
+
+    :param data: Brightway activities that should be checked.
+    :type data: list[dict]
+    :raises ValueError: If an exchange misses mandatory attributes.
     """
 
     MANDATORY_TECH_EXC_KEYS = ["name", "reference product", "location", "unit"]
@@ -330,10 +379,17 @@ def check_inventories(data: list) -> None:
 
 
 def import_bw_inventories(filepath: str) -> list[dict]:
-    """
-    Import inventories from a spreadsheet file.
-    :param filepath:
-    :return: list of inventories
+    """Load Brightway inventories from an Excel workbook.
+
+    The importer relies on :mod:`bw2io` to read Brightway exports and ensures
+    that the required migrations are available.
+
+    :param filepath: Path to the Excel inventory spreadsheet.
+    :type filepath: str
+    :return: List of activities in Brightway format.
+    :rtype: list[dict]
+    :raises FileNotFoundError: If ``filepath`` does not exist.
+    :raises ValueError: If the provided file does not have the ``.xlsx`` suffix.
     """
     # using bw2io, we load the inventories contained
     # in the spreadsheet file
@@ -363,6 +419,14 @@ def import_bw_inventories(filepath: str) -> list[dict]:
 
 
 def check_metadata(metadata: dict) -> dict:
+    """Validate metadata against the expected schema.
+
+    :param metadata: Raw metadata read from the YAML file.
+    :type metadata: dict
+    :return: Sanitised metadata that matches the schema.
+    :rtype: dict
+    :raises voluptuous.error.MultipleInvalid: If validation fails.
+    """
     # metadata dictionary should conform to the following schema:
     # Define the validation schema
     system_description_schema = Schema(
@@ -401,10 +465,17 @@ def check_metadata(metadata: dict) -> dict:
 
 
 def load_inventory_metadata(filepath: str) -> dict:
-    """
-    Load the metadata of the inventory.
-    :param filepath:
-    :return: metadata
+    """Load and validate inventory metadata from disk.
+
+    :param filepath: Path to the YAML document containing the metadata.
+    :type filepath: str
+    :return: Validated metadata dictionary.
+    :rtype: dict
+    :raises FileNotFoundError: If the metadata file does not exist.
+    :raises ValueError: If the file does not have a ``.yaml`` extension.
+    :raises yaml.YAMLError: If the metadata file cannot be parsed.
+    :raises voluptuous.error.MultipleInvalid: If the metadata structure is
+        invalid.
     """
     # if filepath is a string, convert to Path object
     if isinstance(filepath, str):
@@ -431,11 +502,14 @@ def load_inventory_metadata(filepath: str) -> dict:
 
 
 def is_activity_waste_treatment(activity: dict, database: str) -> bool:
-    """
-    Detect whether the given activity is a
-    process or a waste treatment.
-    :param activity:
-    :return: True or False
+    """Determine whether an activity represents waste treatment.
+
+    :param activity: Brightway activity dictionary to inspect.
+    :type activity: dict
+    :param database: Name of the target database used for heuristics.
+    :type database: str
+    :return: ``True`` if the activity is a waste treatment process.
+    :rtype: bool
     """
 
     if "type" in activity:
@@ -451,11 +525,14 @@ def is_activity_waste_treatment(activity: dict, database: str) -> bool:
 
 
 def is_a_waste_treatment(name: str, database: str) -> bool:
-    """
-    Detect if name contains typical to waste treatment.
-    :param name: exchange name
-    :param database: database to link to
-    :return: bool.
+    """Check whether an exchange name matches waste-treatment keywords.
+
+    :param name: Exchange name to analyse.
+    :type name: str
+    :param database: Target database used to refine the decision.
+    :type database: str
+    :return: ``True`` if the exchange is considered waste treatment.
+    :rtype: bool
     """
     WASTE_TERMS = get_waste_exchange_names()
     NOT_WASTE_TERMS = [
@@ -478,10 +555,13 @@ def is_a_waste_treatment(name: str, database: str) -> bool:
 
 
 def find_production_exchange(activity: dict) -> dict:
-    """
-    Find the production exchange of the given activity.
-    :param activity:
-    :return: production exchange
+    """Retrieve the production exchange from an activity.
+
+    :param activity: Activity whose production exchange should be returned.
+    :type activity: dict
+    :return: The production exchange of the activity.
+    :rtype: dict
+    :raises ValueError: If the activity does not contain a production exchange.
     """
     for exc in activity["exchanges"]:
         if exc["type"] == "production":
@@ -492,10 +572,13 @@ def find_production_exchange(activity: dict) -> dict:
 
 
 def get_technosphere_exchanges(activity: dict) -> list:
-    """
-    Get the technosphere exchanges of the given activity.
-    :param activity:
-    :return: technosphere exchanges
+    """Return the technosphere exchanges from an activity.
+
+    :param activity: Activity for which technosphere exchanges should be
+        collected.
+    :type activity: dict
+    :return: Technosphere exchanges with non-zero amounts.
+    :rtype: list[dict]
     """
     return [
         exc
@@ -505,11 +588,15 @@ def get_technosphere_exchanges(activity: dict) -> list:
 
 
 def get_biosphere_exchanges(activity: dict, category: str = None) -> list:
-    """
-    Get the technosphere exchanges of the given activity.
-    :param activity: activity
-    :param category: biosphere category
-    :return: biosphere exchanges
+    """Return biosphere exchanges optionally filtered by category.
+
+    :param activity: Activity for which biosphere exchanges should be
+        collected.
+    :type activity: dict
+    :param category: Biosphere compartment to filter for, e.g. ``"air"``.
+    :type category: str | None
+    :return: Biosphere exchanges that match the optional category.
+    :rtype: list[dict]
     """
     return [
         exc
@@ -523,13 +610,20 @@ def get_biosphere_exchanges(activity: dict, category: str = None) -> list:
 def format_exchange_name(
     name: str, reference_product: str, location: str, unit: str, database: str
 ) -> str:
-    """
-    Format the name of the exchange.
-    :param name: exchange name.
-    :param reference_product: exchange reference product.
-    :param location: exchange location.
-    :param database: database to link to.
-    :return:
+    """Format a Brightway exchange name for SimaPro compatibility.
+
+    :param name: Exchange name from the Brightway inventory.
+    :type name: str
+    :param reference_product: Reference product of the exchange.
+    :type reference_product: str
+    :param location: Location code associated with the exchange.
+    :type location: str
+    :param unit: Unit of the exchange.
+    :type unit: str
+    :param database: Target database used to select the formatting logic.
+    :type database: str
+    :return: Name formatted according to SimaPro conventions.
+    :rtype: str
     """
 
     if database == "ecoinvent":
@@ -565,12 +659,12 @@ def format_exchange_name(
 
 
 def get_simapro_uncertainty_type(uncertainty_type: int) -> str:
-    """
-    Brightway uses integers to define uncertianty distribution types.
-    https://stats-arrays.readthedocs.io/en/latest/#mapping-parameter-array-columns-to-uncertainty-distributions
-    Simapro uses strings.
-    :param uncertainty_type:
-    :return: uncertainty name
+    """Map Brightway uncertainty codes to the SimaPro string representation.
+
+    :param uncertainty_type: Integer identifier of the uncertainty type.
+    :type uncertainty_type: int
+    :return: Human readable uncertainty label used by SimaPro.
+    :rtype: str
     """
 
     UNCERTAINITY_TYPES = {
@@ -586,11 +680,14 @@ def get_simapro_uncertainty_type(uncertainty_type: int) -> str:
 
 
 def is_blacklisted(exchange: dict, database: str) -> bool:
-    """
-    Check whether a name is blacklisted or not
-    :param name: name
-    :param database: database to link to.
-    :return: bool
+    """Check whether an exchange should be excluded during conversion.
+
+    :param exchange: Exchange dictionary to inspect.
+    :type exchange: dict
+    :param database: Target database, ``"ecoinvent"`` or ``"uvek"``.
+    :type database: str
+    :return: ``True`` when the exchange must be ignored.
+    :rtype: bool
     """
 
     if exchange["name"] in simapro_ecoinvent_blacklist:
@@ -604,11 +701,14 @@ def is_blacklisted(exchange: dict, database: str) -> bool:
 
 
 def convert_sd_to_sd2(value: float, uncertainty_type: str) -> float:
-    """
-    Convert standard deviation of underlying lognormal distirbution
-    to standard deviation squared.
-    :param value:
-    :return: squared standard deviation
+    """Convert standard deviations according to SimaPro expectations.
+
+    :param value: Standard deviation or lognormal sigma from Brightway.
+    :type value: float
+    :param uncertainty_type: Uncertainty distribution label.
+    :type uncertainty_type: str
+    :return: Converted standard deviation compatible with SimaPro.
+    :rtype: float
     """
 
     if uncertainty_type == "Lognormal":
@@ -624,9 +724,12 @@ def convert_sd_to_sd2(value: float, uncertainty_type: str) -> float:
 
 
 def get_uvek_conversion_factors() -> dict:
-    """
-    Get conversion factors for uvek database.
-    :return: dictionary
+    """Load conversion factors specific to the UVEK database.
+
+    :return: Mapping of exchange names to conversion factors and units.
+    :rtype: dict
+    :raises FileNotFoundError: If the YAML file is missing.
+    :raises yaml.YAMLError: If the YAML file cannot be parsed.
     """
     filename = "uvek_conversion_factors.yaml"
     filepath = DATA_DIR / "export" / filename
@@ -642,6 +745,13 @@ def get_uvek_conversion_factors() -> dict:
 
 
 def round_floats_in_string(s):
+    """Round floating point numbers found inside a string to two decimals.
+
+    :param s: Arbitrary text potentially containing floating point numbers.
+    :type s: str
+    :return: String where the embedded numbers have been rounded.
+    :rtype: str
+    """
     # Pattern to detect float numbers in a string
     pattern = re.compile(r"[-+]?\d*\.\d+")
 
@@ -654,10 +764,12 @@ def round_floats_in_string(s):
 
 
 def get_subcategory(category: str) -> str:
-    """
-    Extract Simapro subcategory from string
-    :param category:
-    :return:
+    """Extract the SimaPro subcategory from a combined category string.
+
+    :param category: Category string containing ``/``-separated components.
+    :type category: str
+    :return: Subcategory formatted with backslashes as required by SimaPro.
+    :rtype: str
     """
 
     if len(category.split("/")) > 1:
@@ -671,11 +783,12 @@ def get_subcategory(category: str) -> str:
 
 
 def flag_exchanges(activity: dict) -> dict:
-    """
-    We flag exchanges to keep track of whether they have been
-    processed or not.
-    :param activity: activity
-    :return: activity with flagged exchanged
+    """Mark exchanges as unused before processing.
+
+    :param activity: Activity whose exchanges should be flagged.
+    :type activity: dict
+    :return: Activity with a ``used`` flag initialised on each exchange.
+    :rtype: dict
     """
 
     for exc in activity["exchanges"]:
@@ -685,10 +798,10 @@ def flag_exchanges(activity: dict) -> dict:
 
 
 def print_unused_exchanges(inventories: list) -> None:
-    """
-    Print unused exchanges
-    :param inventories:
-    :return: None
+    """Display exchanges that were not converted.
+
+    :param inventories: Converted activities to inspect.
+    :type inventories: list[dict]
     """
 
     unused_exchanges = []
@@ -726,12 +839,14 @@ def print_unused_exchanges(inventories: list) -> None:
 
 
 def check_exchanges_for_conversion(exchanges: list, database: str) -> list:
-    """
-    Check if some exchanges need to be converted.
-    Specifically when linking to uvek.
-    :param exchanges: exchanges to potentially convert.
-    :param database: converted exchanges.
-    :return: list of exchanges
+    """Apply database-specific conversion factors to exchanges.
+
+    :param exchanges: Exchanges that might require conversion.
+    :type exchanges: list[dict]
+    :param database: Target database identifier.
+    :type database: str
+    :return: Updated list of exchanges.
+    :rtype: list[dict]
     """
 
     if database == "uvek":
@@ -745,14 +860,14 @@ def check_exchanges_for_conversion(exchanges: list, database: str) -> list:
 
 
 def fetch_transport_distance(name: str, location: str) -> tuple:
-    """
-    Depending on the exchange name `name`, return one or
-    several exchanges representing additional transport.
-    The uvek database does not have market datasets,
-    hence transport has to be added manually.
-    :param name: exchange name
-    :param location: location of the consuming activity
-    :return: one or several transport exchanges
+    """Return default transport distances for a product and location.
+
+    :param name: Name of the technosphere exchange.
+    :type name: str
+    :param location: Location code of the consuming activity.
+    :type location: str
+    :return: Distances for train, lorry and barge transport.
+    :rtype: tuple[float, float, float]
     """
 
     if name in ecoinvent_transport_distances:
@@ -773,10 +888,13 @@ def fetch_transport_distance(name: str, location: str) -> tuple:
 
 
 def add_distri_transport(activity: dict) -> dict:
-    """
-    Add transport exchanges for distribution.
-    :param activity: activity
-    :return: activity with added transport exchanges.
+    """Add distribution transport exchanges required by the UVEK database.
+
+    :param activity: Activity that should receive additional transport
+        exchanges.
+    :type activity: dict
+    :return: Activity enriched with transport exchanges.
+    :rtype: dict
     """
 
     train_ch, lorry_ch, barge_ch = (0.0, 0.0, 0.0)
@@ -928,6 +1046,13 @@ def add_distri_transport(activity: dict) -> dict:
 
 
 def remove_duplicates(data):
+    """Remove datasets that share the same name from a list of activities.
+
+    :param data: Activities to deduplicate.
+    :type data: list[dict]
+    :return: New list containing only the first occurrence of each dataset.
+    :rtype: list[dict]
+    """
     a = []
     acts = []
     for x in data:
@@ -940,6 +1065,13 @@ def remove_duplicates(data):
 
 
 def check_simapro_inventory(file):
+    """Check a SimaPro CSV file for forbidden units.
+
+    :param file: Path to the CSV inventory file.
+    :type file: str
+    :return: Path to the cleaned CSV file with forbidden units replaced.
+    :rtype: str
+    """
     # read CSV file
     new_file_data = []
     with open(file, "r", encoding="latin-1") as f:
@@ -968,13 +1100,12 @@ def check_simapro_inventory(file):
 
 
 def search_for_forbidden_units(row: list) -> list:
-    """
-    Search for forbidden units.
-    Returns the csv row.
+    """Replace forbidden units found in a CSV row.
 
-    :param row: list of values
-    :return: list of values
-
+    :param row: Row values to inspect.
+    :type row: list[str]
+    :return: Row with forbidden units replaced by allowed ones.
+    :rtype: list[str]
     """
     FORBIDDEN_UNITS = {
         "min": "minute",
@@ -989,6 +1120,13 @@ def search_for_forbidden_units(row: list) -> list:
 
 
 def load_biosphere_correspondence():
+    """Load the correspondence between SimaPro and ecoinvent biosphere flows.
+
+    :return: Mapping of biosphere flows grouped by compartment.
+    :rtype: dict
+    :raises FileNotFoundError: If the correspondence file cannot be found.
+    :raises yaml.YAMLError: If the YAML file cannot be parsed.
+    """
     filename = "correspondence_biosphere_flows.yaml"
     filepath = DATA_DIR / "export" / filename
     if not filepath.is_file():
@@ -1008,6 +1146,12 @@ def load_biosphere_correspondence():
 
 
 def load_ei_biosphere_flows():
+    """Load the list of biosphere flows available in ecoinvent.
+
+    :return: Unique set of tuples ``(name, category, subcategory)``.
+    :rtype: list[tuple[str, str, str]]
+    :raises FileNotFoundError: If the biosphere flow file cannot be found.
+    """
     filename = "flows_biosphere_39.csv"
     filepath = DATA_DIR / "export" / filename
     if not filepath.is_file():
@@ -1023,7 +1167,15 @@ def load_ei_biosphere_flows():
 
 
 def lower_cap_first_letter(s):
-    # Check if the string starts with an acronym (all uppercase letters followed by a space, end of string, dash, or comma)
+    """Lowercase the first character unless the input starts with an acronym.
+
+    :param s: String to normalise.
+    :type s: str
+    :return: Adjusted string that preserves acronyms.
+    :rtype: str
+    """
+    # Check if the string starts with an acronym (all uppercase letters
+    # followed by a space, end of string, dash, or comma)
     if re.match(r"^[A-Z]+(\s|$|-|,)", s):
         return s  # Keep acronyms unchanged
     return s[0].lower() + s[1:] if s else s  # Lowercase first letter otherwise
