@@ -151,22 +151,45 @@ jobs:
       - name: Branch name
         run: echo "running on branch ${GITHUB_REF##*/}"
 
-      - name: Publish to Anaconda if push from non-master branch
-        if: github.ref != 'refs/heads/master'
+      - name: Publish distribution 📦 to Anaconda
         shell: bash -l {0}
         env:
           ANACONDA_TOKEN: ${{ secrets.ANACONDA_CLOUD }}
         run: |
+          set -euo pipefail
           PKG_NAME=brightpath
           USER=romainsacchi
-          conda install anaconda-client conda-build pytest -y
+
+          echo "=== Setting up conda build environment ==="
+          conda build purge-all
+          conda install -y anaconda-client conda-build pytest
+
           mkdir -p ~/conda-bld
           conda config --set anaconda_upload no
           export CONDA_BLD_PATH=~/conda-bld
           export VERSION=$(date +%Y.%m.%d)
+
+          echo "=== Building ${PKG_NAME} version ${VERSION} ==="
+          # If package is pure Python, keep noarch; otherwise add --python ${{ matrix.python-version }}
           conda build conda/ --old-build-string
-          ls $CONDA_BLD_PATH/noarch/
-          anaconda -t "$ANACONDA_TOKEN" upload -u "$USER" "$CONDA_BLD_PATH/noarch/$PKG_NAME-$VERSION-py_0.tar.bz2" --force
+
+          echo "=== Listing artifacts in $CONDA_BLD_PATH ==="
+          find "$CONDA_BLD_PATH" -type f -maxdepth 2 -print
+
+          # Automatically pick up the built file (prefer .conda, fallback .tar.bz2)
+          PKG_FILE="$(ls -1 "$CONDA_BLD_PATH"/noarch/${PKG_NAME}-${VERSION}-py_0.conda 2>/dev/null || true)"
+          if [ -z "$PKG_FILE" ]; then
+            PKG_FILE="$(ls -1 "$CONDA_BLD_PATH"/noarch/${PKG_NAME}-${VERSION}-py_0.tar.bz2 2>/dev/null || true)"
+          fi
+          if [ -z "$PKG_FILE" ]; then
+            echo "ERROR: Could not find built package in $CONDA_BLD_PATH"
+            ls -l "$CONDA_BLD_PATH"/noarch || true
+            exit 1
+          fi
+
+          echo "=== Uploading ${PKG_FILE} to Anaconda ==="
+          anaconda -t "$ANACONDA_TOKEN" upload -u "$USER" "$PKG_FILE" --force
+  
 
   testconda:
     name: Test conda pkg (${{ matrix.python-version }})
