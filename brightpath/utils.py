@@ -1,19 +1,18 @@
 import csv
+import json
+import logging
 import re
+from pathlib import Path
+from typing import Dict, Tuple
 
 import bw2io
-
-from . import DATA_DIR
-from typing import Dict, Tuple
-import json
+import numpy as np
 import yaml
 from bw2io.importers.excel import ExcelImporter
-from pathlib import Path
-from voluptuous import Schema, Required, Optional, Url
 from prettytable import PrettyTable
-import numpy as np
-import re
-import logging
+from voluptuous import Optional, Required, Schema, Url
+
+from . import DATA_DIR
 
 logging.basicConfig(
     level=logging.DEBUG,
@@ -127,7 +126,7 @@ def get_ecoinvent_to_uvek_mapping():
     """
     filename = "ecoinvent_to_uvek_mapping.csv"
     filepath = DATA_DIR / "export" / filename
-    with open(filepath, 'r') as file:
+    with open(filepath, "r") as file:
         reader = csv.reader(file)
         next(reader)
         dictionary = {tuple(row[:4]): row[-1] for row in reader}
@@ -142,7 +141,7 @@ def get_ecoinvent_transport_distances():
     """
     filename = "ei_transport.csv"
     filepath = DATA_DIR / "export" / filename
-    with open(filepath, 'r') as file:
+    with open(filepath, "r") as file:
         reader = csv.reader(file, delimiter=";")
         next(reader)
         dictionary = {
@@ -153,7 +152,9 @@ def get_ecoinvent_transport_distances():
                 "train - CH": row[6],
                 "lorry - CH": row[7],
                 "barge - CH": row[8],
-            } for row in reader}
+            }
+            for row in reader
+        }
 
     return dictionary
 
@@ -364,28 +365,34 @@ def import_bw_inventories(filepath: str) -> list[dict]:
 def check_metadata(metadata: dict) -> dict:
     # metadata dictionary should conform to the following schema:
     # Define the validation schema
-    system_description_schema = Schema({
-        Required('name'): str,
-        Optional('category'): str,
-        Optional('description'): str,
-        Optional('cut-off rules'): str,
-        Optional('energy model'): str,
-        Optional('transport model'): str,
-        Optional('allocation rules'): str,
-    })
+    system_description_schema = Schema(
+        {
+            Required("name"): str,
+            Optional("category"): str,
+            Optional("description"): str,
+            Optional("cut-off rules"): str,
+            Optional("energy model"): str,
+            Optional("transport model"): str,
+            Optional("allocation rules"): str,
+        }
+    )
 
-    literature_reference_schema = Schema({
-        Required('name'): str,
-        Optional('documentation link'): Url(),
-        Optional('comment'): str,
-        Optional('category'): str,
-        Optional('description'): str,
-    })
+    literature_reference_schema = Schema(
+        {
+            Required("name"): str,
+            Optional("documentation link"): Url(),
+            Optional("comment"): str,
+            Optional("category"): str,
+            Optional("description"): str,
+        }
+    )
 
-    main_schema = Schema({
-        Required('system description'): system_description_schema,
-        Required('literature reference'): literature_reference_schema
-    })
+    main_schema = Schema(
+        {
+            Required("system description"): system_description_schema,
+            Required("literature reference"): literature_reference_schema,
+        }
+    )
 
     # Validate against schema
     validated_data = main_schema(metadata)
@@ -452,14 +459,17 @@ def is_a_waste_treatment(name: str, database: str) -> bool:
     """
     WASTE_TERMS = get_waste_exchange_names()
     NOT_WASTE_TERMS = [
-        #"plant",
+        # "plant",
         "incineration plant"
     ]
 
     if any(term.lower() in name.lower() for term in WASTE_TERMS) is True:
         if any(term.lower() in name.lower() for term in NOT_WASTE_TERMS) is False:
             if database == "ecoinvent":
-                if not any(term.lower() in name.lower() for term in ecoinvent_exceptions["waste"]):
+                if not any(
+                    term.lower() in name.lower()
+                    for term in ecoinvent_exceptions["waste"]
+                ):
                     return True
                 else:
                     return False
@@ -477,8 +487,7 @@ def find_production_exchange(activity: dict) -> dict:
         if exc["type"] == "production":
             return exc
     raise ValueError(
-        f"The activity {activity['name']} does "
-        f"not have a production exchange."
+        f"The activity {activity['name']} does " f"not have a production exchange."
     )
 
 
@@ -488,7 +497,11 @@ def get_technosphere_exchanges(activity: dict) -> list:
     :param activity:
     :return: technosphere exchanges
     """
-    return [exc for exc in activity["exchanges"] if exc["type"] == "technosphere" and exc["amount"] != 0]
+    return [
+        exc
+        for exc in activity["exchanges"]
+        if exc["type"] == "technosphere" and exc["amount"] != 0
+    ]
 
 
 def get_biosphere_exchanges(activity: dict, category: str = None) -> list:
@@ -502,12 +515,14 @@ def get_biosphere_exchanges(activity: dict, category: str = None) -> list:
         exc
         for exc in activity["exchanges"]
         if exc["type"] == "biosphere"
-           and exc.get("categories")[0] == category
-           and exc["amount"] != 0
+        and exc.get("categories")[0] == category
+        and exc["amount"] != 0
     ]
 
 
-def format_exchange_name(name: str, reference_product: str, location: str, unit: str, database: str) -> str:
+def format_exchange_name(
+    name: str, reference_product: str, location: str, unit: str, database: str
+) -> str:
     """
     Format the name of the exchange.
     :param name: exchange name.
@@ -522,16 +537,17 @@ def format_exchange_name(name: str, reference_product: str, location: str, unit:
         reference_product = reference_product[0].upper() + reference_product[1:]
         name = name[0].upper() + name[1:]
 
-        exchange_name = (
-            f"{reference_product} {{{location}}}| {name}"
-        )
+        exchange_name = f"{reference_product} {{{location}}}| {name}"
 
         for i in ["market for", "market group for"]:
             if i in name.lower():
                 exchange_name = f"{reference_product} {{{location}}}"
                 reference_product = reference_product[0].lower() + reference_product[1:]
 
-                if reference_product.lower() in ecoinvent_exceptions["market"] and location == "GLO":
+                if (
+                    reference_product.lower() in ecoinvent_exceptions["market"]
+                    and location == "GLO"
+                ):
                     exchange_name += f"| {i}"
                 else:
                     exchange_name += f"| {i} {reference_product}"
@@ -600,7 +616,7 @@ def convert_sd_to_sd2(value: float, uncertainty_type: str) -> float:
 
     if uncertainty_type == "Normal":
         # normal distribution
-        return value ** 2
+        return value**2
 
     if uncertainty_type in ["not defined", "Unspecified"]:
         # normal distribution
@@ -686,7 +702,9 @@ def print_unused_exchanges(inventories: list) -> None:
                         exc["name"],
                         exc["unit"],
                         exc.get("location", "GLO"),
-                        exc.get("categories", ),
+                        exc.get(
+                            "categories",
+                        ),
                     )
                 )
 
@@ -768,18 +786,20 @@ def add_distri_transport(activity: dict) -> dict:
 
     for exc in get_technosphere_exchanges(activity):
         if exc["unit"] == "kilogram":
-            train, lorry, barge = fetch_transport_distance(exc["name"], activity["location"])
+            train, lorry, barge = fetch_transport_distance(
+                exc["name"], activity["location"]
+            )
             if activity["location"] == "CH":
-                train_ch += (train * exc["amount"] / 1000.0)
-                lorry_ch += (lorry * exc["amount"] / 1000.0)
-                barge_ch += (barge * exc["amount"] / 1000.0)
+                train_ch += train * exc["amount"] / 1000.0
+                lorry_ch += lorry * exc["amount"] / 1000.0
+                barge_ch += barge * exc["amount"] / 1000.0
                 distance_train_ch += train
                 distance_lorry_ch += lorry
                 distance_barge_ch += barge
             else:
-                train_rer += (train * exc["amount"] / 1000.0)
-                lorry_rer += (lorry * exc["amount"] / 1000.0)
-                barge_rer += (barge * exc["amount"] / 1000.0)
+                train_rer += train * exc["amount"] / 1000.0
+                lorry_rer += lorry * exc["amount"] / 1000.0
+                barge_rer += barge * exc["amount"] / 1000.0
                 distance_train_rer += train
                 distance_lorry_rer += lorry
                 distance_barge_rer += barge
@@ -798,10 +818,9 @@ def add_distri_transport(activity: dict) -> dict:
                 "scale": 0.396,
                 "used": False,
                 "comment": "Generic transport distances calculated based on "
-                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                            f"Distribution: {np.round((train_ch/distance_train_ch)*1000, 2)} kg "
-                           f"over {np.round(distance_train_ch, 2)} km."
-
+                "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                f"Distribution: {np.round((train_ch/distance_train_ch)*1000, 2)} kg "
+                f"over {np.round(distance_train_ch, 2)} km.",
             }
         )
 
@@ -819,9 +838,9 @@ def add_distri_transport(activity: dict) -> dict:
                 "scale": 0.396,
                 "used": False,
                 "comment": "Generic transport distances calculated based on "
-                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                            f"Distribution: {np.round((lorry_ch/distance_lorry_ch)*1000, 2)} kg "
-                           f"over {np.round(distance_lorry_ch, 2)} km."
+                "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                f"Distribution: {np.round((lorry_ch/distance_lorry_ch)*1000, 2)} kg "
+                f"over {np.round(distance_lorry_ch, 2)} km.",
             }
         )
 
@@ -839,9 +858,9 @@ def add_distri_transport(activity: dict) -> dict:
                 "scale": 0.396,
                 "used": False,
                 "comment": "Generic transport distances calculated based on "
-                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                            f"Distribution: {np.round((barge_ch/distance_barge_ch)*1000, 2)} kg "
-                           f"over {np.round(distance_barge_ch, 2)} km."
+                "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                f"Distribution: {np.round((barge_ch/distance_barge_ch)*1000, 2)} kg "
+                f"over {np.round(distance_barge_ch, 2)} km.",
             }
         )
 
@@ -859,9 +878,9 @@ def add_distri_transport(activity: dict) -> dict:
                 "scale": 0.396,
                 "used": False,
                 "comment": "Generic transport distances calculated based on "
-                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                            f"Distribution: {np.round((train_rer/distance_train_rer)*1000, 2)} kg "
-                            f"over {np.round(distance_train_rer, 2)} km."
+                "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                f"Distribution: {np.round((train_rer/distance_train_rer)*1000, 2)} kg "
+                f"over {np.round(distance_train_rer, 2)} km.",
             }
         )
 
@@ -879,9 +898,9 @@ def add_distri_transport(activity: dict) -> dict:
                 "scale": 0.396,
                 "used": False,
                 "comment": "Generic transport distances calculated based on "
-                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                            f"Distribution: {np.round((lorry_rer/distance_lorry_rer)*1000, 2)} kg "
-                            f"over {np.round(distance_lorry_rer, 2)} km."
+                "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                f"Distribution: {np.round((lorry_rer/distance_lorry_rer)*1000, 2)} kg "
+                f"over {np.round(distance_lorry_rer, 2)} km.",
             }
         )
 
@@ -899,13 +918,14 @@ def add_distri_transport(activity: dict) -> dict:
                 "scale": 0.396,
                 "used": False,
                 "comment": "Generic transport distances calculated based on "
-                           "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                            f"Distribution: {np.round((barge_rer/distance_barge_rer)*1000, 2)} kg "
-                            f"over {np.round(distance_barge_rer, 2)} km."
+                "Table 4.2 of the ecoinvent v.2 Methodology report. "
+                f"Distribution: {np.round((barge_rer/distance_barge_rer)*1000, 2)} kg "
+                f"over {np.round(distance_barge_rer, 2)} km.",
             }
         )
 
     return activity
+
 
 def remove_duplicates(data):
     a = []
@@ -918,11 +938,12 @@ def remove_duplicates(data):
             logging.warning(f"Duplicate found: {x['name']}")
     return acts
 
+
 def check_simapro_inventory(file):
     # read CSV file
     new_file_data = []
     with open(file, "r", encoding="latin-1") as f:
-        data = csv.reader(f, delimiter=';')
+        data = csv.reader(f, delimiter=";")
         for r, row in enumerate(data):
             row = search_for_forbidden_units(row)
             for v, val in enumerate(row):
@@ -930,8 +951,13 @@ def check_simapro_inventory(file):
             new_file_data.append(row)
 
     # save new file
-    with open(file.lower().replace(".csv", "_edited.csv"), mode='w', encoding="latin-1", newline='') as e:
-        writer = csv.writer(e, delimiter=';')
+    with open(
+        file.lower().replace(".csv", "_edited.csv"),
+        mode="w",
+        encoding="latin-1",
+        newline="",
+    ) as e:
+        writer = csv.writer(e, delimiter=";")
         for row in new_file_data:
             writer.writerow(row)
 
@@ -956,12 +982,11 @@ def search_for_forbidden_units(row: list) -> list:
 
     for v, val in enumerate(row):
         if val in FORBIDDEN_UNITS:
-            logging.warning(
-                f"Unit {val} replaced by {FORBIDDEN_UNITS[val]}."
-            )
+            logging.warning(f"Unit {val} replaced by {FORBIDDEN_UNITS[val]}.")
             row[v] = FORBIDDEN_UNITS[val]
 
     return row
+
 
 def load_biosphere_correspondence():
     filename = "correspondence_biosphere_flows.yaml"
@@ -981,6 +1006,7 @@ def load_biosphere_correspondence():
 
     return data
 
+
 def load_ei_biosphere_flows():
     filename = "flows_biosphere_39.csv"
     filepath = DATA_DIR / "export" / filename
@@ -998,9 +1024,6 @@ def load_ei_biosphere_flows():
 
 def lower_cap_first_letter(s):
     # Check if the string starts with an acronym (all uppercase letters followed by a space, end of string, dash, or comma)
-    if re.match(r'^[A-Z]+(\s|$|-|,)', s):
+    if re.match(r"^[A-Z]+(\s|$|-|,)", s):
         return s  # Keep acronyms unchanged
     return s[0].lower() + s[1:] if s else s  # Lowercase first letter otherwise
-
-
-
