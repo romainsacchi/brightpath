@@ -160,34 +160,29 @@ jobs:
           PKG_NAME=brightpath
           USER=romainsacchi
 
-          echo "=== Setting up conda build environment ==="
-          conda build purge-all
-          conda install -y anaconda-client conda-build pytest
+          echo "=== Installing build tooling ==="
+          conda install -y conda-build anaconda-client pytest
 
+          echo "=== Purging old artifacts ==="
+          # Use the standalone CLI; works even if 'conda build' plugin isn't registered
+          conda-build purge-all || true
+
+          echo "=== Configuring build dir ==="
           mkdir -p ~/conda-bld
           conda config --set anaconda_upload no
           export CONDA_BLD_PATH=~/conda-bld
           export VERSION=$(date +%Y.%m.%d)
 
-          echo "=== Building ${PKG_NAME} version ${VERSION} ==="
-          # If package is pure Python, keep noarch; otherwise add --python ${{ matrix.python-version }}
-          conda build conda/ --old-build-string
+          echo "=== Building ${PKG_NAME} ${VERSION} ==="
+          # If not noarch, add: --python ${{ matrix.python-version }}
+          conda-build conda/ --old-build-string
 
-          echo "=== Listing artifacts in $CONDA_BLD_PATH ==="
-          find "$CONDA_BLD_PATH" -type f -maxdepth 2 -print
+          echo "=== Resolving artifact path ==="
+          PKG_FILE="$(conda-build conda/ --old-build-string --output)"
+          echo "Built: $PKG_FILE"
+          test -f "$PKG_FILE"
 
-          # Automatically pick up the built file (prefer .conda, fallback .tar.bz2)
-          PKG_FILE="$(ls -1 "$CONDA_BLD_PATH"/noarch/${PKG_NAME}-${VERSION}-py_0.conda 2>/dev/null || true)"
-          if [ -z "$PKG_FILE" ]; then
-            PKG_FILE="$(ls -1 "$CONDA_BLD_PATH"/noarch/${PKG_NAME}-${VERSION}-py_0.tar.bz2 2>/dev/null || true)"
-          fi
-          if [ -z "$PKG_FILE" ]; then
-            echo "ERROR: Could not find built package in $CONDA_BLD_PATH"
-            ls -l "$CONDA_BLD_PATH"/noarch || true
-            exit 1
-          fi
-
-          echo "=== Uploading ${PKG_FILE} to Anaconda ==="
+          echo "=== Uploading to Anaconda ==="
           anaconda -t "$ANACONDA_TOKEN" upload -u "$USER" "$PKG_FILE" --force
   
 
