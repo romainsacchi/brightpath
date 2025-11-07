@@ -36,8 +36,52 @@ from .utils import (
 
 
 class BrightwayConverter:
-    """
-    Convert Brightway2 inventories to Simapro CSV files.
+    """Convert Brightway2 inventories to SimaPro CSV files.
+
+    The converter loads inventories exported from Brightway2 and prepares
+    them for the SimaPro import format. The instance keeps references to the
+    different lookup tables that are needed throughout the conversion.
+
+    :param filepath: Path to the Brightway inventory spreadsheet.
+    :type filepath: str | None
+    :param data: Brightway inventories provided directly instead of loading
+        them from ``filepath``.
+    :type data: list | None
+    :param metadata: Optional path to a YAML file containing additional
+        metadata to append to the export.
+    :type metadata: str | None
+    :param ecoinvent_version: Version string of the ecoinvent database the
+        inventories are linked to.
+    :type ecoinvent_version: str
+    :param export_dir: Directory where generated SimaPro CSV files are saved.
+    :type export_dir: str | None
+    :ivar filepath: Path to the Brightway inventory spreadsheet.
+    :vartype filepath: str | None
+    :ivar inventories: Brightway activities that are going to be converted.
+    :vartype inventories: list[dict] | None
+    :ivar simapro_blacklist: Exchanges that should not be exported.
+    :vartype simapro_blacklist: dict
+    :ivar simapro_fields: Order and structure of SimaPro sections.
+    :vartype simapro_fields: list[str]
+    :ivar simapro_units: Mapping of Brightway units to SimaPro units.
+    :vartype simapro_units: dict[str, str]
+    :ivar simapro_headers: Header rows used when writing the CSV file.
+    :vartype simapro_headers: list[str]
+    :ivar simapro_technosphere: Mapping from technosphere exchanges to
+        SimaPro names.
+    :vartype simapro_technosphere: dict[tuple[str, str], str]
+    :ivar simapro_biosphere: Mapping from biosphere exchanges to SimaPro
+        names.
+    :vartype simapro_biosphere: dict[str, str]
+    :ivar simapro_subcompartment: Mapping of biosphere subcompartments to
+        SimaPro names.
+    :vartype simapro_subcompartment: dict[str, str]
+    :ivar ei_version: Version of the ecoinvent database in use.
+    :vartype ei_version: str
+    :ivar metadata: Optional metadata loaded from the YAML file.
+    :vartype metadata: dict | None
+    :ivar export_dir: Output directory for converted CSV files.
+    :vartype export_dir: pathlib.Path
     """
 
     def __init__(
@@ -48,8 +92,26 @@ class BrightwayConverter:
         ecoinvent_version: str = "3.9",
         export_dir: str = None,
     ):
-        """
-        :param filepath: path to the BW inventory spreadsheet file
+        """Instantiate a converter that targets the SimaPro CSV format.
+
+        When ``filepath`` is provided the inventories are loaded from the
+        spreadsheet using :func:`brightpath.utils.import_bw_inventories`. If
+        ``filepath`` is omitted, pre-loaded ``data`` can be supplied instead.
+        Optional ``metadata`` is validated and attached to the export.
+
+        :param filepath: Path to the Brightway inventory spreadsheet file.
+        :type filepath: str | None
+        :param data: Inventories loaded in memory. Used when ``filepath`` is
+            ``None``.
+        :type data: list | None
+        :param metadata: Path to the metadata YAML file.
+        :type metadata: str | None
+        :param ecoinvent_version: Version of the linked ecoinvent database.
+        :type ecoinvent_version: str
+        :param export_dir: Directory where SimaPro exports will be written.
+        :type export_dir: str | None
+        :raises FileNotFoundError: If the metadata file does not exist.
+        :raises ValueError: If the metadata file is not a YAML document.
         """
         self.filepath = filepath
         self.inventories = import_bw_inventories(filepath) if self.filepath else data
@@ -70,10 +132,20 @@ class BrightwayConverter:
         self.export_dir = Path(export_dir) or Path.cwd()
 
     def format_inventories_for_simapro(self, database: str):
-        """
-        Format inventories to Simapro format.
-        :param database: name of the database to link to.
-        :return: list
+        """Transform the Brightway inventories into the SimaPro structure.
+
+        This method orchestrates the conversion of each activity in the
+        Brightway dataset into the row-based structure expected by SimaPro.
+        The resulting structure is compatible with the CSV export performed
+        by :meth:`convert_to_simapro`.
+
+        :param database: Name of the target database to link to. Valid values
+            are ``"ecoinvent"`` and ``"uvek"``.
+        :type database: str
+        :return: Rows ready to be written to a SimaPro CSV file.
+        :rtype: list[list[str]]
+        :raises ValueError: If required information is missing from the
+            inventories.
         """
 
         rows = [
@@ -500,9 +572,22 @@ class BrightwayConverter:
     def convert_to_simapro(
         self, database: str = "ecoinvent", format: str = "csv"
     ) -> [str, list]:
-        """
-        Convert the inventories to Simapro CSV files.
-        :param database: Name of the database to link to. Default is `ecoinvent`, but can be `uvek`.
+        """Export the converted inventories.
+
+        The inventories are formatted using
+        :meth:`format_inventories_for_simapro` and either returned as raw data
+        or written to disk as a CSV file, depending on ``format``.
+
+        :param database: Database to use when resolving exchanges. Accepted
+            values are ``"ecoinvent"`` and ``"uvek"``.
+        :type database: str
+        :param format: Output mode. Use ``"data"`` to receive the converted
+            rows instead of writing a CSV file.
+        :type format: str
+        :return: The CSV filepath when ``format`` is ``"csv"`` or the raw
+            SimaPro data rows when ``format`` is ``"data"``.
+        :rtype: str | list[list[str]]
+        :raises ValueError: If an unsupported ``database`` value is supplied.
         """
 
         if database not in ("ecoinvent", "uvek"):
