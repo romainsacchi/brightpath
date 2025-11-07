@@ -27,6 +27,13 @@ WASTE_TERMS = get_waste_exchange_names()
 
 
 def format_technosphere_exchange(txt: str):
+    """Split and normalise a technosphere exchange name from SimaPro.
+
+    :param txt: Raw exchange string as found in a SimaPro CSV export.
+    :type txt: str
+    :return: Tuple containing the cleaned name, reference product and location.
+    :rtype: tuple[str, str, str]
+    """
 
     location_correction = {
         "WECC, US only": "US-WECC",
@@ -151,6 +158,13 @@ def format_technosphere_exchange(txt: str):
 
 
 def load_ecoinvent_activities(version: str) -> list:
+    """Load the list of ecoinvent activities for the given version.
+
+    :param version: Ecoinvent version identifier, e.g. ``"3.9"``.
+    :type version: str
+    :return: Rows describing ecoinvent activities.
+    :rtype: list[list[str]]
+    """
     with open(DATA_DIR / "export" / f"list_ei{version}_cutoff_activities.csv") as f:
         reader = csv.reader(f)
         next(reader)
@@ -158,6 +172,19 @@ def load_ecoinvent_activities(version: str) -> list:
 
 
 def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
+    """Normalise a biosphere exchange to match ecoinvent conventions.
+
+    :param exc: Exchange to adjust in-place.
+    :type exc: dict
+    :param ei_version: Version of ecoinvent used for interpretation.
+    :type ei_version: str
+    :param bio_flows: Known biosphere flows for the version.
+    :type bio_flows: list[tuple[str, str, str]]
+    :param bio_mapping: Mapping to resolve outdated flow names.
+    :type bio_mapping: dict
+    :return: The updated exchange dictionary.
+    :rtype: dict
+    """
     if "in ground" in exc["name"]:
         if ei_version not in ["3.5", "3.6", "3.7", "3.8"]:
             exc["name"] = exc["name"].replace(", in ground", "")
@@ -244,14 +271,48 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
 
 
 class SimaproConverter:
+    """Convert SimaPro CSV exports into Brightway-compatible datasets.
+
+    :param filepath: Path to the SimaPro CSV file.
+    :type filepath: str
+    :param ecoinvent_version: Version of ecoinvent to align biosphere data to.
+    :type ecoinvent_version: str
+    :param db_name: Optional name of the Brightway database to create.
+    :type db_name: str | None
+    :ivar filepath: Normalised path to the validated CSV file.
+    :vartype filepath: pathlib.Path
+    :ivar i: Instance of :class:`bw2io.SimaProCSVImporter` handling the data.
+    :vartype i: bw2io.SimaProCSVImporter
+    :ivar db_name: Name of the Brightway database that will be created.
+    :vartype db_name: str
+    :ivar ecoinvent_version: Version of the ecoinvent database in use.
+    :vartype ecoinvent_version: str
+    :ivar biosphere: Mapping between SimaPro and Brightway biosphere flows.
+    :vartype biosphere: dict
+    :ivar technosphere: Mapping between SimaPro and Brightway technosphere
+        exchanges.
+    :vartype technosphere: dict
+    :ivar subcompartments: Mapping of sub-compartments between the databases.
+    :vartype subcompartments: dict
+    :ivar ei_biosphere_flows: Known biosphere flows for the selected version.
+    :vartype ei_biosphere_flows: list[tuple[str, str, str]]
+    :ivar biosphere_flows_correspondence: Mapping of outdated biosphere names.
+    :vartype biosphere_flows_correspondence: dict
+    """
+
     def __init__(
         self, filepath: str, ecoinvent_version: str = "3.9", db_name: str = None
     ):
-        """
-        Initialize the SimaproConverter object.
+        """Initialise the converter and load the SimaPro inventory.
 
-        :param data: list of Simapro inventories
-        :param ecoinvent_version: ecoinvent version to use
+        :param filepath: Path to the SimaPro CSV export to convert.
+        :type filepath: str
+        :param ecoinvent_version: Ecoinvent version that should be used when
+            reconciling biosphere flows.
+        :type ecoinvent_version: str
+        :param db_name: Optional Brightway database name override.
+        :type db_name: str | None
+        :raises FileNotFoundError: If the provided CSV file cannot be found.
         """
 
         logging.basicConfig(
@@ -283,7 +344,7 @@ class SimaproConverter:
         self.i.db_name = self.db_name
 
     def check_database_name(self):
-
+        """Ensure exchanges reference the correct Brightway database name."""
         for act in self.i.data:
             act["database"] = self.i.db_name
 
@@ -294,7 +355,7 @@ class SimaproConverter:
                             exc["input"] = (self.i.db_name, exc["input"][1])
 
     def convert_to_brightway(self):
-
+        """Convert the imported SimaPro data into Brightway inventories."""
         print("- format exchanges")
         internal_datasets = []
         for ds in self.i.data:
@@ -366,14 +427,16 @@ class SimaproConverter:
         print("Done!")
 
     def remove_empty_datasets(self):
+        """Remove datasets that contain no exchanges."""
         self.i.data = [ds for ds in self.i.data if len(ds["exchanges"]) >= 1]
 
     def remove_empty_exchanges(self):
+        """Remove exchanges that have a zero amount."""
         for ds in self.i.data:
             ds["exchanges"] = [e for e in ds["exchanges"] if e["amount"] != 0.0]
 
     def check_inventories(self):
-
+        """Perform basic validation of the converted inventories."""
         for ds in self.i.data:
             if len([x for x in ds["exchanges"] if x["type"] == "production"]) != 1:
                 print(
