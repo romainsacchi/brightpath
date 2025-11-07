@@ -23,18 +23,19 @@ requirements:
     - wheel
     - prettytable >=3
     - pyyaml
+    - bw2io
   run:
     - python >=3.9
     - prettytable >=3
     - pyyaml
-    # keep optional deps (e.g., bw2io) OUT of run unless needed at import time
+    - bw2io
 
 test:
   imports:
     - brightpath
-    - yaml  # <-- module name, not "pyyaml"
+    - yaml
   requires:
-    - pytest  # lightweight, optional
+    - pytest
 
 about:
   home: https://github.com/romainsacchi/brightpath
