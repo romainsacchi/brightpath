@@ -71,8 +71,8 @@ class BrightwayConverter:
         SimaPro names.
     :vartype simapro_technosphere: dict[tuple[str, str], str]
     :ivar simapro_biosphere: Mapping from biosphere exchanges to SimaPro
-        names.
-    :vartype simapro_biosphere: dict[str, str]
+        names, optionally regionalised by location.
+    :vartype simapro_biosphere: dict[str, str | dict[str | None, str]]
     :ivar simapro_subcompartment: Mapping of biosphere subcompartments to
         SimaPro names.
     :vartype simapro_subcompartment: dict[str, str]
@@ -130,6 +130,36 @@ class BrightwayConverter:
         # export directory is the current working
         # directory unless specified otherwise
         self.export_dir = Path(export_dir) or Path.cwd()
+
+    def _resolve_biosphere_flow_name(
+        self, exchange: dict, activity_location: str | None
+    ) -> str:
+        """Return the SimaPro name for a biosphere exchange, considering geography."""
+
+        mapping = self.simapro_biosphere.get(exchange["name"])
+        if mapping is None:
+            return exchange["name"]
+
+        if isinstance(mapping, str):
+            return mapping
+
+        exchange_location = exchange.get("location") or activity_location
+        candidates = []
+        if exchange_location:
+            candidates.append(exchange_location)
+            if "-" in exchange_location:
+                candidates.extend(
+                    [part for part in exchange_location.split("-") if part]
+                )
+        if activity_location and activity_location not in candidates:
+            candidates.append(activity_location)
+        candidates.extend(["GLO", "RoW", "RER", "WEU", None])
+
+        for candidate in candidates:
+            if candidate in mapping:
+                return mapping[candidate]
+
+        return next(iter(mapping.values()))
 
     def format_inventories_for_simapro(self, database: str):
         """Transform the Brightway inventories into the SimaPro structure.
@@ -434,9 +464,13 @@ class BrightwayConverter:
                         else:
                             sub_compartment = ""
 
+                        biosphere_name = self._resolve_biosphere_flow_name(
+                            exc, activity.get("location")
+                        )
+
                         rows.append(
                             [
-                                f"{self.simapro_biosphere.get(exc['name'], exc['name'])}",
+                                biosphere_name,
                                 sub_compartment,
                                 self.simapro_units[exc["unit"]],
                                 "{:.3E}".format(exc["amount"]),
@@ -475,9 +509,13 @@ class BrightwayConverter:
                         else:
                             sub_compartment = ""
 
+                        biosphere_name = self._resolve_biosphere_flow_name(
+                            exc, activity.get("location")
+                        )
+
                         rows.append(
                             [
-                                f"{self.simapro_biosphere.get(exc['name'], exc['name'])}",
+                                biosphere_name,
                                 sub_compartment,
                                 self.simapro_units[exc["unit"]],
                                 "{:.3E}".format(exc["amount"]),
