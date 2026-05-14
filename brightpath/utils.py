@@ -1105,6 +1105,19 @@ def load_biosphere_correspondence():
     )
 
 
+def load_simapro_brightway_biosphere_mapping(version: str):
+    normalized_version = version.replace(".", "")
+    filename = f"simapro_to_brightway_biosphere_ei{normalized_version}.yaml"
+    filepath = DATA_DIR / "export" / filename
+    if not filepath.is_file():
+        return {}
+
+    return _load_yaml_file(
+        filepath,
+        "The version-specific SimaPro to Brightway biosphere flow mapping",
+    )
+
+
 def load_ei_biosphere_flows():
     filename = "flows_biosphere_39.csv"
     filepath = DATA_DIR / "export" / filename

@@ -12,6 +12,7 @@ from .utils import (
     get_waste_exchange_names,
     load_ei_biosphere_flows,
     load_biosphere_correspondence,
+    load_simapro_brightway_biosphere_mapping,
     ensure_unique_datasets,
     lower_cap_first_letter,
 )
@@ -26,6 +27,26 @@ import tempfile
 
 WASTE_TERMS = get_waste_exchange_names()
 logger = logging.getLogger(__name__)
+
+
+def _version_tuple(version: str) -> tuple:
+    try:
+        return tuple(int(part) for part in version.split("."))
+    except ValueError:
+        return tuple()
+
+
+def _is_version_at_least(version: str, minimum: str) -> bool:
+    version_parts = _version_tuple(version)
+    minimum_parts = _version_tuple(minimum)
+    if not version_parts or not minimum_parts:
+        return False
+
+    length = max(len(version_parts), len(minimum_parts))
+    return version_parts + (0,) * (length - len(version_parts)) >= (
+        minimum_parts + (0,) * (length - len(minimum_parts))
+    )
+
 
 def format_technosphere_exchange(txt: str):
     if not isinstance(txt, str) or not txt.strip():
@@ -52,6 +73,7 @@ def format_technosphere_exchange(txt: str):
         "TRE": "US-TRE",
         "FRCC": "US-FRCC",
         "SPP": "US-SPP",
+        "Europe, without Russia and Turkey": "Europe, without Russia and Türkiye",
     }
 
     correct_name = [
@@ -166,6 +188,20 @@ def _validate_braces(value: str, original: str) -> None:
         raise ValueError(f"Cannot parse multiple SimaPro location blocks in {original!r}.")
 
 
+def _exchange_category_text(exchange: dict) -> str:
+    categories = exchange.get("categories") or exchange.get("simapro category") or ""
+    if isinstance(categories, (tuple, list)):
+        return "/".join(str(item) for item in categories)
+    return str(categories)
+
+
+def is_simapro_final_waste_flow(exchange: dict) -> bool:
+    return (
+        exchange.get("type") in {"technosphere", "substitution"}
+        and "Final waste flows" in _exchange_category_text(exchange)
+    )
+
+
 def load_ecoinvent_activities(version: str) -> list:
     if not re.fullmatch(r"\d+(?:\.\d+){1,2}", version):
         raise ValueError(f"Unsupported ecoinvent version format: {version!r}.")
@@ -176,8 +212,56 @@ def load_ecoinvent_activities(version: str) -> list:
         return [l for l in reader]
 
 
-def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping, copy: bool = True):
+def _biosphere_key(exc) -> tuple:
+    return (
+        exc["name"],
+        exc["categories"][0],
+        "unspecified"
+        if len(exc["categories"]) == 1
+        else exc["categories"][1]
+    )
+
+
+def _mapping_for_category(mapping: dict, category: str) -> dict:
+    mapped = {}
+    mapped.update(mapping.get("global", {}))
+    mapped.update(mapping.get(category, {}))
+    return mapped
+
+
+def _apply_simapro_biosphere_name_normalizers(exc, ei_version, version_mapping):
+    if not _is_version_at_least(ei_version, "3.10"):
+        return
+
+    name = exc["name"]
+    category = exc["categories"][0]
+    name_mapping = _mapping_for_category(version_mapping, category)
+    name = name_mapping.get(name, name)
+
+    if re.search(r"/m3, .+$", name):
+        name = name.split("/m3", 1)[0]
+
+    if name.endswith("/kg"):
+        name = name.removesuffix("/kg")
+
+    name = re.sub(r"\s+\(([IVX]+)\)$", r" \1", name)
+
+    if name.endswith(", ion"):
+        name = name.removesuffix(", ion") + " ion"
+
+    exc["name"] = name_mapping.get(name, name)
+
+
+def format_biosphere_exchange(
+    exc,
+    ei_version,
+    bio_flows,
+    bio_mapping,
+    copy: bool = True,
+    version_mapping=None,
+):
     exc = deepcopy(exc) if copy else exc
+    version_mapping = version_mapping or {}
     categories = exc.get("categories")
     if not categories:
         raise ValueError(f"Biosphere exchange {exc.get('name')} is missing categories.")
@@ -206,21 +290,15 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping, copy: boo
         if "in air" not in exc["name"]:
             exc["categories"] = ("natural resource", "in water")
 
-    key = (
-        exc["name"],
-        exc["categories"][0],
-        "unspecified"
-        if len(exc["categories"]) == 1
-        else exc["categories"][1]
-    )
+    _apply_simapro_biosphere_name_normalizers(exc, ei_version, version_mapping)
+
+    key = _biosphere_key(exc)
 
     if key not in bio_flows:
         try:
             if exc["name"] in bio_mapping[exc["categories"][0]]:
                 exc["name"] = bio_mapping[exc["categories"][0]][exc["name"]]
-                key = list(key)
-                key[0] = exc["name"]
-                key = tuple(key)
+                key = _biosphere_key(exc)
         except KeyError:
             logger.warning("Could not find biosphere flow mapping for %s.", exc["name"])
 
@@ -311,6 +389,9 @@ class SimaproConverter:
 
         self.ei_biosphere_flows = load_ei_biosphere_flows()
         self.biosphere_flows_correspondence = load_biosphere_correspondence()
+        self.simapro_brightway_biosphere_mapping = load_simapro_brightway_biosphere_mapping(
+            ecoinvent_version
+        )
 
 
         self.i.db_name = self.db_name
@@ -341,6 +422,14 @@ class SimaproConverter:
 
             for exc in ds["exchanges"]:
                 exc["simapro name"] = exc["name"]
+
+                if is_simapro_final_waste_flow(exc):
+                    logger.info(
+                        "Dropping SimaPro final waste indicator %s.",
+                        exc["name"],
+                    )
+                    exc["amount"] = 0.0
+                    continue
 
                 if exc["type"] == "production":
                     exc["name"] = ds["name"]
@@ -375,7 +464,12 @@ class SimaproConverter:
                         exc,
                         self.ecoinvent_version,
                         self.ei_biosphere_flows,
-                        self.biosphere_flows_correspondence
+                        self.biosphere_flows_correspondence,
+                        version_mapping=getattr(
+                            self,
+                            "simapro_brightway_biosphere_mapping",
+                            {},
+                        ),
                     ))
 
         ensure_unique_datasets(self.i.data)

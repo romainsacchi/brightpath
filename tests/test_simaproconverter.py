@@ -9,6 +9,7 @@ from brightpath.simaproconverter import (
     format_technosphere_exchange,
     load_ecoinvent_activities,
 )
+from brightpath.utils import load_simapro_brightway_biosphere_mapping
 
 
 @pytest.mark.parametrize(
@@ -52,6 +53,16 @@ def test_format_technosphere_exchange_rejects_malformed_names():
 
     with pytest.raises(ValueError, match="empty location"):
         format_technosphere_exchange("Electricity {}| market for | Cut-off, U")
+
+
+def test_format_technosphere_exchange_normalizes_ei310_location_names():
+    assert format_technosphere_exchange(
+        "Hard coal {Europe, without Russia and Turkey}| market for | Cut-off, U"
+    ) == (
+        "market for hard coal",
+        "hard coal",
+        "Europe, without Russia and Türkiye",
+    )
 
 
 def test_load_ecoinvent_activities_validates_version_and_loads_file(tmp_path, monkeypatch):
@@ -136,6 +147,83 @@ def test_format_biosphere_exchange_applies_correspondence_mapping():
     assert result["name"] == "New flow"
 
 
+@pytest.mark.parametrize(
+    ("name", "categories", "expected_name", "expected_categories"),
+    [
+        (
+            "Mercury (II)",
+            ("air", "urban air close to ground"),
+            "Mercury II",
+            ("air", "urban air close to ground"),
+        ),
+        (
+            "BOD5 (Biological Oxygen Demand)",
+            ("water", "surface water"),
+            "BOD5, Biological Oxygen Demand",
+            ("water", "surface water"),
+        ),
+        (
+            "Water/m3, RER",
+            ("air",),
+            "Water",
+            ("air",),
+        ),
+        (
+            "Argon-40/kg",
+            ("natural resource", "in air"),
+            "Argon",
+            ("natural resource", "in air"),
+        ),
+        (
+            "Strontium (II)",
+            ("water", "surface water"),
+            "Strontium II",
+            ("water", "surface water"),
+        ),
+        (
+            "AOX, Adsorbable Organic Halogen",
+            ("water",),
+            "AOX, Adsorbable Organic Halides",
+            ("water",),
+        ),
+        (
+            "Ammonium ion",
+            ("water", "surface water"),
+            "Ammonium",
+            ("water", "surface water"),
+        ),
+        (
+            "Chromium, ion",
+            ("air",),
+            "Chromium VI",
+            ("air",),
+        ),
+        (
+            "Benzene, hexachloro-",
+            ("air",),
+            "Hexachlorobenzene",
+            ("air",),
+        ),
+    ],
+)
+def test_format_biosphere_exchange_applies_ei310_name_normalizers(
+    name,
+    categories,
+    expected_name,
+    expected_categories,
+):
+    result = format_biosphere_exchange(
+        {"name": name, "categories": categories},
+        "3.10",
+        [],
+        {"water": {"Strontium (II)": "Strontium"}},
+        version_mapping=load_simapro_brightway_biosphere_mapping("3.10"),
+    )
+
+    assert result["name"] == expected_name
+    assert result["categories"] == expected_categories
+
+
 def make_converter(data, db_name="test_db"):
     converter = SimaproConverter.__new__(SimaproConverter)
     converter.i = SimpleNamespace(data=data, db_name=db_name)
@@ -143,6 +231,7 @@ def make_converter(data, db_name="test_db"):
     converter.ecoinvent_version = "3.9"
     converter.ei_biosphere_flows = [("Water, lake", "natural resource", "in water")]
     converter.biosphere_flows_correspondence = {}
+    converter.simapro_brightway_biosphere_mapping = {}
     return converter
 
 
@@ -249,6 +338,35 @@ def test_convert_to_brightway_formats_dataset_and_exchanges():
     assert substitution["type"] == "technosphere"
     assert substitution["amount"] == -3.0
     assert biosphere["categories"] == ("natural resource", "in water")
+
+
+def test_convert_to_brightway_drops_simapro_final_waste_indicators():
+    data = [
+        {
+            "name": "Wastewater {GLO}| treatment of | Cut-off, U",
+            "exchanges": [
+                {
+                    "type": "production",
+                    "name": "Wastewater {GLO}| treatment of | Cut-off, U",
+                    "amount": 1.0,
+                    "input": (None, "production"),
+                },
+                {
+                    "type": "technosphere",
+                    "name": "Non-hazardous waste disposed",
+                    "categories": "Final waste flows",
+                    "amount": 1000.0,
+                },
+            ],
+        }
+    ]
+    converter = make_converter(data)
+
+    converter.convert_to_brightway()
+
+    exchanges = converter.i.data[0]["exchanges"]
+    assert len(exchanges) == 1
+    assert exchanges[0]["type"] == "production"
 
 
 def test_convert_to_brightway_rejects_duplicate_parsed_datasets():
