@@ -2,28 +2,30 @@
 This module contains the class SimaproConverter, which is used to convert
 Simapro inventories to Brightway inventory files.
 """
+
+import csv
+import logging
+import re
+import tempfile
+from copy import deepcopy
+from pathlib import Path
+
+import bw2io
+
 from . import DATA_DIR
 from .utils import (
     ALLOWED_BIOSPHERE_CATEGORIES,
-    get_simapro_technosphere,
+    check_simapro_inventory,
+    ensure_unique_datasets,
     get_simapro_biosphere,
     get_simapro_subcompartments,
-    check_simapro_inventory,
+    get_simapro_technosphere,
     get_waste_exchange_names,
-    load_ei_biosphere_flows,
     load_biosphere_correspondence,
+    load_ei_biosphere_flows,
     load_simapro_brightway_biosphere_mapping,
-    ensure_unique_datasets,
     lower_cap_first_letter,
 )
-
-from pathlib import Path
-from copy import deepcopy
-import bw2io
-import logging
-import csv
-import re
-import tempfile
 
 WASTE_TERMS = get_waste_exchange_names()
 logger = logging.getLogger(__name__)
@@ -58,7 +60,7 @@ def format_technosphere_exchange(txt: str):
 
     location_correction = {
         "WECC, US only": "US-WECC",
-        "ASCC, US only" : "US-ASCC",
+        "ASCC, US only": "US-ASCC",
         "HICC, US only": "US-HICC",
         "MRO, US only": "US-MRO",
         "NPCC, US only": "US-NPCC",
@@ -90,7 +92,7 @@ def format_technosphere_exchange(txt: str):
         "processing, mass based",
         "transport",
         "treatment of",
-        "purification"
+        "purification",
     ]
 
     reference_product, name, location = "", "", ""
@@ -127,8 +129,14 @@ def format_technosphere_exchange(txt: str):
     if location in ["French Guiana", "French Guinana"]:
         location = "FG"
 
-    name = name.replace("Cut-off, U", "",)
-    name = name.replace("cut-off, U", "",)
+    name = name.replace(
+        "Cut-off, U",
+        "",
+    )
+    name = name.replace(
+        "cut-off, U",
+        "",
+    )
 
     if name[-3:] in [", U", ", S"]:
         name = name[:-3]
@@ -196,9 +204,8 @@ def _exchange_category_text(exchange: dict) -> str:
 
 
 def is_simapro_final_waste_flow(exchange: dict) -> bool:
-    return (
-        exchange.get("type") in {"technosphere", "substitution"}
-        and "Final waste flows" in _exchange_category_text(exchange)
+    return exchange.get("type") in {"technosphere", "substitution"} and "Final waste flows" in _exchange_category_text(
+        exchange
     )
 
 
@@ -209,17 +216,11 @@ def load_ecoinvent_activities(version: str) -> list:
     with open(DATA_DIR / "export" / f"list_ei{version}_cutoff_activities.csv", encoding="utf-8") as f:
         reader = csv.reader(f)
         next(reader)
-        return [l for l in reader]
+        return [row for row in reader]
 
 
 def _biosphere_key(exc) -> tuple:
-    return (
-        exc["name"],
-        exc["categories"][0],
-        "unspecified"
-        if len(exc["categories"]) == 1
-        else exc["categories"][1]
-    )
+    return (exc["name"], exc["categories"][0], "unspecified" if len(exc["categories"]) == 1 else exc["categories"][1])
 
 
 def _mapping_for_category(mapping: dict, category: str) -> dict:
@@ -268,9 +269,7 @@ def format_biosphere_exchange(
     if not isinstance(categories, (tuple, list)):
         raise ValueError(f"Biosphere exchange {exc.get('name')} categories must be a tuple or list.")
     if categories[0] not in ALLOWED_BIOSPHERE_CATEGORIES:
-        raise ValueError(
-            f"Biosphere exchange {exc.get('name')} has unsupported category {categories[0]!r}."
-        )
+        raise ValueError(f"Biosphere exchange {exc.get('name')} has unsupported category {categories[0]!r}.")
 
     if "in ground" in exc["name"]:
         if ei_version not in ["3.5", "3.6", "3.7", "3.8"]:
@@ -309,7 +308,6 @@ def format_biosphere_exchange(
                 "biotic",
                 "in air",
                 "land",
-
             ]:
                 key = list(key)
                 key[2] = i
@@ -336,7 +334,7 @@ def format_biosphere_exchange(
                 "low population density, long-term",
                 "lower stratosphere + upper troposphere",
                 "non-urban air or from high stacks",
-                "urban air close to ground"
+                "urban air close to ground",
             ]:
                 key = list(key)
                 key[2] = i
@@ -345,22 +343,16 @@ def format_biosphere_exchange(
                     exc["categories"] = (exc["categories"][0], i)
                     break
 
-    if exc["categories"] == ('natural resource', 'in ground'):
+    if exc["categories"] == ("natural resource", "in ground"):
         if ei_version in ["3.5", "3.6", "3.7", "3.8"]:
             if "in ground" not in exc["name"]:
                 exc["name"] += ", in ground"
-
 
     return exc
 
 
 class SimaproConverter:
-    def __init__(
-            self,
-            filepath: str,
-            ecoinvent_version: str = "3.9",
-            db_name: str = None
-    ):
+    def __init__(self, filepath: str, ecoinvent_version: str = "3.9", db_name: str = None):
         """
         Initialize the SimaproConverter object.
 
@@ -389,13 +381,9 @@ class SimaproConverter:
 
         self.ei_biosphere_flows = load_ei_biosphere_flows()
         self.biosphere_flows_correspondence = load_biosphere_correspondence()
-        self.simapro_brightway_biosphere_mapping = load_simapro_brightway_biosphere_mapping(
-            ecoinvent_version
-        )
-
+        self.simapro_brightway_biosphere_mapping = load_simapro_brightway_biosphere_mapping(ecoinvent_version)
 
         self.i.db_name = self.db_name
-
 
     def check_database_name(self):
 
@@ -460,17 +448,19 @@ class SimaproConverter:
                     exc["amount"] *= -1
 
                 if exc["type"] == "biosphere":
-                    exc.update(format_biosphere_exchange(
-                        exc,
-                        self.ecoinvent_version,
-                        self.ei_biosphere_flows,
-                        self.biosphere_flows_correspondence,
-                        version_mapping=getattr(
-                            self,
-                            "simapro_brightway_biosphere_mapping",
-                            {},
-                        ),
-                    ))
+                    exc.update(
+                        format_biosphere_exchange(
+                            exc,
+                            self.ecoinvent_version,
+                            self.ei_biosphere_flows,
+                            self.biosphere_flows_correspondence,
+                            version_mapping=getattr(
+                                self,
+                                "simapro_brightway_biosphere_mapping",
+                                {},
+                            ),
+                        )
+                    )
 
         ensure_unique_datasets(self.i.data)
         self.check_database_name()
@@ -484,10 +474,7 @@ class SimaproConverter:
         logger.info("SimaPro conversion completed.")
 
     def remove_empty_datasets(self):
-        self.i.data = [
-            ds for ds in self.i.data
-            if len(ds["exchanges"]) >= 1
-        ]
+        self.i.data = [ds for ds in self.i.data if len(ds["exchanges"]) >= 1]
 
     def remove_empty_exchanges(self):
         for ds in self.i.data:
@@ -510,7 +497,9 @@ class SimaproConverter:
 
                 if e["type"] == "production":
                     if (e["name"], e["product"], e["location"]) != (
-                            ds["name"], ds["reference product"], ds["location"]
+                        ds["name"],
+                        ds["reference product"],
+                        ds["location"],
                     ):
                         errors.append(
                             f"{ds['name'], ds['reference product'], ds['location']} has an incorrect production flow {e}."

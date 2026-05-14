@@ -3,39 +3,40 @@ This module contains the class BrightwayConverter, which is used to convert
 Brightway2 inventories to Simapro CSV files.
 """
 
+import csv
+import datetime
+import logging
+from copy import deepcopy
+from pathlib import Path
+
 from .utils import (
+    add_distri_transport,
+    check_exchanges_for_conversion,
+    collect_unused_exchanges,
+    convert_sd_to_sd2,
+    escape_spreadsheet_formula,
+    find_production_exchange,
+    flag_exchanges,
+    format_exchange_name,
+    get_biosphere_exchanges,
+    get_simapro_biosphere,
     get_simapro_ecoinvent_blacklist,
     get_simapro_fields_list,
-    get_simapro_units,
     get_simapro_headers,
-    import_bw_inventories,
-    get_simapro_technosphere,
-    get_simapro_biosphere,
     get_simapro_subcompartments,
-    load_inventory_metadata,
-    is_activity_waste_treatment,
-    find_production_exchange,
-    get_technosphere_exchanges,
-    is_a_waste_treatment,
-    format_exchange_name,
-    get_simapro_uncertainty_type, get_biosphere_exchanges,
-    is_blacklisted,
-    convert_sd_to_sd2,
-    round_floats_in_string,
+    get_simapro_technosphere,
+    get_simapro_uncertainty_type,
+    get_simapro_units,
     get_subcategory,
-    flag_exchanges,
-    collect_unused_exchanges,
-    check_exchanges_for_conversion,
-    add_distri_transport,
-    escape_spreadsheet_formula,
+    get_technosphere_exchanges,
+    import_bw_inventories,
+    is_a_waste_treatment,
+    is_activity_waste_treatment,
+    is_blacklisted,
+    load_inventory_metadata,
+    round_floats_in_string,
     validate_brightway_inventory,
 )
-
-import datetime
-import csv
-import logging
-from pathlib import Path
-from copy import deepcopy
 
 logger = logging.getLogger(__name__)
 
@@ -46,12 +47,12 @@ class BrightwayConverter:
     """
 
     def __init__(
-            self,
-            filepath: str = None,
-            data: list = None,
-            metadata: str = None,
-            ecoinvent_version: str = "3.9",
-            export_dir: str = None
+        self,
+        filepath: str = None,
+        data: list = None,
+        metadata: str = None,
+        ecoinvent_version: str = "3.9",
+        export_dir: str = None,
     ):
         """
         :param filepath: path to the BW inventory spreadsheet file
@@ -82,7 +83,6 @@ class BrightwayConverter:
         # directory unless specified otherwise
         self.export_dir = Path(export_dir) if export_dir else Path.cwd()
 
-
     def format_inventories_for_simapro(self, database: str):
         """
         Format inventories to Simapro format.
@@ -106,8 +106,11 @@ class BrightwayConverter:
 
     def _header_rows(self):
         rows = [
-            [item.replace("today_date", datetime.datetime.today().strftime("%d.%m.%Y"))]
-            if item.startswith("{Date") else [item]
+            (
+                [item.replace("today_date", datetime.datetime.today().strftime("%d.%m.%Y"))]
+                if item.startswith("{Date")
+                else [item]
+            )
             for item in self.simapro_headers
         ]
         rows.append([])
@@ -116,8 +119,8 @@ class BrightwayConverter:
     def _metadata_rows(self):
         rows = []
         for field in (
-                "System description",
-                "Literature reference",
+            "System description",
+            "Literature reference",
         ):
             if field.lower() in self.metadata:
                 rows.extend([[field], []])
@@ -158,11 +161,7 @@ class BrightwayConverter:
 
             if field == "Process name":
                 dataset_name = format_exchange_name(
-                    activity["name"],
-                    activity["reference product"],
-                    activity["location"],
-                    activity["unit"],
-                    database
+                    activity["name"], activity["reference product"], activity["location"], activity["unit"], database
                 )
                 rows.extend([[dataset_name], []])
 
@@ -183,30 +182,30 @@ class BrightwayConverter:
                 rows.extend([[f"{datetime.datetime.today():%d.%m.%Y}"], []])
 
             if field in (
-                    "Time period",
-                    "Record",
-                    "Generator",
-                    "Cut off rules",
-                    "Capital goods",
-                    "Technology",
-                    "Representativeness",
-                    "Boundary with nature",
-                    "Infrastructure",
-                    "External documents",
-                    "System description",
-                    "Allocation rules",
-                    "Literature references",
-                    "Collection method",
-                    "Data treatment",
-                    "Verification",
+                "Time period",
+                "Record",
+                "Generator",
+                "Cut off rules",
+                "Capital goods",
+                "Technology",
+                "Representativeness",
+                "Boundary with nature",
+                "Infrastructure",
+                "External documents",
+                "System description",
+                "Allocation rules",
+                "Literature references",
+                "Collection method",
+                "Data treatment",
+                "Verification",
             ):
                 rows.extend(self._activity_metadata_field_rows(field, activity))
 
             if field in (
-                    "Final waste flows",
-                    "Non material emission",
-                    "Social issues",
-                    "Economic issues",
+                "Final waste flows",
+                "Non material emission",
+                "Social issues",
+                "Economic issues",
             ):
                 rows.append([])
 
@@ -322,11 +321,7 @@ class BrightwayConverter:
 
     def _technosphere_exchange_row(self, exc: dict, database: str):
         exchange_name = format_exchange_name(
-            exc["name"],
-            exc["reference product"],
-            exc.get("location", "GLO"),
-            exc["unit"],
-            database
+            exc["name"], exc["reference product"], exc.get("location", "GLO"), exc["unit"], database
         )
         u_type = get_simapro_uncertainty_type(exc.get("uncertainty type"))
         return [
@@ -378,8 +373,7 @@ class BrightwayConverter:
         subcategory = exc["categories"][1]
         if subcategory not in self.simapro_subcompartment:
             raise ValueError(
-                f"No SimaPro subcompartment mapping for {subcategory!r} "
-                f"on biosphere exchange {exc.get('name')!r}."
+                f"No SimaPro subcompartment mapping for {subcategory!r} " f"on biosphere exchange {exc.get('name')!r}."
             )
         return self.simapro_subcompartment[subcategory]
 

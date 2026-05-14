@@ -3,6 +3,7 @@ import csv
 import math
 
 import pytest
+from voluptuous import MultipleInvalid
 
 from brightpath import utils
 
@@ -131,7 +132,7 @@ def test_load_inventory_metadata_rejects_missing_required_sections(tmp_path):
     metadata = tmp_path / "metadata.yaml"
     metadata.write_text("system description:\n  name: system\n", encoding="utf-8")
 
-    with pytest.raises(Exception):
+    with pytest.raises(MultipleInvalid):
         utils.load_inventory_metadata(metadata)
 
 

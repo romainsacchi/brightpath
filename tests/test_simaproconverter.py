@@ -56,9 +56,7 @@ def test_format_technosphere_exchange_rejects_malformed_names():
 
 
 def test_format_technosphere_exchange_normalizes_ei310_location_names():
-    assert format_technosphere_exchange(
-        "Hard coal {Europe, without Russia and Turkey}| market for | Cut-off, U"
-    ) == (
+    assert format_technosphere_exchange("Hard coal {Europe, without Russia and Turkey}| market for | Cut-off, U") == (
         "market for hard coal",
         "hard coal",
         "Europe, without Russia and Türkiye",

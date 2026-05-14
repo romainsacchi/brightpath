@@ -130,6 +130,9 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     environment: pypi
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - name: Download distribution artifact
         uses: actions/download-artifact@v4
@@ -140,8 +143,6 @@ jobs:
       - name: Publish distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          user: ${{ secrets.PYPI_USER }}
-          password: ${{ secrets.PYPI_PASSWORD }}
           skip-existing: true
 
   publish-anaconda:

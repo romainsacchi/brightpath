@@ -5,5 +5,5 @@ from pathlib import Path
 
 DATA_DIR = Path(__file__).resolve().parent / "data"
 
-from .bwconverter import BrightwayConverter
-from .simaproconverter import SimaproConverter
+from .bwconverter import BrightwayConverter  # noqa: E402
+from .simaproconverter import SimaproConverter  # noqa: E402
