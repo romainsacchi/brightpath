@@ -68,6 +68,17 @@ converter.convert_to_brightway()
 # converter.i.write_database()
 ```
 
+You can also write a Brightway Excel workbook directly, without first creating
+a Brightway database:
+
+```python
+path = converter.convert_to_brightway(
+    format="excel",
+    filename="lci-my-simapro-import.xlsx",
+)
+print(path)
+```
+
 ## Development
 
 * Source code is formatted with standard Python tools and tested with
@@ -80,4 +91,3 @@ converter.convert_to_brightway()
 
 BrightPath is distributed under the
 [BSD-3-Clause license](LICENSE).
-

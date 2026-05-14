@@ -6,6 +6,14 @@ All notable changes to this project will be documented in this file.
 
 - No changes yet.
 
+## 0.0.4 - 2026-05-14
+
+### Added
+
+- Added direct Brightway Excel export from `SimaproConverter.convert_to_brightway(format="excel", filename=...)`.
+- Added `--excel-output` to the ecoinvent 3.10 Si wafer import diagnostic script.
+- Documented direct SimaPro CSV to Brightway Excel conversion in the README.
+
 ## 0.0.3 - 2026-05-14
 
 ### Added

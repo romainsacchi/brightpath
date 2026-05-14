@@ -11,6 +11,12 @@ Dry-run conversion and matching:
 
     python dev/import_ei310_si_wafer_to_brightway.py
 
+Generate a Brightway Excel workbook while keeping the Brightway project
+unchanged:
+
+    python dev/import_ei310_si_wafer_to_brightway.py \
+        --excel-output /tmp/lci-ei310_Si_wafer_RER_.xlsx
+
 Write the converted foreground database:
 
     python dev/import_ei310_si_wafer_to_brightway.py --write
@@ -29,14 +35,11 @@ sys.path.insert(0, str(REPO_ROOT))
 
 from brightpath import SimaproConverter  # noqa: E402
 
-
 DEFAULT_INPUT = REPO_ROOT / "dev" / "ei310_Si_wafer_RER_.csv"
 DEFAULT_PROJECT = "ecoinvent-3.10-cutoff"
 DEFAULT_ECOINVENT_DB = "ecoinvent-3.10.1-cutoff"
 DEFAULT_BIOSPHERE_CANDIDATES = ("ecoinvent-3.10-biosphere", "biosphere3")
-DEFAULT_UNLINKED_REPORT = REPO_ROOT / "dev" / (
-    f"{DEFAULT_INPUT.stem}_unlinked_exchanges.csv"
-)
+DEFAULT_UNLINKED_REPORT = REPO_ROOT / "dev" / (f"{DEFAULT_INPUT.stem}_unlinked_exchanges.csv")
 UNLINKED_REPORT_FIELDS = [
     "dataset",
     "dataset reference product",
@@ -54,10 +57,7 @@ UNLINKED_REPORT_FIELDS = [
 
 def parse_args(argv: Iterable[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(
-        description=(
-            "Convert a SimaPro ecoinvent 3.10 cutoff CSV to a Brightway "
-            "foreground database."
-        ),
+        description=("Convert a SimaPro ecoinvent 3.10 cutoff CSV to a Brightway " "foreground database."),
         formatter_class=argparse.ArgumentDefaultsHelpFormatter,
     )
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
@@ -67,8 +67,7 @@ def parse_args(argv: Iterable[str] | None = None) -> argparse.Namespace:
     parser.add_argument(
         "--biosphere-db",
         help=(
-            "Biosphere database to match. If omitted, the script tries "
-            f"{', '.join(DEFAULT_BIOSPHERE_CANDIDATES)}."
+            "Biosphere database to match. If omitted, the script tries " f"{', '.join(DEFAULT_BIOSPHERE_CANDIDATES)}."
         ),
     )
     parser.add_argument("--ecoinvent-version", default="3.10")
@@ -91,6 +90,11 @@ def parse_args(argv: Iterable[str] | None = None) -> argparse.Namespace:
         "--convert-only",
         action="store_true",
         help="Only parse and convert the CSV; skip Brightway project matching.",
+    )
+    parser.add_argument(
+        "--excel-output",
+        type=Path,
+        help="Write the converted foreground inventory as a Brightway Excel workbook.",
     )
     parser.add_argument(
         "--unlinked-report",
@@ -144,10 +148,7 @@ def require_project(project: str):
 
     if project not in bd.projects:
         available = ", ".join(sorted(str(name) for name in bd.projects)) or "none"
-        raise SystemExit(
-            f"Brightway project not found: {project}\n"
-            f"Available projects: {available}"
-        )
+        raise SystemExit(f"Brightway project not found: {project}\n" f"Available projects: {available}")
     bd.projects.set_current(project)
     return bd
 
@@ -156,8 +157,7 @@ def require_database(bd, name: str, role: str) -> str:
     if name not in bd.databases:
         available = ", ".join(sorted(str(db) for db in bd.databases)) or "none"
         raise SystemExit(
-            f"{role} database not found in project {bd.projects.current}: {name}\n"
-            f"Available databases: {available}"
+            f"{role} database not found in project {bd.projects.current}: {name}\n" f"Available databases: {available}"
         )
     return name
 
@@ -179,11 +179,7 @@ def select_biosphere_database(bd, requested: str | None) -> str:
 
 
 def print_linking_plan(args: argparse.Namespace, biosphere_db: str | None = None) -> None:
-    biosphere_target = (
-        biosphere_db
-        if biosphere_db
-        else f"auto-select from {', '.join(DEFAULT_BIOSPHERE_CANDIDATES)}"
-    )
+    biosphere_target = biosphere_db if biosphere_db else f"auto-select from {', '.join(DEFAULT_BIOSPHERE_CANDIDATES)}"
     print("Linking plan:", flush=True)
     print(f"  Brightway project: {args.project}", flush=True)
     print(f"  Foreground database: {args.db_name}", flush=True)
@@ -197,11 +193,7 @@ def print_inventory_summary(importer) -> None:
     print(f"Converted {datasets} datasets with {exchanges} exchanges.")
     if importer.data:
         first = importer.data[0]
-        print(
-            "First dataset: "
-            f"{first.get('name')} | {first.get('reference product')} | "
-            f"{first.get('location')}"
-        )
+        print("First dataset: " f"{first.get('name')} | {first.get('reference product')} | " f"{first.get('location')}")
 
 
 def format_categories(categories) -> str:
@@ -217,9 +209,7 @@ def collect_unlinked_rows(importer) -> list[dict]:
             rows.append(
                 {
                     "dataset": dataset.get("name", ""),
-                    "dataset reference product": dataset.get(
-                        "reference product", ""
-                    ),
+                    "dataset reference product": dataset.get("reference product", ""),
                     "dataset location": dataset.get("location", ""),
                     "type": exc.get("type", ""),
                     "name": exc.get("name", ""),
@@ -263,10 +253,7 @@ def print_unlinked_summary(rows: list[dict], limit: int) -> None:
         return
 
     unique = unique_unlinked_rows(rows)
-    print(
-        f"{len(rows)} unlinked exchange occurrences remain "
-        f"({len(unique)} unique)."
-    )
+    print(f"{len(rows)} unlinked exchange occurrences remain " f"({len(unique)} unique).")
     displayed = unique if limit == 0 else unique[:limit]
     for index, row in enumerate(displayed, start=1):
         details = [
@@ -337,6 +324,10 @@ def main(argv: Iterable[str] | None = None) -> int:
     converter = convert_source(source, args.db_name, args.ecoinvent_version)
     importer = converter.i
 
+    if args.excel_output:
+        excel_path = converter.write_brightway_excel(args.excel_output)
+        print(f"Wrote Brightway Excel workbook: {excel_path}")
+
     if args.convert_only:
         print("Conversion-only check completed; no Brightway project was touched.")
         return 0
@@ -354,8 +345,7 @@ def main(argv: Iterable[str] | None = None) -> int:
 
     if args.db_name in bd.databases and not args.replace_existing:
         raise SystemExit(
-            f"Database already exists: {args.db_name}\n"
-            "Pass --replace-existing with --write to overwrite it."
+            f"Database already exists: {args.db_name}\n" "Pass --replace-existing with --write to overwrite it."
         )
 
     if unlinked and not args.allow_unlinked:

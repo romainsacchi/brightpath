@@ -5,12 +5,14 @@ Simapro inventories to Brightway inventory files.
 
 import csv
 import logging
+import numbers
 import re
 import tempfile
 from copy import deepcopy
 from pathlib import Path
 
 import bw2io
+import xlsxwriter
 
 from . import DATA_DIR
 from .utils import (
@@ -29,6 +31,44 @@ from .utils import (
 
 WASTE_TERMS = get_waste_exchange_names()
 logger = logging.getLogger(__name__)
+
+EXCEL_ACTIVITY_SKIP_FIELDS = {
+    "database",
+    "exchanges",
+    "name",
+    "parameters",
+    "simapro metadata",
+}
+EXCEL_EXCHANGE_SKIP_FIELDS = {"input", "output"}
+EXCEL_ACTIVITY_FIELD_ORDER = [
+    "reference product",
+    "unit",
+    "location",
+    "code",
+    "comment",
+    "type",
+    "categories",
+]
+EXCEL_EXCHANGE_FIELD_ORDER = [
+    "name",
+    "amount",
+    "database",
+    "reference product",
+    "product",
+    "location",
+    "unit",
+    "categories",
+    "type",
+    "formula",
+    "uncertainty type",
+    "loc",
+    "scale",
+    "shape",
+    "minimum",
+    "maximum",
+    "simapro name",
+    "comment",
+]
 
 
 def _version_tuple(version: str) -> tuple:
@@ -207,6 +247,57 @@ def is_simapro_final_waste_flow(exchange: dict) -> bool:
     return exchange.get("type") in {"technosphere", "substitution"} and "Final waste flows" in _exchange_category_text(
         exchange
     )
+
+
+def _safe_excel_filename(name: str) -> str:
+    safe_name = re.sub(r"[^A-Za-z0-9_.-]+", "_", name).strip("_")
+    return safe_name or "brightway-inventory"
+
+
+def _valid_worksheet_name(name: str) -> str:
+    cleaned = name
+    for char in {"\\", "/", "*", "[", "]", ":", "?"}:
+        cleaned = cleaned.replace(char, "#")
+    if cleaned == "History":
+        cleaned = "History-worksheet"
+    return (cleaned or "Inventory")[:30]
+
+
+def _is_excel_exportable(value) -> bool:
+    if value is None:
+        return True
+    if isinstance(value, (str, bool, numbers.Number)):
+        return True
+    if isinstance(value, (tuple, list)):
+        return all(_is_excel_exportable(item) for item in value)
+    return False
+
+
+def _format_excel_value(value):
+    if isinstance(value, (tuple, list)):
+        return "::".join("" if item is None else str(_format_excel_value(item)) for item in value)
+    return value
+
+
+def _ordered_export_fields(data: list[dict], preferred: list[str], skipped: set[str]) -> list[str]:
+    fields = {
+        field for row in data for field, value in row.items() if field not in skipped and _is_excel_exportable(value)
+    }
+    ordered = [field for field in preferred if field in fields]
+    ordered.extend(sorted(fields.difference(ordered)))
+    return ordered
+
+
+def _write_excel_cell(sheet, row: int, column: int, value, cell_format=None) -> None:
+    value = _format_excel_value(value)
+    if value is None:
+        return
+    if isinstance(value, bool):
+        sheet.write_boolean(row, column, value, cell_format)
+    elif isinstance(value, numbers.Number):
+        sheet.write_number(row, column, value, cell_format)
+    else:
+        sheet.write_string(row, column, str(value), cell_format)
 
 
 def load_ecoinvent_activities(version: str) -> list:
@@ -396,7 +487,9 @@ class SimaproConverter:
                         if exc["input"][0] is None:
                             exc["input"] = (self.i.db_name, exc["input"][1])
 
-    def convert_to_brightway(self):
+    def convert_to_brightway(self, format: str = "data", filename=None):
+        if format not in ("data", "excel"):
+            raise ValueError("Format must be either `data` or `excel`.")
 
         logger.info("Formatting exchanges.")
         for ds in self.i.data:
@@ -472,6 +565,74 @@ class SimaproConverter:
         logger.info("Checking inventories.")
         self.check_inventories()
         logger.info("SimaPro conversion completed.")
+
+        if format == "excel":
+            return self.write_brightway_excel(filename)
+
+        return self.i.data
+
+    def write_brightway_excel(self, filename=None) -> Path:
+        filepath = self._excel_filepath(filename)
+        filepath.parent.mkdir(parents=True, exist_ok=True)
+
+        workbook = xlsxwriter.Workbook(filepath)
+        bold = workbook.add_format({"bold": True})
+        bold.set_font_size(12)
+        sheet = workbook.add_worksheet(_valid_worksheet_name(self.db_name))
+
+        row = 0
+        row = self._write_database_excel_section(sheet, row, bold)
+        row += 1
+
+        for activity in self.i.data:
+            row = self._write_activity_excel_section(sheet, row, activity, bold)
+            row += 1
+
+        workbook.close()
+        return filepath
+
+    def _excel_filepath(self, filename=None) -> Path:
+        if filename is None:
+            return Path.cwd() / f"lci-{_safe_excel_filename(self.db_name)}.xlsx"
+
+        filepath = Path(filename).expanduser()
+        if filepath.suffix == "":
+            filepath = filepath.with_suffix(".xlsx")
+        if filepath.suffix.lower() != ".xlsx":
+            raise ValueError("Brightway Excel exports must use a .xlsx filename.")
+        return filepath.resolve()
+
+    def _write_database_excel_section(self, sheet, row: int, bold) -> int:
+        _write_excel_cell(sheet, row, 0, "Database", bold)
+        _write_excel_cell(sheet, row, 1, self.db_name)
+        return row + 1
+
+    def _write_activity_excel_section(self, sheet, row: int, activity: dict, bold) -> int:
+        _write_excel_cell(sheet, row, 0, "Activity", bold)
+        _write_excel_cell(sheet, row, 1, activity["name"])
+        row += 1
+
+        for field in _ordered_export_fields([activity], EXCEL_ACTIVITY_FIELD_ORDER, EXCEL_ACTIVITY_SKIP_FIELDS):
+            _write_excel_cell(sheet, row, 0, field)
+            _write_excel_cell(sheet, row, 1, activity.get(field))
+            row += 1
+
+        exchanges = activity.get("exchanges", [])
+        _write_excel_cell(sheet, row, 0, "Exchanges", bold)
+        row += 1
+
+        if exchanges:
+            columns = _ordered_export_fields(exchanges, EXCEL_EXCHANGE_FIELD_ORDER, EXCEL_EXCHANGE_SKIP_FIELDS)
+            for column, field in enumerate(columns):
+                _write_excel_cell(sheet, row, column, field)
+            row += 1
+
+            for exchange in exchanges:
+                for column, field in enumerate(columns):
+                    _write_excel_cell(sheet, row, column, exchange.get(field))
+                row += 1
+
+        return row
 
     def remove_empty_datasets(self):
         self.i.data = [ds for ds in self.i.data if len(ds["exchanges"]) >= 1]

@@ -1,5 +1,6 @@
 from types import SimpleNamespace
 
+import bw2io
 import pytest
 
 from brightpath import simaproconverter
@@ -336,6 +337,69 @@ def test_convert_to_brightway_formats_dataset_and_exchanges():
     assert substitution["type"] == "technosphere"
     assert substitution["amount"] == -3.0
     assert biosphere["categories"] == ("natural resource", "in water")
+
+
+def test_convert_to_brightway_rejects_unknown_output_format():
+    converter = make_converter([])
+
+    with pytest.raises(ValueError, match="Format must be"):
+        converter.convert_to_brightway(format="json")
+
+
+def test_convert_to_brightway_writes_excel_importable_by_bw2io(tmp_path):
+    data = [
+        {
+            "name": "Electricity {CH}| market for | Cut-off, U",
+            "unit": "kilowatt hour",
+            "simapro metadata": {"Comment": "dataset comment"},
+            "exchanges": [
+                {
+                    "type": "production",
+                    "name": "Electricity {CH}| market for | Cut-off, U",
+                    "unit": "kilowatt hour",
+                    "amount": 1.0,
+                    "input": (None, "production"),
+                },
+                {
+                    "type": "biosphere",
+                    "name": "Water, lake",
+                    "categories": ("natural resource", "unspecified"),
+                    "unit": "cubic meter",
+                    "amount": 4.0,
+                },
+            ],
+        }
+    ]
+    converter = make_converter(data, db_name="converted_db")
+
+    output = converter.convert_to_brightway(format="excel", filename=tmp_path / "converted")
+
+    assert output == (tmp_path / "converted.xlsx").resolve()
+    importer = bw2io.ExcelImporter(output)
+    assert importer.db_name == "converted_db"
+    assert len(importer.data) == 1
+
+    dataset = importer.data[0]
+    assert dataset["name"] == "market for electricity"
+    assert dataset["reference product"] == "electricity"
+    assert dataset["location"] == "CH"
+    assert dataset["unit"] == "kilowatt hour"
+    assert dataset["comment"] == "dataset comment"
+
+    production = next(exc for exc in dataset["exchanges"] if exc["type"] == "production")
+    biosphere = next(exc for exc in dataset["exchanges"] if exc["type"] == "biosphere")
+    assert production["name"] == "market for electricity"
+    assert production["reference product"] == "electricity"
+    assert production["amount"] == 1
+    assert biosphere["name"] == "Water, lake"
+    assert biosphere["categories"] == "natural resource::in water"
+
+
+def test_write_brightway_excel_requires_xlsx_suffix(tmp_path):
+    converter = make_converter([])
+
+    with pytest.raises(ValueError, match="\\.xlsx"):
+        converter.write_brightway_excel(tmp_path / "converted.csv")
 
 
 def test_convert_to_brightway_drops_simapro_final_waste_indicators():
