@@ -30,6 +30,21 @@ classifiers = [
 ]
 urls = {"Homepage" = "https://github.com/polca/brightpath"}
 
+[project.optional-dependencies]
+test = [
+    "pytest",
+    "pytest-cov",
+]
+dev = [
+    "bandit",
+    "black",
+    "build",
+    "isort",
+    "pytest",
+    "pytest-cov",
+    "ruff",
+]
+
 [tool.setuptools.dynamic]
 dependencies = {file = "requirements.txt" }
 
@@ -37,4 +52,21 @@ dependencies = {file = "requirements.txt" }
 where = ["."]
 include = ["brightpath*"]
 
+[tool.black]
+line-length = 120
+target-version = ["py39", "py310", "py311"]
 
+[tool.isort]
+profile = "black"
+line_length = 120
+
+[tool.ruff]
+line-length = 120
+target-version = "py39"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B"]
+ignore = ["E501"]
+
+[tool.bandit]
+exclude_dirs = ["tests", "dev", "examples"]

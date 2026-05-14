@@ -1,5 +1,7 @@
 import csv
 import re
+from copy import deepcopy
+from numbers import Real
 
 import bw2io
 
@@ -12,16 +14,54 @@ from pathlib import Path
 from voluptuous import Schema, Required, Optional, Url
 from prettytable import PrettyTable
 import numpy as np
-import re
 import logging
+import tempfile
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    filename="brightpath.log",  # Log file to save the entries
-    filemode="a",  # Append to the log file if it exists, 'w' to overwrite
-    format="%(asctime)s - %(levelname)s - %(module)s - %(message)s",
-    datefmt="%Y-%m-%d %H:%M:%S",
-)
+logger = logging.getLogger(__name__)
+
+ALLOWED_EXCHANGE_TYPES = {"production", "technosphere", "biosphere"}
+ALLOWED_BIOSPHERE_CATEGORIES = {"natural resource", "air", "water", "soil"}
+
+
+def _load_yaml_file(filepath: Path, description: str):
+    if not filepath.is_file():
+        raise FileNotFoundError(f"{description} could not be found at {filepath}.")
+
+    try:
+        with open(filepath, "r", encoding="utf-8") as stream:
+            data = yaml.safe_load(stream)
+    except yaml.YAMLError as exc:
+        raise ValueError(f"Could not parse {description} at {filepath}.") from exc
+
+    if data is None:
+        raise ValueError(f"{description} at {filepath} is empty.")
+
+    return data
+
+
+def escape_spreadsheet_formula(value):
+    """
+    Escape text values that spreadsheet programs can interpret as formulas.
+    Numeric negative values are left untouched so SimaPro amounts stay numeric.
+    """
+    if not isinstance(value, str):
+        return value
+
+    stripped = value.lstrip()
+    if not stripped:
+        return value
+
+    first = stripped[0]
+    if first in ("=", "+", "@"):
+        return f"'{value}"
+
+    if first == "-":
+        try:
+            float(stripped)
+        except ValueError:
+            return f"'{value}"
+
+    return value
 
 
 def get_simapro_biosphere() -> Dict[str, str]:
@@ -50,20 +90,10 @@ def get_simapro_subcompartments() -> Dict[str, str]:
 
     filename = "simapro_subcompartments.yaml"
     filepath = DATA_DIR / "export" / filename
-    if not filepath.is_file():
-        raise FileNotFoundError(
-            "The dictionary of subcompartments match "
-            "between ecoinvent and Simapro could not be found."
-        )
-
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    return data
+    return _load_yaml_file(
+        filepath,
+        "The dictionary of subcompartments match between ecoinvent and Simapro",
+    )
 
 
 def get_simapro_technosphere() -> Dict[Tuple[str, str], str]:
@@ -90,13 +120,7 @@ def get_simapro_ecoinvent_blacklist():
 
     filename = "simapro_blacklist.yaml"
     filepath = DATA_DIR / "export" / filename
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-    return data
+    return _load_yaml_file(filepath, "The SimaPro ecoinvent blacklist")
 
 
 simapro_ecoinvent_blacklist = get_simapro_ecoinvent_blacklist()
@@ -108,13 +132,7 @@ def get_simapro_uvek_blacklist():
 
     filename = "uvek_blacklist.yaml"
     filepath = DATA_DIR / "export" / filename
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-    return data
+    return _load_yaml_file(filepath, "The SimaPro UVEK blacklist")
 
 
 simapro_uvek_blacklist = get_simapro_uvek_blacklist()
@@ -127,7 +145,7 @@ def get_ecoinvent_to_uvek_mapping():
     """
     filename = "ecoinvent_to_uvek_mapping.csv"
     filepath = DATA_DIR / "export" / filename
-    with open(filepath, 'r') as file:
+    with open(filepath, "r", encoding="utf-8") as file:
         reader = csv.reader(file)
         next(reader)
         dictionary = {tuple(row[:4]): row[-1] for row in reader}
@@ -142,7 +160,7 @@ def get_ecoinvent_transport_distances():
     """
     filename = "ei_transport.csv"
     filepath = DATA_DIR / "export" / filename
-    with open(filepath, 'r') as file:
+    with open(filepath, "r", encoding="utf-8") as file:
         reader = csv.reader(file, delimiter=";")
         next(reader)
         dictionary = {
@@ -174,13 +192,7 @@ def get_simapro_fields_list() -> list[str]:
     filename = "simapro_fields.yaml"
     filepath = DATA_DIR / "export" / filename
 
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-    return data
+    return _load_yaml_file(filepath, "The SimaPro fields list")
 
 
 def get_simapro_units():
@@ -195,13 +207,7 @@ def get_simapro_units():
     filename = "simapro_units.yaml"
     filepath = DATA_DIR / "export" / filename
 
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-    return data
+    return _load_yaml_file(filepath, "The SimaPro units list")
 
 
 def get_simapro_headers():
@@ -216,14 +222,7 @@ def get_simapro_headers():
     filename = "simapro_headers.yaml"
     filepath = DATA_DIR / "export" / filename
 
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    return data
+    return _load_yaml_file(filepath, "The SimaPro headers list")
 
 
 def get_simapro_ecoinvent_exceptions():
@@ -236,14 +235,7 @@ def get_simapro_ecoinvent_exceptions():
     filename = "simapro_ei_exceptions.yaml"
     filepath = DATA_DIR / "export" / filename
 
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    return data
+    return _load_yaml_file(filepath, "The SimaPro ecoinvent exceptions")
 
 
 ecoinvent_exceptions = get_simapro_ecoinvent_exceptions()
@@ -260,12 +252,125 @@ def get_waste_exchange_names():
     filename = "waste_exchange_names.yaml"
     filepath = DATA_DIR / "export" / filename
 
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
+    return _load_yaml_file(filepath, "The waste exchange names list")
+
+
+def _context(activity_index: int, exchange_index: int = None) -> str:
+    if exchange_index is None:
+        return f"activity[{activity_index}]"
+    return f"activity[{activity_index}].exchanges[{exchange_index}]"
+
+
+def _is_number(value) -> bool:
+    return isinstance(value, Real) and not isinstance(value, bool)
+
+
+def _has_text(value) -> bool:
+    return isinstance(value, str) and bool(value.strip())
+
+
+def validate_brightway_inventory(data: list) -> list:
+    """
+    Validate Brightway-style inventories before converting them to SimaPro.
+
+    Raises ValueError with contextual messages when an activity or exchange
+    cannot be converted safely.
+    """
+    errors = []
+
+    if not isinstance(data, list):
+        raise ValueError("Inventory data must be a list of activity dictionaries.")
+
+    known_units = set(get_simapro_units())
+    required_activity_keys = ("name", "reference product", "location", "unit", "exchanges")
+    required_tech_keys = ("name", "reference product", "location", "unit", "amount")
+    required_bio_keys = ("name", "categories", "unit", "amount")
+
+    for activity_index, activity in enumerate(data):
+        activity_ctx = _context(activity_index)
+        if not isinstance(activity, dict):
+            errors.append(f"{activity_ctx}: activity must be a dictionary.")
+            continue
+
+        for key in required_activity_keys:
+            if key not in activity:
+                errors.append(f"{activity_ctx}: missing required activity field `{key}`.")
+
+        for key in ("name", "reference product", "location", "unit"):
+            if key in activity and not _has_text(activity[key]):
+                errors.append(f"{activity_ctx}: activity field `{key}` must be a non-empty string.")
+
+        if "unit" in activity and _has_text(activity["unit"]) and activity["unit"] not in known_units:
+            errors.append(f"{activity_ctx}: unknown activity unit `{activity['unit']}`.")
+
+        exchanges = activity.get("exchanges")
+        if not isinstance(exchanges, list):
+            errors.append(f"{activity_ctx}: `exchanges` must be a list.")
+            continue
+
+        production_count = 0
+        production_with_category = False
+
+        for exchange_index, exchange in enumerate(exchanges):
+            exchange_ctx = _context(activity_index, exchange_index)
+            if not isinstance(exchange, dict):
+                errors.append(f"{exchange_ctx}: exchange must be a dictionary.")
+                continue
+
+            exchange_type = exchange.get("type")
+            if exchange_type not in ALLOWED_EXCHANGE_TYPES:
+                errors.append(
+                    f"{exchange_ctx}: unsupported exchange type `{exchange_type}`; "
+                    f"expected one of {sorted(ALLOWED_EXCHANGE_TYPES)}."
+                )
+                continue
+
+            required_keys = required_bio_keys if exchange_type == "biosphere" else required_tech_keys
+            for key in required_keys:
+                if key not in exchange:
+                    errors.append(f"{exchange_ctx}: missing required exchange field `{key}`.")
+
+            if "amount" in exchange and not _is_number(exchange["amount"]):
+                errors.append(f"{exchange_ctx}: `amount` must be a number.")
+
+            if "unit" in exchange and _has_text(exchange["unit"]) and exchange["unit"] not in known_units:
+                errors.append(f"{exchange_ctx}: unknown exchange unit `{exchange['unit']}`.")
+
+            if exchange_type in ("production", "technosphere"):
+                for key in ("name", "reference product", "location", "unit"):
+                    if key in exchange and not _has_text(exchange[key]):
+                        errors.append(f"{exchange_ctx}: exchange field `{key}` must be a non-empty string.")
+
+            if exchange_type == "biosphere":
+                if "name" in exchange and not _has_text(exchange["name"]):
+                    errors.append(f"{exchange_ctx}: exchange field `name` must be a non-empty string.")
+
+                categories = exchange.get("categories")
+                if not categories:
+                    errors.append(f"{exchange_ctx}: biosphere exchange is missing categories.")
+                elif not isinstance(categories, (tuple, list)):
+                    errors.append(f"{exchange_ctx}: biosphere categories must be a tuple or list.")
+                elif categories[0] not in ALLOWED_BIOSPHERE_CATEGORIES:
+                    errors.append(
+                        f"{exchange_ctx}: unsupported biosphere category `{categories[0]}`; "
+                        f"expected one of {sorted(ALLOWED_BIOSPHERE_CATEGORIES)}."
+                    )
+
+            if exchange_type == "production":
+                production_count += 1
+                if _has_text(exchange.get("simapro category")):
+                    production_with_category = True
+
+        if production_count != 1:
+            errors.append(f"{activity_ctx}: expected exactly one production exchange, found {production_count}.")
+        elif not production_with_category:
+            errors.append(
+                f"{activity_ctx}: production exchange must define a non-empty `simapro category`."
+            )
+
+    if errors:
+        raise ValueError("Inventory validation failed:\n" + "\n".join(errors))
+
     return data
 
 
@@ -277,55 +382,7 @@ def check_inventories(data: list) -> None:
     :return: list of activities or error
     """
 
-    MANDATORY_TECH_EXC_KEYS = ["name", "reference product", "location", "unit"]
-
-    MANDATORY_BIO_EXC_KEYS = ["name", "categories", "unit"]
-
-    faulty_exchanges = []
-
-    for activity in data:
-        for exchange in activity["exchanges"]:
-            if exchange["type"] in ["production", "technosphere"]:
-                if not all(key in exchange.keys() for key in MANDATORY_TECH_EXC_KEYS):
-                    faulty_exchanges.append(
-                        [
-                            exchange.get("name"),
-                            exchange.get("reference unit"),
-                            exchange.get("location"),
-                            "--",
-                            exchange.get("unit"),
-                        ]
-                    )
-            else:
-                if not all(key in exchange.keys() for key in MANDATORY_BIO_EXC_KEYS):
-                    faulty_exchanges.append(
-                        [
-                            exchange.get("name"),
-                            "--",
-                            "--",
-                            exchange.get("categories"),
-                            exchange.get("unit"),
-                        ]
-                    )
-
-    # print prettytable with faulty exchanges
-    if len(faulty_exchanges) > 0:
-        table = PrettyTable()
-        table.field_names = [
-            "Name",
-            "Reference product",
-            "Location",
-            "Categories",
-            "Unit",
-        ]
-        for exc in faulty_exchanges:
-            table.add_row(exc)
-
-        print(table)
-        raise ValueError(
-            "Some exchanges do not have mandatory exchange "
-            "fields (marked 'None' in table above)."
-        )
+    validate_brightway_inventory(data)
 
 
 def import_bw_inventories(filepath: str) -> list[dict]:
@@ -410,12 +467,7 @@ def load_inventory_metadata(filepath: str) -> dict:
     if filepath.suffix != ".yaml":
         raise ValueError("The file must be a .yaml file.")
 
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
+    data = _load_yaml_file(filepath, "The inventory metadata")
 
     # check that metadata is valid
     data = check_metadata(data)
@@ -498,13 +550,19 @@ def get_biosphere_exchanges(activity: dict, category: str = None) -> list:
     :param category: biosphere category
     :return: biosphere exchanges
     """
-    return [
-        exc
-        for exc in activity["exchanges"]
-        if exc["type"] == "biosphere"
-           and exc.get("categories")[0] == category
-           and exc["amount"] != 0
-    ]
+    exchanges = []
+    for exc in activity["exchanges"]:
+        if exc["type"] != "biosphere" or exc["amount"] == 0:
+            continue
+
+        categories = exc.get("categories")
+        if not categories:
+            raise ValueError(f"Biosphere exchange {exc.get('name')} is missing categories.")
+
+        if categories[0] == category:
+            exchanges.append(exc)
+
+    return exchanges
 
 
 def format_exchange_name(name: str, reference_product: str, location: str, unit: str, database: str) -> str:
@@ -518,6 +576,11 @@ def format_exchange_name(name: str, reference_product: str, location: str, unit:
     """
 
     if database == "ecoinvent":
+        if not name or not reference_product:
+            raise ValueError(
+                "Technosphere exchanges must define non-empty `name` and "
+                "`reference product` fields for ecoinvent export."
+            )
         # first letter of `name` should be capitalized
         reference_product = reference_product[0].upper() + reference_product[1:]
         name = name[0].upper() + name[1:]
@@ -606,6 +669,12 @@ def convert_sd_to_sd2(value: float, uncertainty_type: str) -> float:
         # normal distribution
         return 0
 
+    logger.warning(
+        "No SimaPro uncertainty scale conversion is implemented for %s; using 0.",
+        uncertainty_type,
+    )
+    return 0
+
 
 def get_uvek_conversion_factors() -> dict:
     """
@@ -615,14 +684,7 @@ def get_uvek_conversion_factors() -> dict:
     filename = "uvek_conversion_factors.yaml"
     filepath = DATA_DIR / "export" / filename
 
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    return data
+    return _load_yaml_file(filepath, "The UVEK conversion factors")
 
 
 def round_floats_in_string(s):
@@ -668,43 +730,64 @@ def flag_exchanges(activity: dict) -> dict:
     return activity
 
 
-def print_unused_exchanges(inventories: list) -> None:
+def collect_unused_exchanges(inventories: list) -> list[dict]:
     """
-    Print unused exchanges
+    Collect exchanges that have not been marked as used during conversion.
     :param inventories:
-    :return: None
+    :return: list of unused exchange summaries
     """
 
     unused_exchanges = []
-    exc_counter = 0
     for activity in inventories:
         for exc in activity["exchanges"]:
-            exc_counter += 1
             if exc.get("used", False) is False and exc["amount"] != 0:
                 unused_exchanges.append(
-                    (
-                        exc["name"],
-                        exc["unit"],
-                        exc.get("location", "GLO"),
-                        exc.get("categories", ),
-                    )
+                    {
+                        "activity": activity.get("name"),
+                        "exchange": exc.get("name"),
+                        "unit": exc.get("unit"),
+                        "location": exc.get("location", "GLO"),
+                        "categories": exc.get("categories"),
+                    }
                 )
 
+    return unused_exchanges
+
+
+def print_unused_exchanges(inventories: list) -> None:
+    """
+    Deprecated wrapper for displaying unused exchanges.
+    Prefer collect_unused_exchanges for programmatic reporting.
+    """
+
+    unused_exchanges = collect_unused_exchanges(inventories)
+
     if len(unused_exchanges) > 0:
-        print("The following exchanges have not been used:")
+        logger.warning("The following exchanges have not been used.")
         table = PrettyTable(
             (
+                "Activity",
                 "Exchange",
-                "Amount",
+                "Unit",
                 "Location",
                 "Categories",
             )
         )
-        for row in list(set(unused_exchanges)):
-            table.add_row(row)
+        seen = set()
+        for item in unused_exchanges:
+            row = (
+                item["activity"],
+                item["exchange"],
+                item["unit"],
+                item["location"],
+                item["categories"],
+            )
+            if row not in seen:
+                table.add_row(row)
+                seen.add(row)
         print(table)
     else:
-        print(f"All {exc_counter} exchanges have been converted!")
+        logger.info("All exchanges have been converted.")
 
 
 def check_exchanges_for_conversion(exchanges: list, database: str) -> list:
@@ -716,14 +799,16 @@ def check_exchanges_for_conversion(exchanges: list, database: str) -> list:
     :return: list of exchanges
     """
 
+    converted = deepcopy(exchanges)
+
     if database == "uvek":
         conversion_factors = get_uvek_conversion_factors()
-        for exc in exchanges:
+        for exc in converted:
             if exc["name"] in conversion_factors:
                 exc["amount"] *= conversion_factors[exc["name"]].get("factor", 1)
                 exc["unit"] = conversion_factors[exc["name"]].get("unit", exc["unit"])
 
-    return exchanges
+    return converted
 
 
 def fetch_transport_distance(name: str, location: str) -> tuple:
@@ -760,6 +845,8 @@ def add_distri_transport(activity: dict) -> dict:
     :param activity: activity
     :return: activity with added transport exchanges.
     """
+
+    activity = deepcopy(activity)
 
     train_ch, lorry_ch, barge_ch = (0.0, 0.0, 0.0)
     train_rer, lorry_rer, barge_rer = (0.0, 0.0, 0.0)
@@ -907,38 +994,80 @@ def add_distri_transport(activity: dict) -> dict:
 
     return activity
 
-def remove_duplicates(data):
-    a = []
-    acts = []
-    for x in data:
-        if x["name"] not in a:
-            a.append(x["name"])
-            acts.append(x)
-        else:
-            logging.warning(f"Duplicate found: {x['name']}")
-    return acts
+def ensure_unique_datasets(data):
+    seen = {}
+    duplicates = []
 
-def check_simapro_inventory(file):
+    for dataset in data:
+        key = (
+            dataset.get("name"),
+            dataset.get("reference product"),
+            dataset.get("location"),
+        )
+        if key in seen:
+            duplicates.append(key)
+        else:
+            seen[key] = dataset
+
+    if duplicates:
+        duplicate_text = ", ".join(str(key) for key in duplicates)
+        raise ValueError(
+            "Duplicate datasets found after SimaPro name parsing: "
+            f"{duplicate_text}. Dataset identity must be unique by "
+            "(name, reference product, location)."
+        )
+
+    return data
+
+
+def remove_duplicates(data):
+    logger.warning(
+        "remove_duplicates is deprecated and no longer drops datasets. "
+        "Use ensure_unique_datasets for validation."
+    )
+    return ensure_unique_datasets(data)
+
+
+def check_simapro_inventory(file, output_path=None):
     # read CSV file
     new_file_data = []
-    with open(file, "r", encoding="latin-1") as f:
+    changed = False
+    source = Path(file)
+    with open(source, "r", encoding="latin-1") as f:
         data = csv.reader(f, delimiter=';')
         for r, row in enumerate(data):
-            row = search_for_forbidden_units(row)
-            for v, val in enumerate(row):
-                search_for_forbidden_units(val)
+            updated_row = search_for_forbidden_units(row)
+            changed = changed or updated_row != row
+            row = updated_row
             new_file_data.append(row)
 
-    # save new file
-    with open(file.lower().replace(".csv", "_edited.csv"), mode='w', encoding="latin-1", newline='') as e:
-        writer = csv.writer(e, delimiter=';')
-        for row in new_file_data:
-            writer.writerow(row)
+    if not changed and output_path is None:
+        return source
 
-    logging.info(
-        f"New inventory file saved as: {file.lower().replace('.csv', '_edited.csv')}."
-    )
-    return file.lower().replace(".csv", "_edited.csv")
+    if output_path is None:
+        suffix = source.suffix or ".csv"
+        with tempfile.NamedTemporaryFile(
+            mode="w",
+            encoding="latin-1",
+            newline="",
+            suffix=suffix,
+            prefix=f"{source.stem}_edited_",
+            delete=False,
+        ) as temp:
+            output = Path(temp.name)
+            writer = csv.writer(temp, delimiter=';')
+            for row in new_file_data:
+                writer.writerow(row)
+    else:
+        output = Path(output_path)
+        output.parent.mkdir(parents=True, exist_ok=True)
+        with open(output, mode='w', encoding="latin-1", newline='') as e:
+            writer = csv.writer(e, delimiter=';')
+            for row in new_file_data:
+                writer.writerow(row)
+
+    logger.info("Cleaned SimaPro inventory file saved as: %s.", output)
+    return output
 
 
 def search_for_forbidden_units(row: list) -> list:
@@ -954,32 +1083,27 @@ def search_for_forbidden_units(row: list) -> list:
         "min": "minute",
     }
 
-    for v, val in enumerate(row):
+    updated = list(row)
+    for v, val in enumerate(updated):
         if val in FORBIDDEN_UNITS:
-            logging.warning(
-                f"Unit {val} replaced by {FORBIDDEN_UNITS[val]}."
+            logger.warning(
+                "Unit %s replaced by %s.",
+                val,
+                FORBIDDEN_UNITS[val],
             )
-            row[v] = FORBIDDEN_UNITS[val]
+            updated[v] = FORBIDDEN_UNITS[val]
 
-    return row
+    return updated
+
 
 def load_biosphere_correspondence():
     filename = "correspondence_biosphere_flows.yaml"
     filepath = DATA_DIR / "export" / filename
-    if not filepath.is_file():
-        raise FileNotFoundError(
-            "The dictionary of subcompartments match "
-            "between ecoinvent and Simapro could not be found."
-        )
+    return _load_yaml_file(
+        filepath,
+        "The dictionary of biosphere flow correspondence between ecoinvent and Simapro",
+    )
 
-    # read YAML file
-    with open(filepath, "r") as stream:
-        try:
-            data = yaml.safe_load(stream)
-        except yaml.YAMLError as exc:
-            print(exc)
-
-    return data
 
 def load_ei_biosphere_flows():
     filename = "flows_biosphere_39.csv"
@@ -1001,6 +1125,3 @@ def lower_cap_first_letter(s):
     if re.match(r'^[A-Z]+(\s|$|-|,)', s):
         return s  # Keep acronyms unchanged
     return s[0].lower() + s[1:] if s else s  # Lowercase first letter otherwise
-
-
-

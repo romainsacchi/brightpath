@@ -4,6 +4,7 @@ Simapro inventories to Brightway inventory files.
 """
 from . import DATA_DIR
 from .utils import (
+    ALLOWED_BIOSPHERE_CATEGORIES,
     get_simapro_technosphere,
     get_simapro_biosphere,
     get_simapro_subcompartments,
@@ -11,19 +12,28 @@ from .utils import (
     get_waste_exchange_names,
     load_ei_biosphere_flows,
     load_biosphere_correspondence,
-    remove_duplicates,
-    lower_cap_first_letter
+    ensure_unique_datasets,
+    lower_cap_first_letter,
 )
 
 from pathlib import Path
+from copy import deepcopy
 import bw2io
 import logging
 import csv
-from datetime import datetime
+import re
+import tempfile
 
 WASTE_TERMS = get_waste_exchange_names()
+logger = logging.getLogger(__name__)
 
 def format_technosphere_exchange(txt: str):
+    if not isinstance(txt, str) or not txt.strip():
+        raise ValueError("Cannot parse an empty SimaPro technosphere exchange name.")
+
+    parts = [part.strip() for part in txt.split("|")]
+    if len(parts) > 4:
+        raise ValueError(f"Cannot parse SimaPro technosphere exchange name with too many fields: {txt!r}.")
 
     location_correction = {
         "WECC, US only": "US-WECC",
@@ -62,24 +72,29 @@ def format_technosphere_exchange(txt: str):
     ]
 
     reference_product, name, location = "", "", ""
-    if len(txt.split("|")) == 1:
-        reference_product = txt.split("|")[0]
+    if len(parts) == 1:
+        reference_product = parts[0]
         name = reference_product
 
-    if len(txt.split("|")) == 2:
-        reference_product, name = txt.split("|")
+    if len(parts) == 2:
+        reference_product, name = parts
 
-    if len(txt.split("|")) == 3:
-        reference_product, name, _ = txt.split("|")
+    if len(parts) == 3:
+        reference_product, name, _ = parts
 
-    if len(txt.split("|")) == 4:
-        reference_product, name, _, _ = txt.split("|")
+    if len(parts) == 4:
+        reference_product, name, _, _ = parts
+
+    _validate_braces(reference_product, txt)
+    _validate_braces(name, txt)
 
     reference_product = lower_cap_first_letter(reference_product)
 
     if "{" in reference_product:
-        reference_product, location = reference_product.split("{")
-        location, reference_product_ = location.split("}")
+        reference_product, location = reference_product.split("{", 1)
+        location, reference_product_ = location.split("}", 1)
+        if not location.strip():
+            raise ValueError(f"Cannot parse SimaPro exchange name with empty location: {txt!r}.")
         if len(reference_product_) > 0:
             reference_product_ = reference_product_.strip()
             reference_product = f"{reference_product} {reference_product_}"
@@ -105,7 +120,7 @@ def format_technosphere_exchange(txt: str):
         name = reference_product
 
     reference_product = reference_product.strip()
-    if reference_product[-1] in [",", "."]:
+    if reference_product and reference_product[-1] in [",", "."]:
         reference_product = reference_product[:-1]
 
     if name in correct_name:
@@ -138,16 +153,41 @@ def format_technosphere_exchange(txt: str):
     location = location.replace("}", "").strip()
     location = location_correction.get(location, location)
 
+    if not name.strip() or not reference_product.strip():
+        raise ValueError(f"Could not parse non-empty name and reference product from {txt!r}.")
+
     return name, reference_product, location
 
+
+def _validate_braces(value: str, original: str) -> None:
+    if value.count("{") != value.count("}"):
+        raise ValueError(f"Cannot parse malformed SimaPro location braces in {original!r}.")
+    if value.count("{") > 1 or value.count("}") > 1:
+        raise ValueError(f"Cannot parse multiple SimaPro location blocks in {original!r}.")
+
+
 def load_ecoinvent_activities(version: str) -> list:
-    with open(DATA_DIR/ "export" / f"list_ei{version}_cutoff_activities.csv") as f:
+    if not re.fullmatch(r"\d+(?:\.\d+){1,2}", version):
+        raise ValueError(f"Unsupported ecoinvent version format: {version!r}.")
+
+    with open(DATA_DIR / "export" / f"list_ei{version}_cutoff_activities.csv", encoding="utf-8") as f:
         reader = csv.reader(f)
         next(reader)
         return [l for l in reader]
 
 
-def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
+def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping, copy: bool = True):
+    exc = deepcopy(exc) if copy else exc
+    categories = exc.get("categories")
+    if not categories:
+        raise ValueError(f"Biosphere exchange {exc.get('name')} is missing categories.")
+    if not isinstance(categories, (tuple, list)):
+        raise ValueError(f"Biosphere exchange {exc.get('name')} categories must be a tuple or list.")
+    if categories[0] not in ALLOWED_BIOSPHERE_CATEGORIES:
+        raise ValueError(
+            f"Biosphere exchange {exc.get('name')} has unsupported category {categories[0]!r}."
+        )
+
     if "in ground" in exc["name"]:
         if ei_version not in ["3.5", "3.6", "3.7", "3.8"]:
             exc["name"] = exc["name"].replace(", in ground", "")
@@ -181,9 +221,8 @@ def format_biosphere_exchange(exc, ei_version, bio_flows, bio_mapping):
                 key = list(key)
                 key[0] = exc["name"]
                 key = tuple(key)
-        except:
-            logging.warning(f"Could not find biosphere flow for {exc['name']}.")
-            pass
+        except KeyError:
+            logger.warning("Could not find biosphere flow mapping for %s.", exc["name"])
 
     if key not in bio_flows:
         if exc["categories"][0] == "natural resource":
@@ -251,23 +290,19 @@ class SimaproConverter:
         :param ecoinvent_version: ecoinvent version to use
         """
 
-        logging.basicConfig(
-            level=logging.DEBUG,
-            filename="brightpath.log",  # Log file to save the entries
-            filemode="a",  # Append to the log file if it exists, 'w' to overwrite
-            format="%(asctime)s - %(levelname)s - %(module)s - %(message)s",
-            datefmt="%Y-%m-%d %H:%M:%S",
-        )
-
-        if not Path(filepath).exists():
+        source = Path(filepath)
+        if not source.exists():
             raise FileNotFoundError(f"File {filepath} not found.")
+        if source.suffix.lower() != ".csv":
+            raise ValueError("SimaPro inventories must be CSV files.")
 
-        self.filepath = Path(check_simapro_inventory(filepath))
-        self.i = bw2io.SimaProCSVImporter(filepath=self.filepath, name=db_name)
-        self.db_name = db_name or self.filepath.stem
+        self.original_filepath = source
+        self._tempdir = tempfile.TemporaryDirectory(prefix="brightpath_")
+        cleaned_path = Path(self._tempdir.name) / f"{source.stem}_edited{source.suffix}"
+        self.filepath = Path(check_simapro_inventory(source, output_path=cleaned_path))
+        self.db_name = db_name or source.stem
         self.i = bw2io.SimaProCSVImporter(filepath=self.filepath, name=self.db_name)
         self.i.apply_strategies()
-        self.i.data = remove_duplicates(self.i.data)
 
         self.ecoinvent_version = ecoinvent_version
         self.biosphere = get_simapro_biosphere()
@@ -294,8 +329,7 @@ class SimaproConverter:
 
     def convert_to_brightway(self):
 
-        print("- format exchanges")
-        internal_datasets = []
+        logger.info("Formatting exchanges.")
         for ds in self.i.data:
 
             if "Comment" in ds.get("simapro metadata", {}).keys():
@@ -304,11 +338,6 @@ class SimaproConverter:
                 del ds["simapro metadata"]["Comment"]
 
             ds["name"], ds["reference product"], ds["location"] = format_technosphere_exchange(ds["name"])
-            internal_datasets.append(
-                (
-                    ds["name"], ds["reference product"], ds["location"]
-                )
-            )
 
             for exc in ds["exchanges"]:
                 exc["simapro name"] = exc["name"]
@@ -320,11 +349,10 @@ class SimaproConverter:
                     exc["location"] = ds["location"]
 
                     if any(x in exc["name"] for x in WASTE_TERMS):
-                        logging.info(
-                            msg=f"{exc['name']} considered waste treatment "
-                                f"(input amount made negative)."
+                        logger.info(
+                            "%s considered waste treatment (input amount made negative).",
+                            exc["name"],
                         )
-                        print(f"{exc['name']} considered waste treatment: sign of production exchange made negative.")
                         exc["amount"] *= -1
 
                 if exc["type"] in ["technosphere", "substitution"]:
@@ -332,9 +360,9 @@ class SimaproConverter:
                     exc["reference product"] = exc["product"]
 
                     if any(x in exc["name"] for x in WASTE_TERMS):
-                        logging.info(
-                            msg=f"{exc['name']} considered waste treatment "
-                                f"(input amount made negative)."
+                        logger.info(
+                            "%s considered waste treatment (input amount made negative).",
+                            exc["name"],
                         )
                         exc["amount"] *= -1
 
@@ -343,22 +371,23 @@ class SimaproConverter:
                     exc["amount"] *= -1
 
                 if exc["type"] == "biosphere":
-                    format_biosphere_exchange(
+                    exc.update(format_biosphere_exchange(
                         exc,
                         self.ecoinvent_version,
                         self.ei_biosphere_flows,
                         self.biosphere_flows_correspondence
-                    )
+                    ))
 
+        ensure_unique_datasets(self.i.data)
         self.check_database_name()
 
-        print("- remove empty datasets")
+        logger.info("Removing empty datasets.")
         self.remove_empty_datasets()
-        print("- remove empty exchanges")
+        logger.info("Removing empty exchanges.")
         self.remove_empty_exchanges()
-        print("- check inventories")
+        logger.info("Checking inventories.")
         self.check_inventories()
-        print("Done!")
+        logger.info("SimaPro conversion completed.")
 
     def remove_empty_datasets(self):
         self.i.data = [
@@ -372,19 +401,26 @@ class SimaproConverter:
 
     def check_inventories(self):
 
+        errors = []
         for ds in self.i.data:
             if len([x for x in ds["exchanges"] if x["type"] == "production"]) != 1:
-                print(f"WARNING: {ds['name'], ds['reference product'], ds['location']} has more"
-                      f"than one production flow.")
+                errors.append(
+                    f"{ds['name'], ds['reference product'], ds['location']} must have exactly one production flow."
+                )
 
             for e in ds["exchanges"]:
                 if e["type"] not in ["production", "technosphere", "biosphere"]:
-                    print(f"WARNING: {ds['name'], ds['reference product'], ds['location']} has an"
-                          f"unknown flow type {e['type']}.")
+                    errors.append(
+                        f"{ds['name'], ds['reference product'], ds['location']} has an unknown flow type {e['type']}."
+                    )
 
                 if e["type"] == "production":
                     if (e["name"], e["product"], e["location"]) != (
                             ds["name"], ds["reference product"], ds["location"]
                     ):
-                        print(f"WARNING: {ds['name'], ds['reference product'], ds['location']} has an"
-                              f"incorrect production flow {e}.")
+                        errors.append(
+                            f"{ds['name'], ds['reference product'], ds['location']} has an incorrect production flow {e}."
+                        )
+
+        if errors:
+            raise ValueError("Inventory validation failed:\n" + "\n".join(errors))
