@@ -1,5 +1,5 @@
 __all__ = ("BrightwayConverter", "SimaproConverter", "DATA_DIR")
-__version__ = (0, 0, 2)
+__version__ = (0, 0, 3)
 
 from pathlib import Path
 

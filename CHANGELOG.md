@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 - No changes yet.
 
-## 0.0.2 - 2026-05-14
+## 0.0.3 - 2026-05-14
 
 ### Added
 
