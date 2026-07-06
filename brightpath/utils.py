@@ -270,14 +270,17 @@ def _has_text(value) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
-def validate_brightway_inventory(data: list) -> list:
+def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = True) -> tuple[list[str], list[str]]:
     """
-    Validate Brightway-style inventories before converting them to SimaPro.
+    Inspect Brightway-style inventories and return contextual error and warning messages.
 
-    Raises ValueError with contextual messages when an activity or exchange
-    cannot be converted safely.
+    When ``require_simapro_category`` is ``True``, missing ``simapro category`` values on
+    production exchanges are treated as blocking conversion errors. When ``False``, this
+    SimaPro-export-specific requirement is ignored so Brightway-format validation can succeed
+    outside a SimaPro-export context.
     """
-    errors = []
+    errors: list[str] = []
+    warnings: list[str] = []
 
     if not isinstance(data, list):
         raise ValueError("Inventory data must be a list of activity dictionaries.")
@@ -364,8 +367,25 @@ def validate_brightway_inventory(data: list) -> list:
 
         if production_count != 1:
             errors.append(f"{activity_ctx}: expected exactly one production exchange, found {production_count}.")
-        elif not production_with_category:
-            errors.append(f"{activity_ctx}: production exchange must define a non-empty `simapro category`.")
+        elif require_simapro_category and not production_with_category:
+            message = f"{activity_ctx}: production exchange must define a non-empty `simapro category`."
+            errors.append(message)
+
+    return errors, warnings
+
+
+def validate_brightway_inventory(data: list, *, require_simapro_category: bool = True) -> list:
+    """
+    Validate Brightway-style inventories.
+
+    By default this enforces SimaPro-export requirements as well. Pass
+    ``require_simapro_category=False`` to validate Brightway workbook structure without requiring
+    SimaPro-specific production category metadata.
+    """
+    errors, _warnings = inspect_brightway_inventory(
+        data,
+        require_simapro_category=require_simapro_category,
+    )
 
     if errors:
         raise ValueError("Inventory validation failed:\n" + "\n".join(errors))

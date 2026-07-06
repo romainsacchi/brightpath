@@ -190,6 +190,23 @@ def test_validate_brightway_inventory_rejects_bad_amount_and_categories():
         utils.validate_brightway_inventory(data)
 
 
+def test_inspect_brightway_inventory_can_relax_simapro_category_requirement():
+    data = [activity_with_exchanges(production_exchange(**{"simapro category": ""}))]
+
+    errors, warnings = utils.inspect_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+    assert errors == []
+    assert warnings == []
+
+    utils.validate_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+
 def test_find_production_exchange_returns_exchange_or_raises():
     production = production_exchange()
     assert utils.find_production_exchange(activity_with_exchanges(production)) is production

@@ -107,6 +107,11 @@ The first analysis milestone currently supports:
 * Brightway Excel workbooks (`.xlsx`)
 * SimaPro CSV exports (`.csv`)
 
+For Brightway Excel analysis, BrightPath validates the workbook as a Brightway
+inventory. SimaPro-specific metadata such as `simapro category` on production
+exchanges is enforced only in actual Brightway-to-SimaPro conversion paths, not
+during upload-intake analysis.
+
 ## Development
 
 * Source code is formatted with standard Python tools and tested with

@@ -11,7 +11,7 @@ from bw2io.importers.excel import ExcelImporter
 
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
 from brightpath.simaproconverter import SimaproConverter
-from brightpath.utils import validate_brightway_inventory
+from brightpath.utils import inspect_brightway_inventory
 
 
 SOURCE_FORMAT_BRIGHTWAY_EXCEL = "brightway_excel"
@@ -106,12 +106,18 @@ def _analyze_brightway_excel(
     result.candidates = _build_candidates(inventory_data)
 
     if inventory_data:
-        try:
-            validate_brightway_inventory(inventory_data)
-        except Exception as exc:
+        validation_errors, _validation_warnings = inspect_brightway_inventory(
+            inventory_data,
+            require_simapro_category=False,
+        )
+        if validation_errors:
             _attach_activity_issues(
                 candidates=result.candidates,
-                candidate_issues=_issues_from_brightway_validation_exception(exc),
+                candidate_issues=_issues_from_brightway_validation_messages(
+                    validation_errors,
+                    severity="error",
+                    code="inventory_validation_error",
+                ),
                 file_issues=result.file_issues,
             )
 
@@ -188,23 +194,36 @@ def _build_candidates(inventory_data: list[dict]) -> list[CandidateSummary]:
 
 
 def _issues_from_brightway_validation_exception(exc: Exception) -> list[Issue]:
+    return _issues_from_brightway_validation_messages(
+        _exception_lines(exc),
+        severity="error",
+        code="inventory_validation_error",
+    )
+
+
+def _issues_from_brightway_validation_messages(
+    messages: list[str],
+    *,
+    severity: str,
+    code: str,
+) -> list[Issue]:
     issues: list[Issue] = []
-    for line in _exception_lines(exc):
+    for line in messages:
         match = _ACTIVITY_PATH_PATTERN.match(line)
         if match:
             issues.append(
                 Issue(
-                    severity="error",
-                    code="inventory_validation_error",
-                    message=match.group("message"),
+                    severity=severity,
+                    code=code,
+                    message=line,
                     path=match.group("path"),
                 )
             )
             continue
         issues.append(
             Issue(
-                severity="error",
-                code="inventory_validation_error",
+                severity=severity,
+                code=code,
                 message=line,
             )
         )

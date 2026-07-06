@@ -77,7 +77,7 @@ def test_analyze_brightway_excel_returns_candidate_summaries(tmp_path):
     assert result.candidates[0].issues == []
 
 
-def test_analyze_brightway_excel_attaches_candidate_validation_errors(tmp_path):
+def test_analyze_brightway_excel_ignores_missing_simapro_category(tmp_path):
     invalid_activity = minimal_activity()
     del invalid_activity["exchanges"][0]["simapro category"]
     workbook = make_brightway_excel(tmp_path, [invalid_activity])
@@ -86,9 +86,22 @@ def test_analyze_brightway_excel_attaches_candidate_validation_errors(tmp_path):
 
     assert result.file_issues == []
     assert len(result.candidates) == 1
+    assert result.candidates[0].issues == []
+
+
+def test_analyze_brightway_excel_keeps_structural_validation_errors_blocking(tmp_path):
+    invalid_activity = minimal_activity()
+    invalid_activity["exchanges"][0]["unit"] = "made-up unit"
+    workbook = make_brightway_excel(tmp_path, [invalid_activity])
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert result.file_issues == []
+    assert len(result.candidates) == 1
     assert len(result.candidates[0].issues) == 1
-    assert "production exchange must define" in result.candidates[0].issues[0].message
-    assert result.candidates[0].issues[0].path == "activity[0]"
+    assert result.candidates[0].issues[0].severity == "error"
+    assert result.candidates[0].issues[0].code == "inventory_validation_error"
+    assert "unknown exchange unit" in result.candidates[0].issues[0].message
 
 
 def test_analyze_simapro_csv_returns_candidate_summaries(tmp_path):
