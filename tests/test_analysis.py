@@ -263,6 +263,61 @@ def test_analyze_brightway_excel_infers_background_profile_from_catalogs(tmp_pat
     assert any(issue.code == "background_profile_inferred" for issue in result.file_issues)
 
 
+def test_analyze_brightway_excel_prefers_latest_cutoff_when_profile_matches_are_tied(
+    tmp_path, monkeypatch
+):
+    directory = tmp_path / "reference_catalogs"
+    directory.mkdir(exist_ok=True)
+    for version in ("3.9", "3.10"):
+        for system_model in ("cutoff", "consequential"):
+            write_catalog(
+                tmp_path,
+                family="ecoinvent",
+                version=version,
+                system_model=system_model,
+                technosphere=[
+                    {
+                        "name": "market for steel",
+                        "reference_product": "steel",
+                        "location": "GLO",
+                        "unit": "kilogram",
+                    }
+                ],
+                biosphere=[],
+            )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "market for steel",
+                        "reference product": "steel",
+                        "location": "GLO",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert result.source_profile == BackgroundProfile(
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+    )
+    assert len(result.file_issues) == 1
+    assert result.file_issues[0].severity == "warning"
+    assert result.file_issues[0].code == "background_profile_assumed"
+    assert "selected ecoinvent 3.10 cutoff" in result.file_issues[0].message
+    assert "override" in result.file_issues[0].suggested_fix
+
+
 def test_analyze_brightway_excel_flags_missing_background_targets(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,

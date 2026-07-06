@@ -549,18 +549,35 @@ def _resolve_background_profile(
     if not scored_profiles:
         return normalized, issues
 
-    scored_profiles.sort(key=lambda item: (item[0], item[1].family, item[1].version, item[1].system_model), reverse=True)
+    scored_profiles.sort(
+        key=lambda item: (item[0], _profile_preference_key(item[1])),
+        reverse=True,
+    )
     best_score, best_profile = scored_profiles[0]
     tied = [profile for score, profile in scored_profiles if score == best_score]
     if len(tied) != 1:
+        preferred_profile = max(tied, key=_profile_preference_key)
+        resolved = BackgroundProfile(
+            family=normalized.family or preferred_profile.family,
+            version=normalized.version or preferred_profile.version,
+            system_model=normalized.system_model or preferred_profile.system_model,
+        ).normalized()
         issues.append(
             Issue(
-                severity="info",
-                code="background_profile_ambiguous",
-                message="Background profile inference was ambiguous across several local reference catalogs.",
+                severity="warning",
+                code="background_profile_assumed",
+                message=(
+                    f"Several local reference catalogs matched equally well. BrightPath selected "
+                    f"{resolved.family} {resolved.version} {resolved.system_model} using its "
+                    "default tie-breaker: most recent version, then cut-off when available."
+                ),
+                suggested_fix=(
+                    "Review the chosen background version and system model and override them in "
+                    "the calling workflow if needed."
+                ),
             )
         )
-        return normalized, issues
+        return resolved, issues
 
     resolved = BackgroundProfile(
         family=normalized.family or best_profile.family,
@@ -578,6 +595,27 @@ def _resolve_background_profile(
         )
     )
     return resolved, issues
+
+
+def _profile_preference_key(profile: BackgroundProfile) -> tuple[tuple[int, ...], int, str, str]:
+    return (
+        _version_sort_key(profile.version),
+        1 if profile.system_model == "cutoff" else 0,
+        profile.family,
+        profile.system_model,
+    )
+
+
+def _version_sort_key(version: str) -> tuple[int, ...]:
+    if not version:
+        return tuple()
+    parts: list[int] = []
+    for token in version.split("."):
+        try:
+            parts.append(int(token))
+        except ValueError:
+            parts.append(-1)
+    return tuple(parts)
 
 
 def _collect_technosphere_targets(inventory_data: list[dict]) -> list[tuple[str, str, str, str]]:

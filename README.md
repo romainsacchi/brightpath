@@ -121,7 +121,10 @@ For Brightway analysis, BrightPath validates the inventory as Brightway data,
 can infer the intended background family/version/system model from local
 reference catalogs, and raises explicit validation errors when technosphere or
 biosphere exchanges do not link to the uploaded inventory or the selected
-background catalog. SimaPro-specific metadata such as `simapro category` on
+background catalog. When several local reference catalogs match equally well,
+BrightPath defaults to the most recent matching version and prefers `cutoff`,
+while returning a warning so the calling workflow can let the user override
+that choice. SimaPro-specific metadata such as `simapro category` on
 production exchanges is enforced only in actual Brightway-to-SimaPro
 conversion paths, not during upload-intake analysis.
 
