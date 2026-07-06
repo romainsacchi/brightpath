@@ -111,6 +111,10 @@ validate_inventory(
 )
 ```
 
+Each `candidate` also exposes optional `description_hint` and `source_hint`
+values when the uploaded inventory contains dataset-level `comment` or `source`
+metadata that an intake workflow may want to prefill downstream.
+
 The first analysis milestone currently supports:
 
 * Brightway Excel workbooks (`.xlsx`)

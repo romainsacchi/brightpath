@@ -309,9 +309,36 @@ def _build_candidates(inventory_data: list[dict]) -> list[CandidateSummary]:
                 reference_product=str(dataset.get("reference product") or ""),
                 location=str(dataset.get("location") or ""),
                 unit=str(dataset.get("unit") or ""),
+                description_hint=_stringify_metadata_hint(dataset.get("comment")),
+                source_hint=_stringify_metadata_hint(dataset.get("source")),
             )
         )
     return candidates
+
+
+def _stringify_metadata_hint(value) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, str):
+        return value.strip()
+    if isinstance(value, (int, float, bool)):
+        return str(value).strip()
+    if isinstance(value, dict):
+        lines = []
+        for key, item in value.items():
+            normalized_item = _stringify_metadata_hint(item)
+            if not normalized_item:
+                continue
+            label = str(key).strip()
+            if label:
+                lines.append(f"{label}: {normalized_item}")
+            else:
+                lines.append(normalized_item)
+        return "\n".join(lines).strip()
+    if isinstance(value, (list, tuple, set)):
+        parts = [_stringify_metadata_hint(item) for item in value]
+        return "\n".join(part for part in parts if part).strip()
+    return str(value).strip()
 
 
 def _issues_from_brightway_validation_exception(exc: Exception) -> list[Issue]:
@@ -679,6 +706,7 @@ def _validate_background_links(
         for activity in inventory_data
     }
     issues: list[Issue] = []
+    unknown_technosphere_by_activity: dict[int, list[tuple[str, str, str, str]]] = {}
     for activity_index, activity in enumerate(inventory_data):
         for exchange_index, exchange in enumerate(activity.get("exchanges", [])):
             exchange_type = exchange.get("type")
@@ -690,17 +718,7 @@ def _validate_background_links(
                     str(exchange.get("unit") or ""),
                 )
                 if key not in internal_targets and key not in catalog.technosphere:
-                    issues.append(
-                        Issue(
-                            severity="error",
-                            code="unknown_technosphere_target",
-                            message=(
-                                "Technosphere exchange does not match an uploaded dataset or the selected "
-                                "background reference catalog."
-                            ),
-                            path=_context_path(activity_index, exchange_index),
-                        )
-                    )
+                    unknown_technosphere_by_activity.setdefault(activity_index, []).append(key)
             elif exchange_type == "biosphere":
                 key = (
                     str(exchange.get("name") or ""),
@@ -718,11 +736,38 @@ def _validate_background_links(
                             path=_context_path(activity_index, exchange_index),
                         )
                     )
+    for activity_index, unknown_exchanges in unknown_technosphere_by_activity.items():
+        issues.append(
+            Issue(
+                severity="error",
+                code="unknown_technosphere_target",
+                message=_format_unknown_technosphere_message(unknown_exchanges),
+                path=f"activity[{activity_index}]",
+                suggested_fix=(
+                    "Check whether these technosphere exchanges belong to another background "
+                    "version or system model, or correct their name, reference product, "
+                    "location, or unit."
+                ),
+            )
+        )
     return issues, []
 
 
 def _context_path(activity_index: int, exchange_index: int) -> str:
     return f"activity[{activity_index}].exchanges[{exchange_index}]"
+
+
+def _format_unknown_technosphere_message(
+    exchanges: list[tuple[str, str, str, str]],
+) -> str:
+    lines = [
+        "Technosphere exchanges do not match an uploaded dataset or the selected background reference catalog."
+    ]
+    for name, reference_product, location, unit in exchanges:
+        lines.append(
+            f"- {name or '?'} | {reference_product or '?'} | {location or '?'} | {unit or '?'}"
+        )
+    return "\n".join(lines)
 
 
 def _warning_issues(messages: list[str]) -> list[Issue]:

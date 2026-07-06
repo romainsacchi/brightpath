@@ -207,6 +207,27 @@ def test_inspect_brightway_inventory_can_relax_simapro_category_requirement():
     )
 
 
+def test_inspect_brightway_inventory_accepts_biosphere_kilo_becquerel_unit():
+    data = [
+        activity_with_exchanges(
+            production_exchange(),
+            biosphere_exchange(
+                name="Hydrogen-3, Tritium",
+                categories=("air", "non-urban air or from high stacks"),
+                unit="kilo Becquerel",
+            ),
+        )
+    ]
+
+    errors, warnings = utils.inspect_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+    assert errors == []
+    assert warnings == []
+
+
 def test_find_production_exchange_returns_exchange_or_raises():
     production = production_exchange()
     assert utils.find_production_exchange(activity_with_exchanges(production)) is production

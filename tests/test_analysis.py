@@ -166,7 +166,27 @@ def test_analyze_brightway_excel_returns_candidate_summaries(tmp_path):
     assert len(result.candidates) == 1
     assert result.candidates[0].name == "test process"
     assert result.candidates[0].reference_product == "test product"
+    assert result.candidates[0].description_hint == ""
+    assert result.candidates[0].source_hint == ""
     assert result.candidates[0].issues == []
+
+
+def test_analyze_brightway_excel_extracts_description_and_source_hints(tmp_path):
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                comment="Dataset comment",
+                source="Journal article",
+            )
+        ],
+    )
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert len(result.candidates) == 1
+    assert result.candidates[0].description_hint == "Dataset comment"
+    assert result.candidates[0].source_hint == "Journal article"
 
 
 def test_analyze_brightway_excel_ignores_missing_simapro_category(tmp_path):
@@ -367,6 +387,64 @@ def test_analyze_brightway_excel_flags_missing_background_targets(tmp_path, monk
     assert "unknown_biosphere_flow" in issue_codes
 
 
+def test_analyze_brightway_excel_groups_unknown_technosphere_targets_per_candidate(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "missing market a",
+                        "reference product": "missing product a",
+                        "location": "CH",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    },
+                    {
+                        "type": "technosphere",
+                        "name": "missing market b",
+                        "reference product": "missing product b",
+                        "location": "RER",
+                        "unit": "megajoule",
+                        "amount": 3.0,
+                    },
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+
+    technosphere_issues = [
+        issue
+        for issue in result.candidates[0].issues
+        if issue.code == "unknown_technosphere_target"
+    ]
+    assert len(technosphere_issues) == 1
+    assert "missing market a | missing product a | CH | kilogram" in technosphere_issues[0].message
+    assert "missing market b | missing product b | RER | megajoule" in technosphere_issues[0].message
+    assert technosphere_issues[0].suggested_fix
+
+
 def test_analyze_brightway_excel_accepts_uvek_catalog_with_external_biosphere_reference(
     tmp_path, monkeypatch
 ):
@@ -484,7 +562,7 @@ def test_validate_inventory_raises_for_unknown_background_targets(tmp_path, monk
         )
     except InventoryValidationError as exc:
         assert exc.result.candidates[0].issues[0].code == "unknown_technosphere_target"
-        assert "Technosphere exchange does not match" in str(exc)
+        assert "Technosphere exchanges do not match" in str(exc)
     else:
         raise AssertionError("InventoryValidationError was not raised")
 

@@ -44,6 +44,8 @@ class CandidateSummary:
     reference_product: str = ""
     location: str = ""
     unit: str = ""
+    description_hint: str = ""
+    source_hint: str = ""
     issues: list[Issue] = field(default_factory=list)
 
 

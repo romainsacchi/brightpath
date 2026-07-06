@@ -211,6 +211,27 @@ def get_simapro_units():
     return _load_yaml_file(filepath, "The SimaPro units list")
 
 
+def get_biosphere_units() -> set[str]:
+    """
+    Load the units used by the bundled biosphere flow reference table.
+    """
+
+    filepath = DATA_DIR / "export" / "flows_biosphere_39.csv"
+    if not filepath.is_file():
+        raise FileNotFoundError(f"Biosphere flow reference table could not be found at {filepath}.")
+
+    units: set[str] = set()
+    with open(filepath, encoding="utf-8", newline="") as handle:
+        reader = csv.reader(handle, delimiter=";")
+        for row in reader:
+            if len(row) < 4:
+                continue
+            unit = (row[3] or "").strip()
+            if unit:
+                units.add(unit)
+    return units
+
+
 def get_simapro_headers():
     """
     Load the list of Simapro fields that
@@ -286,6 +307,7 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
         raise ValueError("Inventory data must be a list of activity dictionaries.")
 
     known_units = set(get_simapro_units())
+    known_biosphere_units = get_biosphere_units()
     required_activity_keys = ("name", "reference product", "location", "unit", "exchanges")
     required_tech_keys = ("name", "reference product", "location", "unit", "amount")
     required_bio_keys = ("name", "categories", "unit", "amount")
@@ -337,15 +359,16 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
             if "amount" in exchange and not _is_number(exchange["amount"]):
                 errors.append(f"{exchange_ctx}: `amount` must be a number.")
 
-            if "unit" in exchange and _has_text(exchange["unit"]) and exchange["unit"] not in known_units:
-                errors.append(f"{exchange_ctx}: unknown exchange unit `{exchange['unit']}`.")
-
             if exchange_type in ("production", "technosphere"):
+                if "unit" in exchange and _has_text(exchange["unit"]) and exchange["unit"] not in known_units:
+                    errors.append(f"{exchange_ctx}: unknown exchange unit `{exchange['unit']}`.")
                 for key in ("name", "reference product", "location", "unit"):
                     if key in exchange and not _has_text(exchange[key]):
                         errors.append(f"{exchange_ctx}: exchange field `{key}` must be a non-empty string.")
 
             if exchange_type == "biosphere":
+                if "unit" in exchange and _has_text(exchange["unit"]) and exchange["unit"] not in known_biosphere_units:
+                    errors.append(f"{exchange_ctx}: unknown exchange unit `{exchange['unit']}`.")
                 if "name" in exchange and not _has_text(exchange["name"]):
                     errors.append(f"{exchange_ctx}: exchange field `name` must be a non-empty string.")
 
