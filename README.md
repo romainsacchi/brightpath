@@ -113,7 +113,9 @@ validate_inventory(
 
 Each `candidate` also exposes optional `description_hint` and `source_hint`
 values when the uploaded inventory contains dataset-level `comment` or `source`
-metadata that an intake workflow may want to prefill downstream.
+metadata that an intake workflow may want to prefill downstream. When no
+dedicated `source` field exists, BrightPath also splits a trailing `Source:`
+section out of the dataset comment.
 
 The first analysis milestone currently supports:
 

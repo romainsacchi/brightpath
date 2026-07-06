@@ -32,6 +32,9 @@ _SIMAPRO_IDENTITY_PATTERN = re.compile(
     r"^(?P<identity>\(.+?\))\s+(?P<message>.+)$"
 )
 _TUPLE_PATTERN = re.compile(r"\([^()]+\)")
+_TRAILING_SOURCE_PATTERN = re.compile(
+    r"(?is)(?:^|(?<=[.!?\n]))\s*(?P<label>sources?)\s*:\s*(?P<source>.+?)\s*$"
+)
 _ROOT_LOGGER = "brightpath"
 
 
@@ -302,6 +305,7 @@ def _load_brightway_delimited_without_validation(path: Path) -> list[dict]:
 def _build_candidates(inventory_data: list[dict]) -> list[CandidateSummary]:
     candidates: list[CandidateSummary] = []
     for index, dataset in enumerate(inventory_data):
+        description_hint, source_hint = _extract_candidate_metadata_hints(dataset)
         candidates.append(
             CandidateSummary(
                 index=index,
@@ -309,11 +313,41 @@ def _build_candidates(inventory_data: list[dict]) -> list[CandidateSummary]:
                 reference_product=str(dataset.get("reference product") or ""),
                 location=str(dataset.get("location") or ""),
                 unit=str(dataset.get("unit") or ""),
-                description_hint=_stringify_metadata_hint(dataset.get("comment")),
-                source_hint=_stringify_metadata_hint(dataset.get("source")),
+                description_hint=description_hint,
+                source_hint=source_hint,
             )
         )
     return candidates
+
+
+def _extract_candidate_metadata_hints(dataset: dict) -> tuple[str, str]:
+    description_hint = _stringify_metadata_hint(dataset.get("comment"))
+    source_hint = _stringify_metadata_hint(dataset.get("source"))
+    if source_hint:
+        return description_hint, source_hint
+
+    split_description, extracted_source = _split_trailing_source_section(description_hint)
+    if extracted_source:
+        return split_description, extracted_source
+    return description_hint, ""
+
+
+def _split_trailing_source_section(comment: str) -> tuple[str, str]:
+    normalized_comment = (comment or "").strip()
+    if not normalized_comment:
+        return "", ""
+
+    last_match = None
+    for match in _TRAILING_SOURCE_PATTERN.finditer(normalized_comment):
+        last_match = match
+    if last_match is None:
+        return normalized_comment, ""
+    if last_match.start() == 0:
+        return normalized_comment, ""
+
+    description = normalized_comment[: last_match.start()].rstrip()
+    source = last_match.group("source").strip()
+    return description, source
 
 
 def _stringify_metadata_hint(value) -> str:

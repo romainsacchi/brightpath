@@ -189,6 +189,52 @@ def test_analyze_brightway_excel_extracts_description_and_source_hints(tmp_path)
     assert result.candidates[0].source_hint == "Journal article"
 
 
+def test_analyze_brightway_excel_extracts_trailing_source_from_comment(tmp_path):
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                comment=(
+                    "This dataset models a foreground process. "
+                    "Source: Foteinis et al. (2023). https://doi.org/example"
+                )
+            )
+        ],
+    )
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert len(result.candidates) == 1
+    assert result.candidates[0].description_hint == "This dataset models a foreground process."
+    assert (
+        result.candidates[0].source_hint
+        == "Foteinis et al. (2023). https://doi.org/example"
+    )
+
+
+def test_analyze_brightway_excel_keeps_comment_when_source_marker_is_not_trailing(tmp_path):
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                comment=(
+                    "Source: internal screening assumptions. "
+                    "This dataset models a foreground process."
+                )
+            )
+        ],
+    )
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert len(result.candidates) == 1
+    assert (
+        result.candidates[0].description_hint
+        == "Source: internal screening assumptions. This dataset models a foreground process."
+    )
+    assert result.candidates[0].source_hint == ""
+
+
 def test_analyze_brightway_excel_ignores_missing_simapro_category(tmp_path):
     invalid_activity = minimal_activity()
     del invalid_activity["exchanges"][0]["simapro category"]
