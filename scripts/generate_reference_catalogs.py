@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import os
 import re
 from pathlib import Path
 
@@ -24,6 +25,11 @@ DEFAULT_UVEK_BIOSPHERE_PROFILE = BackgroundProfile(
     version="3.10",
     system_model="cutoff",
 )
+
+
+def clean_credential_value(value: str) -> str:
+    # RTF exports can leave line-control delimiters attached to plain-text tokens.
+    return value.strip().rstrip("\\}")
 
 
 def parse_args() -> argparse.Namespace:
@@ -51,8 +57,8 @@ def parse_args() -> argparse.Namespace:
         "--credentials-file",
         help="Path to a text or RTF file containing 'username:' and 'password:' lines",
     )
-    parser.add_argument("--username", help="ecoinvent username")
-    parser.add_argument("--password", help="ecoinvent password")
+    parser.add_argument("--username", help="ecoinvent username (overrides ECOINVENT_USERNAME)")
+    parser.add_argument("--password", help="ecoinvent password (overrides ECOINVENT_PASSWORD)")
     parser.add_argument(
         "--output-dir",
         help="Override output directory for generated catalogs",
@@ -80,20 +86,31 @@ def parse_args() -> argparse.Namespace:
 
 
 def load_credentials(args: argparse.Namespace) -> tuple[str, str]:
-    username = args.username or ""
-    password = args.password or ""
+    username = clean_credential_value(
+        args.username or os.getenv("ECOINVENT_USERNAME", "")
+    )
+    password = clean_credential_value(
+        args.password or os.getenv("ECOINVENT_PASSWORD", "")
+    )
     if username and password:
         return username, password
 
-    if not args.credentials_file:
-        raise ValueError("Provide --username/--password or --credentials-file.")
+    credentials_file = args.credentials_file or os.getenv("ECOINVENT_CREDENTIALS_FILE", "")
+    if not credentials_file:
+        raise ValueError(
+            "Provide ECOINVENT_USERNAME/ECOINVENT_PASSWORD, "
+            "--username/--password, or --credentials-file."
+        )
 
-    raw_text = Path(args.credentials_file).read_text(encoding="utf-8", errors="ignore")
+    raw_text = Path(credentials_file).read_text(encoding="utf-8", errors="ignore")
     username_match = re.search(r"username:\s*([^\s]+)", raw_text, re.IGNORECASE)
     password_match = re.search(r"password:\s*([^\s]+)", raw_text, re.IGNORECASE)
     if not username_match or not password_match:
         raise ValueError("Could not parse username/password from credentials file.")
-    return username_match.group(1), password_match.group(1)
+    return (
+        clean_credential_value(username_match.group(1)),
+        clean_credential_value(password_match.group(1)),
+    )
 
 
 def ensure_ecoinvent_database(
