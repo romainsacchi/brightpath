@@ -9,6 +9,7 @@ from pathlib import Path
 import bw2io
 from bw2io.importers.excel import ExcelImporter
 
+from brightpath.catalogs import available_catalog_profiles, load_background_catalog
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
 from brightpath.simaproconverter import SimaproConverter
 from brightpath.utils import inspect_brightway_inventory
@@ -104,6 +105,11 @@ def _analyze_brightway_excel(
     warnings.extend(_warning_issues(collector.messages))
     result.inventory_data = deepcopy(inventory_data)
     result.candidates = _build_candidates(inventory_data)
+    result.source_profile, profile_issues = _resolve_background_profile(
+        inventory_data,
+        source_profile,
+    )
+    result.file_issues.extend(profile_issues)
 
     if inventory_data:
         validation_errors, _validation_warnings = inspect_brightway_inventory(
@@ -120,6 +126,14 @@ def _analyze_brightway_excel(
                 ),
                 file_issues=result.file_issues,
             )
+        _attach_activity_issues(
+            candidates=result.candidates,
+            candidate_issues=_validate_background_links(
+                inventory_data,
+                result.source_profile,
+            ),
+            file_issues=result.file_issues,
+        )
 
     result.file_issues.extend(warnings)
     return result
@@ -388,6 +402,161 @@ def _reference_ecoinvent_version(source_profile: BackgroundProfile) -> str:
     if source_profile.family == "ecoinvent" and source_profile.version:
         return source_profile.version
     return "3.9"
+
+
+def _resolve_background_profile(
+    inventory_data: list[dict],
+    source_profile: BackgroundProfile,
+) -> tuple[BackgroundProfile, list[Issue]]:
+    normalized = source_profile.normalized()
+    issues: list[Issue] = []
+
+    if not inventory_data:
+        return normalized, issues
+
+    if normalized.family and normalized.version and normalized.system_model:
+        return normalized, issues
+
+    candidate_profiles = available_catalog_profiles(family=normalized.family)
+    if not candidate_profiles:
+        return normalized, issues
+
+    exchange_keys = _collect_technosphere_targets(inventory_data)
+    if not exchange_keys:
+        return normalized, issues
+
+    scored_profiles: list[tuple[int, BackgroundProfile]] = []
+    for profile in candidate_profiles:
+        try:
+            catalog = load_background_catalog(profile)
+        except FileNotFoundError:
+            continue
+        if normalized.version and profile.version != normalized.version:
+            continue
+        if normalized.system_model and profile.system_model != normalized.system_model:
+            continue
+        score = sum(1 for key in exchange_keys if key in catalog.technosphere)
+        if score > 0:
+            scored_profiles.append((score, profile))
+
+    if not scored_profiles:
+        return normalized, issues
+
+    scored_profiles.sort(key=lambda item: (item[0], item[1].family, item[1].version, item[1].system_model), reverse=True)
+    best_score, best_profile = scored_profiles[0]
+    tied = [profile for score, profile in scored_profiles if score == best_score]
+    if len(tied) != 1:
+        issues.append(
+            Issue(
+                severity="info",
+                code="background_profile_ambiguous",
+                message="Background profile inference was ambiguous across several local reference catalogs.",
+            )
+        )
+        return normalized, issues
+
+    resolved = BackgroundProfile(
+        family=normalized.family or best_profile.family,
+        version=normalized.version or best_profile.version,
+        system_model=normalized.system_model or best_profile.system_model,
+    ).normalized()
+    issues.append(
+        Issue(
+            severity="info",
+            code="background_profile_inferred",
+            message=(
+                f"Inferred background profile {resolved.family} {resolved.version} "
+                f"{resolved.system_model} from technosphere exchange matches."
+            ),
+        )
+    )
+    return resolved, issues
+
+
+def _collect_technosphere_targets(inventory_data: list[dict]) -> list[tuple[str, str, str, str]]:
+    collected: list[tuple[str, str, str, str]] = []
+    for activity in inventory_data:
+        for exchange in activity.get("exchanges", []):
+            if exchange.get("type") != "technosphere":
+                continue
+            collected.append(
+                (
+                    str(exchange.get("name") or ""),
+                    str(exchange.get("reference product") or ""),
+                    str(exchange.get("location") or ""),
+                    str(exchange.get("unit") or ""),
+                )
+            )
+    return collected
+
+
+def _validate_background_links(
+    inventory_data: list[dict],
+    source_profile: BackgroundProfile,
+) -> list[Issue]:
+    normalized = source_profile.normalized()
+    if not (normalized.family and normalized.version and normalized.system_model):
+        return []
+
+    try:
+        catalog = load_background_catalog(normalized)
+    except FileNotFoundError:
+        return []
+
+    internal_targets = {
+        (
+            str(activity.get("name") or ""),
+            str(activity.get("reference product") or ""),
+            str(activity.get("location") or ""),
+            str(activity.get("unit") or ""),
+        )
+        for activity in inventory_data
+    }
+    issues: list[Issue] = []
+    for activity_index, activity in enumerate(inventory_data):
+        for exchange_index, exchange in enumerate(activity.get("exchanges", [])):
+            exchange_type = exchange.get("type")
+            if exchange_type == "technosphere":
+                key = (
+                    str(exchange.get("name") or ""),
+                    str(exchange.get("reference product") or ""),
+                    str(exchange.get("location") or ""),
+                    str(exchange.get("unit") or ""),
+                )
+                if key not in internal_targets and key not in catalog.technosphere:
+                    issues.append(
+                        Issue(
+                            severity="error",
+                            code="unknown_technosphere_target",
+                            message=(
+                                "Technosphere exchange does not match an uploaded dataset or the selected "
+                                "background reference catalog."
+                            ),
+                            path=_context_path(activity_index, exchange_index),
+                        )
+                    )
+            elif exchange_type == "biosphere":
+                key = (
+                    str(exchange.get("name") or ""),
+                    tuple(str(item) for item in exchange.get("categories", ())),
+                    str(exchange.get("unit") or ""),
+                )
+                if key not in catalog.biosphere:
+                    issues.append(
+                        Issue(
+                            severity="error",
+                            code="unknown_biosphere_flow",
+                            message=(
+                                "Biosphere exchange does not match the selected background biosphere reference catalog."
+                            ),
+                            path=_context_path(activity_index, exchange_index),
+                        )
+                    )
+    return issues
+
+
+def _context_path(activity_index: int, exchange_index: int) -> str:
+    return f"activity[{activity_index}].exchanges[{exchange_index}]"
 
 
 def _warning_issues(messages: list[str]) -> list[Issue]:

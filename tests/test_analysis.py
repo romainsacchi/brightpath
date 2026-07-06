@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from types import SimpleNamespace
 
@@ -49,6 +50,27 @@ def make_simapro_csv(tmp_path, data, filename="inventory.csv"):
     return tmp_path / filename
 
 
+def write_catalog(tmp_path, *, family, version, system_model, technosphere, biosphere):
+    directory = tmp_path / "reference_catalogs"
+    directory.mkdir(exist_ok=True)
+    path = directory / f"{family}__{version}__{system_model}.json"
+    path.write_text(
+        json.dumps(
+            {
+                "profile": {
+                    "family": family,
+                    "version": version,
+                    "system_model": system_model,
+                },
+                "technosphere": technosphere,
+                "biosphere": biosphere,
+            }
+        ),
+        encoding="utf-8",
+    )
+    return directory
+
+
 def test_infer_source_format_supports_xlsx_and_csv():
     assert infer_source_format("inventory.xlsx") == SOURCE_FORMAT_BRIGHTWAY_EXCEL
     assert infer_source_format("inventory.csv") == SOURCE_FORMAT_SIMAPRO_CSV
@@ -86,6 +108,163 @@ def test_analyze_brightway_excel_ignores_missing_simapro_category(tmp_path):
 
     assert result.file_issues == []
     assert len(result.candidates) == 1
+    assert result.candidates[0].issues == []
+
+
+def test_analyze_brightway_excel_infers_background_profile_from_catalogs(tmp_path, monkeypatch):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[
+            {
+                "name": "market for steel",
+                "reference_product": "steel",
+                "location": "GLO",
+                "unit": "kilogram",
+            }
+        ],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "market for steel",
+                        "reference product": "steel",
+                        "location": "GLO",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert result.source_profile == BackgroundProfile(
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+    )
+    assert any(issue.code == "background_profile_inferred" for issue in result.file_issues)
+
+
+def test_analyze_brightway_excel_flags_missing_background_targets(tmp_path, monkeypatch):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "missing market",
+                        "reference product": "missing product",
+                        "location": "CH",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    },
+                    {
+                        "type": "biosphere",
+                        "name": "mystery flow",
+                        "categories": ("air", "urban air close to ground"),
+                        "unit": "kilogram",
+                        "amount": 1.0,
+                    },
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+
+    issue_codes = [issue.code for issue in result.candidates[0].issues]
+    assert "unknown_technosphere_target" in issue_codes
+    assert "unknown_biosphere_flow" in issue_codes
+
+
+def test_analyze_brightway_excel_accepts_uvek_catalog_with_external_biosphere_reference(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="uvek",
+        version="2025",
+        system_model="cutoff",
+        technosphere=[
+            {
+                "name": "market for steel",
+                "reference_product": "steel",
+                "location": "CH",
+                "unit": "kilogram",
+            }
+        ],
+        biosphere=[
+            {
+                "name": "Carbon dioxide, fossil",
+                "categories": ["air"],
+                "unit": "kilogram",
+            }
+        ],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "market for steel",
+                        "reference product": "steel",
+                        "location": "CH",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    },
+                    {
+                        "type": "biosphere",
+                        "name": "Carbon dioxide, fossil",
+                        "categories": ("air",),
+                        "unit": "kilogram",
+                        "amount": 1.0,
+                    },
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="uvek",
+            version="2025",
+            system_model="cutoff",
+        ),
+    )
+
+    assert result.file_issues == []
     assert result.candidates[0].issues == []
 
 

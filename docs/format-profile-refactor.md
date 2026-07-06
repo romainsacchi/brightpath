@@ -259,6 +259,18 @@ Examples:
 - unsupported profile combination -> error
 - exchange left unmapped but ignored by target format -> warning
 
+## Local reference catalog policy
+
+For upload-style analysis, local reference catalogs should stay separate from proprietary source
+databases and be generated on the machine where BrightPath runs:
+
+- ecoinvent catalogs come from imported Brightway databases, one catalog per version and system
+  model,
+- the UVEK 2025 catalog comes from a Brightway-compatible Excel workbook such as `lci-bafu.xlsx`,
+  using the workbook datasets as technosphere providers,
+- UVEK biosphere validation reuses the ecoinvent 3.10 cut-off biosphere reference instead of
+  treating the workbook biosphere exchanges as the source of truth.
+
 ## Recommended implementation phases
 
 ### Phase 1: additive analysis layer
