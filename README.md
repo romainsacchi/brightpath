@@ -79,6 +79,34 @@ path = converter.convert_to_brightway(
 print(path)
 ```
 
+### Analyze uploaded inventories without converting them
+
+BrightPath also exposes an additive analysis API that returns structured file
+issues and candidate dataset summaries. This is intended for intake workflows
+such as upload validation in web applications.
+
+```python
+from brightpath.analysis import analyze_inventory
+from brightpath.models import BackgroundProfile
+
+result = analyze_inventory(
+    path="/path/to/brightway-export.xlsx",
+    source_profile=BackgroundProfile(
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+    ),
+)
+
+for candidate in result.candidates:
+    print(candidate.name, candidate.reference_product, candidate.location)
+```
+
+The first analysis milestone currently supports:
+
+* Brightway Excel workbooks (`.xlsx`)
+* SimaPro CSV exports (`.csv`)
+
 ## Development
 
 * Source code is formatted with standard Python tools and tested with
