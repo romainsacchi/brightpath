@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import ast
+import csv
 import logging
+import os
 import re
 from copy import deepcopy
 from pathlib import Path
 
 import bw2io
+from bw2io import CSVImporter
 from bw2io.importers.excel import ExcelImporter
 
 from brightpath.catalogs import available_catalog_profiles, load_background_catalog
@@ -16,6 +19,8 @@ from brightpath.utils import inspect_brightway_inventory
 
 
 SOURCE_FORMAT_BRIGHTWAY_EXCEL = "brightway_excel"
+SOURCE_FORMAT_BRIGHTWAY_CSV = "brightway_csv"
+SOURCE_FORMAT_BRIGHTWAY_TSV = "brightway_tsv"
 SOURCE_FORMAT_SIMAPRO_CSV = "simapro_csv"
 SOFTWARE_BRIGHTWAY = "brightway"
 SOFTWARE_SIMAPRO = "simapro"
@@ -39,10 +44,32 @@ class _CollectingHandler(logging.Handler):
         self.messages.append(record.getMessage())
 
 
+class InventoryValidationError(ValueError):
+    def __init__(self, result: AnalysisResult) -> None:
+        self.result = result
+        super().__init__(_format_error_summary(result))
+
+
+class _TSVExtractor:
+    @classmethod
+    def extract(cls, filepath, encoding="utf-8-sig"):
+        assert os.path.exists(filepath), f"Can't find file at path {filepath}"
+        with open(filepath, encoding=encoding, newline="") as handle:
+            reader = csv.reader(handle, delimiter="\t")
+            data = [row for row in reader]
+        return [os.path.basename(filepath), data]
+
+
+class _TSVImporter(CSVImporter):
+    extractor = _TSVExtractor
+
+
 def infer_source_format(path: str | Path) -> str:
     suffix = Path(path).suffix.lower()
     if suffix == ".xlsx":
         return SOURCE_FORMAT_BRIGHTWAY_EXCEL
+    if suffix == ".tsv":
+        return SOURCE_FORMAT_BRIGHTWAY_TSV
     if suffix == ".csv":
         return SOURCE_FORMAT_SIMAPRO_CSV
     if suffix == ".xls":
@@ -69,6 +96,18 @@ def analyze_inventory(
             path=resolved_path,
             source_profile=profile,
         )
+    if resolved_format == SOURCE_FORMAT_BRIGHTWAY_CSV:
+        return _analyze_brightway_delimited(
+            path=resolved_path,
+            source_profile=profile,
+            detected_format=SOURCE_FORMAT_BRIGHTWAY_CSV,
+        )
+    if resolved_format == SOURCE_FORMAT_BRIGHTWAY_TSV:
+        return _analyze_brightway_delimited(
+            path=resolved_path,
+            source_profile=profile,
+            detected_format=SOURCE_FORMAT_BRIGHTWAY_TSV,
+        )
     if resolved_format == SOURCE_FORMAT_SIMAPRO_CSV:
         return _analyze_simapro_csv(
             path=resolved_path,
@@ -78,26 +117,74 @@ def analyze_inventory(
     raise ValueError(f"Unsupported source format: {resolved_format!r}.")
 
 
+def validate_inventory(
+    *,
+    path: str | Path,
+    source_format: str | None = None,
+    source_profile: BackgroundProfile | None = None,
+) -> AnalysisResult:
+    result = analyze_inventory(
+        path=path,
+        source_format=source_format,
+        source_profile=source_profile,
+    )
+    if result.has_errors:
+        raise InventoryValidationError(result)
+    return result
+
+
 def _analyze_brightway_excel(
     *,
     path: Path,
     source_profile: BackgroundProfile,
 ) -> AnalysisResult:
+    return _analyze_brightway_inventory_data(
+        path=path,
+        source_profile=source_profile,
+        detected_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL,
+        loader=_load_brightway_excel_without_validation,
+        parse_error_code="brightway_excel_parse_failed",
+    )
+
+
+def _analyze_brightway_delimited(
+    *,
+    path: Path,
+    source_profile: BackgroundProfile,
+    detected_format: str,
+) -> AnalysisResult:
+    return _analyze_brightway_inventory_data(
+        path=path,
+        source_profile=source_profile,
+        detected_format=detected_format,
+        loader=_load_brightway_delimited_without_validation,
+        parse_error_code="brightway_tabular_parse_failed",
+    )
+
+
+def _analyze_brightway_inventory_data(
+    *,
+    path: Path,
+    source_profile: BackgroundProfile,
+    detected_format: str,
+    loader,
+    parse_error_code: str,
+) -> AnalysisResult:
     result = AnalysisResult(
         detected_software=SOFTWARE_BRIGHTWAY,
-        detected_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL,
+        detected_format=detected_format,
         source_profile=source_profile,
     )
     warnings: list[Issue] = []
 
     with _capture_warnings() as collector:
         try:
-            inventory_data = _load_brightway_excel_without_validation(path)
+            inventory_data = loader(path)
         except Exception as exc:
             result.file_issues.extend(
                 _exception_to_file_issues(
                     exc,
-                    default_code="brightway_excel_parse_failed",
+                    default_code=parse_error_code,
                 )
             )
             inventory_data = []
@@ -126,14 +213,16 @@ def _analyze_brightway_excel(
                 ),
                 file_issues=result.file_issues,
             )
+        background_issues, background_file_issues = _validate_background_links(
+            inventory_data,
+            result.source_profile,
+        )
         _attach_activity_issues(
             candidates=result.candidates,
-            candidate_issues=_validate_background_links(
-                inventory_data,
-                result.source_profile,
-            ),
+            candidate_issues=background_issues,
             file_issues=result.file_issues,
         )
+        result.file_issues.extend(background_file_issues)
 
     result.file_issues.extend(warnings)
     return result
@@ -186,6 +275,24 @@ def _load_brightway_excel_without_validation(path: Path) -> list[dict]:
         raise ValueError("Brightway Excel analysis requires a .xlsx workbook.")
 
     importer = ExcelImporter(path)
+    if "biosphere-2-3-categories" not in bw2io.migrations:
+        bw2io.create_core_migrations()
+    importer.apply_strategies()
+    return importer.data
+
+
+def _load_brightway_delimited_without_validation(path: Path) -> list[dict]:
+    if not path.is_file():
+        raise FileNotFoundError("The file could not be found.")
+
+    suffix = path.suffix.lower()
+    if suffix == ".csv":
+        importer = CSVImporter(path)
+    elif suffix == ".tsv":
+        importer = _TSVImporter(path)
+    else:
+        raise ValueError("Brightway delimited analysis requires a .csv or .tsv file.")
+
     if "biosphere-2-3-categories" not in bw2io.migrations:
         bw2io.create_core_migrations()
     importer.apply_strategies()
@@ -493,15 +600,36 @@ def _collect_technosphere_targets(inventory_data: list[dict]) -> list[tuple[str,
 def _validate_background_links(
     inventory_data: list[dict],
     source_profile: BackgroundProfile,
-) -> list[Issue]:
+) -> tuple[list[Issue], list[Issue]]:
     normalized = source_profile.normalized()
     if not (normalized.family and normalized.version and normalized.system_model):
-        return []
+        return [], []
+
+    requires_catalog = any(
+        exchange.get("type") in {"technosphere", "biosphere"}
+        for activity in inventory_data
+        for exchange in activity.get("exchanges", [])
+    )
+    if not requires_catalog:
+        return [], []
 
     try:
         catalog = load_background_catalog(normalized)
     except FileNotFoundError:
-        return []
+        return [], [
+            Issue(
+                severity="error",
+                code="background_catalog_missing",
+                message=(
+                    "No local reference catalog is available for "
+                    f"{normalized.family} {normalized.version} {normalized.system_model}."
+                ),
+                suggested_fix=(
+                    "Generate or install the matching BrightPath reference catalog before "
+                    "validating exchange links against this background profile."
+                ),
+            )
+        ]
 
     internal_targets = {
         (
@@ -552,7 +680,7 @@ def _validate_background_links(
                             path=_context_path(activity_index, exchange_index),
                         )
                     )
-    return issues
+    return issues, []
 
 
 def _context_path(activity_index: int, exchange_index: int) -> str:
@@ -574,6 +702,19 @@ def _warning_issues(messages: list[str]) -> list[Issue]:
             )
         )
     return issues
+
+
+def _format_error_summary(result: AnalysisResult) -> str:
+    messages: list[str] = []
+    messages.extend(issue.message for issue in result.file_issues if issue.severity == "error")
+    for candidate in result.candidates:
+        for issue in candidate.issues:
+            if issue.severity == "error":
+                label = candidate.name or f"activity[{candidate.index}]"
+                messages.append(f"{label}: {issue.message}")
+    if not messages:
+        return "Inventory validation failed."
+    return "Inventory validation failed:\n" + "\n".join(messages)
 
 
 class _capture_warnings:

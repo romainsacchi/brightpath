@@ -1,13 +1,20 @@
+import csv
 import json
 from pathlib import Path
 from types import SimpleNamespace
 
+from openpyxl import load_workbook
+
 from brightpath import BrightwayConverter
 from brightpath.analysis import (
+    InventoryValidationError,
+    SOURCE_FORMAT_BRIGHTWAY_CSV,
     SOURCE_FORMAT_BRIGHTWAY_EXCEL,
+    SOURCE_FORMAT_BRIGHTWAY_TSV,
     SOURCE_FORMAT_SIMAPRO_CSV,
     analyze_inventory,
     infer_source_format,
+    validate_inventory,
 )
 from brightpath.models import BackgroundProfile
 from brightpath.simaproconverter import SimaproConverter
@@ -50,9 +57,56 @@ def make_simapro_csv(tmp_path, data, filename="inventory.csv"):
     return tmp_path / filename
 
 
+def make_brightway_delimited(tmp_path, data, *, delimiter=",", suffix=".csv", db_name="analysis_db"):
+    workbook = make_brightway_excel(tmp_path, data, db_name=db_name)
+    sheet = load_workbook(workbook, read_only=True, data_only=False).active
+    path = tmp_path / f"inventory{suffix}"
+    with path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle, delimiter=delimiter)
+        for row in sheet.iter_rows(values_only=True):
+            writer.writerow(["" if cell is None else cell for cell in row])
+    return path
+
+
+def _normalize_technosphere_entries(entries):
+    normalized = []
+    for row in entries:
+        if isinstance(row, dict):
+            normalized.append(
+                (
+                    str(row["name"]),
+                    str(row["reference_product"]),
+                    str(row["location"]),
+                    str(row["unit"]),
+                )
+            )
+            continue
+        normalized.append(tuple(row))
+    return normalized
+
+
+def _normalize_biosphere_entries(entries):
+    normalized = []
+    for row in entries:
+        if isinstance(row, dict):
+            normalized.append(
+                (
+                    str(row["name"]),
+                    tuple(str(item) for item in row["categories"]),
+                    str(row["unit"]),
+                )
+            )
+            continue
+        name, categories, unit = row
+        normalized.append((str(name), tuple(str(item) for item in categories), str(unit)))
+    return normalized
+
+
 def write_catalog(tmp_path, *, family, version, system_model, technosphere, biosphere):
     directory = tmp_path / "reference_catalogs"
     directory.mkdir(exist_ok=True)
+    normalized_technosphere = _normalize_technosphere_entries(technosphere)
+    normalized_biosphere = _normalize_biosphere_entries(biosphere)
     path = directory / f"{family}__{version}__{system_model}.json"
     path.write_text(
         json.dumps(
@@ -62,8 +116,23 @@ def write_catalog(tmp_path, *, family, version, system_model, technosphere, bios
                     "version": version,
                     "system_model": system_model,
                 },
-                "technosphere": technosphere,
-                "biosphere": biosphere,
+                "technosphere": [
+                    {
+                        "name": name,
+                        "reference_product": reference_product,
+                        "location": location,
+                        "unit": unit,
+                    }
+                    for name, reference_product, location, unit in normalized_technosphere
+                ],
+                "biosphere": [
+                    {
+                        "name": name,
+                        "categories": list(categories),
+                        "unit": unit,
+                    }
+                    for name, categories, unit in normalized_biosphere
+                ],
             }
         ),
         encoding="utf-8",
@@ -73,6 +142,7 @@ def write_catalog(tmp_path, *, family, version, system_model, technosphere, bios
 
 def test_infer_source_format_supports_xlsx_and_csv():
     assert infer_source_format("inventory.xlsx") == SOURCE_FORMAT_BRIGHTWAY_EXCEL
+    assert infer_source_format("inventory.tsv") == SOURCE_FORMAT_BRIGHTWAY_TSV
     assert infer_source_format("inventory.csv") == SOURCE_FORMAT_SIMAPRO_CSV
 
 
@@ -109,6 +179,43 @@ def test_analyze_brightway_excel_ignores_missing_simapro_category(tmp_path):
     assert result.file_issues == []
     assert len(result.candidates) == 1
     assert result.candidates[0].issues == []
+
+
+def test_analyze_brightway_csv_returns_candidate_summaries(tmp_path):
+    csv_path = make_brightway_delimited(tmp_path, [minimal_activity()], suffix=".csv")
+
+    result = analyze_inventory(
+        path=csv_path,
+        source_format=SOURCE_FORMAT_BRIGHTWAY_CSV,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cut-off",
+        ),
+    )
+
+    assert result.detected_software == "brightway"
+    assert result.detected_format == SOURCE_FORMAT_BRIGHTWAY_CSV
+    assert result.source_profile.system_model == "cutoff"
+    assert result.file_issues == []
+    assert len(result.candidates) == 1
+    assert result.candidates[0].name == "test process"
+    assert result.candidates[0].issues == []
+
+
+def test_analyze_brightway_tsv_returns_candidate_summaries(tmp_path):
+    tsv_path = make_brightway_delimited(tmp_path, [minimal_activity()], delimiter="\t", suffix=".tsv")
+
+    result = analyze_inventory(
+        path=tsv_path,
+        source_format=SOURCE_FORMAT_BRIGHTWAY_TSV,
+    )
+
+    assert result.detected_software == "brightway"
+    assert result.detected_format == SOURCE_FORMAT_BRIGHTWAY_TSV
+    assert result.file_issues == []
+    assert len(result.candidates) == 1
+    assert result.candidates[0].name == "test process"
 
 
 def test_analyze_brightway_excel_infers_background_profile_from_catalogs(tmp_path, monkeypatch):
@@ -281,6 +388,88 @@ def test_analyze_brightway_excel_keeps_structural_validation_errors_blocking(tmp
     assert result.candidates[0].issues[0].severity == "error"
     assert result.candidates[0].issues[0].code == "inventory_validation_error"
     assert "unknown exchange unit" in result.candidates[0].issues[0].message
+
+
+def test_validate_inventory_raises_for_unknown_background_targets(tmp_path, monkeypatch):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "missing market",
+                        "reference product": "missing product",
+                        "location": "CH",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    try:
+        validate_inventory(
+            path=workbook,
+            source_profile=BackgroundProfile(
+                family="ecoinvent",
+                version="3.10",
+                system_model="cutoff",
+            ),
+        )
+    except InventoryValidationError as exc:
+        assert exc.result.candidates[0].issues[0].code == "unknown_technosphere_target"
+        assert "Technosphere exchange does not match" in str(exc)
+    else:
+        raise AssertionError("InventoryValidationError was not raised")
+
+
+def test_validate_inventory_raises_when_background_catalog_is_missing(tmp_path, monkeypatch):
+    directory = tmp_path / "reference_catalogs"
+    directory.mkdir()
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "market for steel",
+                        "reference product": "steel",
+                        "location": "GLO",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    try:
+        validate_inventory(
+            path=workbook,
+            source_profile=BackgroundProfile(
+                family="ecoinvent",
+                version="3.5",
+                system_model="cutoff",
+            ),
+        )
+    except InventoryValidationError as exc:
+        assert exc.result.file_issues[0].code == "background_catalog_missing"
+        assert "No local reference catalog is available" in str(exc)
+    else:
+        raise AssertionError("InventoryValidationError was not raised")
 
 
 def test_analyze_simapro_csv_returns_candidate_summaries(tmp_path):

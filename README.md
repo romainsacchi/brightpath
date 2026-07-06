@@ -86,7 +86,7 @@ issues and candidate dataset summaries. This is intended for intake workflows
 such as upload validation in web applications.
 
 ```python
-from brightpath.analysis import analyze_inventory
+from brightpath.analysis import analyze_inventory, validate_inventory
 from brightpath.models import BackgroundProfile
 
 result = analyze_inventory(
@@ -100,17 +100,30 @@ result = analyze_inventory(
 
 for candidate in result.candidates:
     print(candidate.name, candidate.reference_product, candidate.location)
+
+validate_inventory(
+    path="/path/to/brightway-export.xlsx",
+    source_profile=BackgroundProfile(
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+    ),
+)
 ```
 
 The first analysis milestone currently supports:
 
 * Brightway Excel workbooks (`.xlsx`)
+* Brightway delimited exports in the `bw2io` block format (`.csv`, `.tsv`)
 * SimaPro CSV exports (`.csv`)
 
-For Brightway Excel analysis, BrightPath validates the workbook as a Brightway
-inventory. SimaPro-specific metadata such as `simapro category` on production
-exchanges is enforced only in actual Brightway-to-SimaPro conversion paths, not
-during upload-intake analysis.
+For Brightway analysis, BrightPath validates the inventory as Brightway data,
+can infer the intended background family/version/system model from local
+reference catalogs, and raises explicit validation errors when technosphere or
+biosphere exchanges do not link to the uploaded inventory or the selected
+background catalog. SimaPro-specific metadata such as `simapro category` on
+production exchanges is enforced only in actual Brightway-to-SimaPro
+conversion paths, not during upload-intake analysis.
 
 ## Development
 
