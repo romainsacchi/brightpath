@@ -5,8 +5,11 @@ import csv
 import logging
 import os
 import re
+from collections import defaultdict
 from copy import deepcopy
+from functools import lru_cache
 from pathlib import Path
+from typing import Iterable, Optional
 
 import bw2io
 from bw2io import CSVImporter
@@ -14,8 +17,12 @@ from bw2io.importers.excel import ExcelImporter
 
 from brightpath.catalogs import available_catalog_profiles, load_background_catalog
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
-from brightpath.simaproconverter import SimaproConverter
-from brightpath.utils import inspect_brightway_inventory
+from brightpath.simaproconverter import SimaproConverter, format_biosphere_exchange
+from brightpath.utils import (
+    inspect_brightway_inventory,
+    load_biosphere_correspondence,
+    load_ei_biosphere_flows,
+)
 
 
 SOURCE_FORMAT_BRIGHTWAY_EXCEL = "brightway_excel"
@@ -36,6 +43,17 @@ _TRAILING_SOURCE_PATTERN = re.compile(
     r"(?is)(?:^|(?<=[.!?\n]))\s*(?P<label>sources?)\s*:\s*(?P<source>.+?)\s*$"
 )
 _ROOT_LOGGER = "brightpath"
+_SUPPLEMENTAL_BIOSPHERE_NAME_ALIASES = {
+    "air": {
+        "Ethane, 1,1,1,2-tetrafluoro-, HFC-134a": "1,1,1,2-Tetrafluoroethane",
+        "Propene": "Propylene",
+        "Xylene": "Xylenes, unspecified",
+    },
+    "water": {
+        "AOX, Adsorbable Organic Halogen": "AOX, Adsorbable Organic Halides",
+        "Sodium": "Sodium I",
+    },
+}
 
 
 class _CollectingHandler(logging.Handler):
@@ -87,34 +105,44 @@ def infer_source_format(path: str | Path) -> str:
 def analyze_inventory(
     *,
     path: str | Path,
-    source_format: str | None = None,
-    source_profile: BackgroundProfile | None = None,
+    source_format: Optional[str] = None,
+    source_profile: Optional[BackgroundProfile] = None,
+    additional_foreground_targets: Optional[
+        Iterable[tuple[str, str, str, str]]
+    ] = None,
 ) -> AnalysisResult:
     resolved_path = Path(path)
     resolved_format = source_format or infer_source_format(resolved_path)
     profile = (source_profile or BackgroundProfile()).normalized()
+    normalized_foreground_targets = _normalize_foreground_targets(
+        additional_foreground_targets
+    )
 
     if resolved_format == SOURCE_FORMAT_BRIGHTWAY_EXCEL:
         return _analyze_brightway_excel(
             path=resolved_path,
             source_profile=profile,
+            additional_foreground_targets=normalized_foreground_targets,
         )
     if resolved_format == SOURCE_FORMAT_BRIGHTWAY_CSV:
         return _analyze_brightway_delimited(
             path=resolved_path,
             source_profile=profile,
             detected_format=SOURCE_FORMAT_BRIGHTWAY_CSV,
+            additional_foreground_targets=normalized_foreground_targets,
         )
     if resolved_format == SOURCE_FORMAT_BRIGHTWAY_TSV:
         return _analyze_brightway_delimited(
             path=resolved_path,
             source_profile=profile,
             detected_format=SOURCE_FORMAT_BRIGHTWAY_TSV,
+            additional_foreground_targets=normalized_foreground_targets,
         )
     if resolved_format == SOURCE_FORMAT_SIMAPRO_CSV:
         return _analyze_simapro_csv(
             path=resolved_path,
             source_profile=profile,
+            additional_foreground_targets=normalized_foreground_targets,
         )
 
     raise ValueError(f"Unsupported source format: {resolved_format!r}.")
@@ -123,13 +151,17 @@ def analyze_inventory(
 def validate_inventory(
     *,
     path: str | Path,
-    source_format: str | None = None,
-    source_profile: BackgroundProfile | None = None,
+    source_format: Optional[str] = None,
+    source_profile: Optional[BackgroundProfile] = None,
+    additional_foreground_targets: Optional[
+        Iterable[tuple[str, str, str, str]]
+    ] = None,
 ) -> AnalysisResult:
     result = analyze_inventory(
         path=path,
         source_format=source_format,
         source_profile=source_profile,
+        additional_foreground_targets=additional_foreground_targets,
     )
     if result.has_errors:
         raise InventoryValidationError(result)
@@ -140,6 +172,7 @@ def _analyze_brightway_excel(
     *,
     path: Path,
     source_profile: BackgroundProfile,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> AnalysisResult:
     return _analyze_brightway_inventory_data(
         path=path,
@@ -147,6 +180,7 @@ def _analyze_brightway_excel(
         detected_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL,
         loader=_load_brightway_excel_without_validation,
         parse_error_code="brightway_excel_parse_failed",
+        additional_foreground_targets=additional_foreground_targets,
     )
 
 
@@ -155,6 +189,7 @@ def _analyze_brightway_delimited(
     path: Path,
     source_profile: BackgroundProfile,
     detected_format: str,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> AnalysisResult:
     return _analyze_brightway_inventory_data(
         path=path,
@@ -162,6 +197,7 @@ def _analyze_brightway_delimited(
         detected_format=detected_format,
         loader=_load_brightway_delimited_without_validation,
         parse_error_code="brightway_tabular_parse_failed",
+        additional_foreground_targets=additional_foreground_targets,
     )
 
 
@@ -172,6 +208,7 @@ def _analyze_brightway_inventory_data(
     detected_format: str,
     loader,
     parse_error_code: str,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> AnalysisResult:
     result = AnalysisResult(
         detected_software=SOFTWARE_BRIGHTWAY,
@@ -193,12 +230,17 @@ def _analyze_brightway_inventory_data(
             inventory_data = []
 
     warnings.extend(_warning_issues(collector.messages))
-    result.inventory_data = deepcopy(inventory_data)
-    result.candidates = _build_candidates(inventory_data)
     result.source_profile, profile_issues = _resolve_background_profile(
         inventory_data,
         source_profile,
     )
+    inventory_data = _normalize_inventory_for_validation(
+        inventory_data,
+        result.source_profile,
+        additional_foreground_targets=additional_foreground_targets,
+    )
+    result.inventory_data = deepcopy(inventory_data)
+    result.candidates = _build_candidates(inventory_data)
     result.file_issues.extend(profile_issues)
 
     if inventory_data:
@@ -229,6 +271,7 @@ def _analyze_brightway_inventory_data(
         background_issues, background_file_issues = _validate_background_links(
             inventory_data,
             result.source_profile,
+            additional_foreground_targets=additional_foreground_targets,
         )
         _attach_activity_issues(
             candidates=result.candidates,
@@ -245,6 +288,7 @@ def _analyze_simapro_csv(
     *,
     path: Path,
     source_profile: BackgroundProfile,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> AnalysisResult:
     result = AnalysisResult(
         detected_software=SOFTWARE_SIMAPRO,
@@ -271,12 +315,17 @@ def _analyze_simapro_csv(
                 )
             )
 
-    result.inventory_data = deepcopy(inventory_data)
-    result.candidates = _build_candidates(inventory_data)
     result.source_profile, profile_issues = _resolve_background_profile(
         inventory_data,
         source_profile,
     )
+    inventory_data = _normalize_inventory_for_validation(
+        inventory_data,
+        result.source_profile,
+        additional_foreground_targets=additional_foreground_targets,
+    )
+    result.inventory_data = deepcopy(inventory_data)
+    result.candidates = _build_candidates(inventory_data)
     result.file_issues.extend(profile_issues)
     _attach_identity_issues(
         candidates=result.candidates,
@@ -310,6 +359,7 @@ def _analyze_simapro_csv(
         background_issues, background_file_issues = _validate_background_links(
             inventory_data,
             result.source_profile,
+            additional_foreground_targets=additional_foreground_targets,
         )
         _attach_activity_issues(
             candidates=result.candidates,
@@ -619,6 +669,8 @@ def _exception_to_file_issues(
 def _reference_ecoinvent_version(source_profile: BackgroundProfile) -> str:
     if source_profile.family == "ecoinvent" and source_profile.version:
         return source_profile.version
+    if source_profile.family == "uvek":
+        return "3.10"
     return "3.9"
 
 
@@ -746,9 +798,346 @@ def _collect_technosphere_targets(inventory_data: list[dict]) -> list[tuple[str,
     return collected
 
 
+def _normalize_foreground_targets(
+    foreground_targets: Optional[Iterable[tuple[str, str, str, str]]],
+) -> frozenset[tuple[str, str, str, str]]:
+    normalized: set[tuple[str, str, str, str]] = set()
+    for target in foreground_targets or ():
+        if len(target) != 4:
+            continue
+        key = tuple(str(part or "").strip() for part in target)
+        if all(key):
+            normalized.add(key)
+    return frozenset(normalized)
+
+
+def _canonicalize_text(value: str) -> str:
+    return " ".join(str(value or "").split()).casefold()
+
+
+def _canonicalize_technosphere_key(
+    key: tuple[str, str, str, str],
+) -> tuple[str, str, str, str]:
+    return tuple(_canonicalize_text(part) for part in key)
+
+
+def _canonicalize_technosphere_triplet(
+    key: tuple[str, str, str],
+) -> tuple[str, str, str]:
+    return tuple(_canonicalize_text(part) for part in key)
+
+
+def _find_unique_canonical_match(
+    key: tuple[str, str, str, str],
+    targets: Iterable[tuple[str, str, str, str]],
+) -> tuple[str, str, str, str] | None:
+    matches = {
+        target
+        for target in targets
+        if _canonicalize_technosphere_key(target) == _canonicalize_technosphere_key(key)
+    }
+    if len(matches) == 1:
+        return next(iter(matches))
+    return None
+
+
+def _normalize_inventory_for_validation(
+    inventory_data: list[dict],
+    source_profile: BackgroundProfile,
+    *,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+) -> list[dict]:
+    normalized_inventory = deepcopy(inventory_data)
+    catalog = _load_catalog_if_available(source_profile)
+    _synchronize_production_exchanges_with_activity(normalized_inventory)
+    _fill_missing_technosphere_reference_products(
+        normalized_inventory,
+        catalog,
+        additional_foreground_targets=additional_foreground_targets,
+    )
+    _harmonize_technosphere_exchange_identities(
+        normalized_inventory,
+        catalog,
+        additional_foreground_targets=additional_foreground_targets,
+    )
+    _normalize_biosphere_exchanges(
+        normalized_inventory,
+        source_profile,
+        catalog,
+    )
+    return normalized_inventory
+
+
+def _load_catalog_if_available(source_profile: BackgroundProfile):
+    normalized = source_profile.normalized()
+    if not (normalized.family and normalized.version and normalized.system_model):
+        return None
+    try:
+        return load_background_catalog(normalized)
+    except FileNotFoundError:
+        return None
+
+
+def _fill_missing_technosphere_reference_products(
+    inventory_data: list[dict],
+    catalog,
+    *,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+) -> None:
+    foreground_candidates: dict[tuple[str, str, str], set[str]] = defaultdict(set)
+    foreground_canonical_candidates: dict[tuple[str, str, str], set[str]] = defaultdict(set)
+    for activity in inventory_data:
+        name = str(activity.get("name") or "").strip()
+        reference_product = str(activity.get("reference product") or "").strip()
+        location = str(activity.get("location") or "").strip()
+        unit = str(activity.get("unit") or "").strip()
+        if all((name, reference_product, location, unit)):
+            foreground_candidates[(name, location, unit)].add(reference_product)
+            foreground_canonical_candidates[
+                _canonicalize_technosphere_triplet((name, location, unit))
+            ].add(reference_product)
+    for name, reference_product, location, unit in additional_foreground_targets:
+        foreground_candidates[(name, location, unit)].add(reference_product)
+        foreground_canonical_candidates[
+            _canonicalize_technosphere_triplet((name, location, unit))
+        ].add(reference_product)
+
+    catalog_candidates: dict[tuple[str, str, str], set[str]] = defaultdict(set)
+    catalog_canonical_candidates: dict[tuple[str, str, str], set[str]] = defaultdict(set)
+    if catalog is not None:
+        for name, reference_product, location, unit in catalog.technosphere:
+            catalog_candidates[(name, location, unit)].add(reference_product)
+            catalog_canonical_candidates[
+                _canonicalize_technosphere_triplet((name, location, unit))
+            ].add(reference_product)
+
+    for activity in inventory_data:
+        for exchange in activity.get("exchanges", []):
+            if exchange.get("type") != "technosphere":
+                continue
+            if str(exchange.get("reference product") or "").strip():
+                continue
+
+            key = (
+                str(exchange.get("name") or "").strip(),
+                str(exchange.get("location") or "").strip(),
+                str(exchange.get("unit") or "").strip(),
+            )
+            foreground_matches = foreground_candidates.get(key, set())
+            if len(foreground_matches) == 1:
+                exchange["reference product"] = next(iter(foreground_matches))
+                continue
+            if foreground_matches:
+                continue
+            foreground_canonical_matches = foreground_canonical_candidates.get(
+                _canonicalize_technosphere_triplet(key),
+                set(),
+            )
+            if len(foreground_canonical_matches) == 1:
+                exchange["reference product"] = next(iter(foreground_canonical_matches))
+                continue
+            if foreground_canonical_matches:
+                continue
+
+            catalog_matches = catalog_candidates.get(key, set())
+            if len(catalog_matches) == 1:
+                exchange["reference product"] = next(iter(catalog_matches))
+                continue
+
+            catalog_canonical_matches = catalog_canonical_candidates.get(
+                _canonicalize_technosphere_triplet(key),
+                set(),
+            )
+            if len(catalog_canonical_matches) == 1:
+                exchange["reference product"] = next(iter(catalog_canonical_matches))
+
+
+def _harmonize_technosphere_exchange_identities(
+    inventory_data: list[dict],
+    catalog,
+    *,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+) -> None:
+    internal_targets = {
+        (
+            str(activity.get("name") or "").strip(),
+            str(activity.get("reference product") or "").strip(),
+            str(activity.get("location") or "").strip(),
+            str(activity.get("unit") or "").strip(),
+        )
+        for activity in inventory_data
+        if all(
+            (
+                str(activity.get("name") or "").strip(),
+                str(activity.get("reference product") or "").strip(),
+                str(activity.get("location") or "").strip(),
+                str(activity.get("unit") or "").strip(),
+            )
+        )
+    }
+    catalog_targets = catalog.technosphere if catalog is not None else frozenset()
+
+    for activity in inventory_data:
+        for exchange in activity.get("exchanges", []):
+            if exchange.get("type") != "technosphere":
+                continue
+            key = (
+                str(exchange.get("name") or "").strip(),
+                str(exchange.get("reference product") or "").strip(),
+                str(exchange.get("location") or "").strip(),
+                str(exchange.get("unit") or "").strip(),
+            )
+            if not all(key):
+                continue
+            if key in internal_targets or key in additional_foreground_targets or key in catalog_targets:
+                continue
+
+            matched_target = _find_unique_canonical_match(key, internal_targets)
+            if matched_target is None:
+                matched_target = _find_unique_canonical_match(key, additional_foreground_targets)
+            if matched_target is None:
+                matched_target = _find_unique_canonical_match(key, catalog_targets)
+            if matched_target is None:
+                continue
+
+            (
+                exchange["name"],
+                exchange["reference product"],
+                exchange["location"],
+                exchange["unit"],
+            ) = matched_target
+
+
+def _synchronize_production_exchanges_with_activity(
+    inventory_data: list[dict],
+) -> None:
+    for activity in inventory_data:
+        activity_name = str(activity.get("name") or "").strip()
+        activity_reference_product = str(activity.get("reference product") or "").strip()
+        activity_location = str(activity.get("location") or "").strip()
+        activity_unit = str(activity.get("unit") or "").strip()
+        for exchange in activity.get("exchanges", []):
+            if exchange.get("type") != "production":
+                continue
+            if not str(exchange.get("name") or "").strip() and activity_name:
+                exchange["name"] = activity_name
+            if not str(exchange.get("reference product") or "").strip() and activity_reference_product:
+                exchange["reference product"] = activity_reference_product
+            if not str(exchange.get("location") or "").strip() and activity_location:
+                exchange["location"] = activity_location
+            if not str(exchange.get("unit") or "").strip() and activity_unit:
+                exchange["unit"] = activity_unit
+
+
+@lru_cache(maxsize=1)
+def _biosphere_correspondence():
+    return load_biosphere_correspondence()
+
+
+@lru_cache(maxsize=1)
+def _biosphere_flow_reference():
+    return tuple(load_ei_biosphere_flows())
+
+
+def _biosphere_reference_version(source_profile: BackgroundProfile) -> str:
+    normalized = source_profile.normalized()
+    if normalized.family == "ecoinvent" and normalized.version:
+        return normalized.version
+    if normalized.family == "uvek":
+        return "3.10"
+    return "3.10"
+
+
+def _normalize_biosphere_exchanges(
+    inventory_data: list[dict],
+    source_profile: BackgroundProfile,
+    catalog,
+) -> None:
+    biosphere_reference = _biosphere_flow_reference()
+    correspondence = _biosphere_correspondence()
+    reference_version = _biosphere_reference_version(source_profile)
+
+    for activity in inventory_data:
+        for exchange in activity.get("exchanges", []):
+            if exchange.get("type") != "biosphere":
+                continue
+            current_key = (
+                str(exchange.get("name") or ""),
+                tuple(str(item) for item in exchange.get("categories", ())),
+                str(exchange.get("unit") or ""),
+            )
+            if catalog is not None and current_key in catalog.biosphere:
+                continue
+            mapped_current = _map_biosphere_name_for_category(
+                current_key[0],
+                current_key[1][0] if current_key[1] else "",
+                correspondence,
+            )
+            mapped_current_key = (
+                mapped_current,
+                current_key[1],
+                current_key[2],
+            )
+            if (
+                catalog is not None
+                and mapped_current != current_key[0]
+                and mapped_current_key in catalog.biosphere
+            ):
+                exchange["name"] = mapped_current
+                continue
+
+            candidate = deepcopy(exchange)
+            try:
+                format_biosphere_exchange(
+                    candidate,
+                    reference_version,
+                    biosphere_reference,
+                    correspondence,
+                    copy=False,
+                )
+            except (KeyError, TypeError, ValueError):
+                continue
+            normalized_key = (
+                str(candidate.get("name") or ""),
+                tuple(str(item) for item in candidate.get("categories", ())),
+                str(candidate.get("unit") or ""),
+            )
+            mapped_normalized = _map_biosphere_name_for_category(
+                normalized_key[0],
+                normalized_key[1][0] if normalized_key[1] else "",
+                correspondence,
+            )
+            mapped_normalized_key = (
+                mapped_normalized,
+                normalized_key[1],
+                normalized_key[2],
+            )
+            if catalog is None or normalized_key in catalog.biosphere:
+                exchange.update(candidate)
+            elif (
+                mapped_normalized != normalized_key[0]
+                and mapped_normalized_key in catalog.biosphere
+            ):
+                candidate["name"] = mapped_normalized
+                exchange.update(candidate)
+
+
+def _map_biosphere_name_for_category(
+    name: str,
+    main_category: str,
+    correspondence,
+) -> str:
+    supplemental = _SUPPLEMENTAL_BIOSPHERE_NAME_ALIASES.get(main_category, {})
+    if name in supplemental:
+        return supplemental[name]
+    mapping = correspondence.get(main_category, {})
+    return str(mapping.get(name, name))
+
+
 def _validate_background_links(
     inventory_data: list[dict],
     source_profile: BackgroundProfile,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> tuple[list[Issue], list[Issue]]:
     normalized = source_profile.normalized()
     if not (normalized.family and normalized.version and normalized.system_model):
@@ -789,6 +1178,7 @@ def _validate_background_links(
         )
         for activity in inventory_data
     }
+    internal_targets.update(additional_foreground_targets)
     issues: list[Issue] = []
     unknown_technosphere_by_activity: dict[int, list[tuple[str, str, str, str]]] = {}
     for activity_index, activity in enumerate(inventory_data):

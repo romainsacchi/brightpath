@@ -520,6 +520,474 @@ def test_analyze_brightway_excel_groups_unknown_technosphere_targets_per_candida
     assert technosphere_issues[0].suggested_fix
 
 
+def test_analyze_brightway_excel_accepts_additional_foreground_targets(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "foreground provider",
+                        "reference product": "foreground product",
+                        "location": "CH",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    unresolved = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+    assert any(
+        issue.code == "unknown_technosphere_target"
+        for issue in unresolved.candidates[0].issues
+    )
+
+    resolved = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+        additional_foreground_targets=[
+            ("foreground provider", "foreground product", "CH", "kilogram")
+        ],
+    )
+
+    assert all(
+        issue.code != "unknown_technosphere_target"
+        for issue in resolved.candidates[0].issues
+    )
+
+
+def test_analyze_brightway_excel_fills_missing_foreground_reference_product(tmp_path):
+    provider = minimal_activity(
+        name="foreground provider",
+        **{"reference product": "foreground product"},
+    )
+    provider["exchanges"][0]["name"] = "foreground provider"
+    provider["exchanges"][0]["reference product"] = "foreground product"
+
+    consumer = minimal_activity(
+        name="foreground consumer",
+        **{"reference product": "consumer product"},
+        extra_exchanges=[
+            {
+                "type": "technosphere",
+                "name": "foreground provider",
+                "reference product": "",
+                "location": "GLO",
+                "unit": "kilogram",
+                "amount": 2.0,
+            }
+        ],
+    )
+    consumer["exchanges"][0]["name"] = "foreground consumer"
+    consumer["exchanges"][0]["reference product"] = "consumer product"
+
+    workbook = make_brightway_excel(
+        tmp_path,
+        [provider, consumer],
+    )
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert result.candidates[1].issues == []
+    assert (
+        result.inventory_data[1]["exchanges"][1]["reference product"]
+        == "foreground product"
+    )
+
+
+def test_analyze_brightway_excel_fills_missing_foreground_reference_product_canonically(tmp_path):
+    provider = minimal_activity(
+        name="Foreground provider",
+        **{"reference product": "Foreground product"},
+    )
+    provider["location"] = "CH"
+    provider["exchanges"][0]["name"] = "Foreground provider"
+    provider["exchanges"][0]["reference product"] = "Foreground product"
+    provider["exchanges"][0]["location"] = "CH"
+
+    consumer = minimal_activity(
+        name="foreground consumer",
+        **{"reference product": "consumer product"},
+        extra_exchanges=[
+            {
+                "type": "technosphere",
+                "name": "  foreground   provider  ",
+                "reference product": "",
+                "location": "ch",
+                "unit": "Kilogram",
+                "amount": 2.0,
+            }
+        ],
+    )
+    consumer["exchanges"][0]["name"] = "foreground consumer"
+    consumer["exchanges"][0]["reference product"] = "consumer product"
+
+    workbook = make_brightway_excel(tmp_path, [provider, consumer])
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert result.candidates[1].issues == []
+    assert result.inventory_data[1]["exchanges"][1]["name"] == "Foreground provider"
+    assert result.inventory_data[1]["exchanges"][1]["reference product"] == "Foreground product"
+    assert result.inventory_data[1]["exchanges"][1]["location"] == "CH"
+    assert result.inventory_data[1]["exchanges"][1]["unit"] == "kilogram"
+
+
+def test_analyze_brightway_excel_accepts_canonical_additional_foreground_targets(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "  foreground provider ",
+                        "reference product": " foreground product ",
+                        "location": "ch",
+                        "unit": "Kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    resolved = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+        additional_foreground_targets=[
+            ("Foreground provider", "Foreground product", "CH", "kilogram")
+        ],
+    )
+
+    assert all(
+        issue.code != "unknown_technosphere_target"
+        for issue in resolved.candidates[0].issues
+    )
+    assert resolved.inventory_data[0]["exchanges"][1]["name"] == "Foreground provider"
+    assert resolved.inventory_data[0]["exchanges"][1]["reference product"] == "Foreground product"
+    assert resolved.inventory_data[0]["exchanges"][1]["location"] == "CH"
+    assert resolved.inventory_data[0]["exchanges"][1]["unit"] == "kilogram"
+
+
+def test_analyze_brightway_excel_accepts_canonical_background_catalog_targets(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[
+            {
+                "name": "market for palladium",
+                "reference_product": "palladium",
+                "location": "GLO",
+                "unit": "kilogram",
+            }
+        ],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "  Market   for Palladium ",
+                        "reference product": "Palladium",
+                        "location": "glo",
+                        "unit": "Kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+
+    assert all(
+        issue.code != "unknown_technosphere_target"
+        for issue in result.candidates[0].issues
+    )
+    assert result.inventory_data[0]["exchanges"][1]["name"] == "market for palladium"
+    assert result.inventory_data[0]["exchanges"][1]["reference product"] == "palladium"
+    assert result.inventory_data[0]["exchanges"][1]["location"] == "GLO"
+    assert result.inventory_data[0]["exchanges"][1]["unit"] == "kilogram"
+
+
+def test_analyze_brightway_excel_fills_missing_catalog_reference_product(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[
+            {
+                "name": "market for steel",
+                "reference_product": "steel",
+                "location": "CH",
+                "unit": "kilogram",
+            }
+        ],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "market for steel",
+                        "reference product": "",
+                        "location": "CH",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+
+    assert result.candidates[0].issues == []
+    assert result.inventory_data[0]["exchanges"][1]["reference product"] == "steel"
+
+
+def test_analyze_brightway_excel_fills_missing_production_reference_product(tmp_path):
+    activity = minimal_activity(
+        name="foreground provider",
+        **{"reference product": "foreground product"},
+    )
+    activity["exchanges"][0]["name"] = "foreground provider"
+    activity["exchanges"][0]["reference product"] = ""
+
+    workbook = make_brightway_excel(tmp_path, [activity])
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert result.candidates[0].issues == []
+    assert result.inventory_data[0]["exchanges"][0]["reference product"] == "foreground product"
+
+
+def test_analyze_brightway_excel_normalizes_biosphere_aliases_before_link_check(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[
+            {
+                "name": "Particulate Matter, < 2.5 um",
+                "categories": ["air", "urban air close to ground"],
+                "unit": "kilogram",
+            }
+        ],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "biosphere",
+                        "name": "Particulates, < 2.5 um",
+                        "categories": ("air", "urban air close to ground"),
+                        "unit": "kilogram",
+                        "amount": 0.1,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+
+    assert all(
+        issue.code != "unknown_biosphere_flow"
+        for issue in result.candidates[0].issues
+    )
+    assert (
+        result.inventory_data[0]["exchanges"][1]["name"]
+        == "Particulate Matter, < 2.5 um"
+    )
+
+
+def test_analyze_brightway_excel_maps_biosphere_alias_to_selected_catalog_name(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.8",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[
+            {
+                "name": "Selenium",
+                "categories": ["air", "non-urban air or from high stacks"],
+                "unit": "kilogram",
+            }
+        ],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "biosphere",
+                        "name": "Selenium IV",
+                        "categories": ("air", "non-urban air or from high stacks"),
+                        "unit": "kilogram",
+                        "amount": 0.1,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.8",
+            system_model="cutoff",
+        ),
+    )
+
+    assert all(
+        issue.code != "unknown_biosphere_flow"
+        for issue in result.candidates[0].issues
+    )
+    assert result.inventory_data[0]["exchanges"][1]["name"] == "Selenium"
+
+
+def test_analyze_brightway_excel_applies_supplemental_biosphere_aliases(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.12",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[
+            {
+                "name": "Propylene",
+                "categories": ["air", "urban air close to ground"],
+                "unit": "kilogram",
+            }
+        ],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "biosphere",
+                        "name": "Propene",
+                        "categories": ("air", "urban air close to ground"),
+                        "unit": "kilogram",
+                        "amount": 0.1,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.12",
+            system_model="cutoff",
+        ),
+    )
+
+    assert all(
+        issue.code != "unknown_biosphere_flow"
+        for issue in result.candidates[0].issues
+    )
+    assert result.inventory_data[0]["exchanges"][1]["name"] == "Propylene"
+
+
 def test_analyze_brightway_excel_accepts_uvek_catalog_with_external_biosphere_reference(
     tmp_path, monkeypatch
 ):
