@@ -4,9 +4,10 @@ import logging
 import re
 import tempfile
 from copy import deepcopy
+from dataclasses import dataclass
 from numbers import Real
 from pathlib import Path
-from typing import Dict, Tuple
+from typing import Any, Dict, Optional as TypingOptional, Tuple
 
 import bw2io
 import numpy as np
@@ -21,6 +22,111 @@ logger = logging.getLogger(__name__)
 
 ALLOWED_EXCHANGE_TYPES = {"production", "technosphere", "biosphere"}
 ALLOWED_BIOSPHERE_CATEGORIES = {"natural resource", "air", "water", "soil"}
+DATASET_UNIT_ALIASES = {
+    "kg": "kilogram",
+    "kwh": "kilowatt hour",
+    "kw": "kilowatt",
+    "mj": "megajoule",
+    "km": "kilometer",
+    "m": "meter",
+    "m2": "square meter",
+    "m3": "cubic meter",
+    "h": "hour",
+    "pkm": "person-kilometer",
+    "vkm": "vehicle-kilometer",
+    "tkm": "ton kilometer",
+    "l": "liter",
+}
+TRANSFORMATION_FROM_PATTERN = re.compile(r"\btransformation\b[\s,]+from\b", re.IGNORECASE)
+TRANSFORMATION_TO_PATTERN = re.compile(r"\btransformation\b[\s,]+to\b", re.IGNORECASE)
+COMBUSTION_ACTIVITY_HINTS = (
+    "boiler",
+    "burn",
+    "cogeneration",
+    "co-generation",
+    "combustion",
+    "engine",
+    "furnace",
+    "heat production",
+    "heater",
+    "incineration",
+    "kiln",
+    "power plant",
+    "steam production",
+    "thermal energy",
+    "turbine",
+)
+
+
+@dataclass(frozen=True)
+class FossilFuelHeuristic:
+    label: str
+    patterns: tuple[str, ...]
+    factors_by_unit: dict[str, float]
+
+
+FOSSIL_FUEL_HEURISTICS = (
+    FossilFuelHeuristic(
+        label="natural gas",
+        patterns=("natural gas",),
+        factors_by_unit={
+            "cubic meter": 1.96,
+            "kilogram": 2.75,
+            "kilowatt hour": 0.202,
+            "megajoule": 0.0561,
+        },
+    ),
+    FossilFuelHeuristic(
+        label="diesel",
+        patterns=("diesel",),
+        factors_by_unit={
+            "kilogram": 3.15,
+            "liter": 2.68,
+            "megajoule": 0.074,
+        },
+    ),
+    FossilFuelHeuristic(
+        label="gasoline",
+        patterns=("gasoline", "petrol"),
+        factors_by_unit={
+            "kilogram": 3.09,
+            "liter": 2.31,
+            "megajoule": 0.069,
+        },
+    ),
+    FossilFuelHeuristic(
+        label="light fuel oil",
+        patterns=("light fuel oil",),
+        factors_by_unit={
+            "kilogram": 3.17,
+            "megajoule": 0.074,
+        },
+    ),
+    FossilFuelHeuristic(
+        label="heavy fuel oil",
+        patterns=("heavy fuel oil",),
+        factors_by_unit={
+            "kilogram": 3.11,
+            "megajoule": 0.077,
+        },
+    ),
+    FossilFuelHeuristic(
+        label="hard coal",
+        patterns=("hard coal",),
+        factors_by_unit={
+            "kilogram": 2.42,
+            "megajoule": 0.094,
+        },
+    ),
+    FossilFuelHeuristic(
+        label="liquefied petroleum gas",
+        patterns=("liquefied petroleum gas", "lpg"),
+        factors_by_unit={
+            "kilogram": 3.00,
+            "megajoule": 0.064,
+        },
+    ),
+)
 
 
 def _load_yaml_file(filepath: Path, description: str):
@@ -291,6 +397,193 @@ def _has_text(value) -> bool:
     return isinstance(value, str) and bool(value.strip())
 
 
+def _normalize_dataset_unit(value: str) -> str:
+    normalized = (value or "").strip()
+    if not normalized:
+        return ""
+    return DATASET_UNIT_ALIASES.get(normalized.lower(), normalized.lower())
+
+
+def _iter_activity_exchanges(activity: dict, *, exchange_type: str = None):
+    for exchange in activity.get("exchanges", []):
+        if not isinstance(exchange, dict):
+            continue
+        if exchange_type is not None and exchange.get("type") != exchange_type:
+            continue
+        yield exchange
+
+
+def _exchange_categories(exchange: dict) -> tuple[str, ...]:
+    categories = exchange.get("categories")
+    if isinstance(categories, (list, tuple)):
+        return tuple(str(item).strip().lower() for item in categories if str(item).strip())
+    if isinstance(categories, str):
+        if "::" in categories:
+            return tuple(item.strip().lower() for item in categories.split("::") if item.strip())
+        normalized = categories.strip().lower()
+        return (normalized,) if normalized else ()
+    return ()
+
+
+def _exchange_label(exchange: dict) -> str:
+    parts = [str(exchange.get("name") or "").strip()]
+    reference_product = str(exchange.get("reference product") or "").strip()
+    location = str(exchange.get("location") or "").strip()
+    unit = str(exchange.get("unit") or "").strip()
+    if reference_product:
+        parts.append(reference_product)
+    if location:
+        parts.append(location)
+    if unit:
+        parts.append(unit)
+    return " | ".join(part for part in parts if part)
+
+
+def _format_examples(values: list[str], *, limit: int = 3) -> str:
+    if not values:
+        return ""
+    shown = values[:limit]
+    suffix = f"; +{len(values) - limit} more" if len(values) > limit else ""
+    return "; ".join(shown) + suffix
+
+
+def _numeric_amount(value: Any) -> TypingOptional[float]:
+    if isinstance(value, bool):
+        return None
+    if isinstance(value, (int, float)):
+        return float(value)
+    try:
+        normalized = str(value).strip()
+        if not normalized:
+            return None
+        return float(normalized)
+    except (TypeError, ValueError):
+        return None
+
+
+def _match_fossil_fuel_heuristic(exchange: dict) -> TypingOptional[FossilFuelHeuristic]:
+    reference_product = str(exchange.get("reference product") or "").strip().lower()
+    name = str(exchange.get("name") or "").strip().lower()
+    for heuristic in FOSSIL_FUEL_HEURISTICS:
+        if any(pattern in reference_product for pattern in heuristic.patterns):
+            return heuristic
+        if any(
+            name.startswith(candidate)
+            for pattern in heuristic.patterns
+            for candidate in (
+                pattern,
+                f"market for {pattern}",
+                f"market group for {pattern}",
+                f"supply of {pattern}",
+                f"{pattern} production",
+            )
+        ):
+            return heuristic
+    return None
+
+
+def _water_balance_warning(activity_ctx: str, activity: dict) -> TypingOptional[str]:
+    water_intakes: list[str] = []
+    water_releases: list[str] = []
+    for exchange in _iter_activity_exchanges(activity, exchange_type="biosphere"):
+        name_lower = str(exchange.get("name") or "").strip().lower()
+        categories = _exchange_categories(exchange)
+        if "water" not in name_lower and not any("water" in category for category in categories):
+            continue
+        if categories[:1] == ("natural resource",):
+            water_intakes.append(_exchange_label(exchange))
+        elif categories[:1] == ("water",):
+            water_releases.append(_exchange_label(exchange))
+
+    if water_intakes and not water_releases:
+        return (
+            f"{activity_ctx}: water resource intake flows were detected, but no water release flows "
+            f"were found in this dataset. Detected intakes: {_format_examples(water_intakes)}. "
+            "Suggested fix: Check whether a water release, evaporation flow, or retained water flow "
+            "is missing, or document why the water balance is intentionally one-sided."
+        )
+    return None
+
+
+def _transformation_pair_warning(activity_ctx: str, activity: dict) -> TypingOptional[str]:
+    transformation_from: list[str] = []
+    transformation_to: list[str] = []
+    for exchange in _iter_activity_exchanges(activity, exchange_type="biosphere"):
+        name = str(exchange.get("name") or "").strip()
+        if not name:
+            continue
+        if TRANSFORMATION_FROM_PATTERN.search(name):
+            transformation_from.append(_exchange_label(exchange))
+        if TRANSFORMATION_TO_PATTERN.search(name):
+            transformation_to.append(_exchange_label(exchange))
+
+    if transformation_from and not transformation_to:
+        return (
+            f"{activity_ctx}: land-use exchanges look incomplete: 'transformation from' was found "
+            f"without any matching 'transformation to' exchange. Detected flows: "
+            f"{_format_examples(transformation_from)}. Suggested fix: Check whether the "
+            "corresponding 'transformation to' flow is missing, or document why this dataset "
+            "intentionally records only one side of the land transformation."
+        )
+    if transformation_to and not transformation_from:
+        return (
+            f"{activity_ctx}: land-use exchanges look incomplete: 'transformation to' was found "
+            f"without any matching 'transformation from' exchange. Detected flows: "
+            f"{_format_examples(transformation_to)}. Suggested fix: Check whether the "
+            "corresponding 'transformation from' flow is missing, or document why this dataset "
+            "intentionally records only one side of the land transformation."
+        )
+    return None
+
+
+def _fuel_co2_warning(activity_ctx: str, activity: dict) -> TypingOptional[str]:
+    expected_fossil_co2 = 0.0
+    detected_fuels: list[str] = []
+    for exchange in _iter_activity_exchanges(activity, exchange_type="technosphere"):
+        heuristic = _match_fossil_fuel_heuristic(exchange)
+        if heuristic is None:
+            continue
+        amount = _numeric_amount(exchange.get("amount"))
+        unit = _normalize_dataset_unit(str(exchange.get("unit") or ""))
+        factor = heuristic.factors_by_unit.get(unit)
+        if amount is None or amount <= 0 or factor is None:
+            continue
+        expected_fossil_co2 += amount * factor
+        detected_fuels.append(
+            f"{heuristic.label} via {_exchange_label(exchange)} ({amount:g} {unit})"
+        )
+
+    if expected_fossil_co2 < 0.2:
+        return None
+
+    actual_fossil_co2 = 0.0
+    for exchange in _iter_activity_exchanges(activity, exchange_type="biosphere"):
+        name_lower = str(exchange.get("name") or "").strip().lower()
+        if name_lower != "carbon dioxide, fossil":
+            continue
+        amount = _numeric_amount(exchange.get("amount"))
+        if amount is not None:
+            actual_fossil_co2 += amount
+
+    activity_name = str(activity.get("name") or "").strip().lower()
+    looks_combustion_like = any(hint in activity_name for hint in COMBUSTION_ACTIVITY_HINTS)
+    if not looks_combustion_like and actual_fossil_co2 <= 0:
+        return None
+
+    gap = abs(actual_fossil_co2 - expected_fossil_co2)
+    relative_gap = gap / max(expected_fossil_co2, 1e-9)
+    if actual_fossil_co2 <= 0.05 or (gap > 0.25 and relative_gap > 0.35):
+        return (
+            f"{activity_ctx}: approximate combustion check: detected fossil fuel inputs suggest "
+            f"about {expected_fossil_co2:.2f} kg of Carbon dioxide, fossil, but this dataset "
+            f"reports {actual_fossil_co2:.2f} kg. Fuel inputs used in this heuristic: "
+            f"{_format_examples(detected_fuels)}. Suggested fix: Check whether direct fossil CO2 "
+            "emissions are missing, whether the fuel is used as feedstock rather than combusted, "
+            "or whether the fuel quantity or unit conversion is incorrect."
+        )
+    return None
+
+
 def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = True) -> tuple[list[str], list[str]]:
     """
     Inspect Brightway-style inventories and return contextual error and warning messages.
@@ -393,6 +686,14 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
         elif require_simapro_category and not production_with_category:
             message = f"{activity_ctx}: production exchange must define a non-empty `simapro category`."
             errors.append(message)
+
+        for warning in (
+            _water_balance_warning(activity_ctx, activity),
+            _transformation_pair_warning(activity_ctx, activity),
+            _fuel_co2_warning(activity_ctx, activity),
+        ):
+            if warning is not None:
+                warnings.append(warning)
 
     return errors, warnings
 

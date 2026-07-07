@@ -247,6 +247,35 @@ def test_analyze_brightway_excel_ignores_missing_simapro_category(tmp_path):
     assert result.candidates[0].issues == []
 
 
+def test_analyze_brightway_excel_surfaces_non_blocking_validation_warnings(tmp_path):
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "biosphere",
+                        "name": "Water, river",
+                        "categories": ("natural resource", "in water"),
+                        "unit": "cubic meter",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
+
+    assert result.file_issues == []
+    assert len(result.candidates) == 1
+    assert len(result.candidates[0].issues) == 1
+    assert result.candidates[0].issues[0].severity == "warning"
+    assert result.candidates[0].issues[0].code == "inventory_validation_warning"
+    assert result.candidates[0].issues[0].path == "activity[0]"
+    assert "no water release flows were found" in result.candidates[0].issues[0].message
+
+
 def test_analyze_brightway_csv_returns_candidate_summaries(tmp_path):
     csv_path = make_brightway_delimited(tmp_path, [minimal_activity()], suffix=".csv")
 

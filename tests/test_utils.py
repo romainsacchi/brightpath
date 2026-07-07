@@ -228,6 +228,105 @@ def test_inspect_brightway_inventory_accepts_biosphere_kilo_becquerel_unit():
     assert warnings == []
 
 
+def test_inspect_brightway_inventory_warns_on_water_resource_intake_without_release():
+    data = [
+        activity_with_exchanges(
+            production_exchange(),
+            biosphere_exchange(
+                name="Water, river",
+                categories=("natural resource", "in water"),
+                unit="cubic meter",
+                amount=2.0,
+            ),
+        )
+    ]
+
+    errors, warnings = utils.inspect_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+    assert errors == []
+    assert len(warnings) == 1
+    assert "no water release flows were found" in warnings[0]
+
+
+def test_inspect_brightway_inventory_warns_on_incomplete_land_transformation_pair():
+    data = [
+        activity_with_exchanges(
+            production_exchange(),
+            biosphere_exchange(
+                name="Transformation, from forest, extensive",
+                categories=("natural resource", "land"),
+                unit="square meter",
+                amount=10.0,
+            ),
+        )
+    ]
+
+    errors, warnings = utils.inspect_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+    assert errors == []
+    assert len(warnings) == 1
+    assert "'transformation to' exchange" in warnings[0]
+
+
+def test_inspect_brightway_inventory_warns_on_combustion_fuel_co2_mismatch():
+    activity = activity_with_exchanges(
+        production_exchange(),
+        technosphere_exchange(
+            name="market for natural gas, high pressure",
+            reference_product="natural gas, high pressure",
+            location="CH",
+            unit="megajoule",
+            amount=10.0,
+        ),
+    )
+    activity["name"] = "heat production, natural gas boiler"
+    data = [activity]
+
+    errors, warnings = utils.inspect_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+    assert errors == []
+    assert len(warnings) == 1
+    assert "detected fossil fuel inputs suggest about" in warnings[0]
+
+
+def test_inspect_brightway_inventory_skips_combustion_warning_when_co2_is_consistent():
+    activity = activity_with_exchanges(
+        production_exchange(),
+        technosphere_exchange(
+            name="market for natural gas, high pressure",
+            reference_product="natural gas, high pressure",
+            location="CH",
+            unit="megajoule",
+            amount=10.0,
+        ),
+        biosphere_exchange(
+            name="Carbon dioxide, fossil",
+            categories=("air",),
+            unit="kilogram",
+            amount=0.56,
+        ),
+    )
+    activity["name"] = "heat production, natural gas boiler"
+    data = [activity]
+
+    errors, warnings = utils.inspect_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+    assert errors == []
+    assert warnings == []
+
+
 def test_find_production_exchange_returns_exchange_or_raises():
     production = production_exchange()
     assert utils.find_production_exchange(activity_with_exchanges(production)) is production

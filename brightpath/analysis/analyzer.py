@@ -202,7 +202,7 @@ def _analyze_brightway_inventory_data(
     result.file_issues.extend(profile_issues)
 
     if inventory_data:
-        validation_errors, _validation_warnings = inspect_brightway_inventory(
+        validation_errors, validation_warnings = inspect_brightway_inventory(
             inventory_data,
             require_simapro_category=False,
         )
@@ -213,6 +213,16 @@ def _analyze_brightway_inventory_data(
                     validation_errors,
                     severity="error",
                     code="inventory_validation_error",
+                ),
+                file_issues=result.file_issues,
+            )
+        if validation_warnings:
+            _attach_activity_issues(
+                candidates=result.candidates,
+                candidate_issues=_issues_from_brightway_validation_messages(
+                    validation_warnings,
+                    severity="warning",
+                    code="inventory_validation_warning",
                 ),
                 file_issues=result.file_issues,
             )
