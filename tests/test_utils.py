@@ -228,6 +228,48 @@ def test_inspect_brightway_inventory_accepts_biosphere_kilo_becquerel_unit():
     assert warnings == []
 
 
+def test_inspect_brightway_inventory_accepts_technosphere_hectare_alias_unit():
+    data = [
+        activity_with_exchanges(
+            production_exchange(),
+            technosphere_exchange(
+                name="market for sowing",
+                **{"reference product": "sowing"},
+                unit="ha",
+            ),
+        )
+    ]
+
+    errors, warnings = utils.inspect_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+    assert errors == []
+    assert warnings == []
+
+
+def test_inspect_brightway_inventory_accepts_person_kilometer_unit_alias():
+    data = [
+        activity_with_exchanges(
+            production_exchange(),
+            technosphere_exchange(
+                name="transport, tram",
+                **{"reference product": "transport, tram"},
+                unit="person kilometer",
+            ),
+        )
+    ]
+
+    errors, warnings = utils.inspect_brightway_inventory(
+        data,
+        require_simapro_category=False,
+    )
+
+    assert errors == []
+    assert warnings == []
+
+
 def test_inspect_brightway_inventory_warns_on_water_resource_intake_without_release():
     data = [
         activity_with_exchanges(

@@ -4,7 +4,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
-- No changes yet.
+### Fixed
+
+- Accepted `hectare` and `ha` as valid Brightway technosphere units during inventory validation and catalog matching.
+- Accepted `person kilometer` plus legacy `product` technosphere fields during Brightway inventory normalization.
+- Replaced repeated full-catalog canonical technosphere scans with indexed matching to keep large workbook analysis responsive.
 
 ## 0.0.4 - 2026-05-14
 

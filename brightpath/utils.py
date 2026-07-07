@@ -36,6 +36,11 @@ DATASET_UNIT_ALIASES = {
     "vkm": "vehicle-kilometer",
     "tkm": "ton kilometer",
     "l": "liter",
+    "ha": "hectare",
+    "person kilometer": "person-kilometer",
+    "vehicle kilometer": "vehicle-kilometer",
+    "square meter year": "square meter-year",
+    "meter year": "meter-year",
 }
 TRANSFORMATION_FROM_PATTERN = re.compile(r"\btransformation\b[\s,]+from\b", re.IGNORECASE)
 TRANSFORMATION_TO_PATTERN = re.compile(r"\btransformation\b[\s,]+to\b", re.IGNORECASE)
@@ -599,8 +604,8 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
     if not isinstance(data, list):
         raise ValueError("Inventory data must be a list of activity dictionaries.")
 
-    known_units = set(get_simapro_units())
-    known_biosphere_units = get_biosphere_units()
+    known_units = {_normalize_dataset_unit(unit) for unit in get_simapro_units()}
+    known_biosphere_units = {_normalize_dataset_unit(unit) for unit in get_biosphere_units()}
     required_activity_keys = ("name", "reference product", "location", "unit", "exchanges")
     required_tech_keys = ("name", "reference product", "location", "unit", "amount")
     required_bio_keys = ("name", "categories", "unit", "amount")
@@ -619,7 +624,11 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
             if key in activity and not _has_text(activity[key]):
                 errors.append(f"{activity_ctx}: activity field `{key}` must be a non-empty string.")
 
-        if "unit" in activity and _has_text(activity["unit"]) and activity["unit"] not in known_units:
+        if (
+            "unit" in activity
+            and _has_text(activity["unit"])
+            and _normalize_dataset_unit(activity["unit"]) not in known_units
+        ):
             errors.append(f"{activity_ctx}: unknown activity unit `{activity['unit']}`.")
 
         exchanges = activity.get("exchanges")
@@ -653,14 +662,22 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
                 errors.append(f"{exchange_ctx}: `amount` must be a number.")
 
             if exchange_type in ("production", "technosphere"):
-                if "unit" in exchange and _has_text(exchange["unit"]) and exchange["unit"] not in known_units:
+                if (
+                    "unit" in exchange
+                    and _has_text(exchange["unit"])
+                    and _normalize_dataset_unit(exchange["unit"]) not in known_units
+                ):
                     errors.append(f"{exchange_ctx}: unknown exchange unit `{exchange['unit']}`.")
                 for key in ("name", "reference product", "location", "unit"):
                     if key in exchange and not _has_text(exchange[key]):
                         errors.append(f"{exchange_ctx}: exchange field `{key}` must be a non-empty string.")
 
             if exchange_type == "biosphere":
-                if "unit" in exchange and _has_text(exchange["unit"]) and exchange["unit"] not in known_biosphere_units:
+                if (
+                    "unit" in exchange
+                    and _has_text(exchange["unit"])
+                    and _normalize_dataset_unit(exchange["unit"]) not in known_biosphere_units
+                ):
                     errors.append(f"{exchange_ctx}: unknown exchange unit `{exchange['unit']}`.")
                 if "name" in exchange and not _has_text(exchange["name"]):
                     errors.append(f"{exchange_ctx}: exchange field `name` must be a non-empty string.")

@@ -818,27 +818,78 @@ def _canonicalize_text(value: str) -> str:
 def _canonicalize_technosphere_key(
     key: tuple[str, str, str, str],
 ) -> tuple[str, str, str, str]:
-    return tuple(_canonicalize_text(part) for part in key)
+    name, reference_product, location, unit = key
+    return (
+        _canonicalize_text(name),
+        _canonicalize_text(reference_product),
+        _canonicalize_text(location),
+        _canonicalize_unit(unit),
+    )
 
 
 def _canonicalize_technosphere_triplet(
     key: tuple[str, str, str],
 ) -> tuple[str, str, str]:
-    return tuple(_canonicalize_text(part) for part in key)
+    name, location, unit = key
+    return (
+        _canonicalize_text(name),
+        _canonicalize_text(location),
+        _canonicalize_unit(unit),
+    )
 
 
 def _find_unique_canonical_match(
     key: tuple[str, str, str, str],
-    targets: Iterable[tuple[str, str, str, str]],
+    canonical_index: dict[
+        tuple[str, str, str, str],
+        frozenset[tuple[str, str, str, str]],
+    ],
 ) -> tuple[str, str, str, str] | None:
-    matches = {
-        target
-        for target in targets
-        if _canonicalize_technosphere_key(target) == _canonicalize_technosphere_key(key)
-    }
+    matches = canonical_index.get(_canonicalize_technosphere_key(key), frozenset())
     if len(matches) == 1:
         return next(iter(matches))
     return None
+
+
+def _build_canonical_target_index(
+    targets: Iterable[tuple[str, str, str, str]],
+) -> dict[tuple[str, str, str, str], frozenset[tuple[str, str, str, str]]]:
+    indexed: defaultdict[
+        tuple[str, str, str, str],
+        set[tuple[str, str, str, str]],
+    ] = defaultdict(set)
+    for target in targets:
+        indexed[_canonicalize_technosphere_key(target)].add(target)
+    return {
+        canonical_key: frozenset(matches)
+        for canonical_key, matches in indexed.items()
+    }
+
+
+def _canonicalize_unit(value: str) -> str:
+    normalized = " ".join(str(value or "").split()).casefold()
+    unit_aliases = {
+        "kg": "kilogram",
+        "m3": "cubic meter",
+        "kwh": "kilowatt hour",
+        "km": "kilometer",
+        "tkm": "ton kilometer",
+        "mj": "megajoule",
+        "m2": "square meter",
+        "kw": "kilowatt",
+        "hr": "hour",
+        "m2a": "square meter-year",
+        "m": "meter",
+        "vkm": "vehicle-kilometer",
+        "personkm": "person-kilometer",
+        "person kilometer": "person-kilometer",
+        "vehicle kilometer": "vehicle-kilometer",
+        "my": "meter-year",
+        "meter year": "meter-year",
+        "square meter year": "square meter-year",
+        "ha": "hectare",
+    }
+    return unit_aliases.get(normalized, normalized)
 
 
 def _normalize_inventory_for_validation(
@@ -849,6 +900,7 @@ def _normalize_inventory_for_validation(
 ) -> list[dict]:
     normalized_inventory = deepcopy(inventory_data)
     catalog = _load_catalog_if_available(source_profile)
+    _promote_legacy_product_fields(normalized_inventory)
     _synchronize_production_exchanges_with_activity(normalized_inventory)
     _fill_missing_technosphere_reference_products(
         normalized_inventory,
@@ -876,6 +928,22 @@ def _load_catalog_if_available(source_profile: BackgroundProfile):
         return load_background_catalog(normalized)
     except FileNotFoundError:
         return None
+
+
+def _promote_legacy_product_fields(inventory_data: list[dict]) -> None:
+    for activity in inventory_data:
+        if not str(activity.get("reference product") or "").strip():
+            legacy_product = str(activity.get("product") or "").strip()
+            if legacy_product:
+                activity["reference product"] = legacy_product
+        for exchange in activity.get("exchanges", []):
+            if exchange.get("type") not in {"production", "technosphere"}:
+                continue
+            if str(exchange.get("reference product") or "").strip():
+                continue
+            legacy_product = str(exchange.get("product") or "").strip()
+            if legacy_product:
+                exchange["reference product"] = legacy_product
 
 
 def _fill_missing_technosphere_reference_products(
@@ -976,6 +1044,9 @@ def _harmonize_technosphere_exchange_identities(
         )
     }
     catalog_targets = catalog.technosphere if catalog is not None else frozenset()
+    internal_target_index = _build_canonical_target_index(internal_targets)
+    additional_target_index = _build_canonical_target_index(additional_foreground_targets)
+    catalog_target_index = _build_canonical_target_index(catalog_targets)
 
     for activity in inventory_data:
         for exchange in activity.get("exchanges", []):
@@ -992,11 +1063,11 @@ def _harmonize_technosphere_exchange_identities(
             if key in internal_targets or key in additional_foreground_targets or key in catalog_targets:
                 continue
 
-            matched_target = _find_unique_canonical_match(key, internal_targets)
+            matched_target = _find_unique_canonical_match(key, internal_target_index)
             if matched_target is None:
-                matched_target = _find_unique_canonical_match(key, additional_foreground_targets)
+                matched_target = _find_unique_canonical_match(key, additional_target_index)
             if matched_target is None:
-                matched_target = _find_unique_canonical_match(key, catalog_targets)
+                matched_target = _find_unique_canonical_match(key, catalog_target_index)
             if matched_target is None:
                 continue
 

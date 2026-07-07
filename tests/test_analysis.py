@@ -766,6 +766,159 @@ def test_analyze_brightway_excel_accepts_canonical_background_catalog_targets(
     assert result.inventory_data[0]["exchanges"][1]["unit"] == "kilogram"
 
 
+def test_analyze_brightway_excel_accepts_technosphere_unit_alias_against_catalog(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[
+            {
+                "name": "market for sowing",
+                "reference_product": "sowing",
+                "location": "GLO",
+                "unit": "hectare",
+            }
+        ],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "market for sowing",
+                        "reference product": "sowing",
+                        "location": "GLO",
+                        "unit": "ha",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+
+    assert result.candidates[0].issues == []
+    assert result.inventory_data[0]["exchanges"][1]["unit"] == "hectare"
+
+
+def test_analyze_brightway_excel_promotes_legacy_product_field_on_technosphere_exchange(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[
+            {
+                "name": "assembly operation, for lorry",
+                "reference_product": "assembly operation, for lorry",
+                "location": "RER",
+                "unit": "kilogram",
+            }
+        ],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "assembly operation, for lorry",
+                        "product": "assembly operation, for lorry",
+                        "location": "RER",
+                        "unit": "kilogram",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+
+    assert result.candidates[0].issues == []
+    assert (
+        result.inventory_data[0]["exchanges"][1]["reference product"]
+        == "assembly operation, for lorry"
+    )
+
+
+def test_analyze_brightway_excel_accepts_person_kilometer_unit_alias_against_catalog(
+    tmp_path, monkeypatch
+):
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.10",
+        system_model="cutoff",
+        technosphere=[
+            {
+                "name": "transport, tram",
+                "reference_product": "transport, tram",
+                "location": "CH",
+                "unit": "person-kilometer",
+            }
+        ],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    workbook = make_brightway_excel(
+        tmp_path,
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "technosphere",
+                        "name": "transport, tram",
+                        "reference product": "transport, tram",
+                        "location": "CH",
+                        "unit": "person kilometer",
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.10",
+            system_model="cutoff",
+        ),
+    )
+
+    assert result.candidates[0].issues == []
+    assert result.inventory_data[0]["exchanges"][1]["unit"] == "person-kilometer"
+
+
 def test_analyze_brightway_excel_fills_missing_catalog_reference_product(
     tmp_path, monkeypatch
 ):
