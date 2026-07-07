@@ -273,10 +273,50 @@ def _analyze_simapro_csv(
 
     result.inventory_data = deepcopy(inventory_data)
     result.candidates = _build_candidates(inventory_data)
+    result.source_profile, profile_issues = _resolve_background_profile(
+        inventory_data,
+        source_profile,
+    )
+    result.file_issues.extend(profile_issues)
     _attach_identity_issues(
         candidates=result.candidates,
         file_issues=result.file_issues,
     )
+    if inventory_data:
+        validation_errors, validation_warnings = inspect_brightway_inventory(
+            inventory_data,
+            require_simapro_category=False,
+        )
+        if validation_errors:
+            _attach_activity_issues(
+                candidates=result.candidates,
+                candidate_issues=_issues_from_brightway_validation_messages(
+                    validation_errors,
+                    severity="error",
+                    code="inventory_validation_error",
+                ),
+                file_issues=result.file_issues,
+            )
+        if validation_warnings:
+            _attach_activity_issues(
+                candidates=result.candidates,
+                candidate_issues=_issues_from_brightway_validation_messages(
+                    validation_warnings,
+                    severity="warning",
+                    code="inventory_validation_warning",
+                ),
+                file_issues=result.file_issues,
+            )
+        background_issues, background_file_issues = _validate_background_links(
+            inventory_data,
+            result.source_profile,
+        )
+        _attach_activity_issues(
+            candidates=result.candidates,
+            candidate_issues=background_issues,
+            file_issues=result.file_issues,
+        )
+        result.file_issues.extend(background_file_issues)
     result.file_issues.extend(_warning_issues(collector.messages))
     return result
 

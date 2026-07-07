@@ -701,6 +701,103 @@ def test_analyze_simapro_csv_returns_candidate_summaries(tmp_path):
     assert result.candidates[0].location == "GLO"
 
 
+def test_analyze_simapro_csv_surfaces_validation_warnings_from_converted_inventory(
+    tmp_path, monkeypatch
+):
+    from brightpath.analysis import analyzer as analysis_analyzer
+
+    filepath = tmp_path / "inventory.csv"
+    filepath.write_text("fake simapro content", encoding="utf-8")
+    inventory_data = [
+        minimal_activity(
+            extra_exchanges=[
+                {
+                    "type": "biosphere",
+                    "name": "Water, river",
+                    "categories": ("natural resource", "in water"),
+                    "unit": "cubic meter",
+                    "amount": 2.0,
+                }
+            ]
+        )
+    ]
+
+    class FakeSimaproConverter:
+        def __init__(self, *args, **kwargs):
+            self.i = SimpleNamespace(data=inventory_data)
+
+        def convert_to_brightway(self, format="data"):
+            assert format == "data"
+            return inventory_data
+
+    monkeypatch.setattr(analysis_analyzer, "SimaproConverter", FakeSimaproConverter)
+
+    result = analyze_inventory(path=filepath, source_format=SOURCE_FORMAT_SIMAPRO_CSV)
+
+    assert result.file_issues == []
+    assert len(result.candidates) == 1
+    assert any(
+        issue.code == "inventory_validation_warning"
+        and "no water release flows were found" in issue.message
+        for issue in result.candidates[0].issues
+    )
+
+
+def test_analyze_simapro_csv_validates_background_links_from_converted_inventory(
+    tmp_path, monkeypatch
+):
+    from brightpath.analysis import analyzer as analysis_analyzer
+
+    directory = write_catalog(
+        tmp_path,
+        family="ecoinvent",
+        version="3.9",
+        system_model="cutoff",
+        technosphere=[],
+        biosphere=[],
+    )
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(directory))
+    filepath = tmp_path / "inventory.csv"
+    filepath.write_text("fake simapro content", encoding="utf-8")
+    inventory_data = [
+        minimal_activity(
+            extra_exchanges=[
+                {
+                    "type": "technosphere",
+                    "name": "missing market",
+                    "reference product": "missing product",
+                    "location": "CH",
+                    "unit": "kilogram",
+                    "amount": 2.0,
+                }
+            ]
+        )
+    ]
+
+    class FakeSimaproConverter:
+        def __init__(self, *args, **kwargs):
+            self.i = SimpleNamespace(data=inventory_data)
+
+        def convert_to_brightway(self, format="data"):
+            assert format == "data"
+            return inventory_data
+
+    monkeypatch.setattr(analysis_analyzer, "SimaproConverter", FakeSimaproConverter)
+
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_profile=BackgroundProfile(
+            family="ecoinvent",
+            version="3.9",
+            system_model="cutoff",
+        ),
+    )
+
+    assert len(result.candidates) == 1
+    assert any(issue.code == "unknown_technosphere_target" for issue in result.candidates[0].issues)
+
+
 def test_analyze_simapro_csv_attaches_duplicate_identity_errors(tmp_path):
     filepath = make_simapro_csv(tmp_path, [minimal_activity(), minimal_activity()], filename="duplicates.csv")
 
