@@ -1446,6 +1446,40 @@ def test_analyze_simapro_csv_requires_exact_context_before_parsing(tmp_path):
     assert [issue.code for issue in result.file_issues] == ["simapro_source_context_required"]
 
 
+def test_analyze_simapro_csv_rejects_conflicting_legacy_profile(tmp_path):
+    filepath = make_simapro_csv(tmp_path, [minimal_activity()])
+
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_context=simapro_context("3.11"),
+        source_profile=BackgroundProfile("ecoinvent", "3.9", "consequential"),
+    )
+
+    assert result.inventory_data == []
+    assert result.candidates == []
+    assert [issue.code for issue in result.file_issues] == ["simapro_source_profile_conflict"]
+    assert "version, system_model" in result.file_issues[0].message
+
+
+def test_analyze_simapro_csv_reports_invalid_application_catalog_provider(tmp_path, monkeypatch):
+    filepath = make_simapro_csv(tmp_path, [minimal_activity()])
+    catalog_directory = tmp_path / "catalogs"
+    catalog_directory.mkdir()
+    (catalog_directory / "RESOURCE_MANIFEST.json").write_text("{not-json", encoding="utf-8")
+    monkeypatch.setenv("BRIGHTPATH_REFERENCE_DIR", str(catalog_directory))
+
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_context=simapro_context(),
+    )
+
+    assert result.inventory_data == []
+    assert result.candidates == []
+    assert [issue.code for issue in result.file_issues] == ["simapro_biosphere_catalog_invalid"]
+
+
 def test_analyze_simapro_csv_reports_missing_exact_biosphere_catalog(tmp_path):
     filepath = make_simapro_csv(tmp_path, [minimal_activity()])
 

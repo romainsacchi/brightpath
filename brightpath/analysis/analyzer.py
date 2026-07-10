@@ -209,6 +209,7 @@ def analyze_inventory(
         return _analyze_simapro_csv(
             path=resolved_path,
             source_context=source_context,
+            legacy_source_profile=source_profile,
             catalog_provider=catalog_provider,
             additional_foreground_targets=normalized_foreground_targets,
         )
@@ -368,6 +369,7 @@ def _analyze_simapro_csv(
     *,
     path: Path,
     source_context: InventoryContext | None,
+    legacy_source_profile: BackgroundProfile | None,
     catalog_provider: CatalogProvider | None,
     additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> AnalysisResult:
@@ -407,7 +409,43 @@ def _analyze_simapro_csv(
         )
         return result
 
-    provider = catalog_provider if catalog_provider is not None else catalog_provider_from_environment()
+    conflict = _simapro_profile_conflict(legacy_source_profile, source_profile)
+    if conflict:
+        result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_source_profile_conflict",
+                message=conflict,
+                suggested_fix="Remove source_profile or make its specified fields match source_context.technosphere.",
+            )
+        )
+        return result
+
+    if catalog_provider is not None:
+        provider = catalog_provider
+    else:
+        try:
+            provider = catalog_provider_from_environment()
+        except CatalogIntegrityError as error:
+            result.file_issues.append(
+                Issue(
+                    severity="error",
+                    code="simapro_biosphere_catalog_invalid",
+                    message=f"Constructing the catalog provider failed integrity checks: {error}",
+                    suggested_fix="Repair the configured catalog manifest or inject a valid exact catalog provider.",
+                )
+            )
+            return result
+        except Exception as error:
+            result.file_issues.append(
+                Issue(
+                    severity="error",
+                    code="simapro_biosphere_catalog_failed",
+                    message=f"Constructing the catalog provider failed: {error}",
+                    suggested_fix="Check the catalog configuration or inject a valid exact catalog provider.",
+                )
+            )
+            return result
     biosphere_catalog, catalog_issue = _load_exact_simapro_biosphere_catalog(source_context, provider)
     if catalog_issue is not None:
         result.file_issues.append(catalog_issue)
@@ -500,6 +538,26 @@ def _analyze_simapro_csv(
         result.file_issues.extend(background_file_issues)
     result.file_issues.extend(_warning_issues(collector.messages))
     return result
+
+
+def _simapro_profile_conflict(
+    legacy: BackgroundProfile | None,
+    exact: BackgroundProfile,
+) -> str:
+    """Describe specified legacy fields that contradict an exact context."""
+
+    if legacy is None:
+        return ""
+    normalized = legacy.normalized()
+    conflicts = [
+        field_name
+        for field_name in ("family", "version", "system_model")
+        if getattr(normalized, field_name) and getattr(normalized, field_name) != getattr(exact, field_name)
+    ]
+    if not conflicts:
+        return ""
+    fields = ", ".join(conflicts)
+    return f"source_profile conflicts with source_context.technosphere for: {fields}."
 
 
 def _load_brightway_excel_without_validation(path: Path) -> list[dict]:
