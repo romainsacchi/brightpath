@@ -230,15 +230,15 @@ def test_migrate_noop_preserves_format_and_returns_reported_document():
     assert result.report.operation is OperationKind.MIGRATE
 
 
-def test_strict_simapro_preflight_rejects_an_unused_exchange_as_explicit_loss():
-    unused = {
+def test_strict_simapro_preflight_rejects_a_blacklisted_exchange_as_explicit_loss():
+    blacklisted = {
         "type": "biosphere",
         "name": "Oxygen",
         "categories": ("air", "urban air close to ground"),
         "unit": "kilogram",
         "amount": 1.0,
     }
-    source = document(data=[activity(extra_exchanges=(unused,))])
+    source = document(data=[activity(extra_exchanges=(blacklisted,))])
     pipeline = InventoryPipeline(default_adapter_registry(), provider_for(source))
 
     strict = pipeline.convert(source, "simapro_csv")
@@ -246,7 +246,7 @@ def test_strict_simapro_preflight_rejects_an_unused_exchange_as_explicit_loss():
 
     assert strict.value is None
     assert strict.error
-    assert [loss.code for loss in strict.report.losses] == ["simapro_exchange_unused"]
+    assert [loss.code for loss in strict.report.losses] == ["simapro_exchange_blacklisted"]
     assert permissive.value is not None
     assert not permissive.error
     assert permissive.lossy

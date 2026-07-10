@@ -15,23 +15,22 @@ from pathlib import Path
 from typing import Any
 
 from brightpath.adapters.base import ArtifactKind, FormatAdapter, FormatDescriptor, coerce_format_descriptor
+from brightpath.adapters.preflight import preflight_conversion
 from brightpath.adapters.registry import AdapterRegistry, DetectionReport
 from brightpath.background.catalogs import CatalogProvider
 from brightpath.background.execution import execute_background_migration
 from brightpath.background.validation import validate_background_links
 from brightpath.exceptions import SerializationError
-from brightpath.formats.simapro_csv import render_simapro_rows
 from brightpath.models import InventoryDocument
 from brightpath.normalization import normalize_inventory
 from brightpath.validation.brightway import validate_brightway_inventory
 
 from .audit import digest_artifact, write_report_sidecar
 from .context import BackgroundContext, ContextHint, FormatProfile, InventoryContext
-from .policies import ConversionPolicy, MigrationPolicy, PolicyAction
+from .policies import ConversionPolicy, MigrationPolicy
 from .reports import (
     Change,
     Issue,
-    Loss,
     OperationKind,
     OperationReport,
     OperationResult,
@@ -460,45 +459,14 @@ class InventoryPipeline:
         policy: ConversionPolicy,
     ) -> tuple[InventoryDocument | None, FormatAdapter | None, tuple[StageReport, ...]]:
         adapter, capability_issues = self._writable_adapter(descriptor)
-        preflight_issues = list(capability_issues)
-        losses: list[Loss] = []
-
-        if adapter is not None and descriptor.format_id == "simapro_csv":
-            try:
-                rendered = render_simapro_rows(document)
-            except Exception as error:
-                preflight_issues.append(
-                    Issue(
-                        Severity.ERROR,
-                        "conversion.preflight_failed",
-                        str(error) or type(error).__name__,
-                        StageKind.CONVERSION_PREFLIGHT,
-                        details={"format": _descriptor_details(descriptor)},
-                    )
-                )
-            else:
-                for legacy_issue in rendered.issues:
-                    if legacy_issue.code == "simapro_exchange_unused":
-                        loss = Loss(
-                            "simapro_exchange_unused",
-                            legacy_issue.message,
-                            StageKind.CONVERSION_PREFLIGHT,
-                            path=str(getattr(legacy_issue, "path", "")),
-                            details={"target_format": descriptor.format_id},
-                        )
-                        losses.append(loss)
-                        policy_issue = _loss_policy_issue(loss, policy.on_information_loss)
-                        if policy_issue is not None:
-                            preflight_issues.append(policy_issue)
-                    else:
-                        preflight_issues.append(_legacy_issue(legacy_issue, StageKind.CONVERSION_PREFLIGHT))
-
+        representability = preflight_conversion(document, descriptor, policy)
         preflight = StageReport(
             StageKind.CONVERSION_PREFLIGHT,
-            label=f"{descriptor.label()} representability",
-            issues=tuple(preflight_issues),
-            losses=tuple(losses),
-            metrics={"target_format": _descriptor_details(descriptor)},
+            label=representability.label,
+            issues=capability_issues + representability.issues,
+            changes=representability.changes,
+            losses=representability.losses,
+            metrics=representability.metrics,
         )
         if preflight.has_errors or adapter is None:
             return None, adapter, (preflight,)
@@ -621,21 +589,6 @@ def _severity(value: object) -> Severity:
         return Severity(str(getattr(value, "value", value)).lower())
     except ValueError:
         return Severity.ERROR
-
-
-def _loss_policy_issue(loss: Loss, action: PolicyAction) -> Issue | None:
-    if action is PolicyAction.ALLOW:
-        return None
-    severity = Severity.ERROR if action is PolicyAction.ERROR else Severity.WARNING
-    return Issue(
-        severity,
-        "conversion.information_loss",
-        loss.message,
-        StageKind.CONVERSION_PREFLIGHT,
-        path=loss.path,
-        details={"loss_code": loss.code, "policy_action": action.value},
-        suggested_fix="Choose a lossless target or explicitly use a policy that permits this loss.",
-    )
 
 
 def _format_hint_conflict(hint: FormatProfile | None, descriptor: FormatDescriptor) -> Issue | None:
