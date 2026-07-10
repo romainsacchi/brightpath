@@ -114,6 +114,8 @@ def load_simapro_csv(
         cleaned_path = Path(directory) / f"{source.stem}_cleaned.csv"
         cleaned = check_simapro_inventory(source, output_path=cleaned_path)
         global_parameter_scopes = _read_global_parameter_scopes(cleaned)
+        if "default-units" not in bw2io.migrations:
+            bw2io.create_core_migrations()
         importer = bw2io.SimaProCSVImporter(filepath=cleaned, name=name)
         importer.apply_strategies()
         detected_system_models = detect_simapro_system_models(importer.data)
