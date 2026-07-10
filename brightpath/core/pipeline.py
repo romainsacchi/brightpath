@@ -549,6 +549,7 @@ class InventoryPipeline:
         stages = [preflight, conversion]
         if policy.validate_target:
             target_validation = validate_adapter_format(converted, adapter)
+            target_validation = _without_preflight_duplicates(target_validation, preflight)
             target_validation = _apply_conversion_target_policy(target_validation, policy.on_invalid_target)
             stages.append(target_validation)
             if target_validation.has_errors:
@@ -661,6 +662,34 @@ def _apply_conversion_target_policy(stage: StageReport, action: PolicyAction) ->
         issues=issues,
         changes=stage.changes,
         losses=stage.losses,
+        metrics=metrics,
+    )
+
+
+def _without_preflight_duplicates(stage: StageReport, preflight: StageReport) -> StageReport:
+    """Keep target validation focused on findings not already preflighted."""
+
+    issue_keys = {(issue.code, issue.path, issue.message) for issue in preflight.issues}
+    loss_keys = {(loss.code, loss.path, loss.message) for loss in preflight.losses}
+    issues = tuple(issue for issue in stage.issues if (issue.code, issue.path, issue.message) not in issue_keys)
+    losses = tuple(loss for loss in stage.losses if (loss.code, loss.path, loss.message) not in loss_keys)
+    removed_issues = len(stage.issues) - len(issues)
+    removed_losses = len(stage.losses) - len(losses)
+    if not removed_issues and not removed_losses:
+        return stage
+    metrics = {
+        **dict(stage.metrics),
+        "preflight_duplicates_omitted": {
+            "issues": removed_issues,
+            "losses": removed_losses,
+        },
+    }
+    return StageReport(
+        stage.stage,
+        label=stage.label,
+        issues=issues,
+        changes=stage.changes,
+        losses=losses,
         metrics=metrics,
     )
 

@@ -305,6 +305,11 @@ def test_strict_simapro_preflight_rejects_a_blacklisted_exchange_as_explicit_los
     assert permissive.value is not None
     assert not permissive.error
     assert permissive.lossy
+    assert [loss.code for loss in permissive.report.losses] == ["simapro_exchange_blacklisted"]
+    assert permissive.report.stages[-1].metrics["preflight_duplicates_omitted"] == {
+        "issues": 1,
+        "losses": 1,
+    }
 
 
 def test_real_builtin_write_and_read_with_atomic_audit_sidecar(tmp_path):
