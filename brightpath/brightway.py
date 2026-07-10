@@ -4,6 +4,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterable
 
+from .core.context import BiosphereProfile, InventoryContext
 from .exceptions import InventoryValidationError
 from .formats import load_brightway_excel, write_brightway_excel
 from .migrations import MigrationReport, migrate_inventory
@@ -37,6 +38,8 @@ class BrightwayInventory:
         path: str | Path,
         *,
         background_profile: BackgroundProfile | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
+        context: InventoryContext | None = None,
     ) -> "BrightwayInventory":
         """Load a ``bw2io``-compatible Brightway Excel workbook.
 
@@ -44,6 +47,9 @@ class BrightwayInventory:
         :param background_profile: Explicit source profile. If omitted,
             BrightPath uses profile metadata embedded by :meth:`write_excel`,
             when available.
+        :param biosphere_profile: Explicit biosphere profile for legacy calls.
+        :param context: Complete exact context. Its format must be
+            ``brightway_excel``.
         :return: A Brightway inventory facade.
         :raises FileNotFoundError: If *path* does not exist.
         :raises ValueError: If *path* does not have an ``.xlsx`` suffix.
@@ -53,6 +59,8 @@ class BrightwayInventory:
             load_brightway_excel(
                 path,
                 background_profile=background_profile,
+                biosphere_profile=biosphere_profile,
+                context=context,
             )
         )
 
@@ -61,7 +69,9 @@ class BrightwayInventory:
         cls,
         data: list[dict],
         *,
-        background_profile: BackgroundProfile,
+        background_profile: BackgroundProfile | None = None,
+        context: InventoryContext | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
         database_name: str = "brightpath-inventory",
         metadata: dict | None = None,
         database_parameters: list[dict] | None = None,
@@ -71,7 +81,11 @@ class BrightwayInventory:
 
         :param data: Dataset dictionaries in the canonical Brightway-style
             representation.
-        :param background_profile: Profile currently linked by the inventory.
+        :param background_profile: Legacy technosphere-only profile currently
+            linked by the inventory. Prefer *context* in new code.
+        :param context: Exact software, technosphere, and biosphere context.
+        :param biosphere_profile: Explicit biosphere used with the legacy
+            *background_profile* argument.
         :param database_name: Name written into exported workbooks.
         :param metadata: Optional database metadata.
         :param database_parameters: Optional database-scoped parameters.
@@ -83,7 +97,9 @@ class BrightwayInventory:
             InventoryDocument(
                 data=data,
                 background_profile=background_profile,
-                inventory_format=InventoryFormat.BRIGHTWAY_EXCEL,
+                inventory_format=(InventoryFormat.BRIGHTWAY_EXCEL if context is None else None),
+                context=context,
+                biosphere_profile=biosphere_profile,
                 database_name=database_name,
                 metadata=metadata,
                 database_parameters=database_parameters,
@@ -102,6 +118,18 @@ class BrightwayInventory:
         """The normalized profile currently linked by the inventory."""
 
         return self._document.background_profile
+
+    @property
+    def context(self) -> InventoryContext:
+        """The exact software, technosphere, and biosphere context."""
+
+        return self._document.context
+
+    @property
+    def biosphere_profile(self) -> BiosphereProfile:
+        """The exact biosphere profile currently linked by the inventory."""
+
+        return self._document.biosphere_profile
 
     @property
     def database_name(self) -> str:

@@ -6,8 +6,8 @@ from functools import lru_cache
 from pathlib import Path
 
 from brightpath import DATA_DIR
+from brightpath.core.context import resolve_migration_series
 from brightpath.exceptions import MigrationError
-from brightpath.models import BackgroundProfile
 
 _PROFILE_ID = re.compile(r"^ecoinvent-(?P<version>\d+(?:\.\d+){1,2})-(?P<kind>cutoff|consequential|biosphere)$")
 
@@ -58,15 +58,7 @@ def _parse_profile_id(value, path: Path) -> tuple[str, str]:
     match = _PROFILE_ID.fullmatch(str(value or ""))
     if not match:
         raise MigrationError(f"Malformed source_id or target_id in migration resource {path}.")
-    version = (
-        BackgroundProfile(
-            family="ecoinvent",
-            version=match.group("version"),
-            system_model="cutoff",
-        )
-        .normalized()
-        .version
-    )
+    version = resolve_migration_series("ecoinvent", match.group("version")).migration_series
     return version, match.group("kind")
 
 

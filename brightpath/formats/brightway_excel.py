@@ -11,8 +11,14 @@ import bw2io
 import xlsxwriter
 from bw2io.importers.excel import ExcelImporter
 
+from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import ExcelSerializationError
-from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFormat
+from brightpath.models import (
+    BackgroundProfile,
+    InventoryDocument,
+    InventoryFormat,
+    default_biosphere_profile,
+)
 
 _JSON_PREFIX = "__brightpath_json__:"
 _MISSING = object()
@@ -20,6 +26,15 @@ _PROFILE_METADATA_FIELDS = {
     "family": "brightpath background family",
     "version": "brightpath background version",
     "system_model": "brightpath background system model",
+}
+_BIOSPHERE_METADATA_FIELDS = {
+    "family": "brightpath biosphere family",
+    "version": "brightpath biosphere version",
+}
+_FORMAT_METADATA_FIELDS = {
+    "format_version": "brightpath format version",
+    "dialect": "brightpath format dialect",
+    "encoding": "brightpath format encoding",
 }
 _ACTIVITY_SKIP_FIELDS = {
     "database",
@@ -74,6 +89,8 @@ def load_brightway_excel(
     path: str | Path,
     *,
     background_profile: BackgroundProfile | None = None,
+    biosphere_profile: BiosphereProfile | None = None,
+    context: InventoryContext | None = None,
 ) -> InventoryDocument:
     """Load a Brightway Excel workbook into a software-neutral document."""
 
@@ -91,12 +108,23 @@ def load_brightway_excel(
     data = _decode_tagged_values(importer.data)
     metadata = _decode_tagged_values(getattr(importer, "metadata", {}) or {})
     embedded_profile = _profile_from_metadata(metadata)
-    profile = (background_profile or embedded_profile).normalized()
+    embedded_biosphere = _biosphere_profile_from_metadata(metadata)
+    if context is not None and context.format.format_id != InventoryFormat.BRIGHTWAY_EXCEL.value:
+        raise ValueError("Explicit context format must be brightway_excel.")
+    if context is None:
+        profile = (background_profile or embedded_profile).normalized()
+        technosphere = profile.to_technosphere_profile()
+        context = InventoryContext(
+            format=_format_profile_from_metadata(metadata),
+            background=BackgroundContext(
+                technosphere=technosphere,
+                biosphere=(biosphere_profile or embedded_biosphere or default_biosphere_profile(technosphere)),
+            ),
+        )
 
     return InventoryDocument(
         data=data,
-        background_profile=profile,
-        inventory_format=InventoryFormat.BRIGHTWAY_EXCEL,
+        context=context,
         database_name=getattr(importer, "db_name", ""),
         metadata=metadata,
         database_parameters=_decode_tagged_values(getattr(importer, "database_parameters", None)),
@@ -145,6 +173,14 @@ def write_brightway_excel(
             metadata[_PROFILE_METADATA_FIELDS["version"]] = profile.version
         if profile.system_model:
             metadata[_PROFILE_METADATA_FIELDS["system_model"]] = profile.system_model
+        biosphere = document.biosphere_profile
+        metadata[_BIOSPHERE_METADATA_FIELDS["family"]] = biosphere.family
+        metadata[_BIOSPHERE_METADATA_FIELDS["version"]] = biosphere.version
+        format_profile = document.context.format
+        for attribute, field in _FORMAT_METADATA_FIELDS.items():
+            value = getattr(format_profile, attribute)
+            if value:
+                metadata[field] = value
 
         for field in sorted(metadata):
             _write_cell(sheet, row, 0, field)
@@ -174,6 +210,23 @@ def _profile_from_metadata(metadata: dict) -> BackgroundProfile:
         family=str(metadata.get(_PROFILE_METADATA_FIELDS["family"], "") or ""),
         version=str(metadata.get(_PROFILE_METADATA_FIELDS["version"], "") or ""),
         system_model=str(metadata.get(_PROFILE_METADATA_FIELDS["system_model"], "") or ""),
+    )
+
+
+def _biosphere_profile_from_metadata(metadata: dict) -> BiosphereProfile | None:
+    family = str(metadata.get(_BIOSPHERE_METADATA_FIELDS["family"], "") or "")
+    version = str(metadata.get(_BIOSPHERE_METADATA_FIELDS["version"], "") or "")
+    if not family or not version:
+        return None
+    return BiosphereProfile(family, version)
+
+
+def _format_profile_from_metadata(metadata: dict) -> FormatProfile:
+    return FormatProfile(
+        InventoryFormat.BRIGHTWAY_EXCEL.value,
+        format_version=str(metadata.get(_FORMAT_METADATA_FIELDS["format_version"], "") or ""),
+        dialect=str(metadata.get(_FORMAT_METADATA_FIELDS["dialect"], "") or ""),
+        encoding=str(metadata.get(_FORMAT_METADATA_FIELDS["encoding"], "") or ""),
     )
 
 

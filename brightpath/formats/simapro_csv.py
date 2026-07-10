@@ -12,8 +12,15 @@ from pathlib import Path
 
 import bw2io
 
+from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import SimaProSerializationError
-from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFormat, Issue
+from brightpath.models import (
+    BackgroundProfile,
+    InventoryDocument,
+    InventoryFormat,
+    Issue,
+    default_biosphere_profile,
+)
 from brightpath.profiles import format_simapro_technosphere_name, parse_simapro_technosphere_name
 from brightpath.utils import (
     ALLOWED_BIOSPHERE_CATEGORIES,
@@ -69,7 +76,9 @@ class SimaProRenderResult:
 def load_simapro_csv(
     path: str | Path,
     *,
-    background_profile: BackgroundProfile,
+    background_profile: BackgroundProfile | None = None,
+    biosphere_profile: BiosphereProfile | None = None,
+    context: InventoryContext | None = None,
     database_name: str | None = None,
 ) -> InventoryDocument:
     """Load and normalize a SimaPro CSV export into canonical inventory data."""
@@ -80,7 +89,26 @@ def load_simapro_csv(
     if source.suffix.lower() != ".csv":
         raise ValueError("SimaPro inventories must use a .csv filename.")
 
-    profile = background_profile.normalized()
+    if context is not None:
+        if context.format.format_id != InventoryFormat.SIMAPRO_CSV.value:
+            raise ValueError("Explicit context format must be simapro_csv.")
+        profile = BackgroundProfile.from_technosphere_profile(context.background.technosphere)
+        if background_profile is not None and background_profile.normalized() != profile:
+            raise ValueError("background_profile conflicts with context.technosphere.")
+        if biosphere_profile is not None and biosphere_profile != context.background.biosphere:
+            raise ValueError("biosphere_profile conflicts with context.biosphere.")
+    else:
+        if background_profile is None:
+            raise TypeError("background_profile or context must be provided.")
+        profile = background_profile.normalized()
+        technosphere = profile.to_technosphere_profile()
+        context = InventoryContext(
+            format=FormatProfile(InventoryFormat.SIMAPRO_CSV.value, encoding="latin-1"),
+            background=BackgroundContext(
+                technosphere=technosphere,
+                biosphere=biosphere_profile or default_biosphere_profile(technosphere),
+            ),
+        )
     name = database_name or source.stem
     with tempfile.TemporaryDirectory(prefix="brightpath_") as directory:
         cleaned_path = Path(directory) / f"{source.stem}_cleaned.csv"
@@ -101,6 +129,7 @@ def load_simapro_csv(
             data = normalize_simapro_import_data(
                 importer.data,
                 background_profile=profile,
+                biosphere_profile=context.background.biosphere,
                 database_name=name,
                 parameter_name_mapping=global_parameter_names,
             )
@@ -115,8 +144,7 @@ def load_simapro_csv(
 
     return InventoryDocument(
         data=data,
-        background_profile=profile,
-        inventory_format=InventoryFormat.SIMAPRO_CSV,
+        context=context,
         database_name=name,
         metadata=metadata,
         database_parameters=database_parameters,
@@ -128,6 +156,7 @@ def normalize_simapro_import_data(
     data: list[dict],
     *,
     background_profile: BackgroundProfile,
+    biosphere_profile: BiosphereProfile | None = None,
     database_name: str,
     biosphere_flows=None,
     biosphere_correspondence=None,
@@ -138,7 +167,8 @@ def normalize_simapro_import_data(
 
     normalized = deepcopy(data)
     profile = background_profile.normalized()
-    reference_version = profile.version if profile.family == "ecoinvent" else "3.10"
+    selected_biosphere = biosphere_profile or default_biosphere_profile(profile)
+    reference_version = selected_biosphere.version
     if biosphere_flows is None:
         biosphere_flows = load_ei_biosphere_flows()
     if biosphere_correspondence is None:

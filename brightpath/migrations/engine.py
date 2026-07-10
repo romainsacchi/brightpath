@@ -6,6 +6,7 @@ from math import isclose
 
 from bw2io.units import normalize_units as normalize_unit
 
+from brightpath.core.context import resolve_migration_series
 from brightpath.exceptions import MigrationError, MigrationUnavailableError
 from brightpath.models import BackgroundProfile, InventoryDocument, Issue
 
@@ -88,7 +89,9 @@ def migrate_inventory(
         raise MigrationUnavailableError("Only ecoinvent cut-off migration resources are currently packaged.")
 
     resources = load_technosphere_resources(source.system_model)
-    route = resolve_migration_route(source.version, target.version, resources)
+    source_series = resolve_migration_series(source.family, source.version).migration_series
+    target_series = resolve_migration_series(target.family, target.version).migration_series
+    route = resolve_migration_route(source_series, target_series, resources)
     biosphere_resources = load_biosphere_resources()
     data = document.data
 
@@ -248,7 +251,7 @@ def _apply_disaggregation(
                     )
                 )
 
-            for target, allocation in zip(rule["targets"], allocations):
+            for target, allocation in zip(rule["targets"], allocations, strict=True):
                 new_exchange = deepcopy(exchange)
                 _record_unit_change(rule["source"], target, report, path=path)
                 _apply_technosphere_target(new_exchange, target)

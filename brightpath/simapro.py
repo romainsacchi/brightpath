@@ -4,6 +4,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterable
 
+from .core.context import BiosphereProfile, InventoryContext
 from .exceptions import InventoryValidationError
 from .formats import load_simapro_csv, render_simapro_rows, write_simapro_csv
 from .formats.simapro_csv import SimaProRenderResult
@@ -32,14 +33,19 @@ class SimaProInventory:
         cls,
         path: str | Path,
         *,
-        background_profile: BackgroundProfile,
+        background_profile: BackgroundProfile | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
+        context: InventoryContext | None = None,
         database_name: str | None = None,
     ) -> "SimaProInventory":
         """Load and normalize a SimaPro CSV export.
 
         :param path: Path to a semicolon-delimited SimaPro ``.csv`` file.
-        :param background_profile: Explicit profile used to interpret SimaPro
-            process names and background links.
+        :param background_profile: Legacy technosphere-only profile used to
+            interpret SimaPro process names and background links.
+        :param biosphere_profile: Explicit biosphere profile for legacy calls.
+        :param context: Complete exact context. Its format must be
+            ``simapro_csv``.
         :param database_name: Optional foreground name; defaults to the file
             stem.
         :return: A SimaPro inventory facade.
@@ -51,6 +57,8 @@ class SimaProInventory:
             load_simapro_csv(
                 path,
                 background_profile=background_profile,
+                biosphere_profile=biosphere_profile,
+                context=context,
                 database_name=database_name,
             )
         )
@@ -60,7 +68,9 @@ class SimaProInventory:
         cls,
         data: list[dict],
         *,
-        background_profile: BackgroundProfile,
+        background_profile: BackgroundProfile | None = None,
+        context: InventoryContext | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
         database_name: str = "brightpath-inventory",
         metadata: dict | None = None,
         database_parameters: list[dict] | None = None,
@@ -70,7 +80,11 @@ class SimaProInventory:
 
         :param data: Dataset dictionaries in the canonical Brightway-style
             representation.
-        :param background_profile: Profile currently linked by the inventory.
+        :param background_profile: Legacy technosphere-only profile currently
+            linked by the inventory. Prefer *context* in new code.
+        :param context: Exact software, technosphere, and biosphere context.
+        :param biosphere_profile: Explicit biosphere used with the legacy
+            *background_profile* argument.
         :param database_name: Foreground database name.
         :param metadata: Optional database metadata.
         :param database_parameters: Optional database-scoped parameters.
@@ -82,7 +96,9 @@ class SimaProInventory:
             InventoryDocument(
                 data=data,
                 background_profile=background_profile,
-                inventory_format=InventoryFormat.SIMAPRO_CSV,
+                inventory_format=(InventoryFormat.SIMAPRO_CSV if context is None else None),
+                context=context,
+                biosphere_profile=biosphere_profile,
                 database_name=database_name,
                 metadata=metadata,
                 database_parameters=database_parameters,
@@ -101,6 +117,18 @@ class SimaProInventory:
         """The normalized profile currently linked by the inventory."""
 
         return self._document.background_profile
+
+    @property
+    def context(self) -> InventoryContext:
+        """The exact software, technosphere, and biosphere context."""
+
+        return self._document.context
+
+    @property
+    def biosphere_profile(self) -> BiosphereProfile:
+        """The exact biosphere profile currently linked by the inventory."""
+
+        return self._document.biosphere_profile
 
     @property
     def database_name(self) -> str:

@@ -1,9 +1,17 @@
 from __future__ import annotations
 
-from copy import deepcopy
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Any
+
+from .core.context import (
+    BackgroundContext,
+    BiosphereProfile,
+    FormatProfile,
+    InventoryContext,
+    TechnosphereProfile,
+)
+from .core.schema import CanonicalInventory
 
 
 def _normalize_family(value: str | None) -> str:
@@ -24,12 +32,6 @@ def _normalize_version(family: str, value: str | None) -> str:
     normalized = str(value or "").strip()
     if family == "uvek" and normalized.endswith(".0") and normalized[:-2].isdigit():
         return normalized[:-2]
-    if family != "ecoinvent":
-        return normalized
-
-    parts = normalized.split(".")
-    if len(parts) >= 3 and all(part.isdigit() for part in parts):
-        return ".".join(parts[:2])
     return normalized
 
 
@@ -55,8 +57,8 @@ class BackgroundProfile:
 
     :param family: Database family, such as ``"ecoinvent"`` or ``"uvek"``.
         The legacy value ``"bafu"`` is normalized to ``"uvek"``.
-    :param version: Database version, such as ``"3.10"`` or ``"2025"``.
-        Numeric ecoinvent patch versions are reduced to major/minor versions.
+    :param version: Exact database version, such as ``"3.10.1"`` or
+        ``"2025"``. Migration-series resolution is a separate operation.
     :param system_model: System model, such as ``"cutoff"`` or
         ``"consequential"``. ``"cut-off"`` is normalized to ``"cutoff"``.
     """
@@ -95,6 +97,40 @@ class BackgroundProfile:
             )
             if part
         )
+
+    def to_technosphere_profile(self) -> TechnosphereProfile:
+        """Return the exact typed technosphere profile.
+
+        :raises ValueError: If this legacy projection is incomplete.
+        """
+
+        normalized = self.normalized()
+        return TechnosphereProfile(
+            normalized.family,
+            normalized.version,
+            normalized.system_model,
+        )
+
+    @classmethod
+    def from_technosphere_profile(cls, profile: TechnosphereProfile) -> "BackgroundProfile":
+        """Create the legacy public projection of a typed profile."""
+
+        return cls(profile.family, profile.version, profile.system_model)
+
+
+def default_biosphere_profile(profile: BackgroundProfile | TechnosphereProfile) -> BiosphereProfile:
+    """Return the documented legacy biosphere default for a technosphere.
+
+    New code should pass an explicit :class:`BiosphereProfile`. This helper is
+    limited to compatibility boundaries where the old API supplied only one
+    combined background profile. UVEK 2025 inventories use the ecoinvent 3.10
+    biosphere catalog in the currently supported data release.
+    """
+
+    technosphere = profile.to_technosphere_profile() if isinstance(profile, BackgroundProfile) else profile
+    if technosphere.family == "uvek" and technosphere.version == "2025":
+        return BiosphereProfile("ecoinvent", "3.10")
+    return BiosphereProfile(technosphere.family, technosphere.version)
 
 
 @dataclass
@@ -181,8 +217,10 @@ class InventoryDocument:
         self,
         *,
         data: list[dict],
-        background_profile: BackgroundProfile,
-        inventory_format: InventoryFormat,
+        background_profile: BackgroundProfile | None = None,
+        inventory_format: InventoryFormat | None = None,
+        context: InventoryContext | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
         database_name: str = "",
         metadata: dict | None = None,
         database_parameters: list[dict] | None = None,
@@ -191,39 +229,93 @@ class InventoryDocument:
     ) -> None:
         if not isinstance(data, list):
             raise TypeError("Inventory data must be a list of dataset dictionaries.")
+        if context is None:
+            if background_profile is None:
+                raise TypeError("background_profile or context must be provided.")
+            if inventory_format is None:
+                raise TypeError("inventory_format or context must be provided.")
+            technosphere = background_profile.to_technosphere_profile()
+            context = InventoryContext(
+                format=FormatProfile(inventory_format.value),
+                background=BackgroundContext(
+                    technosphere=technosphere,
+                    biosphere=biosphere_profile or default_biosphere_profile(technosphere),
+                ),
+            )
+        elif not isinstance(context, InventoryContext):
+            raise TypeError("context must be an InventoryContext.")
+        else:
+            _check_legacy_context_arguments(
+                context,
+                background_profile=background_profile,
+                inventory_format=inventory_format,
+                biosphere_profile=biosphere_profile,
+            )
 
-        self._data = deepcopy(data)
-        self.background_profile = background_profile.normalized()
-        self.inventory_format = inventory_format
-        self.database_name = str(database_name or "")
-        self._metadata = deepcopy(metadata or {})
-        self._database_parameters = deepcopy(database_parameters)
-        self._project_parameters = deepcopy(project_parameters)
+        self._inventory = CanonicalInventory.from_legacy_dicts(
+            data,
+            context=context,
+            database_name=database_name,
+            metadata=metadata,
+            database_parameters=database_parameters,
+            project_parameters=project_parameters,
+            source_namespace=_source_namespace(context.format),
+        )
         self.migration_reports = tuple(migration_reports)
+
+    @property
+    def context(self) -> InventoryContext:
+        """Return the exact software, technosphere, and biosphere context."""
+
+        return self._inventory.context
 
     @property
     def data(self) -> list[dict]:
         """Return a deep copy of the canonical dataset dictionaries."""
 
-        return deepcopy(self._data)
+        return self._inventory.to_legacy_dicts()
+
+    @property
+    def background_profile(self) -> BackgroundProfile:
+        """Return the legacy technosphere-only profile projection."""
+
+        return BackgroundProfile.from_technosphere_profile(self.context.background.technosphere)
+
+    @property
+    def biosphere_profile(self) -> BiosphereProfile:
+        """Return the exact biosphere profile."""
+
+        return self.context.background.biosphere
+
+    @property
+    def inventory_format(self) -> InventoryFormat:
+        """Return the legacy enum projection of the software format."""
+
+        return InventoryFormat(self.context.format.format_id)
+
+    @property
+    def database_name(self) -> str:
+        """Return the foreground database name."""
+
+        return self._inventory.database_name
 
     @property
     def metadata(self) -> dict:
         """Return a deep copy of database-level metadata."""
 
-        return deepcopy(self._metadata)
+        return self._inventory.metadata.to_dict()
 
     @property
     def database_parameters(self) -> list[dict] | None:
         """Return a deep copy of database parameters, when present."""
 
-        return deepcopy(self._database_parameters)
+        return self._inventory.to_legacy_components()["database_parameters"]
 
     @property
     def project_parameters(self) -> list[dict] | None:
         """Return a deep copy of project parameters, when present."""
 
-        return deepcopy(self._project_parameters)
+        return self._inventory.to_legacy_components()["project_parameters"]
 
     def replace(
         self,
@@ -231,17 +323,72 @@ class InventoryDocument:
         data: list[dict] | None = None,
         background_profile: BackgroundProfile | None = None,
         inventory_format: InventoryFormat | None = None,
+        context: InventoryContext | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
         migration_reports: tuple[Any, ...] | None = None,
     ) -> "InventoryDocument":
         """Return a copied document with selected fields replaced."""
 
+        if context is not None and any(
+            value is not None for value in (background_profile, inventory_format, biosphere_profile)
+        ):
+            raise TypeError("context cannot be combined with legacy context replacements.")
+
+        next_context = context or InventoryContext(
+            format=(FormatProfile(inventory_format.value) if inventory_format is not None else self.context.format),
+            background=BackgroundContext(
+                technosphere=(
+                    background_profile.to_technosphere_profile()
+                    if background_profile is not None
+                    else self.context.background.technosphere
+                ),
+                biosphere=(
+                    biosphere_profile
+                    if biosphere_profile is not None
+                    else (
+                        default_biosphere_profile(background_profile)
+                        if background_profile is not None
+                        else self.context.background.biosphere
+                    )
+                ),
+            ),
+        )
         return InventoryDocument(
             data=self.data if data is None else data,
-            background_profile=background_profile or self.background_profile,
-            inventory_format=inventory_format or self.inventory_format,
+            context=next_context,
             database_name=self.database_name,
             metadata=self.metadata,
             database_parameters=self.database_parameters,
             project_parameters=self.project_parameters,
             migration_reports=(self.migration_reports if migration_reports is None else migration_reports),
         )
+
+
+def _source_namespace(profile: FormatProfile) -> str:
+    if profile.format_id.startswith("brightway"):
+        return "brightway"
+    if profile.format_id.startswith("simapro"):
+        return "simapro"
+    if profile.format_id.startswith("openlca"):
+        return "openlca"
+    if profile.format_id.startswith("ecospold"):
+        return "ecospold2"
+    return profile.format_id
+
+
+def _check_legacy_context_arguments(
+    context: InventoryContext,
+    *,
+    background_profile: BackgroundProfile | None,
+    inventory_format: InventoryFormat | None,
+    biosphere_profile: BiosphereProfile | None,
+) -> None:
+    if (
+        background_profile is not None
+        and background_profile.to_technosphere_profile() != context.background.technosphere
+    ):
+        raise ValueError("background_profile conflicts with context.technosphere.")
+    if inventory_format is not None and inventory_format.value != context.format.format_id:
+        raise ValueError("inventory_format conflicts with context.format.")
+    if biosphere_profile is not None and biosphere_profile != context.background.biosphere:
+        raise ValueError("biosphere_profile conflicts with context.biosphere.")

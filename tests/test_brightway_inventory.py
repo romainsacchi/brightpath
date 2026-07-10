@@ -4,6 +4,13 @@ import pytest
 
 import brightpath
 from brightpath import BackgroundProfile, BrightwayInventory, InventoryFormat
+from brightpath.core import (
+    BackgroundContext,
+    BiosphereProfile,
+    FormatProfile,
+    InventoryContext,
+    TechnosphereProfile,
+)
 
 
 def minimal_inventory(*extra_exchanges, **overrides):
@@ -42,11 +49,45 @@ def test_v1_public_api_removes_converter_exports():
     assert InventoryFormat.ECOSPOLD2.value == "ecospold2"
 
 
-def test_background_profile_normalizes_legacy_aliases_and_patch_versions():
+def test_background_profile_normalizes_aliases_but_preserves_exact_patch_versions():
     assert BackgroundProfile("BAFU", "2025.0", "cut-off").normalized() == BackgroundProfile("uvek", "2025", "cutoff")
     assert BackgroundProfile("ECOINVENT", "3.10.1", "cut-off").normalized() == BackgroundProfile(
-        "ecoinvent", "3.10", "cutoff"
+        "ecoinvent", "3.10.1", "cutoff"
     )
+
+
+def test_facade_accepts_explicit_context_and_preserves_both_background_axes():
+    context = InventoryContext(
+        format=FormatProfile("brightway_excel", dialect="bw2io"),
+        background=BackgroundContext(
+            technosphere=TechnosphereProfile("uvek", "2025", "cutoff"),
+            biosphere=BiosphereProfile("ecoinvent", "3.10.1"),
+        ),
+    )
+
+    inventory = BrightwayInventory.from_data(minimal_inventory(), context=context)
+    converted = inventory.to_simapro()
+
+    assert inventory.context == context
+    assert inventory.background_profile == BackgroundProfile("uvek", "2025", "cutoff")
+    assert inventory.biosphere_profile == BiosphereProfile("ecoinvent", "3.10.1")
+    assert converted.context.format.format_id == "simapro_csv"
+    assert converted.context.background == context.background
+
+
+def test_excel_round_trip_embeds_exact_biosphere_context(tmp_path):
+    context = InventoryContext(
+        format=FormatProfile("brightway_excel", dialect="bw2io"),
+        background=BackgroundContext(
+            technosphere=TechnosphereProfile("uvek", "2025", "cutoff"),
+            biosphere=BiosphereProfile("ecoinvent", "3.10.1"),
+        ),
+    )
+    source = BrightwayInventory.from_data(minimal_inventory(), context=context)
+
+    loaded = BrightwayInventory.from_excel(source.write_excel(tmp_path / "context", validate=False))
+
+    assert loaded.context == context
 
 
 def test_normalize_is_copy_on_write():

@@ -105,7 +105,7 @@ def test_render_reports_format_specific_requirements():
 
 def test_render_returns_structured_errors_for_malformed_inventory():
     malformed = SimaProInventory.from_data(
-        [None],
+        [{}],
         background_profile=profile(),
         database_parameters=[{"name": "missing amount"}],
     )
