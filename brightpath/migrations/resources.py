@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import re
 from functools import lru_cache
@@ -36,11 +37,14 @@ def _load_resources(directory: Path, *, expected_kind: str) -> dict[tuple[str, s
         return {}
 
     resources = {}
+    manifest = _load_resource_manifest()
     for path in sorted(directory.glob("*.json")):
         try:
-            payload = json.loads(path.read_text(encoding="utf-8"))
-        except (OSError, json.JSONDecodeError) as exc:
+            raw = path.read_bytes()
+            payload = json.loads(raw.decode("utf-8"))
+        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
             raise MigrationError(f"Could not load migration resource {path}.") from exc
+        _verify_manifest_entry(path, raw, payload, manifest)
 
         source_version, source_kind = _parse_profile_id(payload.get("source_id"), path)
         target_version, target_kind = _parse_profile_id(payload.get("target_id"), path)
@@ -52,6 +56,44 @@ def _load_resources(directory: Path, *, expected_kind: str) -> dict[tuple[str, s
         payload["_path"] = str(path)
         resources[(source_version, target_version)] = payload
     return resources
+
+
+@lru_cache(maxsize=1)
+def _load_resource_manifest() -> dict[str, dict]:
+    path = DATA_DIR / "migrations" / "RESOURCE_MANIFEST.json"
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise MigrationError(f"Could not load migration resource manifest {path}.") from exc
+    if not isinstance(payload, dict) or payload.get("schema_version") != 1:
+        raise MigrationError(f"Migration resource manifest {path} has an unsupported schema.")
+    resources = payload.get("resources")
+    if not isinstance(resources, list):
+        raise MigrationError(f"Migration resource manifest {path} must define a resource list.")
+    result = {}
+    for index, resource in enumerate(resources):
+        if not isinstance(resource, dict) or not str(resource.get("path") or ""):
+            raise MigrationError(f"Migration resource manifest {path} has an invalid entry at index {index}.")
+        relative = str(resource["path"])
+        if relative in result:
+            raise MigrationError(f"Migration resource manifest {path} repeats {relative!r}.")
+        result[relative] = resource
+    return result
+
+
+def _verify_manifest_entry(path: Path, raw: bytes, payload: dict, manifest: dict[str, dict]) -> None:
+    relative = path.relative_to(DATA_DIR / "migrations").as_posix()
+    expected = manifest.get(relative)
+    if expected is None:
+        raise MigrationError(f"Migration resource {path} is absent from RESOURCE_MANIFEST.json.")
+    if expected.get("size") != len(raw) or expected.get("sha256") != hashlib.sha256(raw).hexdigest():
+        raise MigrationError(f"Migration resource {path} does not match its manifest digest or size.")
+    if expected.get("name") != str(payload.get("name") or ""):
+        raise MigrationError(f"Migration resource {path} name does not match its manifest.")
+    if expected.get("source_id") != str(payload.get("source_id") or ""):
+        raise MigrationError(f"Migration resource {path} source ID does not match its manifest.")
+    if expected.get("target_id") != str(payload.get("target_id") or ""):
+        raise MigrationError(f"Migration resource {path} target ID does not match its manifest.")
 
 
 def _parse_profile_id(value, path: Path) -> tuple[str, str]:
