@@ -15,7 +15,7 @@ from pathlib import Path
 from typing import Any
 
 from brightpath.adapters.base import ArtifactKind, FormatAdapter, FormatDescriptor, coerce_format_descriptor
-from brightpath.adapters.preflight import preflight_conversion
+from brightpath.adapters.preflight import preflight_conversion, validate_adapter_format
 from brightpath.adapters.registry import AdapterRegistry, DetectionReport
 from brightpath.background.catalogs import CatalogProvider
 from brightpath.background.execution import execute_background_migration
@@ -27,7 +27,7 @@ from brightpath.validation.brightway import validate_brightway_inventory
 
 from .audit import digest_artifact, write_report_sidecar
 from .context import BackgroundContext, ContextHint, FormatProfile, InventoryContext
-from .policies import ConversionPolicy, MigrationPolicy
+from .policies import ConversionPolicy, MigrationPolicy, PolicyAction
 from .reports import (
     Change,
     Issue,
@@ -144,6 +144,8 @@ class InventoryPipeline:
 
         try:
             adapter = self.registry.get(descriptor)
+            if adapter.capabilities.requires_catalog_provider:
+                kwargs.setdefault("catalog_provider", self.catalog_provider)
             if hint.background is not None:
                 source_format = hint.format or _format_profile(descriptor)
                 kwargs.setdefault("context", InventoryContext(format=source_format, background=hint.background))
@@ -247,14 +249,21 @@ class InventoryPipeline:
         self,
         document: InventoryDocument,
         *,
+        check_format: bool = True,
         check_background_links: bool = True,
         additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
     ) -> OperationResult[InventoryDocument]:
-        """Validate structure and, independently, exact background links."""
+        """Validate structure, source format, and exact background links."""
 
         _require_document(document)
+        if not isinstance(check_format, bool):
+            raise TypeError("check_format must be a boolean.")
+        if not isinstance(check_background_links, bool):
+            raise TypeError("check_background_links must be a boolean.")
         targets = tuple(additional_foreground_targets)
         stages = [self._structural_validation_stage(document)]
+        if check_format:
+            stages.append(self._format_validation_stage(document))
         if check_background_links:
             try:
                 background_stage = validate_background_links(
@@ -452,6 +461,27 @@ class InventoryPipeline:
             metrics={"datasets": len(document.data)},
         )
 
+    def _format_validation_stage(self, document: InventoryDocument) -> StageReport:
+        try:
+            adapter = self.registry.get(document.context.format)
+        except LookupError as error:
+            return StageReport(
+                StageKind.FORMAT_VALIDATION,
+                label="source format",
+                issues=(
+                    Issue(
+                        Severity.ERROR,
+                        "format_validation.adapter_unavailable",
+                        str(error),
+                        StageKind.FORMAT_VALIDATION,
+                        path="context.format",
+                        details={"format": _format_profile_details(document.context.format)},
+                        suggested_fix="Register the adapter that owns the document's declared format.",
+                    ),
+                ),
+            )
+        return validate_adapter_format(document, adapter)
+
     def _prepare_conversion(
         self,
         document: InventoryDocument,
@@ -459,15 +489,23 @@ class InventoryPipeline:
         policy: ConversionPolicy,
     ) -> tuple[InventoryDocument | None, FormatAdapter | None, tuple[StageReport, ...]]:
         adapter, capability_issues = self._writable_adapter(descriptor)
-        representability = preflight_conversion(document, descriptor, policy)
-        preflight = StageReport(
-            StageKind.CONVERSION_PREFLIGHT,
-            label=representability.label,
-            issues=capability_issues + representability.issues,
-            changes=representability.changes,
-            losses=representability.losses,
-            metrics=representability.metrics,
-        )
+        if adapter is None:
+            preflight = StageReport(
+                StageKind.CONVERSION_PREFLIGHT,
+                label=f"{descriptor.label()} adapter capability",
+                issues=capability_issues,
+                metrics={"target_format": _descriptor_details(descriptor), "policy": policy.to_dict()},
+            )
+        else:
+            representability = preflight_conversion(document, adapter, policy)
+            preflight = StageReport(
+                StageKind.CONVERSION_PREFLIGHT,
+                label=representability.label,
+                issues=capability_issues + representability.issues,
+                changes=representability.changes,
+                losses=representability.losses,
+                metrics=representability.metrics,
+            )
         if preflight.has_errors or adapter is None:
             return None, adapter, (preflight,)
 
@@ -508,7 +546,14 @@ class InventoryPipeline:
             changes=changes,
             metrics={"background_unchanged": converted.context.background == document.context.background},
         )
-        return converted, adapter, (preflight, conversion)
+        stages = [preflight, conversion]
+        if policy.validate_target:
+            target_validation = validate_adapter_format(converted, adapter)
+            target_validation = _apply_conversion_target_policy(target_validation, policy.on_invalid_target)
+            stages.append(target_validation)
+            if target_validation.has_errors:
+                return None, adapter, tuple(stages)
+        return converted, adapter, tuple(stages)
 
     def _writable_adapter(
         self,
@@ -589,6 +634,35 @@ def _severity(value: object) -> Severity:
         return Severity(str(getattr(value, "value", value)).lower())
     except ValueError:
         return Severity.ERROR
+
+
+def _apply_conversion_target_policy(stage: StageReport, action: PolicyAction) -> StageReport:
+    """Apply conversion target policy without changing validation findings."""
+
+    if action is PolicyAction.ERROR or not stage.has_errors:
+        return stage
+    severity = Severity.WARNING if action is PolicyAction.WARN else Severity.INFO
+    issues = tuple(
+        Issue(
+            severity=severity if issue.severity is Severity.ERROR else issue.severity,
+            code=issue.code,
+            message=issue.message,
+            stage=issue.stage,
+            path=issue.path,
+            details={**dict(issue.details), "policy_action": action.value},
+            suggested_fix=issue.suggested_fix,
+        )
+        for issue in stage.issues
+    )
+    metrics = {**dict(stage.metrics), "conversion_policy_action": action.value}
+    return StageReport(
+        stage.stage,
+        label=stage.label,
+        issues=issues,
+        changes=stage.changes,
+        losses=stage.losses,
+        metrics=metrics,
+    )
 
 
 def _format_hint_conflict(hint: FormatProfile | None, descriptor: FormatDescriptor) -> Issue | None:

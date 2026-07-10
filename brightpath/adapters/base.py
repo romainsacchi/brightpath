@@ -4,7 +4,12 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from enum import Enum
-from typing import Any, Protocol, runtime_checkable
+from typing import TYPE_CHECKING, Any, Protocol, runtime_checkable
+
+if TYPE_CHECKING:
+    from brightpath.core.policies import ConversionPolicy
+    from brightpath.core.reports import StageReport
+    from brightpath.models import InventoryDocument
 
 
 class ArtifactKind(str, Enum):
@@ -124,6 +129,7 @@ class AdapterCapabilities:
     read_artifact_kinds: frozenset[ArtifactKind] = field(default_factory=frozenset)
     write_artifact_kinds: frozenset[ArtifactKind] = field(default_factory=frozenset)
     detection_artifact_kinds: frozenset[ArtifactKind] = field(default_factory=frozenset)
+    requires_catalog_provider: bool = False
 
     def __post_init__(self) -> None:
         object.__setattr__(
@@ -141,6 +147,8 @@ class AdapterCapabilities:
             "detection_artifact_kinds",
             _freeze_artifact_kinds(self.detection_artifact_kinds, field_name="detection_artifact_kinds"),
         )
+        if not isinstance(self.requires_catalog_provider, bool):
+            raise TypeError("requires_catalog_provider must be a boolean.")
 
     def supports_read(self, artifact_kind: ArtifactKind | str) -> bool:
         """Whether the adapter can read ``artifact_kind``."""
@@ -201,3 +209,14 @@ class FormatAdapter(Protocol):
 
     def write(self, document: object, artifact: object, **kwargs: Any) -> Any:
         """Serialize a canonical inventory representation to an artifact."""
+
+    def validate_format(self, document: InventoryDocument) -> StageReport:
+        """Validate format-specific invariants without converting or writing."""
+
+    def preflight_conversion(
+        self,
+        document: InventoryDocument,
+        *,
+        policy: ConversionPolicy,
+    ) -> StageReport:
+        """Report whether ``document`` is representable by this adapter."""

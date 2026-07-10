@@ -27,8 +27,8 @@ from brightpath.core.context import (
     TechnosphereProfile,
 )
 from brightpath.core.pipeline import InventoryPipeline
-from brightpath.core.policies import ConversionPolicy
-from brightpath.core.reports import OperationKind, StageKind
+from brightpath.core.policies import ConversionPolicy, PolicyAction
+from brightpath.core.reports import Issue, OperationKind, Severity, StageKind, StageReport
 from brightpath.models import InventoryDocument
 
 FILE_ADAPTER = AdapterCapabilities(
@@ -63,6 +63,16 @@ class FakeAdapter:
         output = Path(artifact)
         output.write_text("written", encoding="utf-8")
         return output
+
+    def validate_format(self, document):
+        return StageReport(StageKind.FORMAT_VALIDATION, label="fake format")
+
+    def preflight_conversion(self, document, *, policy):
+        return StageReport(
+            StageKind.CONVERSION_PREFLIGHT,
+            label="fake representability",
+            metrics={"policy": policy.to_dict()},
+        )
 
 
 def context(format_id="brightway_csv"):
@@ -190,15 +200,19 @@ def test_structural_and_background_validation_run_as_independent_stages():
     source = document(data=[duplicate, deepcopy(duplicate)])
     original = source.data
 
-    result = InventoryPipeline(AdapterRegistry(), provider_for(source)).validate(source)
+    result = InventoryPipeline(
+        AdapterRegistry((FakeAdapter(FormatDescriptor("brightway_csv"), confidence=None),)),
+        provider_for(source),
+    ).validate(source)
 
     assert source.data == original
     assert [stage.stage for stage in result.report.stages] == [
         StageKind.STRUCTURAL_VALIDATION,
+        StageKind.FORMAT_VALIDATION,
         StageKind.BACKGROUND_VALIDATION,
     ]
     assert "duplicate_dataset_identity" in {issue.code for issue in result.report.stages[0].issues}
-    assert "background.technosphere_link_unresolved" in {issue.code for issue in result.report.stages[1].issues}
+    assert "background.technosphere_link_unresolved" in {issue.code for issue in result.report.stages[2].issues}
 
 
 def test_convert_changes_only_the_format_context():
@@ -216,6 +230,47 @@ def test_convert_changes_only_the_format_context():
     assert result.value.data == source.data
     assert source.context.format.format_id == "brightway_csv"
     assert result.report.changes[0].path == "context.format"
+
+
+def test_conversion_target_validation_is_policy_controlled_and_can_be_disabled():
+    source = document()
+    target = FakeAdapter(FormatDescriptor("brightway_tsv"), confidence=None)
+
+    def invalid_format(_document):
+        return StageReport(
+            StageKind.FORMAT_VALIDATION,
+            issues=(
+                Issue(
+                    Severity.ERROR,
+                    "target.invalid",
+                    "Target grammar rejected the document.",
+                    StageKind.FORMAT_VALIDATION,
+                ),
+            ),
+        )
+
+    target.validate_format = invalid_format
+    pipeline = InventoryPipeline(AdapterRegistry((target,)), provider_for(source))
+
+    strict = pipeline.convert(source, "brightway_tsv")
+    warned = pipeline.convert(
+        source,
+        "brightway_tsv",
+        policy=ConversionPolicy(on_invalid_target=PolicyAction.WARN),
+    )
+    skipped = pipeline.convert(
+        source,
+        "brightway_tsv",
+        policy=ConversionPolicy(validate_target=False),
+    )
+
+    assert strict.value is None
+    assert strict.report.stages[-1].stage is StageKind.FORMAT_VALIDATION
+    assert strict.report.stages[-1].has_errors
+    assert warned.value is not None
+    assert warned.report.stages[-1].issues[0].severity is Severity.WARNING
+    assert skipped.value is not None
+    assert StageKind.FORMAT_VALIDATION not in {stage.stage for stage in skipped.report.stages}
 
 
 def test_migrate_noop_preserves_format_and_returns_reported_document():

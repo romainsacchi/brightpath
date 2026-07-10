@@ -14,7 +14,7 @@ from .builtins import (
     SimaProCSVAdapter,
     default_adapter_registry,
 )
-from .preflight import preflight_conversion
+from .preflight import preflight_conversion, validate_adapter_format
 from .registry import AdapterRegistry, DetectionIssue, DetectionReport
 
 __all__ = (
@@ -32,4 +32,5 @@ __all__ = (
     "coerce_format_descriptor",
     "default_adapter_registry",
     "preflight_conversion",
+    "validate_adapter_format",
 )

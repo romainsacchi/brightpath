@@ -8,7 +8,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+from brightpath.background import CatalogProvider
 from brightpath.core.context import BiosphereProfile, InventoryContext
+from brightpath.core.policies import ConversionPolicy
+from brightpath.core.reports import StageReport
 from brightpath.formats.brightway_delimited import load_brightway_delimited, write_brightway_delimited
 from brightpath.formats.brightway_excel import load_brightway_excel, write_brightway_excel
 from brightpath.formats.simapro_csv import (
@@ -19,12 +22,24 @@ from brightpath.formats.simapro_csv import (
 from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFormat
 
 from .base import AdapterCapabilities, ArtifactKind, DetectionCandidate, FormatDescriptor
+from .preflight import (
+    preflight_brightway_conversion,
+    preflight_simapro_conversion,
+    validate_brightway_format,
+    validate_simapro_format,
+)
 from .registry import AdapterRegistry
 
 _FILE_CAPABILITIES = AdapterCapabilities(
     read_artifact_kinds={ArtifactKind.FILE},
     write_artifact_kinds={ArtifactKind.FILE},
     detection_artifact_kinds={ArtifactKind.FILE},
+)
+_SIMAPRO_FILE_CAPABILITIES = AdapterCapabilities(
+    read_artifact_kinds={ArtifactKind.FILE},
+    write_artifact_kinds={ArtifactKind.FILE},
+    detection_artifact_kinds={ArtifactKind.FILE},
+    requires_catalog_provider=True,
 )
 
 _MAX_ZIP_ENTRIES = 20_000
@@ -242,13 +257,28 @@ class BrightwayExcelAdapter:
 
         return write_brightway_excel(document, artifact, **kwargs)  # type: ignore[arg-type]
 
+    def validate_format(self, document: InventoryDocument) -> StageReport:
+        """Validate Brightway block-layout invariants without writing."""
+
+        return validate_brightway_format(document, self.descriptor)
+
+    def preflight_conversion(
+        self,
+        document: InventoryDocument,
+        *,
+        policy: ConversionPolicy,
+    ) -> StageReport:
+        """Report target representability using Brightway writer rules."""
+
+        return preflight_brightway_conversion(document, self.descriptor, policy)
+
 
 @dataclass(frozen=True)
 class SimaProCSVAdapter:
     """Read, detect, and write SimaPro process CSV exports."""
 
     descriptor: FormatDescriptor = field(default_factory=lambda: FormatDescriptor(InventoryFormat.SIMAPRO_CSV.value))
-    capabilities: AdapterCapabilities = _FILE_CAPABILITIES
+    capabilities: AdapterCapabilities = _SIMAPRO_FILE_CAPABILITIES
 
     def detect(
         self,
@@ -303,6 +333,7 @@ class SimaProCSVAdapter:
         biosphere_profile: BiosphereProfile | None = None,
         context: InventoryContext | None = None,
         database_name: str | None = None,
+        catalog_provider: CatalogProvider | None = None,
     ) -> InventoryDocument:
         """Load a SimaPro CSV while forwarding the caller's exact context."""
 
@@ -312,6 +343,7 @@ class SimaProCSVAdapter:
             biosphere_profile=biosphere_profile,
             context=context,
             database_name=database_name,
+            catalog_provider=catalog_provider,
         )
 
     def write(
@@ -323,6 +355,21 @@ class SimaProCSVAdapter:
         """Delegate SimaPro CSV serialization to the syntax writer."""
 
         return write_simapro_csv(document, artifact, **kwargs)  # type: ignore[arg-type]
+
+    def validate_format(self, document: InventoryDocument) -> StageReport:
+        """Validate SimaPro rendering and representability without writing."""
+
+        return validate_simapro_format(document, self.descriptor)
+
+    def preflight_conversion(
+        self,
+        document: InventoryDocument,
+        *,
+        policy: ConversionPolicy,
+    ) -> StageReport:
+        """Report target representability using SimaPro writer rules."""
+
+        return preflight_simapro_conversion(document, self.descriptor, policy)
 
 
 @dataclass(frozen=True)
@@ -402,6 +449,21 @@ class BrightwayDelimitedAdapter:
             delimiter=self.delimiter,
             **kwargs,
         )
+
+    def validate_format(self, document: InventoryDocument) -> StageReport:
+        """Validate Brightway delimited block-layout invariants without writing."""
+
+        return validate_brightway_format(document, self.descriptor)
+
+    def preflight_conversion(
+        self,
+        document: InventoryDocument,
+        *,
+        policy: ConversionPolicy,
+    ) -> StageReport:
+        """Report target representability using Brightway writer rules."""
+
+        return preflight_brightway_conversion(document, self.descriptor, policy)
 
 
 def default_adapter_registry() -> AdapterRegistry:

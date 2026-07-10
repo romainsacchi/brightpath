@@ -12,7 +12,9 @@ from brightpath.adapters import (
     DetectionCandidate,
     FormatDescriptor,
     coerce_format_descriptor,
+    default_adapter_registry,
 )
+from brightpath.core import FormatProfile
 
 FILE_READ_WRITE = AdapterCapabilities(
     read_artifact_kinds={ArtifactKind.FILE},
@@ -108,6 +110,28 @@ def test_registry_rejects_duplicate_descriptors_and_requires_specific_dialect():
     with pytest.raises(LookupError, match="Multiple adapters"):
         registry.get("brightway_excel")
     assert registry.get(FormatDescriptor("brightway_excel", dialect="custom")) is alternate
+
+
+def test_qualified_profile_falls_back_to_generic_builtin_descriptor():
+    registry = default_adapter_registry()
+    profile = FormatProfile("brightway_excel", format_version="1.0", dialect="bw2io")
+
+    selected = registry.get(profile)
+
+    assert selected.descriptor == FormatDescriptor("brightway_excel")
+    assert registry.matching(profile) == (selected,)
+    assert registry.supports_write(profile, ArtifactKind.FILE)
+
+
+def test_exact_then_generic_fallback_avoids_qualified_adapter_ambiguity():
+    generic = adapter("brightway_excel", 0.7)
+    bw2io = adapter("brightway_excel", 0.8, dialect="bw2io")
+    custom = adapter("brightway_excel", 0.9, dialect="custom")
+    registry = AdapterRegistry((generic, bw2io, custom))
+
+    assert registry.get(FormatDescriptor("brightway_excel", dialect="bw2io")) is bw2io
+    assert registry.get(FormatDescriptor("brightway_excel", dialect="future")) is generic
+    assert registry.get("brightway_excel") is generic
 
 
 def test_unique_high_confidence_candidate_is_selected_with_all_evidence_retained():

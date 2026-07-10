@@ -12,6 +12,7 @@ from pathlib import Path
 
 import bw2io
 
+from brightpath.background.catalogs import CatalogProvider
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import SimaProSerializationError
 from brightpath.models import (
@@ -44,7 +45,6 @@ from brightpath.utils import (
     is_activity_waste_treatment,
     is_blacklisted,
     load_biosphere_correspondence,
-    load_ei_biosphere_flows,
     load_simapro_brightway_biosphere_mapping,
     round_floats_in_string,
 )
@@ -80,8 +80,14 @@ def load_simapro_csv(
     biosphere_profile: BiosphereProfile | None = None,
     context: InventoryContext | None = None,
     database_name: str | None = None,
+    catalog_provider: CatalogProvider | None = None,
 ) -> InventoryDocument:
-    """Load and normalize a SimaPro CSV export into canonical inventory data."""
+    """Load and normalize a SimaPro CSV export into canonical inventory data.
+
+    ``catalog_provider`` must supply the exact declared biosphere profile. This
+    keeps SimaPro name normalization tied to the inventory context instead of
+    applying a fixed ecoinvent release to every file.
+    """
 
     source = Path(path).expanduser()
     if not source.is_file():
@@ -133,6 +139,7 @@ def load_simapro_csv(
                 background_profile=profile,
                 biosphere_profile=context.background.biosphere,
                 database_name=name,
+                catalog_provider=catalog_provider,
                 parameter_name_mapping=global_parameter_names,
             )
         except Exception as exc:
@@ -164,6 +171,7 @@ def normalize_simapro_import_data(
     biosphere_correspondence=None,
     version_mapping=None,
     parameter_name_mapping=None,
+    catalog_provider: CatalogProvider | None = None,
 ) -> list[dict]:
     """Return canonical data parsed from `bw2io.SimaProCSVImporter` output."""
 
@@ -172,7 +180,12 @@ def normalize_simapro_import_data(
     selected_biosphere = biosphere_profile or default_biosphere_profile(profile)
     reference_version = selected_biosphere.version
     if biosphere_flows is None:
-        biosphere_flows = load_ei_biosphere_flows()
+        if catalog_provider is None:
+            raise TypeError(
+                "catalog_provider or biosphere_flows must be provided for exact SimaPro biosphere normalization."
+            )
+        catalog = catalog_provider.load_biosphere(selected_biosphere)
+        biosphere_flows = _simapro_biosphere_reference(catalog.identities)
     if biosphere_correspondence is None:
         biosphere_correspondence = load_biosphere_correspondence()
     if version_mapping is None:
@@ -268,6 +281,20 @@ def normalize_simapro_import_data(
     except Exception as exc:
         _attach_partial_data(exc, normalized)
         raise
+
+
+def _simapro_biosphere_reference(identities) -> frozenset[tuple[str, str, str]]:
+    """Project exact catalog identities into the SimaPro matching key."""
+
+    return frozenset(
+        (
+            name,
+            categories[0],
+            categories[1] if len(categories) > 1 else "unspecified",
+        )
+        for name, categories, _unit in identities
+        if categories
+    )
 
 
 def write_simapro_csv(

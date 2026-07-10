@@ -4,11 +4,13 @@ from copy import deepcopy
 
 import pytest
 
-from brightpath.adapters.base import FormatDescriptor
-from brightpath.adapters.preflight import preflight_conversion
+from brightpath.adapters.base import AdapterCapabilities, ArtifactKind, FormatAdapter, FormatDescriptor
+from brightpath.adapters.builtins import default_adapter_registry
+from brightpath.adapters.preflight import preflight_conversion, validate_adapter_format
+from brightpath.adapters.registry import AdapterRegistry
 from brightpath.core import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
 from brightpath.core.policies import ConversionPolicy, PolicyAction
-from brightpath.core.reports import Severity, StageKind
+from brightpath.core.reports import Severity, StageKind, StageReport
 from brightpath.formats.simapro_csv import SimaProRenderResult
 from brightpath.models import InventoryDocument
 from brightpath.models import Issue as LegacyIssue
@@ -70,8 +72,15 @@ def _loss_codes(report):
     return {loss.code for loss in report.losses}
 
 
+def _preflight(document, target="simapro_csv", policy=None):
+    adapter = default_adapter_registry().get(target) if isinstance(target, str) else target
+    if policy is None:
+        return preflight_conversion(document, adapter)
+    return preflight_conversion(document, adapter, policy)
+
+
 def test_clean_simapro_conversion_has_only_deterministic_changes():
-    report = preflight_conversion(_document(), FormatDescriptor("simapro_csv"))
+    report = _preflight(_document())
 
     assert report.stage is StageKind.CONVERSION_PREFLIGHT
     assert not report.issues
@@ -91,12 +100,11 @@ def test_unknown_simapro_fields_are_aggregated_and_follow_policy():
     activity["exchanges"][0]["custom exchange"] = "value"
     document = _document(data=[activity], metadata={"custom metadata": "value"})
 
-    strict = preflight_conversion(document, "simapro_csv")
-    permissive = preflight_conversion(document, "simapro_csv", ConversionPolicy.permissive())
-    allowed = preflight_conversion(
+    strict = _preflight(document)
+    permissive = _preflight(document, policy=ConversionPolicy.permissive())
+    allowed = _preflight(
         document,
-        "simapro_csv",
-        ConversionPolicy(on_unsupported_feature=PolicyAction.ALLOW),
+        policy=ConversionPolicy(on_unsupported_feature=PolicyAction.ALLOW),
     )
 
     expected = {
@@ -126,7 +134,7 @@ def test_exchange_formula_and_rounding_are_explicit_losses():
         "formula": "demand * 2",
     }
 
-    report = preflight_conversion(_document(data=[_activity(extra_exchanges=(technosphere,))]), "simapro_csv")
+    report = _preflight(_document(data=[_activity(extra_exchanges=(technosphere,))]))
 
     assert {
         "simapro_exchange_amount_rounded",
@@ -167,7 +175,7 @@ def test_substitution_blacklist_final_waste_and_unused_are_distinguished():
         {"type": "custom", "name": "unhandled", "unit": "kilogram", "amount": 1.0},
     )
 
-    report = preflight_conversion(_document(data=[_activity(extra_exchanges=exchanges)]), "simapro_csv")
+    report = _preflight(_document(data=[_activity(extra_exchanges=exchanges)]))
 
     assert {
         "simapro_exchange_blacklisted",
@@ -194,7 +202,7 @@ def test_sign_and_uncertainty_transformations_are_reported():
         extra_exchanges=(technosphere,),
     )
 
-    report = preflight_conversion(_document(data=[activity]), "simapro_csv")
+    report = _preflight(_document(data=[activity]))
 
     assert {
         "simapro_exchange_sign_normalized",
@@ -205,9 +213,8 @@ def test_sign_and_uncertainty_transformations_are_reported():
 
 
 def test_latin1_failure_is_reported_before_write():
-    report = preflight_conversion(
+    report = _preflight(
         _document(data=[_activity(comment="unsupported snowman: \u2603")]),
-        "simapro_csv",
     )
 
     assert "simapro_latin1_encoding_unsupported" in _loss_codes(report)
@@ -227,7 +234,7 @@ def test_brightway_preserves_unknown_fields_but_omits_link_keys(target):
         }
     )
 
-    report = preflight_conversion(_document(data=[activity]), target)
+    report = _preflight(_document(data=[activity]), target)
 
     assert _loss_codes(report) == {"brightway_exchange_link_fields_omitted"}
     assert report.losses[0].details["fields"] == ("input", "output")
@@ -238,7 +245,7 @@ def test_brightway_unknown_tagged_fields_without_links_are_lossless():
     activity = _activity(custom_dataset={"nested": [1, {"two": 2}]})
     activity["exchanges"][0]["custom exchange"] = {"nested": True}
 
-    report = preflight_conversion(_document(data=[activity]), "brightway_excel")
+    report = _preflight(_document(data=[activity]), "brightway_excel")
 
     assert not report.losses
     assert not report.issues
@@ -256,8 +263,8 @@ def test_renderer_errors_are_translated_to_core_stage_and_policy(monkeypatch):
         lambda _document: SimaProRenderResult(rows=[], issues=[legacy]),
     )
 
-    strict = preflight_conversion(_document(), "simapro_csv")
-    permissive = preflight_conversion(_document(), "simapro_csv", ConversionPolicy.permissive())
+    strict = _preflight(_document())
+    permissive = _preflight(_document(), policy=ConversionPolicy.permissive())
 
     assert strict.issues[0].code == "simapro_category_missing"
     assert strict.issues[0].stage is StageKind.CONVERSION_PREFLIGHT
@@ -272,7 +279,7 @@ def test_unexpected_renderer_failure_is_structured(monkeypatch):
 
     monkeypatch.setattr("brightpath.adapters.preflight.render_simapro_rows", fail)
 
-    report = preflight_conversion(_document(), "simapro_csv")
+    report = _preflight(_document())
 
     assert report.has_errors
     assert [issue.code for issue in report.issues] == ["conversion.preflight_failed"]
@@ -285,9 +292,129 @@ def test_preflight_does_not_mutate_caller_or_document_data():
     document = _document(data=data, metadata={"owner": {"name": "BrightPath"}})
     before = document.data
 
-    first = preflight_conversion(document, "simapro_csv", ConversionPolicy.permissive())
-    second = preflight_conversion(document, "simapro_csv", ConversionPolicy.permissive())
+    first = _preflight(document, policy=ConversionPolicy.permissive())
+    second = _preflight(document, policy=ConversionPolicy.permissive())
 
     assert data == source
     assert document.data == before
     assert first == second
+
+
+def test_ambiguous_product_alias_uses_ambiguous_mapping_policy():
+    activity = _activity(product="conflicting product")
+    document = _document(data=[activity])
+
+    strict = _preflight(document)
+    permissive = _preflight(document, policy=ConversionPolicy.permissive())
+    allowed = _preflight(
+        document,
+        policy=ConversionPolicy(on_ambiguous_mapping=PolicyAction.ALLOW),
+    )
+
+    assert "simapro_product_alias_ambiguous" in _loss_codes(strict)
+    ambiguity = next(issue for issue in strict.issues if issue.code == "conversion.ambiguous_mapping")
+    assert ambiguity.severity is Severity.ERROR
+    assert next(issue for issue in permissive.issues if issue.code == ambiguity.code).severity is Severity.WARNING
+    assert next(issue for issue in allowed.issues if issue.code == ambiguity.code).severity is Severity.INFO
+    assert not allowed.has_errors
+
+
+class _CustomAdapter:
+    descriptor = FormatDescriptor("custom_exchange")
+    capabilities = AdapterCapabilities(write_artifact_kinds={ArtifactKind.FILE})
+
+    def detect(self, artifact, *, artifact_kind):
+        return None
+
+    def read(self, artifact, **kwargs):
+        return artifact
+
+    def write(self, document, artifact, **kwargs):
+        return artifact
+
+    def preflight_conversion(self, document, *, policy):
+        return StageReport(
+            StageKind.CONVERSION_PREFLIGHT,
+            label="custom representability",
+            metrics={"custom_contract": True, "datasets": len(document.data), "policy": policy.to_dict()},
+        )
+
+    def validate_format(self, document):
+        return StageReport(
+            StageKind.FORMAT_VALIDATION,
+            label="custom format validation",
+            metrics={"custom_contract": True, "datasets": len(document.data)},
+        )
+
+
+class _MissingContractsAdapter:
+    descriptor = FormatDescriptor("missing_contracts")
+
+
+def test_custom_adapter_contracts_dispatch_without_central_format_switch():
+    adapter = _CustomAdapter()
+    selected = AdapterRegistry((adapter,)).get("custom_exchange")
+
+    conversion = preflight_conversion(_document(), selected)
+    validation = validate_adapter_format(_document(), selected)
+
+    assert isinstance(selected, FormatAdapter)
+    assert conversion.stage is StageKind.CONVERSION_PREFLIGHT
+    assert conversion.metrics["custom_contract"] is True
+    assert validation.stage is StageKind.FORMAT_VALIDATION
+    assert validation.metrics["custom_contract"] is True
+
+
+def test_missing_adapter_contracts_fail_explicitly():
+    adapter = _MissingContractsAdapter()
+
+    conversion = preflight_conversion(_document(), adapter)
+    validation = validate_adapter_format(_document(), adapter)
+
+    assert conversion.has_errors
+    assert [issue.code for issue in conversion.issues] == ["conversion.preflight_contract_missing"]
+    assert validation.has_errors
+    assert [issue.code for issue in validation.issues] == ["format_validation.contract_missing"]
+
+
+def test_invalid_adapter_contract_stage_fails_explicitly():
+    class WrongStageAdapter(_CustomAdapter):
+        def preflight_conversion(self, document, *, policy):
+            return StageReport(StageKind.FORMAT_VALIDATION)
+
+    report = preflight_conversion(_document(), WrongStageAdapter())
+
+    assert report.has_errors
+    assert [issue.code for issue in report.issues] == ["conversion.preflight_contract_invalid"]
+
+
+def test_builtin_format_validation_is_independent_and_format_specific():
+    simapro = default_adapter_registry().get("simapro_csv")
+    clean = _document(format_id="simapro_csv")
+    malformed_activity = _activity()
+    del malformed_activity["exchanges"][0]["simapro category"]
+    malformed = _document(data=[malformed_activity], format_id="simapro_csv")
+
+    clean_report = validate_adapter_format(clean, simapro)
+    malformed_report = validate_adapter_format(malformed, simapro)
+
+    assert clean_report.stage is StageKind.FORMAT_VALIDATION
+    assert not clean_report.issues
+    assert not clean_report.changes
+    assert "simapro_category_missing" in {issue.code for issue in malformed_report.issues}
+
+
+def test_brightway_format_validation_dry_renders_writer_invariants():
+    activity = _activity(
+        parameters=[
+            {"name": "one", "amount": 1, "group": "first"},
+            {"name": "two", "amount": 2, "group": "second"},
+        ]
+    )
+    document = _document(data=[activity], format_id="brightway_excel")
+
+    report = validate_adapter_format(document, default_adapter_registry().get("brightway_excel"))
+
+    assert report.stage is StageKind.FORMAT_VALIDATION
+    assert report.has_errors
+    assert [issue.code for issue in report.issues] == ["brightway_format_invalid"]

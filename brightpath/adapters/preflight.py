@@ -14,6 +14,7 @@ from typing import Any
 
 from brightpath.core.policies import ConversionPolicy, PolicyAction
 from brightpath.core.reports import Change, Issue, Loss, Severity, StageKind, StageReport
+from brightpath.formats.brightway_delimited import _render_rows as render_brightway_rows
 from brightpath.formats.simapro_csv import (
     _ACTIVITY_METADATA_FIELDS,
     _simapro_uncertainty_type,
@@ -37,8 +38,6 @@ from brightpath.utils import (
 from .base import FormatDescriptor, coerce_format_descriptor
 
 _STAGE = StageKind.CONVERSION_PREFLIGHT
-_BRIGHTWAY_FORMATS = frozenset({"brightway_excel", "brightway_csv", "brightway_tsv"})
-_SUPPORTED_FORMATS = _BRIGHTWAY_FORMATS | {"simapro_csv"}
 _SIMAPRO_BIOSPHERE_CATEGORIES = frozenset({"natural resource", "air", "water", "soil"})
 _STRICT_CONVERSION_POLICY = ConversionPolicy.strict()
 
@@ -102,62 +101,260 @@ _UNCERTAINTY_FIELDS = frozenset({"uncertainty type", "loc", "scale", "shape", "m
 
 def preflight_conversion(
     document: InventoryDocument,
-    target_format: FormatDescriptor | object | str,
+    target_adapter: object,
     policy: ConversionPolicy = _STRICT_CONVERSION_POLICY,
 ) -> StageReport:
-    """Inspect whether *document* is representable in *target_format*.
+    """Invoke a selected adapter's target-representability contract safely.
 
-    :param document: Immutable-boundary inventory document to inspect.
-    :param target_format: Explicit adapter descriptor, format profile, enum, or
-        format identifier.
-    :param policy: Severity decisions for unsupported features, information
-        loss, and invalid target data.
-    :return: An immutable conversion-preflight stage report.
+    The adapter, rather than this dispatcher, owns format semantics. Missing,
+    failing, and malformed contracts are explicit strict errors so a newly
+    registered writer cannot bypass conversion safety.
+
+    :param document: Inventory document to inspect without mutation.
+    :param target_adapter: Selected adapter exposing ``descriptor`` and
+        ``preflight_conversion``.
+    :param policy: Explicit conversion safety decisions.
+    :return: A conversion-preflight stage report.
     """
 
+    _require_document_and_policy(document, policy)
+    descriptor = _adapter_descriptor(target_adapter)
+    hook = getattr(target_adapter, "preflight_conversion", None)
+    if not callable(hook):
+        return _contract_error_report(
+            descriptor,
+            stage=_STAGE,
+            code="conversion.preflight_contract_missing",
+            message=f"The {descriptor.label()} adapter does not define a representability preflight contract.",
+        )
+    try:
+        report = hook(document, policy=policy)
+    except Exception as error:
+        return _contract_error_report(
+            descriptor,
+            stage=_STAGE,
+            code="conversion.preflight_contract_failed",
+            message=f"The {descriptor.label()} representability contract failed: {error}",
+            details={"exception_type": type(error).__name__},
+        )
+    return _validated_contract_report(report, descriptor, _STAGE, "conversion.preflight_contract_invalid")
+
+
+def validate_adapter_format(document: InventoryDocument, adapter: object) -> StageReport:
+    """Invoke a selected adapter's independently callable format validation."""
+
+    if not isinstance(document, InventoryDocument):
+        raise TypeError("document must be an InventoryDocument.")
+    descriptor = _adapter_descriptor(adapter)
+    hook = getattr(adapter, "validate_format", None)
+    if not callable(hook):
+        return _contract_error_report(
+            descriptor,
+            stage=StageKind.FORMAT_VALIDATION,
+            code="format_validation.contract_missing",
+            message=f"The {descriptor.label()} adapter does not define a format-validation contract.",
+        )
+    try:
+        report = hook(document)
+    except Exception as error:
+        return _contract_error_report(
+            descriptor,
+            stage=StageKind.FORMAT_VALIDATION,
+            code="format_validation.contract_failed",
+            message=f"The {descriptor.label()} format-validation contract failed: {error}",
+            details={"exception_type": type(error).__name__},
+        )
+    return _validated_contract_report(
+        report,
+        descriptor,
+        StageKind.FORMAT_VALIDATION,
+        "format_validation.contract_invalid",
+    )
+
+
+def preflight_brightway_conversion(
+    document: InventoryDocument,
+    descriptor: FormatDescriptor,
+    policy: ConversionPolicy,
+) -> StageReport:
+    """Apply Brightway writer representability rules for one built-in adapter."""
+
+    _require_document_and_policy(document, policy)
+    target = coerce_format_descriptor(descriptor)
+    findings = _preflight_brightway(document, policy, stage=_STAGE)
+    return _findings_report(findings, document, target, policy=policy, label="representability")
+
+
+def preflight_simapro_conversion(
+    document: InventoryDocument,
+    descriptor: FormatDescriptor,
+    policy: ConversionPolicy,
+) -> StageReport:
+    """Apply comprehensive SimaPro writer representability rules."""
+
+    _require_document_and_policy(document, policy)
+    target = coerce_format_descriptor(descriptor)
+    findings = _preflight_simapro(document, policy, stage=_STAGE, include_changes=True)
+    return _findings_report(findings, document, target, policy=policy, label="representability")
+
+
+def validate_brightway_format(document: InventoryDocument, descriptor: FormatDescriptor) -> StageReport:
+    """Validate Brightway block-layout syntax without writing an artifact."""
+
+    if not isinstance(document, InventoryDocument):
+        raise TypeError("document must be an InventoryDocument.")
+    target = coerce_format_descriptor(descriptor)
+    findings = _preflight_brightway(document, _STRICT_CONVERSION_POLICY, stage=StageKind.FORMAT_VALIDATION)
+    _add_context_mismatch(document, target, findings)
+    try:
+        render_brightway_rows(document)
+    except Exception as error:
+        findings.add_condition(
+            code="brightway_format_invalid",
+            message=str(error) or type(error).__name__,
+            path="",
+            action=PolicyAction.ERROR,
+            details={"exception_type": type(error).__name__},
+            suggested_fix="Correct values that the Brightway block-layout writer cannot serialize.",
+        )
+    return _findings_report(findings, document, target, label="format validation")
+
+
+def validate_simapro_format(document: InventoryDocument, descriptor: FormatDescriptor) -> StageReport:
+    """Validate SimaPro rendering and exact representability without conversion."""
+
+    if not isinstance(document, InventoryDocument):
+        raise TypeError("document must be an InventoryDocument.")
+    target = coerce_format_descriptor(descriptor)
+    findings = _preflight_simapro(
+        document,
+        _STRICT_CONVERSION_POLICY,
+        stage=StageKind.FORMAT_VALIDATION,
+        include_changes=False,
+    )
+    _add_context_mismatch(document, target, findings)
+    return _findings_report(findings, document, target, label="format validation")
+
+
+def _require_document_and_policy(document: InventoryDocument, policy: ConversionPolicy) -> None:
     if not isinstance(document, InventoryDocument):
         raise TypeError("document must be an InventoryDocument.")
     if not isinstance(policy, ConversionPolicy):
         raise TypeError("policy must be a ConversionPolicy.")
-    descriptor = coerce_format_descriptor(target_format)
 
-    if descriptor.format_id in _BRIGHTWAY_FORMATS:
-        findings = _preflight_brightway(document, policy)
-    elif descriptor.format_id == "simapro_csv":
-        findings = _preflight_simapro(document, policy)
-    else:
-        findings = _Findings()
-        findings.add_condition(
-            code="conversion.target_format_unsupported",
-            message=f"No representability contract is available for target format {descriptor.label()}.",
-            path="context.format",
-            action=policy.on_invalid_target,
-            details={"supported_formats": sorted(_SUPPORTED_FORMATS)},
-            suggested_fix="Choose a target format with a registered writer and representability contract.",
-        )
 
+def _adapter_descriptor(adapter: object) -> FormatDescriptor:
+    try:
+        descriptor = adapter.descriptor  # type: ignore[attr-defined]
+    except AttributeError as error:
+        raise TypeError("An adapter contract requires a descriptor.") from error
+    return coerce_format_descriptor(descriptor)
+
+
+def _contract_error_report(
+    descriptor: FormatDescriptor,
+    *,
+    stage: StageKind,
+    code: str,
+    message: str,
+    details: Mapping[str, Any] | None = None,
+) -> StageReport:
     return StageReport(
-        _STAGE,
-        label=f"{descriptor.label()} representability",
+        stage,
+        label=f"{descriptor.label()} adapter contract",
+        issues=(
+            Issue(
+                Severity.ERROR,
+                code,
+                message,
+                stage,
+                path="context.format",
+                details=dict(details or {}),
+                suggested_fix="Register an adapter implementing the required StageReport contract.",
+            ),
+        ),
+        metrics={"adapter_format": _descriptor_details(descriptor)},
+    )
+
+
+def _validated_contract_report(
+    report: object,
+    descriptor: FormatDescriptor,
+    expected_stage: StageKind,
+    invalid_code: str,
+) -> StageReport:
+    if isinstance(report, StageReport) and report.stage is expected_stage:
+        return report
+    actual = type(report).__name__
+    if isinstance(report, StageReport):
+        actual = report.stage.value
+    return _contract_error_report(
+        descriptor,
+        stage=expected_stage,
+        code=invalid_code,
+        message=(
+            f"The {descriptor.label()} adapter contract must return a {expected_stage.value!r} StageReport; "
+            f"got {actual!r}."
+        ),
+        details={"actual": actual, "expected_stage": expected_stage.value},
+    )
+
+
+def _findings_report(
+    findings: _Findings,
+    document: InventoryDocument,
+    descriptor: FormatDescriptor,
+    *,
+    label: str,
+    policy: ConversionPolicy | None = None,
+) -> StageReport:
+    metrics: dict[str, Any] = {
+        "datasets": len(document.data),
+        "target_format": _descriptor_details(descriptor),
+    }
+    if policy is not None:
+        metrics["policy"] = policy.to_dict()
+    return StageReport(
+        findings.stage,
+        label=f"{descriptor.label()} {label}",
         issues=tuple(findings.issues),
         changes=tuple(findings.changes),
         losses=tuple(findings.losses),
-        metrics={
-            "datasets": len(document.data),
-            "policy": policy.to_dict(),
-            "target_format": {
-                "format_id": descriptor.format_id,
-                "version": descriptor.version,
-                "dialect": descriptor.dialect,
-            },
-        },
+        metrics=metrics,
+    )
+
+
+def _descriptor_details(descriptor: FormatDescriptor) -> dict[str, str]:
+    return {
+        "format_id": descriptor.format_id,
+        "version": descriptor.version,
+        "dialect": descriptor.dialect,
+    }
+
+
+def _add_context_mismatch(
+    document: InventoryDocument,
+    descriptor: FormatDescriptor,
+    findings: _Findings,
+) -> None:
+    source_format = document.context.format.format_id
+    if source_format == descriptor.format_id:
+        return
+    findings.add_condition(
+        code="format_validation.context_mismatch",
+        message=f"Document format {source_format!r} does not match adapter format {descriptor.format_id!r}.",
+        path="context.format",
+        action=PolicyAction.ERROR,
+        details={"document_format": source_format, "adapter_format": descriptor.format_id},
+        suggested_fix="Select the adapter matching the document context before format validation.",
     )
 
 
 class _Findings:
     """Mutable local collector whose values are frozen by :class:`StageReport`."""
 
-    def __init__(self) -> None:
+    def __init__(self, stage: StageKind) -> None:
+        self.stage = stage
         self.issues: list[Issue] = []
         self.changes: list[Change] = []
         self.losses: list[Loss] = []
@@ -177,7 +374,7 @@ class _Findings:
         loss = Loss(
             code=code,
             message=message,
-            stage=_STAGE,
+            stage=self.stage,
             path=path,
             recoverable=recoverable,
             details=dict(details or {}),
@@ -207,7 +404,7 @@ class _Findings:
                 severity=_policy_severity(action),
                 code=code,
                 message=message,
-                stage=_STAGE,
+                stage=self.stage,
                 path=path,
                 details=dict(details or {}),
                 suggested_fix=suggested_fix,
@@ -228,7 +425,7 @@ class _Findings:
             Change(
                 code=code,
                 message=message,
-                stage=_STAGE,
+                stage=self.stage,
                 path=path,
                 before=before,
                 after=after,
@@ -248,11 +445,18 @@ def _policy_severity(action: PolicyAction) -> Severity:
 def _policy_suggested_fix(category: str) -> str:
     if category == "unsupported_feature":
         return "Remove the unsupported feature, choose another target, or explicitly allow it in the policy."
+    if category == "ambiguous_mapping":
+        return "Resolve the conflicting source identities or explicitly allow the selected mapping in the policy."
     return "Choose a lossless target or explicitly allow this information loss in the policy."
 
 
-def _preflight_brightway(document: InventoryDocument, policy: ConversionPolicy) -> _Findings:
-    findings = _Findings()
+def _preflight_brightway(
+    document: InventoryDocument,
+    policy: ConversionPolicy,
+    *,
+    stage: StageKind,
+) -> _Findings:
+    findings = _Findings(stage)
     for dataset_index, dataset in enumerate(document.data):
         if not isinstance(dataset, Mapping):
             continue
@@ -275,16 +479,23 @@ def _preflight_brightway(document: InventoryDocument, policy: ConversionPolicy) 
     return findings
 
 
-def _preflight_simapro(document: InventoryDocument, policy: ConversionPolicy) -> _Findings:
-    findings = _Findings()
+def _preflight_simapro(
+    document: InventoryDocument,
+    policy: ConversionPolicy,
+    *,
+    stage: StageKind,
+    include_changes: bool,
+) -> _Findings:
+    findings = _Findings(stage)
     data = document.data
 
     render_result = None
     try:
         render_result = render_simapro_rows(document)
     except Exception as error:  # The public preflight always returns a report.
+        code = "conversion.preflight_failed" if stage is _STAGE else "format_validation.render_failed"
         findings.add_condition(
-            code="conversion.preflight_failed",
+            code=code,
             message=str(error) or type(error).__name__,
             path="",
             action=policy.on_invalid_target,
@@ -305,8 +516,12 @@ def _preflight_simapro(document: InventoryDocument, policy: ConversionPolicy) ->
 
     _inspect_latin1(document, data, getattr(render_result, "rows", ()), findings, policy)
 
-    if render_result is not None and not any(issue.severity == "error" for issue in render_result.issues):
-        _record_simapro_representation_changes(document, data, findings, policy)
+    if (
+        include_changes
+        and render_result is not None
+        and not any(issue.severity == "error" for issue in render_result.issues)
+    ):
+        _record_simapro_representation_changes(document, data, findings)
     return findings
 
 
@@ -347,9 +562,9 @@ def _inspect_simapro_dataset(
 ) -> None:
     path = f"datasets[{dataset_index}]"
     unsupported = set(dataset) - _SIMAPRO_DATASET_FIELDS
-    if dataset.get("product") in (None, "", dataset.get("reference product")):
-        unsupported.discard("product")
+    unsupported.discard("product")
     _add_unsupported_fields(findings, policy, path, "dataset", sorted(unsupported))
+    _add_product_alias_ambiguity(dataset, path, "dataset", findings, policy)
 
     simapro_metadata = dataset.get("simapro metadata")
     if simapro_metadata is not None:
@@ -365,6 +580,18 @@ def _inspect_simapro_dataset(
             _add_unsupported_fields(findings, policy, path, "dataset", ["simapro metadata"])
 
     _inspect_parameter_collection(dataset.get("parameters"), f"{path}.parameters", findings, policy)
+
+    comment = str(dataset.get("comment") or "")
+    normalized_comment = round_floats_in_string(comment).replace("\n", " ")
+    if comment and normalized_comment != comment:
+        findings.add_loss(
+            code="simapro_comment_normalized",
+            message="SimaPro rendering normalizes line breaks or decimal text in the dataset comment.",
+            path=f"{path}.comment",
+            action=policy.on_information_loss,
+            category="information_loss",
+            details={"before": comment, "after": normalized_comment},
+        )
 
     try:
         waste_activity = is_activity_waste_treatment(dict(dataset), document.background_profile.family)
@@ -406,9 +633,9 @@ def _inspect_simapro_exchange(
         supported.add("categories")
 
     unsupported = set(exchange) - supported
-    if exchange.get("product") in (None, "", exchange.get("reference product")):
-        unsupported.discard("product")
+    unsupported.discard("product")
     _add_unsupported_fields(findings, policy, path, "exchange", sorted(unsupported))
+    _add_product_alias_ambiguity(exchange, path, "exchange", findings, policy)
 
     if exchange.get("formula") not in (None, ""):
         findings.add_loss(
@@ -667,6 +894,30 @@ def _formatted_number(value: Any, precision: str) -> float:
     return float(format(float(value), precision))
 
 
+def _add_product_alias_ambiguity(
+    value: Mapping[str, Any],
+    path: str,
+    object_kind: str,
+    findings: _Findings,
+    policy: ConversionPolicy,
+) -> None:
+    reference_product = str(value.get("reference product") or "")
+    product = str(value.get("product") or "")
+    if not reference_product or not product or reference_product == product:
+        return
+    findings.add_loss(
+        code="simapro_product_alias_ambiguous",
+        message=(
+            f"SimaPro {object_kind} naming cannot choose between conflicting "
+            f"'reference product' and 'product' values."
+        ),
+        path=f"{path}.product",
+        action=policy.on_ambiguous_mapping,
+        category="ambiguous_mapping",
+        details={"product": product, "reference_product": reference_product, "object_kind": object_kind},
+    )
+
+
 def _add_unsupported_fields(
     findings: _Findings,
     policy: ConversionPolicy,
@@ -790,7 +1041,6 @@ def _record_simapro_representation_changes(
     document: InventoryDocument,
     data: list[dict],
     findings: _Findings,
-    policy: ConversionPolicy,
 ) -> None:
     findings.add_change(
         code="simapro_date_generated",
@@ -895,18 +1145,6 @@ def _record_simapro_representation_changes(
                         before=[str(item) for item in categories],
                         after={"section": str(categories[0]), "subcompartment": str(subcompartment)},
                     )
-
-        comment = str(dataset.get("comment") or "")
-        normalized_comment = round_floats_in_string(comment).replace("\n", " ")
-        if comment and normalized_comment != comment:
-            findings.add_loss(
-                code="simapro_comment_normalized",
-                message="SimaPro rendering normalizes line breaks or decimal text in the dataset comment.",
-                path=f"{dataset_path}.comment",
-                action=policy.on_information_loss,
-                category="information_loss",
-                details={"before": comment, "after": normalized_comment},
-            )
 
 
 def _format_technosphere(document: InventoryDocument, value: Mapping[str, Any]) -> str | None:

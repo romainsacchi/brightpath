@@ -108,12 +108,24 @@ class AdapterRegistry:
         return tuple(self._by_descriptor)
 
     def matching(self, format_value: object) -> tuple[FormatAdapter, ...]:
-        """Return adapters matching an exact descriptor or a general format ID."""
+        """Return adapters using exact, generic-fallback, then family matching.
+
+        An exact qualified descriptor always wins. If it is absent, a single
+        unqualified descriptor for the same format family is the conservative
+        fallback. Only an unqualified request with no generic adapter can
+        return multiple qualified adapters and require caller disambiguation.
+        """
 
         descriptor = coerce_format_descriptor(format_value)
+        exact = self._by_descriptor.get(descriptor)
+        if exact is not None:
+            return (exact,)
+
+        generic = self._by_descriptor.get(FormatDescriptor(descriptor.format_id))
+        if generic is not None:
+            return (generic,)
         if descriptor.version or descriptor.dialect:
-            adapter = self._by_descriptor.get(descriptor)
-            return (adapter,) if adapter is not None else ()
+            return ()
         return tuple(
             adapter
             for registered_descriptor, adapter in self._by_descriptor.items()
@@ -123,8 +135,9 @@ class AdapterRegistry:
     def get(self, format_value: object) -> FormatAdapter:
         """Return the sole matching adapter.
 
-        A general format ID can identify one adapter. When multiple versions or
-        dialects are registered, callers must provide a complete descriptor.
+        An exact descriptor or registered generic fallback is decisive. When
+        only multiple qualified versions or dialects are registered, callers
+        must provide a complete descriptor.
         """
 
         matches = self.matching(format_value)

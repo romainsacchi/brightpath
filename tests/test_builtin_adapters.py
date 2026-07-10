@@ -14,7 +14,10 @@ from brightpath.adapters.builtins import (
     SimaProCSVAdapter,
     default_adapter_registry,
 )
+from brightpath.background import BiosphereCatalog, InMemoryCatalogProvider
 from brightpath.core import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
+from brightpath.core.policies import ConversionPolicy
+from brightpath.core.reports import StageKind
 from brightpath.models import BackgroundProfile, InventoryDocument
 
 
@@ -64,12 +67,33 @@ def test_builtin_adapters_are_immutable_format_adapters():
         adapter.descriptor = FormatDescriptor("other")
 
 
+@pytest.mark.parametrize(
+    ("adapter", "format_id"),
+    [
+        (BrightwayExcelAdapter(), "brightway_excel"),
+        (BrightwayDelimitedAdapter(FormatDescriptor("brightway_csv"), ","), "brightway_csv"),
+        (SimaProCSVAdapter(), "simapro_csv"),
+    ],
+)
+def test_builtin_adapters_expose_validation_and_conversion_preflight_hooks(adapter, format_id):
+    document = _document(format_id)
+
+    validation = adapter.validate_format(document)
+    conversion = adapter.preflight_conversion(document, policy=ConversionPolicy.strict())
+
+    assert validation.stage is StageKind.FORMAT_VALIDATION
+    assert conversion.stage is StageKind.CONVERSION_PREFLIGHT
+    assert not validation.has_errors
+    assert not conversion.has_errors
+
+
 def test_read_methods_forward_exact_context_arguments(monkeypatch):
     background = BackgroundProfile("ecoinvent", "3.9.1", "cutoff")
     biosphere = BiosphereProfile("ecoinvent", "3.9.1")
     brightway_context = _context("brightway_excel")
     simapro_context = _context("simapro_csv")
     calls = {}
+    provider = InMemoryCatalogProvider(biosphere=[BiosphereCatalog(biosphere, set())])
 
     def fake_brightway_loader(path, **kwargs):
         calls["brightway"] = (path, kwargs)
@@ -98,6 +122,7 @@ def test_read_methods_forward_exact_context_arguments(monkeypatch):
             biosphere_profile=biosphere,
             context=simapro_context,
             database_name="foreground",
+            catalog_provider=provider,
         )
         == "simapro-document"
     )
@@ -117,6 +142,7 @@ def test_read_methods_forward_exact_context_arguments(monkeypatch):
             "biosphere_profile": biosphere,
             "context": simapro_context,
             "database_name": "foreground",
+            "catalog_provider": provider,
         },
     )
 
@@ -159,7 +185,13 @@ def test_simapro_adapter_writes_detects_and_reads_exact_context(tmp_path, monkey
     Path(projects.logs_dir).mkdir(parents=True, exist_ok=True)
 
     candidate = adapter.detect(destination, artifact_kind=ArtifactKind.FILE)
-    loaded = adapter.read(destination, context=source.context, database_name="loaded-database")
+    provider = InMemoryCatalogProvider(biosphere=[BiosphereCatalog(source.context.background.biosphere, set())])
+    loaded = adapter.read(
+        destination,
+        context=source.context,
+        database_name="loaded-database",
+        catalog_provider=provider,
+    )
 
     assert not render_result.has_errors
     assert candidate is not None
