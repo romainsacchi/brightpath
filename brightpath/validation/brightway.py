@@ -4,7 +4,11 @@ import re
 from collections import Counter
 from typing import Iterable
 
-from brightpath.catalogs import load_background_catalog
+from brightpath.background import (
+    CatalogProvider,
+    catalog_provider_from_environment,
+    validate_background_links,
+)
 from brightpath.models import InventoryDocument, Issue, ValidationReport
 from brightpath.utils import inspect_brightway_inventory
 
@@ -16,6 +20,7 @@ def validate_brightway_inventory(
     *,
     check_background_links: bool = True,
     additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
+    catalog_provider: CatalogProvider | None = None,
 ) -> ValidationReport:
     """Validate canonical inventory structure and optional background links."""
 
@@ -41,85 +46,35 @@ def validate_brightway_inventory(
 
     if not check_background_links:
         return report
-    if not profile.is_complete:
-        report.issues.append(
-            Issue(
-                severity="error",
-                code="background_profile_incomplete",
-                message=(
-                    "Background profile must define family, version, and system model "
-                    "before link validation or migration."
-                ),
-            )
-        )
-        return report
-    if profile.family not in {"ecoinvent", "uvek"}:
-        report.issues.append(
-            Issue(
-                severity="error",
-                code="background_family_unsupported",
-                message=f"Unsupported background family: {profile.family!r}.",
-            )
-        )
-        return report
-
-    try:
-        catalog = load_background_catalog(profile)
-    except FileNotFoundError:
-        report.issues.append(
-            Issue(
-                severity="error",
-                code="background_catalog_missing",
-                message=f"No reference catalog is available for {profile.label()}.",
-                suggested_fix="Install or generate the exact target reference catalog.",
-            )
-        )
-        return report
-
-    foreground = {_technosphere_key(activity) for activity in data if all(_technosphere_key(activity))}
-    foreground.update(
-        tuple(str(part or "").strip() for part in target)
-        for target in additional_foreground_targets
-        if len(target) == 4
+    provider = catalog_provider or catalog_provider_from_environment()
+    background = validate_background_links(
+        data,
+        document.context.background,
+        provider,
+        foreground_technosphere_targets=additional_foreground_targets,
     )
-
-    for activity_index, activity in enumerate(data):
-        for exchange_index, exchange in enumerate(activity.get("exchanges", [])):
-            path = f"activity[{activity_index}].exchanges[{exchange_index}]"
-            if exchange.get("type") == "technosphere":
-                key = _technosphere_key(exchange)
-                if all(key) and key not in foreground and key not in catalog.technosphere:
-                    report.issues.append(
-                        Issue(
-                            severity="error",
-                            code="unknown_technosphere_target",
-                            message=(
-                                "Technosphere exchange does not match an inventory dataset or "
-                                f"the {profile.label()} reference catalog: {' | '.join(key)}."
-                            ),
-                            path=path,
-                        )
-                    )
-            elif exchange.get("type") == "biosphere":
-                key = (
-                    str(exchange.get("name") or ""),
-                    tuple(str(item) for item in exchange.get("categories", ())),
-                    str(exchange.get("unit") or ""),
-                )
-                if all((key[0], key[1], key[2])) and key not in catalog.biosphere:
-                    report.issues.append(
-                        Issue(
-                            severity="error",
-                            code="unknown_biosphere_flow",
-                            message=(
-                                "Biosphere exchange does not match the selected background "
-                                f"reference catalog: {key[0]} | {'::'.join(key[1])} | {key[2]}."
-                            ),
-                            path=path,
-                        )
-                    )
+    report.issues.extend(_background_issues(background.issues))
 
     return report
+
+
+def _background_issues(issues) -> list[Issue]:
+    code_aliases = {
+        "background.technosphere_link_unresolved": "unknown_technosphere_target",
+        "background.biosphere_link_unresolved": "unknown_biosphere_flow",
+        "background.technosphere_catalog_missing": "background_catalog_missing",
+        "background.biosphere_catalog_missing": "background_catalog_missing",
+    }
+    return [
+        Issue(
+            severity=issue.severity.value,
+            code=code_aliases.get(issue.code, issue.code),
+            message=issue.message,
+            path=issue.path.replace("datasets[", "activity[", 1),
+            suggested_fix=issue.suggested_fix,
+        )
+        for issue in issues
+    ]
 
 
 def _messages_to_issues(messages: list[str], *, severity: str, code: str) -> list[Issue]:

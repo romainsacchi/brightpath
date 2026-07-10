@@ -4,6 +4,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterable
 
+from .background import CatalogProvider
 from .core.context import BiosphereProfile, InventoryContext
 from .exceptions import InventoryValidationError
 from .formats import load_simapro_csv, render_simapro_rows, write_simapro_csv
@@ -184,6 +185,7 @@ class SimaProInventory:
         check_background_links: bool = True,
         check_simapro_rendering: bool = False,
         additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
+        catalog_provider: CatalogProvider | None = None,
     ) -> ValidationReport:
         """Validate structure, links, SimaPro rendering, and model markers.
 
@@ -193,6 +195,8 @@ class SimaProInventory:
             be represented as SimaPro rows.
         :param additional_foreground_targets: Valid external foreground
             identities as ``(name, reference product, location, unit)`` tuples.
+        :param catalog_provider: Explicit exact-catalog provider. The facade
+            uses the application environment provider when omitted.
         :return: A structured report. Validation never mutates the inventory.
         """
 
@@ -200,6 +204,7 @@ class SimaProInventory:
             self._document,
             check_background_links=check_background_links,
             additional_foreground_targets=additional_foreground_targets,
+            catalog_provider=catalog_provider,
         )
         if check_simapro_rendering:
             report.issues.extend(self.render().issues)

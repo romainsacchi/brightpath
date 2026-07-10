@@ -4,6 +4,7 @@ from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterable
 
+from .background import CatalogProvider
 from .core.context import BiosphereProfile, InventoryContext
 from .exceptions import InventoryValidationError
 from .formats import load_brightway_excel, write_brightway_excel
@@ -189,6 +190,7 @@ class BrightwayInventory:
         *,
         check_background_links: bool = True,
         additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
+        catalog_provider: CatalogProvider | None = None,
     ) -> ValidationReport:
         """Validate structure, plausibility, identities, and optional links.
 
@@ -196,6 +198,8 @@ class BrightwayInventory:
             biosphere identities against the exact background catalog.
         :param additional_foreground_targets: Valid external foreground
             identities as ``(name, reference product, location, unit)`` tuples.
+        :param catalog_provider: Explicit exact-catalog provider. The facade
+            uses the application environment provider when omitted.
         :return: A structured report. Validation never mutates the inventory.
         """
 
@@ -203,6 +207,7 @@ class BrightwayInventory:
             self._document,
             check_background_links=check_background_links,
             additional_foreground_targets=additional_foreground_targets,
+            catalog_provider=catalog_provider,
         )
 
     def migrate_background(

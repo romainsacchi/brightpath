@@ -4,6 +4,7 @@ import pytest
 
 import brightpath
 from brightpath import BackgroundProfile, BrightwayInventory, InventoryFormat
+from brightpath.background import BiosphereCatalog, InMemoryCatalogProvider, TechnosphereCatalog
 from brightpath.core import (
     BackgroundContext,
     BiosphereProfile,
@@ -124,6 +125,37 @@ def test_validate_is_read_only_and_checks_catalog_links():
 
     assert report.is_valid
     assert inventory.data == before
+
+
+def test_validate_uses_explicit_technosphere_and_biosphere_catalogs():
+    context = InventoryContext(
+        format=FormatProfile("brightway_excel"),
+        background=BackgroundContext(
+            technosphere=TechnosphereProfile("uvek", "2025", "cutoff"),
+            biosphere=BiosphereProfile("ecoinvent", "3.10.1"),
+        ),
+    )
+    biosphere_exchange = {
+        "name": "test flow",
+        "categories": ("air",),
+        "unit": "kilogram",
+        "amount": 1,
+        "type": "biosphere",
+    }
+    inventory = BrightwayInventory.from_data(minimal_inventory(biosphere_exchange), context=context)
+    provider = InMemoryCatalogProvider(
+        technosphere=[TechnosphereCatalog(context.background.technosphere, set())],
+        biosphere=[
+            BiosphereCatalog(
+                context.background.biosphere,
+                {("test flow", ("air",), "kilogram")},
+            )
+        ],
+    )
+
+    report = inventory.validate(catalog_provider=provider)
+
+    assert report.is_valid
 
 
 def test_validate_accepts_foreground_specific_units():
