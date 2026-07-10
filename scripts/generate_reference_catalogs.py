@@ -7,16 +7,15 @@ from pathlib import Path
 
 import bw2data as bd
 import bw2io
-from ecoinvent_interface import EcoinventRelease, Settings
 from bw2io import import_ecoinvent_release
 from bw2io.importers.excel import ExcelImporter
+from ecoinvent_interface import EcoinventRelease, Settings
 
 from brightpath.catalogs import (
     collect_technosphere_catalog_entries,
     write_background_catalog,
 )
 from brightpath.models import BackgroundProfile
-
 
 DEFAULT_ECOINVENT_VERSIONS = ["3.5", "3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
 DEFAULT_SYSTEM_MODELS = ["cutoff", "consequential"]
@@ -86,20 +85,15 @@ def parse_args() -> argparse.Namespace:
 
 
 def load_credentials(args: argparse.Namespace) -> tuple[str, str]:
-    username = clean_credential_value(
-        args.username or os.getenv("ECOINVENT_USERNAME", "")
-    )
-    password = clean_credential_value(
-        args.password or os.getenv("ECOINVENT_PASSWORD", "")
-    )
+    username = clean_credential_value(args.username or os.getenv("ECOINVENT_USERNAME", ""))
+    password = clean_credential_value(args.password or os.getenv("ECOINVENT_PASSWORD", ""))
     if username and password:
         return username, password
 
     credentials_file = args.credentials_file or os.getenv("ECOINVENT_CREDENTIALS_FILE", "")
     if not credentials_file:
         raise ValueError(
-            "Provide ECOINVENT_USERNAME/ECOINVENT_PASSWORD, "
-            "--username/--password, or --credentials-file."
+            "Provide ECOINVENT_USERNAME/ECOINVENT_PASSWORD, " "--username/--password, or --credentials-file."
         )
 
     raw_text = Path(credentials_file).read_text(encoding="utf-8", errors="ignore")
@@ -141,9 +135,7 @@ def ensure_ecoinvent_database(
             f"{preferred_project_name!r} or {fallback_project_name!r}."
         )
     if not username or not password:
-        raise ValueError(
-            f"Missing ecoinvent credentials to import {version} {system_model}."
-        )
+        raise ValueError(f"Missing ecoinvent credentials to import {version} {system_model}.")
 
     import_ecoinvent_release(
         version=version,
@@ -160,10 +152,7 @@ def ensure_ecoinvent_database(
 
 def available_release_matrix(username: str, password: str) -> dict[str, set[str]]:
     release = EcoinventRelease(Settings(username=username, password=password))
-    return {
-        version: set(release.list_system_models(version))
-        for version in release.list_versions()
-    }
+    return {version: set(release.list_system_models(version)) for version in release.list_versions()}
 
 
 def export_catalog(

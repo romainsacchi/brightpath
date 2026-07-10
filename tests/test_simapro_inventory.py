@@ -575,9 +575,7 @@ def test_simapro_background_migration_is_explicit_and_bidirectional():
     assert source.data[0]["exchanges"][1]["location"] == "RNA"
     assert forward.data[0]["exchanges"][1]["location"] == "CA"
     assert backward.data[0]["exchanges"][1]["location"] == "RNA"
-    assert "migration.technosphere_step_applied" in {
-        change.code for change in forward.last_migration_report.changes
-    }
+    assert "migration.technosphere_step_applied" in {change.code for change in forward.last_migration_report.changes}
 
 
 def test_simapro_to_brightway_writes_importable_excel(tmp_path):
