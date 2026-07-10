@@ -2,9 +2,11 @@ __all__ = (
     "BackgroundProfile",
     "BackgroundContext",
     "BiosphereProfile",
+    "ConversionError",
     "BrightwayInventory",
     "DATA_DIR",
     "ExcelSerializationError",
+    "FormatDetectionError",
     "FormatProfile",
     "InventoryFormat",
     "InventoryContext",
@@ -12,8 +14,10 @@ __all__ = (
     "Issue",
     "MigrationError",
     "MigrationUnavailableError",
+    "OperationError",
     "SimaProInventory",
     "SimaProSerializationError",
+    "SerializationError",
     "TechnosphereProfile",
     "ValidationReport",
 )
@@ -32,10 +36,14 @@ from .core import (  # noqa: E402
     TechnosphereProfile,
 )
 from .exceptions import (  # noqa: E402
+    ConversionError,
     ExcelSerializationError,
+    FormatDetectionError,
     InventoryValidationError,
     MigrationError,
     MigrationUnavailableError,
+    OperationError,
+    SerializationError,
     SimaProSerializationError,
 )
 from .models import (  # noqa: E402

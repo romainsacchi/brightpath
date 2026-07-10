@@ -16,6 +16,7 @@ from bw2io import CSVImporter
 from bw2io.importers.excel import ExcelImporter
 
 from brightpath.catalogs import available_catalog_profiles, load_background_catalog
+from brightpath.exceptions import InventoryValidationError
 from brightpath.formats.simapro_csv import format_biosphere_exchange
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
 from brightpath.simapro import SimaProInventory
@@ -59,19 +60,6 @@ class _CollectingHandler(logging.Handler):
 
     def emit(self, record: logging.LogRecord) -> None:
         self.messages.append(record.getMessage())
-
-
-class InventoryValidationError(ValueError):
-    """Raised by :func:`validate_inventory` when upload analysis finds errors.
-
-    The full :class:`~brightpath.models.AnalysisResult` is available through
-    ``result``. This analysis exception is distinct from the package-root
-    validation exception raised by format writers.
-    """
-
-    def __init__(self, result: AnalysisResult) -> None:
-        self.result = result
-        super().__init__(_format_error_summary(result))
 
 
 class _TSVExtractor:
@@ -190,7 +178,10 @@ def validate_inventory(
         additional_foreground_targets=additional_foreground_targets,
     )
     if result.has_errors:
-        raise InventoryValidationError(result)
+        raise InventoryValidationError(
+            result=result,
+            message=_format_error_summary(result),
+        )
     return result
 
 
