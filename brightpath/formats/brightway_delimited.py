@@ -33,6 +33,7 @@ from .brightway_excel import (
     _decode_tagged_values,
     _ordered_fields,
     _serialize_value,
+    _validate_explicit_context,
 )
 
 _DELIMITERS = {".csv": ",", ".tsv": "\t"}
@@ -85,6 +86,12 @@ def load_brightway_delimited(
     if not source.is_file():
         raise FileNotFoundError(f"Brightway delimited inventory not found: {source}")
     selected_delimiter, format_id, _ = _resolve_layout(source, delimiter=delimiter, for_write=False)
+    _validate_explicit_context(
+        context,
+        background_profile=background_profile,
+        biosphere_profile=biosphere_profile,
+        format_id=format_id,
+    )
 
     importer = CSVImporter(source) if selected_delimiter == "," else _TSVImporter(source)
     if "biosphere-2-3-categories" not in bw2io.migrations:
@@ -95,8 +102,6 @@ def load_brightway_delimited(
     metadata = _decode_tagged_keys_and_values(getattr(importer, "metadata", {}) or {})
     embedded_profile = _profile_from_metadata(metadata)
     embedded_biosphere = _biosphere_profile_from_metadata(metadata)
-    if context is not None and context.format.format_id != format_id:
-        raise ValueError(f"Explicit context format must be {format_id}.")
     if context is None:
         profile = (background_profile or embedded_profile).normalized()
         technosphere = profile.to_technosphere_profile()

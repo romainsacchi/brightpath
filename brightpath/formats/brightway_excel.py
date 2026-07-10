@@ -99,6 +99,12 @@ def load_brightway_excel(
         raise FileNotFoundError(f"Brightway Excel workbook not found: {source}")
     if source.suffix.lower() != ".xlsx":
         raise ValueError("Brightway Excel workbooks must use a .xlsx filename.")
+    _validate_explicit_context(
+        context,
+        background_profile=background_profile,
+        biosphere_profile=biosphere_profile,
+        format_id=InventoryFormat.BRIGHTWAY_EXCEL.value,
+    )
 
     importer = ExcelImporter(source)
     if "biosphere-2-3-categories" not in bw2io.migrations:
@@ -109,8 +115,6 @@ def load_brightway_excel(
     metadata = _decode_tagged_values(getattr(importer, "metadata", {}) or {})
     embedded_profile = _profile_from_metadata(metadata)
     embedded_biosphere = _biosphere_profile_from_metadata(metadata)
-    if context is not None and context.format.format_id != InventoryFormat.BRIGHTWAY_EXCEL.value:
-        raise ValueError("Explicit context format must be brightway_excel.")
     if context is None:
         profile = (background_profile or embedded_profile).normalized()
         technosphere = profile.to_technosphere_profile()
@@ -130,6 +134,26 @@ def load_brightway_excel(
         database_parameters=_decode_tagged_values(getattr(importer, "database_parameters", None)),
         project_parameters=_decode_tagged_values(getattr(importer, "project_parameters", None)),
     )
+
+
+def _validate_explicit_context(
+    context: InventoryContext | None,
+    *,
+    background_profile: BackgroundProfile | None,
+    biosphere_profile: BiosphereProfile | None,
+    format_id: str,
+) -> None:
+    """Reject legacy arguments that conflict with a complete source context."""
+
+    if context is None:
+        return
+    if context.format.format_id != format_id:
+        raise ValueError(f"Explicit context format must be {format_id}.")
+    profile = BackgroundProfile.from_technosphere_profile(context.background.technosphere)
+    if background_profile is not None and background_profile.normalized() != profile:
+        raise ValueError("background_profile conflicts with context.technosphere.")
+    if biosphere_profile is not None and biosphere_profile != context.background.biosphere:
+        raise ValueError("biosphere_profile conflicts with context.biosphere.")
 
 
 def write_brightway_excel(

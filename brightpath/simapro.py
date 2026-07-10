@@ -27,6 +27,7 @@ if TYPE_CHECKING:
     from .brightway import BrightwayInventory
 
 _STRICT_MIGRATION_POLICY = MigrationPolicy.strict()
+_FORMAT_ID = InventoryFormat.SIMAPRO_CSV.value
 
 
 class SimaProInventory:
@@ -38,6 +39,10 @@ class SimaProInventory:
     """
 
     def __init__(self, document: InventoryDocument) -> None:
+        if not isinstance(document, InventoryDocument):
+            raise TypeError("document must be an InventoryDocument.")
+        if document.context.format.format_id != _FORMAT_ID:
+            raise ValueError("SimaProInventory requires a simapro_csv document.")
         self._document = document
 
     @classmethod
@@ -49,6 +54,7 @@ class SimaProInventory:
         biosphere_profile: BiosphereProfile | None = None,
         context: InventoryContext | None = None,
         database_name: str | None = None,
+        catalog_provider: CatalogProvider | None = None,
     ) -> "SimaProInventory":
         """Load and normalize a SimaPro CSV export.
 
@@ -60,6 +66,9 @@ class SimaProInventory:
             ``simapro_csv``.
         :param database_name: Optional foreground name; defaults to the file
             stem.
+        :param catalog_provider: Exact biosphere catalog provider used while
+            normalizing SimaPro flow names. Application defaults use the
+            environment/package provider stack.
         :return: A SimaPro inventory facade.
         :raises FileNotFoundError: If *path* does not exist.
         :raises ValueError: If *path* does not have a ``.csv`` suffix.
@@ -72,6 +81,7 @@ class SimaProInventory:
                 biosphere_profile=biosphere_profile,
                 context=context,
                 database_name=database_name,
+                catalog_provider=catalog_provider or catalog_provider_from_environment(),
             )
         )
 
@@ -103,6 +113,9 @@ class SimaProInventory:
         :param project_parameters: Optional project-scoped parameters.
         :return: A facade that owns a deep copy of all supplied values.
         """
+
+        if context is not None and context.format.format_id != _FORMAT_ID:
+            raise ValueError("SimaProInventory context format must be simapro_csv.")
 
         return cls(
             InventoryDocument(

@@ -38,9 +38,10 @@ def _normalize_version(family: str, value: str | None) -> str:
 class InventoryFormat(str, Enum):
     """Known source and target format identifiers.
 
-    Brightway Excel and SimaPro CSV have full facade support. Brightway CSV and
-    TSV are currently accepted by the upload-analysis API. OpenLCA Excel and
-    ecospold2 are reserved for future adapters.
+    Brightway Excel and SimaPro CSV have dedicated facade support. Brightway
+    CSV and TSV are registered pipeline formats. OpenLCA Excel and ecospold2
+    remain reserved for future adapters. Custom adapters may use identifiers
+    outside this compatibility enum.
     """
 
     BRIGHTWAY_EXCEL = "brightway_excel"
@@ -288,10 +289,19 @@ class InventoryDocument:
         return self.context.background.biosphere
 
     @property
-    def inventory_format(self) -> InventoryFormat:
-        """Return the legacy enum projection of the software format."""
+    def inventory_format(self) -> InventoryFormat | str:
+        """Return the legacy enum value or an extensible format identifier.
 
-        return InventoryFormat(self.context.format.format_id)
+        Known :class:`InventoryFormat` identifiers retain their historical enum
+        return values. A custom adapter identifier is returned unchanged as a
+        string instead of raising :class:`ValueError`.
+        """
+
+        format_id = self.context.format.format_id
+        try:
+            return InventoryFormat(format_id)
+        except ValueError:
+            return format_id
 
     @property
     def database_name(self) -> str:

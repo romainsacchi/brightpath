@@ -31,6 +31,7 @@ if TYPE_CHECKING:
     from .simapro import SimaProInventory
 
 _STRICT_MIGRATION_POLICY = MigrationPolicy.strict()
+_FORMAT_ID = InventoryFormat.BRIGHTWAY_EXCEL.value
 
 
 class BrightwayInventory:
@@ -42,6 +43,10 @@ class BrightwayInventory:
     """
 
     def __init__(self, document: InventoryDocument) -> None:
+        if not isinstance(document, InventoryDocument):
+            raise TypeError("document must be an InventoryDocument.")
+        if document.context.format.format_id != _FORMAT_ID:
+            raise ValueError("BrightwayInventory requires a brightway_excel document.")
         self._document = document
 
     @classmethod
@@ -104,6 +109,9 @@ class BrightwayInventory:
         :param project_parameters: Optional project-scoped parameters.
         :return: A facade that owns a deep copy of all supplied values.
         """
+
+        if context is not None and context.format.format_id != _FORMAT_ID:
+            raise ValueError("BrightwayInventory context format must be brightway_excel.")
 
         return cls(
             InventoryDocument(
