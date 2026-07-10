@@ -1,75 +1,101 @@
 Validation and catalogs
 =======================
 
-Validation is read-only and returns ``ValidationReport``. It never normalizes,
-migrates, writes, or mutates inventory data.
+Validation is read-only. Structural, adapter-owned format, and exact
+background-link validation are independent stages and never normalize,
+migrate, write, or mutate the source document.
 
-Validation stages
------------------
-
-Facade validation checks:
-
-* canonical dataset and exchange structure;
-* inventory plausibility warnings;
-* duplicate dataset identities;
-* production exchange identity consistency;
-* optional technosphere and biosphere links against an exact catalog.
-
-SimaPro validation can additionally render rows and check ecoinvent system
-model markers.
-
-Inspect structured issues
--------------------------
+Pipeline validation
+-------------------
 
 .. code-block:: python
 
-   report = inventory.validate()
+   result = pipeline.validate(
+       document,
+       check_format=True,
+       check_background_links=True,
+   )
 
-   for issue in report.issues:
+   for stage in result.report.stages:
+       print(stage.stage.value, stage.has_errors, dict(stage.metrics))
+   for issue in result.report.issues:
        print(
-           issue.severity,
+           issue.severity.value,
+           issue.stage.value,
            issue.code,
            issue.path,
            issue.message,
            issue.suggested_fix,
        )
 
-   if report.is_valid:
-       print("No validation errors")
+   if result.error:
+       raise RuntimeError("Validation failed")
 
-Warnings do not make ``report.has_errors`` true. Applications should still
-present them for review.
+Warnings do not set ``result.error``. Applications should still present them.
+The immutable operation report can be serialized with ``to_json()``.
+
+Validation stages
+-----------------
+
+Stages are returned in stable order:
+
+1. canonical structural validation;
+2. source-format validation when ``check_format=True``;
+3. exact background validation when ``check_background_links=True``.
+
+The structural stage checks canonical dataset and exchange shape, plausibility,
+duplicate identities, and production identity consistency. The selected source
+adapter owns ``validate_format(document)`` and checks format-specific
+invariants without converting or writing. Missing, failing, or malformed
+adapter contracts are format-validation errors. The background stage
+independently checks:
+
+* technosphere exchange identities against the exact technosphere catalog;
+* biosphere exchange identities against the exact biosphere catalog;
+* local datasets and explicitly supplied external foreground identities before
+  treating a technosphere link as background.
+
+Each axis reports total, resolved, unresolved, and unchecked links, resolution
+coverage, catalog status, identity count, resource digest, schema version, and
+source.
 
 Structural validation only
 --------------------------
 
-Disable background links when validating a draft or an inventory whose exact
-catalog is not installed:
-
 .. code-block:: python
 
-   report = inventory.validate(check_background_links=False)
-
-An incomplete profile is accepted in this mode. Link validation requires a
-complete family, version, and system model.
-
-SimaPro rendering validation
-----------------------------
-
-.. code-block:: python
-
-   report = simapro_inventory.validate(
+   structural = pipeline.validate(
+       document,
+       check_format=False,
        check_background_links=False,
-       check_simapro_rendering=True,
    )
 
-This checks target-format requirements without writing a file.
+This is useful for drafts, but it establishes neither source-format
+representability nor that external links match the declared background.
+
+Format validation only
+----------------------
+
+Run structure plus the adapter-owned format hook without loading catalogs:
+
+.. code-block:: python
+
+   format_result = pipeline.validate(
+       document,
+       check_format=True,
+       check_background_links=False,
+   )
+
+Brightway adapters validate their block-layout serialization. The SimaPro
+adapter checks rendering and exact representability. This is source-format
+validation; target representability before conversion uses the separate
+``preflight_conversion`` hook.
 
 External foreground targets
 ---------------------------
 
-Technosphere exchanges may point to foreground datasets managed outside the
-current file. Declare those identities explicitly:
+Technosphere exchanges can point to foreground datasets managed outside the
+current artifact. Declare their exact four-field identities:
 
 .. code-block:: python
 
@@ -81,74 +107,173 @@ current file. Declare those identities explicitly:
            "ton kilometer",
        )
    ]
-
-   report = inventory.validate(
+   result = pipeline.validate(
+       document,
        additional_foreground_targets=external_targets,
    )
 
-Each tuple is ``(name, reference product, location, unit)``. These targets are
-accepted as foreground links; they are not added to the inventory or catalog.
+These identities are accepted as foreground links. They are not added to the
+inventory or to a background catalog.
 
-Packaged catalogs
------------------
+Typed catalog providers
+-----------------------
 
-BrightPath packages exact identity catalogs for:
+Catalogs are independent typed resources:
 
-* ecoinvent 3.6 through 3.12, cut-off;
-* ecoinvent 3.6 through 3.12, consequential;
-* UVEK 2025, cut-off.
+* ``TechnosphereCatalog`` belongs to an exact
+  ``TechnosphereProfile(family, version, system_model)``;
+* ``BiosphereCatalog`` belongs to an exact
+  ``BiosphereProfile(family, version)``.
 
-A profile must match a catalog exactly. ecoinvent 3.5 migration rules are
-packaged, but a 3.5 catalog is not; supply a custom catalog to validate that
-source profile with background checks enabled.
+All validation and migration services receive a ``CatalogProvider``. Built-in
+implementations are:
 
-Use a custom catalog directory
-------------------------------
+``PackageCatalogProvider``
+   Loads the resources installed with BrightPath.
 
-Set ``BRIGHTPATH_REFERENCE_DIR`` to a directory containing catalog JSON files:
+``DirectoryCatalogProvider``
+   Loads combined JSON catalogs from an explicit directory and verifies the
+   embedded profile. When a resource manifest is present it also verifies
+   SHA-256, size, schema version, profile, and identity counts. For one exact
+   biosphere family/version it validates all matching system-model files,
+   requires a common schema version, unions their identity shards, and records
+   a composite digest and source list.
+
+``InMemoryCatalogProvider``
+   Accepts typed catalog objects for tests, services, databases, or other
+   application-owned stores.
+
+``CompositeCatalogProvider``
+   Tries providers in order and rejects duplicate profiles within a provider.
+
+Environment application boundary
+--------------------------------
 
 .. code-block:: console
 
    export BRIGHTPATH_REFERENCE_DIR=/path/to/reference_catalogs
 
-This directory replaces the packaged catalog directory for the process. Files
-must use the canonical name
-``family__version__system_model.json``, for example
-``ecoinvent__3.5__cutoff.json``.
+``catalog_provider_from_environment()`` then returns a composite provider with
+the configured directory first and packaged catalogs as fallback. The custom
+directory extends and can override application lookup; it does not disable
+packaged fallback. Core provider classes do not read this environment variable.
 
-Generate a catalog from database data
--------------------------------------
+Combined catalog files use names such as
+``ecoinvent__3.10__cutoff.json``. Requested profiles must match embedded
+metadata exactly. A 3.10 catalog is not accepted for 3.10.1.
 
-Given canonical dictionaries for the complete background database:
+Inject an in-memory provider
+----------------------------
 
 .. code-block:: python
 
-   from pathlib import Path
-
-   from brightpath import BackgroundProfile
-   from brightpath.catalogs import (
-       collect_biosphere_catalog_entries,
-       collect_technosphere_catalog_entries,
-       write_background_catalog,
+   from brightpath import InventoryPipeline
+   from brightpath.adapters import default_adapter_registry
+   from brightpath.background import (
+       BiosphereCatalog,
+       InMemoryCatalogProvider,
+       TechnosphereCatalog,
    )
 
-   profile = BackgroundProfile("ecoinvent", "3.5", "cutoff")
-   catalog_path = write_background_catalog(
-       profile,
-       technosphere=collect_technosphere_catalog_entries(background_database_data),
-       biosphere=collect_biosphere_catalog_entries(background_database_data),
-       output_dir=Path("reference_catalogs"),
+   provider = InMemoryCatalogProvider(
+       technosphere=(
+           TechnosphereCatalog(
+               profile=context.background.technosphere,
+               identities=frozenset(
+                   {
+                       (
+                           "market for electricity, low voltage",
+                           "electricity, low voltage",
+                           "CH",
+                           "kilowatt hour",
+                       )
+                   }
+               ),
+               source="application catalog",
+           ),
+       ),
+       biosphere=(
+           BiosphereCatalog(
+               profile=context.background.biosphere,
+               identities=frozenset(
+                   {
+                       (
+                           "Carbon dioxide, fossil",
+                           ("air", "urban air close to ground"),
+                           "kilogram",
+                       )
+                   }
+               ),
+               source="application catalog",
+           ),
+       ),
    )
-   print(catalog_path)
+   pipeline = InventoryPipeline(default_adapter_registry(), provider)
 
-Do not generate a background catalog from only a foreground inventory: it
-would omit the external identities that link validation is intended to check.
-Do not distribute proprietary database contents.
+The provider is injected once and is used by both validation and migration
+endpoint checks. It is also injected into readers whose adapter declares
+``requires_catalog_provider``, currently SimaPro CSV.
 
-Writer failures
----------------
+Legacy combined catalog API
+---------------------------
 
-Writers validate by default and raise the package-root exception:
+The functions under ``brightpath.catalogs`` remain compatibility bridges. For
+example, ``load_background_catalog(BackgroundProfile(...))`` loads exact axes
+through the provider stack and combines the technosphere with the documented
+legacy biosphere default. ``available_catalog_profiles()`` projects available
+technosphere profiles back to ``BackgroundProfile``.
+
+These functions cannot express independently selected background axes. New
+code should call ``provider.load_technosphere()`` and
+``provider.load_biosphere()`` directly.
+
+Packaged catalog coverage
+-------------------------
+
+The installed identity catalogs currently expose:
+
+* ecoinvent 3.6 through 3.12 cut-off technosphere;
+* ecoinvent 3.6 through 3.12 consequential technosphere;
+* ecoinvent 3.6 through 3.12 biosphere;
+* UVEK 2025 cut-off technosphere, with identities generated from the current
+  UVEK source workbook.
+
+The current UVEK resources use ecoinvent 3.10 biosphere identities. State this
+explicitly as ``BiosphereProfile("ecoinvent", "3.10")`` in new contexts.
+
+Migration resources exist for ecoinvent 3.5, but no packaged 3.5 validation
+catalog exists. Supply an exact application catalog before strict execution.
+
+Catalog release gate
+--------------------
+
+``brightpath/data/export/reference_catalogs/RESOURCE_MANIFEST.json`` is marked
+``legal_review_required``. The manifest records integrity and provenance; it is
+not a redistribution license. This status is an explicit governance gate for a
+stable public release. Maintainers must obtain the applicable legal approval
+or use separately licensed/local catalogs before release.
+
+Do not generate or distribute catalogs in violation of source database terms,
+and never commit complete proprietary background inventories.
+
+Facade validation and exceptions
+--------------------------------
+
+``BrightwayInventory.validate()`` and ``SimaProInventory.validate()`` return
+the v1 ``ValidationReport`` projection and accept an explicit
+``catalog_provider=``. SimaPro can also run render preflight:
+
+.. code-block:: python
+
+   report = simapro.validate(
+       check_background_links=True,
+       check_simapro_rendering=True,
+       catalog_provider=provider,
+   )
+
+The package has one ``InventoryValidationError`` class. It always exposes the
+shared immutable ``.report`` and retains ``.legacy_report`` or ``.result`` only
+when raised from a facade or upload-analysis compatibility path:
 
 .. code-block:: python
 
@@ -156,9 +281,6 @@ Writers validate by default and raise the package-root exception:
 
    try:
        inventory.write_excel("inventory.xlsx")
-   except InventoryValidationError as exc:
-       for issue in exc.report.issues:
+   except InventoryValidationError as error:
+       for issue in error.report.issues:
            print(issue.code, issue.message)
-
-The upload-analysis API has a different exception with an ``.result``
-attribute; see :doc:`analysis`.

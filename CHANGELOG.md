@@ -17,6 +17,10 @@ All notable changes to this project will be documented in this file.
   explicit permissive policy, and unsafe unit-changing rules are never applied without factors.
 - Unified operation failures around immutable reports; upload validation and writer validation now
   use the same exception hierarchy.
+- Removed the legacy public `brightpath.migrations.migrate_inventory` entry point, which could not
+  represent independent biosphere contexts or transactional validation.
+- Enforced software-format identity at facade and reader boundaries; contradictory exact and legacy
+  context arguments now fail instead of being ignored.
 
 ### Added
 
@@ -25,6 +29,8 @@ All notable changes to this project will be documented in this file.
   operation reports, and explicit conversion/migration policies.
 - Added an injected format adapter registry with bounded content probes. Brightway Excel, Brightway
   CSV/TSV, and SimaPro CSV are first-class read/write adapters; ambiguous CSV is never guessed.
+- Added adapter-owned format validation and conversion-preflight contracts so new formats can
+  extend the pipeline without central format switches.
 - Added the dependency-injected `InventoryPipeline` for detection, parsing, normalization,
   independent validation, migration, format conversion, writing, and audit sidecars.
 - Added independent technosphere and biosphere catalog providers, validation coverage metrics,
@@ -34,6 +40,8 @@ All notable changes to this project will be documented in this file.
 - Added independent Brightway Excel loading, normalization, structured validation, and writing.
 - Added independent SimaPro CSV loading, rendering, structured validation, parameter preservation,
   ecoinvent cut-off/consequential marker checks, and ecoinvent/UVEK naming profiles.
+- Added exact catalog injection for SimaPro biosphere normalization instead of applying one fixed
+  ecoinvent flow list to every declared biosphere release.
 - Added bidirectional ecoinvent cut-off migration routes from 3.5 through 3.12 with structured step
   reports for replacements, disaggregation, aggregation, irreversible deletion, ambiguity, and unit
   changes.
@@ -59,6 +67,8 @@ All notable changes to this project will be documented in this file.
   database, project, and process parameter scopes.
 - Initialized Brightway core migrations inside SimaPro loading so clean environments do not depend
   on an earlier Brightway import.
+- Routed compatibility catalog access through exact independent providers and combined verified
+  model-specific biosphere shards into one version-specific biosphere catalog.
 
 ## 0.0.4 - 2026-05-14
 

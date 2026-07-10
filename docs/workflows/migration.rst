@@ -1,121 +1,212 @@
 Background migration
 ====================
 
-BrightPath packages attributed Premise migration resources and applies them to
-canonical dataset, technosphere, substitution, and biosphere identities.
-Migration keeps the current software format.
+Background migration is independent of file format. It has two explicit
+services:
 
-Supported routes
-----------------
+* ``plan_background_migration()`` resolves technosphere and biosphere resource
+  routes without reading catalogs or changing inventory data;
+* ``execute_background_migration()`` validates the source, applies a plan to a
+  copy, validates the target, and commits or rolls back transactionally.
 
-Packaged technosphere rules connect every ecoinvent cut-off version from 3.5
-through 3.12. Routes work forward and backward, including multi-step paths.
+``InventoryPipeline.migrate()`` is the usual application entry point and
+delegates to the executor with its injected catalog provider.
+
+Plan without changing data
+--------------------------
 
 .. code-block:: python
 
-   from brightpath.migrations import available_ecoinvent_versions
+   from brightpath import (
+       BackgroundContext,
+       BiosphereProfile,
+       TechnosphereProfile,
+   )
+   from brightpath.background import plan_background_migration
+   from brightpath.core import MigrationPolicy
 
-   print(available_ecoinvent_versions())
-   # ('3.5', '3.6', '3.7', '3.8', '3.9', '3.10', '3.11', '3.12')
+   source = BackgroundContext(
+       technosphere=TechnosphereProfile("ecoinvent", "3.10", "cutoff"),
+       biosphere=BiosphereProfile("ecoinvent", "3.10"),
+   )
+   target = BackgroundContext(
+       technosphere=TechnosphereProfile("ecoinvent", "3.11", "cutoff"),
+       biosphere=BiosphereProfile("ecoinvent", "3.11"),
+   )
 
-Numeric patch versions are normalized before route resolution. For example,
-``3.10.1`` uses the ``3.10`` rules.
+   plan = plan_background_migration(
+       source,
+       target,
+       MigrationPolicy.strict(),
+   )
+   print(plan.executable)
+   for step in plan.technosphere_steps:
+       print(step.axis.value, step.source_version, step.target_version)
+   for step in plan.biosphere_steps:
+       print(step.axis.value, step.source_version, step.target_version)
 
-Forward migration
+Planning records exact source/target profiles, resource-series resolutions,
+resource names, rule counts, direction, policy findings, and potential losses.
+Unsupported routes are inspectable error reports; invalid Python argument types
+still raise immediately.
+
+Execute through the pipeline
+----------------------------
+
+.. code-block:: python
+
+   migration = pipeline.migrate(
+       document,
+       target,
+       policy=MigrationPolicy.strict(),
+   )
+
+   for stage in migration.report.stages:
+       print(stage.stage.value, stage.has_errors, dict(stage.metrics))
+   for issue in migration.report.issues:
+       print(issue.severity.value, issue.code, issue.path, issue.message)
+   for loss in migration.report.losses:
+       print(loss.code, loss.path, loss.message)
+
+   if not migration.succeeded:
+       raise RuntimeError(migration.report.to_json(indent=2))
+
+   assert migration.value.context.format == document.context.format
+   pipeline.write(migration.value, "foreground-ei311.xlsx", sidecar=True)
+
+Strict policy
+-------------
+
+``MigrationPolicy.strict()`` requires:
+
+* exact source validation before rule application;
+* a resource-backed route for every changed background component;
+* no inferred reverse route, ambiguous rule, deletion, information loss, or
+  unit change without a numeric factor;
+* exact target validation after rule application;
+* 100% resolved target-link coverage for technosphere and biosphere.
+
+If any error-policy condition occurs, execution returns the original document.
+The migration stage is marked as rolled back and its non-committed changes are
+removed from the report.
+
+Permissive review
 -----------------
 
+``MigrationPolicy.permissive()`` changes policy-controlled failures to
+warnings and sets minimum target coverage to zero:
+
 .. code-block:: python
 
-   from brightpath import BackgroundProfile
+   review = pipeline.migrate(
+       document,
+       older_target,
+       policy=MigrationPolicy.permissive(),
+   )
+   for issue in review.report.issues:
+       print(issue.severity.value, issue.code, issue.message)
+   for loss in review.report.losses:
+       print("loss", loss.code, loss.message)
 
-   migrated = inventory.migrate_background(
-       BackgroundProfile("ecoinvent", "3.12", "cutoff")
+This mode is intended for diagnosis and informed manual review. An operation
+that continues under permissive policy is not automatically scientifically
+valid.
+
+Reverse routes
+--------------
+
+Only forward migration resources are packaged. A reverse route is inferred by
+reversing those edges and is policy-controlled:
+
+* forward one-to-many disaggregation may require lossy reverse aggregation;
+* individual exchange metadata cannot always be reconstructed;
+* deleted biosphere flows cannot be recovered;
+* multiple source rules can map to the same target identity;
+* a change of unit is unsafe unless the resource supplies a numeric factor.
+
+Strict policy rejects inferred reverse steps. Permissive policy records both
+the warning and explicit ``Loss`` objects. Unsafe unit-changing rules are
+skipped rather than applying a new unit to an unchanged amount.
+
+Exact patch versions
+--------------------
+
+Exact profile versions are preserved while planning uses a separately recorded
+migration series:
+
+.. code-block:: python
+
+   patch_source = BackgroundContext(
+       technosphere=TechnosphereProfile("ecoinvent", "3.10.1", "cutoff"),
+       biosphere=BiosphereProfile("ecoinvent", "3.10.1"),
+   )
+   patch_target = BackgroundContext(
+       technosphere=TechnosphereProfile("ecoinvent", "3.11.2", "cutoff"),
+       biosphere=BiosphereProfile("ecoinvent", "3.11.2"),
+   )
+   patch_plan = plan_background_migration(patch_source, patch_target)
+
+   assert patch_plan.source_technosphere_resolution.exact_version == "3.10.1"
+   assert patch_plan.source_technosphere_resolution.migration_series == "3.10"
+   assert patch_plan.target_technosphere_resolution.migration_series == "3.11"
+
+Execution also requires exact 3.10.1 and 3.11.2 catalogs from the injected
+provider; packaged 3.10 and 3.11 catalogs are not treated as equivalents. Two
+different exact versions in the same series, such as 3.10.1 and 3.10.2, are not
+migrated because no resource establishes their equivalence.
+
+Available resource edges
+------------------------
+
+Packaged ecoinvent cut-off technosphere edges connect 3.5→3.6 through
+3.11→3.12. Packaged biosphere edges connect 3.5→3.6 through 3.10→3.11.
+Capability discovery reports edges, not a promise that every multi-axis route
+is executable under every policy.
+
+In particular, no ecoinvent 3.11→3.12 biosphere migration resource is
+packaged. A complete target that changes both technosphere and biosphere to
+3.12 is therefore unavailable:
+
+.. code-block:: python
+
+   target_312 = BackgroundContext(
+       technosphere=TechnosphereProfile("ecoinvent", "3.12", "cutoff"),
+       biosphere=BiosphereProfile("ecoinvent", "3.12"),
+   )
+   unavailable = plan_background_migration(target, target_312)
+   assert not unavailable.executable
+
+The planner reports
+``migration.biosphere_resource_missing_unavailable``. It does not fabricate an
+identity mapping or silently leave the biosphere relabeled and unchanged.
+
+Independent background components
+---------------------------------
+
+A target may intentionally preserve one component while changing the other:
+
+.. code-block:: python
+
+   technosphere_only_target = BackgroundContext(
+       technosphere=TechnosphereProfile("ecoinvent", "3.12", "cutoff"),
+       biosphere=BiosphereProfile("ecoinvent", "3.11"),
    )
 
-``inventory`` may be either a ``BrightwayInventory`` or a
-``SimaProInventory``. The returned object has the same facade type.
+That plan uses the technosphere edge and no biosphere edge. The caller is
+responsible for choosing a scientifically valid combination, and exact target
+catalog validation still applies.
 
-Target validation is enabled by default. Its issues are appended to the
-migration report rather than raised immediately:
+Unavailable families and models
+-------------------------------
 
-.. code-block:: python
+No resources are advertised for:
 
-   report = migrated.last_migration_report
-   print(report.source_profile.label())
-   print(report.target_profile.label())
-   print(report.changed, report.has_errors)
-
-   for step in report.steps:
-       print(
-           step.source_version,
-           step.target_version,
-           step.direction,
-           step.technosphere_replacements,
-           step.technosphere_disaggregations,
-           step.biosphere_replacements,
-           step.biosphere_deletions,
-       )
-
-   for issue in report.all_issues:
-       print(issue.severity, issue.code, issue.path, issue.message)
-
-Writers validate again by default and raise ``InventoryValidationError`` when
-errors remain.
-
-Reverse migration
------------------
-
-.. code-block:: python
-
-   older = migrated.migrate_background(
-       BackgroundProfile("ecoinvent", "3.6", "cutoff")
-   )
-
-Reverse routes can be lossy:
-
-* a forward one-to-many disaggregation is reconstructed by aggregation;
-* per-exchange metadata cannot always be reconstructed;
-* forward biosphere deletions cannot be reversed;
-* ambiguous packaged rules are resolved deterministically and reported;
-* unit-changing rules do not contain amount-conversion factors.
-
-Treat every warning as an audit item, especially
-``migration_reverse_aggregation_lossy``,
-``migration_biosphere_deletion_irreversible``, and
-``migration_unit_changed_without_amount_conversion``.
-
-Migration without target validation
------------------------------------
-
-For diagnostics or when a custom target catalog is not installed:
-
-.. code-block:: python
-
-   migrated = inventory.migrate_background(
-       BackgroundProfile("ecoinvent", "3.12", "cutoff"),
-       validate_target=False,
-   )
-
-This only skips catalog validation after the migration. It does not suppress
-migration-rule issues and does not establish that the result is ready to use.
-
-Same-profile migration
-----------------------
-
-Migrating to the normalized current profile is a supported no-op. It returns a
-new facade with an empty, unchanged report, which is useful when target
-profiles are selected dynamically.
-
-Unsupported routes
-------------------
-
-The following raise ``MigrationUnavailableError``:
-
-* ecoinvent cut-off to consequential or the reverse;
-* migration between consequential versions;
-* ecoinvent to UVEK or UVEK to ecoinvent;
+* consequential version migration;
+* cross-system-model migration;
+* ecoinvent↔UVEK migration;
 * migration between UVEK versions;
-* any ecoinvent version outside the packaged graph.
+* unsupported background families.
 
-The ecoinvent-to-UVEK resource is deliberately an empty placeholder. It cannot
-be mistaken for a successful conversion.
+The ecoinvent-to-UVEK file is an explicit placeholder and is excluded from
+capability discovery. UVEK can still be read, validated, and converted between
+software formats without changing its background.

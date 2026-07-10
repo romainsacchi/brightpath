@@ -24,9 +24,10 @@ All public workflows compose the same stages:
 .. code-block:: text
 
    detect -> parse -> canonicalize -> normalize -> resolve context
-          -> validate structure -> validate source links
+          -> validate structure -> validate source format -> validate source links
           -> optional background migration -> validate target links
-          -> optional format conversion -> target preflight -> render -> write
+          -> optional target preflight -> format conversion
+          -> validate target format -> render -> write
 
 Format conversion and background migration remain separate calls. Validation
 is read-only. Normalization performs only deterministic repairs; catalog-aware
@@ -36,8 +37,12 @@ Compatibility
 -------------
 
 ``BrightwayInventory`` and ``SimaProInventory`` remain convenience facades over
-the generic pipeline. The deleted 0.x converter classes will not return.
+the same document and focused services. New orchestration uses the generic,
+dependency-injected pipeline. The deleted 0.x converter classes will not return.
 Ambiguous files require an explicit format instead of a guessed default.
+Adapter-owned format-validation and representability hooks are mandatory
+contracts. The legacy non-transactional ``migrate_inventory`` function is not
+exported from ``brightpath.migrations``.
 
-BrightPath 1.0 requires Python 3.10 or newer. The codebase already uses Python
+BrightPath 1.0 supports Python 3.10 and 3.11. The codebase already uses Python
 3.10 syntax, so claiming Python 3.9 support would be inaccurate.

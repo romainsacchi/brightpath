@@ -1,224 +1,174 @@
-# Format and Background Profile Architecture
+# Format, Context, and Background Architecture
 
 ## Status
 
-Implemented for BrightPath 1.0. The API is intentionally incompatible with the deleted 0.x
-converter classes. Brightway Excel and SimaPro CSV are adapters over the same inventory document
-and background migration pipeline. OpenLCA Excel and ecospold2 remain future adapters.
+Implemented in the BrightPath 1.0 pre-release. This document records the
+refactor from the deleted 0.x source-specific converters to the current exact
+context and injected pipeline.
 
 ## Problem
 
-BrightPath 0.x modeled conversion as two source-specific workflows:
+BrightPath 0.x treated conversion as two coupled workflows:
 
 ```text
 Brightway -> SimaPro
 SimaPro -> Brightway
 ```
 
-Those workflows mixed four independent concerns:
+That mixed file parsing, structural validation, background identity, migration,
+and target serialization. It also made UVEK look like a SimaPro-only option.
+A same-format ecoinvent migration consequently implied an unrelated software
+conversion.
 
-- parsing or writing a software exchange format;
-- validating inventory structure;
-- identifying the linked background profile;
-- transforming background links.
+## Current Model
 
-As a result, migrating a Brightway Excel inventory from ecoinvent 3.6 to 3.8 unnecessarily implied
-SimaPro output, while UVEK behavior was exposed as a SimaPro-only database option.
-
-## Decision
-
-BrightPath uses this pipeline:
+The exact context is:
 
 ```text
-source format + source background profile
-    -> InventoryDocument
-    -> optional normalization
-    -> validation
-    -> optional background migration
-    -> target format
+InventoryContext
++-- FormatProfile(format_id, format_version, dialect, encoding)
++-- BackgroundContext
+    +-- TechnosphereProfile(family, exact version, system model)
+    +-- BiosphereProfile(family, exact version)
 ```
 
-Format conversion and background migration are never implicit consequences of one another.
+The axes are independent. `BAFU` is accepted only as a boundary alias and is
+normalized to `uvek`. Exact patch versions are preserved. Migration resource
+lookup returns a separate `VersionResolution`, so ecoinvent 3.10.1 may use the
+3.10 resource series without becoming 3.10 in context or output.
 
-## Independent Axes
+## Pipeline
 
-### File format
+`InventoryPipeline` receives an immutable `AdapterRegistry` and an explicit
+`CatalogProvider`:
 
-Current and planned format identifiers include:
+```text
+detect -> read -> normalize -> structural validation
+                    |              |
+                    |              +-> exact catalog validation
+                    +-> optional background planning/execution
+                    +-> optional format conversion/preflight
+                                   |
+                                   v
+                              explicit write
+```
+
+Generic validation orders canonical structure, optional adapter-owned format
+validation, then optional exact background-link validation. Each adapter must
+implement `validate_format` and `preflight_conversion`; missing or malformed
+report contracts fail safely. Adapters can declare `requires_catalog_provider`
+so the pipeline injects its provider during reads. SimaPro uses this to
+normalize flow names against the exact biosphere profile.
+
+Format conversion preserves `BackgroundContext`. Background migration
+preserves `FormatProfile`. Neither operation infers the other. Validation is
+read-only, normalization returns a copy, and migration is transactional.
+
+## Canonical Inventory
+
+`CanonicalInventory` is a versioned software-neutral representation with typed
+datasets, exchanges, parameters, identities, uncertainty, metadata, and exact
+context. Unknown values are preserved in source namespaces. `InventoryDocument`
+provides the transitional Brightway-style dictionary bridge used by existing
+facades and codecs, with copy-on-read semantics.
+
+Writers must preflight representability and report unsupported features or
+information loss. They must not discard unknown metadata silently.
+
+The compatibility `inventory_format` property returns an `InventoryFormat`
+member for known IDs and the string identifier for custom formats. The enum is
+therefore not a capability registry.
+
+## Format Adapters
+
+Executable support is defined by registered adapters, not enum membership.
+The built-in registry currently contains:
 
 - `brightway_excel`
 - `brightway_csv`
 - `brightway_tsv`
 - `simapro_csv`
-- future `openlca_excel`
-- future `ecospold2`
 
-An extension alone is not always sufficient for detection. CSV adapters must inspect content or
-require an explicit format identifier when Brightway and SimaPro interpretations are both possible.
+All four detect, read, and write files. Brightway and SimaPro CSV are
+distinguished by bounded content evidence; the `.csv` suffix is never a silent
+default. OpenLCA Excel and ecoSpold2 remain reserved identifiers and canonical
+extension namespaces, but no adapter is registered or advertised.
 
-### Background profile
+Qualified descriptor lookup selects an exact version/dialect first, then a
+registered generic adapter for the same format ID. Without a generic adapter,
+an unqualified request can be ambiguous across multiple qualified adapters.
 
-`BackgroundProfile` contains:
+## Background Catalogs
 
-- `family`: `ecoinvent` or `uvek`;
-- `version`: e.g. `3.10` or `2025`;
-- `system_model`: e.g. `cutoff` or `consequential`.
+Technosphere and biosphere catalogs are independent typed resources loaded by
+an injected provider. Package, directory, in-memory, and composite providers
+are available. Directory resources are checked against exact embedded profiles
+and, when present, manifest hashes, sizes, schema versions, and identity counts.
 
-`BAFU` is accepted only as a legacy alias for the canonical family name `UVEK`.
+Biosphere identities for one family/version can be split across system-model
+catalog files. The provider validates each shard and a common schema version,
+then unions the identities and computes a deterministic composite digest.
+Legacy `brightpath.catalogs` functions bridge through these independent
+providers using the documented default biosphere.
 
-UVEK can be used with Brightway, SimaPro, or any future format. It is not a format-specific export
-option.
+`BRIGHTPATH_REFERENCE_DIR` is interpreted only by the application helper. It
+places a custom directory ahead of packaged fallback rather than creating
+hidden core state.
 
-## Core Inventory Model
+The packaged catalog manifest is intentionally marked `legal_review_required`.
+It is an integrity and provenance record, not a redistribution license. Legal
+approval or separately licensed/local catalogs are a gate for a stable public
+release.
 
-`InventoryDocument` is the format-neutral boundary. It owns:
+## Background Migration
 
-- Brightway-style dataset and exchange dictionaries;
-- the source or current `BackgroundProfile`;
-- the current `InventoryFormat` view;
-- database metadata and parameters;
-- migration report history.
+Planning and execution are separate. The planner resolves independent
+technosphere and biosphere routes and applies policy without reading catalogs
+or changing data. The executor validates the exact source, applies rules to a
+copy, validates exact target links and coverage, then commits or rolls back.
 
-The initial canonical representation remains dictionary-backed because `bw2io`, the Premise
-migration resources, and existing inventories already share that representation. The document uses
-copy-on-read and copy-on-write semantics so validation and transformation cannot mutate caller-owned
-data.
+Strict policy rejects inferred reverse routes, ambiguity, deletions,
+information loss, unresolved links, incomplete coverage, and unit-changing
+rules without numeric factors. Permissive policy reports these as warnings and
+losses; it does not certify output.
 
-Unknown fields remain in the dictionaries. Brightway Excel uses tagged JSON strings for nested
-values that the generic workbook layout cannot otherwise represent, allowing BrightPath round trips
-without silently dropping those fields.
+The legacy engine function `brightpath.migrations.migrate_inventory` is not a
+public export. Public calls use transactional execution with endpoint
+validation and rollback.
 
-## Format Adapters
+Packaged ecoinvent cut-off technosphere edges cover 3.5 to 3.12. Biosphere
+edges stop at 3.10 to 3.11. The missing 3.11 to 3.12 biosphere edge prevents a
+complete 3.12 migration. Consequential, cross-model, ecoinvent-to-UVEK, and
+UVEK-version routes are unavailable. The UVEK mapping placeholder is excluded
+from capability discovery.
 
-Format adapters are responsible only for syntax and serialization:
+## Reports and Exceptions
 
-```text
-formats/brightway_excel.py
-formats/simapro_csv.py
-formats/openlca_excel.py     # future
-formats/ecospold2.py         # future
-```
+Pipeline operations return an immutable `OperationResult` and
+`OperationReport`. Ordered stage reports contain issues, non-lossy changes,
+explicit losses, metrics, and policy metadata, with deterministic JSON round
+trips. Atomic sidecars can include SHA-256 artifact digests.
 
-A reader returns `InventoryDocument`. A writer receives `InventoryDocument`. Neither chooses or
-changes the background profile.
+One exception hierarchy carries the same report through `.report`. Upload and
+facade compatibility attributes do not create separate validation exception
+types.
 
-User-facing `BrightwayInventory` and `SimaProInventory` classes are thin facades. They delegate
-normalization, validation, migration, and writing to independent services. Calling `to_simapro()`
-or `to_brightway()` changes the format view without changing the background profile.
+## Compatibility
 
-## Validation
+`BrightwayInventory` and `SimaProInventory` remain v1 convenience facades and
+accept an exact `context=`. `BackgroundProfile` remains a technosphere-only
+compatibility projection. The 0.x `BrightwayConverter` and `SimaproConverter`
+classes will not return.
 
-Validation is read-only and returns `ValidationReport` with structured `Issue` objects. The stages
-are independently callable:
+## Acceptance Rules
 
-- canonical inventory structure;
-- format-specific requirements;
-- plausibility warnings;
-- background catalog link compatibility.
-
-Writers may validate before export, but validation does not export or normalize data. Callers can
-disable background-link validation when only structural checks are needed.
-
-## Ecoinvent Migration
-
-BrightPath packages the Premise migration JSON resources rather than importing Premise's internal
-`inventory_imports.py` module. This avoids a runtime dependency on Premise's unrelated database,
-scenario, geography, and data-processing dependencies.
-
-The migration engine:
-
-1. normalizes patch versions to the migration graph's major/minor versions;
-2. resolves the shortest deterministic route;
-3. applies each edge in order;
-4. reverses operation order on backward edges;
-5. returns a structured report;
-6. validates resulting links against the exact target catalog when requested.
-
-Forward rules can replace identities and disaggregate one exchange into several allocated targets.
-Backward routes reverse replacements and aggregate disaggregated targets.
-
-### Loss policy
-
-Bidirectional routing does not imply perfect reversibility:
-
-- several source identities can map to the same target identity;
-- aggregation cannot preserve all metadata from every split exchange;
-- deleted biosphere exchanges cannot be reconstructed;
-- some rules change units without providing amount conversion factors;
-- no 3.11-to-3.12 biosphere migration resource is currently included.
-
-These cases produce structured issues. They are never hidden in logger output. Target catalog
-validation remains the final compatibility check.
-
-Only cut-off technosphere migration resources are currently packaged. Consequential inventories can
-be validated against their catalogs, but migration is rejected until consequential rules exist.
-
-## UVEK Migration
-
-UVEK 2025 is already a valid background profile for loading, validation, and same-profile writing.
-
-No real ecoinvent-to-UVEK mapping is available yet. The package contains a resource marked
-`status: placeholder` with empty rules to reserve the schema and location. It is not registered as a
-route, and cross-family migration raises `MigrationUnavailableError`.
-
-Future UVEK mappings belong under `data/migrations/uvek/` and must define direction, unit and amount
-transformations, mapping provenance, and target-catalog validation behavior.
-
-## Public API
-
-The v1 APIs compose explicitly:
-
-```python
-from brightpath import BackgroundProfile, BrightwayInventory, SimaProInventory
-
-inventory = BrightwayInventory.from_excel(
-    "inventory.xlsx",
-    background_profile=BackgroundProfile("ecoinvent", "3.6", "cutoff"),
-)
-
-normalized = inventory.normalize()
-validation = normalized.validate()
-migrated = normalized.migrate_background(
-    BackgroundProfile("ecoinvent", "3.8", "cutoff")
-)
-migrated.write_excel("inventory-ei38.xlsx")
-
-simapro = migrated.to_simapro()
-simapro.write_csv("inventory-ei38.csv")
-
-loaded_simapro = SimaProInventory.from_csv(
-    "inventory-ei38.csv",
-    background_profile=BackgroundProfile("ecoinvent", "3.8", "cutoff"),
-)
-loaded_simapro.to_brightway().write_excel("inventory-ei38-roundtrip.xlsx")
-```
-
-The 0.x `BrightwayConverter` and `SimaproConverter` modules are deleted. SimaPro parsing records
-duplicate identities and system-model mismatches as structured validation issues. It does not reject
-an otherwise parseable file before validation.
-
-## Implementation Sequence
-
-Completed:
-
-1. Brightway Excel read, validate, normalize, migrate, and write.
-2. SimaPro CSV read, validate, migrate, and write over `InventoryDocument`.
-3. Analysis composition through the v1 SimaPro reader and validator.
-4. Deletion of converter modules and implicit UVEK transforms.
-
-Next adapters:
-
-1. Brightway CSV/TSV as first-class facade inputs.
-2. OpenLCA Excel.
-3. ecospold2.
-
-## Acceptance Criteria
-
-- same-format, same-profile writing does not imply conversion;
-- ecoinvent background migration works forward and backward with explicit reports;
-- validation is read-only;
-- source data is not mutated;
-- UVEK is independent of file format;
-- placeholder mappings cannot masquerade as successful migrations;
-- new package data is present in both editable installs and built distributions;
-- no proprietary ecoinvent inventory data is packaged.
+- Same-format writing never implies conversion.
+- Format conversion preserves exact background context.
+- Migration preserves software format and requires explicit component targets.
+- Source data is never mutated.
+- UVEK is independent of software format.
+- CSV ambiguity is reported rather than guessed.
+- Placeholder data cannot advertise or execute a route.
+- OpenLCA Excel and ecoSpold2 remain undiscoverable until complete adapters and
+  independent fixtures pass their contracts.
+- No proprietary background inventory is packaged.

@@ -1,121 +1,169 @@
-Brightway Excel workflows
-=========================
+Brightway workflows
+===================
 
-Load a workbook
----------------
+BrightPath has a convenience facade for Brightway Excel and pipeline adapters
+for Brightway Excel, block CSV, and block TSV.
 
-Pass the profile that the workbook currently links to:
+Load Brightway Excel with exact context
+---------------------------------------
 
 .. code-block:: python
 
-   from brightpath import BackgroundProfile, BrightwayInventory
-
-   inventory = BrightwayInventory.from_excel(
-       "foreground-ei310.xlsx",
-       background_profile=BackgroundProfile("ecoinvent", "3.10", "cutoff"),
+   from brightpath import (
+       BackgroundContext,
+       BiosphereProfile,
+       BrightwayInventory,
+       FormatProfile,
+       InventoryContext,
+       TechnosphereProfile,
    )
 
-Workbooks written by BrightPath embed the normalized background profile. The
-argument can therefore be omitted when reopening one of those workbooks:
+   context = InventoryContext(
+       format=FormatProfile("brightway_excel", dialect="bw2io"),
+       background=BackgroundContext(
+           technosphere=TechnosphereProfile("ecoinvent", "3.10", "cutoff"),
+           biosphere=BiosphereProfile("ecoinvent", "3.10"),
+       ),
+   )
+   inventory = BrightwayInventory.from_excel(
+       "foreground-ei310.xlsx",
+       context=context,
+   )
+
+Workbooks written by BrightPath embed their exact context. It can be omitted
+when reopening such a workbook:
 
 .. code-block:: python
 
-   reopened = BrightwayInventory.from_excel("foreground-ei310-roundtrip.xlsx")
-   print(reopened.background_profile.label())
+   reopened = BrightwayInventory.from_excel("foreground-roundtrip.xlsx")
+   print(reopened.context.background.technosphere.label())
+   print(reopened.context.background.biosphere.label())
 
-For third-party workbooks, pass the profile explicitly. An incomplete profile
-prevents background-link validation and migration.
+Third-party workbooks should receive an explicit context. The legacy
+``background_profile=BackgroundProfile(...)`` argument still creates a
+technosphere profile and documented default biosphere, but cannot express all
+background combinations.
 
-Normalize legacy fields
------------------------
-
-Normalization is explicit and copy-on-write:
+Normalize and validate
+----------------------
 
 .. code-block:: python
 
    normalized = inventory.normalize()
+   report = normalized.validate()
 
-It promotes legacy ``product`` keys to ``reference product``, normalizes
-biosphere category sequences, and makes the production exchange identity match
-its dataset. It does not export, validate, or migrate links.
-
-Create an inventory in memory
------------------------------
-
-.. code-block:: python
-
-   from brightpath import BackgroundProfile, BrightwayInventory
-
-   inventory = BrightwayInventory.from_data(
-       data,
-       background_profile=BackgroundProfile("ecoinvent", "3.10", "cutoff"),
-       database_name="foreground-model",
-       metadata={"owner": "LCA team"},
-       database_parameters=[{"name": "loss", "amount": 0.03}],
-       project_parameters=[{"name": "year", "amount": 2030}],
-   )
-
-BrightPath deep-copies these values. The ``data`` variable can be safely reused
-or modified after construction.
-
-Validate without exporting
----------------------------
-
-.. code-block:: python
-
-   report = inventory.validate()
    for issue in report.issues:
        print(issue.severity, issue.code, issue.path, issue.message)
 
    if report.has_errors:
        raise RuntimeError("Correct the inventory before writing")
 
-Use ``check_background_links=False`` when only structure, plausibility,
-dataset uniqueness, and production identities should be checked. See
-:doc:`validation` for catalogs and external foreground targets.
+Normalization promotes legacy ``product`` fields, normalizes biosphere
+category sequences, and synchronizes production identities. It returns a new
+facade. Validation is read-only and can receive an explicit
+``catalog_provider=``.
 
-Write the same format
+Create a facade from dictionaries
+---------------------------------
+
+.. code-block:: python
+
+   inventory = BrightwayInventory.from_data(
+       data,
+       context=context,
+       database_name="foreground-model",
+       metadata={"owner": "LCA team"},
+       database_parameters=[{"name": "loss", "amount": 0.03}],
+       project_parameters=[{"name": "year", "amount": 2030}],
+   )
+
+Inputs are copied. ``.data``, ``.metadata``, and parameter properties also
+return copies.
+
+Write Brightway Excel
 ---------------------
 
 .. code-block:: python
 
-   output = inventory.write_excel("foreground-ei310-checked")
-   # output ends with .xlsx and is an absolute pathlib.Path
+   output = normalized.write_excel("foreground-ei310-checked")
 
-Writing validates by default. ``validate=False`` bypasses that preflight but
-does not make otherwise unserializable values valid. A destination with a
-non-``.xlsx`` suffix is rejected.
+The result is an absolute :class:`pathlib.Path` ending in ``.xlsx``. Writing
+validates by default. ``validate=False`` skips that facade preflight but cannot
+make an unserializable value valid.
 
-Migrate and stay in Brightway
------------------------------
+Brightway CSV and TSV
+---------------------
+
+Delimited Brightway files are full read/write pipeline formats, not analysis-
+only inputs:
 
 .. code-block:: python
 
-   migrated = inventory.migrate_background(
-       BackgroundProfile("ecoinvent", "3.12", "cutoff")
-   )
-   migrated.write_excel("foreground-ei312.xlsx")
+   from brightpath import InventoryPipeline
+   from brightpath.adapters import default_adapter_registry
+   from brightpath.background import catalog_provider_from_environment
+   from brightpath.core import ContextHint, FormatProfile
 
-The facade remains ``BrightwayInventory`` throughout. Inspect
-``migrated.last_migration_report`` before writing, especially for reverse or
-multi-step routes.
+   pipeline = InventoryPipeline(
+       default_adapter_registry(),
+       catalog_provider_from_environment(),
+   )
+   read = pipeline.read(
+       "foreground.csv",
+       hint=ContextHint(
+           format=FormatProfile("brightway_csv"),
+           background=context.background,
+       ),
+   )
+   pipeline.write(read.value, "foreground.tsv", target_format="brightway_tsv")
+
+The block grammar is the same canonical Brightway layout with a comma or tab
+delimiter. Detection inspects the delimiter and block markers. It does not
+assume that every ``.csv`` file is SimaPro.
+
+Migrate while staying in Brightway
+----------------------------------
+
+Use the injected pipeline when technosphere and biosphere targets, strict
+validation, coverage, reverse handling, and loss policy must be explicit:
+
+.. code-block:: python
+
+   from brightpath.core import MigrationPolicy
+
+   target = BackgroundContext(
+       technosphere=TechnosphereProfile("ecoinvent", "3.11", "cutoff"),
+       biosphere=BiosphereProfile("ecoinvent", "3.11"),
+   )
+   migrated = pipeline.migrate(
+       read.value,
+       target,
+       policy=MigrationPolicy.strict(),
+   )
+   if migrated.succeeded:
+       pipeline.write(migrated.value, "foreground-ei311.csv")
+
+The document remains in its Brightway format. The facade's
+``migrate_background(BackgroundProfile(...))`` method remains available for
+technosphere-oriented v1 code, but it cannot express separate component
+targets or the full strict/permissive policy contract.
 
 Convert only when requested
 ---------------------------
 
 .. code-block:: python
 
-   simapro = inventory.to_simapro()
-   assert simapro.background_profile == inventory.background_profile
+   simapro = normalized.to_simapro()
+   assert simapro.context.background == normalized.context.background
 
-SimaPro export imposes additional requirements, including a ``simapro
-category`` on production exchanges and SimaPro-supported units. Call
-``simapro.validate(check_simapro_rendering=True)`` before writing.
+``to_simapro()`` changes only the format view. SimaPro writing has additional
+unit, category, section, encoding, and representability constraints. Use
+``pipeline.convert(..., policy=ConversionPolicy.strict())`` when those
+conditions must be represented in an immutable operation report.
 
-Scope of the facade
--------------------
+Scope
+-----
 
-``BrightwayInventory`` reads and writes exchange workbooks. It does not select
-a Brightway project or register a database in a local Brightway installation.
-Use normal Brightway/``bw2io`` APIs to import the resulting workbook into a
-project.
+BrightPath writes exchange artifacts. It does not select a Brightway project,
+register a database in a local installation, or distribute proprietary
+background inventory contents.
