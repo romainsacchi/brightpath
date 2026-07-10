@@ -7,7 +7,9 @@ from pathlib import Path
 from typing import Iterable
 
 from . import DATA_DIR
-from .models import BackgroundProfile
+from .background.catalogs import CatalogIntegrityError, catalog_provider_from_environment
+from .core.context import BiosphereProfile, TechnosphereProfile
+from .models import BackgroundProfile, default_biosphere_profile
 
 
 @dataclass(frozen=True)
@@ -125,65 +127,64 @@ def write_background_catalog(
 
 
 def available_catalog_profiles(*, family: str = "") -> list[BackgroundProfile]:
-    """List profiles available in the active reference-catalog directory."""
+    """List legacy combined profiles exposed by the active provider stack.
 
-    directory = catalog_directory()
-    if not directory.is_dir():
-        return []
+    This compatibility projection is derived from exact technosphere profiles.
+    New code should query :class:`~brightpath.background.CatalogProvider`
+    directly so technosphere and biosphere availability remain independent.
+    """
 
-    profiles: list[BackgroundProfile] = []
-    for path in sorted(directory.glob("*.json")):
-        parts = path.stem.split("__")
-        if len(parts) != 3:
-            continue
-        profile = BackgroundProfile(
-            family=parts[0],
-            version=parts[1],
-            system_model=parts[2],
-        ).normalized()
-        if family and profile.family != family.strip().lower():
-            continue
-        profiles.append(profile)
-    return profiles
+    selected_family = BackgroundProfile(family=family).normalized().family if family else ""
+    provider = catalog_provider_from_environment()
+    technosphere_profiles = provider.technosphere_profiles()
+    if (os.getenv("BRIGHTPATH_REFERENCE_DIR") or "").strip():
+        directory = catalog_directory()
+        technosphere_profiles = tuple(
+            profile
+            for profile in technosphere_profiles
+            if (directory / catalog_filename(BackgroundProfile.from_technosphere_profile(profile))).is_file()
+        )
+    profiles = (BackgroundProfile.from_technosphere_profile(profile) for profile in technosphere_profiles)
+    return [profile for profile in profiles if not selected_family or profile.family == selected_family]
 
 
 def load_background_catalog(profile: BackgroundProfile) -> BackgroundCatalog:
-    """Load the exact reference catalog for *profile*.
+    """Load exact catalog axes and combine them at the legacy boundary.
+
+    A :class:`BackgroundProfile` cannot express an independent biosphere, so
+    this compatibility API uses the documented legacy biosphere default. New
+    callers that need different axes should use
+    :class:`~brightpath.background.CatalogProvider` directly. In particular,
+    UVEK 2025 resolves to the ecoinvent 3.10 biosphere catalog.
 
     :raises FileNotFoundError: If the corresponding catalog is unavailable.
+    :raises brightpath.background.CatalogIntegrityError: If a provider returns
+        a catalog for a different exact profile or a resource fails integrity
+        validation.
     """
 
     normalized = profile.normalized()
-    path = catalog_path(normalized)
-    if not path.is_file():
-        raise FileNotFoundError(f"Background catalog is missing for {normalized}: {path}")
+    technosphere_profile = normalized.to_technosphere_profile()
+    biosphere_profile = default_biosphere_profile(technosphere_profile)
+    provider = catalog_provider_from_environment()
+    technosphere = provider.load_technosphere(technosphere_profile)
+    biosphere = provider.load_biosphere(biosphere_profile)
 
-    payload = json.loads(path.read_text(encoding="utf-8"))
-    loaded_profile = BackgroundProfile(
-        family=payload.get("profile", {}).get("family", normalized.family),
-        version=payload.get("profile", {}).get("version", normalized.version),
-        system_model=payload.get("profile", {}).get("system_model", normalized.system_model),
-    ).normalized()
-
-    technosphere = frozenset(
-        (
-            str(row["name"]),
-            str(row["reference_product"]),
-            str(row["location"]),
-            str(row["unit"]),
-        )
-        for row in payload.get("technosphere", [])
-    )
-    biosphere = frozenset(
-        (
-            str(row["name"]),
-            tuple(str(item) for item in row["categories"]),
-            str(row["unit"]),
-        )
-        for row in payload.get("biosphere", [])
-    )
+    _require_exact_profile("technosphere", technosphere.profile, technosphere_profile)
+    _require_exact_profile("biosphere", biosphere.profile, biosphere_profile)
     return BackgroundCatalog(
-        profile=loaded_profile,
-        technosphere=technosphere,
-        biosphere=biosphere,
+        profile=normalized,
+        technosphere=technosphere.identities,
+        biosphere=biosphere.identities,
     )
+
+
+def _require_exact_profile(
+    axis: str,
+    actual: TechnosphereProfile | BiosphereProfile,
+    expected: TechnosphereProfile | BiosphereProfile,
+) -> None:
+    if actual != expected:
+        raise CatalogIntegrityError(
+            f"Provider returned {actual.label()} for requested {axis} profile {expected.label()}."
+        )

@@ -49,7 +49,7 @@ def test_directory_provider_rejects_embedded_profile_mismatch(tmp_path):
         DirectoryCatalogProvider(tmp_path).load_technosphere(technosphere())
 
 
-def test_directory_provider_requires_consistent_biosphere_across_models(tmp_path):
+def test_directory_provider_unions_verified_biosphere_shards_across_models(tmp_path):
     for model, flow in (("cutoff", "flow a"), ("consequential", "flow b")):
         (tmp_path / f"ecoinvent__3.10__{model}.json").write_text(
             json.dumps(
@@ -62,8 +62,27 @@ def test_directory_provider_requires_consistent_biosphere_across_models(tmp_path
             encoding="utf-8",
         )
 
-    with pytest.raises(CatalogIntegrityError, match="disagree"):
-        DirectoryCatalogProvider(tmp_path).load_biosphere(biosphere())
+    catalog = DirectoryCatalogProvider(tmp_path).load_biosphere(biosphere())
+
+    assert catalog.identities == frozenset(
+        {
+            ("flow a", ("air",), "kilogram"),
+            ("flow b", ("air",), "kilogram"),
+        }
+    )
+    assert len(catalog.digest) == 64
+    assert catalog.source.endswith(
+        "ecoinvent__3.10__consequential.json;" + str(tmp_path / "ecoinvent__3.10__cutoff.json")
+    )
+
+
+def test_package_provider_unions_ecoinvent_38_biosphere_shards():
+    catalog = PackageCatalogProvider().load_biosphere(biosphere("3.8"))
+
+    assert catalog.identities
+    assert len(catalog.digest) == 64
+    assert "ecoinvent__3.8__consequential.json" in catalog.source
+    assert "ecoinvent__3.8__cutoff.json" in catalog.source
 
 
 def test_composite_provider_uses_first_matching_catalog():

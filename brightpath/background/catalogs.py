@@ -172,18 +172,19 @@ class DirectoryCatalogProvider(CatalogProvider):
             identities = frozenset(_parse_biosphere_rows(payload.get("biosphere"), path))
             loaded.append((path, payload, digest, identities))
 
-        first_path, first_payload, first_digest, first_identities = loaded[0]
-        for path, _payload, _digest, identities in loaded[1:]:
-            if identities != first_identities:
-                raise CatalogIntegrityError(
-                    "Biosphere catalogs for {} disagree between {} and {}.".format(profile.label(), first_path, path)
-                )
+        schema_versions = {_schema_version(payload, path) for path, payload, _digest, _identities in loaded}
+        if len(schema_versions) != 1:
+            sources = ", ".join(path.name for path, _payload, _digest, _identities in loaded)
+            raise CatalogIntegrityError(
+                f"Biosphere catalog shards for {profile.label()} use inconsistent schema versions: {sources}."
+            )
+        identities = frozenset(identity for _path, _payload, _digest, rows in loaded for identity in rows)
         catalog = BiosphereCatalog(
             profile=profile,
-            identities=first_identities,
-            digest=first_digest,
-            schema_version=_schema_version(first_payload, first_path),
-            source=str(first_path.resolve()),
+            identities=identities,
+            digest=_composite_biosphere_digest(profile, loaded, identities),
+            schema_version=next(iter(schema_versions)),
+            source=";".join(str(path.resolve()) for path, _payload, _digest, _identities in loaded),
         )
         self._biosphere_cache[profile] = catalog
         return catalog
@@ -327,6 +328,23 @@ def _verify_manifest_resource(path: Path, payload: dict, digest: str, manifest: 
         raise CatalogIntegrityError(f"Catalog {path} technosphere count does not match its manifest.")
     if resource.get("biosphere_identities") != len(payload.get("biosphere", ())):
         raise CatalogIntegrityError(f"Catalog {path} biosphere count does not match its manifest.")
+
+
+def _composite_biosphere_digest(
+    profile: BiosphereProfile,
+    loaded: list[tuple[Path, dict, str, frozenset[BiosphereIdentity]]],
+    identities: frozenset[BiosphereIdentity],
+) -> str:
+    payload = {
+        "profile": {"family": profile.family, "version": profile.version},
+        "sources": [{"file": path.name, "sha256": digest} for path, _payload, digest, _identities in loaded],
+        "identities": [
+            {"name": name, "categories": list(categories), "unit": unit}
+            for name, categories, unit in sorted(identities)
+        ],
+    }
+    encoded = json.dumps(payload, ensure_ascii=False, separators=(",", ":"), sort_keys=True).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
 
 
 def _technosphere_profile(payload: dict, path: Path) -> TechnosphereProfile:
