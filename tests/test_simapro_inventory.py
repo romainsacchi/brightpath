@@ -11,6 +11,7 @@ from brightpath import (
     SimaProInventory,
     SimaProSerializationError,
 )
+from brightpath.core import MigrationPolicy
 from brightpath.formats.simapro_csv import normalize_simapro_import_data
 
 
@@ -564,14 +565,19 @@ def test_simapro_background_migration_is_explicit_and_bidirectional():
         background_profile=profile("3.6"),
     )
 
-    forward = source.migrate_background(profile("3.7"), validate_target=False)
-    backward = forward.migrate_background(profile("3.6"), validate_target=False)
+    forward = source.migrate_background(profile("3.7"))
+    backward = forward.migrate_background(
+        profile("3.6"),
+        policy=MigrationPolicy.permissive(),
+    )
 
     assert isinstance(forward, SimaProInventory)
     assert source.data[0]["exchanges"][1]["location"] == "RNA"
     assert forward.data[0]["exchanges"][1]["location"] == "CA"
     assert backward.data[0]["exchanges"][1]["location"] == "RNA"
-    assert forward.last_migration_report.steps[0].technosphere_replacements == 1
+    assert "migration.technosphere_step_applied" in {
+        change.code for change in forward.last_migration_report.changes
+    }
 
 
 def test_simapro_to_brightway_writes_importable_excel(tmp_path):
