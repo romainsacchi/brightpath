@@ -75,6 +75,8 @@ All notable changes to this project will be documented in this file.
   model-specific biosphere shards into one version-specific biosphere catalog.
 - Separated intrinsic format validation from conversion representability/loss policy and treated
   reconstructible BW2IO `input`/`output` graph keys as non-lossy metadata.
+- Declared setuptools 77 or newer and Twine 6.1 or newer for reproducible SPDX license metadata
+  builds and Metadata 2.4 release validation.
 
 ## 0.0.4 - 2026-05-14
 
