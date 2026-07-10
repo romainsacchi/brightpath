@@ -12,6 +12,7 @@ from .catalogs import (
     TechnosphereCatalog,
     catalog_provider_from_environment,
 )
+from .validation import validate_background_links
 
 __all__ = (
     "BiosphereCatalog",
@@ -24,4 +25,5 @@ __all__ = (
     "PackageCatalogProvider",
     "TechnosphereCatalog",
     "catalog_provider_from_environment",
+    "validate_background_links",
 )
