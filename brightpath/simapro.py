@@ -1,21 +1,32 @@
 from __future__ import annotations
 
-from copy import deepcopy
 from pathlib import Path
 from typing import TYPE_CHECKING, Iterable
 
-from .background import CatalogProvider
-from .core.context import BiosphereProfile, InventoryContext
-from .exceptions import InventoryValidationError
+from .background import (
+    CatalogProvider,
+    catalog_provider_from_environment,
+    execute_background_migration,
+)
+from .core.context import (
+    BackgroundContext,
+    BiosphereProfile,
+    InventoryContext,
+    TechnosphereProfile,
+)
+from .core.policies import MigrationPolicy
+from .core.reports import OperationReport
+from .exceptions import InventoryValidationError, MigrationError
 from .formats import load_simapro_csv, render_simapro_rows, write_simapro_csv
 from .formats.simapro_csv import SimaProRenderResult
-from .migrations import MigrationReport, migrate_inventory
 from .models import BackgroundProfile, InventoryDocument, InventoryFormat, Issue, ValidationReport
 from .normalization import normalize_inventory
 from .validation import validate_brightway_inventory
 
 if TYPE_CHECKING:
     from .brightway import BrightwayInventory
+
+_STRICT_MIGRATION_POLICY = MigrationPolicy.strict()
 
 
 class SimaProInventory:
@@ -162,14 +173,14 @@ class SimaProInventory:
         return self._document.project_parameters
 
     @property
-    def migration_reports(self) -> tuple[MigrationReport, ...]:
-        """Return copied audit reports for all migrations in this pipeline."""
+    def migration_reports(self) -> tuple[OperationReport, ...]:
+        """Return immutable operation reports for successful migrations."""
 
-        return deepcopy(self._document.migration_reports)
+        return tuple(self._document.migration_reports)
 
     @property
-    def last_migration_report(self) -> MigrationReport | None:
-        """The most recent migration report, or ``None`` before migration."""
+    def last_migration_report(self) -> OperationReport | None:
+        """Return the most recent immutable migration operation report."""
 
         reports = self.migration_reports
         return reports[-1] if reports else None
@@ -242,33 +253,52 @@ class SimaProInventory:
 
     def migrate_background(
         self,
-        target_profile: BackgroundProfile,
+        target: BackgroundContext | BackgroundProfile | TechnosphereProfile,
         *,
-        validate_target: bool = True,
+        biosphere_profile: BiosphereProfile | None = None,
+        policy: MigrationPolicy = _STRICT_MIGRATION_POLICY,
+        catalog_provider: CatalogProvider | None = None,
         additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
     ) -> "SimaProInventory":
-        """Return a SimaPro copy linked to *target_profile*.
+        """Transactionally migrate background links and return a new facade.
 
-        The software format remains SimaPro CSV. Only packaged ecoinvent
-        cut-off migrations are currently available.
+        The preferred *target* is a complete :class:`BackgroundContext`.
+        Legacy :class:`BackgroundProfile` and :class:`TechnosphereProfile`
+        targets may be paired with an explicit *biosphere_profile*. When it is
+        omitted, the inventory's exact existing biosphere profile is preserved;
+        BrightPath never derives a biosphere version from the technosphere
+        target. Reverse migrations require an explicitly permissive policy.
 
-        :param target_profile: Explicit destination background profile.
-        :param validate_target: Append target-catalog validation issues to the
-            migration report after applying the route.
+        :param target: Exact destination background context or a legacy
+            technosphere-only target.
+        :param biosphere_profile: Exact destination biosphere for a legacy
+            technosphere-only target. Omit it to preserve the current exact
+            biosphere profile.
+        :param policy: Validation, loss, and reverse-route decisions. Strict by
+            default.
+        :param catalog_provider: Exact source and target catalogs. When omitted,
+            the application environment and packaged catalogs are used.
         :param additional_foreground_targets: Valid external foreground
-            identities used by target validation.
-        :raises brightpath.MigrationUnavailableError: If no supported route
-            exists.
+            identities used by source and target validation.
+        :raises brightpath.MigrationError: If planning, validation, or execution
+            fails under *policy*. The exception contains the immutable report.
         """
 
-        migrated_document, report = migrate_inventory(self._document, target_profile)
-        migrated = SimaProInventory(migrated_document)
-        if validate_target:
-            validation = migrated.validate(
-                additional_foreground_targets=additional_foreground_targets,
-            )
-            report.issues.extend(validation.issues)
-        return migrated
+        target_context = _coerce_migration_target(self._document, target, biosphere_profile)
+        provider = catalog_provider if catalog_provider is not None else catalog_provider_from_environment()
+        result = execute_background_migration(
+            self._document,
+            target_context,
+            provider,
+            policy,
+            foreground_technosphere_targets=additional_foreground_targets,
+        )
+        if result.error:
+            raise MigrationError(_migration_failure_message(result.report), report=result.report)
+        migrated_document = result.value.replace(
+            migration_reports=(*self._document.migration_reports, result.report),
+        )
+        return SimaProInventory(migrated_document)
 
     def write_csv(
         self,
@@ -306,3 +336,33 @@ class SimaProInventory:
         from .brightway import BrightwayInventory
 
         return BrightwayInventory(self._document.replace(inventory_format=InventoryFormat.BRIGHTWAY_EXCEL))
+
+
+def _coerce_migration_target(
+    document: InventoryDocument,
+    target: BackgroundContext | BackgroundProfile | TechnosphereProfile,
+    biosphere_profile: BiosphereProfile | None,
+) -> BackgroundContext:
+    if isinstance(target, BackgroundContext):
+        if biosphere_profile is not None:
+            raise TypeError("biosphere_profile cannot be combined with a complete BackgroundContext target.")
+        return target
+    if isinstance(target, BackgroundProfile):
+        technosphere = target.to_technosphere_profile()
+    elif isinstance(target, TechnosphereProfile):
+        technosphere = target
+    else:
+        raise TypeError("target must be a BackgroundContext, BackgroundProfile, or TechnosphereProfile.")
+    if biosphere_profile is not None and not isinstance(biosphere_profile, BiosphereProfile):
+        raise TypeError("biosphere_profile must be a BiosphereProfile or None.")
+    return BackgroundContext(
+        technosphere=technosphere,
+        biosphere=biosphere_profile or document.context.background.biosphere,
+    )
+
+
+def _migration_failure_message(report: OperationReport) -> str:
+    first_error = next((issue.message for issue in report.issues if issue.severity.value == "error"), None)
+    if first_error:
+        return f"Background migration failed: {first_error}"
+    return "Background migration failed under the selected policy."

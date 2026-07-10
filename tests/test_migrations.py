@@ -1,7 +1,8 @@
 import pytest
 
 from brightpath import DATA_DIR, BackgroundProfile, BrightwayInventory
-from brightpath.exceptions import MigrationUnavailableError
+from brightpath.core import BackgroundContext, BiosphereProfile, MigrationPolicy, TechnosphereProfile
+from brightpath.exceptions import MigrationError
 from brightpath.migrations import available_ecoinvent_versions, resolve_migration_route
 from brightpath.migrations.resources import load_technosphere_resources
 
@@ -64,14 +65,17 @@ def test_forward_and_backward_replacement_are_non_mutating():
         }
     )
 
-    forward = source.migrate_background(profile("3.7"), validate_target=False)
-    backward = forward.migrate_background(profile("3.6"), validate_target=False)
+    forward = source.migrate_background(profile("3.7"))
+    backward = forward.migrate_background(
+        profile("3.6"),
+        policy=MigrationPolicy.permissive(),
+    )
 
     assert source.data[0]["exchanges"][1]["location"] == "RNA"
     assert forward.data[0]["exchanges"][1]["location"] == "CA"
     assert backward.data[0]["exchanges"][1]["location"] == "RNA"
-    assert forward.last_migration_report.steps[0].technosphere_replacements == 1
-    assert backward.last_migration_report.steps[0].technosphere_replacements == 1
+    assert "migration.technosphere_step_applied" in {change.code for change in forward.last_migration_report.changes}
+    assert "migration.technosphere_step_applied" in {change.code for change in backward.last_migration_report.changes}
 
 
 def test_reverse_migration_aggregates_forward_disaggregation():
@@ -86,8 +90,11 @@ def test_reverse_migration_aggregates_forward_disaggregation():
         }
     )
 
-    forward = source.migrate_background(profile("3.7"), validate_target=False)
-    backward = forward.migrate_background(profile("3.6"), validate_target=False)
+    forward = source.migrate_background(profile("3.7"))
+    backward = forward.migrate_background(
+        profile("3.6"),
+        policy=MigrationPolicy.permissive(),
+    )
     forward_exchanges = forward.data[0]["exchanges"][1:]
     reconstructed = backward.data[0]["exchanges"][1]
 
@@ -96,7 +103,7 @@ def test_reverse_migration_aggregates_forward_disaggregation():
     assert reconstructed["reference product"] == "ammonia, liquid"
     assert reconstructed["location"] == "RoW"
     assert reconstructed["amount"] == pytest.approx(10.0)
-    assert "migration_reverse_aggregation_lossy" in {issue.code for issue in backward.last_migration_report.all_issues}
+    assert "migration.reverse_aggregation" in {loss.code for loss in backward.last_migration_report.losses}
 
 
 def test_missing_biosphere_step_is_reported():
@@ -112,9 +119,15 @@ def test_missing_biosphere_step_is_reported():
         version="3.11",
     )
 
-    migrated = source.migrate_background(profile("3.12"), validate_target=False)
+    target = BackgroundContext(
+        technosphere=TechnosphereProfile("ecoinvent", "3.12", "cutoff"),
+        biosphere=BiosphereProfile("ecoinvent", "3.12"),
+    )
 
-    assert "biosphere_migration_missing" in {issue.code for issue in migrated.last_migration_report.all_issues}
+    with pytest.raises(MigrationError) as raised:
+        source.migrate_background(target)
+
+    assert "migration.biosphere_resource_missing_unavailable" in {issue.code for issue in raised.value.report.issues}
 
 
 def test_cross_family_migration_uses_explicit_placeholder_failure():
@@ -131,7 +144,7 @@ def test_cross_family_migration_uses_explicit_placeholder_failure():
     )
 
     assert placeholder.is_file()
-    with pytest.raises(MigrationUnavailableError, match="placeholder"):
+    with pytest.raises(MigrationError, match="not available"):
         source.migrate_background(BackgroundProfile("uvek", "2025", "cutoff"))
 
 
@@ -141,7 +154,7 @@ def test_consequential_migration_is_rejected_until_rules_exist():
         background_profile=BackgroundProfile("ecoinvent", "3.10", "consequential"),
     )
 
-    with pytest.raises(MigrationUnavailableError, match="cut-off"):
+    with pytest.raises(MigrationError, match="consequential"):
         source.migrate_background(BackgroundProfile("ecoinvent", "3.11", "consequential"))
 
 
@@ -155,8 +168,8 @@ def test_consequential_migration_is_rejected_until_rules_exist():
 def test_same_profile_migration_is_a_supported_noop(same_profile):
     source = BrightwayInventory.from_data([], background_profile=same_profile)
 
-    migrated = source.migrate_background(same_profile, validate_target=False)
+    migrated = source.migrate_background(same_profile)
 
     assert migrated.background_profile == same_profile.normalized()
-    assert migrated.last_migration_report.steps == []
+    assert migrated.last_migration_report.stages
     assert not migrated.last_migration_report.changed
