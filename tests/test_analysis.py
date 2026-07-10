@@ -1,23 +1,19 @@
 import csv
 import json
-from pathlib import Path
-from types import SimpleNamespace
 
 from openpyxl import load_workbook
 
-from brightpath import BrightwayConverter
+from brightpath import BackgroundProfile, BrightwayInventory, SimaProInventory
 from brightpath.analysis import (
-    InventoryValidationError,
     SOURCE_FORMAT_BRIGHTWAY_CSV,
     SOURCE_FORMAT_BRIGHTWAY_EXCEL,
     SOURCE_FORMAT_BRIGHTWAY_TSV,
     SOURCE_FORMAT_SIMAPRO_CSV,
+    InventoryValidationError,
     analyze_inventory,
     infer_source_format,
     validate_inventory,
 )
-from brightpath.models import BackgroundProfile
-from brightpath.simaproconverter import SimaproConverter
 
 
 def minimal_activity(extra_exchanges=None, **overrides):
@@ -45,16 +41,18 @@ def minimal_activity(extra_exchanges=None, **overrides):
 
 
 def make_brightway_excel(tmp_path, data, db_name="analysis_db"):
-    converter = SimaproConverter.__new__(SimaproConverter)
-    converter.i = SimpleNamespace(data=data, db_name=db_name)
-    converter.db_name = db_name
-    return converter.write_brightway_excel(tmp_path / "inventory")
+    return BrightwayInventory.from_data(
+        data,
+        background_profile=BackgroundProfile("ecoinvent", "3.9", "cutoff"),
+        database_name=db_name,
+    ).write_excel(tmp_path / "inventory", validate=False)
 
 
 def make_simapro_csv(tmp_path, data, filename="inventory.csv"):
-    converter = BrightwayConverter(data=data, export_dir=tmp_path)
-    converter.convert_to_simapro(filename=filename)
-    return tmp_path / filename
+    return SimaProInventory.from_data(
+        data,
+        background_profile=BackgroundProfile("ecoinvent", "3.9", "cutoff"),
+    ).write_csv(tmp_path / filename, validate=False)
 
 
 def make_brightway_delimited(tmp_path, data, *, delimiter=",", suffix=".csv", db_name="analysis_db"):
@@ -206,10 +204,7 @@ def test_analyze_brightway_excel_extracts_trailing_source_from_comment(tmp_path)
 
     assert len(result.candidates) == 1
     assert result.candidates[0].description_hint == "This dataset models a foreground process."
-    assert (
-        result.candidates[0].source_hint
-        == "Foteinis et al. (2023). https://doi.org/example"
-    )
+    assert result.candidates[0].source_hint == "Foteinis et al. (2023). https://doi.org/example"
 
 
 def test_analyze_brightway_excel_keeps_comment_when_source_marker_is_not_trailing(tmp_path):
@@ -217,10 +212,7 @@ def test_analyze_brightway_excel_keeps_comment_when_source_marker_is_not_trailin
         tmp_path,
         [
             minimal_activity(
-                comment=(
-                    "Source: internal screening assumptions. "
-                    "This dataset models a foreground process."
-                )
+                comment=("Source: internal screening assumptions. " "This dataset models a foreground process.")
             )
         ],
     )
@@ -358,9 +350,7 @@ def test_analyze_brightway_excel_infers_background_profile_from_catalogs(tmp_pat
     assert any(issue.code == "background_profile_inferred" for issue in result.file_issues)
 
 
-def test_analyze_brightway_excel_prefers_latest_cutoff_when_profile_matches_are_tied(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_prefers_latest_cutoff_when_profile_matches_are_tied(tmp_path, monkeypatch):
     directory = tmp_path / "reference_catalogs"
     directory.mkdir(exist_ok=True)
     for version in ("3.9", "3.10"):
@@ -462,9 +452,7 @@ def test_analyze_brightway_excel_flags_missing_background_targets(tmp_path, monk
     assert "unknown_biosphere_flow" in issue_codes
 
 
-def test_analyze_brightway_excel_groups_unknown_technosphere_targets_per_candidate(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_groups_unknown_technosphere_targets_per_candidate(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -510,9 +498,7 @@ def test_analyze_brightway_excel_groups_unknown_technosphere_targets_per_candida
     )
 
     technosphere_issues = [
-        issue
-        for issue in result.candidates[0].issues
-        if issue.code == "unknown_technosphere_target"
+        issue for issue in result.candidates[0].issues if issue.code == "unknown_technosphere_target"
     ]
     assert len(technosphere_issues) == 1
     assert "missing market a | missing product a | CH | kilogram" in technosphere_issues[0].message
@@ -520,9 +506,7 @@ def test_analyze_brightway_excel_groups_unknown_technosphere_targets_per_candida
     assert technosphere_issues[0].suggested_fix
 
 
-def test_analyze_brightway_excel_accepts_additional_foreground_targets(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_accepts_additional_foreground_targets(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -558,10 +542,7 @@ def test_analyze_brightway_excel_accepts_additional_foreground_targets(
             system_model="cutoff",
         ),
     )
-    assert any(
-        issue.code == "unknown_technosphere_target"
-        for issue in unresolved.candidates[0].issues
-    )
+    assert any(issue.code == "unknown_technosphere_target" for issue in unresolved.candidates[0].issues)
 
     resolved = analyze_inventory(
         path=workbook,
@@ -570,15 +551,10 @@ def test_analyze_brightway_excel_accepts_additional_foreground_targets(
             version="3.10",
             system_model="cutoff",
         ),
-        additional_foreground_targets=[
-            ("foreground provider", "foreground product", "CH", "kilogram")
-        ],
+        additional_foreground_targets=[("foreground provider", "foreground product", "CH", "kilogram")],
     )
 
-    assert all(
-        issue.code != "unknown_technosphere_target"
-        for issue in resolved.candidates[0].issues
-    )
+    assert all(issue.code != "unknown_technosphere_target" for issue in resolved.candidates[0].issues)
 
 
 def test_analyze_brightway_excel_fills_missing_foreground_reference_product(tmp_path):
@@ -614,10 +590,7 @@ def test_analyze_brightway_excel_fills_missing_foreground_reference_product(tmp_
     result = analyze_inventory(path=workbook, source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL)
 
     assert result.candidates[1].issues == []
-    assert (
-        result.inventory_data[1]["exchanges"][1]["reference product"]
-        == "foreground product"
-    )
+    assert result.inventory_data[1]["exchanges"][1]["reference product"] == "foreground product"
 
 
 def test_analyze_brightway_excel_fills_missing_foreground_reference_product_canonically(tmp_path):
@@ -658,9 +631,7 @@ def test_analyze_brightway_excel_fills_missing_foreground_reference_product_cano
     assert result.inventory_data[1]["exchanges"][1]["unit"] == "kilogram"
 
 
-def test_analyze_brightway_excel_accepts_canonical_additional_foreground_targets(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_accepts_canonical_additional_foreground_targets(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -695,24 +666,17 @@ def test_analyze_brightway_excel_accepts_canonical_additional_foreground_targets
             version="3.10",
             system_model="cutoff",
         ),
-        additional_foreground_targets=[
-            ("Foreground provider", "Foreground product", "CH", "kilogram")
-        ],
+        additional_foreground_targets=[("Foreground provider", "Foreground product", "CH", "kilogram")],
     )
 
-    assert all(
-        issue.code != "unknown_technosphere_target"
-        for issue in resolved.candidates[0].issues
-    )
+    assert all(issue.code != "unknown_technosphere_target" for issue in resolved.candidates[0].issues)
     assert resolved.inventory_data[0]["exchanges"][1]["name"] == "Foreground provider"
     assert resolved.inventory_data[0]["exchanges"][1]["reference product"] == "Foreground product"
     assert resolved.inventory_data[0]["exchanges"][1]["location"] == "CH"
     assert resolved.inventory_data[0]["exchanges"][1]["unit"] == "kilogram"
 
 
-def test_analyze_brightway_excel_accepts_canonical_background_catalog_targets(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_accepts_canonical_background_catalog_targets(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -756,19 +720,14 @@ def test_analyze_brightway_excel_accepts_canonical_background_catalog_targets(
         ),
     )
 
-    assert all(
-        issue.code != "unknown_technosphere_target"
-        for issue in result.candidates[0].issues
-    )
+    assert all(issue.code != "unknown_technosphere_target" for issue in result.candidates[0].issues)
     assert result.inventory_data[0]["exchanges"][1]["name"] == "market for palladium"
     assert result.inventory_data[0]["exchanges"][1]["reference product"] == "palladium"
     assert result.inventory_data[0]["exchanges"][1]["location"] == "GLO"
     assert result.inventory_data[0]["exchanges"][1]["unit"] == "kilogram"
 
 
-def test_analyze_brightway_excel_accepts_technosphere_unit_alias_against_catalog(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_accepts_technosphere_unit_alias_against_catalog(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -816,9 +775,7 @@ def test_analyze_brightway_excel_accepts_technosphere_unit_alias_against_catalog
     assert result.inventory_data[0]["exchanges"][1]["unit"] == "hectare"
 
 
-def test_analyze_brightway_excel_promotes_legacy_product_field_on_technosphere_exchange(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_promotes_legacy_product_field_on_technosphere_exchange(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -863,15 +820,10 @@ def test_analyze_brightway_excel_promotes_legacy_product_field_on_technosphere_e
     )
 
     assert result.candidates[0].issues == []
-    assert (
-        result.inventory_data[0]["exchanges"][1]["reference product"]
-        == "assembly operation, for lorry"
-    )
+    assert result.inventory_data[0]["exchanges"][1]["reference product"] == "assembly operation, for lorry"
 
 
-def test_analyze_brightway_excel_accepts_person_kilometer_unit_alias_against_catalog(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_accepts_person_kilometer_unit_alias_against_catalog(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -919,9 +871,7 @@ def test_analyze_brightway_excel_accepts_person_kilometer_unit_alias_against_cat
     assert result.inventory_data[0]["exchanges"][1]["unit"] == "person-kilometer"
 
 
-def test_analyze_brightway_excel_fills_missing_catalog_reference_product(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_fills_missing_catalog_reference_product(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -985,9 +935,7 @@ def test_analyze_brightway_excel_fills_missing_production_reference_product(tmp_
     assert result.inventory_data[0]["exchanges"][0]["reference product"] == "foreground product"
 
 
-def test_analyze_brightway_excel_normalizes_biosphere_aliases_before_link_check(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_normalizes_biosphere_aliases_before_link_check(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -1029,19 +977,11 @@ def test_analyze_brightway_excel_normalizes_biosphere_aliases_before_link_check(
         ),
     )
 
-    assert all(
-        issue.code != "unknown_biosphere_flow"
-        for issue in result.candidates[0].issues
-    )
-    assert (
-        result.inventory_data[0]["exchanges"][1]["name"]
-        == "Particulate Matter, < 2.5 um"
-    )
+    assert all(issue.code != "unknown_biosphere_flow" for issue in result.candidates[0].issues)
+    assert result.inventory_data[0]["exchanges"][1]["name"] == "Particulate Matter, < 2.5 um"
 
 
-def test_analyze_brightway_excel_maps_biosphere_alias_to_selected_catalog_name(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_maps_biosphere_alias_to_selected_catalog_name(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -1083,16 +1023,11 @@ def test_analyze_brightway_excel_maps_biosphere_alias_to_selected_catalog_name(
         ),
     )
 
-    assert all(
-        issue.code != "unknown_biosphere_flow"
-        for issue in result.candidates[0].issues
-    )
+    assert all(issue.code != "unknown_biosphere_flow" for issue in result.candidates[0].issues)
     assert result.inventory_data[0]["exchanges"][1]["name"] == "Selenium"
 
 
-def test_analyze_brightway_excel_applies_supplemental_biosphere_aliases(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_applies_supplemental_biosphere_aliases(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="ecoinvent",
@@ -1134,16 +1069,11 @@ def test_analyze_brightway_excel_applies_supplemental_biosphere_aliases(
         ),
     )
 
-    assert all(
-        issue.code != "unknown_biosphere_flow"
-        for issue in result.candidates[0].issues
-    )
+    assert all(issue.code != "unknown_biosphere_flow" for issue in result.candidates[0].issues)
     assert result.inventory_data[0]["exchanges"][1]["name"] == "Propylene"
 
 
-def test_analyze_brightway_excel_accepts_uvek_catalog_with_external_biosphere_reference(
-    tmp_path, monkeypatch
-):
+def test_analyze_brightway_excel_accepts_uvek_catalog_with_external_biosphere_reference(tmp_path, monkeypatch):
     directory = write_catalog(
         tmp_path,
         family="uvek",
@@ -1317,14 +1247,12 @@ def test_analyze_simapro_csv_returns_candidate_summaries(tmp_path):
     assert result.detected_format == SOURCE_FORMAT_SIMAPRO_CSV
     assert result.file_issues == []
     assert len(result.candidates) == 1
-    assert result.candidates[0].name == "Test process"
+    assert result.candidates[0].name == "test process"
     assert result.candidates[0].reference_product == "test product"
     assert result.candidates[0].location == "GLO"
 
 
-def test_analyze_simapro_csv_surfaces_validation_warnings_from_converted_inventory(
-    tmp_path, monkeypatch
-):
+def test_analyze_simapro_csv_surfaces_validation_warnings_from_converted_inventory(tmp_path, monkeypatch):
     from brightpath.analysis import analyzer as analysis_analyzer
 
     filepath = tmp_path / "inventory.csv"
@@ -1343,30 +1271,29 @@ def test_analyze_simapro_csv_surfaces_validation_warnings_from_converted_invento
         )
     ]
 
-    class FakeSimaproConverter:
-        def __init__(self, *args, **kwargs):
-            self.i = SimpleNamespace(data=inventory_data)
+    class FakeSimaProInventory:
+        data = inventory_data
 
-        def convert_to_brightway(self, format="data"):
-            assert format == "data"
-            return inventory_data
+        @classmethod
+        def from_csv(cls, *args, **kwargs):
+            return cls()
 
-    monkeypatch.setattr(analysis_analyzer, "SimaproConverter", FakeSimaproConverter)
+        def validate(self, **kwargs):
+            return type("Report", (), {"issues": []})()
+
+    monkeypatch.setattr(analysis_analyzer, "SimaProInventory", FakeSimaProInventory)
 
     result = analyze_inventory(path=filepath, source_format=SOURCE_FORMAT_SIMAPRO_CSV)
 
     assert result.file_issues == []
     assert len(result.candidates) == 1
     assert any(
-        issue.code == "inventory_validation_warning"
-        and "no water release flows were found" in issue.message
+        issue.code == "inventory_validation_warning" and "no water release flows were found" in issue.message
         for issue in result.candidates[0].issues
     )
 
 
-def test_analyze_simapro_csv_validates_background_links_from_converted_inventory(
-    tmp_path, monkeypatch
-):
+def test_analyze_simapro_csv_validates_background_links_from_converted_inventory(tmp_path, monkeypatch):
     from brightpath.analysis import analyzer as analysis_analyzer
 
     directory = write_catalog(
@@ -1395,15 +1322,17 @@ def test_analyze_simapro_csv_validates_background_links_from_converted_inventory
         )
     ]
 
-    class FakeSimaproConverter:
-        def __init__(self, *args, **kwargs):
-            self.i = SimpleNamespace(data=inventory_data)
+    class FakeSimaProInventory:
+        data = inventory_data
 
-        def convert_to_brightway(self, format="data"):
-            assert format == "data"
-            return inventory_data
+        @classmethod
+        def from_csv(cls, *args, **kwargs):
+            return cls()
 
-    monkeypatch.setattr(analysis_analyzer, "SimaproConverter", FakeSimaproConverter)
+        def validate(self, **kwargs):
+            return type("Report", (), {"issues": []})()
+
+    monkeypatch.setattr(analysis_analyzer, "SimaProInventory", FakeSimaProInventory)
 
     result = analyze_inventory(
         path=filepath,

@@ -17,19 +17,17 @@ build:
 
 requirements:
   host:
-    - python >=3.9
+    - python >=3.9,<3.12
     - pip
     - setuptools
     - wheel
-    - prettytable >=3
     - pyyaml
     - xlsxwriter >=3
   run:
-    - python >=3.9
-    - prettytable >=3
+    - python >=3.9,<3.12
+    - bw2io
     - pyyaml
     - xlsxwriter >=3
-    # bw2io intentionally NOT in runtime to keep the package light
 
 test:
   imports:
@@ -37,7 +35,7 @@ test:
     - yaml
   requires:
     # Ensure the test env uses a Python version where bw2io wheels/conda pkgs exist
-    - python >=3.9,<3.13
+    - python >=3.9,<3.12
     - pytest
     - bw2io
     - xlsxwriter >=3
@@ -46,4 +44,4 @@ about:
   home: https://github.com/romainsacchi/brightpath
   license: BSD-3-Clause
   license_family: BSD
-  summary: 'Convert Brightway2/3 life-cycle inventories to SimaPro 9.x.'
+  summary: 'Validate, migrate, and exchange life-cycle inventories across LCA formats.'

@@ -1,5 +1,12 @@
 recursive-include brightpath *.py
 recursive-include brightpath/data/export *.csv *.json *.yaml
+recursive-include brightpath/data/migrations *.json *.md
+recursive-include docs *.css *.py *.rst *.txt
+prune docs/_build
+exclude brightpath/data/export/list_ei3.9_cutoff_activities.csv
+prune dev
+prune .idea
 global-exclude *.py[cod]
 global-exclude __pycache__
+global-exclude .ipynb_checkpoints
 global-exclude .DS_Store

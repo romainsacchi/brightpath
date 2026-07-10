@@ -10,7 +10,6 @@ from brightpath.catalogs import (
 )
 from brightpath.models import BackgroundProfile
 
-
 SCRIPT_PATH = Path(__file__).resolve().parents[1] / "scripts" / "generate_reference_catalogs.py"
 SCRIPT_SPEC = importlib.util.spec_from_file_location("generate_reference_catalogs", SCRIPT_PATH)
 SCRIPT_MODULE = importlib.util.module_from_spec(SCRIPT_SPEC)

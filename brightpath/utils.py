@@ -3,18 +3,14 @@ import json
 import logging
 import re
 import tempfile
-from copy import deepcopy
 from dataclasses import dataclass
 from numbers import Real
 from pathlib import Path
-from typing import Any, Dict, Optional as TypingOptional, Tuple
+from typing import Any
+from typing import Optional as TypingOptional
 
-import bw2io
 import numpy as np
 import yaml
-from bw2io.importers.excel import ExcelImporter
-from prettytable import PrettyTable
-from voluptuous import Optional, Required, Schema, Url
 
 from . import DATA_DIR
 
@@ -175,7 +171,7 @@ def escape_spreadsheet_formula(value):
     return value
 
 
-def get_simapro_biosphere() -> Dict[str, str]:
+def get_simapro_biosphere() -> dict[str, str]:
     # Load the matching dictionary between ecoinvent and Simapro biosphere flows
     # for each ecoinvent biosphere flow name, it gives the corresponding Simapro name
 
@@ -194,7 +190,7 @@ def get_simapro_biosphere() -> Dict[str, str]:
     return dict_bio
 
 
-def get_simapro_subcompartments() -> Dict[str, str]:
+def get_simapro_subcompartments() -> dict[str, str]:
     # Load the matching dictionary between ecoinvent and Simapro subcompartments
     # contained in simapro_subcompartments.yaml
 
@@ -204,24 +200,6 @@ def get_simapro_subcompartments() -> Dict[str, str]:
         filepath,
         "The dictionary of subcompartments match between ecoinvent and Simapro",
     )
-
-
-def get_simapro_technosphere() -> Dict[Tuple[str, str], str]:
-    # Load the matching dictionary between ecoinvent and Simapro product flows
-
-    filename = "simapro-technosphere-3.5.csv"
-    filepath = DATA_DIR / "export" / filename
-    with open(filepath, encoding="utf-8") as f:
-        csv_list = [[val.strip() for val in r.split(";")] for r in f.readlines()]
-    (_, _, *header), *data = csv_list
-
-    dict_tech = {}
-    for row in data:
-        name, location, simapro_name = row
-        simapro_name = simapro_name.split("|")[:2]
-        dict_tech[(name, location)] = "|".join(simapro_name)
-
-    return dict_tech
 
 
 def get_simapro_ecoinvent_blacklist():
@@ -246,50 +224,6 @@ def get_simapro_uvek_blacklist():
 
 
 simapro_uvek_blacklist = get_simapro_uvek_blacklist()
-
-
-def get_ecoinvent_to_uvek_mapping():
-    """
-    Load ecoinvent_to_uvek_mapping.csv into a dictionary.
-    :return: dictionary with tuples of ecoinvent flow name and location as keys
-    """
-    filename = "ecoinvent_to_uvek_mapping.csv"
-    filepath = DATA_DIR / "export" / filename
-    with open(filepath, "r", encoding="utf-8") as file:
-        reader = csv.reader(file)
-        next(reader)
-        dictionary = {tuple(row[:4]): row[-1] for row in reader}
-
-    return dictionary
-
-
-def get_ecoinvent_transport_distances():
-    """
-    Load ei_transport.csv into a dictionary.
-    :return: dictionary with tuples of ecoinvent flow name and location as keys
-    """
-    filename = "ei_transport.csv"
-    filepath = DATA_DIR / "export" / filename
-    with open(filepath, "r", encoding="utf-8") as file:
-        reader = csv.reader(file, delimiter=";")
-        next(reader)
-        dictionary = {
-            row[0]: {
-                "train - RER": row[3],
-                "lorry - RER": row[4],
-                "barge - RER": row[5],
-                "train - CH": row[6],
-                "lorry - CH": row[7],
-                "barge - CH": row[8],
-            }
-            for row in reader
-        }
-
-    return dictionary
-
-
-ecoinvent_uvek_mapping = get_ecoinvent_to_uvek_mapping()
-ecoinvent_transport_distances = get_ecoinvent_transport_distances()
 
 
 def get_simapro_fields_list() -> list[str]:
@@ -554,9 +488,7 @@ def _fuel_co2_warning(activity_ctx: str, activity: dict) -> TypingOptional[str]:
         if amount is None or amount <= 0 or factor is None:
             continue
         expected_fossil_co2 += amount * factor
-        detected_fuels.append(
-            f"{heuristic.label} via {_exchange_label(exchange)} ({amount:g} {unit})"
-        )
+        detected_fuels.append(f"{heuristic.label} via {_exchange_label(exchange)} ({amount:g} {unit})")
 
     if expected_fossil_co2 < 0.2:
         return None
@@ -589,14 +521,19 @@ def _fuel_co2_warning(activity_ctx: str, activity: dict) -> TypingOptional[str]:
     return None
 
 
-def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = True) -> tuple[list[str], list[str]]:
+def inspect_brightway_inventory(
+    data: list,
+    *,
+    require_simapro_category: bool = True,
+    validate_units: bool = True,
+) -> tuple[list[str], list[str]]:
     """
     Inspect Brightway-style inventories and return contextual error and warning messages.
 
     When ``require_simapro_category`` is ``True``, missing ``simapro category`` values on
-    production exchanges are treated as blocking conversion errors. When ``False``, this
-    SimaPro-export-specific requirement is ignored so Brightway-format validation can succeed
-    outside a SimaPro-export context.
+    production exchanges are treated as blocking conversion errors. Set ``validate_units=False``
+    for software-neutral validation where foreground units are checked through link compatibility
+    instead of the legacy SimaPro-oriented unit whitelist.
     """
     errors: list[str] = []
     warnings: list[str] = []
@@ -627,6 +564,7 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
         if (
             "unit" in activity
             and _has_text(activity["unit"])
+            and validate_units
             and _normalize_dataset_unit(activity["unit"]) not in known_units
         ):
             errors.append(f"{activity_ctx}: unknown activity unit `{activity['unit']}`.")
@@ -665,6 +603,7 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
                 if (
                     "unit" in exchange
                     and _has_text(exchange["unit"])
+                    and validate_units
                     and _normalize_dataset_unit(exchange["unit"]) not in known_units
                 ):
                     errors.append(f"{exchange_ctx}: unknown exchange unit `{exchange['unit']}`.")
@@ -676,6 +615,7 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
                 if (
                     "unit" in exchange
                     and _has_text(exchange["unit"])
+                    and validate_units
                     and _normalize_dataset_unit(exchange["unit"]) not in known_biosphere_units
                 ):
                     errors.append(f"{exchange_ctx}: unknown exchange unit `{exchange['unit']}`.")
@@ -713,132 +653,6 @@ def inspect_brightway_inventory(data: list, *, require_simapro_category: bool = 
                 warnings.append(warning)
 
     return errors, warnings
-
-
-def validate_brightway_inventory(data: list, *, require_simapro_category: bool = True) -> list:
-    """
-    Validate Brightway-style inventories.
-
-    By default this enforces SimaPro-export requirements as well. Pass
-    ``require_simapro_category=False`` to validate Brightway workbook structure without requiring
-    SimaPro-specific production category metadata.
-    """
-    errors, _warnings = inspect_brightway_inventory(
-        data,
-        require_simapro_category=require_simapro_category,
-    )
-
-    if errors:
-        raise ValueError("Inventory validation failed:\n" + "\n".join(errors))
-
-    return data
-
-
-def check_inventories(data: list) -> None:
-    """
-    Check that inventories, and the exchanges they contain
-    have all the mandatory fields.
-    :param data: list of activities
-    :return: list of activities or error
-    """
-
-    validate_brightway_inventory(data)
-
-
-def import_bw_inventories(filepath: str) -> list[dict]:
-    """
-    Import inventories from a spreadsheet file.
-    :param filepath:
-    :return: list of inventories
-    """
-    # using bw2io, we load the inventories contained
-    # in the spreadsheet file
-    # and return a list of dictionaries
-
-    # if filepath is a string, convert to Path object
-    if isinstance(filepath, str):
-        filepath = Path(filepath)
-
-    # check that filepath is a file
-    if not filepath.is_file():
-        raise FileNotFoundError("The file could not be found.")
-    # check that suffix is .xlsx
-    if filepath.suffix != ".xlsx":
-        raise ValueError("The file must be a .xlsx spreadsheet.")
-
-    # import the inventories
-    importer = ExcelImporter(filepath)
-    # check if all necessary migration files are present
-    if "biosphere-2-3-categories" not in bw2io.migrations:
-        bw2io.create_core_migrations()
-    importer.apply_strategies()
-
-    check_inventories(importer.data)
-
-    return importer.data
-
-
-def check_metadata(metadata: dict) -> dict:
-    # metadata dictionary should conform to the following schema:
-    # Define the validation schema
-    system_description_schema = Schema(
-        {
-            Required("name"): str,
-            Optional("category"): str,
-            Optional("description"): str,
-            Optional("cut-off rules"): str,
-            Optional("energy model"): str,
-            Optional("transport model"): str,
-            Optional("allocation rules"): str,
-        }
-    )
-
-    literature_reference_schema = Schema(
-        {
-            Required("name"): str,
-            Optional("documentation link"): Url(),
-            Optional("comment"): str,
-            Optional("category"): str,
-            Optional("description"): str,
-        }
-    )
-
-    main_schema = Schema(
-        {
-            Required("system description"): system_description_schema,
-            Required("literature reference"): literature_reference_schema,
-        }
-    )
-
-    # Validate against schema
-    validated_data = main_schema(metadata)
-
-    return validated_data
-
-
-def load_inventory_metadata(filepath: str) -> dict:
-    """
-    Load the metadata of the inventory.
-    :param filepath:
-    :return: metadata
-    """
-    # if filepath is a string, convert to Path object
-    if isinstance(filepath, str):
-        filepath = Path(filepath)
-
-    # check that filepath is a file
-    if not filepath.is_file():
-        raise FileNotFoundError("The file could not be found.")
-    # check that suffix is .yaml
-    if filepath.suffix != ".yaml":
-        raise ValueError("The file must be a .yaml file.")
-
-    data = _load_yaml_file(filepath, "The inventory metadata")
-
-    # check that metadata is valid
-    data = check_metadata(data)
-
-    return data
 
 
 def is_activity_waste_treatment(activity: dict, database: str) -> bool:
@@ -928,71 +742,6 @@ def get_biosphere_exchanges(activity: dict, category: str = None) -> list:
     return exchanges
 
 
-def format_exchange_name(name: str, reference_product: str, location: str, unit: str, database: str) -> str:
-    """
-    Format the name of the exchange.
-    :param name: exchange name.
-    :param reference_product: exchange reference product.
-    :param location: exchange location.
-    :param database: database to link to.
-    :return:
-    """
-
-    if database == "ecoinvent":
-        if not name or not reference_product:
-            raise ValueError(
-                "Technosphere exchanges must define non-empty `name` and "
-                "`reference product` fields for ecoinvent export."
-            )
-        # first letter of `name` should be capitalized
-        reference_product = reference_product[0].upper() + reference_product[1:]
-        name = name[0].upper() + name[1:]
-
-        exchange_name = f"{reference_product} {{{location}}}| {name}"
-
-        for i in ["market for", "market group for"]:
-            if i in name.lower():
-                exchange_name = f"{reference_product} {{{location}}}"
-                reference_product = reference_product[0].lower() + reference_product[1:]
-
-                if reference_product.lower() in ecoinvent_exceptions["market"] and location == "GLO":
-                    exchange_name += f"| {i}"
-                else:
-                    exchange_name += f"| {i} {reference_product}"
-
-        exchange_name += " | Cut-off, U"
-
-    else:
-        # check first if name appears in ecoinvent-uvek mapping list
-        if (name, location, unit, reference_product) in ecoinvent_uvek_mapping:
-            return ecoinvent_uvek_mapping[(name, location, unit, reference_product)]
-        # database to link to is uvek.
-        exchange_name = f"{name}/{location} U"
-
-    return exchange_name
-
-
-def get_simapro_uncertainty_type(uncertainty_type: int) -> str:
-    """
-    Brightway uses integers to define uncertianty distribution types.
-    https://stats-arrays.readthedocs.io/en/latest/#mapping-parameter-array-columns-to-uncertainty-distributions
-    Simapro uses strings.
-    :param uncertainty_type:
-    :return: uncertainty name
-    """
-
-    UNCERTAINITY_TYPES = {
-        0: "not defined",
-        1: "not defined",
-        2: "Lognormal",
-        3: "Normal",
-        4: "Uniform",
-        5: "Triangular",
-    }
-
-    return UNCERTAINITY_TYPES.get(uncertainty_type, "not defined")
-
-
 def is_blacklisted(exchange: dict, database: str) -> bool:
     """
     Check whether a name is blacklisted or not
@@ -1026,7 +775,7 @@ def convert_sd_to_sd2(value: float, uncertainty_type: str) -> float:
         # normal distribution
         return value**2
 
-    if uncertainty_type in ["not defined", "Unspecified"]:
+    if uncertainty_type in ["not defined", "Unspecified", "Undefined", "Triangle", "Uniform"]:
         # normal distribution
         return 0
 
@@ -1035,17 +784,6 @@ def convert_sd_to_sd2(value: float, uncertainty_type: str) -> float:
         uncertainty_type,
     )
     return 0
-
-
-def get_uvek_conversion_factors() -> dict:
-    """
-    Get conversion factors for uvek database.
-    :return: dictionary
-    """
-    filename = "uvek_conversion_factors.yaml"
-    filepath = DATA_DIR / "export" / filename
-
-    return _load_yaml_file(filepath, "The UVEK conversion factors")
 
 
 def round_floats_in_string(s):
@@ -1113,279 +851,6 @@ def collect_unused_exchanges(inventories: list) -> list[dict]:
                 )
 
     return unused_exchanges
-
-
-def print_unused_exchanges(inventories: list) -> None:
-    """
-    Deprecated wrapper for displaying unused exchanges.
-    Prefer collect_unused_exchanges for programmatic reporting.
-    """
-
-    unused_exchanges = collect_unused_exchanges(inventories)
-
-    if len(unused_exchanges) > 0:
-        logger.warning("The following exchanges have not been used.")
-        table = PrettyTable(
-            (
-                "Activity",
-                "Exchange",
-                "Unit",
-                "Location",
-                "Categories",
-            )
-        )
-        seen = set()
-        for item in unused_exchanges:
-            row = (
-                item["activity"],
-                item["exchange"],
-                item["unit"],
-                item["location"],
-                item["categories"],
-            )
-            if row not in seen:
-                table.add_row(row)
-                seen.add(row)
-        print(table)
-    else:
-        logger.info("All exchanges have been converted.")
-
-
-def check_exchanges_for_conversion(exchanges: list, database: str) -> list:
-    """
-    Check if some exchanges need to be converted.
-    Specifically when linking to uvek.
-    :param exchanges: exchanges to potentially convert.
-    :param database: converted exchanges.
-    :return: list of exchanges
-    """
-
-    converted = deepcopy(exchanges)
-
-    if database == "uvek":
-        conversion_factors = get_uvek_conversion_factors()
-        for exc in converted:
-            if exc["name"] in conversion_factors:
-                exc["amount"] *= conversion_factors[exc["name"]].get("factor", 1)
-                exc["unit"] = conversion_factors[exc["name"]].get("unit", exc["unit"])
-
-    return converted
-
-
-def fetch_transport_distance(name: str, location: str) -> tuple:
-    """
-    Depending on the exchange name `name`, return one or
-    several exchanges representing additional transport.
-    The uvek database does not have market datasets,
-    hence transport has to be added manually.
-    :param name: exchange name
-    :param location: location of the consuming activity
-    :return: one or several transport exchanges
-    """
-
-    if name in ecoinvent_transport_distances:
-        if location == "CH":
-            return (
-                float(ecoinvent_transport_distances[name]["train - CH"]),
-                float(ecoinvent_transport_distances[name]["lorry - CH"]),
-                float(ecoinvent_transport_distances[name]["barge - CH"]),
-            )
-        else:
-            return (
-                float(ecoinvent_transport_distances[name]["train - RER"]),
-                float(ecoinvent_transport_distances[name]["lorry - RER"]),
-                float(ecoinvent_transport_distances[name]["barge - RER"]),
-            )
-    else:
-        return 0.0, 0.0, 0.0
-
-
-def add_distri_transport(activity: dict) -> dict:
-    """
-    Add transport exchanges for distribution.
-    :param activity: activity
-    :return: activity with added transport exchanges.
-    """
-
-    activity = deepcopy(activity)
-
-    train_ch, lorry_ch, barge_ch = (0.0, 0.0, 0.0)
-    train_rer, lorry_rer, barge_rer = (0.0, 0.0, 0.0)
-    distance_train_ch, distance_lorry_ch, distance_barge_ch = (0.0, 0.0, 0.0)
-    distance_train_rer, distance_lorry_rer, distance_barge_rer = (0.0, 0.0, 0.0)
-
-    for exc in get_technosphere_exchanges(activity):
-        if exc["unit"] == "kilogram":
-            train, lorry, barge = fetch_transport_distance(exc["name"], activity["location"])
-            if activity["location"] == "CH":
-                train_ch += train * exc["amount"] / 1000.0
-                lorry_ch += lorry * exc["amount"] / 1000.0
-                barge_ch += barge * exc["amount"] / 1000.0
-                distance_train_ch += train
-                distance_lorry_ch += lorry
-                distance_barge_ch += barge
-            else:
-                train_rer += train * exc["amount"] / 1000.0
-                lorry_rer += lorry * exc["amount"] / 1000.0
-                barge_rer += barge * exc["amount"] / 1000.0
-                distance_train_rer += train
-                distance_lorry_rer += lorry
-                distance_barge_rer += barge
-
-    if train_ch > 0:
-        activity["exchanges"].append(
-            {
-                "name": "market for transport, freight train",
-                "reference product": "transport, freight train",
-                "amount": train_ch,
-                "unit": "ton kilometer",
-                "type": "technosphere",
-                "location": "CH",
-                "uncertainty type": 2,
-                "loc": np.log(train_ch),
-                "scale": 0.396,
-                "used": False,
-                "comment": "Generic transport distances calculated based on "
-                "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                f"Distribution: {np.round((train_ch/distance_train_ch)*1000, 2)} kg "
-                f"over {np.round(distance_train_ch, 2)} km.",
-            }
-        )
-
-    if lorry_ch > 0:
-        activity["exchanges"].append(
-            {
-                "name": "market for transport, freight, lorry, unspecified",
-                "reference product": "transport, freight, lorry, unspecified",
-                "amount": lorry_ch,
-                "unit": "ton kilometer",
-                "type": "technosphere",
-                "location": "CH",
-                "uncertainty type": 2,
-                "loc": np.log(lorry_ch),
-                "scale": 0.396,
-                "used": False,
-                "comment": "Generic transport distances calculated based on "
-                "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                f"Distribution: {np.round((lorry_ch/distance_lorry_ch)*1000, 2)} kg "
-                f"over {np.round(distance_lorry_ch, 2)} km.",
-            }
-        )
-
-    if barge_ch > 0:
-        activity["exchanges"].append(
-            {
-                "name": "market for transport, freight, inland waterways, barge",
-                "reference product": "transport, freight, inland waterways, barge",
-                "amount": barge_ch,
-                "unit": "ton kilometer",
-                "type": "technosphere",
-                "location": "RER",
-                "uncertainty type": 2,
-                "loc": np.log(barge_ch),
-                "scale": 0.396,
-                "used": False,
-                "comment": "Generic transport distances calculated based on "
-                "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                f"Distribution: {np.round((barge_ch/distance_barge_ch)*1000, 2)} kg "
-                f"over {np.round(distance_barge_ch, 2)} km.",
-            }
-        )
-
-    if train_rer > 0:
-        activity["exchanges"].append(
-            {
-                "name": "market for transport, freight train",
-                "reference product": "transport, freight train",
-                "amount": train_rer,
-                "unit": "ton kilometer",
-                "type": "technosphere",
-                "location": "Europe without Switzerland",
-                "uncertainty type": 2,
-                "loc": np.log(train_rer),
-                "scale": 0.396,
-                "used": False,
-                "comment": "Generic transport distances calculated based on "
-                "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                f"Distribution: {np.round((train_rer/distance_train_rer)*1000, 2)} kg "
-                f"over {np.round(distance_train_rer, 2)} km.",
-            }
-        )
-
-    if lorry_rer > 0:
-        activity["exchanges"].append(
-            {
-                "name": "market for transport, freight, lorry, unspecified",
-                "reference product": "transport, freight, lorry, unspecified",
-                "amount": lorry_rer,
-                "unit": "ton kilometer",
-                "type": "technosphere",
-                "location": "RER",
-                "uncertainty type": 2,
-                "loc": np.log(lorry_rer),
-                "scale": 0.396,
-                "used": False,
-                "comment": "Generic transport distances calculated based on "
-                "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                f"Distribution: {np.round((lorry_rer/distance_lorry_rer)*1000, 2)} kg "
-                f"over {np.round(distance_lorry_rer, 2)} km.",
-            }
-        )
-
-    if barge_rer > 0:
-        activity["exchanges"].append(
-            {
-                "name": "market for transport, freight, inland waterways, barge",
-                "reference product": "transport, freight, inland waterways, barge",
-                "amount": barge_rer,
-                "unit": "ton kilometer",
-                "type": "technosphere",
-                "location": "RER",
-                "uncertainty type": 2,
-                "loc": np.log(barge_rer),
-                "scale": 0.396,
-                "used": False,
-                "comment": "Generic transport distances calculated based on "
-                "Table 4.2 of the ecoinvent v.2 Methodology report. "
-                f"Distribution: {np.round((barge_rer/distance_barge_rer)*1000, 2)} kg "
-                f"over {np.round(distance_barge_rer, 2)} km.",
-            }
-        )
-
-    return activity
-
-
-def ensure_unique_datasets(data):
-    seen = {}
-    duplicates = []
-
-    for dataset in data:
-        key = (
-            dataset.get("name"),
-            dataset.get("reference product"),
-            dataset.get("location"),
-        )
-        if key in seen:
-            duplicates.append(key)
-        else:
-            seen[key] = dataset
-
-    if duplicates:
-        duplicate_text = ", ".join(str(key) for key in duplicates)
-        raise ValueError(
-            "Duplicate datasets found after SimaPro name parsing: "
-            f"{duplicate_text}. Dataset identity must be unique by "
-            "(name, reference product, location)."
-        )
-
-    return data
-
-
-def remove_duplicates(data):
-    logger.warning(
-        "remove_duplicates is deprecated and no longer drops datasets. " "Use ensure_unique_datasets for validation."
-    )
-    return ensure_unique_datasets(data)
 
 
 def check_simapro_inventory(file, output_path=None):

@@ -12,12 +12,19 @@ from .models import BackgroundProfile
 
 @dataclass(frozen=True)
 class BackgroundCatalog:
+    """Exact technosphere and biosphere identities for one profile."""
+
     profile: BackgroundProfile
     technosphere: frozenset[tuple[str, str, str, str]]
     biosphere: frozenset[tuple[str, tuple[str, ...], str]]
 
 
 def catalog_directory() -> Path:
+    """Return the active reference-catalog directory.
+
+    ``BRIGHTPATH_REFERENCE_DIR`` overrides the packaged directory when set.
+    """
+
     configured = (os.getenv("BRIGHTPATH_REFERENCE_DIR") or "").strip()
     if configured:
         return Path(configured).expanduser()
@@ -25,6 +32,8 @@ def catalog_directory() -> Path:
 
 
 def catalog_filename(profile: BackgroundProfile) -> str:
+    """Return the canonical JSON filename for *profile*."""
+
     normalized = profile.normalized()
     return (
         f"{normalized.family or 'unknown'}"
@@ -34,12 +43,16 @@ def catalog_filename(profile: BackgroundProfile) -> str:
 
 
 def catalog_path(profile: BackgroundProfile) -> Path:
+    """Return the expected path for *profile* in the active directory."""
+
     return catalog_directory() / catalog_filename(profile)
 
 
 def collect_technosphere_catalog_entries(
     inventory_data: list[dict],
 ) -> frozenset[tuple[str, str, str, str]]:
+    """Collect dataset identities suitable for a technosphere catalog."""
+
     return frozenset(
         (
             str(activity.get("name") or ""),
@@ -54,6 +67,8 @@ def collect_technosphere_catalog_entries(
 def collect_biosphere_catalog_entries(
     inventory_data: list[dict],
 ) -> frozenset[tuple[str, tuple[str, ...], str]]:
+    """Collect biosphere identities from canonical inventory data."""
+
     return frozenset(
         (
             str(exchange.get("name") or ""),
@@ -73,6 +88,8 @@ def write_background_catalog(
     biosphere: Iterable[tuple[str, tuple[str, ...], str]],
     output_dir: Path | None = None,
 ) -> Path:
+    """Write a reference-catalog JSON file and return its absolute path."""
+
     normalized = profile.normalized()
     directory = output_dir or catalog_directory()
     directory.mkdir(parents=True, exist_ok=True)
@@ -108,6 +125,8 @@ def write_background_catalog(
 
 
 def available_catalog_profiles(*, family: str = "") -> list[BackgroundProfile]:
+    """List profiles available in the active reference-catalog directory."""
+
     directory = catalog_directory()
     if not directory.is_dir():
         return []
@@ -129,6 +148,11 @@ def available_catalog_profiles(*, family: str = "") -> list[BackgroundProfile]:
 
 
 def load_background_catalog(profile: BackgroundProfile) -> BackgroundCatalog:
+    """Load the exact reference catalog for *profile*.
+
+    :raises FileNotFoundError: If the corresponding catalog is unavailable.
+    """
+
     normalized = profile.normalized()
     path = catalog_path(normalized)
     if not path.is_file():

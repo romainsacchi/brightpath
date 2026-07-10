@@ -4,9 +4,9 @@ from pathlib import Path
 
 import pytest
 
-from brightpath import BrightwayConverter
-from brightpath.simaproconverter import format_technosphere_exchange, load_ecoinvent_activities
-from brightpath.utils import check_simapro_inventory, ensure_unique_datasets
+from brightpath import BackgroundProfile, SimaProInventory
+from brightpath.profiles import parse_simapro_technosphere_name
+from brightpath.utils import check_simapro_inventory
 
 
 def minimal_activity(extra_exchanges=None, **overrides):
@@ -33,15 +33,19 @@ def minimal_activity(extra_exchanges=None, **overrides):
     return activity
 
 
-def test_brightway_converter_accepts_data_without_metadata_or_export_dir():
-    converter = BrightwayConverter(data=[minimal_activity()])
+def profile():
+    return BackgroundProfile("ecoinvent", "3.9", "cutoff")
 
-    rows = converter.convert_to_simapro(format="data")
+
+def test_simapro_inventory_accepts_direct_data_without_metadata():
+    inventory = SimaProInventory.from_data([minimal_activity()], background_profile=profile())
+
+    rows = inventory.render().rows
 
     assert rows
 
 
-def test_brightway_conversion_does_not_mutate_input_data():
+def test_simapro_rendering_does_not_mutate_input_data():
     data = [
         minimal_activity(
             extra_exchanges=[
@@ -57,21 +61,20 @@ def test_brightway_conversion_does_not_mutate_input_data():
     ]
     original = copy.deepcopy(data)
 
-    BrightwayConverter(data=data).convert_to_simapro(format="data")
+    SimaProInventory.from_data(data, background_profile=profile()).render()
 
     assert data == original
 
 
 def test_simapro_csv_export_escapes_formula_like_text(tmp_path):
-    converter = BrightwayConverter(
-        data=[minimal_activity(comment="=1+1")],
-        export_dir=tmp_path,
+    inventory = SimaProInventory.from_data(
+        [minimal_activity(comment="=1+1")],
+        background_profile=profile(),
     )
 
-    converter.convert_to_simapro()
-    [csv_path] = tmp_path.glob("simapro_ecoinvent_*.csv")
+    csv_path = inventory.write_csv(tmp_path / "inventory.csv", validate=False)
 
-    with open(csv_path, newline="", encoding="utf-8") as handle:
+    with open(csv_path, newline="", encoding="latin-1") as handle:
         cells = [cell for row in csv.reader(handle, delimiter=";") for cell in row]
 
     assert any(cell.startswith("'=1+1") for cell in cells)
@@ -94,23 +97,34 @@ def test_check_simapro_inventory_does_not_write_sibling_by_default(tmp_path):
             cleaned.unlink()
 
 
-def test_ensure_unique_datasets_uses_full_dataset_identity():
+def test_duplicate_validation_uses_full_dataset_identity():
     data = [
         {"name": "market", "reference product": "electricity", "location": "CH"},
         {"name": "market", "reference product": "electricity", "location": "DE"},
     ]
 
-    assert ensure_unique_datasets(data) == data
+    unique = SimaProInventory.from_data(data, background_profile=profile())
+    duplicate = SimaProInventory.from_data(
+        data + [copy.deepcopy(data[0])],
+        background_profile=profile(),
+    )
 
-    with pytest.raises(ValueError, match="Duplicate datasets"):
-        ensure_unique_datasets(data + [copy.deepcopy(data[0])])
+    assert "duplicate_dataset_identity" not in {
+        issue.code for issue in unique.validate(check_background_links=False).issues
+    }
+    assert "duplicate_dataset_identity" in {
+        issue.code for issue in duplicate.validate(check_background_links=False).issues
+    }
 
 
 def test_simapro_exchange_parser_rejects_empty_names():
     with pytest.raises(ValueError, match="empty"):
-        format_technosphere_exchange("")
+        parse_simapro_technosphere_name("", profile=profile())
 
 
-def test_ecoinvent_activity_loader_rejects_path_traversal():
-    with pytest.raises(ValueError, match="Unsupported ecoinvent version"):
-        load_ecoinvent_activities("../../../tmp/foo")
+def test_simapro_profile_is_explicit_instead_of_filename_driven():
+    with pytest.raises(ValueError, match="Unsupported background family"):
+        parse_simapro_technosphere_name(
+            "Electricity {CH}| market for | Cut-off, U",
+            profile=BackgroundProfile("../../../tmp/foo", "3.9", "cutoff"),
+        )

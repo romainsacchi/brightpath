@@ -16,14 +16,14 @@ from bw2io import CSVImporter
 from bw2io.importers.excel import ExcelImporter
 
 from brightpath.catalogs import available_catalog_profiles, load_background_catalog
+from brightpath.formats.simapro_csv import format_biosphere_exchange
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
-from brightpath.simaproconverter import SimaproConverter, format_biosphere_exchange
+from brightpath.simapro import SimaProInventory
 from brightpath.utils import (
     inspect_brightway_inventory,
     load_biosphere_correspondence,
     load_ei_biosphere_flows,
 )
-
 
 SOURCE_FORMAT_BRIGHTWAY_EXCEL = "brightway_excel"
 SOURCE_FORMAT_BRIGHTWAY_CSV = "brightway_csv"
@@ -35,13 +35,9 @@ SOFTWARE_SIMAPRO = "simapro"
 _ACTIVITY_PATH_PATTERN = re.compile(
     r"^(?P<path>activity\[(?P<index>\d+)\](?:\.exchanges\[(?P<exchange_index>\d+)\])?):\s*(?P<message>.+)$"
 )
-_SIMAPRO_IDENTITY_PATTERN = re.compile(
-    r"^(?P<identity>\(.+?\))\s+(?P<message>.+)$"
-)
+_SIMAPRO_IDENTITY_PATTERN = re.compile(r"^(?P<identity>\(.+?\))\s+(?P<message>.+)$")
 _TUPLE_PATTERN = re.compile(r"\([^()]+\)")
-_TRAILING_SOURCE_PATTERN = re.compile(
-    r"(?is)(?:^|(?<=[.!?\n]))\s*(?P<label>sources?)\s*:\s*(?P<source>.+?)\s*$"
-)
+_TRAILING_SOURCE_PATTERN = re.compile(r"(?is)(?:^|(?<=[.!?\n]))\s*(?P<label>sources?)\s*:\s*(?P<source>.+?)\s*$")
 _ROOT_LOGGER = "brightpath"
 _SUPPLEMENTAL_BIOSPHERE_NAME_ALIASES = {
     "air": {
@@ -66,6 +62,13 @@ class _CollectingHandler(logging.Handler):
 
 
 class InventoryValidationError(ValueError):
+    """Raised by :func:`validate_inventory` when upload analysis finds errors.
+
+    The full :class:`~brightpath.models.AnalysisResult` is available through
+    ``result``. This analysis exception is distinct from the package-root
+    validation exception raised by format writers.
+    """
+
     def __init__(self, result: AnalysisResult) -> None:
         self.result = result
         super().__init__(_format_error_summary(result))
@@ -74,7 +77,8 @@ class InventoryValidationError(ValueError):
 class _TSVExtractor:
     @classmethod
     def extract(cls, filepath, encoding="utf-8-sig"):
-        assert os.path.exists(filepath), f"Can't find file at path {filepath}"
+        if not os.path.exists(filepath):
+            raise FileNotFoundError(f"Can't find file at path {filepath}")
         with open(filepath, encoding=encoding, newline="") as handle:
             reader = csv.reader(handle, delimiter="\t")
             data = [row for row in reader]
@@ -86,6 +90,15 @@ class _TSVImporter(CSVImporter):
 
 
 def infer_source_format(path: str | Path) -> str:
+    """Infer the upload-analysis format from a filename.
+
+    ``.xlsx`` is treated as Brightway Excel, ``.tsv`` as Brightway TSV, and
+    ``.csv`` as SimaPro CSV. Pass an explicit Brightway CSV constant to
+    :func:`analyze_inventory` because the CSV suffix is ambiguous.
+
+    :raises ValueError: If the suffix is unsupported.
+    """
+
     suffix = Path(path).suffix.lower()
     if suffix == ".xlsx":
         return SOURCE_FORMAT_BRIGHTWAY_EXCEL
@@ -94,12 +107,8 @@ def infer_source_format(path: str | Path) -> str:
     if suffix == ".csv":
         return SOURCE_FORMAT_SIMAPRO_CSV
     if suffix == ".xls":
-        raise ValueError(
-            "BrightPath analysis currently supports Brightway .xlsx workbooks, not .xls files."
-        )
-    raise ValueError(
-        f"Unsupported inventory source format for analysis: {suffix or 'no extension'}."
-    )
+        raise ValueError("BrightPath analysis currently supports Brightway .xlsx workbooks, not .xls files.")
+    raise ValueError(f"Unsupported inventory source format for analysis: {suffix or 'no extension'}.")
 
 
 def analyze_inventory(
@@ -107,16 +116,28 @@ def analyze_inventory(
     path: str | Path,
     source_format: Optional[str] = None,
     source_profile: Optional[BackgroundProfile] = None,
-    additional_foreground_targets: Optional[
-        Iterable[tuple[str, str, str, str]]
-    ] = None,
+    additional_foreground_targets: Optional[Iterable[tuple[str, str, str, str]]] = None,
 ) -> AnalysisResult:
+    """Parse an inventory upload and return structured intake information.
+
+    :param path: Inventory file to analyze.
+    :param source_format: Optional explicit format constant. This is required
+        for Brightway CSV because automatic CSV inference selects SimaPro.
+    :param source_profile: Optional complete or partial background profile. If
+        fields are missing, BrightPath attempts catalog-based inference.
+    :param additional_foreground_targets: External foreground identities that
+        should be accepted during link validation.
+    :return: Detected format, resolved profile, normalized inventory data,
+        file issues, and per-dataset candidate summaries.
+
+    Parsing and validation failures are captured as issues whenever possible;
+    this function is intended for inspectable upload workflows.
+    """
+
     resolved_path = Path(path)
     resolved_format = source_format or infer_source_format(resolved_path)
     profile = (source_profile or BackgroundProfile()).normalized()
-    normalized_foreground_targets = _normalize_foreground_targets(
-        additional_foreground_targets
-    )
+    normalized_foreground_targets = _normalize_foreground_targets(additional_foreground_targets)
 
     if resolved_format == SOURCE_FORMAT_BRIGHTWAY_EXCEL:
         return _analyze_brightway_excel(
@@ -153,10 +174,15 @@ def validate_inventory(
     path: str | Path,
     source_format: Optional[str] = None,
     source_profile: Optional[BackgroundProfile] = None,
-    additional_foreground_targets: Optional[
-        Iterable[tuple[str, str, str, str]]
-    ] = None,
+    additional_foreground_targets: Optional[Iterable[tuple[str, str, str, str]]] = None,
 ) -> AnalysisResult:
+    """Analyze an upload and raise if any returned issue is an error.
+
+    :return: The successful :class:`~brightpath.models.AnalysisResult`.
+    :raises InventoryValidationError: If file-level or candidate-level errors
+        are present. The exception exposes the result through ``.result``.
+    """
+
     result = analyze_inventory(
         path=path,
         source_format=source_format,
@@ -295,19 +321,22 @@ def _analyze_simapro_csv(
         detected_format=SOURCE_FORMAT_SIMAPRO_CSV,
         source_profile=source_profile,
     )
-    converter: SimaproConverter | None = None
     inventory_data: list[dict] = []
 
     with _capture_warnings() as collector:
         try:
-            converter = SimaproConverter(
-                filepath=str(path),
-                ecoinvent_version=_reference_ecoinvent_version(source_profile),
+            inventory = SimaProInventory.from_csv(
+                path,
+                background_profile=_simapro_parse_profile(source_profile),
             )
-            inventory_data = converter.convert_to_brightway(format="data")
+            inventory_data = inventory.data
+            result.file_issues.extend(
+                issue
+                for issue in inventory.validate(check_background_links=False).issues
+                if issue.code == "duplicate_dataset_identity"
+            )
         except Exception as exc:
-            if converter is not None and getattr(converter, "i", None) is not None:
-                inventory_data = deepcopy(getattr(converter.i, "data", []))
+            inventory_data = deepcopy(getattr(exc, "partial_data", []))
             result.file_issues.extend(
                 _issues_from_simapro_exception(
                     exc,
@@ -536,9 +565,7 @@ def _issues_from_simapro_exception(
                     Issue(
                         severity="error",
                         code="duplicate_dataset_identity",
-                        message=(
-                            "Dataset identity must be unique after SimaPro name parsing."
-                        ),
+                        message=("Dataset identity must be unique after SimaPro name parsing."),
                         path=duplicate_identity,
                     )
                 )
@@ -627,7 +654,8 @@ def _candidate_indexes_from_identity(
             candidate.name,
             candidate.reference_product,
             candidate.location,
-        ) == normalized_identity
+        )
+        == normalized_identity
     ]
 
 
@@ -672,6 +700,22 @@ def _reference_ecoinvent_version(source_profile: BackgroundProfile) -> str:
     if source_profile.family == "uvek":
         return "3.10"
     return "3.9"
+
+
+def _simapro_parse_profile(source_profile: BackgroundProfile) -> BackgroundProfile:
+    normalized = source_profile.normalized()
+    family = normalized.family or "ecoinvent"
+    if family == "uvek":
+        return BackgroundProfile(
+            family="uvek",
+            version=normalized.version or "2025",
+            system_model=normalized.system_model or "cutoff",
+        )
+    return BackgroundProfile(
+        family=family,
+        version=normalized.version or _reference_ecoinvent_version(normalized),
+        system_model=normalized.system_model or "cutoff",
+    )
 
 
 def _resolve_background_profile(
@@ -860,10 +904,7 @@ def _build_canonical_target_index(
     ] = defaultdict(set)
     for target in targets:
         indexed[_canonicalize_technosphere_key(target)].add(target)
-    return {
-        canonical_key: frozenset(matches)
-        for canonical_key, matches in indexed.items()
-    }
+    return {canonical_key: frozenset(matches) for canonical_key, matches in indexed.items()}
 
 
 def _canonicalize_unit(value: str) -> str:
@@ -961,23 +1002,23 @@ def _fill_missing_technosphere_reference_products(
         unit = str(activity.get("unit") or "").strip()
         if all((name, reference_product, location, unit)):
             foreground_candidates[(name, location, unit)].add(reference_product)
-            foreground_canonical_candidates[
-                _canonicalize_technosphere_triplet((name, location, unit))
-            ].add(reference_product)
+            foreground_canonical_candidates[_canonicalize_technosphere_triplet((name, location, unit))].add(
+                reference_product
+            )
     for name, reference_product, location, unit in additional_foreground_targets:
         foreground_candidates[(name, location, unit)].add(reference_product)
-        foreground_canonical_candidates[
-            _canonicalize_technosphere_triplet((name, location, unit))
-        ].add(reference_product)
+        foreground_canonical_candidates[_canonicalize_technosphere_triplet((name, location, unit))].add(
+            reference_product
+        )
 
     catalog_candidates: dict[tuple[str, str, str], set[str]] = defaultdict(set)
     catalog_canonical_candidates: dict[tuple[str, str, str], set[str]] = defaultdict(set)
     if catalog is not None:
         for name, reference_product, location, unit in catalog.technosphere:
             catalog_candidates[(name, location, unit)].add(reference_product)
-            catalog_canonical_candidates[
-                _canonicalize_technosphere_triplet((name, location, unit))
-            ].add(reference_product)
+            catalog_canonical_candidates[_canonicalize_technosphere_triplet((name, location, unit))].add(
+                reference_product
+            )
 
     for activity in inventory_data:
         for exchange in activity.get("exchanges", []):
@@ -1149,11 +1190,7 @@ def _normalize_biosphere_exchanges(
                 current_key[1],
                 current_key[2],
             )
-            if (
-                catalog is not None
-                and mapped_current != current_key[0]
-                and mapped_current_key in catalog.biosphere
-            ):
+            if catalog is not None and mapped_current != current_key[0] and mapped_current_key in catalog.biosphere:
                 exchange["name"] = mapped_current
                 continue
 
@@ -1185,10 +1222,7 @@ def _normalize_biosphere_exchanges(
             )
             if catalog is None or normalized_key in catalog.biosphere:
                 exchange.update(candidate)
-            elif (
-                mapped_normalized != normalized_key[0]
-                and mapped_normalized_key in catalog.biosphere
-            ):
+            elif mapped_normalized != normalized_key[0] and mapped_normalized_key in catalog.biosphere:
                 candidate["name"] = mapped_normalized
                 exchange.update(candidate)
 
@@ -1305,13 +1339,9 @@ def _context_path(activity_index: int, exchange_index: int) -> str:
 def _format_unknown_technosphere_message(
     exchanges: list[tuple[str, str, str, str]],
 ) -> str:
-    lines = [
-        "Technosphere exchanges do not match an uploaded dataset or the selected background reference catalog."
-    ]
+    lines = ["Technosphere exchanges do not match an uploaded dataset or the selected background reference catalog."]
     for name, reference_product, location, unit in exchanges:
-        lines.append(
-            f"- {name or '?'} | {reference_product or '?'} | {location or '?'} | {unit or '?'}"
-        )
+        lines.append(f"- {name or '?'} | {reference_product or '?'} | {location or '?'} | {unit or '?'}")
     return "\n".join(lines)
 
 
