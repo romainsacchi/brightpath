@@ -10,6 +10,7 @@ __all__ = (
     "FormatProfile",
     "InventoryFormat",
     "InventoryContext",
+    "InventoryPipeline",
     "InventoryValidationError",
     "Issue",
     "MigrationError",
@@ -33,6 +34,7 @@ from .core import (  # noqa: E402
     BiosphereProfile,
     FormatProfile,
     InventoryContext,
+    InventoryPipeline,
     TechnosphereProfile,
 )
 from .exceptions import (  # noqa: E402
