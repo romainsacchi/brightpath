@@ -5,6 +5,8 @@ on:
     tags:
       - "v[0-9]*.[0-9]*.[0-9]*"
       - "[0-9]*.[0-9]*.[0-9]*"
+      - "v[0-9]*.[0-9]*.[0-9]*a[0-9]*"
+      - "[0-9]*.[0-9]*.[0-9]*a[0-9]*"
   release:
     types: [published]
   workflow_dispatch:
@@ -50,7 +52,7 @@ jobs:
       fail-fast: false
       matrix:
         os: ["ubuntu-latest", "macos-latest", "windows-latest"]
-        python-version: ["3.9", "3.10", "3.11"]
+        python-version: ["3.10", "3.11"]
 
     steps:
       - uses: actions/checkout@v4
