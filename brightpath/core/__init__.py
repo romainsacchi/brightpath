@@ -1,5 +1,6 @@
 """Core context and canonical-schema contracts."""
 
+from .audit import ArtifactDigest, digest_artifact, write_report_sidecar
 from .context import (
     BackgroundContext,
     BiosphereProfile,
@@ -37,6 +38,7 @@ from .schema import (
 
 __all__ = (
     "BackgroundContext",
+    "ArtifactDigest",
     "BiosphereProfile",
     "CANONICAL_SCHEMA_VERSION",
     "CanonicalDataset",
@@ -66,4 +68,6 @@ __all__ = (
     "VersionResolution",
     "resolve_migration_series",
     "resolve_profile_migration_series",
+    "digest_artifact",
+    "write_report_sidecar",
 )
