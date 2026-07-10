@@ -4,11 +4,43 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 1.0.0 - 2026-07-10
+
+### Breaking
+
+- Deleted `BrightwayConverter` and `SimaproConverter` and replaced them with the independent
+  `BrightwayInventory` and `SimaProInventory` APIs.
+- Separated file-format operations from background family, version, and system-model migration.
+- Removed implicit UVEK amount conversion and distribution-transport injection from SimaPro
+  serialization; background transformations now require an explicit migration route.
+
+### Added
+
+- Added copy-on-write `InventoryDocument`, `BrightwayInventory`, and `SimaProInventory` models.
+- Added independent Brightway Excel loading, normalization, structured validation, and writing.
+- Added independent SimaPro CSV loading, rendering, structured validation, parameter preservation,
+  ecoinvent cut-off/consequential marker checks, and ecoinvent/UVEK naming profiles.
+- Added bidirectional ecoinvent cut-off migration routes from 3.5 through 3.12 with structured step
+  reports for replacements, disaggregation, aggregation, irreversible deletion, ambiguity, and unit
+  changes.
+- Packaged and attributed Premise's CC-BY-4.0 ecoinvent technosphere and biosphere migration
+  resources.
+- Added an explicit, non-routable placeholder for future ecoinvent-to-UVEK 2025 mappings.
+- Normalized `BAFU` to the canonical `UVEK` background family name.
+- Preserved nested unknown Brightway workbook fields through tagged JSON values during round trips.
+- Reserved `openlca_excel` and `ecospold2` format identifiers for future adapters.
+- Added task-oriented Sphinx documentation, generated API reference, strict CI documentation builds,
+  and a modern Read the Docs configuration.
+
 ### Fixed
 
 - Accepted `hectare` and `ha` as valid Brightway technosphere units during inventory validation and catalog matching.
 - Accepted `person kilometer` plus legacy `product` technosphere fields during Brightway inventory normalization.
 - Replaced repeated full-catalog canonical technosphere scans with indexed matching to keep large workbook analysis responsive.
+- Fixed SimaPro uncertainty labels to use values accepted by `bw2io` and kept duplicate parsed
+  identities available for validation instead of aborting file loading.
+- Normalized SimaPro parameter identifiers across supported `bw2io` releases while preserving
+  database, project, and process parameter scopes.
 
 ## 0.0.4 - 2026-05-14
 

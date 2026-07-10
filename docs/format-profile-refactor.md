@@ -1,347 +1,224 @@
-# Format/Profile Refactor Plan
+# Format and Background Profile Architecture
 
-## Purpose
+## Status
 
-BrightPath currently succeeds as a converter library, but its internals still mix two different
-concerns:
+Implemented for BrightPath 1.0. The API is intentionally incompatible with the deleted 0.x
+converter classes. Brightway Excel and SimaPro CSV are adapters over the same inventory document
+and background migration pipeline. OpenLCA Excel and ecospold2 remain future adapters.
 
-- software format parsing and rendering,
-- background database profile compatibility and transformation.
+## Problem
 
-This document defines a refactor target that separates those concerns while keeping the current
-public workflow stable.
-
-## Current coupling
-
-The present codebase combines format and profile behavior in ways that make new workflows harder
-to add:
-
-- `BrightwayConverter` converts toward SimaPro rows while selecting behavior by `database`,
-- `format_exchange_name(...)` formats technosphere targets differently for `ecoinvent` and
-  `uvek`,
-- `check_exchanges_for_conversion(...)` applies profile-specific exchange modifications,
-- `add_distri_transport(...)` injects UVEK-specific transport enrichment during one export path,
-- `SimaproConverter` assumes an ecoinvent-version-driven target interpretation.
-
-This means the implementation is closer to:
-
-`source format -> hardcoded target workflow`
-
-than to:
-
-`source format + source profile -> canonical inventory -> optional target profile + target format`
-
-## Target model
-
-BrightPath should treat these as independent axes:
-
-- source format
-- source background profile
-- target background profile
-- target format
-
-### Examples the new model should support
-
-- Brightway inventory linked to UVEK -> render to SimaPro with ecoinvent-style targets
-- SimaPro CSV linked to UVEK -> normalize to canonical inventory -> export toward Brightway
-  conventions
-- SimaPro CSV linked to ecoinvent cut-off -> analyze only, with no export
-- Brightway Excel linked to ecoinvent consequential -> validate and report compatibility issues
-
-## Canonical inventory layer
-
-Introduce a canonical, software-neutral inventory representation.
-
-Suggested models:
-
-- `BackgroundProfile`
-- `InventoryBundle`
-- `DatasetRecord`
-- `ExchangeRecord`
-- `Issue`
-- `AnalysisResult`
-- `CompatibilityReport`
-
-The canonical inventory should preserve enough information to:
-
-- validate uploaded inventories,
-- emit candidate summaries,
-- transform profiles,
-- render to one or more output formats,
-- surface warnings without relying on log scraping.
-
-## Proposed module layout
+BrightPath 0.x modeled conversion as two source-specific workflows:
 
 ```text
-brightpath/
-  __init__.py
-  models.py
-  analysis/
-    __init__.py
-    analyzer.py
-    compatibility.py
-  formats/
-    __init__.py
-    brightway_excel.py
-    brightway_table.py
-    simapro_csv.py
-  pipeline/
-    __init__.py
-    parse.py
-    convert.py
-  profiles/
-    __init__.py
-    base.py
-    ecoinvent.py
-    uvek.py
-    registry.py
-  transforms/
-    __init__.py
-    biosphere.py
-    technosphere.py
-    transport.py
-    relinking.py
-  validation/
-    __init__.py
-    inventory.py
-    brightway.py
-    simapro.py
+Brightway -> SimaPro
+SimaPro -> Brightway
 ```
 
-The existing `bwconverter.py`, `simaproconverter.py`, and `utils.py` should remain during the
-transition, but increasingly delegate to the new modules.
+Those workflows mixed four independent concerns:
 
-## Responsibility split
+- parsing or writing a software exchange format;
+- validating inventory structure;
+- identifying the linked background profile;
+- transforming background links.
 
-### `formats/*`
+As a result, migrating a Brightway Excel inventory from ecoinvent 3.6 to 3.8 unnecessarily implied
+SimaPro output, while UVEK behavior was exposed as a SimaPro-only database option.
 
-Responsible for:
+## Decision
 
-- reading a file into canonical inventory data,
-- writing canonical inventory data to a concrete software format,
-- handling software-specific syntax and workbook/CSV layout details.
+BrightPath uses this pipeline:
 
-Not responsible for:
+```text
+source format + source background profile
+    -> InventoryDocument
+    -> optional normalization
+    -> validation
+    -> optional background migration
+    -> target format
+```
 
-- background profile logic,
-- contributor workflow validation,
-- review workflow behavior.
+Format conversion and background migration are never implicit consequences of one another.
 
-### `profiles/*`
+## Independent Axes
 
-Responsible for:
+### File format
 
-- supported background families and system models,
-- profile-specific naming rules,
-- blacklist rules,
-- exchange conversion factors,
-- profile-specific transport enrichment,
-- reference mapping tables.
+Current and planned format identifiers include:
 
-### `validation/*`
+- `brightway_excel`
+- `brightway_csv`
+- `brightway_tsv`
+- `simapro_csv`
+- future `openlca_excel`
+- future `ecospold2`
 
-Responsible for:
+An extension alone is not always sufficient for detection. CSV adapters must inspect content or
+require an explicit format identifier when Brightway and SimaPro interpretations are both possible.
 
-- structural validation of canonical inventories,
-- software-specific input requirements,
-- profile compatibility checks,
-- converting hard failures and soft warnings into structured issues.
+### Background profile
 
-### `analysis/*`
+`BackgroundProfile` contains:
 
-Responsible for returning a structured report for upload-like workflows:
+- `family`: `ecoinvent` or `uvek`;
+- `version`: e.g. `3.10` or `2025`;
+- `system_model`: e.g. `cutoff` or `consequential`.
 
-- detected format,
-- inferred or normalized profile,
-- file-level issues,
-- candidate summaries,
-- candidate-level issues,
-- normalized inventory bundle.
+`BAFU` is accepted only as a legacy alias for the canonical family name `UVEK`.
 
-### `pipeline/*`
+UVEK can be used with Brightway, SimaPro, or any future format. It is not a format-specific export
+option.
 
-Responsible for orchestration:
+## Core Inventory Model
 
-- parse,
-- validate,
-- optionally transform profiles,
-- optionally render.
+`InventoryDocument` is the format-neutral boundary. It owns:
 
-## Additive API target
+- Brightway-style dataset and exchange dictionaries;
+- the source or current `BackgroundProfile`;
+- the current `InventoryFormat` view;
+- database metadata and parameters;
+- migration report history.
 
-BrightPath should add a new API without breaking existing classes.
+The initial canonical representation remains dictionary-backed because `bw2io`, the Premise
+migration resources, and existing inventories already share that representation. The document uses
+copy-on-read and copy-on-write semantics so validation and transformation cannot mutate caller-owned
+data.
 
-Suggested entrypoints:
+Unknown fields remain in the dictionaries. Brightway Excel uses tagged JSON strings for nested
+values that the generic workbook layout cannot otherwise represent, allowing BrightPath round trips
+without silently dropping those fields.
+
+## Format Adapters
+
+Format adapters are responsible only for syntax and serialization:
+
+```text
+formats/brightway_excel.py
+formats/simapro_csv.py
+formats/openlca_excel.py     # future
+formats/ecospold2.py         # future
+```
+
+A reader returns `InventoryDocument`. A writer receives `InventoryDocument`. Neither chooses or
+changes the background profile.
+
+User-facing `BrightwayInventory` and `SimaProInventory` classes are thin facades. They delegate
+normalization, validation, migration, and writing to independent services. Calling `to_simapro()`
+or `to_brightway()` changes the format view without changing the background profile.
+
+## Validation
+
+Validation is read-only and returns `ValidationReport` with structured `Issue` objects. The stages
+are independently callable:
+
+- canonical inventory structure;
+- format-specific requirements;
+- plausibility warnings;
+- background catalog link compatibility.
+
+Writers may validate before export, but validation does not export or normalize data. Callers can
+disable background-link validation when only structural checks are needed.
+
+## Ecoinvent Migration
+
+BrightPath packages the Premise migration JSON resources rather than importing Premise's internal
+`inventory_imports.py` module. This avoids a runtime dependency on Premise's unrelated database,
+scenario, geography, and data-processing dependencies.
+
+The migration engine:
+
+1. normalizes patch versions to the migration graph's major/minor versions;
+2. resolves the shortest deterministic route;
+3. applies each edge in order;
+4. reverses operation order on backward edges;
+5. returns a structured report;
+6. validates resulting links against the exact target catalog when requested.
+
+Forward rules can replace identities and disaggregate one exchange into several allocated targets.
+Backward routes reverse replacements and aggregate disaggregated targets.
+
+### Loss policy
+
+Bidirectional routing does not imply perfect reversibility:
+
+- several source identities can map to the same target identity;
+- aggregation cannot preserve all metadata from every split exchange;
+- deleted biosphere exchanges cannot be reconstructed;
+- some rules change units without providing amount conversion factors;
+- no 3.11-to-3.12 biosphere migration resource is currently included.
+
+These cases produce structured issues. They are never hidden in logger output. Target catalog
+validation remains the final compatibility check.
+
+Only cut-off technosphere migration resources are currently packaged. Consequential inventories can
+be validated against their catalogs, but migration is rejected until consequential rules exist.
+
+## UVEK Migration
+
+UVEK 2025 is already a valid background profile for loading, validation, and same-profile writing.
+
+No real ecoinvent-to-UVEK mapping is available yet. The package contains a resource marked
+`status: placeholder` with empty rules to reserve the schema and location. It is not registered as a
+route, and cross-family migration raises `MigrationUnavailableError`.
+
+Future UVEK mappings belong under `data/migrations/uvek/` and must define direction, unit and amount
+transformations, mapping provenance, and target-catalog validation behavior.
+
+## Public API
+
+The v1 APIs compose explicitly:
 
 ```python
-from brightpath.analysis import analyze_inventory
-from brightpath.models import BackgroundProfile
+from brightpath import BackgroundProfile, BrightwayInventory, SimaProInventory
 
-result = analyze_inventory(
-    path="inventory.xlsx",
-    source_format="brightway_excel",
-    source_profile=BackgroundProfile(
-        family="ecoinvent",
-        version="3.10",
-        system_model="cutoff",
-    ),
+inventory = BrightwayInventory.from_excel(
+    "inventory.xlsx",
+    background_profile=BackgroundProfile("ecoinvent", "3.6", "cutoff"),
 )
+
+normalized = inventory.normalize()
+validation = normalized.validate()
+migrated = normalized.migrate_background(
+    BackgroundProfile("ecoinvent", "3.8", "cutoff")
+)
+migrated.write_excel("inventory-ei38.xlsx")
+
+simapro = migrated.to_simapro()
+simapro.write_csv("inventory-ei38.csv")
+
+loaded_simapro = SimaProInventory.from_csv(
+    "inventory-ei38.csv",
+    background_profile=BackgroundProfile("ecoinvent", "3.8", "cutoff"),
+)
+loaded_simapro.to_brightway().write_excel("inventory-ei38-roundtrip.xlsx")
 ```
 
-```python
-from brightpath.pipeline import convert_inventory
+The 0.x `BrightwayConverter` and `SimaproConverter` modules are deleted. SimaPro parsing records
+duplicate identities and system-model mismatches as structured validation issues. It does not reject
+an otherwise parseable file before validation.
 
-conversion = convert_inventory(
-    path="inventory.csv",
-    source_format="simapro_csv",
-    source_profile=BackgroundProfile("uvek", "2025", "cutoff"),
-    target_format="brightway_excel",
-    target_profile=BackgroundProfile("ecoinvent", "3.10", "cutoff"),
-)
-```
+## Implementation Sequence
 
-## Backward compatibility
+Completed:
 
-The public imports in `brightpath.__init__` must remain stable:
+1. Brightway Excel read, validate, normalize, migrate, and write.
+2. SimaPro CSV read, validate, migrate, and write over `InventoryDocument`.
+3. Analysis composition through the v1 SimaPro reader and validator.
+4. Deletion of converter modules and implicit UVEK transforms.
 
-- `BrightwayConverter`
-- `SimaproConverter`
-- `DATA_DIR`
+Next adapters:
 
-### Compatibility wrapper strategy
+1. Brightway CSV/TSV as first-class facade inputs.
+2. OpenLCA Excel.
+3. ecospold2.
 
-`BrightwayConverter`
+## Acceptance Criteria
 
-- keep accepting `filepath` or `data`,
-- keep defaulting to current behavior,
-- internally call the new pipeline with:
-  - `source_format="brightway_excel"` when `filepath` is used,
-  - canonical inventory input when `data` is used,
-  - `target_format="simapro_csv"` for current export paths.
-
-`SimaproConverter`
-
-- keep accepting `filepath`, `ecoinvent_version`, and `db_name`,
-- internally call the new parser and conversion pipeline,
-- keep returning Brightway-style data or Brightway Excel exports exactly as today.
-
-## Old-to-new mapping
-
-The following functions should migrate into the new structure:
-
-- `import_bw_inventories(...)` -> `formats.brightway_excel.parse_brightway_excel(...)`
-- `validate_brightway_inventory(...)` -> `validation.inventory.validate_canonical_inventory(...)`
-- `check_simapro_inventory(...)` -> `formats.simapro_csv.preclean_simapro_csv(...)`
-- `format_technosphere_exchange(...)` -> `formats.simapro_csv.parse_simapro_exchange_name(...)`
-- `format_biosphere_exchange(...)` -> `transforms.biosphere.normalize_biosphere_exchange(...)`
-- `format_exchange_name(...)` -> `profiles.*.format_technosphere_target_name(...)`
-- `check_exchanges_for_conversion(...)` -> `profiles.*.transform_exchange_for_profile(...)`
-- `add_distri_transport(...)` -> `profiles.uvek.apply_distribution_transport(...)`
-- `ensure_unique_datasets(...)` -> `validation.inventory.ensure_unique_dataset_identity(...)`
-- `collect_unused_exchanges(...)` -> `analysis.compatibility.collect_unmapped_exchanges(...)`
-
-## Warning model
-
-Warnings should no longer be available only through logger output or secondary attributes.
-
-BrightPath should return structured `Issue` instances with:
-
-- `severity`
-- `code`
-- `message`
-- `path`
-- `suggested_fix`
-
-Examples:
-
-- missing biosphere mapping -> warning
-- duplicate dataset identity after normalization -> error
-- unsupported profile combination -> error
-- exchange left unmapped but ignored by target format -> warning
-
-## Local reference catalog policy
-
-For upload-style analysis, local reference catalogs should stay separate from proprietary source
-databases and be generated on the machine where BrightPath runs:
-
-- ecoinvent catalogs come from imported Brightway databases, one catalog per version and system
-  model,
-- the UVEK 2025 catalog comes from a Brightway-compatible Excel workbook such as `lci-bafu.xlsx`,
-  using the workbook datasets as technosphere providers,
-- UVEK biosphere validation reuses the ecoinvent 3.10 cut-off biosphere reference instead of
-  treating the workbook biosphere exchanges as the source of truth.
-
-## Recommended implementation phases
-
-### Phase 1: additive analysis layer
-
-Add:
-
-- `models.py`
-- `analysis/analyzer.py`
-- structured `Issue` and `AnalysisResult`
-- Brightway Excel analysis
-- SimaPro CSV analysis
-
-No public converter behavior changes.
-
-### Phase 2: profile objects and registry
-
-Add:
-
-- `BackgroundProfile`
-- profile registry
-- explicit ecoinvent and UVEK profile modules
-
-Refactor database-specific utilities to use profile modules internally.
-
-### Phase 3: conversion pipeline
-
-Add:
-
-- explicit `parse_inventory(...)`
-- explicit `convert_inventory(...)`
-
-Refit `BrightwayConverter` and `SimaproConverter` as wrappers.
-
-### Phase 4: broaden format support
-
-Add native Brightway CSV and TSV parsing as first-class format modules.
-
-### Phase 5: remove internal coupling
-
-Deprecate direct callers of utility helpers that still encode profile behavior in generic names.
-
-## Minimum first PR
-
-The smallest useful first PR should:
-
-1. add the new `models.py` dataclasses,
-2. add `analysis/analyzer.py`,
-3. expose `analyze_inventory(...)`,
-4. support:
-   - Brightway Excel analysis,
-   - SimaPro CSV analysis,
-5. return structured issues and candidate summaries,
-6. preserve all existing converter behavior and tests.
-
-That first PR is enough for CLIC to replace its mocked upload validator for the two most
-important input paths.
-
-## Non-goals for the first PR
-
-- rewriting both converters entirely,
-- removing `utils.py`,
-- changing current export defaults,
-- changing current public constructor signatures,
-- solving every target-profile transformation case immediately.
-
-## Acceptance criteria
-
-The refactor target is successful when:
-
-- existing `BrightwayConverter` and `SimaproConverter` tests still pass,
-- a caller can analyze an upload without performing a conversion,
-- warnings are available programmatically,
-- source format handling is independent from source and target background profiles,
-- new profile combinations can be added without editing generic format parsers.
+- same-format, same-profile writing does not imply conversion;
+- ecoinvent background migration works forward and backward with explicit reports;
+- validation is read-only;
+- source data is not mutated;
+- UVEK is independent of file format;
+- placeholder mappings cannot masquerade as successful migrations;
+- new package data is present in both editable installs and built distributions;
+- no proprietary ecoinvent inventory data is packaged.
