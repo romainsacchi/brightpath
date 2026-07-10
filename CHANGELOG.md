@@ -2,8 +2,6 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
-
 ## 1.0.0a1 - Unreleased
 
 ### Breaking
@@ -13,10 +11,26 @@ All notable changes to this project will be documented in this file.
 - Separated file-format operations from background family, version, and system-model migration.
 - Removed implicit UVEK amount conversion and distribution-transport injection from SimaPro
   serialization; background transformations now require an explicit migration route.
+- Replaced the combined background assumption with exact, independent technosphere and biosphere
+  profiles. Ecoinvent patch versions are preserved instead of truncated to major/minor.
+- Made migration and conversion loss handling strict by default. Inferred reverse routes require an
+  explicit permissive policy, and unsafe unit-changing rules are never applied without factors.
+- Unified operation failures around immutable reports; upload validation and writer validation now
+  use the same exception hierarchy.
 
 ### Added
 
 - Added copy-on-write `InventoryDocument`, `BrightwayInventory`, and `SimaProInventory` models.
+- Added a versioned canonical schema, exact `InventoryContext`, namespaced extensions, immutable
+  operation reports, and explicit conversion/migration policies.
+- Added an injected format adapter registry with bounded content probes. Brightway Excel, Brightway
+  CSV/TSV, and SimaPro CSV are first-class read/write adapters; ambiguous CSV is never guessed.
+- Added the dependency-injected `InventoryPipeline` for detection, parsing, normalization,
+  independent validation, migration, format conversion, writing, and audit sidecars.
+- Added independent technosphere and biosphere catalog providers, validation coverage metrics,
+  migration planning, transactional execution, and exact source/target validation.
+- Added the `brightpath` CLI with `formats`, `inspect`, `validate`, `convert-format`, and
+  `migrate-background` commands, dry runs, JSON reports, and stable exit codes.
 - Added independent Brightway Excel loading, normalization, structured validation, and writing.
 - Added independent SimaPro CSV loading, rendering, structured validation, parameter preservation,
   ecoinvent cut-off/consequential marker checks, and ecoinvent/UVEK naming profiles.
@@ -31,6 +45,8 @@ All notable changes to this project will be documented in this file.
 - Reserved `openlca_excel` and `ecospold2` format identifiers for future adapters.
 - Added task-oriented Sphinx documentation, generated API reference, strict CI documentation builds,
   and a modern Read the Docs configuration.
+- Added SHA-256 integrity manifests for catalog and migration resources, with explicit provenance
+  and a stable-release legal-review gate for generated reference catalogs.
 
 ### Fixed
 
@@ -41,6 +57,8 @@ All notable changes to this project will be documented in this file.
   identities available for validation instead of aborting file loading.
 - Normalized SimaPro parameter identifiers across supported `bw2io` releases while preserving
   database, project, and process parameter scopes.
+- Initialized Brightway core migrations inside SimaPro loading so clean environments do not depend
+  on an earlier Brightway import.
 
 ## 0.0.4 - 2026-05-14
 

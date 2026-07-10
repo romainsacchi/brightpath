@@ -6,8 +6,8 @@ BrightPath reads foreground life-cycle inventory files, validates and normalizes
 optionally migrates their background links, and writes them in an LCA software exchange format.
 Treat the following concerns as independent axes:
 
-- **File format:** Brightway Excel and SimaPro CSV have v1 facades; upload analysis also accepts
-  Brightway CSV/TSV. OpenLCA Excel and ecospold2 may be added later.
+- **File format:** Brightway Excel, Brightway CSV/TSV, and SimaPro CSV have registered read/write
+  adapters. OpenLCA Excel and ecospold2 identifiers are reserved but are not supported adapters.
 - **Background family:** `ecoinvent` or `uvek`.
 - **Background version:** for example ecoinvent `3.6` through `3.12`, or UVEK `2025`.
 - **System model:** for example `cutoff` or `consequential` where the background family supports it.
@@ -27,16 +27,24 @@ format after an ecoinvent migration must be supported.
 
 - `brightway.py` and `simapro.py` define the public `BrightwayInventory` and `SimaProInventory`
   facades.
-- `formats/` contains syntax-only Brightway Excel and SimaPro CSV readers and writers.
+- `core/` defines exact context, canonical schema, immutable reports and policies, audit sidecars,
+  and the dependency-injected operation pipeline.
+- `adapters/` defines capability contracts, content probes, the immutable registry, and built-in
+  Brightway Excel/CSV/TSV and SimaPro CSV adapters.
+- `background/` owns independent catalog providers, technosphere/biosphere validation, migration
+  planning, and transactional execution.
+- `formats/` contains syntax-only Brightway Excel/CSV/TSV and SimaPro CSV readers and writers.
 - `profiles/` contains background-family naming behavior used by format adapters.
-- `migrations/` resolves and applies explicit background-profile routes, while
-  `data/migrations/` contains the attributed Premise migration resources.
+- `migrations/` retains low-level migration rule application, while `data/migrations/` contains
+  attributed, integrity-manifested Premise resources. New orchestration belongs in `background/`.
 - `validation/` performs read-only structural and background-link validation.
-- `analysis/analyzer.py` parses uploads, normalizes Brightway-style dictionaries, infers background
-  profiles, checks links against catalogs, and returns structured issues.
+- `analysis/analyzer.py` provides candidate-oriented upload summaries on top of content-based format
+  detection. It must not restore suffix-only CSV guessing.
 - `models.py` defines `InventoryDocument`, `InventoryFormat`, `BackgroundProfile`, issue, candidate,
   validation, and analysis result models.
-- `catalogs.py` loads packaged reference catalogs used for profile inference and link validation.
+- `capabilities.py` derives the support matrix from registered adapters, packaged route edges, and
+  exact catalog profiles; never hard-code a broader support claim in docs or CLI output.
+- `cli.py` implements the `brightpath` commands and stable exit codes.
 - `utils.py` retains shared analysis heuristics and SimaPro mapping loaders. New format, profile,
   validation, or migration behavior belongs in its focused module rather than this file.
 - `data/export/` contains packaged mappings and generated reference catalogs; keep package-data
@@ -55,8 +63,11 @@ wrappers.
 
 - Format readers parse into one software-neutral inventory representation; format writers only
   render that representation.
-- Background migration receives an explicit source and target `BackgroundProfile`. It must be a
-  no-op when the normalized profiles are equal and must not be triggered by a format writer.
+- Background migration receives explicit source and target `BackgroundContext` values. It must be
+  a no-op when the exact contexts are equal and must not be triggered by a format writer.
+- Preserve exact database versions in contexts. Resolve a patch release to a migration series only
+  in a reported planning step; never rewrite the stored version implicitly.
+- Validate technosphere and biosphere independently using an injected `CatalogProvider`.
 - Structural validation, format-specific validation, and background-link validation are distinct
   stages. Return structured `Issue` objects instead of relying on logger output or printed tables.
 - Keep parsing, validation, normalization, and migration callable independently. A caller must be
@@ -67,8 +78,8 @@ wrappers.
   metadata merely because the canonical model does not interpret it.
 - Do not infer a target format or target background profile from the source. Defaults may preserve
   the source, but cross-format or cross-profile operations must be explicit.
-- CSV extensions are ambiguous between Brightway and SimaPro. Prefer an explicit format identifier;
-  format inference must inspect content and report ambiguity rather than guessing silently.
+- CSV extensions are ambiguous between Brightway and SimaPro. Content probes or an explicit format
+  identifier are mandatory; ambiguity is a reported error.
 - Keep ecoinvent system-model support explicit. Do not apply cut-off migration rules to
   consequential inventories.
 
@@ -87,6 +98,8 @@ If migration resources are copied into BrightPath:
 - resolve multi-step routes explicitly and return a report for every applied step;
 - test forward and reverse behavior independently, including ambiguous aggregation and deleted
   biosphere flows;
+- use strict policy by default; inferred reverse routes, deletions, missing conversion factors, and
+  incomplete coverage must be explicit report findings;
 - verify the transformed links against the exact target reference catalog;
 - never import proprietary ecoinvent inventory contents into the repository.
 
@@ -119,6 +132,8 @@ work, cover:
 - validation without conversion;
 - same-format, same-profile round trips;
 - same-format ecoinvent version migration;
+- independent technosphere-only and biosphere-only migration;
+- exact-version preservation and reported migration-series resolution;
 - format conversion with an unchanged background profile;
 - combined format and profile conversion as an explicit pipeline;
 - UVEK/BAFU alias normalization;
@@ -126,6 +141,8 @@ work, cover:
 - source-data non-mutation and repeated-call idempotence;
 - loading every new packaged mapping or migration resource from an editable install and a built
   wheel.
+- strict/permissive policy outcomes, transactional rollback, immutable JSON reports, and CLI dry
+  runs.
 
 ## Commit and Data Hygiene
 
