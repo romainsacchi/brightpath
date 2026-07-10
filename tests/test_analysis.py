@@ -1,6 +1,7 @@
 import csv
 import json
 
+import pytest
 from openpyxl import load_workbook
 
 from brightpath import BackgroundProfile, BrightwayInventory, SimaProInventory
@@ -138,10 +139,29 @@ def write_catalog(tmp_path, *, family, version, system_model, technosphere, bios
     return directory
 
 
-def test_infer_source_format_supports_xlsx_and_csv():
+def test_infer_source_format_uses_only_unambiguous_missing_path_suffixes():
     assert infer_source_format("inventory.xlsx") == SOURCE_FORMAT_BRIGHTWAY_EXCEL
     assert infer_source_format("inventory.tsv") == SOURCE_FORMAT_BRIGHTWAY_TSV
-    assert infer_source_format("inventory.csv") == SOURCE_FORMAT_SIMAPRO_CSV
+    with pytest.raises(ValueError, match="ambiguous"):
+        infer_source_format("inventory.csv")
+
+
+def test_infer_source_format_distinguishes_existing_csv_content(tmp_path):
+    brightway_csv = make_brightway_delimited(tmp_path, [minimal_activity()], suffix=".csv")
+    simapro_csv = make_simapro_csv(tmp_path, [minimal_activity()], filename="simapro.csv")
+
+    assert infer_source_format(brightway_csv) == SOURCE_FORMAT_BRIGHTWAY_CSV
+    assert infer_source_format(simapro_csv) == SOURCE_FORMAT_SIMAPRO_CSV
+
+
+def test_analyze_inventory_reports_unrecognized_content(tmp_path):
+    source = tmp_path / "inventory.csv"
+    source.write_text("not an inventory\n", encoding="utf-8")
+
+    result = analyze_inventory(path=source)
+
+    assert result.detected_format == ""
+    assert result.file_issues[0].code == "format_detection_failed"
 
 
 def test_analyze_brightway_excel_returns_candidate_summaries(tmp_path):

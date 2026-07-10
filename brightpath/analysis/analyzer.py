@@ -15,6 +15,7 @@ import bw2io
 from bw2io import CSVImporter
 from bw2io.importers.excel import ExcelImporter
 
+from brightpath.adapters import default_adapter_registry
 from brightpath.catalogs import available_catalog_profiles, load_background_catalog
 from brightpath.exceptions import InventoryValidationError
 from brightpath.formats.simapro_csv import format_biosphere_exchange
@@ -78,22 +79,30 @@ class _TSVImporter(CSVImporter):
 
 
 def infer_source_format(path: str | Path) -> str:
-    """Infer the upload-analysis format from a filename.
+    """Infer the upload-analysis format from content when a file exists.
 
-    ``.xlsx`` is treated as Brightway Excel, ``.tsv`` as Brightway TSV, and
-    ``.csv`` as SimaPro CSV. Pass an explicit Brightway CSV constant to
-    :func:`analyze_inventory` because the CSV suffix is ambiguous.
+    The built-in adapter registry probes existing artifacts. For a path that
+    does not exist yet, only the unambiguous ``.xlsx`` and ``.tsv`` suffixes
+    can be inferred. A bare ``.csv`` filename is deliberately ambiguous.
 
     :raises ValueError: If the suffix is unsupported.
     """
 
-    suffix = Path(path).suffix.lower()
+    source = Path(path)
+    if source.is_file():
+        detection = default_adapter_registry().detect(source)
+        if detection.detected_format is not None and not detection.has_errors:
+            return detection.detected_format.format_id
+        detail = "; ".join(issue.message for issue in detection.issues)
+        raise ValueError(detail or f"Could not detect inventory source format: {source}.")
+
+    suffix = source.suffix.lower()
     if suffix == ".xlsx":
         return SOURCE_FORMAT_BRIGHTWAY_EXCEL
     if suffix == ".tsv":
         return SOURCE_FORMAT_BRIGHTWAY_TSV
     if suffix == ".csv":
-        return SOURCE_FORMAT_SIMAPRO_CSV
+        raise ValueError("CSV format is ambiguous; provide an existing file or an explicit source_format.")
     if suffix == ".xls":
         raise ValueError("BrightPath analysis currently supports Brightway .xlsx workbooks, not .xls files.")
     raise ValueError(f"Unsupported inventory source format for analysis: {suffix or 'no extension'}.")
@@ -109,8 +118,8 @@ def analyze_inventory(
     """Parse an inventory upload and return structured intake information.
 
     :param path: Inventory file to analyze.
-    :param source_format: Optional explicit format constant. This is required
-        for Brightway CSV because automatic CSV inference selects SimaPro.
+    :param source_format: Optional explicit format constant. Existing files
+        are otherwise detected from content; ambiguous CSV is never guessed.
     :param source_profile: Optional complete or partial background profile. If
         fields are missing, BrightPath attempts catalog-based inference.
     :param additional_foreground_targets: External foreground identities that
@@ -123,8 +132,22 @@ def analyze_inventory(
     """
 
     resolved_path = Path(path)
-    resolved_format = source_format or infer_source_format(resolved_path)
     profile = (source_profile or BackgroundProfile()).normalized()
+    try:
+        resolved_format = source_format or infer_source_format(resolved_path)
+    except ValueError as error:
+        return AnalysisResult(
+            detected_software="",
+            detected_format="",
+            source_profile=profile,
+            file_issues=[
+                Issue(
+                    severity="error",
+                    code="format_detection_failed",
+                    message=str(error),
+                )
+            ],
+        )
     normalized_foreground_targets = _normalize_foreground_targets(additional_foreground_targets)
 
     if resolved_format == SOURCE_FORMAT_BRIGHTWAY_EXCEL:
