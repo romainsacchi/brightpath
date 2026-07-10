@@ -17,6 +17,7 @@ from typing import Any
 from brightpath.adapters.base import ArtifactKind, FormatAdapter, FormatDescriptor, coerce_format_descriptor
 from brightpath.adapters.registry import AdapterRegistry, DetectionReport
 from brightpath.background.catalogs import CatalogProvider
+from brightpath.background.execution import execute_background_migration
 from brightpath.background.validation import validate_background_links
 from brightpath.exceptions import SerializationError
 from brightpath.formats.simapro_csv import render_simapro_rows
@@ -25,8 +26,8 @@ from brightpath.normalization import normalize_inventory
 from brightpath.validation.brightway import validate_brightway_inventory
 
 from .audit import digest_artifact, write_report_sidecar
-from .context import ContextHint, FormatProfile, InventoryContext
-from .policies import ConversionPolicy, PolicyAction
+from .context import BackgroundContext, ContextHint, FormatProfile, InventoryContext
+from .policies import ConversionPolicy, MigrationPolicy, PolicyAction
 from .reports import (
     Change,
     Issue,
@@ -38,6 +39,8 @@ from .reports import (
     StageKind,
     StageReport,
 )
+
+_STRICT_MIGRATION_POLICY = MigrationPolicy.strict()
 
 _EMPTY_CONTEXT_HINT = ContextHint()
 _STRICT_CONVERSION_POLICY = ConversionPolicy.strict()
@@ -302,6 +305,29 @@ class InventoryPipeline:
                     "target_format": descriptor.format_id,
                 },
             ),
+        )
+
+    def migrate(
+        self,
+        document: InventoryDocument,
+        target: BackgroundContext,
+        *,
+        policy: MigrationPolicy = _STRICT_MIGRATION_POLICY,
+        additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
+    ) -> OperationResult[InventoryDocument]:
+        """Migrate background axes without changing the software format."""
+
+        _require_document(document)
+        if not isinstance(target, BackgroundContext):
+            raise TypeError("target must be a BackgroundContext.")
+        if not isinstance(policy, MigrationPolicy):
+            raise TypeError("policy must be a MigrationPolicy.")
+        return execute_background_migration(
+            document,
+            target,
+            self.catalog_provider,
+            policy,
+            foreground_technosphere_targets=additional_foreground_targets,
         )
 
     def write(

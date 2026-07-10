@@ -12,7 +12,6 @@ from .context import (
     resolve_migration_series,
     resolve_profile_migration_series,
 )
-from .pipeline import InventoryPipeline
 from .policies import ConversionPolicy, MigrationPolicy, PolicyAction
 from .reports import (
     Change,
@@ -54,7 +53,6 @@ __all__ = (
     "ExtensionMap",
     "FormatProfile",
     "InventoryContext",
-    "InventoryPipeline",
     "Issue",
     "Loss",
     "MigrationPolicy",

@@ -12,6 +12,7 @@ from .catalogs import (
     TechnosphereCatalog,
     catalog_provider_from_environment,
 )
+from .execution import execute_background_migration
 from .migration import (
     MigrationAxis,
     MigrationPlan,
@@ -34,6 +35,7 @@ __all__ = (
     "PackageCatalogProvider",
     "TechnosphereCatalog",
     "catalog_provider_from_environment",
+    "execute_background_migration",
     "plan_background_migration",
     "validate_background_links",
 )

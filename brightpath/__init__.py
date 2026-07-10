@@ -34,9 +34,9 @@ from .core import (  # noqa: E402
     BiosphereProfile,
     FormatProfile,
     InventoryContext,
-    InventoryPipeline,
     TechnosphereProfile,
 )
+from .core.pipeline import InventoryPipeline  # noqa: E402
 from .exceptions import (  # noqa: E402
     ConversionError,
     ExcelSerializationError,

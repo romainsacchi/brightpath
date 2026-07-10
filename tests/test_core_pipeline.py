@@ -218,6 +218,18 @@ def test_convert_changes_only_the_format_context():
     assert result.report.changes[0].path == "context.format"
 
 
+def test_migrate_noop_preserves_format_and_returns_reported_document():
+    source = document()
+    pipeline = InventoryPipeline(AdapterRegistry(), InMemoryCatalogProvider())
+
+    result = pipeline.migrate(source, source.context.background)
+
+    assert result.succeeded
+    assert result.value is source
+    assert result.value.context.format == source.context.format
+    assert result.report.operation is OperationKind.MIGRATE
+
+
 def test_strict_simapro_preflight_rejects_an_unused_exchange_as_explicit_loss():
     unused = {
         "type": "biosphere",
