@@ -17,6 +17,7 @@ from brightpath.core.reports import Change, Issue, Loss, Severity, StageKind, St
 from brightpath.formats.brightway_delimited import _render_rows as render_brightway_rows
 from brightpath.formats.simapro_csv import (
     _ACTIVITY_METADATA_FIELDS,
+    SimaProRenderResult,
     _simapro_uncertainty_type,
     is_simapro_final_waste_flow,
     render_simapro_rows,
@@ -40,6 +41,7 @@ from .base import FormatDescriptor, coerce_format_descriptor
 _STAGE = StageKind.CONVERSION_PREFLIGHT
 _SIMAPRO_BIOSPHERE_CATEGORIES = frozenset({"natural resource", "air", "water", "soil"})
 _STRICT_CONVERSION_POLICY = ConversionPolicy.strict()
+_TRANSIENT_EXCHANGE_FIELDS = frozenset({"input", "output"})
 
 _SIMAPRO_DOCUMENT_METADATA = frozenset({"Project", "system description", "literature reference"})
 _SIMAPRO_ACTIVITY_METADATA = frozenset(field.lower() for field in _ACTIVITY_METADATA_FIELDS)
@@ -181,7 +183,9 @@ def preflight_brightway_conversion(
 
     _require_document_and_policy(document, policy)
     target = coerce_format_descriptor(descriptor)
-    findings = _preflight_brightway(document, policy, stage=_STAGE)
+    # bw2io reconstructs input/output link keys when the artifact is imported;
+    # they are transient graph metadata rather than exchange-format content.
+    findings = _Findings(_STAGE)
     return _findings_report(findings, document, target, policy=policy, label="representability")
 
 
@@ -204,7 +208,7 @@ def validate_brightway_format(document: InventoryDocument, descriptor: FormatDes
     if not isinstance(document, InventoryDocument):
         raise TypeError("document must be an InventoryDocument.")
     target = coerce_format_descriptor(descriptor)
-    findings = _preflight_brightway(document, _STRICT_CONVERSION_POLICY, stage=StageKind.FORMAT_VALIDATION)
+    findings = _Findings(StageKind.FORMAT_VALIDATION)
     _add_context_mismatch(document, target, findings)
     try:
         render_brightway_rows(document)
@@ -221,16 +225,15 @@ def validate_brightway_format(document: InventoryDocument, descriptor: FormatDes
 
 
 def validate_simapro_format(document: InventoryDocument, descriptor: FormatDescriptor) -> StageReport:
-    """Validate SimaPro rendering and exact representability without conversion."""
+    """Validate intrinsic SimaPro grammar without applying loss policy."""
 
     if not isinstance(document, InventoryDocument):
         raise TypeError("document must be an InventoryDocument.")
     target = coerce_format_descriptor(descriptor)
-    findings = _preflight_simapro(
+    findings, _render_result = _simapro_grammar_findings(
         document,
         _STRICT_CONVERSION_POLICY,
         stage=StageKind.FORMAT_VALIDATION,
-        include_changes=False,
     )
     _add_context_mismatch(document, target, findings)
     return _findings_report(findings, document, target, label="format validation")
@@ -450,35 +453,6 @@ def _policy_suggested_fix(category: str) -> str:
     return "Choose a lossless target or explicitly allow this information loss in the policy."
 
 
-def _preflight_brightway(
-    document: InventoryDocument,
-    policy: ConversionPolicy,
-    *,
-    stage: StageKind,
-) -> _Findings:
-    findings = _Findings(stage)
-    for dataset_index, dataset in enumerate(document.data):
-        if not isinstance(dataset, Mapping):
-            continue
-        for exchange_index, exchange in enumerate(dataset.get("exchanges", ())):
-            if not isinstance(exchange, Mapping):
-                continue
-            fields = sorted({"input", "output"}.intersection(exchange))
-            if not fields:
-                continue
-            path = f"datasets[{dataset_index}].exchanges[{exchange_index}]"
-            findings.add_loss(
-                code="brightway_exchange_link_fields_omitted",
-                message=f"Brightway writers omit exchange link field(s): {', '.join(fields)}.",
-                path=path,
-                action=policy.on_information_loss,
-                category="information_loss",
-                details={"fields": fields},
-                suggested_fix="Remove transient input/output keys or retain the source artifact alongside the export.",
-            )
-    return findings
-
-
 def _preflight_simapro(
     document: InventoryDocument,
     policy: ConversionPolicy,
@@ -486,24 +460,8 @@ def _preflight_simapro(
     stage: StageKind,
     include_changes: bool,
 ) -> _Findings:
-    findings = _Findings(stage)
+    findings, render_result = _simapro_grammar_findings(document, policy, stage=stage)
     data = document.data
-
-    render_result = None
-    try:
-        render_result = render_simapro_rows(document)
-    except Exception as error:  # The public preflight always returns a report.
-        code = "conversion.preflight_failed" if stage is _STAGE else "format_validation.render_failed"
-        findings.add_condition(
-            code=code,
-            message=str(error) or type(error).__name__,
-            path="",
-            action=policy.on_invalid_target,
-            details={"exception_type": type(error).__name__, "target_format": "simapro_csv"},
-            suggested_fix="Correct the inventory data rejected by the SimaPro renderer.",
-        )
-    else:
-        _translate_renderer_issues(render_result.issues, findings, policy)
 
     _inspect_document_metadata(document.metadata, findings, policy)
     _inspect_parameter_collection(document.database_parameters, "database_parameters", findings, policy)
@@ -523,6 +481,33 @@ def _preflight_simapro(
     ):
         _record_simapro_representation_changes(document, data, findings)
     return findings
+
+
+def _simapro_grammar_findings(
+    document: InventoryDocument,
+    policy: ConversionPolicy,
+    *,
+    stage: StageKind,
+) -> tuple[_Findings, SimaProRenderResult | None]:
+    """Return only intrinsic renderer findings and its optional render result."""
+
+    findings = _Findings(stage)
+    render_result = None
+    try:
+        render_result = render_simapro_rows(document)
+    except Exception as error:  # The public preflight always returns a report.
+        code = "conversion.preflight_failed" if stage is _STAGE else "format_validation.render_failed"
+        findings.add_condition(
+            code=code,
+            message=str(error) or type(error).__name__,
+            path="",
+            action=policy.on_invalid_target,
+            details={"exception_type": type(error).__name__, "target_format": "simapro_csv"},
+            suggested_fix="Correct the inventory data rejected by the SimaPro renderer.",
+        )
+    else:
+        _translate_renderer_issues(render_result.issues, findings, policy)
+    return findings, render_result
 
 
 def _translate_renderer_issues(issues: Iterable[object], findings: _Findings, policy: ConversionPolicy) -> None:
@@ -634,6 +619,7 @@ def _inspect_simapro_exchange(
 
     unsupported = set(exchange) - supported
     unsupported.discard("product")
+    unsupported.difference_update(_TRANSIENT_EXCHANGE_FIELDS)
     _add_unsupported_fields(findings, policy, path, "exchange", sorted(unsupported))
     _add_product_alias_ambiguity(exchange, path, "exchange", findings, policy)
 

@@ -35,6 +35,8 @@ FILE_ADAPTER = AdapterCapabilities(
     read_artifact_kinds={ArtifactKind.FILE},
     write_artifact_kinds={ArtifactKind.FILE},
     detection_artifact_kinds={ArtifactKind.FILE},
+    can_validate_format=True,
+    can_preflight_conversion=True,
 )
 
 
@@ -232,6 +234,22 @@ def test_convert_changes_only_the_format_context():
     assert result.report.changes[0].path == "context.format"
 
 
+def test_pipeline_persists_only_explicitly_supported_format_qualifiers():
+    source = document()
+    pipeline = InventoryPipeline(default_adapter_registry(), provider_for(source))
+
+    supported = pipeline.convert(source, FormatProfile("brightway_excel", dialect="bw2io"))
+    unsupported = pipeline.convert(source, FormatProfile("brightway_excel", dialect="future"))
+    unknown_version = pipeline.convert(source, FormatProfile("brightway_excel", format_version="99"))
+
+    assert supported.value is not None
+    assert supported.value.context.format.dialect == "bw2io"
+    assert unsupported.value is None
+    assert unknown_version.value is None
+    assert [issue.code for issue in unsupported.report.issues] == ["conversion.target_adapter_unavailable"]
+    assert [issue.code for issue in unknown_version.report.issues] == ["conversion.target_adapter_unavailable"]
+
+
 def test_conversion_target_validation_is_policy_controlled_and_can_be_disabled():
     source = document()
     target = FakeAdapter(FormatDescriptor("brightway_tsv"), confidence=None)
@@ -273,6 +291,37 @@ def test_conversion_target_validation_is_policy_controlled_and_can_be_disabled()
     assert StageKind.FORMAT_VALIDATION not in {stage.stage for stage in skipped.report.stages}
 
 
+def test_loss_policy_is_not_overridden_by_intrinsic_target_validation():
+    rounded_exchange = {
+        "type": "technosphere",
+        "name": "market for product",
+        "reference product": "product",
+        "location": "CH",
+        "unit": "kilogram",
+        "amount": 1.23456,
+    }
+    source = document(data=[activity(extra_exchanges=(rounded_exchange,))])
+    pipeline = InventoryPipeline(default_adapter_registry(), provider_for(source))
+    policy = ConversionPolicy(on_information_loss=PolicyAction.ALLOW)
+
+    allowed = pipeline.convert(source, "simapro_csv", policy=policy)
+    malformed_data = source.data
+    del malformed_data[0]["exchanges"][0]["simapro category"]
+    malformed = document(data=malformed_data)
+    rejected = pipeline.convert(malformed, "simapro_csv", policy=policy)
+
+    assert allowed.value is not None
+    assert "simapro_exchange_amount_rounded" in {loss.code for loss in allowed.report.losses}
+    rounding_issue = next(
+        issue for issue in allowed.report.issues if issue.details.get("loss_code") == "simapro_exchange_amount_rounded"
+    )
+    assert rounding_issue.severity is Severity.INFO
+    assert allowed.report.stages[-1].stage is StageKind.FORMAT_VALIDATION
+    assert not allowed.report.stages[-1].issues
+    assert rejected.value is None
+    assert "simapro_category_missing" in {issue.code for issue in rejected.report.issues}
+
+
 def test_migrate_noop_preserves_format_and_returns_reported_document():
     source = document()
     pipeline = InventoryPipeline(AdapterRegistry(), InMemoryCatalogProvider())
@@ -306,10 +355,9 @@ def test_strict_simapro_preflight_rejects_a_blacklisted_exchange_as_explicit_los
     assert not permissive.error
     assert permissive.lossy
     assert [loss.code for loss in permissive.report.losses] == ["simapro_exchange_blacklisted"]
-    assert permissive.report.stages[-1].metrics["preflight_duplicates_omitted"] == {
-        "issues": 1,
-        "losses": 1,
-    }
+    assert permissive.report.stages[-1].stage is StageKind.FORMAT_VALIDATION
+    assert not permissive.report.stages[-1].issues
+    assert not permissive.report.stages[-1].losses
 
 
 def test_real_builtin_write_and_read_with_atomic_audit_sidecar(tmp_path):
@@ -334,6 +382,30 @@ def test_real_builtin_write_and_read_with_atomic_audit_sidecar(tmp_path):
     assert loaded.value is not None
     assert loaded.value.context == source.context
     assert loaded.value.data[0]["name"] == "foreground process"
+
+
+def test_own_brightway_workbook_read_validate_and_same_format_write_is_strictly_safe(tmp_path):
+    source = document("brightway_excel")
+    registry = default_adapter_registry()
+    provider = provider_for(source)
+    input_path = registry.get("brightway_excel").write(source, tmp_path / "source.xlsx")
+    pipeline = InventoryPipeline(registry, provider)
+
+    loaded_result = pipeline.read(
+        input_path,
+        hint=ContextHint(background=source.context.background),
+    )
+    assert loaded_result.succeeded
+    loaded = loaded_result.value
+    assert loaded is not None
+    assert "input" in loaded.data[0]["exchanges"][0]
+
+    validation = pipeline.validate(loaded)
+    written = pipeline.write(loaded, tmp_path / "roundtrip.xlsx")
+
+    assert validation.succeeded
+    assert written.succeeded
+    assert written.value == (tmp_path / "roundtrip.xlsx").resolve()
 
 
 def test_parse_and_write_failures_are_structured_operation_results(tmp_path):

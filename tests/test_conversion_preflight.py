@@ -224,7 +224,7 @@ def test_latin1_failure_is_reported_before_write():
 
 
 @pytest.mark.parametrize("target", ["brightway_excel", "brightway_csv", "brightway_tsv"])
-def test_brightway_preserves_unknown_fields_but_omits_link_keys(target):
+def test_brightway_preserves_unknown_fields_and_accepts_transient_link_keys(target):
     activity = _activity(custom_dataset={"nested": [1, {"two": 2}]})
     activity["exchanges"][0].update(
         {
@@ -236,9 +236,23 @@ def test_brightway_preserves_unknown_fields_but_omits_link_keys(target):
 
     report = _preflight(_document(data=[activity]), target)
 
-    assert _loss_codes(report) == {"brightway_exchange_link_fields_omitted"}
-    assert report.losses[0].details["fields"] == ("input", "output")
-    assert report.losses[0].path == "datasets[0].exchanges[0]"
+    assert not report.losses
+    assert not report.issues
+
+
+def test_simapro_preflight_accepts_transient_brightway_link_keys():
+    activity = _activity()
+    activity["exchanges"][0].update(
+        {
+            "input": ("foreground", "activity"),
+            "output": ("foreground", "database"),
+        }
+    )
+
+    report = _preflight(_document(data=[activity]))
+
+    assert "simapro_exchange_fields_unsupported" not in _loss_codes(report)
+    assert not report.has_errors
 
 
 def test_brightway_unknown_tagged_fields_without_links_are_lossless():
@@ -321,7 +335,11 @@ def test_ambiguous_product_alias_uses_ambiguous_mapping_policy():
 
 class _CustomAdapter:
     descriptor = FormatDescriptor("custom_exchange")
-    capabilities = AdapterCapabilities(write_artifact_kinds={ArtifactKind.FILE})
+    capabilities = AdapterCapabilities(
+        write_artifact_kinds={ArtifactKind.FILE},
+        can_validate_format=True,
+        can_preflight_conversion=True,
+    )
 
     def detect(self, artifact, *, artifact_kind):
         return None

@@ -20,6 +20,8 @@ FILE_READ_WRITE = AdapterCapabilities(
     read_artifact_kinds={ArtifactKind.FILE},
     write_artifact_kinds={ArtifactKind.FILE},
     detection_artifact_kinds={ArtifactKind.FILE},
+    can_validate_format=True,
+    can_preflight_conversion=True,
 )
 
 
@@ -45,6 +47,12 @@ class FakeAdapter:
 
     def write(self, document, artifact, **kwargs):
         return artifact
+
+    def validate_format(self, document):
+        return document
+
+    def preflight_conversion(self, document, *, policy):
+        return document
 
 
 def adapter(format_id, confidence, *, evidence=(), capabilities=FILE_READ_WRITE, version="", dialect=""):
@@ -114,7 +122,7 @@ def test_registry_rejects_duplicate_descriptors_and_requires_specific_dialect():
 
 def test_qualified_profile_falls_back_to_generic_builtin_descriptor():
     registry = default_adapter_registry()
-    profile = FormatProfile("brightway_excel", format_version="1.0", dialect="bw2io")
+    profile = FormatProfile("brightway_excel", dialect="bw2io")
 
     selected = registry.get(profile)
 
@@ -123,8 +131,33 @@ def test_qualified_profile_falls_back_to_generic_builtin_descriptor():
     assert registry.supports_write(profile, ArtifactKind.FILE)
 
 
+@pytest.mark.parametrize(
+    "profile",
+    [
+        FormatProfile("brightway_excel", format_version="1.0"),
+        FormatProfile("brightway_excel", dialect="future"),
+        FormatProfile("brightway_csv", dialect="bw2io"),
+    ],
+)
+def test_generic_builtin_rejects_undeclared_qualifiers(profile):
+    registry = default_adapter_registry()
+
+    assert registry.matching(profile) == ()
+    assert not registry.supports_write(profile, ArtifactKind.FILE)
+    with pytest.raises(LookupError, match="No adapter"):
+        registry.get(profile)
+
+
 def test_exact_then_generic_fallback_avoids_qualified_adapter_ambiguity():
-    generic = adapter("brightway_excel", 0.7)
+    compatible_fallback = AdapterCapabilities(
+        read_artifact_kinds={ArtifactKind.FILE},
+        write_artifact_kinds={ArtifactKind.FILE},
+        detection_artifact_kinds={ArtifactKind.FILE},
+        can_validate_format=True,
+        can_preflight_conversion=True,
+        compatible_dialects={"future"},
+    )
+    generic = adapter("brightway_excel", 0.7, capabilities=compatible_fallback)
     bw2io = adapter("brightway_excel", 0.8, dialect="bw2io")
     custom = adapter("brightway_excel", 0.9, dialect="custom")
     registry = AdapterRegistry((generic, bw2io, custom))
@@ -132,6 +165,29 @@ def test_exact_then_generic_fallback_avoids_qualified_adapter_ambiguity():
     assert registry.get(FormatDescriptor("brightway_excel", dialect="bw2io")) is bw2io
     assert registry.get(FormatDescriptor("brightway_excel", dialect="future")) is generic
     assert registry.get("brightway_excel") is generic
+
+
+@pytest.mark.parametrize(
+    "method_name",
+    ["detect", "read", "write", "validate_format", "preflight_conversion"],
+)
+def test_registry_rejects_missing_callable_for_declared_capability(method_name):
+    incomplete = adapter("incomplete", 0.5)
+    setattr(incomplete, method_name, None)
+
+    with pytest.raises(TypeError, match=method_name):
+        AdapterRegistry((incomplete,))
+
+
+def test_registry_rejects_unsafe_writer_capability_declaration():
+    unsafe = adapter(
+        "unsafe_writer",
+        None,
+        capabilities=AdapterCapabilities(write_artifact_kinds={ArtifactKind.FILE}),
+    )
+
+    with pytest.raises(TypeError, match="can_validate_format=True"):
+        AdapterRegistry((unsafe,))
 
 
 def test_unique_high_confidence_candidate_is_selected_with_all_evidence_retained():
@@ -191,7 +247,11 @@ def test_explicit_format_wins_but_all_detector_evidence_is_still_collected():
 
 
 def test_explicit_format_must_be_registered_and_readable():
-    write_only = AdapterCapabilities(write_artifact_kinds={ArtifactKind.FILE})
+    write_only = AdapterCapabilities(
+        write_artifact_kinds={ArtifactKind.FILE},
+        can_validate_format=True,
+        can_preflight_conversion=True,
+    )
     registry = AdapterRegistry([adapter("ecospold2", None, capabilities=write_only)])
 
     unavailable = registry.detect("inventory", explicit_format="openlca_excel")

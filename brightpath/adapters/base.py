@@ -117,19 +117,42 @@ def _freeze_artifact_kinds(values: object, *, field_name: str) -> frozenset[Arti
         raise ValueError(f"{field_name} contains an unsupported artifact kind.") from error
 
 
+def _freeze_qualifiers(values: object, *, field_name: str, lowercase: bool = False) -> frozenset[str]:
+    """Validate an explicit adapter qualifier allowlist."""
+
+    if isinstance(values, (str, bytes)):
+        raise TypeError(f"{field_name} must be a collection of qualifier strings.")
+    try:
+        candidates = tuple(values)  # type: ignore[arg-type]
+    except TypeError as error:
+        raise TypeError(f"{field_name} must be a collection of qualifier strings.") from error
+    if any(not isinstance(value, str) for value in candidates):
+        raise TypeError(f"{field_name} must contain only strings.")
+    normalized = {value.strip().lower() if lowercase else value.strip() for value in candidates}
+    if "" in normalized:
+        raise ValueError(f"{field_name} must not contain empty qualifiers.")
+    return frozenset(normalized)
+
+
 @dataclass(frozen=True)
 class AdapterCapabilities:
     """Read, write, and content-detection support declared by an adapter.
 
     An empty collection means that the operation is unsupported. Detection is
     declared independently from reading because some adapters require an
-    explicit format even though they can parse the artifact.
+    explicit format even though they can parse the artifact. Generic adapters
+    accept only unqualified descriptors unless exact compatible versions or
+    dialects are listed explicitly.
     """
 
     read_artifact_kinds: frozenset[ArtifactKind] = field(default_factory=frozenset)
     write_artifact_kinds: frozenset[ArtifactKind] = field(default_factory=frozenset)
     detection_artifact_kinds: frozenset[ArtifactKind] = field(default_factory=frozenset)
     requires_catalog_provider: bool = False
+    can_validate_format: bool = False
+    can_preflight_conversion: bool = False
+    compatible_format_versions: frozenset[str] = field(default_factory=frozenset)
+    compatible_dialects: frozenset[str] = field(default_factory=frozenset)
 
     def __post_init__(self) -> None:
         object.__setattr__(
@@ -149,6 +172,20 @@ class AdapterCapabilities:
         )
         if not isinstance(self.requires_catalog_provider, bool):
             raise TypeError("requires_catalog_provider must be a boolean.")
+        if not isinstance(self.can_validate_format, bool):
+            raise TypeError("can_validate_format must be a boolean.")
+        if not isinstance(self.can_preflight_conversion, bool):
+            raise TypeError("can_preflight_conversion must be a boolean.")
+        object.__setattr__(
+            self,
+            "compatible_format_versions",
+            _freeze_qualifiers(self.compatible_format_versions, field_name="compatible_format_versions"),
+        )
+        object.__setattr__(
+            self,
+            "compatible_dialects",
+            _freeze_qualifiers(self.compatible_dialects, field_name="compatible_dialects", lowercase=True),
+        )
 
     def supports_read(self, artifact_kind: ArtifactKind | str) -> bool:
         """Whether the adapter can read ``artifact_kind``."""
@@ -164,6 +201,14 @@ class AdapterCapabilities:
         """Whether the adapter can probe ``artifact_kind`` for its format."""
 
         return ArtifactKind(artifact_kind) in self.detection_artifact_kinds
+
+    def supports_qualifiers(self, descriptor: FormatDescriptor | object) -> bool:
+        """Whether a generic adapter explicitly accepts requested qualifiers."""
+
+        requested = coerce_format_descriptor(descriptor)
+        version_supported = not requested.version or requested.version in self.compatible_format_versions
+        dialect_supported = not requested.dialect or requested.dialect in self.compatible_dialects
+        return version_supported and dialect_supported
 
 
 @dataclass(frozen=True)

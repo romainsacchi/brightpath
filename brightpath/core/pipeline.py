@@ -118,7 +118,7 @@ class InventoryPipeline:
         kwargs = _copy_adapter_kwargs(adapter_kwargs)
         selected_explicit = explicit_format
         if selected_explicit is None and hint.format is not None:
-            selected_explicit = _registered_profile_descriptor(self.registry, hint.format)
+            selected_explicit = _registered_profile_descriptor(hint.format)
 
         detection_result = self.detect(
             artifact,
@@ -362,7 +362,7 @@ class InventoryPipeline:
         descriptor = (
             coerce_format_descriptor(target_format)
             if target_format is not None
-            else _registered_profile_descriptor(self.registry, document.context.format)
+            else _registered_profile_descriptor(document.context.format)
         )
         converted, adapter, prepared_stages = self._prepare_conversion(document, descriptor, policy)
         stages = list(prepared_stages)
@@ -549,7 +549,6 @@ class InventoryPipeline:
         stages = [preflight, conversion]
         if policy.validate_target:
             target_validation = validate_adapter_format(converted, adapter)
-            target_validation = _without_preflight_duplicates(target_validation, preflight)
             target_validation = _apply_conversion_target_policy(target_validation, policy.on_invalid_target)
             stages.append(target_validation)
             if target_validation.has_errors:
@@ -666,34 +665,6 @@ def _apply_conversion_target_policy(stage: StageReport, action: PolicyAction) ->
     )
 
 
-def _without_preflight_duplicates(stage: StageReport, preflight: StageReport) -> StageReport:
-    """Keep target validation focused on findings not already preflighted."""
-
-    issue_keys = {(issue.code, issue.path, issue.message) for issue in preflight.issues}
-    loss_keys = {(loss.code, loss.path, loss.message) for loss in preflight.losses}
-    issues = tuple(issue for issue in stage.issues if (issue.code, issue.path, issue.message) not in issue_keys)
-    losses = tuple(loss for loss in stage.losses if (loss.code, loss.path, loss.message) not in loss_keys)
-    removed_issues = len(stage.issues) - len(issues)
-    removed_losses = len(stage.losses) - len(losses)
-    if not removed_issues and not removed_losses:
-        return stage
-    metrics = {
-        **dict(stage.metrics),
-        "preflight_duplicates_omitted": {
-            "issues": removed_issues,
-            "losses": removed_losses,
-        },
-    }
-    return StageReport(
-        stage.stage,
-        label=stage.label,
-        issues=issues,
-        changes=stage.changes,
-        losses=losses,
-        metrics=metrics,
-    )
-
-
 def _format_hint_conflict(hint: FormatProfile | None, descriptor: FormatDescriptor) -> Issue | None:
     if hint is None:
         return None
@@ -729,11 +700,8 @@ def _format_profile(descriptor: FormatDescriptor) -> FormatProfile:
     return _target_format_profile(FormatProfile(descriptor.format_id), descriptor)
 
 
-def _registered_profile_descriptor(registry: AdapterRegistry, profile: FormatProfile) -> FormatDescriptor:
-    descriptor = coerce_format_descriptor(profile)
-    if registry.matching(descriptor):
-        return descriptor
-    return FormatDescriptor(profile.format_id)
+def _registered_profile_descriptor(profile: FormatProfile) -> FormatDescriptor:
+    return coerce_format_descriptor(profile)
 
 
 def _descriptor_details(descriptor: FormatDescriptor) -> dict[str, str]:

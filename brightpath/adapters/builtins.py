@@ -34,12 +34,24 @@ _FILE_CAPABILITIES = AdapterCapabilities(
     read_artifact_kinds={ArtifactKind.FILE},
     write_artifact_kinds={ArtifactKind.FILE},
     detection_artifact_kinds={ArtifactKind.FILE},
+    can_validate_format=True,
+    can_preflight_conversion=True,
+)
+_BRIGHTWAY_EXCEL_CAPABILITIES = AdapterCapabilities(
+    read_artifact_kinds={ArtifactKind.FILE},
+    write_artifact_kinds={ArtifactKind.FILE},
+    detection_artifact_kinds={ArtifactKind.FILE},
+    can_validate_format=True,
+    can_preflight_conversion=True,
+    compatible_dialects={"bw2io"},
 )
 _SIMAPRO_FILE_CAPABILITIES = AdapterCapabilities(
     read_artifact_kinds={ArtifactKind.FILE},
     write_artifact_kinds={ArtifactKind.FILE},
     detection_artifact_kinds={ArtifactKind.FILE},
     requires_catalog_provider=True,
+    can_validate_format=True,
+    can_preflight_conversion=True,
 )
 
 _MAX_ZIP_ENTRIES = 20_000
@@ -205,7 +217,7 @@ class BrightwayExcelAdapter:
     descriptor: FormatDescriptor = field(
         default_factory=lambda: FormatDescriptor(InventoryFormat.BRIGHTWAY_EXCEL.value)
     )
-    capabilities: AdapterCapabilities = _FILE_CAPABILITIES
+    capabilities: AdapterCapabilities = _BRIGHTWAY_EXCEL_CAPABILITIES
 
     def detect(
         self,

@@ -76,6 +76,34 @@ def _capabilities_for_adapter(adapter: FormatAdapter) -> AdapterCapabilities:
     return capabilities
 
 
+def _require_callable(adapter: FormatAdapter, method_name: str, descriptor: FormatDescriptor) -> None:
+    if not callable(getattr(adapter, method_name, None)):
+        raise TypeError(f"The {descriptor.label()} adapter declares support requiring callable {method_name}().")
+
+
+def _validate_adapter_contract(
+    adapter: FormatAdapter,
+    descriptor: FormatDescriptor,
+    capabilities: AdapterCapabilities,
+) -> None:
+    if capabilities.detection_artifact_kinds:
+        _require_callable(adapter, "detect", descriptor)
+    if capabilities.read_artifact_kinds:
+        _require_callable(adapter, "read", descriptor)
+        if not capabilities.can_validate_format:
+            raise TypeError(f"The readable {descriptor.label()} adapter must declare can_validate_format=True.")
+    if capabilities.write_artifact_kinds:
+        _require_callable(adapter, "write", descriptor)
+        if not capabilities.can_validate_format:
+            raise TypeError(f"The writable {descriptor.label()} adapter must declare can_validate_format=True.")
+        if not capabilities.can_preflight_conversion:
+            raise TypeError(f"The writable {descriptor.label()} adapter must declare can_preflight_conversion=True.")
+    if capabilities.can_validate_format:
+        _require_callable(adapter, "validate_format", descriptor)
+    if capabilities.can_preflight_conversion:
+        _require_callable(adapter, "preflight_conversion", descriptor)
+
+
 @dataclass(frozen=True)
 class AdapterRegistry:
     """An immutable, dependency-injected collection of format adapters.
@@ -93,7 +121,8 @@ class AdapterRegistry:
         by_descriptor: dict[FormatDescriptor, FormatAdapter] = {}
         for adapter in adapters:
             descriptor = _descriptor_for_adapter(adapter)
-            _capabilities_for_adapter(adapter)
+            capabilities = _capabilities_for_adapter(adapter)
+            _validate_adapter_contract(adapter, descriptor, capabilities)
             if descriptor in by_descriptor:
                 raise ValueError(f"Duplicate adapter descriptor: {descriptor.label()}.")
             by_descriptor[descriptor] = adapter
@@ -110,10 +139,11 @@ class AdapterRegistry:
     def matching(self, format_value: object) -> tuple[FormatAdapter, ...]:
         """Return adapters using exact, generic-fallback, then family matching.
 
-        An exact qualified descriptor always wins. If it is absent, a single
-        unqualified descriptor for the same format family is the conservative
-        fallback. Only an unqualified request with no generic adapter can
-        return multiple qualified adapters and require caller disambiguation.
+        An exact qualified descriptor always wins. If it is absent, an
+        unqualified descriptor is used only when its capabilities explicitly
+        accept every requested qualifier. Only an unqualified request with no
+        generic adapter can return multiple qualified adapters and require
+        caller disambiguation.
         """
 
         descriptor = coerce_format_descriptor(format_value)
@@ -122,7 +152,7 @@ class AdapterRegistry:
             return (exact,)
 
         generic = self._by_descriptor.get(FormatDescriptor(descriptor.format_id))
-        if generic is not None:
+        if generic is not None and generic.capabilities.supports_qualifiers(descriptor):
             return (generic,)
         if descriptor.version or descriptor.dialect:
             return ()
