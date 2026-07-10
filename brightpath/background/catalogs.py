@@ -129,12 +129,14 @@ class DirectoryCatalogProvider(CatalogProvider):
         self.directory = Path(directory).expanduser()
         self._technosphere_cache: dict[TechnosphereProfile, TechnosphereCatalog] = {}
         self._biosphere_cache: dict[BiosphereProfile, BiosphereCatalog] = {}
+        self._manifest = _load_catalog_manifest(self.directory)
 
     def load_technosphere(self, profile: TechnosphereProfile) -> TechnosphereCatalog:
         if profile in self._technosphere_cache:
             return self._technosphere_cache[profile]
         path = self.directory / _combined_filename(profile)
         payload, digest = _load_payload(path)
+        _verify_manifest_resource(path, payload, digest, self._manifest)
         embedded = _technosphere_profile(payload, path)
         if embedded != profile:
             raise CatalogIntegrityError(
@@ -161,6 +163,7 @@ class DirectoryCatalogProvider(CatalogProvider):
         loaded = []
         for path in candidates:
             payload, digest = _load_payload(path)
+            _verify_manifest_resource(path, payload, digest, self._manifest)
             embedded = _technosphere_profile(payload, path)
             if (embedded.family, embedded.version) != (profile.family, profile.version):
                 raise CatalogIntegrityError(
@@ -282,6 +285,48 @@ def _load_payload(path: Path) -> tuple[dict, str]:
     if not isinstance(payload, dict):
         raise CatalogIntegrityError(f"Catalog {path} must contain a JSON object.")
     return payload, hashlib.sha256(raw).hexdigest()
+
+
+def _load_catalog_manifest(directory: Path) -> dict[str, dict]:
+    path = directory / "RESOURCE_MANIFEST.json"
+    if not path.is_file():
+        return {}
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise CatalogIntegrityError(f"Catalog manifest {path} is not valid UTF-8 JSON.") from error
+    if not isinstance(payload, dict) or payload.get("schema_version") != 1:
+        raise CatalogIntegrityError(f"Catalog manifest {path} has an unsupported schema.")
+    resources = payload.get("resources")
+    if not isinstance(resources, list):
+        raise CatalogIntegrityError(f"Catalog manifest {path} field 'resources' must be a list.")
+    result = {}
+    for index, resource in enumerate(resources):
+        if not isinstance(resource, dict) or not str(resource.get("file") or ""):
+            raise CatalogIntegrityError(f"Catalog manifest {path} resource {index} is invalid.")
+        filename = str(resource["file"])
+        if filename in result:
+            raise CatalogIntegrityError(f"Catalog manifest {path} repeats {filename!r}.")
+        result[filename] = resource
+    return result
+
+
+def _verify_manifest_resource(path: Path, payload: dict, digest: str, manifest: dict[str, dict]) -> None:
+    if not manifest:
+        return
+    resource = manifest.get(path.name)
+    if resource is None:
+        raise CatalogIntegrityError(f"Catalog {path} has no entry in RESOURCE_MANIFEST.json.")
+    if resource.get("sha256") != digest or resource.get("size") != path.stat().st_size:
+        raise CatalogIntegrityError(f"Catalog {path} does not match its manifest digest or size.")
+    if resource.get("schema_version", 1) != payload.get("schema_version", 1):
+        raise CatalogIntegrityError(f"Catalog {path} schema version does not match its manifest.")
+    if resource.get("profile") != payload.get("profile"):
+        raise CatalogIntegrityError(f"Catalog {path} profile does not match its manifest.")
+    if resource.get("technosphere_identities") != len(payload.get("technosphere", ())):
+        raise CatalogIntegrityError(f"Catalog {path} technosphere count does not match its manifest.")
+    if resource.get("biosphere_identities") != len(payload.get("biosphere", ())):
+        raise CatalogIntegrityError(f"Catalog {path} biosphere count does not match its manifest.")
 
 
 def _technosphere_profile(payload: dict, path: Path) -> TechnosphereProfile:

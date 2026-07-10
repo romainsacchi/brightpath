@@ -89,3 +89,35 @@ def test_package_provider_loads_exact_profiles_and_digests():
     assert bio.identities
     assert len(tech.digest) == 64
     assert len(bio.digest) == 64
+
+
+def test_directory_provider_rejects_a_manifest_digest_mismatch(tmp_path):
+    catalog_path = tmp_path / "ecoinvent__3.10__cutoff.json"
+    payload = {
+        "profile": {"family": "ecoinvent", "version": "3.10", "system_model": "cutoff"},
+        "technosphere": [],
+        "biosphere": [],
+    }
+    catalog_path.write_text(json.dumps(payload), encoding="utf-8")
+    (tmp_path / "RESOURCE_MANIFEST.json").write_text(
+        json.dumps(
+            {
+                "schema_version": 1,
+                "resources": [
+                    {
+                        "file": catalog_path.name,
+                        "sha256": "0" * 64,
+                        "size": catalog_path.stat().st_size,
+                        "schema_version": 1,
+                        "profile": payload["profile"],
+                        "technosphere_identities": 0,
+                        "biosphere_identities": 0,
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    with pytest.raises(CatalogIntegrityError, match="digest or size"):
+        DirectoryCatalogProvider(tmp_path).load_technosphere(technosphere())
