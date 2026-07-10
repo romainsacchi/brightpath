@@ -105,17 +105,22 @@ pipeline = InventoryPipeline(
 catalogs as fallback.
 
 Each registered adapter owns two independently callable safety hooks:
-`validate_format(document)` checks invariants of a document already declaring
-that format, while `preflight_conversion(document, policy=...)` checks whether
-the target writer can represent a source document. Missing, failing, or
-malformed hooks are reported as contract errors. Adapters can also declare
+`validate_format(document)` checks intrinsic grammar of a document already
+declaring that format, while `preflight_conversion(document, policy=...)`
+exclusively checks target representability, loss, and mapping ambiguity.
+Readable/writable adapters must declare `can_validate_format` and writers must
+also declare `can_preflight_conversion`; registry construction rejects missing
+flags or non-callable hooks before capability discovery. Hook failures and
+malformed reports remain explicit operation errors. Adapters can also declare
 `requires_catalog_provider`; `InventoryPipeline.read()` injects its provider
 for those readers. SimaPro uses this to normalize biosphere names against the
 exact declared biosphere catalog.
 
 Qualified format descriptors are resolved conservatively. An exact
-`(format_id, version, dialect)` adapter wins; when it is absent, a registered
-unqualified adapter for the same format family is the generic fallback. An
+`(format_id, version, dialect)` adapter wins. A generic adapter handles a
+qualified request only when `compatible_format_versions` and
+`compatible_dialects` explicitly allow every requested qualifier. The built-in
+Brightway Excel adapter accepts the `bw2io` dialect and no other dialect. An
 unqualified request is ambiguous when only multiple qualified adapters exist.
 
 ## Inspect and Validate
@@ -157,6 +162,59 @@ source-format validation, then optional exact background-link validation.
 `check_format=False` skips only the adapter hook;
 `check_background_links=False` skips only catalog checks. Normalization returns
 a copy. Caller-owned data and the source document are not mutated.
+
+## Upload Analysis
+
+Brightway upload analysis can still use a complete or partial legacy
+`source_profile` and infer missing background fields from catalogs. SimaPro
+analysis cannot: it requires an exact `InventoryContext` before parsing so the
+reader never guesses technosphere, biosphere, or system model.
+
+```python
+from brightpath import (
+    BackgroundContext,
+    BiosphereProfile,
+    FormatProfile,
+    InventoryContext,
+    TechnosphereProfile,
+)
+from brightpath.analysis import SOURCE_FORMAT_SIMAPRO_CSV, analyze_inventory
+from brightpath.background import catalog_provider_from_environment
+
+simapro_context = InventoryContext(
+    format=FormatProfile("simapro_csv", encoding="latin-1"),
+    background=BackgroundContext(
+        technosphere=TechnosphereProfile("ecoinvent", "3.11", "cutoff"),
+        biosphere=BiosphereProfile("ecoinvent", "3.11"),
+    ),
+)
+analysis = analyze_inventory(
+    path="foreground.csv",
+    source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+    source_context=simapro_context,
+    catalog_provider=catalog_provider_from_environment(),
+)
+```
+
+Missing context is an inspectable result, not an attempted parse:
+
+```python
+missing = analyze_inventory(
+    path="foreground.csv",
+    source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+)
+assert missing.inventory_data == []
+assert missing.candidates == []
+assert missing.file_issues[0].code == "simapro_source_context_required"
+```
+
+`validate_inventory()` accepts the same `source_context` and
+`catalog_provider` arguments and raises the shared `InventoryValidationError`
+when this structured error is present. Contradictory legacy
+`source_profile` values return `simapro_source_profile_conflict`; catalog
+construction or loading returns the structured
+`simapro_biosphere_catalog_missing`, `simapro_biosphere_catalog_invalid`, or
+`simapro_biosphere_catalog_failed` issue instead of attempting a parse.
 
 ## Migrate and Keep the Same Format
 
@@ -239,11 +297,18 @@ SimaPro preflight reports unsupported or unused exchanges, conflicting
 `product`/`reference product` aliases, numeric or uncertainty transformations,
 and other representability problems. `on_ambiguous_mapping` controls ambiguous
 target mappings independently of other information loss. After changing the
-format context, `validate_target=True` runs the target adapter's
-`validate_format` hook; `on_invalid_target` controls those findings.
+format context, `validate_target=True` runs the target adapter's intrinsic
+`validate_format` hook; `on_invalid_target` controls only those grammar
+findings. Target validation cannot override a loss, representability, or
+ambiguity decision already made by preflight.
 `ConversionPolicy.permissive()` downgrades unsafe conditions to warnings but
 never hides them. Set `validate_target=False` only when the caller will run
 target-format validation separately.
+
+Brightway/BW2IO `input` and `output` keys are reconstructible graph-link
+metadata. Writers may regenerate them during import, so their presence does
+not count as information loss and does not block strict Brightway or SimaPro
+round trips.
 
 ## Migrate and Convert Explicitly
 

@@ -80,8 +80,8 @@ Inspect and validate
    for issue in report.issues:
        print(issue.severity, issue.code, issue.path, issue.message)
 
-Rendering validation checks production categories, supported units,
-unrepresentable exchanges, and other output conditions. Validation also
+Facade rendering validation checks production categories, supported units,
+unrepresentable exchanges, and other output conditions. Facade validation also
 reports mixed cut-off/consequential markers or a mismatch between SimaPro name
 markers and the selected ecoinvent technosphere.
 
@@ -96,6 +96,9 @@ The generic pipeline runs adapter-owned SimaPro format validation by default:
    )
 
 Its stable stage order is structure, SimaPro format, then background links.
+The adapter-owned format stage checks intrinsic SimaPro grammar only.
+Representability, information loss, and mapping ambiguity are exclusively
+conversion-preflight concerns and cannot be overridden by target validation.
 
 Render without writing
 ----------------------

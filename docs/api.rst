@@ -155,8 +155,15 @@ Adapters and registry
 .. autoclass:: brightpath.adapters.AdapterCapabilities
    :members:
 
-``requires_catalog_provider`` declares that a reader needs the pipeline's
-exact catalog provider. It is ``True`` for the built-in SimaPro adapter.
+``can_validate_format`` declares the intrinsic grammar hook and
+``can_preflight_conversion`` declares the target representability/loss hook.
+Readable adapters require the former; writable adapters require both. Registry
+construction enforces the flags and callable hooks before capability discovery.
+``compatible_format_versions`` and ``compatible_dialects`` are explicit
+allowlists for resolving a qualified descriptor through a generic adapter. The
+built-in Brightway Excel adapter allows only the ``bw2io`` dialect.
+``requires_catalog_provider`` declares that a reader needs the pipeline's exact
+catalog provider; it is ``True`` for the built-in SimaPro adapter.
 
 .. autoclass:: brightpath.adapters.DetectionCandidate
    :members:

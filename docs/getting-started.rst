@@ -112,8 +112,10 @@ validation, and transformation preserve caller-owned input.
 
 Validation reports stages in the order structure, source format, then
 background links. The last two stages can be disabled independently. Format
-rules and conversion preflight belong to the selected adapter, so custom
-adapters must implement both report hooks before registration.
+validation checks intrinsic grammar; conversion preflight exclusively owns
+target representability, loss, and ambiguity policy. Custom adapters must
+declare the corresponding capability flags and callable report hooks before
+registry construction.
 
 Migrate without changing format
 -------------------------------

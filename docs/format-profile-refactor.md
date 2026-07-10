@@ -54,11 +54,15 @@ detect -> read -> normalize -> structural validation
 ```
 
 Generic validation orders canonical structure, optional adapter-owned format
-validation, then optional exact background-link validation. Each adapter must
-implement `validate_format` and `preflight_conversion`; missing or malformed
-report contracts fail safely. Adapters can declare `requires_catalog_provider`
-so the pipeline injects its provider during reads. SimaPro uses this to
-normalize flow names against the exact biosphere profile.
+validation, then optional exact background-link validation. Format validation
+owns intrinsic grammar only; conversion preflight exclusively owns target
+representability, loss, and mapping ambiguity. Read/write capabilities declare
+`can_validate_format` and writers additionally declare
+`can_preflight_conversion`. Registry construction rejects missing flags and
+non-callable hooks before capability discovery; failing or malformed report
+contracts fail safely at execution. Adapters can declare
+`requires_catalog_provider` so the pipeline injects its provider during reads.
+SimaPro uses this to normalize flow names against the exact biosphere profile.
 
 Format conversion preserves `BackgroundContext`. Background migration
 preserves `FormatProfile`. Neither operation infers the other. Validation is
@@ -74,6 +78,8 @@ facades and codecs, with copy-on-read semantics.
 
 Writers must preflight representability and report unsupported features or
 information loss. They must not discard unknown metadata silently.
+BW2IO `input` and `output` keys are reconstructible graph metadata and do not
+count as losses or block strict round trips.
 
 The compatibility `inventory_format` property returns an `InventoryFormat`
 member for known IDs and the string identifier for custom formats. The enum is
@@ -94,9 +100,12 @@ distinguished by bounded content evidence; the `.csv` suffix is never a silent
 default. OpenLCA Excel and ecoSpold2 remain reserved identifiers and canonical
 extension namespaces, but no adapter is registered or advertised.
 
-Qualified descriptor lookup selects an exact version/dialect first, then a
-registered generic adapter for the same format ID. Without a generic adapter,
-an unqualified request can be ambiguous across multiple qualified adapters.
+Qualified descriptor lookup selects an exact version/dialect first. A generic
+adapter is eligible only when `compatible_format_versions` and
+`compatible_dialects` explicitly admit every requested qualifier. The built-in
+Brightway Excel generic adapter admits the `bw2io` dialect only. Without a
+generic adapter, an unqualified request can be ambiguous across multiple
+qualified adapters.
 
 ## Background Catalogs
 

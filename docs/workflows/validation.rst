@@ -45,8 +45,8 @@ Stages are returned in stable order:
 
 The structural stage checks canonical dataset and exchange shape, plausibility,
 duplicate identities, and production identity consistency. The selected source
-adapter owns ``validate_format(document)`` and checks format-specific
-invariants without converting or writing. Missing, failing, or malformed
+adapter owns ``validate_format(document)`` and checks intrinsic grammar without
+converting, writing, or applying loss policy. Missing, failing, or malformed
 adapter contracts are format-validation errors. The background stage
 independently checks:
 
@@ -86,10 +86,12 @@ Run structure plus the adapter-owned format hook without loading catalogs:
        check_background_links=False,
    )
 
-Brightway adapters validate their block-layout serialization. The SimaPro
-adapter checks rendering and exact representability. This is source-format
-validation; target representability before conversion uses the separate
-``preflight_conversion`` hook.
+Brightway adapters validate their block-layout grammar. The SimaPro adapter
+checks intrinsic renderer grammar such as required categories, units, and
+amounts. Unsupported metadata, precision changes, omitted exchanges,
+information loss, and ambiguous mappings belong exclusively to the separate
+``preflight_conversion`` hook. Format validation cannot override those policy
+decisions.
 
 External foreground targets
 ---------------------------

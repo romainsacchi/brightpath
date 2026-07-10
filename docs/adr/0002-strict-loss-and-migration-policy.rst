@@ -23,8 +23,10 @@ corresponding stable loss or migration code:
 
 Conversion applies ambiguous-mapping policy during adapter-owned preflight.
 When target validation is enabled, it runs the target adapter's independent
-format hook after the context change and applies invalid-target policy to that
-stage.
+intrinsic grammar hook after the context change and applies invalid-target
+policy only to that stage. Target validation cannot override representability,
+loss, or ambiguity decisions already made by preflight. Reconstructible BW2IO
+``input`` and ``output`` graph keys are not conversion losses.
 
 Every operation returns an immutable, deterministic, JSON-serializable report.
 Reports contain stage, code, canonical path, source and target contexts,

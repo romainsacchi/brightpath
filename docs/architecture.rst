@@ -22,7 +22,7 @@ orchestration:
       |
       +--> safe normalization
       +--> structural validation
-      +--> adapter-owned source-format validation
+      +--> adapter-owned intrinsic source-format validation
       +--> exact catalog validation (injected CatalogProvider)
       +--> background planner + transactional executor
       +--> adapter-owned target representability preflight
@@ -64,6 +64,10 @@ dictionary properties. Normalization and migration always work on copies.
 Writers report unsupported target representation instead of silently dropping
 canonical or extension data.
 
+BW2IO ``input`` and ``output`` keys are reconstructible graph metadata. They
+do not count as information loss or block strict round trips; other unknown
+fields remain subject to target representability preflight.
+
 The legacy ``inventory_format`` property returns ``InventoryFormat`` for known
 IDs and a string for custom IDs. This keeps old comparisons stable without
 making enum membership a prerequisite for an adapter.
@@ -88,9 +92,17 @@ Adapter registry
 Each adapter owns a ``FormatDescriptor``, ``AdapterCapabilities``, and
 ``detect/read/write/validate_format/preflight_conversion`` methods. Artifact
 kinds are explicit and currently use files. Registry construction is immutable
-and rejects conflicting descriptors. Dispatchers validate that both safety
-hooks return the expected immutable ``StageReport``; missing, failing, or
-malformed contracts are errors.
+and rejects conflicting descriptors. Read capability requires
+``can_validate_format``; write capability requires both
+``can_validate_format`` and ``can_preflight_conversion``. Declared contracts
+must have callable hooks. These checks run during registry construction, so an
+incomplete adapter cannot appear in capability discovery. Dispatchers still
+reject failing hooks or malformed ``StageReport`` values at execution time.
+
+``validate_format`` owns only the intrinsic grammar of a document already in
+that format. ``preflight_conversion`` exclusively owns target
+representability, information loss, and mapping ambiguity. Post-conversion
+target validation cannot revise a preflight policy decision.
 
 ``requires_catalog_provider`` is an adapter read capability. The pipeline
 injects its provider with ``setdefault``, allowing an explicit application
@@ -102,10 +114,13 @@ evidence. Brightway CSV and SimaPro CSV share a suffix, so the registry reports
 no match or ambiguity rather than guessing. Passing an explicit format still
 checks that the registered adapter supports the requested artifact kind.
 
-Descriptor lookup is exact, then generic. A registered qualified
-version/dialect wins; otherwise a generic descriptor with the same format ID
-is the fallback. Only an unqualified request without a generic adapter may
-return multiple qualified adapters and require disambiguation.
+Descriptor lookup is exact, then compatible generic. A registered qualified
+version/dialect wins. If no exact descriptor exists, the registry considers a
+generic descriptor only when its ``compatible_format_versions`` and
+``compatible_dialects`` explicitly admit every requested qualifier. The
+built-in Brightway Excel generic adapter admits only the ``bw2io`` dialect. An
+unqualified request without a generic adapter may return multiple qualified
+adapters and require disambiguation.
 
 The built-in registry contains Brightway Excel, Brightway CSV, Brightway TSV,
 and SimaPro CSV. ``InventoryFormat`` also reserves OpenLCA Excel and ecoSpold2,
@@ -172,8 +187,10 @@ conditions to warnings but preserves issues and losses.
 
 Conversion preflight applies ``on_ambiguous_mapping`` separately from ordinary
 information loss. After the format context changes, ``validate_target=True``
-runs the selected adapter's format-validation hook; ``on_invalid_target``
-controls whether its errors abort, warn, or are allowed.
+runs the selected adapter's intrinsic format-validation hook;
+``on_invalid_target`` controls whether grammar errors abort, warn, or are
+allowed. It cannot override representability, loss, or ambiguity decisions
+made by preflight.
 
 All pipeline methods return ``OperationResult`` with an immutable
 ``OperationReport``. A report contains deterministic ordered ``StageReport``
@@ -236,6 +253,8 @@ Maintainers must preserve these contracts:
 * validation is read-only and independently callable;
 * caller-owned input and source documents are not mutated;
 * adapters report unsupported representation and information loss;
+* format validation owns intrinsic grammar while conversion preflight owns
+  representability, loss, and ambiguity policy;
 * validation stages remain ordered as structure, optional format, optional
   background links;
 * exact versions are retained and series resolution is separately reported;
@@ -252,7 +271,9 @@ Adding a format adapter
 2. Add syntax-only parsing/rendering under ``brightpath.formats`` using a
    maintained domain parser where one exists.
 3. Implement the adapter protocol, both report hooks, and precise artifact
-   capabilities, including any catalog-provider read dependency.
+   capabilities. Declare ``can_validate_format``, ``can_preflight_conversion``,
+   any compatible qualifier allowlists, and any catalog-provider read
+   dependency.
 4. Add bounded content probing with evidence and ambiguity tests.
 5. Add representability preflight and explicit ``Loss`` findings.
 6. Register only after read, write, same-format round-trip, conversion,

@@ -112,6 +112,11 @@ then merged back through the legacy dictionary bridge. Writers must report
 features that their target grammar cannot represent instead of silently
 discarding them.
 
+BW2IO ``input`` and ``output`` keys are reconstructible graph metadata, not
+independent inventory information. Their presence does not create a conversion
+loss or prevent a strict round trip; adapters still preflight all other unknown
+fields against the target grammar.
+
 ``InventoryDocument`` deep-copies inputs and returns copies from its public
 dictionary properties. Normalization and migration construct new documents.
 Migration execution is transactional and returns the source document when an
@@ -164,18 +169,25 @@ SimaPro signatures, headers, process labels, and sections for SimaPro CSV.
 Detection returns evidence and confidence. It reports absent, weak, or tied
 evidence instead of choosing a CSV interpretation by suffix.
 
-Qualified descriptors use exact-then-generic lookup. An exact version/dialect
-adapter wins. If it is absent, one registered unqualified adapter for the same
-format family is the fallback. An unqualified request with no generic adapter
-can match multiple qualified adapters and must then be disambiguated.
+Qualified descriptors use exact-then-compatible-generic lookup. An exact
+version/dialect adapter wins. If no exact descriptor exists, the registry
+considers a generic descriptor only when ``compatible_format_versions`` and
+``compatible_dialects`` explicitly admit every requested qualifier. The
+built-in Brightway Excel generic adapter admits only the ``bw2io`` dialect. An
+unqualified request with no generic adapter can match multiple qualified
+adapters and must then be disambiguated.
 
 Every production adapter owns ``validate_format`` and
-``preflight_conversion`` hooks. Source-format validation is independently
-callable and conversion preflight reports target representability before the
-format context changes. Missing, failing, or malformed hooks are explicit
-contract errors. ``AdapterCapabilities.requires_catalog_provider`` lets a
-reader request the pipeline's exact catalog provider; the SimaPro adapter uses
-this dependency for biosphere-name normalization.
+``preflight_conversion`` hooks. Intrinsic source-format grammar validation is
+independently callable; conversion preflight exclusively reports target
+representability, information loss, and mapping ambiguity before the format
+context changes. ``can_validate_format`` and ``can_preflight_conversion`` make
+these contracts discoverable. Registry construction rejects capability/hook
+mismatches and non-callable hooks before an adapter can appear in capability
+discovery; execution failures or malformed reports remain contract errors.
+``requires_catalog_provider`` lets a reader request the pipeline's exact
+catalog provider; the SimaPro adapter uses this dependency for biosphere-name
+normalization.
 
 OpenLCA Excel and ecoSpold2 are reserved identifiers and extension namespaces,
 but no built-in adapter advertises them. ``brightpath formats`` is the
@@ -192,8 +204,9 @@ ambiguous mappings, invalid target representation, and target validation.
 ``on_ambiguous_mapping`` is applied to findings such as conflicting SimaPro
 ``product`` and ``reference product`` aliases. When ``validate_target`` is
 true, conversion changes the format context and then invokes the target
-adapter's ``validate_format`` hook; ``on_invalid_target`` controls any errors
-from that stage.
+adapter's intrinsic ``validate_format`` grammar hook; ``on_invalid_target``
+controls only errors from that stage. Target validation cannot override the
+representability, loss, or ambiguity policies already applied by preflight.
 ``MigrationPolicy`` additionally controls invalid source links, unresolved
 links, ambiguous rules, deletions, inferred reverse routes, unit changes
 without numeric factors, target validity, and minimum coverage.

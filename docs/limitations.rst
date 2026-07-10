@@ -35,8 +35,13 @@ Format boundaries
   ``InventoryDocument.inventory_format`` returns their string ID while
   retaining enum members for known legacy IDs. A custom format is executable
   only when its adapter is registered.
-* Every registered writer must implement adapter-owned format validation and
-  conversion preflight. A missing or invalid hook fails safely.
+* Read capability requires ``can_validate_format``; write capability also
+  requires ``can_preflight_conversion``. Registry construction rejects missing
+  flags and non-callable hooks before capability discovery. Runtime hook
+  failures and malformed reports fail safely.
+* A generic adapter does not accept arbitrary format qualifiers. Its
+  ``compatible_format_versions`` and ``compatible_dialects`` must explicitly
+  admit them; built-in Brightway Excel admits only the ``bw2io`` dialect.
 * BrightPath writes exchange artifacts. It does not install databases into
   Brightway, SimaPro, or another LCA application.
 
@@ -105,6 +110,14 @@ can preserve only what its grammar supports. SimaPro cannot represent arbitrary
 canonical metadata. Conversion and write reports identify known unsupported or
 unused features, but no generic checker can prove semantic equality for an
 uninterpreted vendor extension.
+
+BW2IO ``input`` and ``output`` keys are a documented exception: they are
+reconstructible graph metadata, so they do not count as information loss or
+block a strict round trip.
+
+Format validation checks intrinsic grammar only. Conversion preflight
+exclusively owns representability, information-loss, and ambiguity policy;
+post-conversion target validation cannot override those decisions.
 
 Normalization and migration copy source data. Reports are immutable and JSON
 serializable, but v1 facade ``ValidationReport`` and upload ``AnalysisResult``

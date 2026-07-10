@@ -21,6 +21,8 @@ All notable changes to this project will be documented in this file.
   represent independent biosphere contexts or transactional validation.
 - Enforced software-format identity at facade and reader boundaries; contradictory exact and legacy
   context arguments now fail instead of being ignored.
+- Required exact `InventoryContext` and exact catalog access before SimaPro upload analysis parses a
+  file; legacy partial `source_profile` inference remains Brightway-only.
 
 ### Added
 
@@ -31,6 +33,8 @@ All notable changes to this project will be documented in this file.
   CSV/TSV, and SimaPro CSV are first-class read/write adapters; ambiguous CSV is never guessed.
 - Added adapter-owned format validation and conversion-preflight contracts so new formats can
   extend the pipeline without central format switches.
+- Added explicit adapter contract flags and version/dialect compatibility allowlists; incomplete
+  adapters are rejected before registry capability discovery.
 - Added the dependency-injected `InventoryPipeline` for detection, parsing, normalization,
   independent validation, migration, format conversion, writing, and audit sidecars.
 - Added independent technosphere and biosphere catalog providers, validation coverage metrics,
@@ -69,6 +73,8 @@ All notable changes to this project will be documented in this file.
   on an earlier Brightway import.
 - Routed compatibility catalog access through exact independent providers and combined verified
   model-specific biosphere shards into one version-specific biosphere catalog.
+- Separated intrinsic format validation from conversion representability/loss policy and treated
+  reconstructible BW2IO `input`/`output` graph keys as non-lossy metadata.
 
 ## 0.0.4 - 2026-05-14
 

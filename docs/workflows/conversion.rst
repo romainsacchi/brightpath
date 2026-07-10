@@ -64,11 +64,12 @@ Brightway to SimaPro
        raise RuntimeError(written.report.to_json(indent=2))
 
 SimaPro preflight reports representability issues before changing the format
-context. The selected adapter owns this ``preflight_conversion`` hook; the
-pipeline treats missing, failing, or malformed contracts as errors. Known
-unused exchanges are explicit ``Loss`` values. Unsupported features,
-information loss, ambiguous mappings, and invalid targets are errors under
-strict policy.
+context. The selected adapter owns this ``preflight_conversion`` hook. A
+writable adapter cannot enter a registry unless it declares
+``can_preflight_conversion`` and exposes a callable hook; failures or malformed
+reports at execution time are operation errors. Known unused exchanges are
+explicit ``Loss`` values. Unsupported features, information loss, ambiguous
+mappings, and invalid targets are errors under strict policy.
 
 Live conversion policy controls
 -------------------------------
@@ -80,10 +81,12 @@ aliases through ``on_ambiguous_mapping`` rather than folding them into generic
 information loss.
 
 With ``validate_target=True`` (the default), the pipeline changes only the
-format context and then calls the target adapter's ``validate_format`` hook.
-``on_invalid_target`` controls errors from this post-conversion stage. Set
-``validate_target=False`` only when the caller will validate the target format
-separately:
+format context and then calls the target adapter's intrinsic
+``validate_format`` grammar hook. ``on_invalid_target`` controls errors from
+this post-conversion grammar stage. It cannot override unsupported-feature,
+information-loss, or ambiguous-mapping decisions already made by preflight.
+Set ``validate_target=False`` only when the caller will validate the target
+format separately:
 
 .. code-block:: python
 
@@ -99,6 +102,15 @@ separately:
    )
 
 Preflight always runs, regardless of ``validate_target``.
+
+Reconstructible Brightway graph metadata
+-----------------------------------------
+
+BW2IO ``input`` and ``output`` keys record graph links that an importer can
+reconstruct from canonical exchange and dataset identities. BrightPath
+therefore does not report their presence as information loss, and these keys
+do not block a strict Brightway or SimaPro round trip. Other unknown fields
+remain subject to the target adapter's representability preflight.
 
 SimaPro to Brightway
 --------------------
@@ -241,6 +253,8 @@ Qualified target descriptors
 
 Pass a ``FormatDescriptor`` or qualified ``FormatProfile`` when a registry has
 versioned or dialect-specific adapters. Registry lookup selects an exact
-qualified adapter first, then a registered unqualified adapter for the same
-format family as a conservative fallback. An unqualified request is rejected
-as ambiguous when only multiple qualified adapters are registered.
+qualified adapter first. A generic adapter is eligible only when its
+``compatible_format_versions`` and ``compatible_dialects`` explicitly admit
+every requested qualifier. The built-in Brightway Excel adapter admits the
+``bw2io`` dialect only. An unqualified request is rejected as ambiguous when
+only multiple qualified adapters are registered.

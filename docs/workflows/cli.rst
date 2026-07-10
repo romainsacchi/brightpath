@@ -67,10 +67,10 @@ Validate
      --json \
      --report validation.audit.json
 
-Validation checks canonical structure, the source adapter's format invariants,
-and exact technosphere/biosphere links in that order. The JSON payload contains
-separate read and validation reports. The audit file contains the combined
-immutable operation report and SHA-256 digest of the source.
+Validation checks canonical structure, the source adapter's intrinsic format
+grammar, and exact technosphere/biosphere links in that order. The JSON payload
+contains separate read and validation reports. The audit file contains the
+combined immutable operation report and SHA-256 digest of the source.
 
 Convert format
 --------------
@@ -95,6 +95,10 @@ Use ``--dry-run`` to run detection, parsing, adapter-owned conversion
 preflight, and target-format validation without creating the destination. The
 positional destination remains required so the same command can be rerun
 without changing its shape:
+
+Conversion preflight owns representability, loss, and ambiguity policy. The
+post-conversion target check owns intrinsic grammar only and cannot override a
+preflight decision.
 
 .. code-block:: console
 

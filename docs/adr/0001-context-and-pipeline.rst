@@ -41,7 +41,11 @@ the same document and focused services. New orchestration uses the generic,
 dependency-injected pipeline. The deleted 0.x converter classes will not return.
 Ambiguous files require an explicit format instead of a guessed default.
 Adapter-owned format-validation and representability hooks are mandatory
-contracts. The legacy non-transactional ``migrate_inventory`` function is not
+contracts. Capability flags make them discoverable, and registry construction
+rejects missing or non-callable required hooks before discovery. Qualified
+adapter fallback is opt-in through explicit version/dialect compatibility
+allowlists. The built-in Brightway Excel adapter admits only the ``bw2io``
+dialect. The legacy non-transactional ``migrate_inventory`` function is not
 exported from ``brightpath.migrations``.
 
 BrightPath 1.0 supports Python 3.10 and 3.11. The codebase already uses Python
