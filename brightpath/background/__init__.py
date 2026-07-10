@@ -12,6 +12,12 @@ from .catalogs import (
     TechnosphereCatalog,
     catalog_provider_from_environment,
 )
+from .migration import (
+    MigrationAxis,
+    MigrationPlan,
+    MigrationRouteStep,
+    plan_background_migration,
+)
 from .validation import validate_background_links
 
 __all__ = (
@@ -22,8 +28,12 @@ __all__ = (
     "CompositeCatalogProvider",
     "DirectoryCatalogProvider",
     "InMemoryCatalogProvider",
+    "MigrationAxis",
+    "MigrationPlan",
+    "MigrationRouteStep",
     "PackageCatalogProvider",
     "TechnosphereCatalog",
     "catalog_provider_from_environment",
+    "plan_background_migration",
     "validate_background_links",
 )
