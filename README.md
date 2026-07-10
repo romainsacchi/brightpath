@@ -36,7 +36,7 @@ were deleted. Version 1 uses `BrightwayInventory` and `SimaProInventory`.
 
 ## Installation
 
-BrightPath supports Python 3.9 through 3.11.
+BrightPath supports Python 3.10 and 3.11.
 
 ```bash
 python -m pip install brightpath

@@ -34,7 +34,7 @@ def profile(version="3.10"):
 
 
 def test_v1_public_api_removes_converter_exports():
-    assert brightpath.__version__ == (1, 0, 0)
+    assert brightpath.__version__ == "1.0.0a1"
     assert brightpath.BrightwayInventory is BrightwayInventory
     assert not hasattr(brightpath, "BrightwayConverter")
     assert not hasattr(brightpath, "SimaproConverter")

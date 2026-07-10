@@ -13,8 +13,8 @@ PACKAGE_VERSION = importlib.import_module("brightpath").__version__
 project = "BrightPath"
 author = "Romain Sacchi and contributors"
 copyright = "2020-2026, Potsdam Institute for Climate Impact Research and Paul Scherrer Institut"
-release = ".".join(str(part) for part in PACKAGE_VERSION)
-version = ".".join(str(part) for part in PACKAGE_VERSION[:2])
+release = str(PACKAGE_VERSION)
+version = ".".join(release.split(".")[:2])
 
 extensions = [
     "sphinx.ext.autodoc",

@@ -51,6 +51,7 @@ Start with :doc:`getting-started`, then choose the guide matching your task.
    :caption: Maintainer guide
 
    architecture
+   adr/index
    api
 
 Indices

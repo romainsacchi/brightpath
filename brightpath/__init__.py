@@ -12,7 +12,7 @@ __all__ = (
     "SimaProSerializationError",
     "ValidationReport",
 )
-__version__ = (1, 0, 0)
+__version__ = "1.0.0a1"
 
 from pathlib import Path
 

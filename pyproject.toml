@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "brightpath"
-version = "1.0.0"
+version = "1.0.0a1"
 description = "Validate, migrate, and exchange life-cycle inventory data across LCA formats."
 dynamic = ["dependencies"]
 authors = [
@@ -13,7 +13,7 @@ authors = [
 license = "BSD-3-Clause"
 license-files = ["LICENSE"]
 readme = "README.md"
-requires-python = ">=3.9,<3.12"
+requires-python = ">=3.10,<3.12"
 classifiers = [
     "Intended Audience :: End Users/Desktop",
     "Intended Audience :: Developers",
@@ -23,7 +23,6 @@ classifiers = [
     "Operating System :: POSIX",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
     "Topic :: Scientific/Engineering :: Information Analysis",
@@ -59,7 +58,7 @@ include = ["brightpath*"]
 
 [tool.black]
 line-length = 120
-target-version = ["py39", "py310", "py311"]
+target-version = ["py310", "py311"]
 
 [tool.isort]
 profile = "black"
@@ -67,7 +66,7 @@ line_length = 120
 
 [tool.ruff]
 line-length = 120
-target-version = "py39"
+target-version = "py310"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B"]

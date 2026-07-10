@@ -4,7 +4,7 @@ Getting started
 Installation
 ------------
 
-BrightPath supports Python 3.9 through 3.11.
+BrightPath supports Python 3.10 and 3.11.
 
 .. code-block:: console
 

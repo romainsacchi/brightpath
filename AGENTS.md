@@ -102,7 +102,7 @@ use a declared library dependency or maintain attributed package resources insid
   warnings as failures after installing the `docs` extra.
 - `python -m build` builds source and wheel distributions when `build` is installed.
 
-Use Python 3.9 to 3.11, matching `pyproject.toml`. Run the focused tests while iterating and the full
+Use Python 3.10 or 3.11, matching `pyproject.toml`. Run the focused tests while iterating and the full
 suite before handing off a structural change.
 
 ## Coding and Testing Conventions
