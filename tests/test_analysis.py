@@ -4,7 +4,16 @@ import json
 import pytest
 from openpyxl import load_workbook
 
-from brightpath import BackgroundProfile, BrightwayInventory, SimaProInventory
+from brightpath import (
+    BackgroundContext,
+    BackgroundProfile,
+    BiosphereProfile,
+    BrightwayInventory,
+    FormatProfile,
+    InventoryContext,
+    SimaProInventory,
+    TechnosphereProfile,
+)
 from brightpath.analysis import (
     SOURCE_FORMAT_BRIGHTWAY_CSV,
     SOURCE_FORMAT_BRIGHTWAY_EXCEL,
@@ -15,6 +24,7 @@ from brightpath.analysis import (
     infer_source_format,
     validate_inventory,
 )
+from brightpath.background import BiosphereCatalog, InMemoryCatalogProvider, TechnosphereCatalog
 
 
 def minimal_activity(extra_exchanges=None, **overrides):
@@ -54,6 +64,23 @@ def make_simapro_csv(tmp_path, data, filename="inventory.csv"):
         data,
         background_profile=BackgroundProfile("ecoinvent", "3.9", "cutoff"),
     ).write_csv(tmp_path / filename, validate=False)
+
+
+def simapro_context(
+    version="3.9",
+    *,
+    family="ecoinvent",
+    system_model="cutoff",
+    biosphere_family=None,
+    biosphere_version=None,
+):
+    return InventoryContext(
+        format=FormatProfile(SOURCE_FORMAT_SIMAPRO_CSV, encoding="latin-1"),
+        background=BackgroundContext(
+            technosphere=TechnosphereProfile(family, version, system_model),
+            biosphere=BiosphereProfile(biosphere_family or family, biosphere_version or version),
+        ),
+    )
 
 
 def make_brightway_delimited(tmp_path, data, *, delimiter=",", suffix=".csv", db_name="analysis_db"):
@@ -1256,11 +1283,7 @@ def test_analyze_simapro_csv_returns_candidate_summaries(tmp_path):
 
     result = analyze_inventory(
         path=filepath,
-        source_profile=BackgroundProfile(
-            family="ecoinvent",
-            version="3.9",
-            system_model="cutoff",
-        ),
+        source_context=simapro_context(),
     )
 
     assert result.detected_software == "simapro"
@@ -1303,7 +1326,11 @@ def test_analyze_simapro_csv_surfaces_validation_warnings_from_converted_invento
 
     monkeypatch.setattr(analysis_analyzer, "SimaProInventory", FakeSimaProInventory)
 
-    result = analyze_inventory(path=filepath, source_format=SOURCE_FORMAT_SIMAPRO_CSV)
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_context=simapro_context(),
+    )
 
     assert result.file_issues == []
     assert len(result.candidates) == 1
@@ -1357,21 +1384,91 @@ def test_analyze_simapro_csv_validates_background_links_from_converted_inventory
     result = analyze_inventory(
         path=filepath,
         source_format=SOURCE_FORMAT_SIMAPRO_CSV,
-        source_profile=BackgroundProfile(
-            family="ecoinvent",
-            version="3.9",
-            system_model="cutoff",
-        ),
+        source_context=simapro_context(),
     )
 
     assert len(result.candidates) == 1
     assert any(issue.code == "unknown_technosphere_target" for issue in result.candidates[0].issues)
 
 
+def test_analyze_simapro_csv_uses_exact_injected_311_biosphere_catalog(tmp_path):
+    context = simapro_context("3.11")
+    flow_identity = (
+        "Release-specific flow",
+        ("air", "urban air close to ground"),
+        "kilogram",
+    )
+    filepath = SimaProInventory.from_data(
+        [
+            minimal_activity(
+                extra_exchanges=[
+                    {
+                        "type": "biosphere",
+                        "name": flow_identity[0],
+                        "categories": flow_identity[1],
+                        "unit": flow_identity[2],
+                        "amount": 2.0,
+                    }
+                ]
+            )
+        ],
+        context=context,
+    ).write_csv(tmp_path / "exact-311.csv", validate=False)
+    provider = InMemoryCatalogProvider(
+        technosphere=(TechnosphereCatalog(context.background.technosphere, set()),),
+        biosphere=(BiosphereCatalog(context.background.biosphere, {flow_identity}),),
+    )
+
+    result = analyze_inventory(
+        path=filepath,
+        source_context=context,
+        catalog_provider=provider,
+    )
+
+    assert result.source_profile == BackgroundProfile("ecoinvent", "3.11", "cutoff")
+    assert result.file_issues == []
+    assert result.candidates[0].issues == []
+    exchange = result.inventory_data[0]["exchanges"][1]
+    assert (exchange["name"], exchange["categories"], exchange["unit"]) == flow_identity
+
+
+def test_analyze_simapro_csv_requires_exact_context_before_parsing(tmp_path):
+    filepath = make_simapro_csv(tmp_path, [minimal_activity()])
+
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_profile=BackgroundProfile("ecoinvent", "3.11", ""),
+    )
+
+    assert result.inventory_data == []
+    assert result.candidates == []
+    assert [issue.code for issue in result.file_issues] == ["simapro_source_context_required"]
+
+
+def test_analyze_simapro_csv_reports_missing_exact_biosphere_catalog(tmp_path):
+    filepath = make_simapro_csv(tmp_path, [minimal_activity()])
+
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_context=simapro_context("3.11"),
+        catalog_provider=InMemoryCatalogProvider(),
+    )
+
+    assert result.inventory_data == []
+    assert result.candidates == []
+    assert [issue.code for issue in result.file_issues] == ["simapro_biosphere_catalog_missing"]
+
+
 def test_analyze_simapro_csv_attaches_duplicate_identity_errors(tmp_path):
     filepath = make_simapro_csv(tmp_path, [minimal_activity(), minimal_activity()], filename="duplicates.csv")
 
-    result = analyze_inventory(path=filepath, source_format=SOURCE_FORMAT_SIMAPRO_CSV)
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_context=simapro_context(),
+    )
 
     assert result.file_issues == []
     assert len(result.candidates) == 2

@@ -7,6 +7,7 @@ import os
 import re
 from collections import defaultdict
 from copy import deepcopy
+from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path
 from typing import Iterable, Optional
@@ -16,7 +17,17 @@ from bw2io import CSVImporter
 from bw2io.importers.excel import ExcelImporter
 
 from brightpath.adapters import default_adapter_registry
+from brightpath.background import (
+    BiosphereCatalog,
+    CatalogIntegrityError,
+    CatalogNotFoundError,
+    CatalogProvider,
+    InMemoryCatalogProvider,
+    catalog_provider_from_environment,
+)
+from brightpath.background import validate_background_links as validate_exact_background_links
 from brightpath.catalogs import available_catalog_profiles, load_background_catalog
+from brightpath.core import InventoryContext
 from brightpath.exceptions import InventoryValidationError
 from brightpath.formats.simapro_csv import format_biosphere_exchange
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
@@ -41,6 +52,7 @@ _SIMAPRO_IDENTITY_PATTERN = re.compile(r"^(?P<identity>\(.+?\))\s+(?P<message>.+
 _TUPLE_PATTERN = re.compile(r"\([^()]+\)")
 _TRAILING_SOURCE_PATTERN = re.compile(r"(?is)(?:^|(?<=[.!?\n]))\s*(?P<label>sources?)\s*:\s*(?P<source>.+?)\s*$")
 _ROOT_LOGGER = "brightpath"
+_CATALOG_UNSET = object()
 _SUPPLEMENTAL_BIOSPHERE_NAME_ALIASES = {
     "air": {
         "Ethane, 1,1,1,2-tetrafluoro-, HFC-134a": "1,1,1,2-Tetrafluoroethane",
@@ -52,6 +64,12 @@ _SUPPLEMENTAL_BIOSPHERE_NAME_ALIASES = {
         "Sodium": "Sodium I",
     },
 }
+
+
+@dataclass(frozen=True)
+class _AnalysisCatalog:
+    technosphere: frozenset[tuple[str, str, str, str]]
+    biosphere: frozenset[tuple[str, tuple[str, ...], str]]
 
 
 class _CollectingHandler(logging.Handler):
@@ -113,6 +131,8 @@ def analyze_inventory(
     path: str | Path,
     source_format: Optional[str] = None,
     source_profile: Optional[BackgroundProfile] = None,
+    source_context: InventoryContext | None = None,
+    catalog_provider: CatalogProvider | None = None,
     additional_foreground_targets: Optional[Iterable[tuple[str, str, str, str]]] = None,
 ) -> AnalysisResult:
     """Parse an inventory upload and return structured intake information.
@@ -120,8 +140,13 @@ def analyze_inventory(
     :param path: Inventory file to analyze.
     :param source_format: Optional explicit format constant. Existing files
         are otherwise detected from content; ambiguous CSV is never guessed.
-    :param source_profile: Optional complete or partial background profile. If
-        fields are missing, BrightPath attempts catalog-based inference.
+    :param source_profile: Optional Brightway compatibility profile. If fields
+        are missing, BrightPath attempts catalog-based inference. SimaPro
+        analysis requires *source_context* instead.
+    :param source_context: Exact format, technosphere, and biosphere context
+        required before parsing SimaPro CSV.
+    :param catalog_provider: Exact catalogs used for SimaPro parsing and link
+        validation. The application provider is used when omitted.
     :param additional_foreground_targets: External foreground identities that
         should be accepted during link validation.
     :return: Detected format, resolved profile, normalized inventory data,
@@ -131,8 +156,18 @@ def analyze_inventory(
     this function is intended for inspectable upload workflows.
     """
 
+    if source_context is not None and not isinstance(source_context, InventoryContext):
+        raise TypeError("source_context must be an InventoryContext.")
+    if catalog_provider is not None and not isinstance(catalog_provider, CatalogProvider):
+        raise TypeError("catalog_provider must implement CatalogProvider.")
+
     resolved_path = Path(path)
-    profile = (source_profile or BackgroundProfile()).normalized()
+    context_profile = (
+        BackgroundProfile.from_technosphere_profile(source_context.background.technosphere)
+        if source_context is not None
+        else None
+    )
+    profile = (context_profile or source_profile or BackgroundProfile()).normalized()
     try:
         resolved_format = source_format or infer_source_format(resolved_path)
     except ValueError as error:
@@ -173,7 +208,8 @@ def analyze_inventory(
     if resolved_format == SOURCE_FORMAT_SIMAPRO_CSV:
         return _analyze_simapro_csv(
             path=resolved_path,
-            source_profile=profile,
+            source_context=source_context,
+            catalog_provider=catalog_provider,
             additional_foreground_targets=normalized_foreground_targets,
         )
 
@@ -185,6 +221,8 @@ def validate_inventory(
     path: str | Path,
     source_format: Optional[str] = None,
     source_profile: Optional[BackgroundProfile] = None,
+    source_context: InventoryContext | None = None,
+    catalog_provider: CatalogProvider | None = None,
     additional_foreground_targets: Optional[Iterable[tuple[str, str, str, str]]] = None,
 ) -> AnalysisResult:
     """Analyze an upload and raise if any returned issue is an error.
@@ -198,6 +236,8 @@ def validate_inventory(
         path=path,
         source_format=source_format,
         source_profile=source_profile,
+        source_context=source_context,
+        catalog_provider=catalog_provider,
         additional_foreground_targets=additional_foreground_targets,
     )
     if result.has_errors:
@@ -327,21 +367,71 @@ def _analyze_brightway_inventory_data(
 def _analyze_simapro_csv(
     *,
     path: Path,
-    source_profile: BackgroundProfile,
+    source_context: InventoryContext | None,
+    catalog_provider: CatalogProvider | None,
     additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> AnalysisResult:
+    source_profile = (
+        BackgroundProfile.from_technosphere_profile(source_context.background.technosphere)
+        if source_context is not None
+        else BackgroundProfile()
+    )
     result = AnalysisResult(
         detected_software=SOFTWARE_SIMAPRO,
         detected_format=SOURCE_FORMAT_SIMAPRO_CSV,
         source_profile=source_profile,
     )
+    if source_context is None:
+        result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_source_context_required",
+                message="SimaPro analysis requires an exact source InventoryContext before parsing.",
+                suggested_fix=(
+                    "Provide the SimaPro format plus exact technosphere and biosphere profiles in source_context."
+                ),
+            )
+        )
+        return result
+    if source_context.format.format_id != SOURCE_FORMAT_SIMAPRO_CSV:
+        result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_source_context_format_mismatch",
+                message=(
+                    "SimaPro analysis requires source_context.format.format_id to be "
+                    f"{SOURCE_FORMAT_SIMAPRO_CSV!r}, not {source_context.format.format_id!r}."
+                ),
+                suggested_fix="Use a SimaPro CSV format profile for this source artifact.",
+            )
+        )
+        return result
+
+    provider = catalog_provider if catalog_provider is not None else catalog_provider_from_environment()
+    biosphere_catalog, catalog_issue = _load_exact_simapro_biosphere_catalog(source_context, provider)
+    if catalog_issue is not None:
+        result.file_issues.append(catalog_issue)
+        return result
+    if biosphere_catalog is None:  # Defensive guard for custom provider implementations.
+        result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_biosphere_catalog_failed",
+                message="The catalog provider did not return an exact biosphere catalog.",
+            )
+        )
+        return result
+
+    parsing_provider = InMemoryCatalogProvider(biosphere=(biosphere_catalog,))
+    analysis_catalog = _exact_analysis_catalog(source_context, provider, biosphere_catalog)
     inventory_data: list[dict] = []
 
     with _capture_warnings() as collector:
         try:
             inventory = SimaProInventory.from_csv(
                 path,
-                background_profile=_simapro_parse_profile(source_profile),
+                context=source_context,
+                catalog_provider=parsing_provider,
             )
             inventory_data = inventory.data
             result.file_issues.extend(
@@ -358,18 +448,15 @@ def _analyze_simapro_csv(
                 )
             )
 
-    result.source_profile, profile_issues = _resolve_background_profile(
-        inventory_data,
-        source_profile,
-    )
     inventory_data = _normalize_inventory_for_validation(
         inventory_data,
-        result.source_profile,
+        source_profile,
         additional_foreground_targets=additional_foreground_targets,
+        catalog=analysis_catalog,
+        normalize_biosphere=False,
     )
     result.inventory_data = deepcopy(inventory_data)
     result.candidates = _build_candidates(inventory_data)
-    result.file_issues.extend(profile_issues)
     _attach_identity_issues(
         candidates=result.candidates,
         file_issues=result.file_issues,
@@ -399,9 +486,10 @@ def _analyze_simapro_csv(
                 ),
                 file_issues=result.file_issues,
             )
-        background_issues, background_file_issues = _validate_background_links(
+        background_issues, background_file_issues = _validate_exact_analysis_background_links(
             inventory_data,
-            result.source_profile,
+            source_context,
+            provider,
             additional_foreground_targets=additional_foreground_targets,
         )
         _attach_activity_issues(
@@ -708,28 +796,61 @@ def _exception_to_file_issues(
     ]
 
 
-def _reference_ecoinvent_version(source_profile: BackgroundProfile) -> str:
-    if source_profile.family == "ecoinvent" and source_profile.version:
-        return source_profile.version
-    if source_profile.family == "uvek":
-        return "3.10"
-    return "3.9"
-
-
-def _simapro_parse_profile(source_profile: BackgroundProfile) -> BackgroundProfile:
-    normalized = source_profile.normalized()
-    family = normalized.family or "ecoinvent"
-    if family == "uvek":
-        return BackgroundProfile(
-            family="uvek",
-            version=normalized.version or "2025",
-            system_model=normalized.system_model or "cutoff",
+def _load_exact_simapro_biosphere_catalog(
+    source_context: InventoryContext,
+    provider: CatalogProvider,
+) -> tuple[BiosphereCatalog | None, Issue | None]:
+    profile = source_context.background.biosphere
+    try:
+        catalog = provider.load_biosphere(profile)
+    except CatalogNotFoundError as error:
+        return None, Issue(
+            severity="error",
+            code="simapro_biosphere_catalog_missing",
+            message=f"No exact biosphere catalog is available for {profile.label()}: {error}",
+            suggested_fix="Install or inject the exact biosphere catalog before analyzing this SimaPro CSV.",
         )
-    return BackgroundProfile(
-        family=family,
-        version=normalized.version or _reference_ecoinvent_version(normalized),
-        system_model=normalized.system_model or "cutoff",
-    )
+    except CatalogIntegrityError as error:
+        return None, Issue(
+            severity="error",
+            code="simapro_biosphere_catalog_invalid",
+            message=f"The exact biosphere catalog for {profile.label()} is invalid: {error}",
+            suggested_fix="Repair or replace the exact biosphere catalog before analyzing this SimaPro CSV.",
+        )
+    except Exception as error:
+        return None, Issue(
+            severity="error",
+            code="simapro_biosphere_catalog_failed",
+            message=f"Loading the exact biosphere catalog for {profile.label()} failed: {error}",
+            suggested_fix="Check the injected catalog provider before analyzing this SimaPro CSV.",
+        )
+
+    if not isinstance(catalog, BiosphereCatalog) or catalog.profile != profile:
+        actual = catalog.profile.label() if isinstance(catalog, BiosphereCatalog) else type(catalog).__name__
+        return None, Issue(
+            severity="error",
+            code="simapro_biosphere_catalog_invalid",
+            message=f"The provider returned {actual}, not the requested exact biosphere profile {profile.label()}.",
+            suggested_fix="Correct the catalog provider so exact profile requests return matching catalogs.",
+        )
+    return catalog, None
+
+
+def _exact_analysis_catalog(
+    source_context: InventoryContext,
+    provider: CatalogProvider,
+    biosphere_catalog: BiosphereCatalog,
+) -> _AnalysisCatalog:
+    technosphere = frozenset()
+    profile = source_context.background.technosphere
+    try:
+        catalog = provider.load_technosphere(profile)
+    except (CatalogNotFoundError, CatalogIntegrityError):
+        pass
+    else:
+        if catalog.profile == profile:
+            technosphere = catalog.identities
+    return _AnalysisCatalog(technosphere=technosphere, biosphere=biosphere_catalog.identities)
 
 
 def _resolve_background_profile(
@@ -952,26 +1073,29 @@ def _normalize_inventory_for_validation(
     source_profile: BackgroundProfile,
     *,
     additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+    catalog=_CATALOG_UNSET,
+    normalize_biosphere: bool = True,
 ) -> list[dict]:
     normalized_inventory = deepcopy(inventory_data)
-    catalog = _load_catalog_if_available(source_profile)
+    selected_catalog = _load_catalog_if_available(source_profile) if catalog is _CATALOG_UNSET else catalog
     _promote_legacy_product_fields(normalized_inventory)
     _synchronize_production_exchanges_with_activity(normalized_inventory)
     _fill_missing_technosphere_reference_products(
         normalized_inventory,
-        catalog,
+        selected_catalog,
         additional_foreground_targets=additional_foreground_targets,
     )
     _harmonize_technosphere_exchange_identities(
         normalized_inventory,
-        catalog,
+        selected_catalog,
         additional_foreground_targets=additional_foreground_targets,
     )
-    _normalize_biosphere_exchanges(
-        normalized_inventory,
-        source_profile,
-        catalog,
-    )
+    if normalize_biosphere:
+        _normalize_biosphere_exchanges(
+            normalized_inventory,
+            source_profile,
+            selected_catalog,
+        )
     return normalized_inventory
 
 
@@ -1251,6 +1375,40 @@ def _map_biosphere_name_for_category(
         return supplemental[name]
     mapping = correspondence.get(main_category, {})
     return str(mapping.get(name, name))
+
+
+def _validate_exact_analysis_background_links(
+    inventory_data: list[dict],
+    source_context: InventoryContext,
+    catalog_provider: CatalogProvider,
+    *,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+) -> tuple[list[Issue], list[Issue]]:
+    report = validate_exact_background_links(
+        inventory_data,
+        source_context.background,
+        catalog_provider,
+        foreground_technosphere_targets=additional_foreground_targets,
+    )
+    candidate_issues = []
+    file_issues = []
+    code_aliases = {
+        "background.technosphere_link_unresolved": "unknown_technosphere_target",
+        "background.biosphere_link_unresolved": "unknown_biosphere_flow",
+    }
+    for issue in report.issues:
+        converted = Issue(
+            severity=issue.severity.value,
+            code=code_aliases.get(issue.code, issue.code),
+            message=issue.message,
+            path=issue.path.replace("datasets[", "activity[", 1),
+            suggested_fix=issue.suggested_fix,
+        )
+        if "_catalog_" in issue.code:
+            file_issues.append(converted)
+        else:
+            candidate_issues.append(converted)
+    return candidate_issues, file_issues
 
 
 def _validate_background_links(
