@@ -11,6 +11,8 @@ from brightpath.core.context import resolve_migration_series
 from brightpath.exceptions import MigrationError
 
 _PROFILE_ID = re.compile(r"^ecoinvent-(?P<version>\d+(?:\.\d+){1,2})-(?P<kind>cutoff|consequential|biosphere)$")
+_UVEK_TECHNOSPHERE_RESOURCE = "ecoinvent-to-uvek-2025.json"
+_UVEK_BIOSPHERE_RESOURCE = "ecoinvent-to-ecoinvent-3.10-biosphere.json"
 
 
 @lru_cache(maxsize=4)
@@ -23,6 +25,20 @@ def load_technosphere_resources(system_model: str) -> dict[tuple[str, str], dict
 def load_biosphere_resources() -> dict[tuple[str, str], dict]:
     directory = DATA_DIR / "migrations" / "ecoinvent" / "biosphere"
     return _load_resources(directory, expected_kind="biosphere")
+
+
+@lru_cache(maxsize=1)
+def load_uvek_technosphere_resource() -> dict:
+    """Load the active heuristic ecoinvent-to-UVEK technosphere resource."""
+
+    return _load_uvek_resource(_UVEK_TECHNOSPHERE_RESOURCE, expected_axis="technosphere")
+
+
+@lru_cache(maxsize=1)
+def load_uvek_biosphere_resource() -> dict:
+    """Load the ecoinvent 3.x to 3.10 biosphere resource used for UVEK."""
+
+    return _load_uvek_resource(_UVEK_BIOSPHERE_RESOURCE, expected_axis="biosphere")
 
 
 def available_ecoinvent_versions(system_model: str = "cutoff") -> tuple[str, ...]:
@@ -56,6 +72,42 @@ def _load_resources(directory: Path, *, expected_kind: str) -> dict[tuple[str, s
         payload["_path"] = str(path)
         resources[(source_version, target_version)] = payload
     return resources
+
+
+def _load_uvek_resource(filename: str, *, expected_axis: str) -> dict:
+    path = DATA_DIR / "migrations" / "uvek" / filename
+    try:
+        raw = path.read_bytes()
+        payload = json.loads(raw.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise MigrationError(f"Could not load migration resource {path}.") from exc
+    if not isinstance(payload, dict):
+        raise MigrationError(f"Migration resource {path} must contain an object.")
+    _verify_manifest_entry(path, raw, payload, _load_resource_manifest())
+    if payload.get("status") != "active":
+        raise MigrationError(f"Migration resource {path} is not active.")
+    if payload.get("axis") != expected_axis:
+        raise MigrationError(f"Migration resource {path} does not describe the {expected_axis} axis.")
+    if payload.get("quality") != "heuristic":
+        raise MigrationError(f"Migration resource {path} must declare its heuristic quality.")
+    _validate_profile(payload.get("source_profile"), path, role="source")
+    _validate_profile(payload.get("target_profile"), path, role="target")
+    _validate_rule_lists(payload, path)
+    payload["_path"] = str(path)
+    return payload
+
+
+def _validate_profile(value, path: Path, *, role: str) -> None:
+    if not isinstance(value, dict) or not str(value.get("family") or ""):
+        raise MigrationError(f"Migration resource {path} has an invalid {role} profile.")
+    versions = value.get("versions")
+    version = value.get("version")
+    if versions is None and not str(version or ""):
+        raise MigrationError(f"Migration resource {path} has no {role} profile version.")
+    if versions is not None and (
+        not isinstance(versions, list) or not versions or not all(str(item or "") for item in versions)
+    ):
+        raise MigrationError(f"Migration resource {path} has invalid {role} profile versions.")
 
 
 @lru_cache(maxsize=1)

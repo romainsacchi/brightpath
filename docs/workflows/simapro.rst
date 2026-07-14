@@ -177,8 +177,9 @@ UVEK 2025 technosphere uses ecoinvent 3.10 biosphere identities:
 
    assert brightway.context.background == uvek_context.background
 
-The same context is valid for Brightway output. Conversion does not trigger an
-ecoinvent↔UVEK migration; no such mapping rules are available.
+The same context is valid for Brightway output. Format conversion alone does
+not trigger background migration. An explicit background-migration operation
+can use the heuristic ecoinvent 3.6–3.12 to UVEK 2025 compatibility resources.
 
 CSV detection
 -------------

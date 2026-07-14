@@ -39,7 +39,12 @@ from brightpath.migrations.engine import (
     _technosphere_matches,
 )
 from brightpath.migrations.models import MigrationStepReport
-from brightpath.migrations.resources import load_biosphere_resources, load_technosphere_resources
+from brightpath.migrations.resources import (
+    load_biosphere_resources,
+    load_technosphere_resources,
+    load_uvek_biosphere_resource,
+    load_uvek_technosphere_resource,
+)
 from brightpath.models import InventoryDocument
 
 _STRICT_POLICY = MigrationPolicy.strict()
@@ -226,9 +231,27 @@ def _execute_plan(data: list[dict], plan: MigrationPlan, policy: MigrationPolicy
     changes: list[Change] = []
     losses: list[Loss] = []
     step_metrics = []
+    technosphere_resources = _execution_resources(
+        plan.technosphere_steps,
+        load_technosphere_resources(plan.source.technosphere.system_model),
+        (
+            load_uvek_technosphere_resource()
+            if plan.source.technosphere.family == "ecoinvent" and plan.target.technosphere.family == "uvek"
+            else None
+        ),
+    )
+    biosphere_resources = _execution_resources(
+        plan.biosphere_steps,
+        load_biosphere_resources(),
+        (
+            load_uvek_biosphere_resource()
+            if plan.source.technosphere.family == "ecoinvent" and plan.target.technosphere.family == "uvek"
+            else None
+        ),
+    )
 
     for step_index, step in enumerate(plan.technosphere_steps):
-        resource = _resource_for_step(step, load_technosphere_resources(plan.source.technosphere.system_model))
+        resource = _resource_for_step(step, technosphere_resources)
         step_report, step_losses = _apply_technosphere_step(data, resource, step, policy, step_index)
         translated = _translate_legacy_issues(step_report, policy, step.axis, step_index)
         issues.extend(translated)
@@ -243,7 +266,7 @@ def _execute_plan(data: list[dict], plan: MigrationPlan, policy: MigrationPolicy
     offset = len(plan.technosphere_steps)
     for axis_index, step in enumerate(plan.biosphere_steps):
         step_index = offset + axis_index
-        resource = _resource_for_step(step, load_biosphere_resources())
+        resource = _resource_for_step(step, biosphere_resources)
         step_report, step_losses = _apply_biosphere_step(data, resource, step, policy, step_index)
         translated = _translate_legacy_issues(step_report, policy, step.axis, step_index)
         issues.extend(translated)
@@ -256,6 +279,26 @@ def _execute_plan(data: list[dict], plan: MigrationPlan, policy: MigrationPolicy
             return _migration_stage(issues, (), losses, step_metrics, rolled_back=True)
 
     return _migration_stage(issues, changes, losses, step_metrics, rolled_back=False)
+
+
+def _execution_resources(
+    steps: Sequence[MigrationRouteStep],
+    standard: Mapping[tuple[str, str], dict],
+    uvek_resource: dict | None,
+) -> dict[tuple[str, str], dict]:
+    resources = dict(standard)
+    if uvek_resource is None:
+        return resources
+    for step in steps:
+        if step.resource_name != uvek_resource.get("name"):
+            continue
+        pair = (
+            (step.source_version, step.target_version)
+            if step.direction == "forward"
+            else (step.target_version, step.source_version)
+        )
+        resources[pair] = uvek_resource
+    return resources
 
 
 def _resource_for_step(step: MigrationRouteStep, resources: Mapping[tuple[str, str], dict]) -> dict:
@@ -353,9 +396,10 @@ def _prepare_technosphere_replacements(
     safe_replacements = []
     factored_replacements = []
     losses: list[Loss] = []
+    entity_index = _technosphere_entity_index(data)
 
     for rule in rules:
-        matches = _matching_technosphere_entities(data, rule[match_side])
+        matches = _matching_technosphere_entities(entity_index, rule[match_side])
         unit_change = _unit_changes(rule[match_side], rule[replacement_side])
         if not matches or not unit_change:
             safe_replacements.append(rule)
@@ -407,8 +451,9 @@ def _prepare_biosphere_replacements(
     safe = []
     factored = []
     losses: list[Loss] = []
+    entity_index = _biosphere_entity_index(data)
     for rule in rules:
-        matches = _matching_biosphere_entities(data, rule[match_side])
+        matches = _matching_biosphere_entities(entity_index, rule[match_side])
         if not matches or not _unit_changes(rule[match_side], rule[replacement_side]):
             safe.append(rule)
             continue
@@ -463,15 +508,36 @@ def _unsafe_unit_findings(
         )
 
 
-def _matching_technosphere_entities(data: list[dict], specification: dict) -> list[str]:
-    matches = []
+def _technosphere_entity_index(data: list[dict]) -> dict[tuple[str, str, str], list[tuple[dict, str]]]:
+    index: dict[tuple[str, str, str], list[tuple[dict, str]]] = {}
     for dataset_index, dataset in enumerate(data):
-        if _technosphere_matches(dataset, specification):
-            matches.append(f"datasets[{dataset_index}]")
+        key = _technosphere_identity(dataset)
+        index.setdefault(key, []).append((dataset, f"datasets[{dataset_index}]"))
         for exchange_index, exchange in enumerate(dataset.get("exchanges", [])):
-            if exchange.get("type") in _TECHNOSPHERE_TYPES and _technosphere_matches(exchange, specification):
-                matches.append(f"datasets[{dataset_index}].exchanges[{exchange_index}]")
-    return matches
+            if exchange.get("type") in _TECHNOSPHERE_TYPES:
+                key = _technosphere_identity(exchange)
+                index.setdefault(key, []).append((exchange, f"datasets[{dataset_index}].exchanges[{exchange_index}]"))
+    return index
+
+
+def _matching_technosphere_entities(
+    index: Mapping[tuple[str, str, str], Sequence[tuple[dict, str]]],
+    specification: dict,
+) -> list[str]:
+    key = (
+        str(specification.get("name") or ""),
+        str(specification.get("reference product") or ""),
+        str(specification.get("location") or ""),
+    )
+    return [path for entity, path in index.get(key, ()) if _technosphere_matches(entity, specification)]
+
+
+def _technosphere_identity(entity: Mapping) -> tuple[str, str, str]:
+    return (
+        str(entity.get("name") or ""),
+        str(entity.get("reference product") or entity.get("product") or ""),
+        str(entity.get("location") or ""),
+    )
 
 
 def _matching_disaggregation_entities(data: list[dict], rule: dict, direction: str) -> list[str]:
@@ -486,13 +552,24 @@ def _matching_disaggregation_entities(data: list[dict], rule: dict, direction: s
     return matches
 
 
-def _matching_biosphere_entities(data: list[dict], specification: dict) -> list[str]:
-    matches = []
+def _biosphere_entity_index(data: list[dict]) -> dict[str, list[tuple[dict, str]]]:
+    index: dict[str, list[tuple[dict, str]]] = {"": []}
     for dataset_index, dataset in enumerate(data):
         for exchange_index, exchange in enumerate(dataset.get("exchanges", [])):
-            if exchange.get("type") == "biosphere" and _biosphere_matches(exchange, specification):
-                matches.append(f"datasets[{dataset_index}].exchanges[{exchange_index}]")
-    return matches
+            if exchange.get("type") != "biosphere":
+                continue
+            record = (exchange, f"datasets[{dataset_index}].exchanges[{exchange_index}]")
+            index[""].append(record)
+            index.setdefault(str(exchange.get("name") or ""), []).append(record)
+    return index
+
+
+def _matching_biosphere_entities(
+    index: Mapping[str, Sequence[tuple[dict, str]]],
+    specification: dict,
+) -> list[str]:
+    candidates = index.get(str(specification.get("name") or ""), ())
+    return [path for exchange, path in candidates if _biosphere_matches(exchange, specification)]
 
 
 def _apply_factored_replacements(

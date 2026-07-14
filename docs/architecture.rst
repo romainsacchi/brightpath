@@ -175,8 +175,11 @@ source document and removes uncommitted changes from the report.
 
 Technosphere resources connect ecoinvent cut-off 3.5→3.12. Biosphere resources
 stop at 3.10→3.11; no 3.11→3.12 edge exists. A full 3.12 migration must not be
-advertised or approximated. Consequential, cross-model, ecoinvent↔UVEK, and
-UVEK-version migration also remain unavailable.
+advertised or approximated. Consequential version-to-version, cross-model,
+UVEK-to-ecoinvent, and UVEK-version migration also remain unavailable. A
+separate ecoinvent 3.6–3.12 to UVEK 2025 compatibility resource is explicitly
+heuristic, records a warning and loss, and is verified against the exact UVEK
+target catalog before commit.
 
 Policies and reports
 --------------------

@@ -231,6 +231,22 @@ def test_legacy_technosphere_target_preserves_exact_existing_biosphere(facade_ty
     assert migrated.context.background == target_context
 
 
+def test_legacy_uvek_target_uses_documented_ecoinvent_310_biosphere(facade_type):
+    source_context = background("3.11", "3.11")
+    source = inventory(facade_type, source_context)
+
+    migrated = source.migrate_background(
+        BackgroundProfile("uvek", "2025", "cutoff"),
+        policy=MigrationPolicy(validate_source=False, validate_target=False),
+        catalog_provider=InMemoryCatalogProvider(),
+    )
+
+    assert migrated.context.background == BackgroundContext(
+        technosphere=TechnosphereProfile("uvek", "2025", "cutoff"),
+        biosphere=BiosphereProfile("ecoinvent", "3.10"),
+    )
+
+
 def test_complete_target_rejects_redundant_biosphere_argument(facade_type):
     context = background("3.10")
     source = inventory(facade_type, context)

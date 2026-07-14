@@ -13,12 +13,17 @@ from enum import Enum
 from pathlib import Path
 from typing import Iterable
 
-from brightpath.core.context import BackgroundContext, VersionResolution
+from brightpath.core.context import BackgroundContext, BiosphereProfile, TechnosphereProfile, VersionResolution
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.core.reports import Issue, Loss, Severity, StageKind, StageReport
 from brightpath.exceptions import MigrationUnavailableError
 from brightpath.migrations.engine import resolve_migration_route
-from brightpath.migrations.resources import load_biosphere_resources, load_technosphere_resources
+from brightpath.migrations.resources import (
+    load_biosphere_resources,
+    load_technosphere_resources,
+    load_uvek_biosphere_resource,
+    load_uvek_technosphere_resource,
+)
 
 _STRICT_MIGRATION_POLICY = MigrationPolicy.strict()
 
@@ -247,6 +252,16 @@ def _plan_technosphere(
     if source_profile == target_profile:
         return ()
     if source_profile.family != target_profile.family:
+        if source_profile.family == "ecoinvent" and target_profile.family == "uvek":
+            return _plan_uvek_technosphere(
+                source_profile,
+                target_profile,
+                source_resolution,
+                target_resolution,
+                policy,
+                issues,
+                losses,
+            )
         _unavailable_issue(
             issues,
             axis,
@@ -311,6 +326,21 @@ def _plan_biosphere(
         return ()
     if source_profile == target_profile:
         return ()
+    if (
+        source.technosphere.family == "ecoinvent"
+        and target.technosphere.family == "uvek"
+        and source_profile.family == "ecoinvent"
+        and target_profile == BiosphereProfile("ecoinvent", "3.10")
+    ):
+        direct = _plan_uvek_biosphere(
+            source_resolution,
+            target_resolution,
+            policy,
+            issues,
+            losses,
+        )
+        if direct is not None:
+            return direct
     if source_profile.family != target_profile.family:
         _unavailable_issue(
             issues,
@@ -422,6 +452,107 @@ def _resolve_biosphere_gap(
         policy,
         issues,
         losses,
+    )
+
+
+def _plan_uvek_technosphere(
+    source_profile: TechnosphereProfile,
+    target_profile: TechnosphereProfile,
+    source_resolution: VersionResolution,
+    target_resolution: VersionResolution,
+    policy: MigrationPolicy,
+    issues: list[Issue],
+    losses: list[Loss],
+) -> tuple[MigrationRouteStep, ...]:
+    resource = load_uvek_technosphere_resource()
+    source_specification = resource["source_profile"]
+    target_specification = resource["target_profile"]
+    supported = (
+        source_profile.family == source_specification["family"]
+        and target_profile.family == target_specification["family"]
+        and source_profile.system_model in source_specification["system_models"]
+        and source_resolution.migration_series in source_specification["versions"]
+        and target_profile.version == target_specification["version"]
+        and target_profile.system_model == target_specification["system_model"]
+    )
+    if not supported:
+        _unavailable_issue(
+            issues,
+            MigrationAxis.TECHNOSPHERE,
+            "uvek_route",
+            f"No heuristic ecoinvent-to-UVEK route is available from {source_profile.label()} "
+            f"to {target_profile.label()}.",
+        )
+        return ()
+    _heuristic_mapping_finding(MigrationAxis.TECHNOSPHERE, resource, issues, losses)
+    return _materialize_steps(
+        MigrationAxis.TECHNOSPHERE,
+        ((source_resolution.migration_series, target_resolution.migration_series, "forward"),),
+        {(source_resolution.migration_series, target_resolution.migration_series): resource},
+        policy,
+        issues,
+        losses,
+    )
+
+
+def _plan_uvek_biosphere(
+    source_resolution: VersionResolution,
+    target_resolution: VersionResolution,
+    policy: MigrationPolicy,
+    issues: list[Issue],
+    losses: list[Loss],
+) -> tuple[MigrationRouteStep, ...] | None:
+    resource = load_uvek_biosphere_resource()
+    if source_resolution.migration_series not in resource["source_profile"]["versions"]:
+        return None
+    _heuristic_mapping_finding(MigrationAxis.BIOSPHERE, resource, issues, losses)
+    return _materialize_steps(
+        MigrationAxis.BIOSPHERE,
+        ((source_resolution.migration_series, target_resolution.migration_series, "forward"),),
+        {(source_resolution.migration_series, target_resolution.migration_series): resource},
+        policy,
+        issues,
+        losses,
+    )
+
+
+def _heuristic_mapping_finding(
+    axis: MigrationAxis,
+    resource: dict,
+    issues: list[Issue],
+    losses: list[Loss],
+) -> None:
+    path = f"background.{axis.value}"
+    message = (
+        f"{axis.value.capitalize()} migration uses heuristic compatibility resource "
+        f"{_resource_name(resource)!r}; mapped targets are not scientific equivalence claims."
+    )
+    details = {
+        "axis": axis.value,
+        "resource": _resource_name(resource),
+        "quality": resource.get("quality"),
+        "coverage": resource.get("coverage", {}),
+    }
+    issues.append(
+        Issue(
+            severity=Severity.WARNING,
+            code="migration.heuristic_mapping",
+            message=message,
+            stage=StageKind.MIGRATION_PLANNING,
+            path=path,
+            details=details,
+            suggested_fix="Review low-confidence mappings before using converted results for assessment.",
+        )
+    )
+    losses.append(
+        Loss(
+            code="migration.heuristic_mapping",
+            message=message,
+            stage=StageKind.MIGRATION_PLANNING,
+            path=path,
+            recoverable=True,
+            details=details,
+        )
     )
 
 

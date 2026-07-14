@@ -6,7 +6,11 @@ from dataclasses import dataclass
 
 from .adapters import AdapterRegistry, default_adapter_registry
 from .background import PackageCatalogProvider
-from .migrations.resources import load_biosphere_resources, load_technosphere_resources
+from .migrations.resources import (
+    load_biosphere_resources,
+    load_technosphere_resources,
+    load_uvek_technosphere_resource,
+)
 
 
 @dataclass(frozen=True)
@@ -42,6 +46,7 @@ class MigrationCapability:
     system_model: str
     source_series: str
     target_series: str
+    target_family: str = ""
     forward: str = "available"
     reverse: str = "inferred_policy_controlled"
 
@@ -51,6 +56,7 @@ class MigrationCapability:
         return {
             "axis": self.axis,
             "family": self.family,
+            "target_family": self.target_family or self.family,
             "system_model": self.system_model,
             "source_series": self.source_series,
             "target_series": self.target_series,
@@ -103,6 +109,20 @@ def migration_capabilities() -> tuple[MigrationCapability, ...]:
             target_series=target,
         )
         for source, target in sorted(load_biosphere_resources(), key=_edge_key)
+    )
+    uvek = load_uvek_technosphere_resource()
+    values.extend(
+        MigrationCapability(
+            axis="technosphere",
+            family=uvek["source_profile"]["family"],
+            target_family=uvek["target_profile"]["family"],
+            system_model=system_model,
+            source_series=source_version,
+            target_series=uvek["target_profile"]["version"],
+            reverse="unavailable",
+        )
+        for source_version in uvek["source_profile"]["versions"]
+        for system_model in uvek["source_profile"]["system_models"]
     )
     return tuple(values)
 

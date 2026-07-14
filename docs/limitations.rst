@@ -60,10 +60,11 @@ Migration boundaries
 * Rules that change units without numeric conversion factors are skipped and
   reported. BrightPath never changes a unit while retaining an unconverted
   amount.
-* Consequential, cross-system-model, ecoinvent↔UVEK, and UVEK-version
-  migrations are unavailable.
-* The ecoinvent-to-UVEK resource is a placeholder excluded from discovery. It
-  is never interpreted as an empty successful mapping.
+* Consequential version-to-version, cross-system-model, UVEK-to-ecoinvent, and
+  UVEK-version migrations are unavailable.
+* The ecoinvent 3.6–3.12 to UVEK 2025 route is a heuristic compatibility map,
+  not an equivalence map. It always reports ``migration.heuristic_mapping`` and
+  must be reviewed before assessment results are used.
 
 Exact version boundaries
 ------------------------

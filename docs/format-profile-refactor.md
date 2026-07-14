@@ -147,9 +147,10 @@ validation and rollback.
 
 Packaged ecoinvent cut-off technosphere edges cover 3.5 to 3.12. Biosphere
 edges stop at 3.10 to 3.11. The missing 3.11 to 3.12 biosphere edge prevents a
-complete 3.12 migration. Consequential, cross-model, ecoinvent-to-UVEK, and
-UVEK-version routes are unavailable. The UVEK mapping placeholder is excluded
-from capability discovery.
+complete 3.12 migration. Consequential version-to-version, cross-model,
+UVEK-to-ecoinvent, and UVEK-version routes are unavailable. The forward
+ecoinvent 3.6–3.12 to UVEK 2025 compatibility route is explicitly heuristic,
+reported as a loss, and validated against exact target catalogs.
 
 ## Reports and Exceptions
 

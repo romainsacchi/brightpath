@@ -163,6 +163,15 @@ Packaged ecoinvent cut-off technosphere edges connect 3.5→3.6 through
 Capability discovery reports edges, not a promise that every multi-axis route
 is executable under every policy.
 
+A separate forward compatibility route maps packaged ecoinvent 3.6–3.12
+cut-off and consequential technosphere identities to activities that exist in
+the UVEK 2025 catalog. When the target is UVEK 2025 with ecoinvent 3.10 as its
+biosphere, a separate direct biosphere resource maps the source biosphere to
+ecoinvent 3.10. Both resources are deterministic heuristics. Planning records
+``migration.heuristic_mapping`` as a warning and loss, including coverage
+metadata; it does not claim that the selected activities are scientifically
+equivalent.
+
 In particular, no ecoinvent 3.11→3.12 biosphere migration resource is
 packaged. A complete target that changes both technosphere and biosphere to
 3.12 is therefore unavailable:
@@ -203,10 +212,11 @@ No resources are advertised for:
 
 * consequential version migration;
 * cross-system-model migration;
-* ecoinvent↔UVEK migration;
+* UVEK-to-ecoinvent migration;
 * migration between UVEK versions;
 * unsupported background families.
 
-The ecoinvent-to-UVEK file is an explicit placeholder and is excluded from
-capability discovery. UVEK can still be read, validated, and converted between
-software formats without changing its background.
+The forward ecoinvent-to-UVEK route is available only for the packaged 3.6–3.12
+source series and UVEK 2025 target. It is intentionally approximate, advertises
+no reverse route, and remains subject to exact source and target catalog
+validation.

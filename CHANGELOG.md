@@ -51,7 +51,8 @@ All notable changes to this project will be documented in this file.
   changes.
 - Packaged and attributed Premise's CC-BY-4.0 ecoinvent technosphere and biosphere migration
   resources.
-- Added an explicit, non-routable placeholder for future ecoinvent-to-UVEK 2025 mappings.
+- Added auditable heuristic mappings from packaged ecoinvent 3.6–3.12 identities to UVEK 2025 and
+  its ecoinvent 3.10 biosphere, with exact target validation and per-rule confidence metadata.
 - Normalized `BAFU` to the canonical `UVEK` background family name.
 - Preserved nested unknown Brightway workbook fields through tagged JSON values during round trips.
 - Reserved `openlca_excel` and `ecospold2` format identifiers for future adapters.

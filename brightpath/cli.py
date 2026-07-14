@@ -539,7 +539,11 @@ def _render_capabilities(snapshot: dict) -> None:
     rows = [
         (
             item["axis"],
-            item["family"],
+            (
+                item["family"]
+                if item["family"] == item.get("target_family", item["family"])
+                else f"{item['family']} -> {item['target_family']}"
+            ),
             item["system_model"] or "-",
             f"{item['source_series']} -> {item['target_series']}",
         )

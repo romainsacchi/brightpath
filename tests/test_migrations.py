@@ -130,22 +130,10 @@ def test_missing_biosphere_step_is_reported():
     assert "migration.biosphere_resource_missing_unavailable" in {issue.code for issue in raised.value.report.issues}
 
 
-def test_cross_family_migration_uses_explicit_placeholder_failure():
-    placeholder = DATA_DIR / "migrations" / "uvek" / "ecoinvent-to-uvek-2025-placeholder.json"
-    source = inventory_with_exchange(
-        {
-            "name": "market for electricity, low voltage",
-            "reference product": "electricity, low voltage",
-            "location": "CH",
-            "unit": "kilowatt hour",
-            "amount": 1.0,
-            "type": "technosphere",
-        }
-    )
+def test_cross_family_migration_resource_is_active():
+    resource = DATA_DIR / "migrations" / "uvek" / "ecoinvent-to-uvek-2025.json"
 
-    assert placeholder.is_file()
-    with pytest.raises(MigrationError, match="not available"):
-        source.migrate_background(BackgroundProfile("uvek", "2025", "cutoff"))
+    assert resource.is_file()
 
 
 def test_consequential_migration_is_rejected_until_rules_exist():

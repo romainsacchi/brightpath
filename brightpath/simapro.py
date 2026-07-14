@@ -19,7 +19,14 @@ from .core.reports import OperationReport
 from .exceptions import InventoryValidationError, MigrationError
 from .formats import load_simapro_csv, render_simapro_rows, write_simapro_csv
 from .formats.simapro_csv import SimaProRenderResult
-from .models import BackgroundProfile, InventoryDocument, InventoryFormat, Issue, ValidationReport
+from .models import (
+    BackgroundProfile,
+    InventoryDocument,
+    InventoryFormat,
+    Issue,
+    ValidationReport,
+    default_biosphere_profile,
+)
 from .normalization import normalize_inventory
 from .validation import validate_brightway_inventory
 
@@ -278,15 +285,16 @@ class SimaProInventory:
         The preferred *target* is a complete :class:`BackgroundContext`.
         Legacy :class:`BackgroundProfile` and :class:`TechnosphereProfile`
         targets may be paired with an explicit *biosphere_profile*. When it is
-        omitted, the inventory's exact existing biosphere profile is preserved;
-        BrightPath never derives a biosphere version from the technosphere
-        target. Reverse migrations require an explicitly permissive policy.
+        omitted, the inventory's exact existing biosphere profile is preserved,
+        except that the legacy UVEK 2025 target uses its documented ecoinvent
+        3.10 biosphere. Reverse migrations require an explicitly permissive
+        policy.
 
         :param target: Exact destination background context or a legacy
             technosphere-only target.
         :param biosphere_profile: Exact destination biosphere for a legacy
             technosphere-only target. Omit it to preserve the current exact
-            biosphere profile.
+            biosphere profile, or to use ecoinvent 3.10 for UVEK 2025.
         :param policy: Validation, loss, and reverse-route decisions. Strict by
             default.
         :param catalog_provider: Exact source and target catalogs. When omitted,
@@ -370,7 +378,11 @@ def _coerce_migration_target(
         raise TypeError("biosphere_profile must be a BiosphereProfile or None.")
     return BackgroundContext(
         technosphere=technosphere,
-        biosphere=biosphere_profile or document.context.background.biosphere,
+        biosphere=(
+            biosphere_profile
+            or (default_biosphere_profile(technosphere) if technosphere.family == "uvek" else None)
+            or document.context.background.biosphere
+        ),
     )
 
 

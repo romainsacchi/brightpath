@@ -369,8 +369,11 @@ pipeline.write(uvek_simapro.value, "foreground-uvek.csv")
 ```
 
 The same background context can originate in SimaPro and be written as
-Brightway. No ecoinvent↔UVEK migration rules exist; the packaged placeholder is
-excluded from capability discovery and cannot produce a successful route.
+Brightway. BrightPath also packages an explicitly heuristic migration from
+ecoinvent 3.6–3.12 cut-off or consequential technosphere identities to existing
+UVEK 2025 activities. For this route, biosphere links are mapped separately to
+ecoinvent 3.10. The operation reports ``migration.heuristic_mapping`` and is not
+a scientific equivalence claim; exact target-catalog validation still applies.
 
 ## Custom Catalog Provider
 
@@ -546,8 +549,10 @@ uses an atomic replacement; its parent directory must already exist.
   ambiguity, and information loss.
 - Rules that change units without an explicit numeric factor are not applied;
   the skipped rule and loss are reported.
-- Consequential, cross-system-model, ecoinvent↔UVEK, and UVEK-version
-  migrations are not available.
+- Consequential version-to-version, cross-system-model, UVEK-to-ecoinvent, and
+  UVEK-version migrations are not available. The forward ecoinvent 3.6–3.12 to
+  UVEK 2025 compatibility route is heuristic and must be reviewed before its
+  results are used for assessment.
 - OpenLCA Excel and ecoSpold2 identifiers reserve future schema namespaces,
   but they are not registered adapters and do not appear in capability output.
 - The packaged reference catalog manifest is marked
@@ -561,6 +566,8 @@ uses an atomic replacement; its parent directory must already exist.
 The packaged ecoinvent migration resources were imported from Premise and
 retain source, generator, contributor, and CC-BY-4.0 metadata. See
 [`brightpath/data/migrations/ATTRIBUTION.md`](brightpath/data/migrations/ATTRIBUTION.md).
+The UVEK compatibility resources are generated from packaged identity catalogs
+and explicitly carry heuristic quality and per-rule confidence metadata.
 Proprietary ecoinvent inventories are not included.
 
 ## Development

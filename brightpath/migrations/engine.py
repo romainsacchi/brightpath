@@ -76,8 +76,8 @@ def migrate_inventory(
 
     if source.family != target.family:
         raise MigrationUnavailableError(
-            "Cross-family migration is not available yet. The packaged ecoinvent-to-UVEK "
-            "resource is an explicit placeholder and contains no mapping rules."
+            "The legacy migration engine does not execute cross-family routes; use the transactional "
+            "background migration service for ecoinvent-to-UVEK conversion."
         )
     if source.family == "uvek":
         raise MigrationUnavailableError(
@@ -528,6 +528,11 @@ def _biosphere_matches(exchange: dict, specification: dict) -> bool:
         return False
     actual_uuid = _exchange_uuid(exchange)
     if actual_uuid and specification.get("uuid") and actual_uuid != specification["uuid"]:
+        return False
+    expected_categories = specification.get("categories")
+    if expected_categories is not None and tuple(str(value) for value in exchange.get("categories", ())) != tuple(
+        str(value) for value in expected_categories
+    ):
         return False
     return bool(expected_name or specification.get("uuid"))
 
