@@ -126,7 +126,7 @@ Analysis returns before parsing with a stable file-level issue:
    missing = analyze_inventory(
        path="foreground.csv",
        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
-       source_profile=BackgroundProfile("ecoinvent", "3.11", "cutoff"),
+       source_profile=BackgroundProfile("ecoinvent", "3.11", ""),
    )
 
    assert missing.inventory_data == []
@@ -141,6 +141,9 @@ legacy ``source_profile`` that contradicts the exact technosphere returns
 ``simapro_biosphere_catalog_invalid`` for integrity/profile failures, and
 ``simapro_biosphere_catalog_failed`` for other provider failures. These are
 inspectable ``AnalysisResult`` errors; no best-effort SimaPro parse occurs.
+When inference cannot list any biosphere profiles it reports
+``simapro_biosphere_inference_unavailable``; a provider failure while listing
+them reports ``simapro_biosphere_inference_failed``.
 
 Supported inputs and inference
 ------------------------------

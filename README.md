@@ -161,7 +161,9 @@ Validation is read-only and orders its stages as canonical structure, optional
 source-format validation, then optional exact background-link validation.
 `check_format=False` skips only the adapter hook;
 `check_background_links=False` skips only catalog checks. Normalization returns
-a copy. Caller-owned data and the source document are not mutated.
+a copy. Caller-owned data and the source document are not mutated. Structural
+validation requires every dataset to have a non-empty `comment`; a missing or
+whitespace-only comment is a blocking error.
 
 ## Upload Analysis
 
@@ -178,6 +180,7 @@ SimaPro path.
 ```python
 from brightpath import (
     BackgroundContext,
+    BackgroundProfile,
     BiosphereProfile,
     FormatProfile,
     InventoryContext,
@@ -234,7 +237,11 @@ when this structured error is present. Contradictory legacy
 `source_profile` values return `simapro_source_profile_conflict`; catalog
 construction or loading returns the structured
 `simapro_biosphere_catalog_missing`, `simapro_biosphere_catalog_invalid`, or
-`simapro_biosphere_catalog_failed` issue instead of attempting a parse.
+`simapro_biosphere_catalog_failed` issue instead of attempting a parse. During
+inference, unavailable profile listings, tied best coverage, and zero resolved
+matches are reported as `simapro_biosphere_inference_unavailable`,
+`simapro_biosphere_profile_ambiguous`, and
+`simapro_biosphere_profile_not_inferred`, respectively.
 
 ## Migrate and Keep the Same Format
 

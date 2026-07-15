@@ -231,8 +231,10 @@ The same format-only operation works for UVEK:
 
    assert uvek_csv.value.context.background == uvek_background
 
-This is not an ecoinvent-to-UVEK mapping. Cross-family background migration
-remains unavailable.
+This format-only step is not an ecoinvent-to-UVEK mapping. Cross-family
+background migration remains a separate explicit operation. The only packaged
+cross-family route is the heuristic forward ecoinvent 3.6–3.12 to UVEK 2025
+route; UVEK-to-ecoinvent migration remains unavailable.
 
 File round-trip limits
 ----------------------

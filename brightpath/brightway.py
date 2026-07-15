@@ -241,13 +241,14 @@ class BrightwayInventory:
     ) -> "BrightwayInventory":
         """Transactionally migrate background links and return a new facade.
 
-        The preferred *target* is a complete :class:`BackgroundContext`.
-        Legacy :class:`BackgroundProfile` and :class:`TechnosphereProfile`
-        targets may be paired with an explicit *biosphere_profile*. When it is
-        omitted, the inventory's exact existing biosphere profile is preserved,
-        except that the legacy UVEK 2025 target uses its documented ecoinvent
-        3.10 biosphere. Reverse migrations require an explicitly permissive
-        policy.
+        The preferred *target* is a complete
+        :class:`~brightpath.core.context.BackgroundContext`. Legacy
+        :class:`~brightpath.models.BackgroundProfile` and
+        :class:`~brightpath.core.context.TechnosphereProfile` targets may be
+        paired with an explicit *biosphere_profile*. When it is omitted, the
+        inventory's exact existing biosphere profile is preserved, except that
+        the legacy UVEK 2025 target uses its documented ecoinvent 3.10
+        biosphere. Reverse migrations require an explicitly permissive policy.
 
         :param target: Exact destination background context or a legacy
             technosphere-only target.

@@ -4,8 +4,9 @@ SimaPro CSV workflows
 Load with exact context
 -----------------------
 
-SimaPro names encode database-specific conventions, so pass the exact
-technosphere and biosphere context when it is not embedded elsewhere:
+SimaPro names encode database-specific conventions, and a SimaPro CSV is not
+treated as an exact background-context source. New code should therefore pass
+the exact technosphere and biosphere context explicitly:
 
 .. code-block:: python
 

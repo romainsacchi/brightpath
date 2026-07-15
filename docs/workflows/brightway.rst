@@ -144,9 +144,14 @@ validation, coverage, reverse handling, and loss policy must be explicit:
        pipeline.write(migrated.value, "foreground-ei311.csv")
 
 The document remains in its Brightway format. The facade's
-``migrate_background(BackgroundProfile(...))`` method remains available for
-technosphere-oriented v1 code, but it cannot express separate component
-targets or the full strict/permissive policy contract.
+``migrate_background()`` method also accepts a complete ``BackgroundContext``,
+a ``MigrationPolicy``, a catalog provider, and external foreground
+targets. It raises ``MigrationError`` with the immutable operation report when
+the selected policy prevents commit. Legacy ``BackgroundProfile`` and
+``TechnosphereProfile`` targets remain available; callers can pair them with
+an explicit ``biosphere_profile`` or preserve the existing biosphere. Use the
+pipeline when the migration result should be returned as a value instead of
+raised as an exception.
 
 Convert only when requested
 ---------------------------

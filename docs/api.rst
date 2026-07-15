@@ -6,11 +6,9 @@ Facade API
 
 .. autoclass:: brightpath.BrightwayInventory
    :members:
-   :exclude-members: migrate_background
 
 .. autoclass:: brightpath.SimaProInventory
    :members:
-   :exclude-members: migrate_background
 
 Exact context
 -------------

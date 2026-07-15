@@ -240,9 +240,12 @@ The installed identity catalogs currently expose:
 * ecoinvent 3.6 through 3.12 consequential technosphere;
 * ecoinvent 3.6 through 3.12 biosphere;
 * UVEK 2025 cut-off technosphere, with identities generated from the current
-  UVEK source workbook.
+  UVEK source workbook;
+* UVEK 2025 biosphere identities from that legacy combined catalog resource.
 
-The current UVEK resources use ecoinvent 3.10 biosphere identities. State this
+Provider discovery consequently lists both ``BiosphereProfile("uvek",
+"2025")`` and the ecoinvent profiles. The documented compatibility context for
+UVEK 2025 nevertheless uses ecoinvent 3.10 biosphere identities; state this
 explicitly as ``BiosphereProfile("ecoinvent", "3.10")`` in new contexts.
 
 Migration resources exist for ecoinvent 3.5, but no packaged 3.5 validation
