@@ -1448,13 +1448,189 @@ def test_analyze_simapro_csv_uses_exact_injected_311_biosphere_catalog(tmp_path)
     )
 
     assert result.source_profile == BackgroundProfile("ecoinvent", "3.11", "cutoff")
+    assert result.source_context == context
     assert result.file_issues == []
     assert result.candidates[0].issues == []
     exchange = result.inventory_data[0]["exchanges"][1]
     assert (exchange["name"], exchange["categories"], exchange["unit"]) == flow_identity
 
 
-def test_analyze_simapro_csv_requires_exact_context_before_parsing(tmp_path):
+def test_analyze_simapro_csv_infers_unique_biosphere_catalog(tmp_path, monkeypatch):
+    from brightpath.analysis import analyzer as analysis_analyzer
+
+    filepath = tmp_path / "inventory.csv"
+    filepath.write_text("fake simapro content", encoding="utf-8")
+    flow_identity = (
+        "Release-specific flow",
+        ("air", "urban air close to ground"),
+        "kilogram",
+    )
+    inventory_data = [
+        minimal_activity(
+            extra_exchanges=[
+                {
+                    "type": "biosphere",
+                    "name": flow_identity[0],
+                    "categories": flow_identity[1],
+                    "unit": flow_identity[2],
+                    "amount": 2.0,
+                }
+            ]
+        )
+    ]
+
+    class FakeSimaProInventory:
+        data = inventory_data
+
+        @classmethod
+        def from_csv(cls, *args, **kwargs):
+            return cls()
+
+        def validate(self, **kwargs):
+            return type("Report", (), {"issues": []})()
+
+    monkeypatch.setattr(analysis_analyzer, "SimaProInventory", FakeSimaProInventory)
+    source_profile = BackgroundProfile("ecoinvent", "3.9", "cutoff")
+    technosphere = source_profile.to_technosphere_profile()
+    biosphere_39 = BiosphereProfile("ecoinvent", "3.9")
+    biosphere_311 = BiosphereProfile("ecoinvent", "3.11")
+    provider = InMemoryCatalogProvider(
+        technosphere=(TechnosphereCatalog(technosphere, set()),),
+        biosphere=(
+            BiosphereCatalog(
+                biosphere_39,
+                {("Another flow", ("air",), "kilogram")},
+            ),
+            BiosphereCatalog(biosphere_311, {flow_identity}),
+        ),
+    )
+
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_profile=source_profile,
+        catalog_provider=provider,
+    )
+
+    assert result.source_context is not None
+    assert result.source_context.background.biosphere == biosphere_311
+    assert len(result.candidates) == 1
+    assert result.candidates[0].issues == []
+    assert "simapro_biosphere_profile_inferred" in {issue.code for issue in result.file_issues}
+
+
+def test_analyze_simapro_csv_reports_ambiguous_biosphere_catalogs(tmp_path, monkeypatch):
+    from brightpath.analysis import analyzer as analysis_analyzer
+
+    filepath = tmp_path / "inventory.csv"
+    filepath.write_text("fake simapro content", encoding="utf-8")
+    flow_identity = (
+        "Shared flow",
+        ("air", "urban air close to ground"),
+        "kilogram",
+    )
+    inventory_data = [
+        minimal_activity(
+            extra_exchanges=[
+                {
+                    "type": "biosphere",
+                    "name": flow_identity[0],
+                    "categories": flow_identity[1],
+                    "unit": flow_identity[2],
+                    "amount": 2.0,
+                }
+            ]
+        )
+    ]
+
+    class FakeSimaProInventory:
+        data = inventory_data
+
+        @classmethod
+        def from_csv(cls, *args, **kwargs):
+            return cls()
+
+        def validate(self, **kwargs):
+            return type("Report", (), {"issues": []})()
+
+    monkeypatch.setattr(analysis_analyzer, "SimaProInventory", FakeSimaProInventory)
+    source_profile = BackgroundProfile("ecoinvent", "3.9", "cutoff")
+    technosphere = source_profile.to_technosphere_profile()
+    provider = InMemoryCatalogProvider(
+        technosphere=(TechnosphereCatalog(technosphere, set()),),
+        biosphere=tuple(
+            BiosphereCatalog(BiosphereProfile("ecoinvent", version), {flow_identity}) for version in ("3.9", "3.11")
+        ),
+    )
+
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_profile=source_profile,
+        catalog_provider=provider,
+    )
+
+    assert result.source_context is None
+    assert result.inventory_data == []
+    assert result.candidates == []
+    assert [issue.code for issue in result.file_issues] == ["simapro_biosphere_profile_ambiguous"]
+
+
+def test_analyze_simapro_csv_reports_unmatched_biosphere_catalogs(tmp_path, monkeypatch):
+    from brightpath.analysis import analyzer as analysis_analyzer
+
+    filepath = tmp_path / "inventory.csv"
+    filepath.write_text("fake simapro content", encoding="utf-8")
+    inventory_data = [
+        minimal_activity(
+            extra_exchanges=[
+                {
+                    "type": "biosphere",
+                    "name": "Unmatched flow",
+                    "categories": ("air",),
+                    "unit": "kilogram",
+                    "amount": 2.0,
+                }
+            ]
+        )
+    ]
+
+    class FakeSimaProInventory:
+        data = inventory_data
+
+        @classmethod
+        def from_csv(cls, *args, **kwargs):
+            return cls()
+
+        def validate(self, **kwargs):
+            return type("Report", (), {"issues": []})()
+
+    monkeypatch.setattr(analysis_analyzer, "SimaProInventory", FakeSimaProInventory)
+    source_profile = BackgroundProfile("ecoinvent", "3.9", "cutoff")
+    provider = InMemoryCatalogProvider(
+        technosphere=(TechnosphereCatalog(source_profile.to_technosphere_profile(), set()),),
+        biosphere=(
+            BiosphereCatalog(
+                BiosphereProfile("ecoinvent", "3.9"),
+                {("Known flow", ("air",), "kilogram")},
+            ),
+        ),
+    )
+
+    result = analyze_inventory(
+        path=filepath,
+        source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_profile=source_profile,
+        catalog_provider=provider,
+    )
+
+    assert result.source_context is None
+    assert result.inventory_data == []
+    assert result.candidates == []
+    assert [issue.code for issue in result.file_issues] == ["simapro_biosphere_profile_not_inferred"]
+
+
+def test_analyze_simapro_csv_requires_exact_context_or_complete_profile_before_parsing(tmp_path):
     filepath = make_simapro_csv(tmp_path, [minimal_activity()])
 
     result = analyze_inventory(

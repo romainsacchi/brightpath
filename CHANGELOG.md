@@ -21,11 +21,13 @@ All notable changes to this project will be documented in this file.
   represent independent biosphere contexts or transactional validation.
 - Enforced software-format identity at facade and reader boundaries; contradictory exact and legacy
   context arguments now fail instead of being ignored.
-- Required exact `InventoryContext` and exact catalog access before SimaPro upload analysis parses a
-  file; legacy partial `source_profile` inference remains Brightway-only.
+- Kept every SimaPro parse tied to an exact `InventoryContext`; upload analysis can now construct
+  exact candidate contexts from a complete technosphere profile while comparing biosphere catalogs.
 
 ### Added
 
+- Added SimaPro biosphere-profile inference across all available exact catalogs. A profile is
+  returned only for a unique best exchange-coverage result; ties and no-match outcomes are reported.
 - Added copy-on-write `InventoryDocument`, `BrightwayInventory`, and `SimaProInventory` models.
 - Added a versioned canonical schema, exact `InventoryContext`, namespaced extensions, immutable
   operation reports, and explicit conversion/migration policies.

@@ -8,9 +8,10 @@ summaries. It does not write or migrate the inventory.
 
 This API retains the v1 ``BackgroundProfile`` result projection for upload
 compatibility. Brightway analysis may infer a missing or partial legacy source
-profile. SimaPro requires an exact ``InventoryContext`` before parsing. Use
-:class:`~brightpath.InventoryPipeline` when an application also needs immutable
-stage reports, format conversion, or migration.
+profile. SimaPro accepts either an exact ``InventoryContext`` or a complete
+technosphere ``BackgroundProfile`` from which upload analysis can infer only
+the biosphere profile. Use :class:`~brightpath.InventoryPipeline` when an
+application also needs immutable stage reports, format conversion, or migration.
 
 Analyze a file
 --------------
@@ -57,6 +58,7 @@ before parsing:
 
    from brightpath import (
        BackgroundContext,
+       BackgroundProfile,
        BiosphereProfile,
        FormatProfile,
        InventoryContext,
@@ -82,10 +84,36 @@ before parsing:
        catalog_provider=catalog_provider_from_environment(),
    )
 
-``result.source_profile`` remains the legacy technosphere projection, while
-parsing and link checks use both exact axes from ``source_context``. The
+``result.source_profile`` remains the legacy technosphere projection and
+``result.source_context`` contains the exact context used for SimaPro parsing.
+Parsing and link checks use both exact axes from ``source_context``. The
 application provider is used when ``catalog_provider`` is omitted, but it must
 contain the exact declared biosphere catalog.
+
+Infer a missing SimaPro biosphere profile
+------------------------------------------
+
+When the technosphere family, version, and system model are known, omit
+``source_context`` and pass the complete technosphere projection:
+
+.. code-block:: python
+
+   inferred = analyze_inventory(
+       path="foreground.csv",
+       source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+       source_profile=BackgroundProfile("ecoinvent", "3.10", "cutoff"),
+       catalog_provider=catalog_provider_from_environment(),
+   )
+
+   if inferred.source_context is not None:
+       print(inferred.source_context.background.biosphere)
+
+BrightPath parses the file once per available biosphere profile, always using
+a complete candidate ``InventoryContext``. It scores resolved biosphere links
+and parsing errors, and returns only a unique best result. The stable
+``simapro_biosphere_profile_inferred`` information issue records the selected
+coverage. Equal best scores return ``simapro_biosphere_profile_ambiguous``;
+zero resolved matches return ``simapro_biosphere_profile_not_inferred``.
 
 Missing SimaPro context is structured
 -------------------------------------
@@ -205,9 +233,10 @@ SimaPro validation accepts the same exact arguments as analysis:
        catalog_provider=catalog_provider_from_environment(),
    )
 
-If ``source_context`` is absent, ``validate_inventory`` raises the shared
-``InventoryValidationError`` containing the structured
-``simapro_source_context_required`` result.
+If both ``source_context`` and a complete technosphere ``source_profile`` are
+absent, ``validate_inventory`` raises the shared ``InventoryValidationError``
+containing the structured ``simapro_source_context_required`` result. Ambiguous
+and unmatched biosphere inference errors are raised through the same contract.
 
 ``brightpath.analysis.InventoryValidationError`` is the same class re-exported
 from the package root. It always exposes the shared immutable ``.report`` and

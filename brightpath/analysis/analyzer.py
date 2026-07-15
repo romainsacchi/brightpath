@@ -27,7 +27,12 @@ from brightpath.background import (
 )
 from brightpath.background import validate_background_links as validate_exact_background_links
 from brightpath.catalogs import available_catalog_profiles, load_background_catalog
-from brightpath.core import InventoryContext
+from brightpath.core import (
+    BackgroundContext,
+    BiosphereProfile,
+    FormatProfile,
+    InventoryContext,
+)
 from brightpath.exceptions import InventoryValidationError
 from brightpath.formats.simapro_csv import format_biosphere_exchange
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
@@ -70,6 +75,32 @@ _SUPPLEMENTAL_BIOSPHERE_NAME_ALIASES = {
 class _AnalysisCatalog:
     technosphere: frozenset[tuple[str, str, str, str]]
     biosphere: frozenset[tuple[str, tuple[str, ...], str]]
+
+
+@dataclass(frozen=True)
+class _BiosphereAnalysisCandidate:
+    profile: BiosphereProfile
+    result: AnalysisResult
+    total_links: int
+    unresolved_links: int
+    file_errors: int
+
+    @property
+    def resolved_links(self) -> int:
+        return max(self.total_links - self.unresolved_links, 0)
+
+    @property
+    def coverage(self) -> float:
+        return self.resolved_links / self.total_links if self.total_links else 0.0
+
+    @property
+    def rank(self) -> tuple[int, float, int, int]:
+        return (
+            int(self.file_errors == 0),
+            self.coverage,
+            self.resolved_links,
+            -self.unresolved_links,
+        )
 
 
 class _CollectingHandler(logging.Handler):
@@ -140,11 +171,11 @@ def analyze_inventory(
     :param path: Inventory file to analyze.
     :param source_format: Optional explicit format constant. Existing files
         are otherwise detected from content; ambiguous CSV is never guessed.
-    :param source_profile: Optional Brightway compatibility profile. If fields
-        are missing, BrightPath attempts catalog-based inference. SimaPro
-        analysis requires *source_context* instead.
+    :param source_profile: Optional compatibility profile. Brightway analysis
+        can infer missing fields. SimaPro analysis uses a complete profile as
+        the exact technosphere axis while inferring only the biosphere profile.
     :param source_context: Exact format, technosphere, and biosphere context
-        required before parsing SimaPro CSV.
+        used directly when parsing SimaPro CSV.
     :param catalog_provider: Exact catalogs used for SimaPro parsing and link
         validation. The application provider is used when omitted.
     :param additional_foreground_targets: External foreground identities that
@@ -373,24 +404,42 @@ def _analyze_simapro_csv(
     catalog_provider: CatalogProvider | None,
     additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> AnalysisResult:
+    normalized_legacy_profile = (legacy_source_profile or BackgroundProfile()).normalized()
     source_profile = (
         BackgroundProfile.from_technosphere_profile(source_context.background.technosphere)
         if source_context is not None
-        else BackgroundProfile()
+        else normalized_legacy_profile
     )
     result = AnalysisResult(
         detected_software=SOFTWARE_SIMAPRO,
         detected_format=SOURCE_FORMAT_SIMAPRO_CSV,
         source_profile=source_profile,
+        source_context=source_context,
     )
     if source_context is None:
+        if all(
+            (
+                source_profile.family,
+                source_profile.version,
+                source_profile.system_model,
+            )
+        ):
+            return _analyze_simapro_with_inferred_biosphere(
+                path=path,
+                source_profile=source_profile,
+                catalog_provider=catalog_provider,
+                additional_foreground_targets=additional_foreground_targets,
+            )
         result.file_issues.append(
             Issue(
                 severity="error",
                 code="simapro_source_context_required",
-                message="SimaPro analysis requires an exact source InventoryContext before parsing.",
+                message=(
+                    "SimaPro analysis requires either an exact source InventoryContext or a complete "
+                    "technosphere source_profile for biosphere inference."
+                ),
                 suggested_fix=(
-                    "Provide the SimaPro format plus exact technosphere and biosphere profiles in source_context."
+                    "Provide an exact source_context, or provide the technosphere family, version, and system model."
                 ),
             )
         )
@@ -421,31 +470,19 @@ def _analyze_simapro_csv(
         )
         return result
 
-    if catalog_provider is not None:
-        provider = catalog_provider
-    else:
-        try:
-            provider = catalog_provider_from_environment()
-        except CatalogIntegrityError as error:
-            result.file_issues.append(
-                Issue(
-                    severity="error",
-                    code="simapro_biosphere_catalog_invalid",
-                    message=f"Constructing the catalog provider failed integrity checks: {error}",
-                    suggested_fix="Repair the configured catalog manifest or inject a valid exact catalog provider.",
-                )
+    provider, provider_issue = _resolve_simapro_catalog_provider(catalog_provider)
+    if provider_issue is not None:
+        result.file_issues.append(provider_issue)
+        return result
+    if provider is None:  # Defensive guard for custom provider implementations.
+        result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_biosphere_catalog_failed",
+                message="Constructing the catalog provider returned no provider.",
             )
-            return result
-        except Exception as error:
-            result.file_issues.append(
-                Issue(
-                    severity="error",
-                    code="simapro_biosphere_catalog_failed",
-                    message=f"Constructing the catalog provider failed: {error}",
-                    suggested_fix="Check the catalog configuration or inject a valid exact catalog provider.",
-                )
-            )
-            return result
+        )
+        return result
     biosphere_catalog, catalog_issue = _load_exact_simapro_biosphere_catalog(source_context, provider)
     if catalog_issue is not None:
         result.file_issues.append(catalog_issue)
@@ -538,6 +575,162 @@ def _analyze_simapro_csv(
         result.file_issues.extend(background_file_issues)
     result.file_issues.extend(_warning_issues(collector.messages))
     return result
+
+
+def _analyze_simapro_with_inferred_biosphere(
+    *,
+    path: Path,
+    source_profile: BackgroundProfile,
+    catalog_provider: CatalogProvider | None,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+) -> AnalysisResult:
+    base_result = AnalysisResult(
+        detected_software=SOFTWARE_SIMAPRO,
+        detected_format=SOURCE_FORMAT_SIMAPRO_CSV,
+        source_profile=source_profile,
+    )
+    provider, provider_issue = _resolve_simapro_catalog_provider(catalog_provider)
+    if provider_issue is not None:
+        base_result.file_issues.append(provider_issue)
+        return base_result
+    if provider is None:  # Defensive guard for custom provider implementations.
+        base_result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_biosphere_inference_failed",
+                message="Constructing the catalog provider returned no provider.",
+            )
+        )
+        return base_result
+
+    try:
+        profiles = provider.biosphere_profiles()
+    except Exception as error:
+        base_result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_biosphere_inference_failed",
+                message=f"Listing available biosphere catalogs failed: {error}",
+                suggested_fix="Check the configured catalog provider before retrying biosphere inference.",
+            )
+        )
+        return base_result
+    if not profiles:
+        base_result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_biosphere_inference_unavailable",
+                message="No biosphere catalogs are available for SimaPro profile inference.",
+                suggested_fix="Install or inject biosphere catalogs, or provide an exact source_context.",
+            )
+        )
+        return base_result
+
+    technosphere = source_profile.to_technosphere_profile()
+    candidates = []
+    for biosphere_profile in profiles:
+        context = InventoryContext(
+            format=FormatProfile(SOURCE_FORMAT_SIMAPRO_CSV, encoding="latin-1"),
+            background=BackgroundContext(
+                technosphere=technosphere,
+                biosphere=biosphere_profile,
+            ),
+        )
+        analysis = _analyze_simapro_csv(
+            path=path,
+            source_context=context,
+            legacy_source_profile=source_profile,
+            catalog_provider=provider,
+            additional_foreground_targets=additional_foreground_targets,
+        )
+        total_links = sum(
+            1
+            for activity in analysis.inventory_data
+            for exchange in activity.get("exchanges", [])
+            if exchange.get("type") == "biosphere"
+        )
+        unresolved_links = sum(
+            1
+            for candidate in analysis.candidates
+            for issue in candidate.issues
+            if issue.code == "unknown_biosphere_flow"
+        )
+        candidates.append(
+            _BiosphereAnalysisCandidate(
+                profile=biosphere_profile,
+                result=analysis,
+                total_links=total_links,
+                unresolved_links=unresolved_links,
+                file_errors=sum(1 for issue in analysis.file_issues if issue.severity == "error"),
+            )
+        )
+
+    eligible = [candidate for candidate in candidates if candidate.resolved_links > 0]
+    if not eligible:
+        base_result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_biosphere_profile_not_inferred",
+                message=(
+                    f"None of the {len(profiles)} available biosphere catalogs resolved a "
+                    "biosphere exchange uniquely enough to infer a profile."
+                ),
+                suggested_fix="Provide an exact biosphere profile or use an application fallback.",
+            )
+        )
+        return base_result
+
+    best_rank = max(candidate.rank for candidate in eligible)
+    best_candidates = [candidate for candidate in eligible if candidate.rank == best_rank]
+    if len(best_candidates) != 1:
+        labels = ", ".join(candidate.profile.label() for candidate in best_candidates)
+        base_result.file_issues.append(
+            Issue(
+                severity="error",
+                code="simapro_biosphere_profile_ambiguous",
+                message=("Multiple biosphere catalogs produced the same best exchange coverage " f"({labels})."),
+                suggested_fix="Provide an exact biosphere profile or use an application fallback.",
+            )
+        )
+        return base_result
+
+    selected = best_candidates[0]
+    selected.result.file_issues.append(
+        Issue(
+            severity="info",
+            code="simapro_biosphere_profile_inferred",
+            message=(
+                f"BrightPath inferred {selected.profile.label()} by resolving "
+                f"{selected.resolved_links} of {selected.total_links} biosphere exchanges "
+                f"across {len(profiles)} available biosphere catalogs."
+            ),
+            suggested_fix="Review the inferred profile and override it if the source context is known.",
+        )
+    )
+    return selected.result
+
+
+def _resolve_simapro_catalog_provider(
+    catalog_provider: CatalogProvider | None,
+) -> tuple[CatalogProvider | None, Issue | None]:
+    if catalog_provider is not None:
+        return catalog_provider, None
+    try:
+        return catalog_provider_from_environment(), None
+    except CatalogIntegrityError as error:
+        return None, Issue(
+            severity="error",
+            code="simapro_biosphere_catalog_invalid",
+            message=f"Constructing the catalog provider failed integrity checks: {error}",
+            suggested_fix="Repair the configured catalog manifest or inject a valid exact catalog provider.",
+        )
+    except Exception as error:
+        return None, Issue(
+            severity="error",
+            code="simapro_biosphere_catalog_failed",
+            message=f"Constructing the catalog provider failed: {error}",
+            suggested_fix="Check the catalog configuration or inject a valid exact catalog provider.",
+        )
 
 
 def _simapro_profile_conflict(

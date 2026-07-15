@@ -167,8 +167,13 @@ a copy. Caller-owned data and the source document are not mutated.
 
 Brightway upload analysis can still use a complete or partial legacy
 `source_profile` and infer missing background fields from catalogs. SimaPro
-analysis cannot: it requires an exact `InventoryContext` before parsing so the
-reader never guesses technosphere, biosphere, or system model.
+analysis prefers an exact `InventoryContext`. When only a complete technosphere
+`source_profile` is available, upload analysis probes every available biosphere
+catalog using a separate exact context, then accepts only a unique best
+biosphere-link coverage result. The selected exact context is returned as
+`analysis.source_context`; ambiguous or unmatched probes remain structured
+errors. Technosphere fields and the system model are never inferred by this
+SimaPro path.
 
 ```python
 from brightpath import (
@@ -196,7 +201,22 @@ analysis = analyze_inventory(
 )
 ```
 
-Missing context is an inspectable result, not an attempted parse:
+To infer only the missing biosphere profile, supply a complete technosphere
+profile instead. Each catalog probe still parses against an exact context:
+
+```python
+inferred = analyze_inventory(
+    path="foreground.csv",
+    source_format=SOURCE_FORMAT_SIMAPRO_CSV,
+    source_profile=BackgroundProfile("ecoinvent", "3.10", "cutoff"),
+    catalog_provider=catalog_provider_from_environment(),
+)
+if inferred.source_context is not None:
+    print(inferred.source_context.background.biosphere.label())
+```
+
+Missing both an exact context and a complete technosphere profile is an
+inspectable result, not an attempted parse:
 
 ```python
 missing = analyze_inventory(

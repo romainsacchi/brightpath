@@ -173,6 +173,7 @@ class AnalysisResult:
     detected_software: str
     detected_format: str
     source_profile: BackgroundProfile = field(default_factory=BackgroundProfile)
+    source_context: InventoryContext | None = None
     file_issues: list[Issue] = field(default_factory=list)
     candidates: list[CandidateSummary] = field(default_factory=list)
     inventory_data: list[dict] = field(default_factory=list)
