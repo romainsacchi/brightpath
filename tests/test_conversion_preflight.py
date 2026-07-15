@@ -32,6 +32,7 @@ def _activity(*, extra_exchanges=(), **overrides):
         "reference product": "test product",
         "location": "GLO",
         "unit": "kilogram",
+        "comment": "Documented foreground dataset.",
         "exchanges": [
             {
                 "type": "production",

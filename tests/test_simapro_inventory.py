@@ -25,6 +25,7 @@ def minimal_activity(extra_exchanges=None, **overrides):
         "reference product": "test product",
         "location": "GLO",
         "unit": "kilogram",
+        "comment": "Documented foreground dataset.",
         "exchanges": [
             {
                 "type": "production",
@@ -297,6 +298,7 @@ def test_uvek_csv_round_trip_uses_uvek_mapping(tmp_path):
             "reference product": "Bentonite, at processing",
             "location": "DE",
             "unit": "kilogram",
+            "comment": "Documented foreground dataset.",
             "exchanges": [
                 {
                     "type": "production",

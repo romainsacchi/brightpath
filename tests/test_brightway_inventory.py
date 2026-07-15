@@ -20,6 +20,7 @@ def minimal_inventory(*extra_exchanges, **overrides):
         "reference product": "service",
         "location": "GLO",
         "unit": "unit",
+        "comment": "Documented foreground dataset.",
         "exchanges": [
             {
                 "name": "foreground service",
@@ -125,6 +126,25 @@ def test_validate_is_read_only_and_checks_catalog_links():
 
     assert report.is_valid
     assert inventory.data == before
+
+
+@pytest.mark.parametrize("comment", [None, "", "   "])
+def test_validate_requires_non_empty_dataset_comment(comment):
+    data = minimal_inventory()
+    if comment is None:
+        data[0].pop("comment")
+    else:
+        data[0]["comment"] = comment
+    inventory = BrightwayInventory.from_data(data, background_profile=profile())
+
+    report = inventory.validate(check_background_links=False)
+
+    comment_issues = [issue for issue in report.issues if "comment" in issue.message]
+    assert report.has_errors
+    assert len(comment_issues) == 1
+    assert comment_issues[0].severity == "error"
+    assert comment_issues[0].code == "inventory_structure"
+    assert comment_issues[0].path == "activity[0]"
 
 
 def test_validate_uses_explicit_technosphere_and_biosphere_catalogs():

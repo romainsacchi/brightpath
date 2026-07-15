@@ -93,6 +93,7 @@ def activity(*, extra_exchanges=()):
         "reference product": "foreground product",
         "location": "GLO",
         "unit": "kilogram",
+        "comment": "Documented foreground dataset.",
         "exchanges": [
             {
                 "type": "production",

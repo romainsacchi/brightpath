@@ -543,7 +543,14 @@ def inspect_brightway_inventory(
 
     known_units = {_normalize_dataset_unit(unit) for unit in get_simapro_units()}
     known_biosphere_units = {_normalize_dataset_unit(unit) for unit in get_biosphere_units()}
-    required_activity_keys = ("name", "reference product", "location", "unit", "exchanges")
+    required_activity_keys = (
+        "name",
+        "reference product",
+        "location",
+        "unit",
+        "comment",
+        "exchanges",
+    )
     required_tech_keys = ("name", "reference product", "location", "unit", "amount")
     required_bio_keys = ("name", "categories", "unit", "amount")
 
@@ -557,7 +564,7 @@ def inspect_brightway_inventory(
             if key not in activity:
                 errors.append(f"{activity_ctx}: missing required activity field `{key}`.")
 
-        for key in ("name", "reference product", "location", "unit"):
+        for key in ("name", "reference product", "location", "unit", "comment"):
             if key in activity and not _has_text(activity[key]):
                 errors.append(f"{activity_ctx}: activity field `{key}` must be a non-empty string.")
 

@@ -33,6 +33,7 @@ def minimal_activity(extra_exchanges=None, **overrides):
         "reference product": "test product",
         "location": "GLO",
         "unit": "kilogram",
+        "comment": "Documented foreground dataset.",
         "exchanges": [
             {
                 "type": "production",
@@ -211,7 +212,7 @@ def test_analyze_brightway_excel_returns_candidate_summaries(tmp_path):
     assert len(result.candidates) == 1
     assert result.candidates[0].name == "test process"
     assert result.candidates[0].reference_product == "test product"
-    assert result.candidates[0].description_hint == ""
+    assert result.candidates[0].description_hint == "Documented foreground dataset."
     assert result.candidates[0].source_hint == ""
     assert result.candidates[0].issues == []
 
@@ -284,6 +285,27 @@ def test_analyze_brightway_excel_ignores_missing_simapro_category(tmp_path):
     assert result.file_issues == []
     assert len(result.candidates) == 1
     assert result.candidates[0].issues == []
+
+
+def test_analyze_brightway_excel_blocks_dataset_without_comment(tmp_path):
+    workbook = make_brightway_excel(
+        tmp_path,
+        [minimal_activity(comment="   ")],
+    )
+
+    result = analyze_inventory(
+        path=workbook,
+        source_format=SOURCE_FORMAT_BRIGHTWAY_EXCEL,
+    )
+
+    assert result.file_issues == []
+    assert result.has_errors
+    assert len(result.candidates) == 1
+    comment_issues = [issue for issue in result.candidates[0].issues if "comment" in issue.message]
+    assert len(comment_issues) == 1
+    assert comment_issues[0].severity == "error"
+    assert comment_issues[0].code == "inventory_validation_error"
+    assert comment_issues[0].path == "activity[0]"
 
 
 def test_analyze_brightway_excel_surfaces_non_blocking_validation_warnings(tmp_path):

@@ -43,12 +43,14 @@ Stages are returned in stable order:
 2. source-format validation when ``check_format=True``;
 3. exact background validation when ``check_background_links=True``.
 
-The structural stage checks canonical dataset and exchange shape, plausibility,
-duplicate identities, and production identity consistency. The selected source
-adapter owns ``validate_format(document)`` and checks intrinsic grammar without
-converting, writing, or applying loss policy. Missing, failing, or malformed
-adapter contracts are format-validation errors. The background stage
-independently checks:
+The structural stage checks canonical dataset and exchange shape, requires a
+non-empty ``comment`` on every dataset, checks plausibility, duplicate
+identities, and production identity consistency. A missing or whitespace-only
+dataset comment is a blocking error. The selected source adapter owns
+``validate_format(document)`` and checks intrinsic grammar without converting,
+writing, or applying loss policy. Missing, failing, or malformed adapter
+contracts are format-validation errors. The background stage independently
+checks:
 
 * technosphere exchange identities against the exact technosphere catalog;
 * biosphere exchange identities against the exact biosphere catalog;

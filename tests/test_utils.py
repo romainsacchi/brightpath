@@ -12,6 +12,7 @@ def activity_with_exchanges(*exchanges):
         "reference product": "product",
         "location": "GLO",
         "unit": "kilogram",
+        "comment": "Documented foreground dataset.",
         "exchanges": list(exchanges),
     }
 

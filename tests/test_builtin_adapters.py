@@ -39,6 +39,7 @@ def _document(format_id: str) -> InventoryDocument:
                 "reference product": "test product",
                 "location": "GLO",
                 "unit": "kilogram",
+                "comment": "Documented foreground dataset.",
                 "exchanges": [
                     {
                         "type": "production",

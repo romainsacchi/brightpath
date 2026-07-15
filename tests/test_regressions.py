@@ -15,6 +15,7 @@ def minimal_activity(extra_exchanges=None, **overrides):
         "reference product": "test product",
         "location": "GLO",
         "unit": "kilogram",
+        "comment": "Documented foreground dataset.",
         "exchanges": [
             {
                 "type": "production",
