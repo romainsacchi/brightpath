@@ -5,11 +5,10 @@ import re
 from functools import lru_cache
 
 import yaml
-from bw2io.units import normalize_units as normalize_unit
-
 from brightpath import DATA_DIR
 from brightpath.catalogs import load_background_catalog
 from brightpath.models import BackgroundProfile
+from brightpath.units import normalize_unit
 
 _LOCATION_CORRECTIONS = {
     "WECC, US only": "US-WECC",

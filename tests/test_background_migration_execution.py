@@ -365,6 +365,38 @@ def test_permissive_forward_biosphere_deletion_is_applied_and_reported_as_loss()
     assert "migration.biosphere_deletion" in {loss.code for loss in result.report.losses}
 
 
+def test_strict_biosphere_deletion_fails_only_when_the_inventory_matches_the_rule():
+    source = background("3.5", "3.5")
+    target = BackgroundContext(
+        technosphere=source.technosphere,
+        biosphere=BiosphereProfile("ecoinvent", "3.6"),
+    )
+    rule = load_biosphere_resources()[("3.5", "3.6")]["delete"][0]
+    original = document(source, biosphere_exchange(rule["source"], categories=("air",)))
+    provider = InMemoryCatalogProvider(
+        biosphere=[BiosphereCatalog(source.biosphere, {(rule["source"]["name"], ("air",), "kg")})]
+    )
+
+    result = execute_background_migration(original, target, provider)
+
+    assert not result.succeeded
+    assert "migration.biosphere_deletion" in {issue.code for issue in result.report.issues}
+
+
+def test_strict_biosphere_deletion_rule_allows_unaffected_inventory():
+    source = background("3.5", "3.5")
+    target = BackgroundContext(
+        technosphere=source.technosphere,
+        biosphere=BiosphereProfile("ecoinvent", "3.6"),
+    )
+    original = document(source)
+    provider = InMemoryCatalogProvider()
+
+    result = execute_background_migration(original, target, provider)
+
+    assert result.succeeded
+
+
 def test_unsafe_unit_change_never_fakes_target_unit_or_amount():
     source = background("3.6", "3.6")
     target = background("3.7", "3.6")

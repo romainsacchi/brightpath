@@ -4,11 +4,10 @@ from collections import defaultdict, deque
 from copy import deepcopy
 from math import isclose
 
-from bw2io.units import normalize_units as normalize_unit
-
 from brightpath.core.context import resolve_migration_series
 from brightpath.exceptions import MigrationError, MigrationUnavailableError
 from brightpath.models import BackgroundProfile, InventoryDocument, Issue
+from brightpath.units import normalize_unit
 
 from .models import MigrationReport, MigrationStepReport
 from .resources import load_biosphere_resources, load_technosphere_resources

@@ -369,6 +369,25 @@ def _apply_biosphere_step(
     report = _legacy_step_report(step)
     if step.direction == "forward":
         _delete_biosphere_exchanges(data, resource.get("delete", []), report)
+        if report.biosphere_deletions:
+            report.issues.append(
+                _legacy_issue(
+                    severity=_severity(policy.on_deletion).value,
+                    code="migration_biosphere_deletion",
+                    message=(
+                        f"Migration removed {report.biosphere_deletions} biosphere exchange(s) "
+                        "that have no target replacement."
+                    ),
+                )
+            )
+            return report, [
+                Loss(
+                    code="migration.biosphere_deletion",
+                    message="Matched biosphere exchanges were deleted by the migration resource.",
+                    stage=StageKind.BACKGROUND_MIGRATION,
+                    details={"axis": step.axis.value, "step_index": step_index, "count": report.biosphere_deletions},
+                )
+            ]
     prepared = deepcopy(resource)
     if step.direction == "forward":
         prepared["delete"] = []

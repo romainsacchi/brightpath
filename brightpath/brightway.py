@@ -17,7 +17,6 @@ from .core.context import (
 from .core.policies import MigrationPolicy
 from .core.reports import OperationReport
 from .exceptions import InventoryValidationError, MigrationError
-from .formats import load_brightway_excel, write_brightway_excel
 from .models import (
     BackgroundProfile,
     InventoryDocument,
@@ -72,6 +71,8 @@ class BrightwayInventory:
         :raises FileNotFoundError: If *path* does not exist.
         :raises ValueError: If *path* does not have an ``.xlsx`` suffix.
         """
+
+        from .formats.brightway_excel import load_brightway_excel
 
         return cls(
             load_brightway_excel(
@@ -307,6 +308,8 @@ class BrightwayInventory:
             )
             if report.has_errors:
                 raise InventoryValidationError(report)
+        from .formats.brightway_excel import write_brightway_excel
+
         return write_brightway_excel(self._document, path)
 
     def to_simapro(self) -> "SimaProInventory":

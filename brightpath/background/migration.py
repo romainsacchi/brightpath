@@ -614,36 +614,6 @@ def _materialize_steps(
                 path=path,
                 details=loss.details,
             )
-        if step.deletion_rules:
-            reverse = step.inferred_reverse
-            loss = Loss(
-                code="migration.reverse_deletion" if reverse else "migration.deletion",
-                message=(
-                    f"The resource contains {step.deletion_rules} deletion rules; "
-                    + (
-                        "a reverse migration cannot reconstruct the deleted flows."
-                        if reverse
-                        else "applying them removes matching flows."
-                    )
-                ),
-                stage=StageKind.MIGRATION_PLANNING,
-                path=path,
-                details={
-                    "axis": axis.value,
-                    "resource": step.resource_name,
-                    "rule_count": step.deletion_rules,
-                    "policy_action": policy.on_deletion.value,
-                },
-            )
-            losses.append(loss)
-            _policy_issue(
-                issues,
-                policy.on_deletion,
-                "migration.reverse_deletion_loss" if reverse else "migration.deletion_loss",
-                loss.message,
-                path=path,
-                details=loss.details,
-            )
     return tuple(steps)
 
 

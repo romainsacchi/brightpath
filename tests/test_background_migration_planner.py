@@ -132,7 +132,7 @@ def test_allow_policy_records_reverse_as_information():
     assert {issue.severity for issue in plan.report.issues} == {Severity.INFO}
 
 
-def test_reverse_deletion_is_an_explicit_loss():
+def test_reverse_deletion_rule_does_not_make_a_data_free_plan_fail():
     source = background("3.6", "3.6")
     target = background("3.6", "3.5")
 
@@ -140,8 +140,9 @@ def test_reverse_deletion_is_an_explicit_loss():
 
     assert [step.direction for step in plan.biosphere_steps] == ["backward"]
     assert plan.biosphere_steps[0].deletion_rules == 3
-    assert "migration.reverse_deletion" in {loss.code for loss in plan.report.losses}
-    assert "migration.reverse_deletion_loss" in issue_codes(plan)
+    assert plan.executable
+    assert "migration.reverse_deletion" not in {loss.code for loss in plan.report.losses}
+    assert "migration.reverse_deletion_loss" not in issue_codes(plan)
 
 
 def test_missing_311_to_312_biosphere_resource_is_reported_by_exact_edge():
