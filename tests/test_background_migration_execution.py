@@ -397,6 +397,35 @@ def test_strict_biosphere_deletion_rule_allows_unaffected_inventory():
     assert result.succeeded
 
 
+def test_uuid_less_nitrogen_oxides_uses_its_air_compartment():
+    source = background("3.9", "3.9")
+    target = background("3.10", "3.10")
+    original = document(
+        source,
+        {
+            "name": "Nitrogen oxides",
+            "categories": ["air"],
+            "unit": "kilogram",
+            "amount": 1.0,
+            "type": "biosphere",
+        },
+    )
+    identity = ("Nitrogen oxides", ("air",), "kilogram")
+    provider = InMemoryCatalogProvider(
+        biosphere=[
+            BiosphereCatalog(source.biosphere, {identity}),
+            BiosphereCatalog(target.biosphere, {identity}),
+        ]
+    )
+
+    result = execute_background_migration(original, target, provider)
+
+    assert result.succeeded
+    exchange = result.value.data[0]["exchanges"][0]
+    assert exchange["uuid"] == "c1b91234-6f24-417b-8309-46111d09c457"
+    assert exchange["categories"] == ["air"]
+
+
 def test_unsafe_unit_change_never_fakes_target_unit_or_amount():
     source = background("3.6", "3.6")
     target = background("3.7", "3.6")
