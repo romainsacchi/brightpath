@@ -1,0 +1,264 @@
+{
+  "name": "ecoinvent-3.11-biosphere-ecoinvent-3.12-biosphere",
+  "description": "Data migration file from ecoinvent-3.11-biosphere to ecoinvent-3.12-biosphere generated with `ecoinvent_migrate` version 0.6.2; supplemented with one whitespace-only identity correction verified against the exact BrightPath catalogs",
+  "contributors": [
+    {
+      "title": "ecoinvent association",
+      "path": "https://ecoinvent.org/",
+      "roles": [
+        "author"
+      ]
+    },
+    {
+      "title": "Chris Mutel",
+      "path": "https://chris.mutel.org/",
+      "roles": [
+        "wrangler"
+      ]
+    }
+  ],
+  "created": "2026-07-22T08:38:11.068301+00:00",
+  "version": "2.0.0",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "title": "Creative Commons Attribution 4.0 International"
+    }
+  ],
+  "graph_context": [
+    "edges"
+  ],
+  "mapping": {
+    "source": {
+      "expression language": "XPath",
+      "labels": {
+        "name": "//*:elementaryExchange/*:name/text()",
+        "unit": "//*:elementaryExchange/*:unitName/text()",
+        "uuid": "//*:elementaryExchange/@elementaryExchangeId",
+        "formula": "//*:elementaryExchange/@formula",
+        "context": [
+          "//*:elementaryExchange/*:compartment/*:compartment/text()",
+          "//*:elementaryExchange/*:compartment/*:subcompartment/text()"
+        ]
+      }
+    },
+    "target": {
+      "expression language": "XPath",
+      "labels": {
+        "name": "//*:elementaryExchange/*:name/text()",
+        "unit": "//*:elementaryExchange/*:unitName/text()",
+        "uuid": "//*:elementaryExchange/@elementaryExchangeId",
+        "formula": "//*:elementaryExchange/@formula",
+        "context": [
+          "//*:elementaryExchange/*:compartment/*:compartment/text()",
+          "//*:elementaryExchange/*:compartment/*:subcompartment/text()"
+        ]
+      }
+    }
+  },
+  "source_id": "ecoinvent-3.11-biosphere",
+  "target_id": "ecoinvent-3.12-biosphere",
+  "homepage": "https://github.com/brightway-lca/ecoinvent_migrate",
+  "replace": [
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "air"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "53214ef0-3cc1-4166-920b-08ca46f7c457"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "53214ef0-3cc1-4166-920b-08ca46f7c457"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "9fbec2f4-6b42-4e63-9573-14e04befe20f"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "9fbec2f4-6b42-4e63-9573-14e04befe20f"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "air",
+          "non-urban air or from high stacks"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "6ed53433-96ff-402c-87d0-52b8271aadac"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "6ed53433-96ff-402c-87d0-52b8271aadac"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "water",
+          "surface water"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "1a19ad61-abd0-4d42-9828-8fae315c0b06"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "1a19ad61-abd0-4d42-9828-8fae315c0b06"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "water",
+          "ground-"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "b9fbef13-2fbf-4783-b7ff-b2ecabf2a55c"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "b9fbef13-2fbf-4783-b7ff-b2ecabf2a55c"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "Tert-butanol",
+        "categories": [
+          "air"
+        ],
+        "unit": "kilogram",
+        "formula": "C4H10O",
+        "uuid": "f06ecbdf-cd83-46a9-b05e-c90ce65858a8"
+      },
+      "target": {
+        "name": "tert-Butanol",
+        "uuid": "f06ecbdf-cd83-46a9-b05e-c90ce65858a8"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "water"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "f9d36529-abde-4ed2-a82c-d365ae2c713f"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "f9d36529-abde-4ed2-a82c-d365ae2c713f"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "air",
+          "low population density, long-term"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "497e2e7c-0e1a-4b9f-a94e-d63d5e49dcf8"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "497e2e7c-0e1a-4b9f-a94e-d63d5e49dcf8"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "water",
+          "ocean"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "f6a4bdb1-d67e-4c00-adf3-df344701bde9"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "f6a4bdb1-d67e-4c00-adf3-df344701bde9"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "4-Methyl-2-pentanone",
+        "categories": [
+          "water",
+          "ground-, long-term"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H12O",
+        "uuid": "663ca947-9c87-4fb3-885f-f65789a93671"
+      },
+      "target": {
+        "name": "Methyl isobutyl ketone",
+        "uuid": "663ca947-9c87-4fb3-885f-f65789a93671"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "Tert-butanol",
+        "categories": [
+          "water"
+        ],
+        "unit": "kilogram",
+        "formula": "C4H10O",
+        "uuid": "18762d4d-f0b1-4f32-9dd1-fed497e286bd"
+      },
+      "target": {
+        "name": "tert-Butanol",
+        "uuid": "18762d4d-f0b1-4f32-9dd1-fed497e286bd"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "Ferrocyanide ",
+        "categories": [
+          "water"
+        ],
+        "unit": "kilogram",
+        "formula": "C6FeN6-4",
+        "uuid": "1591e09e-283f-4000-8b28-978122005557"
+      },
+      "target": {
+        "name": "Ferrocyanide",
+        "uuid": "1591e09e-283f-4000-8b28-978122005557"
+      },
+      "comment": "Whitespace-only flow identity change verified against the exact BrightPath 3.11 and 3.12 catalogs"
+    }
+  ]
+}

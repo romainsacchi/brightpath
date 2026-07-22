@@ -133,12 +133,17 @@ skipped rather than applying a new unit to an unchanged amount.
 Biosphere identity disambiguation
 ----------------------------------
 
-Foreground inventories do not always carry biosphere UUIDs. For each route
-step, the executor therefore loads the exact biosphere catalog at that step's
-destination and compares the exchange's ``(name, categories, unit)`` identity.
-When several rules match, no UUID-specific rule is selected if that identity
-is already valid in the catalog. Otherwise, if the rules' non-UUID targets
-produce exactly one catalog-valid identity, that target is applied. Any
+Foreground inventories do not always carry biosphere UUIDs. Every packaged
+biosphere rule source therefore declares a unique ``(name, categories, unit)``
+identity, and forward source matching uses that tuple without requiring a UUID.
+UUIDs retained in standard ecoinvent resources record upstream provenance but
+do not override a complete tuple.
+
+For each route step, the executor also loads the exact biosphere catalog at
+that step's destination. When partial targets or reverse rules produce several
+matches, no UUID-specific rule is selected if the exchange tuple is already
+valid in the catalog. Otherwise, if the rules' non-UUID targets produce
+exactly one catalog-valid identity, that target is applied. Any
 remaining multi-rule match reports
 ``migration.biosphere_replacement_ambiguous`` and applies
 ``MigrationPolicy.on_ambiguous_rule``. Strict policy rolls the operation back;
@@ -180,7 +185,7 @@ Available resource edges
 ------------------------
 
 Packaged ecoinvent cut-off technosphere edges connect 3.5→3.6 through
-3.11→3.12. Packaged biosphere edges connect 3.5→3.6 through 3.10→3.11.
+3.11→3.12. Packaged biosphere edges cover the same adjacent release series.
 Capability discovery reports edges, not a promise that every multi-axis route
 is executable under every policy.
 
@@ -193,9 +198,9 @@ ecoinvent 3.10. Both resources are deterministic heuristics. Planning records
 metadata; it does not claim that the selected activities are scientifically
 equivalent.
 
-In particular, no ecoinvent 3.11→3.12 biosphere migration resource is
-packaged. A complete target that changes both technosphere and biosphere to
-3.12 is therefore unavailable:
+The ecoinvent 3.11→3.12 biosphere resource records stable-UUID flow renames
+identified from the release master data. A complete cut-off target can
+therefore migrate both axes to 3.12:
 
 .. code-block:: python
 
@@ -203,12 +208,10 @@ packaged. A complete target that changes both technosphere and biosphere to
        technosphere=TechnosphereProfile("ecoinvent", "3.12", "cutoff"),
        biosphere=BiosphereProfile("ecoinvent", "3.12"),
    )
-   unavailable = plan_background_migration(target, target_312)
-   assert not unavailable.executable
-
-The planner reports
-``migration.biosphere_resource_missing_unavailable``. It does not fabricate an
-identity mapping or silently leave the biosphere relabeled and unchanged.
+   plan_312 = plan_background_migration(target, target_312)
+   assert plan_312.executable
+   assert len(plan_312.technosphere_steps) == 1
+   assert len(plan_312.biosphere_steps) == 1
 
 Independent background components
 ---------------------------------

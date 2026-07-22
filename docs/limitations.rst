@@ -49,9 +49,8 @@ Migration boundaries
 --------------------
 
 * Packaged ecoinvent cut-off technosphere edges cover 3.5→3.12.
-* Packaged ecoinvent biosphere edges cover 3.5→3.11. The missing 3.11→3.12
-  biosphere resource prevents a complete migration that changes both
-  components to 3.12.
+* Packaged ecoinvent biosphere edges cover adjacent release series from
+  3.5→3.6 through 3.11→3.12.
 * Reverse routes are inferred from forward data and fail under strict policy.
   Permissive policy records the inference and all known losses.
 * Forward resources can contain deletion rules. A route is not rejected merely
@@ -100,10 +99,12 @@ System-model catalog files may contain complementary biosphere shards. The
 directory provider unions them only after validating every resource and a
 common schema version; a corrupt shard invalidates the combined catalog.
 
-UUID-less biosphere migration can also consult the exact catalog at each route
-step to distinguish rules by ``(name, categories, unit)``. A missing
-intermediate catalog can therefore leave an otherwise resolvable multi-step
-replacement ambiguous under the selected policy.
+Packaged biosphere rule sources are independently identifiable by a unique
+``(name, categories, unit)`` tuple, so forward matching does not require UUIDs.
+The exact catalog at each route step is still needed for partial targets,
+reverse rules, and endpoint validation. A missing intermediate catalog can
+therefore leave an otherwise resolvable multi-step replacement ambiguous under
+the selected policy.
 
 The packaged catalogs cover ecoinvent 3.6–3.12 and UVEK 2025, while migration
 resources begin at ecoinvent 3.5. Strict 3.5 execution therefore needs a custom

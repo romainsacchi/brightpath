@@ -1,6 +1,7 @@
 import pytest
 
 from brightpath import DATA_DIR, BackgroundProfile, BrightwayInventory
+from brightpath.background import PackageCatalogProvider
 from brightpath.core import BackgroundContext, BiosphereProfile, MigrationPolicy, TechnosphereProfile
 from brightpath.exceptions import MigrationError
 from brightpath.migrations import available_ecoinvent_versions, resolve_migration_route
@@ -106,15 +107,14 @@ def test_reverse_migration_aggregates_forward_disaggregation():
     assert "migration.reverse_aggregation" in {loss.code for loss in backward.last_migration_report.losses}
 
 
-def test_missing_biosphere_step_is_reported():
+def test_full_311_to_312_migration_applies_biosphere_renames():
     source = inventory_with_exchange(
         {
-            "name": "market for electricity, low voltage",
-            "reference product": "electricity, low voltage",
-            "location": "CH",
-            "unit": "kilowatt hour",
+            "name": "4-Methyl-2-pentanone",
+            "categories": ("air",),
+            "unit": "kilogram",
             "amount": 1.0,
-            "type": "technosphere",
+            "type": "biosphere",
         },
         version="3.11",
     )
@@ -124,10 +124,76 @@ def test_missing_biosphere_step_is_reported():
         biosphere=BiosphereProfile("ecoinvent", "3.12"),
     )
 
-    with pytest.raises(MigrationError) as raised:
-        source.migrate_background(target)
+    migrated = source.migrate_background(target)
 
-    assert "migration.biosphere_resource_missing_unavailable" in {issue.code for issue in raised.value.report.issues}
+    assert migrated.data[0]["exchanges"][1]["name"] == "Methyl isobutyl ketone"
+    assert migrated.background_profile == BackgroundProfile("ecoinvent", "3.12", "cutoff")
+    assert migrated.biosphere_profile == BiosphereProfile("ecoinvent", "3.12")
+    assert source.data[0]["exchanges"][1]["name"] == "4-Methyl-2-pentanone"
+
+
+def test_311_to_312_biosphere_resource_covers_every_obsolete_catalog_identity():
+    provider = PackageCatalogProvider()
+    source_profile = BiosphereProfile("ecoinvent", "3.11")
+    target_profile = BiosphereProfile("ecoinvent", "3.12")
+    source_catalog = provider.load_biosphere(source_profile).identities
+    target_catalog = provider.load_biosphere(target_profile).identities
+    obsolete = source_catalog - target_catalog
+    source = BrightwayInventory.from_data(
+        [
+            {
+                "name": "foreground service",
+                "reference product": "service",
+                "location": "GLO",
+                "unit": "unit",
+                "exchanges": [
+                    {
+                        "name": "foreground service",
+                        "reference product": "service",
+                        "location": "GLO",
+                        "unit": "unit",
+                        "amount": 1.0,
+                        "type": "production",
+                    },
+                    *(
+                        {
+                            "name": name,
+                            "categories": categories,
+                            "unit": unit,
+                            "amount": 1.0,
+                            "type": "biosphere",
+                        }
+                        for name, categories, unit in sorted(obsolete)
+                    ),
+                ],
+            }
+        ],
+        background_profile=profile("3.11"),
+    )
+    target = BackgroundContext(
+        technosphere=TechnosphereProfile("ecoinvent", "3.11", "cutoff"),
+        biosphere=target_profile,
+    )
+
+    migrated = source.migrate_background(target)
+    migrated_identities = {
+        (exchange["name"], tuple(exchange["categories"]), exchange["unit"])
+        for exchange in migrated.data[0]["exchanges"]
+        if exchange["type"] == "biosphere"
+    }
+
+    assert len(obsolete) == 12
+    assert migrated_identities <= target_catalog
+    assert {
+        "Ferrocyanide",
+        "Methyl isobutyl ketone",
+        "tert-Butanol",
+    } <= {name for name, _categories, _unit in migrated_identities}
+    assert {
+        (exchange["name"], tuple(exchange["categories"]), exchange["unit"])
+        for exchange in source.data[0]["exchanges"]
+        if exchange["type"] == "biosphere"
+    } == obsolete
 
 
 def test_cross_family_migration_resource_is_active():

@@ -166,9 +166,10 @@ Planning and execution are independent:
 
 ``execute_background_migration()``
    Validates exact source links, plans, applies rules to copied dictionaries,
-   consults each step-target biosphere catalog to disambiguate UUID-less flow
-   rules, validates exact final-target links and coverage, and commits only
-   when the selected policy allows it.
+   matches biosphere sources by their complete ``(name, categories, unit)``
+   identities, consults each step-target biosphere catalog to disambiguate
+   partial targets and reverse rules, validates exact final-target links and
+   coverage, and commits only when the selected policy allows it.
 
 The executor never applies a unit-changing rule without an explicit numeric
 factor. Reverse routes are inferred and policy-controlled. Deletion-rule
@@ -176,10 +177,9 @@ presence is planning metadata; deletion policy is applied only when execution
 matches and removes an exchange. Rollback returns the source document and
 removes uncommitted changes from the report.
 
-Technosphere resources connect ecoinvent cut-off 3.5→3.12. Biosphere resources
-stop at 3.10→3.11; no 3.11→3.12 edge exists. A full 3.12 migration must not be
-advertised or approximated. Consequential version-to-version, cross-model,
-UVEK-to-ecoinvent, and UVEK-version migration also remain unavailable. A
+Technosphere and biosphere resources connect adjacent ecoinvent release series
+from 3.5→3.6 through 3.11→3.12. Consequential version-to-version, cross-model,
+UVEK-to-ecoinvent, and UVEK-version migration remain unavailable. A
 separate ecoinvent 3.6–3.12 to UVEK 2025 compatibility resource is explicitly
 heuristic, records a warning and loss, and is verified against the exact UVEK
 target catalog before commit.

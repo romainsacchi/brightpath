@@ -145,21 +145,20 @@ def test_reverse_deletion_rule_does_not_make_a_data_free_plan_fail():
     assert "migration.reverse_deletion_loss" not in issue_codes(plan)
 
 
-def test_missing_311_to_312_biosphere_resource_is_reported_by_exact_edge():
+def test_311_to_312_biosphere_resource_is_planned_by_exact_edge():
     source = background("3.12", "3.11")
     target = background("3.12", "3.12")
 
     plan = plan_background_migration(source, target)
 
-    missing = next(
-        issue for issue in plan.report.issues if issue.code == "migration.biosphere_resource_missing_unavailable"
-    )
     assert plan.technosphere_steps == ()
-    assert plan.biosphere_steps == ()
-    assert missing.details["source_series"] == "3.11"
-    assert missing.details["target_series"] == "3.12"
-    assert "3.11 to 3.12" in missing.message
-    assert not plan.executable
+    assert len(plan.biosphere_steps) == 1
+    step = plan.biosphere_steps[0]
+    assert (step.source_version, step.target_version) == ("3.11", "3.12")
+    assert step.resource_name == "ecoinvent-3.11-biosphere-ecoinvent-3.12-biosphere"
+    assert step.replacement_rules == 12
+    assert plan.report.issues == ()
+    assert plan.executable
 
 
 @pytest.mark.parametrize(

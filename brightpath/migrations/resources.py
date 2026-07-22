@@ -68,7 +68,7 @@ def _load_resources(directory: Path, *, expected_kind: str) -> dict[tuple[str, s
             raise MigrationError(
                 f"Migration resource {path} has unexpected profile kinds " f"{source_kind!r} and {target_kind!r}."
             )
-        _validate_rule_lists(payload, path)
+        _validate_rule_lists(payload, path, expected_axis=expected_kind)
         payload["_path"] = str(path)
         resources[(source_version, target_version)] = payload
     return resources
@@ -92,7 +92,7 @@ def _load_uvek_resource(filename: str, *, expected_axis: str) -> dict:
         raise MigrationError(f"Migration resource {path} must declare its heuristic quality.")
     _validate_profile(payload.get("source_profile"), path, role="source")
     _validate_profile(payload.get("target_profile"), path, role="target")
-    _validate_rule_lists(payload, path)
+    _validate_rule_lists(payload, path, expected_axis=expected_axis)
     payload["_path"] = str(path)
     return payload
 
@@ -156,7 +156,8 @@ def _parse_profile_id(value, path: Path) -> tuple[str, str]:
     return version, match.group("kind")
 
 
-def _validate_rule_lists(payload: dict, path: Path) -> None:
+def _validate_rule_lists(payload: dict, path: Path, *, expected_axis: str) -> None:
+    biosphere_identities: dict[tuple[str, tuple[str, ...], str], tuple[str, int]] = {}
     for field in ("replace", "disaggregate", "delete"):
         rules = payload.get(field, [])
         if not isinstance(rules, list):
@@ -164,6 +165,14 @@ def _validate_rule_lists(payload: dict, path: Path) -> None:
         for index, rule in enumerate(rules):
             if not isinstance(rule, dict) or not isinstance(rule.get("source"), dict):
                 raise MigrationError(f"Migration resource {path} has an invalid {field} rule at index {index}.")
+            if expected_axis == "biosphere":
+                identity = _validate_biosphere_source(rule["source"], path, field=field, index=index)
+                previous = biosphere_identities.setdefault(identity, (field, index))
+                if previous != (field, index):
+                    raise MigrationError(
+                        f"Migration resource {path} repeats biosphere source identity {identity!r} "
+                        f"at {previous[0]} rule {previous[1]} and {field} rule {index}."
+                    )
             if field == "replace" and not isinstance(rule.get("target"), dict):
                 raise MigrationError(f"Migration resource {path} has an invalid replacement target at index {index}.")
             if field == "disaggregate" and not isinstance(rule.get("targets"), list):
@@ -172,6 +181,31 @@ def _validate_rule_lists(payload: dict, path: Path) -> None:
                 raise MigrationError(
                     f"Migration resource {path} has a non-dictionary disaggregation target " f"at index {index}."
                 )
+
+
+def _validate_biosphere_source(
+    source: dict,
+    path: Path,
+    *,
+    field: str,
+    index: int,
+) -> tuple[str, tuple[str, ...], str]:
+    """Validate and return the UUID-independent identity of a biosphere rule source."""
+
+    name = source.get("name")
+    categories = source.get("categories")
+    unit = source.get("unit")
+    if not isinstance(name, str) or not name:
+        raise MigrationError(f"Migration resource {path} {field} rule {index} has no biosphere source name.")
+    if (
+        not isinstance(categories, list)
+        or not categories
+        or not all(isinstance(category, str) and category for category in categories)
+    ):
+        raise MigrationError(f"Migration resource {path} {field} rule {index} has invalid biosphere categories.")
+    if not isinstance(unit, str) or not unit:
+        raise MigrationError(f"Migration resource {path} {field} rule {index} has no biosphere source unit.")
+    return name, tuple(categories), unit
 
 
 def _version_key(version: str) -> tuple[int, ...]:

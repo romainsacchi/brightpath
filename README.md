@@ -28,7 +28,7 @@ The full Sphinx guide starts at [`docs/index.rst`](docs/index.rst).
 | Brightway block CSV/TSV | Detect, read, normalize, validate, convert, write |
 | SimaPro CSV | Detect, read, normalize, validate, convert, write |
 | ecoinvent technosphere migration | Cut-off edges 3.5→3.12; reverse is inferred and policy-controlled |
-| ecoinvent biosphere migration | Edges 3.5→3.11; **3.11→3.12 is unavailable** |
+| ecoinvent biosphere migration | Edges 3.5→3.12; reverse is inferred and policy-controlled |
 | Reference catalogs | ecoinvent 3.6–3.12 cut-off/consequential and UVEK 2025 cut-off |
 | UVEK | Valid in Brightway and SimaPro; `BAFU` accepted only as an input alias |
 | OpenLCA Excel / ecoSpold2 | Structurally reserved, but no adapter is registered or advertised |
@@ -297,13 +297,16 @@ for loss in review_migration.report.losses:
 Permissive means “continue and report”; it does not establish scientific
 validity.
 
-For UUID-less biosphere exchanges, each migration step uses the exact catalog
-at that step's destination to resolve otherwise ambiguous rules. An exchange
-with multiple rule matches is left alone when its ``(name, categories, unit)``
-identity is already valid; otherwise BrightPath prefers a unique catalog-valid
-target identity. Remaining ambiguity is reported through
-``MigrationPolicy.on_ambiguous_rule``; a permissive run retains the first
-packaged rule's deterministic fallback for review.
+Every packaged biosphere rule source carries a unique
+``(name, categories, unit)`` identity. Forward migration therefore does not
+require a foreground UUID; UUIDs retained from upstream resources are
+provenance rather than a prerequisite for matching. Each migration step also
+uses the exact catalog at that step's destination to resolve partial or
+otherwise ambiguous target rules. An exchange with multiple rule matches is
+left alone when its tuple identity is already valid; otherwise BrightPath
+prefers a unique catalog-valid target identity. Remaining ambiguity is
+reported through ``MigrationPolicy.on_ambiguous_rule``; a permissive run
+retains the first packaged rule's deterministic fallback for review.
 
 ## Convert Format Only
 
@@ -579,9 +582,9 @@ uses an atomic replacement; its parent directory must already exist.
 
 ## Important Limits
 
-- The ecoinvent technosphere has a 3.11→3.12 rule, but no corresponding
-  biosphere resource is packaged. A complete migration that changes the
-  biosphere from 3.11 to 3.12 is unavailable.
+- Packaged ecoinvent cut-off technosphere and biosphere resources both connect
+  adjacent release series through 3.12. Exact endpoint catalogs are still
+  required for transactional execution.
 - Reverse migration is inferred from forward resources and is blocked by
   strict policy. Permissive execution records aggregation, irreversible
   deletion rules, ambiguity, and information loss.

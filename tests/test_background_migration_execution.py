@@ -68,15 +68,17 @@ def technosphere_identity(specification):
     )
 
 
-def biosphere_exchange(specification, *, categories=("air", "urban air close to ground"), amount=1.0):
-    return {
+def biosphere_exchange(specification, *, categories=None, amount=1.0, include_uuid=True):
+    exchange = {
         "name": specification["name"],
-        "uuid": specification["uuid"],
-        "categories": categories,
-        "unit": specification.get("unit", "kg"),
+        "categories": tuple(specification["categories"]) if categories is None else categories,
+        "unit": specification["unit"],
         "amount": amount,
         "type": "biosphere",
     }
+    if include_uuid:
+        exchange["uuid"] = specification["uuid"]
+    return exchange
 
 
 def first_safe_replacement(source_version="3.10", target_version="3.11"):
@@ -318,10 +320,11 @@ def test_biosphere_replacement_runs_independently_of_technosphere():
     source = background("3.10", "3.10")
     target = background("3.10", "3.11")
     rule = load_biosphere_resources()[("3.10", "3.11")]["replace"][0]
-    categories = ("air", "urban air close to ground")
-    source_identity = (rule["source"]["name"], categories, "kg")
-    target_identity = (rule["target"]["name"], categories, "kg")
-    original = document(source, biosphere_exchange(rule["source"], categories=categories))
+    categories = tuple(rule["source"]["categories"])
+    unit = rule["source"]["unit"]
+    source_identity = (rule["source"]["name"], categories, unit)
+    target_identity = (rule["target"]["name"], categories, unit)
+    original = document(source, biosphere_exchange(rule["source"], include_uuid=False))
     provider = InMemoryCatalogProvider(
         biosphere=[
             BiosphereCatalog(source.biosphere, {source_identity}),
@@ -348,9 +351,12 @@ def test_permissive_forward_biosphere_deletion_is_applied_and_reported_as_loss()
         biosphere=BiosphereProfile("ecoinvent", "3.6"),
     )
     rule = load_biosphere_resources()[("3.5", "3.6")]["delete"][0]
-    categories = ("air",)
-    source_identity = (rule["source"]["name"], categories, "kg")
-    original = document(source, biosphere_exchange(rule["source"], categories=categories))
+    source_identity = (
+        rule["source"]["name"],
+        tuple(rule["source"]["categories"]),
+        rule["source"]["unit"],
+    )
+    original = document(source, biosphere_exchange(rule["source"], include_uuid=False))
     provider = InMemoryCatalogProvider(biosphere=[BiosphereCatalog(source.biosphere, {source_identity})])
 
     result = execute_background_migration(original, target, provider, MigrationPolicy.permissive())
@@ -372,9 +378,11 @@ def test_strict_biosphere_deletion_fails_only_when_the_inventory_matches_the_rul
         biosphere=BiosphereProfile("ecoinvent", "3.6"),
     )
     rule = load_biosphere_resources()[("3.5", "3.6")]["delete"][0]
-    original = document(source, biosphere_exchange(rule["source"], categories=("air",)))
+    categories = tuple(rule["source"]["categories"])
+    unit = rule["source"]["unit"]
+    original = document(source, biosphere_exchange(rule["source"], include_uuid=False))
     provider = InMemoryCatalogProvider(
-        biosphere=[BiosphereCatalog(source.biosphere, {(rule["source"]["name"], ("air",), "kg")})]
+        biosphere=[BiosphereCatalog(source.biosphere, {(rule["source"]["name"], categories, unit)})]
     )
 
     result = execute_background_migration(original, target, provider)
@@ -426,7 +434,7 @@ def test_uuid_less_nitrogen_oxides_uses_its_air_compartment():
     assert exchange["categories"] == ["air"]
 
 
-def test_uuid_less_biosphere_exchange_uses_target_catalog_identity_before_ambiguous_rules():
+def test_uuid_less_biosphere_exchange_matches_unique_source_tuple():
     source = background("3.7", "3.7")
     target = background("3.8", "3.8")
     identity = ("Sulfur dioxide", ("air",), "kilogram")
@@ -451,13 +459,23 @@ def test_uuid_less_biosphere_exchange_uses_target_catalog_identity_before_ambigu
 
     assert result.succeeded
     exchange = result.value.data[0]["exchanges"][0]
+    rule = next(
+        rule
+        for rule in load_biosphere_resources()[("3.7", "3.8")]["replace"]
+        if (
+            rule["source"]["name"],
+            tuple(rule["source"]["categories"]),
+            rule["source"]["unit"],
+        )
+        == identity
+    )
     assert exchange["name"] == "Sulfur dioxide"
     assert exchange["categories"] == ["air"]
-    assert "uuid" not in exchange
+    assert exchange["uuid"] == rule["target"]["uuid"]
     assert "migration.biosphere_replacement_ambiguous" not in {issue.code for issue in result.report.issues}
 
 
-def test_uuid_less_biosphere_exchange_uses_intermediate_catalog_identity():
+def test_uuid_less_biosphere_exchange_matches_source_tuples_across_intermediate_steps():
     source = background("3.7", "3.7")
     target = background("3.10", "3.10")
     intermediate_identity = (
@@ -493,9 +511,20 @@ def test_uuid_less_biosphere_exchange_uses_intermediate_catalog_identity():
 
     assert result.succeeded
     exchange = result.value.data[0]["exchanges"][0]
+    final_rule = next(
+        rule
+        for rule in load_biosphere_resources()[("3.9", "3.10")]["replace"]
+        if (
+            rule["source"]["name"],
+            tuple(rule["source"]["categories"]),
+            rule["source"]["unit"],
+        )
+        == intermediate_identity
+        and rule["target"]["name"] == target_identity[0]
+    )
     assert exchange["name"] == target_identity[0]
     assert exchange["categories"] == list(target_identity[1])
-    assert "uuid" not in exchange
+    assert exchange["uuid"] == final_rule["target"]["uuid"]
     assert "migration.biosphere_replacement_ambiguous" not in {issue.code for issue in result.report.issues}
 
 

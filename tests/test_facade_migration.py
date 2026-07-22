@@ -67,12 +67,11 @@ def technosphere_exchange(identity: tuple[str, str, str, str]) -> dict:
     }
 
 
-def biosphere_exchange(specification: dict, categories: tuple[str, ...]) -> dict:
+def biosphere_exchange(specification: dict) -> dict:
     return {
         "name": specification["name"],
-        "uuid": specification["uuid"],
-        "categories": categories,
-        "unit": specification.get("unit", "kg"),
+        "categories": tuple(specification["categories"]),
+        "unit": specification["unit"],
         "amount": 1.0,
         "type": "biosphere",
     }
@@ -196,16 +195,17 @@ def test_biosphere_migrates_independently_of_technosphere(facade_type):
     source_context = background("3.10", "3.10")
     target_context = background("3.10", "3.11")
     rule = load_biosphere_resources()[("3.10", "3.11")]["replace"][0]
-    categories = ("air", "urban air close to ground")
-    source_identity = (rule["source"]["name"], categories, rule["source"].get("unit", "kg"))
-    target_identity = (rule["target"]["name"], categories, rule["target"].get("unit", "kg"))
+    categories = tuple(rule["source"]["categories"])
+    unit = rule["source"]["unit"]
+    source_identity = (rule["source"]["name"], categories, unit)
+    target_identity = (rule["target"]["name"], categories, rule["target"].get("unit", unit))
     provider = InMemoryCatalogProvider(
         biosphere=[
             BiosphereCatalog(source_context.biosphere, {source_identity}),
             BiosphereCatalog(target_context.biosphere, {target_identity}),
         ]
     )
-    source = inventory(facade_type, source_context, biosphere_exchange(rule["source"], categories))
+    source = inventory(facade_type, source_context, biosphere_exchange(rule["source"]))
 
     migrated = source.migrate_background(target_context, catalog_provider=provider)
 

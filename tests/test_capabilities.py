@@ -22,7 +22,7 @@ def test_migration_capabilities_advertise_only_active_routes():
 
     assert ("technosphere", "3.11", "3.12") in edges
     assert ("biosphere", "3.10", "3.11") in edges
-    assert ("biosphere", "3.11", "3.12") not in edges
+    assert ("biosphere", "3.11", "3.12") in edges
     assert {value.family for value in capabilities} == {"ecoinvent"}
     uvek = [value for value in capabilities if value.target_family == "uvek"]
     assert {(value.source_series, value.target_series) for value in uvek} == {

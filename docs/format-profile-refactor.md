@@ -146,9 +146,8 @@ The legacy engine function `brightpath.migrations.migrate_inventory` is not a
 public export. Public calls use transactional execution with endpoint
 validation and rollback.
 
-Packaged ecoinvent cut-off technosphere edges cover 3.5 to 3.12. Biosphere
-edges stop at 3.10 to 3.11. The missing 3.11 to 3.12 biosphere edge prevents a
-complete 3.12 migration. Consequential version-to-version, cross-model,
+Packaged ecoinvent cut-off technosphere and biosphere edges now cover adjacent
+release series from 3.5 to 3.12. Consequential version-to-version, cross-model,
 UVEK-to-ecoinvent, and UVEK-version routes are unavailable. The forward
 ecoinvent 3.6–3.12 to UVEK 2025 compatibility route is explicitly heuristic,
 reported as a loss, and validated against exact target catalogs.

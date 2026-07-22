@@ -576,13 +576,15 @@ def _biosphere_matches(exchange: dict, specification: dict) -> bool:
             return False
     if not _units_compatible(exchange.get("unit"), specification.get("unit")):
         return False
-    actual_uuid = _exchange_uuid(exchange)
-    if actual_uuid and specification.get("uuid") and actual_uuid != specification["uuid"]:
-        return False
     expected_categories = specification.get("categories")
     if expected_categories is not None and tuple(str(value) for value in exchange.get("categories", ())) != tuple(
         str(value) for value in expected_categories
     ):
+        return False
+    if expected_name and expected_categories is not None and specification.get("unit"):
+        return True
+    actual_uuid = _exchange_uuid(exchange)
+    if actual_uuid and specification.get("uuid") and actual_uuid != specification["uuid"]:
         return False
     return bool(expected_name or specification.get("uuid"))
 
