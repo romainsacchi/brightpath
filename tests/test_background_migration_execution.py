@@ -15,7 +15,7 @@ from brightpath.core.context import (
     InventoryContext,
     TechnosphereProfile,
 )
-from brightpath.core.policies import MigrationPolicy
+from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.core.reports import OperationKind, StageKind
 from brightpath.migrations.engine import _canonical_unit
 from brightpath.migrations.resources import load_biosphere_resources, load_technosphere_resources
@@ -403,6 +403,30 @@ def test_strict_biosphere_deletion_rule_allows_unaffected_inventory():
     result = execute_background_migration(original, target, provider)
 
     assert result.succeeded
+
+
+def test_reverse_biosphere_deletion_route_warns_without_blocking():
+    source = background("3.6", "3.6")
+    target = BackgroundContext(
+        technosphere=source.technosphere,
+        biosphere=BiosphereProfile("ecoinvent", "3.5"),
+    )
+
+    result = execute_background_migration(
+        document(source),
+        target,
+        InMemoryCatalogProvider(),
+        MigrationPolicy(on_inferred_reverse=PolicyAction.WARN),
+    )
+
+    assert result.succeeded
+    notices = [
+        issue
+        for issue in result.report.issues
+        if issue.code == "migration.biosphere_reverse_route_notice"
+    ]
+    assert len(notices) == 1
+    assert notices[0].severity.value == "warning"
 
 
 def test_uuid_less_nitrogen_oxides_uses_its_air_compartment():

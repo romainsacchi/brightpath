@@ -361,10 +361,11 @@ def _apply_biosphere_rules(
             report.issues.append(
                 Issue(
                     severity="warning",
-                    code="migration_biosphere_deletion_irreversible",
+                    code="migration_biosphere_reverse_route_notice",
                     message=(
                         f"{len(resource['delete'])} biosphere deletion rules in "
-                        f"{resource.get('name', 'this migration')} cannot be reversed."
+                        f"{resource.get('name', 'this migration')} apply only in the "
+                        "forward direction; no exchange was deleted while reversing this route."
                     ),
                 )
             )
