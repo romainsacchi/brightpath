@@ -278,8 +278,11 @@ if not written.succeeded:
 Migration is transactional: an error-policy condition returns the unchanged
 source document and records why the candidate was rolled back. Strict policy
 requires valid source and target links, 100% coverage, and no inferred reverse,
-ambiguous, deleted, lossy, or unsafe unit-change behavior. Permissive policy
-turns these conditions into warnings and sets minimum coverage to zero:
+ambiguous, applied-deletion, lossy, or unsafe unit-change behavior. Merely
+having deletion rules in a route does not block planning or execution; deletion
+policy is applied only when a rule matches an exchange in the inventory.
+Permissive policy turns these conditions into warnings and sets minimum
+coverage to zero:
 
 ```python
 review_migration = pipeline.migrate(
@@ -293,6 +296,14 @@ for loss in review_migration.report.losses:
 
 Permissive means “continue and report”; it does not establish scientific
 validity.
+
+For UUID-less biosphere exchanges, each migration step uses the exact catalog
+at that step's destination to resolve otherwise ambiguous rules. An exchange
+with multiple rule matches is left alone when its ``(name, categories, unit)``
+identity is already valid; otherwise BrightPath prefers a unique catalog-valid
+target identity. Remaining ambiguity is reported through
+``MigrationPolicy.on_ambiguous_rule``; a permissive run retains the first
+packaged rule's deterministic fallback for review.
 
 ## Convert Format Only
 
@@ -572,8 +583,8 @@ uses an atomic replacement; its parent directory must already exist.
   biosphere resource is packaged. A complete migration that changes the
   biosphere from 3.11 to 3.12 is unavailable.
 - Reverse migration is inferred from forward resources and is blocked by
-  strict policy. Permissive execution records aggregation, deletion,
-  ambiguity, and information loss.
+  strict policy. Permissive execution records aggregation, irreversible
+  deletion rules, ambiguity, and information loss.
 - Rules that change units without an explicit numeric factor are not applied;
   the skipped rule and loss are reported.
 - Consequential version-to-version, cross-system-model, UVEK-to-ecoinvent, and

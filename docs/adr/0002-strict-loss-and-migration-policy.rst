@@ -18,8 +18,12 @@ corresponding stable loss or migration code:
 * unresolved source or target background links;
 * unit changes without finite amount-conversion factors;
 * partial reverse aggregation;
-* irreversible deletion;
+* an irreversible deletion actually applied to inventory data;
 * missing catalog or migration resources.
+
+Deletion-rule presence and counts remain visible planning metadata, but policy
+is evaluated against matched exchanges during execution. This prevents an
+unused rule from blocking an otherwise unaffected inventory.
 
 Conversion applies ambiguous-mapping policy during adapter-owned preflight.
 When target validation is enabled, it runs the target adapter's independent

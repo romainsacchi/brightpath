@@ -54,9 +54,10 @@ Migration boundaries
   components to 3.12.
 * Reverse routes are inferred from forward data and fail under strict policy.
   Permissive policy records the inference and all known losses.
-* Forward resources can contain deletion rules. Strict policy rejects a route
-  with policy-controlled deletion risk; permissive mode is an explicit review
-  choice.
+* Forward resources can contain deletion rules. A route is not rejected merely
+  because such rules exist: deletion policy is applied during execution only
+  when a rule matches an inventory exchange. Strict policy then rolls back;
+  permissive mode records the applied deletion as an explicit loss.
 * Rules that change units without numeric conversion factors are skipped and
   reported. BrightPath never changes a unit while retaining an unconverted
   amount.
@@ -98,6 +99,11 @@ provider or the application default; pipeline reads use the injected provider.
 System-model catalog files may contain complementary biosphere shards. The
 directory provider unions them only after validating every resource and a
 common schema version; a corrupt shard invalidates the combined catalog.
+
+UUID-less biosphere migration can also consult the exact catalog at each route
+step to distinguish rules by ``(name, categories, unit)``. A missing
+intermediate catalog can therefore leave an otherwise resolvable multi-step
+replacement ambiguous under the selected policy.
 
 The packaged catalogs cover ecoinvent 3.6–3.12 and UVEK 2025, while migration
 resources begin at ecoinvent 3.5. Strict 3.5 execution therefore needs a custom

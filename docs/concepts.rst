@@ -208,8 +208,8 @@ adapter's intrinsic ``validate_format`` grammar hook; ``on_invalid_target``
 controls only errors from that stage. Target validation cannot override the
 representability, loss, or ambiguity policies already applied by preflight.
 ``MigrationPolicy`` additionally controls invalid source links, unresolved
-links, ambiguous rules, deletions, inferred reverse routes, unit changes
-without numeric factors, target validity, and minimum coverage.
+links, ambiguous rules, applied deletions, inferred reverse routes, unit
+changes without numeric factors, target validity, and minimum coverage.
 
 Permissive policies downgrade unsafe conditions to warnings and continue when
 possible. They do not hide issues or certify the output.

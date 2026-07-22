@@ -81,14 +81,16 @@ Strict policy
 
 * exact source validation before rule application;
 * a resource-backed route for every changed background component;
-* no inferred reverse route, ambiguous rule, deletion, information loss, or
-  unit change without a numeric factor;
+* no inferred reverse route, ambiguous rule, applied deletion, information
+  loss, or unit change without a numeric factor;
 * exact target validation after rule application;
 * 100% resolved target-link coverage for technosphere and biosphere.
 
 If any error-policy condition occurs, execution returns the original document.
 The migration stage is marked as rolled back and its non-committed changes are
-removed from the report.
+removed from the report. Deletion-rule counts remain planning metadata, but a
+forward route is rejected for deletion only when a rule actually matches an
+exchange during execution.
 
 Permissive review
 -----------------
@@ -127,6 +129,25 @@ reversing those edges and is policy-controlled:
 Strict policy rejects inferred reverse steps. Permissive policy records both
 the warning and explicit ``Loss`` objects. Unsafe unit-changing rules are
 skipped rather than applying a new unit to an unchanged amount.
+
+Biosphere identity disambiguation
+----------------------------------
+
+Foreground inventories do not always carry biosphere UUIDs. For each route
+step, the executor therefore loads the exact biosphere catalog at that step's
+destination and compares the exchange's ``(name, categories, unit)`` identity.
+When several rules match, no UUID-specific rule is selected if that identity
+is already valid in the catalog. Otherwise, if the rules' non-UUID targets
+produce exactly one catalog-valid identity, that target is applied. Any
+remaining multi-rule match reports
+``migration.biosphere_replacement_ambiguous`` and applies
+``MigrationPolicy.on_ambiguous_rule``. Strict policy rolls the operation back;
+a permissive run retains the first packaged rule's deterministic fallback for
+review.
+
+This lookup is step-specific for multi-step routes; an intermediate release's
+catalog can be needed to disambiguate its incoming biosphere rules. Final
+target validation remains a separate transaction gate.
 
 Exact patch versions
 --------------------

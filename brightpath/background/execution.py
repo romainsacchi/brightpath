@@ -311,8 +311,9 @@ def _step_target_biosphere_identities(
     try:
         return provider.load_biosphere(BiosphereProfile(family, version)).identities
     except (CatalogNotFoundError, CatalogIntegrityError):
-        # Target validation records this condition with the appropriate policy
-        # severity after migration. Do not mask it while applying a step.
+        # Final-target validation reports an unavailable final catalog. For an
+        # intermediate step, an empty set keeps UUID-less multi-rule matches
+        # ambiguous so the selected ambiguity policy can fail safely.
         return frozenset()
 
 

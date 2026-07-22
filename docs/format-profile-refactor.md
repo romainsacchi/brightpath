@@ -136,10 +136,11 @@ technosphere and biosphere routes and applies policy without reading catalogs
 or changing data. The executor validates the exact source, applies rules to a
 copy, validates exact target links and coverage, then commits or rolls back.
 
-Strict policy rejects inferred reverse routes, ambiguity, deletions,
+Strict policy rejects inferred reverse routes, ambiguity, applied deletions,
 information loss, unresolved links, incomplete coverage, and unit-changing
-rules without numeric factors. Permissive policy reports these as warnings and
-losses; it does not certify output.
+rules without numeric factors. Deletion rules that do not match inventory data
+do not fail planning or execution. Permissive policy reports applied deletions
+as warnings and losses; it does not certify output.
 
 The legacy engine function `brightpath.migrations.migrate_inventory` is not a
 public export. Public calls use transactional execution with endpoint
