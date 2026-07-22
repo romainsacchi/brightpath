@@ -316,6 +316,34 @@ def test_forward_disaggregation_and_reverse_aggregation_execute_transactionally(
     assert original.data[0]["exchanges"][0]["amount"] == 10.0
 
 
+def test_graphite_anode_market_is_disaggregated_from_38_to_39():
+    resource = load_technosphere_resources("cutoff")[("3.8", "3.9")]
+    rule = next(
+        rule
+        for rule in resource["disaggregate"]
+        if rule["source"]["name"] == "market for anode, graphite, for lithium-ion battery"
+    )
+    source_identity = technosphere_identity(rule["source"])
+    target_identities = {technosphere_identity(target) for target in rule["targets"]}
+    source = background("3.8")
+    target = background("3.9")
+    original = document(source, technosphere_exchange(source_identity, amount=10.0))
+    provider = InMemoryCatalogProvider(
+        technosphere=[
+            TechnosphereCatalog(source.technosphere, {source_identity}),
+            TechnosphereCatalog(target.technosphere, target_identities),
+        ]
+    )
+
+    result = execute_background_migration(original, target, provider)
+
+    assert result.succeeded
+    exchanges = result.value.data[0]["exchanges"]
+    assert {technosphere_identity(exchange) for exchange in exchanges} == target_identities
+    assert sum(exchange["amount"] for exchange in exchanges) == pytest.approx(10.0)
+    assert {exchange["location"] for exchange in exchanges} == {"CN", "RoW"}
+
+
 def test_biosphere_replacement_runs_independently_of_technosphere():
     source = background("3.10", "3.10")
     target = background("3.10", "3.11")
@@ -420,11 +448,7 @@ def test_reverse_biosphere_deletion_route_warns_without_blocking():
     )
 
     assert result.succeeded
-    notices = [
-        issue
-        for issue in result.report.issues
-        if issue.code == "migration.biosphere_reverse_route_notice"
-    ]
+    notices = [issue for issue in result.report.issues if issue.code == "migration.biosphere_reverse_route_notice"]
     assert len(notices) == 1
     assert notices[0].severity.value == "warning"
 

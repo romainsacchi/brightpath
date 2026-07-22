@@ -1,6 +1,6 @@
 {
   "name": "ecoinvent-3.8-cutoff-ecoinvent-3.9-cutoff",
-  "description": "Data migration file from ecoinvent-3.8-cutoff to ecoinvent-3.9-cutoff generated with `ecoinvent_migrate` version 0.6.2",
+  "description": "Data migration file from ecoinvent-3.8-cutoff to ecoinvent-3.9-cutoff generated with `ecoinvent_migrate` version 0.6.2; supplemented with a verified graphite-anode market disaggregation derived from the licensed ecoinvent 3.8 cutoff source market",
   "contributors": [
     {
       "title": "ecoinvent association",
@@ -8359,6 +8359,32 @@
     }
   ],
   "disaggregate": [
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for anode, graphite, for lithium-ion battery",
+        "reference product": "anode, graphite, for lithium-ion battery",
+        "location": "GLO"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for anode, graphite, for Li-ion battery",
+          "reference product": "anode, graphite, for Li-ion battery",
+          "location": "CN",
+          "allocation": 0.0493720466375044,
+          "comment": "Verified from the supplier share in the licensed ecoinvent 3.8 cutoff GLO source market."
+        },
+        {
+          "unit": "kg",
+          "name": "market for anode, graphite, for Li-ion battery",
+          "reference product": "anode, graphite, for Li-ion battery",
+          "location": "RoW",
+          "allocation": 0.950627953362496,
+          "comment": "Verified from the supplier share in the licensed ecoinvent 3.8 cutoff GLO source market."
+        }
+      ]
+    },
     {
       "source": {
         "unit": "kg",
