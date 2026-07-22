@@ -349,6 +349,8 @@ def _apply_biosphere_rules(
     resource: dict,
     direction: str,
     report: MigrationStepReport,
+    *,
+    target_biosphere_identities=frozenset(),
 ) -> None:
     if direction == "forward":
         _delete_biosphere_exchanges(data, resource.get("delete", []), report)
@@ -389,6 +391,12 @@ def _apply_biosphere_rules(
             if not matches:
                 continue
             if len(matches) > 1:
+                # CLIC-style inventories identify elementary flows by name,
+                # emission category, and unit. When that exact identity is
+                # already valid in the target catalog, no UUID-specific
+                # migration rule is needed (and choosing one would be wrong).
+                if _biosphere_catalog_identity(exchange) in target_biosphere_identities:
+                    continue
                 report.issues.append(
                     Issue(
                         severity="warning",
@@ -409,6 +417,17 @@ def _apply_biosphere_rules(
             )
             _apply_biosphere_target(exchange, rule[replacement_side])
             report.biosphere_replacements += 1
+
+
+def _biosphere_catalog_identity(exchange: dict) -> tuple[str, tuple[str, ...], str]:
+    raw_categories = exchange.get("categories", ())
+    if isinstance(raw_categories, str):
+        raw_categories = (raw_categories,)
+    return (
+        str(exchange.get("name") or ""),
+        tuple(str(value) for value in raw_categories),
+        str(exchange.get("unit") or ""),
+    )
 
 
 def _delete_biosphere_exchanges(

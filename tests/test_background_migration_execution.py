@@ -426,6 +426,39 @@ def test_uuid_less_nitrogen_oxides_uses_its_air_compartment():
     assert exchange["categories"] == ["air"]
 
 
+def test_uuid_less_biosphere_exchange_uses_target_catalog_identity_before_ambiguous_rules():
+    source = background("3.7", "3.7")
+    target = background("3.8", "3.8")
+    identity = ("Sulfur dioxide", ("air",), "kilogram")
+    original = document(
+        source,
+        {
+            "name": "Sulfur dioxide",
+            "categories": ["air"],
+            "unit": "kilogram",
+            "amount": 0.0003,
+            "type": "biosphere",
+        },
+    )
+    provider = InMemoryCatalogProvider(
+        biosphere=[
+            BiosphereCatalog(source.biosphere, {identity}),
+            BiosphereCatalog(target.biosphere, {identity}),
+        ]
+    )
+
+    result = execute_background_migration(original, target, provider)
+
+    assert result.succeeded
+    exchange = result.value.data[0]["exchanges"][0]
+    assert exchange["name"] == "Sulfur dioxide"
+    assert exchange["categories"] == ["air"]
+    assert "uuid" not in exchange
+    assert "migration.biosphere_replacement_ambiguous" not in {
+        issue.code for issue in result.report.issues
+    }
+
+
 def test_unsafe_unit_change_never_fakes_target_unit_or_amount():
     source = background("3.6", "3.6")
     target = background("3.7", "3.6")

@@ -7,7 +7,12 @@ from collections.abc import Iterable, Mapping, Sequence
 from copy import deepcopy
 from typing import Any
 
-from brightpath.background.catalogs import CatalogProvider, TechnosphereIdentity
+from brightpath.background.catalogs import (
+    CatalogIntegrityError,
+    CatalogNotFoundError,
+    CatalogProvider,
+    TechnosphereIdentity,
+)
 from brightpath.background.migration import (
     MigrationAxis,
     MigrationPlan,
@@ -107,7 +112,7 @@ def execute_background_migration(
         return _result(document, source, target, policy, stages, committed=False)
 
     working_data = document.data
-    migration_stage = _execute_plan(working_data, plan, policy)
+    migration_stage = _execute_plan(working_data, plan, policy, provider)
     stages.append(migration_stage)
     if migration_stage.has_errors:
         stages[-1] = _rolled_back_stage(migration_stage, "migration application failed")
@@ -226,7 +231,12 @@ def _enforce_minimum_coverage(report: StageReport, policy: MigrationPolicy) -> S
     )
 
 
-def _execute_plan(data: list[dict], plan: MigrationPlan, policy: MigrationPolicy) -> StageReport:
+def _execute_plan(
+    data: list[dict],
+    plan: MigrationPlan,
+    policy: MigrationPolicy,
+    provider: CatalogProvider,
+) -> StageReport:
     issues: list[Issue] = []
     changes: list[Change] = []
     losses: list[Loss] = []
@@ -249,6 +259,16 @@ def _execute_plan(data: list[dict], plan: MigrationPlan, policy: MigrationPolicy
             else None
         ),
     )
+    target_biosphere_identities = frozenset()
+    if plan.biosphere_steps:
+        try:
+            target_biosphere_identities = provider.load_biosphere(
+                plan.target.biosphere
+            ).identities
+        except (CatalogNotFoundError, CatalogIntegrityError):
+            # Target validation records this condition with the appropriate
+            # policy severity after migration. Do not mask it here.
+            pass
 
     for step_index, step in enumerate(plan.technosphere_steps):
         resource = _resource_for_step(step, technosphere_resources)
@@ -267,7 +287,14 @@ def _execute_plan(data: list[dict], plan: MigrationPlan, policy: MigrationPolicy
     for axis_index, step in enumerate(plan.biosphere_steps):
         step_index = offset + axis_index
         resource = _resource_for_step(step, biosphere_resources)
-        step_report, step_losses = _apply_biosphere_step(data, resource, step, policy, step_index)
+        step_report, step_losses = _apply_biosphere_step(
+            data,
+            resource,
+            step,
+            policy,
+            step_index,
+            target_biosphere_identities=target_biosphere_identities,
+        )
         translated = _translate_legacy_issues(step_report, policy, step.axis, step_index)
         issues.extend(translated)
         losses.extend(step_losses)
@@ -365,6 +392,8 @@ def _apply_biosphere_step(
     step: MigrationRouteStep,
     policy: MigrationPolicy,
     step_index: int,
+    *,
+    target_biosphere_identities=frozenset(),
 ) -> tuple[MigrationStepReport, list[Loss]]:
     report = _legacy_step_report(step)
     if step.direction == "forward":
@@ -397,7 +426,13 @@ def _apply_biosphere_step(
     if any(issue.severity == "error" for issue in report.issues):
         return report, losses
     prepared["replace"] = replacements
-    _apply_biosphere_rules(data, prepared, step.direction, report)
+    _apply_biosphere_rules(
+        data,
+        prepared,
+        step.direction,
+        report,
+        target_biosphere_identities=target_biosphere_identities,
+    )
     _apply_factored_biosphere_replacements(data, factored_replacements, step.direction, report)
     return report, losses
 
