@@ -276,9 +276,7 @@ def _execute_plan(
     for axis_index, step in enumerate(plan.biosphere_steps):
         step_index = offset + axis_index
         resource = _resource_for_step(step, biosphere_resources)
-        target_biosphere_identities = _step_target_biosphere_identities(
-            provider, plan.target.biosphere.family, step
-        )
+        target_biosphere_identities = _step_target_biosphere_identities(provider, plan.target.biosphere.family, step)
         step_report, step_losses = _apply_biosphere_step(
             data,
             resource,

@@ -5,6 +5,7 @@ import re
 from functools import lru_cache
 
 import yaml
+
 from brightpath import DATA_DIR
 from brightpath.catalogs import load_background_catalog
 from brightpath.models import BackgroundProfile

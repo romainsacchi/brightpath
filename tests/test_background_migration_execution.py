@@ -454,9 +454,7 @@ def test_uuid_less_biosphere_exchange_uses_target_catalog_identity_before_ambigu
     assert exchange["name"] == "Sulfur dioxide"
     assert exchange["categories"] == ["air"]
     assert "uuid" not in exchange
-    assert "migration.biosphere_replacement_ambiguous" not in {
-        issue.code for issue in result.report.issues
-    }
+    assert "migration.biosphere_replacement_ambiguous" not in {issue.code for issue in result.report.issues}
 
 
 def test_uuid_less_biosphere_exchange_uses_intermediate_catalog_identity():
@@ -498,9 +496,7 @@ def test_uuid_less_biosphere_exchange_uses_intermediate_catalog_identity():
     assert exchange["name"] == target_identity[0]
     assert exchange["categories"] == list(target_identity[1])
     assert "uuid" not in exchange
-    assert "migration.biosphere_replacement_ambiguous" not in {
-        issue.code for issue in result.report.issues
-    }
+    assert "migration.biosphere_replacement_ambiguous" not in {issue.code for issue in result.report.issues}
 
 
 def test_unsafe_unit_change_never_fakes_target_unit_or_amount():

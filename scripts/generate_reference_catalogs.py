@@ -9,7 +9,6 @@ import bw2data as bd
 import bw2io
 from bw2io import import_ecoinvent_release
 from bw2io.importers.excel import ExcelImporter
-from ecoinvent_interface import EcoinventRelease, Settings
 
 from brightpath.catalogs import (
     collect_technosphere_catalog_entries,
@@ -151,6 +150,11 @@ def ensure_ecoinvent_database(
 
 
 def available_release_matrix(username: str, password: str) -> dict[str, set[str]]:
+    try:
+        from ecoinvent_interface import EcoinventRelease, Settings
+    except ModuleNotFoundError as error:
+        raise ModuleNotFoundError("Catalog generation requires the optional 'ecoinvent-interface' package.") from error
+
     release = EcoinventRelease(Settings(username=username, password=password))
     return {version: set(release.list_system_models(version)) for version in release.list_versions()}
 

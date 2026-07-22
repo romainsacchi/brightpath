@@ -404,9 +404,7 @@ def _apply_biosphere_rules(
                     target_biosphere_identities,
                 )
                 if target is not None:
-                    _record_unit_change(
-                        matches[0][match_side], target, report, path=path
-                    )
+                    _record_unit_change(matches[0][match_side], target, report, path=path)
                     _apply_biosphere_target(exchange, target)
                     report.biosphere_replacements += 1
                     continue
@@ -453,9 +451,7 @@ def _shared_catalog_target(
 
     targets = []
     for rule in matches:
-        target = {
-            key: value for key, value in rule[replacement_side].items() if key != "uuid"
-        }
+        target = {key: value for key, value in rule[replacement_side].items() if key != "uuid"}
         candidate = dict(exchange)
         candidate.update(target)
         if _biosphere_catalog_identity(candidate) in target_biosphere_identities:
