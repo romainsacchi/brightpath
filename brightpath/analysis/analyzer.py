@@ -114,7 +114,9 @@ class _CollectingHandler(logging.Handler):
 
 class _TSVExtractor:
     @classmethod
-    def extract(cls, filepath, encoding="utf-8-sig"):
+    def extract(cls, filepath, encoding="utf-8-sig", sheet_name=None):
+        if sheet_name is not None:
+            raise ValueError("TSV files do not contain worksheets")
         if not os.path.exists(filepath):
             raise FileNotFoundError(f"Can't find file at path {filepath}")
         with open(filepath, encoding=encoding, newline="") as handle:

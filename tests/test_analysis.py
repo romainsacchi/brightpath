@@ -24,6 +24,7 @@ from brightpath.analysis import (
     infer_source_format,
     validate_inventory,
 )
+from brightpath.analysis.analyzer import _TSVExtractor
 from brightpath.background import BiosphereCatalog, InMemoryCatalogProvider, TechnosphereCatalog
 
 
@@ -93,6 +94,16 @@ def make_brightway_delimited(tmp_path, data, *, delimiter=",", suffix=".csv", db
         for row in sheet.iter_rows(values_only=True):
             writer.writerow(["" if cell is None else cell for cell in row])
     return path
+
+
+def test_analysis_tsv_extractor_accepts_bw2io_sheet_name_keyword(tmp_path):
+    source = tmp_path / "inventory.tsv"
+    source.write_text("database\tanalysis_db\n", encoding="utf-8")
+
+    filename, rows = _TSVExtractor.extract(source, sheet_name=None)
+
+    assert filename == "inventory.tsv"
+    assert rows == [["database", "analysis_db"]]
 
 
 def _normalize_technosphere_entries(entries):
