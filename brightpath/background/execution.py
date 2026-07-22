@@ -20,7 +20,7 @@ from brightpath.background.migration import (
     plan_background_migration,
 )
 from brightpath.background.validation import validate_background_links
-from brightpath.core.context import BackgroundContext, InventoryContext
+from brightpath.core.context import BackgroundContext, BiosphereProfile, InventoryContext
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.core.reports import (
     Change,
@@ -259,17 +259,6 @@ def _execute_plan(
             else None
         ),
     )
-    target_biosphere_identities = frozenset()
-    if plan.biosphere_steps:
-        try:
-            target_biosphere_identities = provider.load_biosphere(
-                plan.target.biosphere
-            ).identities
-        except (CatalogNotFoundError, CatalogIntegrityError):
-            # Target validation records this condition with the appropriate
-            # policy severity after migration. Do not mask it here.
-            pass
-
     for step_index, step in enumerate(plan.technosphere_steps):
         resource = _resource_for_step(step, technosphere_resources)
         step_report, step_losses = _apply_technosphere_step(data, resource, step, policy, step_index)
@@ -287,6 +276,9 @@ def _execute_plan(
     for axis_index, step in enumerate(plan.biosphere_steps):
         step_index = offset + axis_index
         resource = _resource_for_step(step, biosphere_resources)
+        target_biosphere_identities = _step_target_biosphere_identities(
+            provider, plan.target.biosphere.family, step
+        )
         step_report, step_losses = _apply_biosphere_step(
             data,
             resource,
@@ -306,6 +298,22 @@ def _execute_plan(
             return _migration_stage(issues, (), losses, step_metrics, rolled_back=True)
 
     return _migration_stage(issues, changes, losses, step_metrics, rolled_back=False)
+
+
+def _step_target_biosphere_identities(
+    provider: CatalogProvider,
+    family: str,
+    step: MigrationRouteStep,
+):
+    """Return the exact catalog identities at this route step's destination."""
+
+    version = step.target_version if step.direction == "forward" else step.source_version
+    try:
+        return provider.load_biosphere(BiosphereProfile(family, version)).identities
+    except (CatalogNotFoundError, CatalogIntegrityError):
+        # Target validation records this condition with the appropriate policy
+        # severity after migration. Do not mask it while applying a step.
+        return frozenset()
 
 
 def _execution_resources(

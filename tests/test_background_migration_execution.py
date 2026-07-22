@@ -459,6 +459,50 @@ def test_uuid_less_biosphere_exchange_uses_target_catalog_identity_before_ambigu
     }
 
 
+def test_uuid_less_biosphere_exchange_uses_intermediate_catalog_identity():
+    source = background("3.7", "3.7")
+    target = background("3.10", "3.10")
+    intermediate_identity = (
+        "Ethane, 1,1-difluoro-, HFC-152a",
+        ("air", "urban air close to ground"),
+        "kilogram",
+    )
+    target_identity = (
+        "1,1-Difluoroethane",
+        intermediate_identity[1],
+        intermediate_identity[2],
+    )
+    original = document(
+        source,
+        {
+            "name": intermediate_identity[0],
+            "categories": list(intermediate_identity[1]),
+            "unit": intermediate_identity[2],
+            "amount": 0.013583,
+            "type": "biosphere",
+        },
+    )
+    provider = InMemoryCatalogProvider(
+        biosphere=[
+            BiosphereCatalog(source.biosphere, {intermediate_identity}),
+            BiosphereCatalog(BiosphereProfile("ecoinvent", "3.8"), {intermediate_identity}),
+            BiosphereCatalog(BiosphereProfile("ecoinvent", "3.9"), {intermediate_identity}),
+            BiosphereCatalog(target.biosphere, {target_identity}),
+        ]
+    )
+
+    result = execute_background_migration(original, target, provider)
+
+    assert result.succeeded
+    exchange = result.value.data[0]["exchanges"][0]
+    assert exchange["name"] == target_identity[0]
+    assert exchange["categories"] == list(target_identity[1])
+    assert "uuid" not in exchange
+    assert "migration.biosphere_replacement_ambiguous" not in {
+        issue.code for issue in result.report.issues
+    }
+
+
 def test_unsafe_unit_change_never_fakes_target_unit_or_amount():
     source = background("3.6", "3.6")
     target = background("3.7", "3.6")

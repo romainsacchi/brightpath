@@ -397,6 +397,19 @@ def _apply_biosphere_rules(
                 # migration rule is needed (and choosing one would be wrong).
                 if _biosphere_catalog_identity(exchange) in target_biosphere_identities:
                     continue
+                target = _shared_catalog_target(
+                    exchange,
+                    matches,
+                    replacement_side,
+                    target_biosphere_identities,
+                )
+                if target is not None:
+                    _record_unit_change(
+                        matches[0][match_side], target, report, path=path
+                    )
+                    _apply_biosphere_target(exchange, target)
+                    report.biosphere_replacements += 1
+                    continue
                 report.issues.append(
                     Issue(
                         severity="warning",
@@ -428,6 +441,29 @@ def _biosphere_catalog_identity(exchange: dict) -> tuple[str, tuple[str, ...], s
         tuple(str(value) for value in raw_categories),
         str(exchange.get("unit") or ""),
     )
+
+
+def _shared_catalog_target(
+    exchange: dict,
+    matches: list[dict],
+    replacement_side: str,
+    target_biosphere_identities,
+) -> dict | None:
+    """Return a UUID-free target when every candidate has one catalog identity."""
+
+    targets = []
+    for rule in matches:
+        target = {
+            key: value for key, value in rule[replacement_side].items() if key != "uuid"
+        }
+        candidate = dict(exchange)
+        candidate.update(target)
+        if _biosphere_catalog_identity(candidate) in target_biosphere_identities:
+            targets.append(target)
+    unique_targets = list({tuple(sorted(target.items())): target for target in targets}.values())
+    if len(unique_targets) != 1:
+        return None
+    return unique_targets[0]
 
 
 def _delete_biosphere_exchanges(
