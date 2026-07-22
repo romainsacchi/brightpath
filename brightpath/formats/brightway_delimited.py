@@ -48,7 +48,9 @@ class _TSVExtractor:
     """Read TSV rows without changing ``CSVImporter.extractor`` globally."""
 
     @classmethod
-    def extract(cls, filepath, encoding="utf-8-sig"):
+    def extract(cls, filepath, encoding="utf-8-sig", sheet_name=None):
+        if sheet_name is not None:
+            raise ValueError("Brightway TSV files do not support sheet selection.")
         source = Path(filepath)
         if not source.is_file():
             raise FileNotFoundError(f"Brightway TSV file not found: {source}")

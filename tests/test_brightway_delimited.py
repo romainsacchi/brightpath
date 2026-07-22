@@ -10,7 +10,7 @@ from brightpath.core import (
     InventoryContext,
     TechnosphereProfile,
 )
-from brightpath.formats.brightway_delimited import load_brightway_delimited, write_brightway_delimited
+from brightpath.formats.brightway_delimited import _TSVExtractor, load_brightway_delimited, write_brightway_delimited
 from brightpath.models import InventoryDocument
 
 
@@ -99,6 +99,16 @@ def test_writer_adds_suffix_selected_by_explicit_delimiter(tmp_path):
 
     assert output == (tmp_path / "inventory.tsv").resolve()
     assert load_brightway_delimited(output).context.format.format_id == "brightway_tsv"
+
+
+def test_tsv_extractor_accepts_bw2io_sheet_name_keyword(tmp_path):
+    source = tmp_path / "inventory.tsv"
+    source.write_text("Database\ttest\n", encoding="utf-8")
+
+    filename, rows = _TSVExtractor.extract(source, sheet_name=None)
+
+    assert filename == source.name
+    assert rows == [["Database", "test"]]
 
 
 def test_writer_is_deterministic_and_does_not_mutate_input(tmp_path):
