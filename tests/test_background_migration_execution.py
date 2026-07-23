@@ -285,6 +285,33 @@ def test_reverse_preference_resolves_polystyrene_fae_without_ambiguity():
     assert "migration.replacement_ambiguous" not in {issue.code for issue in result.report.stages[-1].issues}
 
 
+def test_reverse_preference_resolves_row_unpolluted_wastewater_without_ambiguity():
+    resource = load_technosphere_resources("cutoff")[("3.8", "3.9")]
+    rule = next(
+        candidate
+        for candidate in resource["replace"]
+        if candidate.get("reverse_preferred") is True
+        and candidate["source"]["name"] == "treatment of wastewater, unpolluted, capacity 5E9l/year"
+        and candidate["source"]["location"] == "RoW"
+    )
+    source = background("3.9", "3.9")
+    target = background("3.8", "3.8")
+    source_identity = technosphere_identity(rule["target"])
+    target_identity = technosphere_identity(rule["source"])
+    original = document(source, technosphere_exchange(source_identity))
+
+    result = execute_background_migration(
+        original,
+        target,
+        provider_for_technosphere(source, target, source_identity, target_identity),
+        MigrationPolicy.permissive(),
+    )
+
+    assert result.succeeded
+    assert result.value.data[0]["exchanges"][0]["name"] == target_identity[0]
+    assert "migration.replacement_ambiguous" not in {issue.code for issue in result.report.stages[-1].issues}
+
+
 def test_forward_disaggregation_and_reverse_aggregation_execute_transactionally():
     resource = load_technosphere_resources("cutoff")[("3.6", "3.7")]
     rule = next(
