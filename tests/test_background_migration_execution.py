@@ -558,6 +558,98 @@ def test_reverse_biosphere_rename_uses_complete_non_uuid_identity():
     assert (exchange["name"], tuple(exchange["categories"]), exchange["unit"]) == target_identity
 
 
+def test_unrepresentable_biosphere_unit_change_is_removed_with_a_warning():
+    source = background("3.9", "3.9")
+    target = background("3.10", "3.10")
+    rule = next(
+        rule
+        for rule in load_biosphere_resources()[("3.9", "3.10")]["replace"]
+        if rule["source"]["name"] == "Manganese-55"
+    )
+    source_identity = (
+        rule["source"]["name"],
+        tuple(rule["source"]["categories"]),
+        rule["source"]["unit"],
+    )
+    original = document(source, biosphere_exchange(rule["source"], include_uuid=False))
+    provider = InMemoryCatalogProvider(
+        biosphere=[
+            BiosphereCatalog(source.biosphere, {source_identity}),
+            BiosphereCatalog(target.biosphere, set()),
+        ]
+    )
+
+    result = execute_background_migration(original, target, provider)
+
+    assert result.succeeded
+    assert result.value.data[0]["exchanges"] == []
+    assert "migration.biosphere_exchange_removed_unsafe_unit" in {
+        issue.code for issue in result.report.issues
+    }
+    assert "migration.biosphere_exchange_removed_unsafe_unit" in {
+        loss.code for loss in result.report.losses
+    }
+
+
+@pytest.mark.parametrize("reverse", [False, True])
+def test_standard_cubic_meter_and_sm3_biosphere_units_use_a_factor_of_one(reverse):
+    resource = load_biosphere_resources()[("3.8", "3.9")]
+    rule = next(
+        rule
+        for rule in resource["replace"]
+        if rule["source"]["name"] == "Gas, natural, in ground"
+    )
+    source = background("3.9", "3.9") if reverse else background("3.8", "3.8")
+    target = background("3.8", "3.8") if reverse else background("3.9", "3.9")
+    source_specification = rule["target"] if reverse else rule["source"]
+    target_specification = rule["source"] if reverse else rule["target"]
+    source_identity = (
+        source_specification["name"],
+        tuple(rule["source"]["categories"]),
+        _canonical_unit(source_specification["unit"]),
+    )
+    target_identity = (
+        target_specification["name"],
+        tuple(rule["source"]["categories"]),
+        _canonical_unit(target_specification["unit"]),
+    )
+    original = document(
+        source,
+        {
+            "name": source_identity[0],
+            "categories": source_identity[1],
+            "unit": source_identity[2],
+            "amount": 2.5,
+            "type": "biosphere",
+        },
+    )
+    provider = InMemoryCatalogProvider(
+        biosphere=[
+            BiosphereCatalog(source.biosphere, {source_identity}),
+            BiosphereCatalog(target.biosphere, {target_identity}),
+        ]
+    )
+
+    result = execute_background_migration(
+        original,
+        target,
+        provider,
+        (
+            MigrationPolicy(
+                on_inferred_reverse=PolicyAction.WARN,
+                on_information_loss=PolicyAction.WARN,
+            )
+            if reverse
+            else MigrationPolicy()
+        ),
+    )
+
+    assert result.succeeded, result.report.to_dict()
+    exchange = result.value.data[0]["exchanges"][0]
+    assert (exchange["name"], tuple(exchange["categories"]), exchange["unit"]) == target_identity
+    assert exchange["amount"] == 2.5
+
+
 def test_uuid_less_nitrogen_oxides_uses_its_air_compartment():
     source = background("3.9", "3.9")
     target = background("3.10", "3.10")

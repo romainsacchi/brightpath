@@ -38,6 +38,7 @@ from brightpath.migrations.engine import (
     _apply_biosphere_rules,
     _apply_disaggregation,
     _apply_replacements,
+    _biosphere_match_specification,
     _biosphere_matches,
     _canonical_unit,
     _delete_biosphere_exchanges,
@@ -514,7 +515,8 @@ def _prepare_biosphere_replacements(
     losses: list[Loss] = []
     entity_index = _biosphere_entity_index(data)
     for rule in rules:
-        matches = _matching_biosphere_entities(entity_index, rule[match_side])
+        specification = _biosphere_match_specification(rule, match_side)
+        matches = _matching_biosphere_entities(entity_index, specification)
         if not matches or not _unit_changes(rule[match_side], rule[replacement_side]):
             safe.append(rule)
             continue
@@ -522,8 +524,72 @@ def _prepare_biosphere_replacements(
         if factor is not None:
             factored.append(rule)
             continue
-        _unsafe_unit_findings(matches, rule, step, policy, report, losses, step_index)
+        _remove_unrepresentable_biosphere_exchanges(
+            data,
+            rule,
+            step,
+            report,
+            losses,
+            step_index,
+            specification,
+        )
     return safe, factored, losses
+
+
+def _remove_unrepresentable_biosphere_exchanges(
+    data: list[dict],
+    rule: dict,
+    step: MigrationRouteStep,
+    report: MigrationStepReport,
+    losses: list[Loss],
+    step_index: int,
+    specification: Mapping,
+) -> None:
+    """Remove elementary flows whose migration changes units without a factor.
+
+    A target inventory cannot retain an elementary flow with the wrong unit.
+    For biosphere flows only, CLIC exports remain usable by omitting that
+    exchange and recording an explicit, recoverable warning and loss.
+    """
+
+    source_unit, target_unit = _rule_units(rule, step.direction)
+    for dataset_index, dataset in enumerate(data):
+        retained = []
+        for exchange_index, exchange in enumerate(dataset.get("exchanges", [])):
+            if exchange.get("type") != "biosphere" or not _biosphere_matches(exchange, dict(specification)):
+                retained.append(exchange)
+                continue
+            path = f"datasets[{dataset_index}].exchanges[{exchange_index}]"
+            message = (
+                f"Removed biosphere exchange at {path}: migration changes unit from "
+                f"{source_unit!r} to {target_unit!r} without an explicit numeric conversion factor."
+            )
+            report.biosphere_deletions += 1
+            report.issues.append(
+                _legacy_issue(
+                    severity="warning",
+                    code="migration_biosphere_exchange_removed_unsafe_unit",
+                    message=message,
+                    path=path,
+                )
+            )
+            losses.append(
+                Loss(
+                    code="migration.biosphere_exchange_removed_unsafe_unit",
+                    message=message,
+                    stage=StageKind.BACKGROUND_MIGRATION,
+                    path=path,
+                    recoverable=True,
+                    details={
+                        "axis": step.axis.value,
+                        "resource": step.resource_name,
+                        "step_index": step_index,
+                        "source_unit": source_unit,
+                        "target_unit": target_unit,
+                    },
+                )
+            )
+        dataset["exchanges"] = retained
 
 
 def _unsafe_unit_findings(
@@ -749,7 +815,14 @@ def _apply_factored_biosphere_replacements(
         for exchange in dataset.get("exchanges", []):
             if exchange.get("type") != "biosphere":
                 continue
-            matches = [rule for rule in rules if _biosphere_matches(exchange, rule[match_side])]
+            matches = [
+                rule
+                for rule in rules
+                if _biosphere_matches(
+                    exchange,
+                    _biosphere_match_specification(rule, match_side),
+                )
+            ]
             if not matches:
                 continue
             rule = matches[0]
