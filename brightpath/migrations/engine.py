@@ -500,6 +500,10 @@ def _select_technosphere_rule(
     compatible = [rule for rule in candidates if _units_compatible(entity.get("unit"), rule[side].get("unit"))]
     if compatible:
         candidates = compatible
+    if side == "target":
+        reverse_preferred = [rule for rule in candidates if rule.get("reverse_preferred") is True]
+        if reverse_preferred:
+            candidates = reverse_preferred
     if len(candidates) > 1:
         report.issues.append(
             Issue(
