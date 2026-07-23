@@ -306,7 +306,11 @@ def _step_target_biosphere_identities(
 ):
     """Return the exact catalog identities at this route step's destination."""
 
-    version = step.target_version if step.direction == "forward" else step.source_version
+    # MigrationRouteStep keeps its source and destination in this order even
+    # when the resource is traversed backwards. The destination is therefore
+    # always ``target_version``; using ``source_version`` for reverse routes
+    # incorrectly validated/matched against the input catalog.
+    version = step.target_version
     try:
         return provider.load_biosphere(BiosphereProfile(family, version)).identities
     except (CatalogNotFoundError, CatalogIntegrityError):
@@ -442,6 +446,9 @@ def _apply_biosphere_step(
         target_biosphere_identities=target_biosphere_identities,
     )
     _apply_factored_biosphere_replacements(data, factored_replacements, step.direction, report)
+    _apply_unambiguous_biosphere_compartment_fallback(
+        data, target_biosphere_identities, report
+    )
     return report, losses
 
 
@@ -850,6 +857,64 @@ def _apply_biosphere_target_with_unit(exchange: dict, target: dict) -> None:
             continue
         exchange[field] = _canonical_unit(value) if field == "unit" else deepcopy(value)
     exchange.pop("input", None)
+
+
+def _apply_unambiguous_biosphere_compartment_fallback(
+    data: list[dict],
+    target_identities: frozenset[tuple[str, tuple[str, ...], str]],
+    report: MigrationStepReport,
+) -> None:
+    """Resolve a lone parent/child compartment difference against the target.
+
+    Some ecoinvent biosphere releases add or remove a generic parent flow while
+    retaining one matching sub-compartment. A UUID is not a stable identity
+    across these releases. When the name and unit are identical and precisely
+    one target flow extends or shortens the compartment path, using that target
+    is safer than leaving an otherwise valid export unlinked.
+    """
+    if not target_identities:
+        return
+    candidates_by_name_unit: dict[tuple[str, str], list[tuple[str, tuple[str, ...], str]]] = {}
+    for identity in target_identities:
+        candidates_by_name_unit.setdefault((identity[0], identity[2]), []).append(identity)
+
+    for dataset_index, dataset in enumerate(data):
+        for exchange_index, exchange in enumerate(dataset.get("exchanges", ())):
+            if exchange.get("type") != "biosphere":
+                continue
+            name = str(exchange.get("name") or "")
+            unit = str(exchange.get("unit") or "")
+            categories = tuple(str(value) for value in exchange.get("categories") or ())
+            identity = (name, categories, unit)
+            if identity in target_identities:
+                continue
+            candidates = [
+                candidate
+                for candidate in candidates_by_name_unit.get((name, unit), ())
+                if _biosphere_compartments_are_related(categories, candidate[1])
+            ]
+            if len(candidates) != 1:
+                continue
+            target = candidates[0]
+            exchange["categories"] = list(target[1])
+            exchange.pop("uuid", None)
+            report.biosphere_replacements += 1
+            report.issues.append(
+                _legacy_issue(
+                    "warning",
+                    "migration_biosphere_parent_compartment_fallback",
+                    "Mapped biosphere exchange to the only target flow with the same "
+                    "name and unit in a parent or child compartment.",
+                    path=f"datasets[{dataset_index}].exchanges[{exchange_index}]",
+                )
+            )
+
+
+def _biosphere_compartments_are_related(
+    source: tuple[str, ...], target: tuple[str, ...]
+) -> bool:
+    """Return whether two category paths differ only by parent/child depth."""
+    return source == target[: len(source)] or target == source[: len(target)]
 
 
 def _apply_amount_factor(entity: dict, factor: float | None) -> None:

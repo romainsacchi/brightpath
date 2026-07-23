@@ -259,6 +259,45 @@ def test_permissive_reverse_applies_replacement_and_records_loss():
     assert "migration.reverse_disaggregation" in {loss.code for loss in result.report.losses}
 
 
+def test_reverse_biosphere_migration_falls_back_to_unique_child_compartment():
+    source = background("3.9")
+    target = background("3.8")
+    source_identity = ("Sulfuric acid", ("water",), "kilogram")
+    target_identity = ("Sulfuric acid", ("water", "surface water"), "kilogram")
+    original = document(
+        source,
+        {
+            "name": source_identity[0],
+            "categories": source_identity[1],
+            "unit": source_identity[2],
+            "amount": 1.0,
+            "type": "biosphere",
+        },
+    )
+    provider = InMemoryCatalogProvider(
+        biosphere=[
+            BiosphereCatalog(source.biosphere, {source_identity}),
+            BiosphereCatalog(target.biosphere, {target_identity}),
+        ]
+    )
+
+    result = execute_background_migration(
+        original,
+        target,
+        provider,
+        MigrationPolicy(
+            on_inferred_reverse=PolicyAction.WARN,
+            on_information_loss=PolicyAction.WARN,
+        ),
+    )
+
+    assert result.succeeded, result.report.to_dict()
+    assert result.value.data[0]["exchanges"][0]["categories"] == list(target_identity[1])
+    assert "migration.biosphere_parent_compartment_fallback" in {
+        issue.code for issue in result.report.issues
+    }
+
+
 def test_reverse_preference_resolves_polystyrene_fae_without_ambiguity():
     resource = load_technosphere_resources("cutoff")[("3.9", "3.10")]
     rule = next(
