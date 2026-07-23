@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 from brightpath import DATA_DIR
-from brightpath.migrations.engine import _biosphere_matches
+from brightpath.migrations.engine import _biosphere_match_specification, _biosphere_matches
 
 SCRIPT_PATH = Path(__file__).resolve().parents[1] / "scripts" / "enrich_biosphere_migration_sources.py"
 SCRIPT_SPEC = importlib.util.spec_from_file_location("enrich_biosphere_migration_sources", SCRIPT_PATH)
@@ -81,3 +81,30 @@ def test_complete_biosphere_tuple_matches_without_requiring_uuid():
     assert _biosphere_matches(uuid_less_exchange, specification)
     assert _biosphere_matches(exchange_with_unrelated_uuid, specification)
     assert not _biosphere_matches({**uuid_less_exchange, "categories": ("water",)}, specification)
+
+
+def test_reverse_rule_inherits_unchanged_biosphere_identity_fields():
+    rule = {
+        "source": {
+            "name": "Particulates, < 2.5 um",
+            "categories": ["air", "urban air close to ground"],
+            "unit": "kilogram",
+            "uuid": "source-uuid",
+        },
+        "target": {
+            "name": "Particulate Matter, < 2.5 um",
+            "uuid": "target-uuid",
+        },
+    }
+    exchange = {
+        "name": "Particulate Matter, < 2.5 um",
+        "categories": ("air", "urban air close to ground"),
+        "unit": "kilogram",
+        "type": "biosphere",
+    }
+
+    specification = _biosphere_match_specification(rule, "target")
+
+    assert specification["categories"] == ["air", "urban air close to ground"]
+    assert specification["unit"] == "kilogram"
+    assert _biosphere_matches(exchange, specification)

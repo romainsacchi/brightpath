@@ -114,7 +114,7 @@ def test_successful_forward_technosphere_migration_preserves_format_and_exact_co
         provider_for_technosphere(source, target, source_identity, target_identity),
     )
 
-    assert result.succeeded
+    assert result.succeeded, result.report.to_dict()
     assert result.changed
     assert result.report.operation is OperationKind.MIGRATE
     assert result.report.metadata["committed"] is True
@@ -504,6 +504,58 @@ def test_reverse_biosphere_deletion_route_warns_without_blocking():
     notices = [issue for issue in result.report.issues if issue.code == "migration.biosphere_reverse_route_notice"]
     assert len(notices) == 1
     assert notices[0].severity.value == "warning"
+
+
+def test_reverse_biosphere_rename_uses_complete_non_uuid_identity():
+    source = background("3.10", "3.10")
+    target = background("3.8", "3.8")
+    resource = load_biosphere_resources()[("3.8", "3.9")]
+    rule = next(
+        rule
+        for rule in resource["replace"]
+        if rule["source"]["name"] == "Particulates, < 2.5 um"
+        and rule["source"]["categories"] == ["air", "urban air close to ground"]
+    )
+    original_identity = (
+        rule["target"]["name"],
+        tuple(rule["source"]["categories"]),
+        rule["source"]["unit"],
+    )
+    target_identity = (
+        rule["source"]["name"],
+        tuple(rule["source"]["categories"]),
+        rule["source"]["unit"],
+    )
+    original = document(
+        source,
+        {
+            "name": original_identity[0],
+            "categories": original_identity[1],
+            "unit": original_identity[2],
+            "amount": 1.0,
+            "type": "biosphere",
+        },
+    )
+    provider = InMemoryCatalogProvider(
+        biosphere=[
+            BiosphereCatalog(source.biosphere, {original_identity}),
+            BiosphereCatalog(target.biosphere, {target_identity}),
+        ]
+    )
+
+    result = execute_background_migration(
+        original,
+        target,
+        provider,
+        MigrationPolicy(
+            on_inferred_reverse=PolicyAction.WARN,
+            on_information_loss=PolicyAction.WARN,
+        ),
+    )
+
+    assert result.succeeded, result.report.to_dict()
+    exchange = result.value.data[0]["exchanges"][0]
+    assert (exchange["name"], tuple(exchange["categories"]), exchange["unit"]) == target_identity
 
 
 def test_uuid_less_nitrogen_oxides_uses_its_air_compartment():

@@ -388,7 +388,14 @@ def _apply_biosphere_rules(
                 *rules_by_name.get(str(exchange.get("name") or ""), []),
                 *rules_without_name,
             ]
-            matches = [rule for rule in candidates if _biosphere_matches(exchange, rule[match_side])]
+            matches = [
+                rule
+                for rule in candidates
+                if _biosphere_matches(
+                    exchange,
+                    _biosphere_match_specification(rule, match_side),
+                )
+            ]
             if not matches:
                 continue
             if len(matches) > 1:
@@ -592,6 +599,24 @@ def _biosphere_matches(exchange: dict, specification: dict) -> bool:
     if actual_uuid and specification.get("uuid") and actual_uuid != specification["uuid"]:
         return False
     return bool(expected_name or specification.get("uuid"))
+
+
+def _biosphere_match_specification(rule: dict, side: str) -> dict:
+    """Complete an abbreviated rule side with unchanged flow identity fields.
+
+    ecoinvent migration resources often place only a renamed flow's name and
+    UUID on the target side. Its compartment and unit are unchanged and remain
+    documented on the source side. CLIC exchanges intentionally do not depend
+    on ecoinvent UUIDs, so use that preserved name/category/unit identity when
+    applying the rule in either direction.
+    """
+
+    specification = dict(rule[side])
+    other_side = rule["target" if side == "source" else "source"]
+    for field in ("categories", "unit"):
+        if field not in specification and field in other_side:
+            specification[field] = other_side[field]
+    return specification
 
 
 def _exchange_uuid(exchange: dict) -> str:
