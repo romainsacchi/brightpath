@@ -11,6 +11,7 @@ from brightpath.adapters.base import ArtifactKind, FormatAdapter, FormatDescript
 from brightpath.adapters.builtins import (
     BrightwayDelimitedAdapter,
     BrightwayExcelAdapter,
+    OpenLCAJSONLDAdapter,
     SimaProCSVAdapter,
     default_adapter_registry,
 )
@@ -63,6 +64,7 @@ def test_builtin_adapters_are_immutable_format_adapters():
     adapter = BrightwayExcelAdapter()
 
     assert isinstance(adapter, FormatAdapter)
+    assert isinstance(OpenLCAJSONLDAdapter(), FormatAdapter)
     assert isinstance(SimaProCSVAdapter(), FormatAdapter)
     with pytest.raises(FrozenInstanceError):
         adapter.descriptor = FormatDescriptor("other")
@@ -73,10 +75,13 @@ def test_builtin_adapters_are_immutable_format_adapters():
     [
         (BrightwayExcelAdapter(), "brightway_excel"),
         (BrightwayDelimitedAdapter(FormatDescriptor("brightway_csv"), ","), "brightway_csv"),
+        (OpenLCAJSONLDAdapter(), "openlca_jsonld"),
         (SimaProCSVAdapter(), "simapro_csv"),
     ],
 )
 def test_builtin_adapters_expose_validation_and_conversion_preflight_hooks(adapter, format_id):
+    if format_id == "openlca_jsonld":
+        pytest.importorskip("olca_schema")
     document = _document(format_id)
 
     validation = adapter.validate_format(document)
@@ -232,13 +237,31 @@ def test_default_registry_advertises_and_detects_only_implemented_file_adapters(
         FormatDescriptor("brightway_excel"),
         FormatDescriptor("brightway_csv"),
         FormatDescriptor("brightway_tsv"),
+        FormatDescriptor("openlca_jsonld"),
         FormatDescriptor("simapro_csv"),
     )
     assert registry.supports_read("brightway_excel", ArtifactKind.FILE)
+    assert registry.supports_write("openlca_jsonld", ArtifactKind.FILE)
     assert registry.supports_write("simapro_csv", ArtifactKind.FILE)
     assert not registry.supports_read("openlca_excel", ArtifactKind.FILE)
     assert report.detected_format == FormatDescriptor("simapro_csv")
     assert not report.has_errors
+
+
+def test_openlca_jsonld_adapter_writes_detects_and_reads_exact_context(tmp_path):
+    pytest.importorskip("olca_schema")
+    adapter = OpenLCAJSONLDAdapter()
+    source = _document("openlca_jsonld")
+
+    destination = adapter.write(source, tmp_path / "inventory.zip")
+    candidate = adapter.detect(destination, artifact_kind=ArtifactKind.FILE)
+    loaded = adapter.read(destination, context=source.context)
+
+    assert candidate is not None
+    assert candidate.descriptor == FormatDescriptor("openlca_jsonld")
+    assert loaded.context == source.context
+    assert loaded.data[0]["name"] == source.data[0]["name"]
+    assert loaded.data[0]["reference product"] == source.data[0]["reference product"]
 
 
 @pytest.mark.parametrize(

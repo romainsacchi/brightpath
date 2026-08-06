@@ -11,6 +11,7 @@ from .base import (
 from .builtins import (
     BrightwayDelimitedAdapter,
     BrightwayExcelAdapter,
+    OpenLCAJSONLDAdapter,
     SimaProCSVAdapter,
     default_adapter_registry,
 )
@@ -28,6 +29,7 @@ __all__ = (
     "DetectionReport",
     "FormatAdapter",
     "FormatDescriptor",
+    "OpenLCAJSONLDAdapter",
     "SimaProCSVAdapter",
     "coerce_format_descriptor",
     "default_adapter_registry",

@@ -14,6 +14,7 @@ from brightpath.core.policies import ConversionPolicy
 from brightpath.core.reports import StageReport
 from brightpath.formats.brightway_delimited import load_brightway_delimited, write_brightway_delimited
 from brightpath.formats.brightway_excel import load_brightway_excel, write_brightway_excel
+from brightpath.formats.openlca_jsonld import load_openlca_jsonld, write_openlca_jsonld
 from brightpath.formats.simapro_csv import (
     SimaProRenderResult,
     load_simapro_csv,
@@ -24,8 +25,10 @@ from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFor
 from .base import AdapterCapabilities, ArtifactKind, DetectionCandidate, FormatDescriptor
 from .preflight import (
     preflight_brightway_conversion,
+    preflight_openlca_jsonld_conversion,
     preflight_simapro_conversion,
     validate_brightway_format,
+    validate_openlca_jsonld_format,
     validate_simapro_format,
 )
 from .registry import AdapterRegistry
@@ -53,6 +56,13 @@ _SIMAPRO_FILE_CAPABILITIES = AdapterCapabilities(
     can_validate_format=True,
     can_preflight_conversion=True,
 )
+_OPENLCA_JSONLD_CAPABILITIES = AdapterCapabilities(
+    read_artifact_kinds={ArtifactKind.FILE},
+    write_artifact_kinds={ArtifactKind.FILE},
+    detection_artifact_kinds={ArtifactKind.FILE},
+    can_validate_format=True,
+    can_preflight_conversion=True,
+)
 
 _MAX_ZIP_ENTRIES = 20_000
 _MAX_PACKAGE_PART_BYTES = 2 * 1024 * 1024
@@ -75,6 +85,16 @@ _SIMAPRO_SECTION_MARKERS = frozenset(
         "final waste flows",
         "waste to treatment",
         "end",
+    }
+)
+_OPENLCA_UNSUPPORTED_FOLDERS = frozenset(
+    {
+        "epds",
+        "lcia_categories",
+        "lcia_methods",
+        "product_systems",
+        "projects",
+        "results",
     }
 )
 
@@ -179,6 +199,25 @@ def _brightway_workbook_markers(path: Path) -> set[str]:
             return found
     except (OSError, zipfile.BadZipFile, zipfile.LargeZipFile):
         return set()
+
+
+def _probe_openlca_jsonld_package(path: Path) -> tuple[bool, bool, bool]:
+    """Return manifest, process, and unsupported-root flags for one ZIP file."""
+
+    try:
+        with zipfile.ZipFile(path) as archive:
+            names = archive.namelist()
+            has_manifest = "olca-schema.json" in names
+            has_processes = any(
+                name.startswith("processes/") and name.endswith(".json") and name.count("/") == 1 for name in names
+            )
+            has_unsupported = any(
+                any(name.startswith(f"{folder}/") and name.endswith(".json") for name in names)
+                for folder in _OPENLCA_UNSUPPORTED_FOLDERS
+            )
+            return has_manifest, has_processes, has_unsupported
+    except (OSError, zipfile.BadZipFile, zipfile.LargeZipFile):
+        return False, False, False
 
 
 def _decoded_text_prefix(path: Path) -> str:
@@ -385,6 +424,80 @@ class SimaProCSVAdapter:
 
 
 @dataclass(frozen=True)
+class OpenLCAJSONLDAdapter:
+    """Read, detect, and write zipped openLCA JSON-LD process packages."""
+
+    descriptor: FormatDescriptor = field(default_factory=lambda: FormatDescriptor(InventoryFormat.OPENLCA_JSONLD.value))
+    capabilities: AdapterCapabilities = _OPENLCA_JSONLD_CAPABILITIES
+
+    def detect(
+        self,
+        artifact: object,
+        *,
+        artifact_kind: ArtifactKind,
+    ) -> DetectionCandidate | None:
+        """Probe for the openLCA ZIP manifest and process folder."""
+
+        if ArtifactKind(artifact_kind) is not ArtifactKind.FILE:
+            return None
+        path = _file_path(artifact)
+        if path is None:
+            return None
+        has_manifest, has_processes, has_unsupported = _probe_openlca_jsonld_package(path)
+        if not has_manifest or not has_processes:
+            return None
+        evidence = [
+            "openLCA package manifest olca-schema.json found at the archive root.",
+            "Process JSON-LD entities found under the processes/ folder.",
+        ]
+        if has_unsupported:
+            evidence.append("Archive also contains unsupported non-process root entities.")
+            confidence = 0.9
+        else:
+            confidence = 0.98
+        return DetectionCandidate(self.descriptor, confidence, tuple(evidence))
+
+    def read(
+        self,
+        artifact: object,
+        *,
+        background_profile: BackgroundProfile | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
+        context: InventoryContext | None = None,
+        database_name: str | None = None,
+    ) -> InventoryDocument:
+        """Load a zipped openLCA JSON-LD package with an exact context."""
+
+        return load_openlca_jsonld(
+            artifact,  # type: ignore[arg-type]
+            background_profile=background_profile,
+            biosphere_profile=biosphere_profile,
+            context=context,
+            database_name=database_name,
+        )
+
+    def write(self, document: object, artifact: object, **kwargs: Any) -> Path:
+        """Delegate openLCA ZIP serialization to the format codec."""
+
+        return write_openlca_jsonld(document, artifact, **kwargs)  # type: ignore[arg-type]
+
+    def validate_format(self, document: InventoryDocument) -> StageReport:
+        """Validate openLCA JSON-LD rendering without writing a ZIP archive."""
+
+        return validate_openlca_jsonld_format(document, self.descriptor)
+
+    def preflight_conversion(
+        self,
+        document: InventoryDocument,
+        *,
+        policy: ConversionPolicy,
+    ) -> StageReport:
+        """Report openLCA JSON-LD representability with the current policy."""
+
+        return preflight_openlca_jsonld_conversion(document, self.descriptor, policy)
+
+
+@dataclass(frozen=True)
 class BrightwayDelimitedAdapter:
     """Read, detect, and write one Brightway block-layout text dialect."""
 
@@ -486,6 +599,7 @@ def default_adapter_registry() -> AdapterRegistry:
             BrightwayExcelAdapter(),
             BrightwayDelimitedAdapter(FormatDescriptor(InventoryFormat.BRIGHTWAY_CSV.value), ","),
             BrightwayDelimitedAdapter(FormatDescriptor(InventoryFormat.BRIGHTWAY_TSV.value), "\t"),
+            OpenLCAJSONLDAdapter(),
             SimaProCSVAdapter(),
         )
     )

@@ -34,6 +34,7 @@ from brightpath.core import (
     InventoryContext,
 )
 from brightpath.exceptions import InventoryValidationError
+from brightpath.formats.openlca_jsonld import load_openlca_jsonld_package
 from brightpath.formats.simapro_csv import format_biosphere_exchange
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
 from brightpath.simapro import SimaProInventory
@@ -46,8 +47,10 @@ from brightpath.utils import (
 SOURCE_FORMAT_BRIGHTWAY_EXCEL = "brightway_excel"
 SOURCE_FORMAT_BRIGHTWAY_CSV = "brightway_csv"
 SOURCE_FORMAT_BRIGHTWAY_TSV = "brightway_tsv"
+SOURCE_FORMAT_OPENLCA_JSONLD = "openlca_jsonld"
 SOURCE_FORMAT_SIMAPRO_CSV = "simapro_csv"
 SOFTWARE_BRIGHTWAY = "brightway"
+SOFTWARE_OPENLCA = "openlca"
 SOFTWARE_SIMAPRO = "simapro"
 
 _ACTIVITY_PATH_PATTERN = re.compile(
@@ -154,6 +157,8 @@ def infer_source_format(path: str | Path) -> str:
         return SOURCE_FORMAT_BRIGHTWAY_TSV
     if suffix == ".csv":
         raise ValueError("CSV format is ambiguous; provide an existing file or an explicit source_format.")
+    if suffix == ".zip":
+        raise ValueError("ZIP format is ambiguous; provide an existing file or an explicit source_format.")
     if suffix == ".xls":
         raise ValueError("BrightPath analysis currently supports Brightway .xlsx workbooks, not .xls files.")
     raise ValueError(f"Unsupported inventory source format for analysis: {suffix or 'no extension'}.")
@@ -238,6 +243,12 @@ def analyze_inventory(
             detected_format=SOURCE_FORMAT_BRIGHTWAY_TSV,
             additional_foreground_targets=normalized_foreground_targets,
         )
+    if resolved_format == SOURCE_FORMAT_OPENLCA_JSONLD:
+        return _analyze_openlca_jsonld(
+            path=resolved_path,
+            source_profile=profile,
+            additional_foreground_targets=normalized_foreground_targets,
+        )
     if resolved_format == SOURCE_FORMAT_SIMAPRO_CSV:
         return _analyze_simapro_csv(
             path=resolved_path,
@@ -313,6 +324,82 @@ def _analyze_brightway_delimited(
         parse_error_code="brightway_tabular_parse_failed",
         additional_foreground_targets=additional_foreground_targets,
     )
+
+
+def _analyze_openlca_jsonld(
+    *,
+    path: Path,
+    source_profile: BackgroundProfile,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+) -> AnalysisResult:
+    result = AnalysisResult(
+        detected_software=SOFTWARE_OPENLCA,
+        detected_format=SOURCE_FORMAT_OPENLCA_JSONLD,
+        source_profile=source_profile,
+    )
+
+    try:
+        package = load_openlca_jsonld_package(path)
+        inventory_data = package.data
+    except Exception as exc:
+        result.file_issues.extend(
+            _exception_to_file_issues(
+                exc,
+                default_code="openlca_jsonld_parse_failed",
+            )
+        )
+        inventory_data = []
+
+    result.source_profile, profile_issues = _resolve_background_profile(
+        inventory_data,
+        source_profile,
+    )
+    inventory_data = _normalize_inventory_for_validation(
+        inventory_data,
+        result.source_profile,
+        additional_foreground_targets=additional_foreground_targets,
+    )
+    result.inventory_data = deepcopy(inventory_data)
+    result.candidates = _build_candidates(inventory_data)
+    result.file_issues.extend(profile_issues)
+
+    if inventory_data:
+        validation_errors, validation_warnings = inspect_brightway_inventory(
+            inventory_data,
+            require_simapro_category=False,
+        )
+        if validation_errors:
+            _attach_activity_issues(
+                candidates=result.candidates,
+                candidate_issues=_issues_from_brightway_validation_messages(
+                    validation_errors,
+                    severity="error",
+                    code="inventory_validation_error",
+                ),
+                file_issues=result.file_issues,
+            )
+        if validation_warnings:
+            _attach_activity_issues(
+                candidates=result.candidates,
+                candidate_issues=_issues_from_brightway_validation_messages(
+                    validation_warnings,
+                    severity="warning",
+                    code="inventory_validation_warning",
+                ),
+                file_issues=result.file_issues,
+            )
+        background_issues, background_file_issues = _validate_background_links(
+            inventory_data,
+            result.source_profile,
+            additional_foreground_targets=additional_foreground_targets,
+        )
+        _attach_activity_issues(
+            candidates=result.candidates,
+            candidate_issues=background_issues,
+            file_issues=result.file_issues,
+        )
+        result.file_issues.extend(background_file_issues)
+    return result
 
 
 def _analyze_brightway_inventory_data(

@@ -15,6 +15,7 @@ from typing import Any
 from brightpath.core.policies import ConversionPolicy, PolicyAction
 from brightpath.core.reports import Change, Issue, Loss, Severity, StageKind, StageReport
 from brightpath.formats.brightway_delimited import _render_rows as render_brightway_rows
+from brightpath.formats.openlca_jsonld import render_openlca_jsonld_package
 from brightpath.formats.simapro_csv import (
     _ACTIVITY_METADATA_FIELDS,
     _SIMAPRO_NUMBER_FORMAT,
@@ -239,6 +240,52 @@ def validate_simapro_format(document: InventoryDocument, descriptor: FormatDescr
         stage=StageKind.FORMAT_VALIDATION,
     )
     _add_context_mismatch(document, target, findings)
+    return _findings_report(findings, document, target, label="format validation")
+
+
+def preflight_openlca_jsonld_conversion(
+    document: InventoryDocument,
+    descriptor: FormatDescriptor,
+    policy: ConversionPolicy,
+) -> StageReport:
+    """Apply openLCA JSON-LD package representability rules."""
+
+    _require_document_and_policy(document, policy)
+    target = coerce_format_descriptor(descriptor)
+    findings = _Findings(_STAGE)
+    try:
+        render_openlca_jsonld_package(document)
+    except Exception as error:
+        findings.add_condition(
+            code="openlca_jsonld_unrepresentable",
+            message=str(error) or type(error).__name__,
+            path="",
+            action=PolicyAction.ERROR,
+            details={"exception_type": type(error).__name__},
+            suggested_fix="Correct values that the openLCA JSON-LD writer cannot represent.",
+        )
+    return _findings_report(findings, document, target, policy=policy, label="representability")
+
+
+def validate_openlca_jsonld_format(document: InventoryDocument, descriptor: FormatDescriptor) -> StageReport:
+    """Validate openLCA JSON-LD rendering without writing an archive."""
+
+    if not isinstance(document, InventoryDocument):
+        raise TypeError("document must be an InventoryDocument.")
+    target = coerce_format_descriptor(descriptor)
+    findings = _Findings(StageKind.FORMAT_VALIDATION)
+    _add_context_mismatch(document, target, findings)
+    try:
+        render_openlca_jsonld_package(document)
+    except Exception as error:
+        findings.add_condition(
+            code="openlca_jsonld_format_invalid",
+            message=str(error) or type(error).__name__,
+            path="",
+            action=PolicyAction.ERROR,
+            details={"exception_type": type(error).__name__},
+            suggested_fix="Correct values that the openLCA JSON-LD writer cannot serialize.",
+        )
     return _findings_report(findings, document, target, label="format validation")
 
 

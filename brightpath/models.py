@@ -39,15 +39,17 @@ class InventoryFormat(str, Enum):
     """Known source and target format identifiers.
 
     Brightway Excel and SimaPro CSV have dedicated facade support. Brightway
-    CSV and TSV are registered pipeline formats. OpenLCA Excel and ecospold2
-    remain reserved for future adapters. Custom adapters may use identifiers
-    outside this compatibility enum.
+    CSV and TSV are registered pipeline formats. openLCA JSON-LD is supported
+    as a zipped process package. OpenLCA Excel and ecospold2 remain reserved
+    for future adapters. Custom adapters may use identifiers outside this
+    compatibility enum.
     """
 
     BRIGHTWAY_EXCEL = "brightway_excel"
     BRIGHTWAY_CSV = "brightway_csv"
     BRIGHTWAY_TSV = "brightway_tsv"
     SIMAPRO_CSV = "simapro_csv"
+    OPENLCA_JSONLD = "openlca_jsonld"
     OPENLCA_EXCEL = "openlca_excel"
     ECOSPOLD2 = "ecospold2"
 
