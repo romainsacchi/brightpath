@@ -26,6 +26,7 @@ The full Sphinx guide starts at [`docs/index.rst`](docs/index.rst).
 |---|---|
 | Brightway Excel | Detect, read, normalize, validate, convert, write |
 | Brightway block CSV/TSV | Detect, read, normalize, validate, convert, write |
+| openLCA JSON-LD ZIP | Detect, read, analyze, validate, convert, write for process-only packages |
 | SimaPro CSV | Detect, read, normalize, validate, convert, write |
 | ecoinvent technosphere migration | Cut-off edges 3.5→3.12; reverse is inferred and policy-controlled |
 | ecoinvent biosphere migration | Edges 3.5→3.12; reverse is inferred and policy-controlled |
@@ -38,7 +39,7 @@ and migration resources instead of relying on this static table.
 
 ## Installation
 
-BrightPath supports Python 3.10 and 3.11.
+BrightPath supports Python 3.12.
 
 ```bash
 python -m pip install brightpath

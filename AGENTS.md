@@ -7,7 +7,8 @@ optionally migrates their background links, and writes them in an LCA software e
 Treat the following concerns as independent axes:
 
 - **File format:** Brightway Excel, Brightway CSV/TSV, and SimaPro CSV have registered read/write
-  adapters. OpenLCA Excel and ecospold2 identifiers are reserved but are not supported adapters.
+  adapters. openLCA JSON-LD ZIP packages are supported for process-only exchange. OpenLCA Excel and
+  ecospold2 identifiers are reserved but are not supported adapters.
 - **Background family:** `ecoinvent` or `uvek`.
 - **Background version:** for example ecoinvent `3.6` through `3.12`, or UVEK `2025`.
 - **System model:** for example `cutoff` or `consequential` where the background family supports it.
@@ -30,10 +31,11 @@ format after an ecoinvent migration must be supported.
 - `core/` defines exact context, canonical schema, immutable reports and policies, audit sidecars,
   and the dependency-injected operation pipeline.
 - `adapters/` defines capability contracts, content probes, the immutable registry, and built-in
-  Brightway Excel/CSV/TSV and SimaPro CSV adapters.
+  Brightway Excel/CSV/TSV, openLCA JSON-LD ZIP, and SimaPro CSV adapters.
 - `background/` owns independent catalog providers, technosphere/biosphere validation, migration
   planning, and transactional execution.
-- `formats/` contains syntax-only Brightway Excel/CSV/TSV and SimaPro CSV readers and writers.
+- `formats/` contains syntax-only Brightway Excel/CSV/TSV, openLCA JSON-LD ZIP, and SimaPro CSV
+  readers and writers.
 - `profiles/` contains background-family naming behavior used by format adapters.
 - `migrations/` retains low-level migration rule application, while `data/migrations/` contains
   attributed, integrity-manifested Premise resources. New orchestration belongs in `background/`.
@@ -115,8 +117,8 @@ use a declared library dependency or maintain attributed package resources insid
   warnings as failures after installing the `docs` extra.
 - `python -m build` builds source and wheel distributions when `build` is installed.
 
-Use Python 3.10 or 3.11, matching `pyproject.toml`. Run the focused tests while iterating and the full
-suite before handing off a structural change.
+Use Python 3.12, matching `pyproject.toml`. Run the focused tests while iterating and the full suite
+before handing off a structural change.
 
 ## Coding and Testing Conventions
 
