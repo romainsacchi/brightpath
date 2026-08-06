@@ -5,6 +5,7 @@ import datetime
 import logging
 import re
 import tempfile
+import unicodedata
 from copy import deepcopy
 from dataclasses import dataclass, field
 from numbers import Real
@@ -53,6 +54,49 @@ logger = logging.getLogger(__name__)
 _WASTE_TERMS = tuple(get_waste_exchange_names())
 _INVENTORY_PATH_PATTERN = re.compile(r"^(?P<path>activity\[\d+\](?:\.exchanges\[\d+\])?):")
 _DETECTED_SYSTEM_MODELS_KEY = "simapro detected system models"
+_LATIN1_TEXT_REPLACEMENTS = str.maketrans(
+    {
+        "\u00a0": " ",
+        "\u2002": " ",
+        "\u2003": " ",
+        "\u2004": " ",
+        "\u2005": " ",
+        "\u2006": " ",
+        "\u2007": " ",
+        "\u2008": " ",
+        "\u2009": " ",
+        "\u200a": " ",
+        "\u202f": " ",
+        "\u200b": "",
+        "\u200c": "",
+        "\u200d": "",
+        "\ufeff": "",
+        "\u2010": "-",
+        "\u2011": "-",
+        "\u2012": "-",
+        "\u2013": "-",
+        "\u2014": "-",
+        "\u2015": "-",
+        "\u2212": "-",
+        "\u2018": "'",
+        "\u2019": "'",
+        "\u201a": "'",
+        "\u201b": "'",
+        "\u201c": '"',
+        "\u201d": '"',
+        "\u201e": '"',
+        "\u201f": '"',
+        "\u2026": "...",
+        "\u2022": "*",
+        "\u2043": "-",
+        "\u2190": "<-",
+        "\u2192": "->",
+        "\u2194": "<->",
+        "\u2264": "<=",
+        "\u2265": ">=",
+        "\u03bc": "µ",
+    }
+)
 
 
 class _Formula(str):
@@ -319,13 +363,54 @@ def write_simapro_csv(
             writer = csv.writer(handle, delimiter=";")
             for row in result.rows:
                 writer.writerow(
-                    [value if isinstance(value, _Formula) else escape_spreadsheet_formula(value) for value in row]
+                    [_latin1_safe_cell(value) for value in row]
                 )
     except UnicodeEncodeError as exc:
         raise SimaProSerializationError(
             "SimaPro CSV uses Latin-1 encoding and the inventory contains unsupported characters."
         ) from exc
     return destination, result
+
+
+def _latin1_safe_cell(value):
+    cell = value if isinstance(value, _Formula) else escape_spreadsheet_formula(value)
+    if isinstance(cell, _Formula):
+        return _Formula(_latin1_safe_text(str(cell)))
+    if isinstance(cell, str):
+        return _latin1_safe_text(cell)
+    return cell
+
+
+def _latin1_safe_text(value: str) -> str:
+    translated = value.translate(_LATIN1_TEXT_REPLACEMENTS)
+    try:
+        translated.encode("latin-1")
+    except UnicodeEncodeError:
+        pass
+    else:
+        return translated
+
+    normalized_parts: list[str] = []
+    for char in translated:
+        if ord(char) <= 255:
+            normalized_parts.append(char)
+            continue
+        compatibility = unicodedata.normalize("NFKD", char).translate(
+            _LATIN1_TEXT_REPLACEMENTS
+        )
+        replacement = "".join(
+            item
+            for item in compatibility
+            if ord(item) <= 255 and unicodedata.category(item) != "Mn"
+        )
+        if replacement:
+            normalized_parts.append(replacement)
+            continue
+        if unicodedata.category(char).startswith("Z"):
+            normalized_parts.append(" ")
+            continue
+        normalized_parts.append("?")
+    return "".join(normalized_parts)
 
 
 def render_simapro_rows(document: InventoryDocument) -> SimaProRenderResult:

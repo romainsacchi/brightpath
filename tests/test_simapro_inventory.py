@@ -9,7 +9,6 @@ from brightpath import (
     BrightwayInventory,
     InventoryFormat,
     SimaProInventory,
-    SimaProSerializationError,
 )
 from brightpath.core import MigrationPolicy
 from brightpath.formats.simapro_csv import normalize_simapro_import_data
@@ -237,16 +236,30 @@ def test_write_csv_adds_suffix_escapes_formula_text_and_overwrites(tmp_path):
     assert "'@formula " in cells
 
 
-def test_write_csv_rejects_wrong_suffix_and_non_latin1_text(tmp_path):
+def test_write_csv_rejects_wrong_suffix_and_normalizes_non_latin1_text(tmp_path):
     inventory = SimaProInventory.from_data(
-        [minimal_activity(comment="unsupported snowman: \u2603")],
+        [
+            minimal_activity(
+                comment='Range 25 \N{DEGREE SIGN}C\N{EN DASH}50 \N{DEGREE SIGN}C, CO\N{SUBSCRIPT TWO} reuse, '
+                'smart quotes \N{LEFT DOUBLE QUOTATION MARK}ok\N{RIGHT DOUBLE QUOTATION MARK}, '
+                "unsupported snowman: \u2603"
+            )
+        ],
         background_profile=profile(),
     )
 
     with pytest.raises(ValueError, match=r"\.csv"):
         inventory.write_csv(tmp_path / "inventory.xlsx", validate=False)
-    with pytest.raises(SimaProSerializationError, match="Latin-1"):
-        inventory.write_csv(tmp_path / "inventory.csv", validate=False)
+
+    path = inventory.write_csv(tmp_path / "inventory.csv", validate=False)
+
+    with path.open(newline="", encoding="latin-1") as handle:
+        cells = [cell for row in csv.reader(handle, delimiter=";") for cell in row]
+    comment = next(cell for cell in cells if "unsupported snowman" in cell)
+    assert f"25 \N{DEGREE SIGN}C-50 \N{DEGREE SIGN}C" in comment
+    assert "CO2 reuse" in comment
+    assert 'smart quotes "ok"' in comment
+    assert "unsupported snowman: ?" in comment
 
 
 def test_ecoinvent_csv_round_trip_is_importable_and_preserves_identity(tmp_path):
