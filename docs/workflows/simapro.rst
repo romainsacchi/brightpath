@@ -128,7 +128,10 @@ Create from canonical data
        database_name="foreground-model",
    )
 
-Production exchanges need a supported ``simapro category`` for output:
+Production exchanges need a supported ``simapro category`` for output. Its
+first component is the SimaPro category type (``material``, ``energy``,
+``transport``, ``processing``, ``use``, ``waste treatment``, or
+``waste scenario``); remaining components form the process subcategory:
 
 .. code-block:: python
 
@@ -140,7 +143,7 @@ Production exchanges need a supported ``simapro category`` for output:
        "location": "CH",
        "unit": "kilogram",
        "amount": 1.0,
-       "simapro category": "Materials/Other",
+       "simapro category": "material/Other",
    }
 
 Write SimaPro CSV
@@ -150,8 +153,12 @@ Write SimaPro CSV
 
    output = inventory.write_csv("foreground-checked")
 
-Output is semicolon-delimited and Latin-1 encoded. Characters outside Latin-1
-raise ``SimaProSerializationError``. ``validate=False`` bypasses facade
+Output uses the SimaPro 9 CSV grammar: semicolon delimiters, CRLF records,
+Latin-1 text, and the DEL character as the intra-cell paragraph marker used by
+SimaPro exports. Characters outside Latin-1 are transliterated where possible
+and otherwise replaced with ``?``. Product, waste-treatment, technosphere, and
+biosphere rows use their distinct SimaPro column layouts; numeric exchange
+values retain 15 significant digits. ``validate=False`` bypasses facade
 structural/catalog preflight, but rendering and encoding still apply.
 
 UVEK in SimaPro

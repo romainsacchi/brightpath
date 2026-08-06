@@ -17,8 +17,10 @@ from brightpath.core.reports import Change, Issue, Loss, Severity, StageKind, St
 from brightpath.formats.brightway_delimited import _render_rows as render_brightway_rows
 from brightpath.formats.simapro_csv import (
     _ACTIVITY_METADATA_FIELDS,
+    _SIMAPRO_NUMBER_FORMAT,
     SimaProRenderResult,
     _simapro_uncertainty_type,
+    _split_simapro_category,
     is_simapro_final_waste_flow,
     render_simapro_rows,
 )
@@ -29,11 +31,9 @@ from brightpath.utils import (
     get_simapro_biosphere,
     get_simapro_subcompartments,
     get_simapro_units,
-    get_subcategory,
     is_a_waste_treatment,
     is_activity_waste_treatment,
     is_blacklisted,
-    round_floats_in_string,
 )
 
 from .base import FormatDescriptor, coerce_format_descriptor
@@ -56,6 +56,9 @@ _SIMAPRO_DATASET_FIELDS = frozenset(
         "type",
         "comment",
         "source",
+        "code",
+        "process identifier",
+        "simapro process name",
         "simapro name",
         "simapro metadata",
         *_SIMAPRO_ACTIVITY_METADATA,
@@ -566,18 +569,6 @@ def _inspect_simapro_dataset(
 
     _inspect_parameter_collection(dataset.get("parameters"), f"{path}.parameters", findings, policy)
 
-    comment = str(dataset.get("comment") or "")
-    normalized_comment = round_floats_in_string(comment).replace("\n", " ")
-    if comment and normalized_comment != comment:
-        findings.add_loss(
-            code="simapro_comment_normalized",
-            message="SimaPro rendering normalizes line breaks or decimal text in the dataset comment.",
-            path=f"{path}.comment",
-            action=policy.on_information_loss,
-            category="information_loss",
-            details={"before": comment, "after": normalized_comment},
-        )
-
     try:
         waste_activity = is_activity_waste_treatment(dict(dataset), document.background_profile.family)
     except (KeyError, TypeError, ValueError):
@@ -611,7 +602,7 @@ def _inspect_simapro_exchange(
     if exchange_type in {"production", "technosphere", "substitution"}:
         supported.update({"reference product", "location"})
     if exchange_type == "production":
-        supported.add("simapro category")
+        supported.update({"simapro category", "allocation", "simapro waste type"})
     if exchange_type == "biosphere":
         supported.add("categories")
     if is_simapro_final_waste_flow(dict(exchange)):
@@ -698,10 +689,10 @@ def _inspect_simapro_exchange(
         policy,
         path=f"{path}.amount",
         value=effective_amount,
-        precision=".3E",
+        precision=_SIMAPRO_NUMBER_FORMAT,
         code="simapro_exchange_amount_rounded",
     )
-    _add_uncertainty_loss(exchange, path, ".3E", findings, policy)
+    _add_uncertainty_loss(exchange, path, _SIMAPRO_NUMBER_FORMAT, findings, policy)
 
 
 def _simapro_exchange_status(document: InventoryDocument, exchange: Mapping[str, Any]) -> str:
@@ -1113,12 +1104,17 @@ def _record_simapro_representation_changes(
 
             if exchange_type == "production" and exchange.get("simapro category"):
                 category = str(exchange["simapro category"])
+                try:
+                    category_type, subcategory = _split_simapro_category(category)
+                except ValueError:
+                    category_type = category.split("/")[0]
+                    subcategory = "\\".join(category.split("/")[1:])
                 findings.add_change(
                     code="simapro_category_mapped",
                     message="Production category is split into SimaPro category and subcategory fields.",
                     path=f"{exchange_path}.simapro_category",
                     before=category,
-                    after={"category": category.split("/")[0], "subcategory": get_subcategory(category)},
+                    after={"category": category_type, "subcategory": subcategory},
                 )
             elif exchange_type == "biosphere":
                 categories = exchange.get("categories")

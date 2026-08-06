@@ -38,7 +38,6 @@ from brightpath.utils import (
     get_simapro_headers,
     get_simapro_subcompartments,
     get_simapro_units,
-    get_subcategory,
     get_technosphere_exchanges,
     get_waste_exchange_names,
     inspect_brightway_inventory,
@@ -47,13 +46,27 @@ from brightpath.utils import (
     is_blacklisted,
     load_biosphere_correspondence,
     load_simapro_brightway_biosphere_mapping,
-    round_floats_in_string,
 )
 
 logger = logging.getLogger(__name__)
 _WASTE_TERMS = tuple(get_waste_exchange_names())
 _INVENTORY_PATH_PATTERN = re.compile(r"^(?P<path>activity\[\d+\](?:\.exchanges\[\d+\])?):")
 _DETECTED_SYSTEM_MODELS_KEY = "simapro detected system models"
+_SIMAPRO_NUMBER_FORMAT = ".15g"
+_SIMAPRO_CATEGORY_TYPES = frozenset(
+    {
+        "material",
+        "energy",
+        "transport",
+        "processing",
+        "use",
+        "waste treatment",
+        "waste scenario",
+    }
+)
+_SIMAPRO_CATEGORY_TYPE_ALIASES = {
+    "materials": "material",
+}
 _LATIN1_TEXT_REPLACEMENTS = str.maketrans(
     {
         "\u00a0": " ",
@@ -247,8 +260,24 @@ def normalize_simapro_import_data(
                 if key not in {"Process name", "Category type"}:
                     dataset.setdefault(key.lower(), value)
 
+            production = next(
+                (
+                    exchange
+                    for exchange in dataset.get("exchanges", [])
+                    if isinstance(exchange, dict) and exchange.get("type") == "production"
+                ),
+                {},
+            )
+            # SimaPro's metadata ``Process name`` is a display label such as
+            # ``market for electricity GLO``. The fully qualified link name
+            # in the Products/Waste treatment row carries the canonical
+            # product, activity, geography, and system-model identity.
             raw_dataset_name = (
-                dataset.get("simapro name") or simapro_metadata.get("Process name") or dataset.get("name", "")
+                dataset.get("simapro name")
+                or production.get("simapro name")
+                or production.get("name")
+                or dataset.get("name")
+                or simapro_metadata.get("Process name", "")
             )
             dataset["simapro name"] = raw_dataset_name
             dataset["name"], dataset["reference product"], dataset["location"] = parse_simapro_technosphere_name(
@@ -362,9 +391,7 @@ def write_simapro_csv(
         with destination.open("w", newline="", encoding="latin-1") as handle:
             writer = csv.writer(handle, delimiter=";")
             for row in result.rows:
-                writer.writerow(
-                    [_latin1_safe_cell(value) for value in row]
-                )
+                writer.writerow([_latin1_safe_cell(value) for value in row])
     except UnicodeEncodeError as exc:
         raise SimaProSerializationError(
             "SimaPro CSV uses Latin-1 encoding and the inventory contains unsupported characters."
@@ -382,7 +409,9 @@ def _latin1_safe_cell(value):
 
 
 def _latin1_safe_text(value: str) -> str:
-    translated = value.translate(_LATIN1_TEXT_REPLACEMENTS)
+    translated = (
+        value.replace("\r\n", "\x7f").replace("\r", "\x7f").replace("\n", "\x7f").translate(_LATIN1_TEXT_REPLACEMENTS)
+    )
     try:
         translated.encode("latin-1")
     except UnicodeEncodeError:
@@ -395,14 +424,8 @@ def _latin1_safe_text(value: str) -> str:
         if ord(char) <= 255:
             normalized_parts.append(char)
             continue
-        compatibility = unicodedata.normalize("NFKD", char).translate(
-            _LATIN1_TEXT_REPLACEMENTS
-        )
-        replacement = "".join(
-            item
-            for item in compatibility
-            if ord(item) <= 255 and unicodedata.category(item) != "Mn"
-        )
+        compatibility = unicodedata.normalize("NFKD", char).translate(_LATIN1_TEXT_REPLACEMENTS)
+        replacement = "".join(item for item in compatibility if ord(item) <= 255 and unicodedata.category(item) != "Mn")
         if replacement:
             normalized_parts.append(replacement)
             continue
@@ -522,6 +545,7 @@ class _SimaProRenderer:
     def __init__(self, document: InventoryDocument) -> None:
         self.document = document
         self.profile = document.background_profile.normalized()
+        self.generated_at = datetime.datetime.now()
         self.fields = get_simapro_fields_list()
         self.units = get_simapro_units()
         self.headers = get_simapro_headers()
@@ -538,8 +562,8 @@ class _SimaProRenderer:
             inventories = [flag_exchanges(activity) for activity in self.document.data]
             for activity in inventories:
                 rows.extend(self._activity_rows(activity))
-            rows.extend(self._global_parameter_rows())
             rows.extend(self._metadata_rows())
+            rows.extend(self._global_parameter_rows())
         except (KeyError, SimaProSerializationError, TypeError, ValueError) as exc:
             issues.append(
                 Issue(
@@ -611,6 +635,27 @@ class _SimaProRenderer:
         issues.extend(self._parameter_issues(self.document.project_parameters, "project_parameters"))
         for activity_index, activity in enumerate(self.document.data):
             if isinstance(activity, dict):
+                try:
+                    production = find_production_exchange(activity)
+                    _split_simapro_category(production["simapro category"])
+                except (KeyError, TypeError, ValueError) as exc:
+                    if production := next(
+                        (
+                            exchange
+                            for exchange in activity.get("exchanges", [])
+                            if isinstance(exchange, dict) and exchange.get("type") == "production"
+                        ),
+                        None,
+                    ):
+                        if production.get("simapro category"):
+                            issues.append(
+                                Issue(
+                                    severity="error",
+                                    code="simapro_category_invalid",
+                                    message=str(exc),
+                                    path=f"activity[{activity_index}].exchanges",
+                                )
+                            )
                 issues.extend(
                     self._parameter_issues(
                         activity.get("parameters"),
@@ -621,18 +666,18 @@ class _SimaProRenderer:
 
     def _header_rows(self):
         project_name = str(self.document.metadata.get("Project") or self.document.database_name or "brightpath")
-        rows = [
-            (
-                [
-                    item.replace("today_date", datetime.datetime.today().strftime("%d.%m.%Y")).replace(
-                        "project_name", project_name
-                    )
-                ]
-                if item.startswith("{Date")
-                else [item.replace("project_name", project_name)]
-            )
-            for item in self.headers
-        ]
+        replacements = {
+            "today_date": self.generated_at.strftime("%d.%m.%Y"),
+            "today_time": self.generated_at.strftime("%H:%M:%S"),
+            "project_name": project_name,
+            "process_count": str(len(self.document.data)),
+        }
+        rows = []
+        for item in self.headers:
+            rendered = item
+            for source, target in replacements.items():
+                rendered = rendered.replace(source, target)
+            rows.append([rendered])
         rows.append([])
         return rows
 
@@ -656,7 +701,7 @@ class _SimaProRenderer:
 
     def _activity_rows(self, activity: dict):
         rows = []
-        dataset_name = ""
+        dataset_link_name = ""
         is_waste = is_activity_waste_treatment(activity, self.profile.family)
         for field_name in self.fields:
             if is_waste and field_name == "Products":
@@ -665,7 +710,6 @@ class _SimaProRenderer:
                 continue
 
             if field_name == "End":
-                rows.extend(self._parameter_rows(activity.get("parameters")))
                 rows.extend([[field_name], []])
                 continue
 
@@ -674,25 +718,34 @@ class _SimaProRenderer:
                 rows.append([])
                 continue
             if field_name == "Process name":
-                dataset_name = self._format_technosphere(activity)
-                rows.extend([[dataset_name], []])
+                dataset_link_name = self._format_technosphere(activity)
+                rows.extend([[self._process_name(activity)], []])
             elif field_name == "Type":
-                rows.extend([["Unit process"], []])
+                rows.extend(self._activity_metadata_rows(field_name, activity, default="Unit process"))
             elif field_name == "Comment":
                 rows.extend([[self._comment(activity)], []])
             elif field_name == "Category type":
                 production = find_production_exchange(activity)
-                rows.extend([[production["simapro category"].split("/")[0]], []])
+                category_type, _subcategory = _split_simapro_category(production["simapro category"])
+                rows.extend([[category_type], []])
             elif field_name == "Geography":
-                rows.extend([[activity["location"]], []])
+                rows.extend(self._activity_metadata_rows(field_name, activity, default="Unspecified"))
             elif field_name == "Date":
-                rows.extend([[f"{datetime.datetime.today():%d.%m.%Y}"], []])
+                rows.extend(
+                    self._activity_metadata_rows(
+                        field_name,
+                        activity,
+                        default=self.generated_at.strftime("%d.%m.%Y"),
+                    )
+                )
+            elif field_name == "Process identifier":
+                rows.extend(self._process_identifier_rows(activity))
             elif field_name in _ACTIVITY_METADATA_FIELDS:
                 rows.extend(self._activity_metadata_rows(field_name, activity))
             elif field_name in _EMPTY_SECTIONS:
                 rows.append([])
             elif field_name in {"Waste treatment", "Products"}:
-                rows.extend(self._product_rows(dataset_name, activity, field_name))
+                rows.extend(self._product_rows(dataset_link_name, activity, field_name))
             elif field_name in {"Materials/fuels", "Electricity/heat"}:
                 rows.extend(self._technosphere_rows(field_name, activity, is_waste))
             elif field_name == "Resources":
@@ -701,6 +754,19 @@ class _SimaProRenderer:
                 rows.extend(self._biosphere_rows(activity, field_name.split(" ")[-1].lower()))
             elif field_name == "Waste to treatment":
                 rows.extend(self._waste_rows(activity))
+            elif field_name == "Input parameters":
+                parameters = [
+                    parameter for parameter in (activity.get("parameters") or []) if not parameter.get("formula")
+                ]
+                rows.extend(self._input_parameter_row(parameter) for parameter in parameters)
+                rows.append([])
+            elif field_name == "Calculated parameters":
+                parameters = [parameter for parameter in (activity.get("parameters") or []) if parameter.get("formula")]
+                rows.extend(
+                    [parameter["name"], _Formula(str(parameter["formula"])), parameter.get("comment")]
+                    for parameter in parameters
+                )
+                rows.append([])
         rows.append([])
         return rows
 
@@ -795,27 +861,47 @@ class _SimaProRenderer:
         )
 
     def _comment(self, activity: dict) -> str:
-        result = ""
+        parts = []
         if activity.get("comment"):
-            result = f"{round_floats_in_string(str(activity['comment']))} "
+            parts.append(str(activity["comment"]))
         if activity.get("source"):
-            result += f"Source: {activity['source']} "
-        return result.replace("\n", " ")
+            parts.append(f"Source: {activity['source']}")
+        return " ".join(parts)
 
-    def _activity_metadata_rows(self, field_name: str, activity: dict):
+    def _process_name(self, activity: dict) -> str:
+        metadata = activity.get("simapro metadata", {})
+        if isinstance(metadata, dict) and metadata.get("Process name"):
+            return str(metadata["Process name"])
+        if activity.get("simapro process name"):
+            return str(activity["simapro process name"])
+        name = str(activity["name"])
+        location = str(activity.get("location") or "GLO")
+        return f"{name} {location}"
+
+    def _process_identifier_rows(self, activity: dict):
+        metadata = activity.get("simapro metadata", {})
+        if isinstance(metadata, dict) and metadata.get("Process identifier") not in (None, ""):
+            value = metadata["Process identifier"]
+        else:
+            value = activity.get("process identifier", activity.get("code", ""))
+        return [[value], []]
+
+    def _activity_metadata_rows(self, field_name: str, activity: dict, *, default=None):
+        metadata = activity.get("simapro metadata", {})
+        if field_name == "Type" and isinstance(metadata, dict) and field_name in metadata:
+            return [[metadata[field_name]], []]
         if field_name.lower() in activity:
             return [[activity[field_name.lower()]], []]
-        metadata = activity.get("simapro metadata", {})
-        if field_name in metadata:
+        if isinstance(metadata, dict) and field_name in metadata:
             return [[metadata[field_name]], []]
-        if field_name == "Infrastructure":
-            return [["No"], []]
         document_metadata = self.document.metadata
         if field_name == "System description" and "system description" in document_metadata:
             return [[document_metadata["system description"]["name"]], []]
         if field_name == "Literature references" and "literature reference" in document_metadata:
             return [[document_metadata["literature reference"]["name"]], []]
-        return [["Unspecified"], []]
+        if default is None:
+            default = _ACTIVITY_METADATA_DEFAULTS.get(field_name, "")
+        return [[default], []]
 
     def _product_rows(self, dataset_name: str, activity: dict, field_name: str):
         production = find_production_exchange(activity)
@@ -823,15 +909,28 @@ class _SimaProRenderer:
         if field_name == "Waste treatment" and amount < 0:
             amount = abs(amount)
         production["used"] = True
+        _category_type, subcategory = _split_simapro_category(production["simapro category"])
+        if field_name == "Waste treatment":
+            return [
+                [
+                    dataset_name,
+                    self.units[production["unit"]],
+                    _format_simapro_number(amount),
+                    production.get("simapro waste type") or "All waste types",
+                    subcategory,
+                    production.get("comment"),
+                ],
+                [],
+            ]
         return [
             [
                 dataset_name,
                 self.units[production["unit"]],
-                f"{amount:.3E}",
-                "100",
-                "not defined",
-                get_subcategory(production["simapro category"]),
-                "not defined",
+                _format_simapro_number(amount),
+                _format_simapro_number(production["allocation"] if production.get("allocation") is not None else 100),
+                production.get("simapro waste type") or "not defined",
+                subcategory,
+                production.get("comment"),
             ],
             [],
         ]
@@ -869,11 +968,11 @@ class _SimaProRenderer:
         return [
             self._format_technosphere(exchange),
             self.units[exchange["unit"]],
-            f"{amount:.3E}",
+            _format_simapro_number(amount),
             uncertainty,
-            f"{convert_sd_to_sd2(exchange.get('scale', 1), uncertainty):.3E}",
-            f"{exchange.get('min', exchange.get('minimum', 0)):.3E}",
-            f"{exchange.get('max', exchange.get('maximum', 0)):.3E}",
+            _format_simapro_number(convert_sd_to_sd2(exchange.get("scale", 1), uncertainty)),
+            _format_simapro_number(exchange.get("min", exchange.get("minimum", 0))),
+            _format_simapro_number(exchange.get("max", exchange.get("maximum", 0))),
             exchange.get("comment"),
         ]
 
@@ -906,25 +1005,32 @@ class _SimaProRenderer:
             self.biosphere.get(exchange["name"], exchange["name"]),
             subcompartment,
             self.units[exchange["unit"]],
-            f"{exchange['amount']:.3E}",
+            _format_simapro_number(exchange["amount"]),
             uncertainty,
-            f"{convert_sd_to_sd2(exchange.get('scale', 1), uncertainty):.3E}",
-            f"{exchange.get('min', exchange.get('minimum', 0)):.3E}",
-            f"{exchange.get('max', exchange.get('maximum', 0)):.3E}",
+            _format_simapro_number(convert_sd_to_sd2(exchange.get("scale", 1), uncertainty)),
+            _format_simapro_number(exchange.get("min", exchange.get("minimum", 0))),
+            _format_simapro_number(exchange.get("max", exchange.get("maximum", 0))),
             exchange.get("comment"),
         ]
 
 
 _ACTIVITY_METADATA_FIELDS = {
+    "Process identifier",
+    "Type",
+    "Status",
     "Time period",
+    "Geography",
     "Record",
     "Generator",
+    "Multiple output allocation",
+    "Substitution allocation",
     "Cut off rules",
     "Capital goods",
     "Technology",
     "Representativeness",
     "Boundary with nature",
     "Infrastructure",
+    "Date",
     "External documents",
     "System description",
     "Allocation rules",
@@ -933,7 +1039,45 @@ _ACTIVITY_METADATA_FIELDS = {
     "Data treatment",
     "Verification",
 }
-_EMPTY_SECTIONS = {"Final waste flows", "Non material emission", "Social issues", "Economic issues"}
+_ACTIVITY_METADATA_DEFAULTS = {
+    "Time period": "Unspecified",
+    "Technology": "Unspecified",
+    "Representativeness": "Unspecified",
+    "Multiple output allocation": "Unspecified",
+    "Substitution allocation": "Unspecified",
+    "Cut off rules": "Unspecified",
+    "Capital goods": "Unspecified",
+    "Boundary with nature": "Unspecified",
+    "Infrastructure": "No",
+}
+_EMPTY_SECTIONS = {
+    "Avoided products",
+    "Final waste flows",
+    "Non material emissions",
+    "Social issues",
+    "Economic issues",
+}
+
+
+def _split_simapro_category(category: str) -> tuple[str, str]:
+    parts = [part.strip() for part in str(category).split("/")]
+    category_type = parts[0].lower() if parts else ""
+    category_type = _SIMAPRO_CATEGORY_TYPE_ALIASES.get(category_type, category_type)
+    if category_type not in _SIMAPRO_CATEGORY_TYPES:
+        supported = ", ".join(sorted(_SIMAPRO_CATEGORY_TYPES))
+        raise ValueError(f"Unsupported SimaPro category type {parts[0]!r}; expected one of: {supported}.")
+    return category_type, "\\".join(part for part in parts[1:] if part)
+
+
+def _format_simapro_number(value: Real) -> str:
+    number = float(value)
+    if number == 0:
+        return "0"
+    rendered = format(number, _SIMAPRO_NUMBER_FORMAT)
+    if "e" not in rendered:
+        return rendered
+    mantissa, exponent = rendered.split("e", 1)
+    return f"{mantissa}E{int(exponent)}"
 
 
 def _restore_simapro_category(dataset: dict, production: dict) -> None:

@@ -131,7 +131,7 @@ def test_exchange_formula_and_rounding_are_explicit_losses():
         "reference product": "product",
         "location": "CH",
         "unit": "kilogram",
-        "amount": 1.23456,
+        "amount": 1.2345678901234567,
         "formula": "demand * 2",
     }
 
@@ -144,7 +144,7 @@ def test_exchange_formula_and_rounding_are_explicit_losses():
     formula = next(loss for loss in report.losses if loss.code == "simapro_exchange_formula_unsupported")
     rounding = next(loss for loss in report.losses if loss.code == "simapro_exchange_amount_rounded")
     assert formula.path == "datasets[0].exchanges[1].formula"
-    assert rounding.details["after"] == pytest.approx(1.235)
+    assert rounding.details["after"] == pytest.approx(1.23456789012346)
 
 
 def test_substitution_blacklist_final_waste_and_unused_are_distinguished():

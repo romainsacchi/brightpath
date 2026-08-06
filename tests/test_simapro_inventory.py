@@ -48,6 +48,10 @@ def flatten_rows(rows):
     return [cell for row in rows for cell in row]
 
 
+def row_after(rows, label):
+    return rows[rows.index([label]) + 1]
+
+
 def test_format_facades_share_a_copy_on_write_document():
     data = [minimal_activity()]
     source = deepcopy(data)
@@ -102,6 +106,16 @@ def test_render_reports_format_specific_requirements():
     assert {issue.code for issue in category_result.issues} == {"simapro_category_missing"}
     assert unit_result.rows == []
     assert {issue.code for issue in unit_result.issues} == {"simapro_unit_unsupported"}
+
+
+def test_render_rejects_unknown_simapro_category_type():
+    activity = minimal_activity()
+    activity["exchanges"][0]["simapro category"] = "unknown/Test"
+
+    result = SimaProInventory.from_data([activity], background_profile=profile()).render()
+
+    assert result.rows == []
+    assert {issue.code for issue in result.issues} == {"simapro_category_invalid"}
 
 
 def test_render_returns_structured_errors_for_malformed_inventory():
@@ -177,9 +191,113 @@ def test_render_includes_metadata_technosphere_and_biosphere_rows():
     assert "Product {CH}| market for product | Cut-off, U" in cells
     assert "Electricity {CH}| market for electricity | Cut-off, U" in cells
     assert "Normal" in cells
-    assert "4.000E-02" in cells
-    assert "2.000E+03" in cells
+    assert "0.04" in cells
+    assert "2000" in cells
     assert "kg" in cells
+
+
+def test_render_matches_observed_simapro_process_grammar_and_row_shapes():
+    activity = minimal_activity(
+        code="EI3ARUNI000000000000001",
+        extra_exchanges=[
+            {
+                "type": "technosphere",
+                "name": "market for product",
+                "reference product": "product",
+                "location": "CH",
+                "unit": "kilogram",
+                "amount": 1.2345678901234567,
+                "uncertainty type": 2,
+                "scale": 0.2,
+                "minimum": 0.1,
+                "maximum": 2.0,
+                "comment": "technosphere comment",
+            },
+            {
+                "type": "biosphere",
+                "name": "Water",
+                "categories": ("air", "urban air close to ground"),
+                "unit": "cubic meter",
+                "amount": 0.00012345678901234567,
+                "comment": "biosphere comment",
+            },
+        ],
+    )
+    activity["exchanges"][0].update(
+        {
+            "allocation": 87.5,
+            "comment": "production comment",
+        }
+    )
+
+    rows = SimaProInventory.from_data([activity], background_profile=profile()).render().rows
+
+    expected_fields = [
+        "Process",
+        "Category type",
+        "Process identifier",
+        "Type",
+        "Process name",
+        "Status",
+        "Time period",
+        "Geography",
+        "Technology",
+        "Representativeness",
+        "Multiple output allocation",
+        "Substitution allocation",
+        "Cut off rules",
+        "Capital goods",
+        "Boundary with nature",
+        "Infrastructure",
+        "Date",
+        "Record",
+        "Generator",
+        "External documents",
+        "Literature references",
+        "Collection method",
+        "Data treatment",
+        "Verification",
+        "Comment",
+        "Allocation rules",
+        "System description",
+        "Products",
+        "Avoided products",
+        "Resources",
+        "Materials/fuels",
+        "Electricity/heat",
+        "Emissions to air",
+        "Emissions to water",
+        "Emissions to soil",
+        "Final waste flows",
+        "Non material emissions",
+        "Social issues",
+        "Economic issues",
+        "Waste to treatment",
+        "Input parameters",
+        "Calculated parameters",
+        "End",
+    ]
+    process_rows = rows[rows.index(["Process"]) : rows.index(["End"]) + 1]
+    field_set = set(expected_fields)
+    assert [row[0] for row in process_rows if len(row) == 1 and row[0] in field_set] == expected_fields
+    assert row_after(rows, "Category type") == ["material"]
+    assert row_after(rows, "Process identifier") == ["EI3ARUNI000000000000001"]
+    assert row_after(rows, "Process name") == ["test process GLO"]
+    assert row_after(rows, "Geography") == ["Unspecified"]
+    assert row_after(rows, "Input parameters") == []
+    assert row_after(rows, "Calculated parameters") == []
+
+    product = row_after(rows, "Products")
+    technosphere = row_after(rows, "Materials/fuels")
+    biosphere = row_after(rows, "Emissions to air")
+    assert len(product) == 7
+    assert product[1:] == ["kg", "1", "87.5", "not defined", "Test", "production comment"]
+    assert len(technosphere) == 8
+    assert technosphere[2] == "1.23456789012346"
+    assert technosphere[-1] == "technosphere comment"
+    assert len(biosphere) == 9
+    assert biosphere[3] == "0.123456789012346"
+    assert biosphere[-1] == "biosphere comment"
 
 
 def test_render_is_non_mutating_and_reports_unused_exchanges():
@@ -208,16 +326,32 @@ def test_render_is_non_mutating_and_reports_unused_exchanges():
 
 
 def test_waste_treatment_activity_uses_waste_section():
-    inventory = SimaProInventory.from_data(
-        [minimal_activity(name="treatment of municipal waste", type="waste treatment")],
-        background_profile=profile(),
+    activity = minimal_activity(name="treatment of municipal waste", type="waste treatment")
+    activity["exchanges"][0].update(
+        {
+            "amount": -1.0,
+            "comment": "treatment comment",
+            "simapro category": "waste treatment/Recycling/Transformation",
+            "simapro waste type": "Aluminium",
+        }
     )
+    inventory = SimaProInventory.from_data([activity], background_profile=profile())
 
-    cells = flatten_rows(inventory.render().rows)
+    rows = inventory.render().rows
+    cells = flatten_rows(rows)
 
     assert "Waste treatment" in cells
     assert "Products" not in cells
-    assert "1.000E+00" in cells
+    assert "1" in cells
+    assert row_after(rows, "Category type") == ["waste treatment"]
+    assert row_after(rows, "Waste treatment")[1:] == [
+        "kg",
+        "1",
+        "Aluminium",
+        "Recycling\\Transformation",
+        "treatment comment",
+    ]
+    assert len(row_after(rows, "Waste treatment")) == 6
 
 
 def test_write_csv_adds_suffix_escapes_formula_text_and_overwrites(tmp_path):
@@ -233,15 +367,32 @@ def test_write_csv_adds_suffix_escapes_formula_text_and_overwrites(tmp_path):
     assert second == first
     with first.open(newline="", encoding="latin-1") as handle:
         cells = [cell for row in csv.reader(handle, delimiter=";") for cell in row]
-    assert "'@formula " in cells
+    assert "'@formula" in cells
+
+
+def test_write_csv_uses_crlf_and_simapro_paragraph_markers_without_rounding_comment_text(tmp_path):
+    inventory = SimaProInventory.from_data(
+        [minimal_activity(comment="First paragraph\nValue 1.23456")],
+        background_profile=profile(),
+    )
+
+    path = inventory.write_csv(tmp_path / "paragraphs.csv", validate=False)
+    payload = path.read_bytes()
+
+    assert payload.startswith(b"{SimaPro 9.5.0.2}\r\n")
+    assert b"\x7f" in payload
+    assert b"\n" not in payload.replace(b"\r\n", b"")
+    with path.open(newline="", encoding="latin-1") as handle:
+        rows = list(csv.reader(handle, delimiter=";"))
+    assert row_after(rows, "Comment") == ["First paragraph\x7fValue 1.23456"]
 
 
 def test_write_csv_rejects_wrong_suffix_and_normalizes_non_latin1_text(tmp_path):
     inventory = SimaProInventory.from_data(
         [
             minimal_activity(
-                comment='Range 25 \N{DEGREE SIGN}C\N{EN DASH}50 \N{DEGREE SIGN}C, CO\N{SUBSCRIPT TWO} reuse, '
-                'smart quotes \N{LEFT DOUBLE QUOTATION MARK}ok\N{RIGHT DOUBLE QUOTATION MARK}, '
+                comment="Range 25 \N{DEGREE SIGN}C\N{EN DASH}50 \N{DEGREE SIGN}C, CO\N{SUBSCRIPT TWO} reuse, "
+                "smart quotes \N{LEFT DOUBLE QUOTATION MARK}ok\N{RIGHT DOUBLE QUOTATION MARK}, "
                 "unsupported snowman: \u2603"
             )
         ],
@@ -296,7 +447,7 @@ def test_ecoinvent_csv_round_trip_is_importable_and_preserves_identity(tmp_path)
     assert loaded.data[0]["reference product"] == "test product"
     assert loaded.data[0]["location"] == "GLO"
     production, technosphere = loaded.data[0]["exchanges"]
-    assert production["simapro category"] == "Materials/Test"
+    assert production["simapro category"] == "material/Test"
     assert technosphere["name"] == "market for product"
     assert technosphere["reference product"] == "product"
     assert technosphere["uncertainty type"] == 3
@@ -412,6 +563,7 @@ def test_normalize_import_data_converts_all_exchange_types_without_mutating():
             "simapro metadata": {
                 "Comment": "dataset comment",
                 "Category type": "Materials",
+                "Process name": "display-only process name CH",
             },
             "exchanges": [
                 {

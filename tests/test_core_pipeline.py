@@ -299,7 +299,7 @@ def test_loss_policy_is_not_overridden_by_intrinsic_target_validation():
         "reference product": "product",
         "location": "CH",
         "unit": "kilogram",
-        "amount": 1.23456,
+        "amount": 1.2345678901234567,
     }
     source = document(data=[activity(extra_exchanges=(rounded_exchange,))])
     pipeline = InventoryPipeline(default_adapter_registry(), provider_for(source))
