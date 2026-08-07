@@ -161,6 +161,18 @@ biosphere rows use their distinct SimaPro column layouts; numeric exchange
 values retain 15 significant digits. ``validate=False`` bypasses facade
 structural/catalog preflight, but rendering and encoding still apply.
 
+Canonical Brightway datasets normally use ``type="process"``; BrightPath
+renders these as SimaPro ``Unit process`` records. Existing SimaPro process
+identifiers are preserved when they use the observed eight-character prefix
+and fifteen-digit suffix. Other canonical activity codes are converted to a
+stable ``BRTPATH0`` identifier with a fifteen-digit suffix so that SimaPro does
+not receive UUIDs or other unsupported identifiers.
+
+Before importing a foreground CSV, enable the exact background library in the
+target SimaPro project. A ``process not found`` message for an otherwise exact
+ecoinvent link normally means that the corresponding library is unavailable
+to that project rather than that the CSV exchange name is malformed.
+
 UVEK in SimaPro
 ---------------
 

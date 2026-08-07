@@ -1,4 +1,5 @@
 import csv
+import re
 from copy import deepcopy
 
 import bw2io
@@ -199,6 +200,7 @@ def test_render_includes_metadata_technosphere_and_biosphere_rows():
 def test_render_matches_observed_simapro_process_grammar_and_row_shapes():
     activity = minimal_activity(
         code="EI3ARUNI000000000000001",
+        type="process",
         extra_exchanges=[
             {
                 "type": "technosphere",
@@ -282,6 +284,7 @@ def test_render_matches_observed_simapro_process_grammar_and_row_shapes():
     assert [row[0] for row in process_rows if len(row) == 1 and row[0] in field_set] == expected_fields
     assert row_after(rows, "Category type") == ["material"]
     assert row_after(rows, "Process identifier") == ["EI3ARUNI000000000000001"]
+    assert row_after(rows, "Type") == ["Unit process"]
     assert row_after(rows, "Process name") == ["test process GLO"]
     assert row_after(rows, "Geography") == ["Unspecified"]
     assert row_after(rows, "Input parameters") == []
@@ -298,6 +301,19 @@ def test_render_matches_observed_simapro_process_grammar_and_row_shapes():
     assert len(biosphere) == 9
     assert biosphere[3] == "0.123456789012346"
     assert biosphere[-1] == "biosphere comment"
+
+
+def test_render_generates_stable_simapro_identifier_from_canonical_code():
+    activity = minimal_activity(code="clic-2eeede00b65c4689b161b0e84a9131db", type="process")
+    inventory = SimaProInventory.from_data([activity], background_profile=profile())
+
+    first = row_after(inventory.render().rows, "Process identifier")[0]
+    second = row_after(inventory.render().rows, "Process identifier")[0]
+
+    assert re.fullmatch(r"BRTPATH0\d{15}", first)
+    assert second == first
+    assert first != activity["code"]
+    assert row_after(inventory.render().rows, "Type") == ["Unit process"]
 
 
 def test_render_is_non_mutating_and_reports_unused_exchanges():
@@ -626,6 +642,40 @@ def test_normalize_import_data_converts_all_exchange_types_without_mutating():
     assert substitution["type"] == "technosphere"
     assert substitution["amount"] == -3.0
     assert biosphere["categories"] == ("natural resource", "in water")
+
+
+def test_normalize_import_data_does_not_treat_incineration_plant_products_as_waste():
+    name = (
+        "Carbon dioxide, captured {RER}| Carbon dioxide, captured, at municipal solid waste incineration plant, "
+        "for subsequent reuse | Cut-off, U"
+    )
+    raw = [
+        {
+            "name": name,
+            "unit": "kilogram",
+            "simapro metadata": {"Category type": "material", "Type": "Unit process"},
+            "exchanges": [
+                {
+                    "type": "production",
+                    "name": name,
+                    "unit": "kilogram",
+                    "amount": 1.0,
+                    "categories": ("carbon dioxide, captured",),
+                }
+            ],
+        }
+    ]
+
+    normalized = normalize_simapro_import_data(
+        raw,
+        background_profile=profile(),
+        database_name="test",
+        biosphere_flows=[],
+        biosphere_correspondence={},
+        version_mapping={},
+    )
+
+    assert normalized[0]["exchanges"][0]["amount"] == 1.0
 
 
 def test_normalize_import_data_drops_final_waste_but_preserves_zero_and_empty_datasets():

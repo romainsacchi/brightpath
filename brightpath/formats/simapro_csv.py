@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import datetime
+import hashlib
 import logging
 import re
 import tempfile
@@ -39,7 +40,6 @@ from brightpath.utils import (
     get_simapro_subcompartments,
     get_simapro_units,
     get_technosphere_exchanges,
-    get_waste_exchange_names,
     inspect_brightway_inventory,
     is_a_waste_treatment,
     is_activity_waste_treatment,
@@ -49,7 +49,6 @@ from brightpath.utils import (
 )
 
 logger = logging.getLogger(__name__)
-_WASTE_TERMS = tuple(get_waste_exchange_names())
 _INVENTORY_PATH_PATTERN = re.compile(r"^(?P<path>activity\[\d+\](?:\.exchanges\[\d+\])?):")
 _DETECTED_SYSTEM_MODELS_KEY = "simapro detected system models"
 _SIMAPRO_NUMBER_FORMAT = ".15g"
@@ -67,6 +66,8 @@ _SIMAPRO_CATEGORY_TYPES = frozenset(
 _SIMAPRO_CATEGORY_TYPE_ALIASES = {
     "materials": "material",
 }
+_SIMAPRO_PROCESS_IDENTIFIER_PATTERN = re.compile(r"^.{8}\d{15}$")
+_SIMAPRO_GENERATED_IDENTIFIER_PREFIX = "BRTPATH0"
 _LATIN1_TEXT_REPLACEMENTS = str.maketrans(
     {
         "\u00a0": " ",
@@ -315,7 +316,7 @@ def normalize_simapro_import_data(
                     exchange["location"] = dataset["location"]
                     exchange["database"] = database_name
                     _restore_simapro_category(dataset, exchange)
-                    if _is_waste_name(exchange["name"]):
+                    if is_a_waste_treatment(exchange["name"], profile.family):
                         exchange["amount"] *= -1
 
                 elif exchange_type in {"technosphere", "substitution"}:
@@ -329,7 +330,7 @@ def normalize_simapro_import_data(
                     exchange["reference product"] = product
                     exchange["location"] = location
                     exchange.pop("input", None)
-                    if _is_waste_name(name):
+                    if is_a_waste_treatment(name, profile.family):
                         exchange["amount"] *= -1
                     if exchange_type == "substitution":
                         exchange["type"] = "technosphere"
@@ -884,12 +885,18 @@ class _SimaProRenderer:
             value = metadata["Process identifier"]
         else:
             value = activity.get("process identifier", activity.get("code", ""))
-        return [[value], []]
+        return [[_simapro_process_identifier(value, activity)], []]
 
     def _activity_metadata_rows(self, field_name: str, activity: dict, *, default=None):
         metadata = activity.get("simapro metadata", {})
-        if field_name == "Type" and isinstance(metadata, dict) and field_name in metadata:
-            return [[metadata[field_name]], []]
+        if field_name == "Type":
+            # ``activity["type"]`` is the canonical Brightway dataset kind
+            # (normally ``process``), not SimaPro's process-type field.
+            # Preserve an explicit SimaPro value on round trip; otherwise use
+            # the importable foreground default.
+            if isinstance(metadata, dict) and metadata.get(field_name) not in (None, "", "process"):
+                return [[metadata[field_name]], []]
+            return [[default or "Unit process"], []]
         if field_name.lower() in activity:
             return [[activity[field_name.lower()]], []]
         if isinstance(metadata, dict) and field_name in metadata:
@@ -1080,6 +1087,19 @@ def _format_simapro_number(value: Real) -> str:
     return f"{mantissa}E{int(exponent)}"
 
 
+def _simapro_process_identifier(value, activity: dict) -> str:
+    candidate = str(value or "").strip()
+    if _SIMAPRO_PROCESS_IDENTIFIER_PATTERN.fullmatch(candidate):
+        return candidate
+
+    seed = candidate or "|".join(
+        str(activity.get(field) or "") for field in ("name", "reference product", "location", "unit")
+    )
+    digest = hashlib.sha256(seed.encode("utf-8")).digest()
+    numeric_suffix = int.from_bytes(digest[:8], "big") % 10**15
+    return f"{_SIMAPRO_GENERATED_IDENTIFIER_PREFIX}{numeric_suffix:015d}"
+
+
 def _restore_simapro_category(dataset: dict, production: dict) -> None:
     category_type = str(dataset.get("simapro metadata", {}).get("Category type") or "").strip()
     categories = production.get("categories") or ()
@@ -1087,10 +1107,6 @@ def _restore_simapro_category(dataset: dict, production: dict) -> None:
         categories = tuple(part for part in re.split(r"[/\\]", categories) if part)
     category_parts = [category_type, *(str(part) for part in categories)]
     production["simapro category"] = "/".join(part for part in category_parts if part)
-
-
-def _is_waste_name(name: str) -> bool:
-    return any(term in name for term in _WASTE_TERMS)
 
 
 def _biosphere_key(exchange: dict) -> tuple:
