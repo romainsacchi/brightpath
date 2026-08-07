@@ -17,6 +17,7 @@ __all__ = (
     "MigrationUnavailableError",
     "OperationError",
     "SimaProInventory",
+    "SimaProCategoryMode",
     "SimaProSerializationError",
     "SerializationError",
     "TechnosphereProfile",
@@ -32,6 +33,7 @@ DATA_DIR = Path(__file__).resolve().parent / "data"
 _EXPORTS = {
     "BrightwayInventory": (".brightway", "BrightwayInventory"),
     "SimaProInventory": (".simapro", "SimaProInventory"),
+    "SimaProCategoryMode": (".profiles.simapro_categories", "SimaProCategoryMode"),
     "InventoryPipeline": (".core.pipeline", "InventoryPipeline"),
     "BackgroundContext": (".core", "BackgroundContext"),
     "BiosphereProfile": (".core", "BiosphereProfile"),

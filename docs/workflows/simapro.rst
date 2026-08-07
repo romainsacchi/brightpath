@@ -146,6 +146,53 @@ first component is the SimaPro category type (``material``, ``energy``,
        "simapro category": "material/Other",
    }
 
+BrightPath preserves supplied categories by default, including intentional
+custom foreground categories. For ecoinvent 3.9 or 3.9.1 cut-off inventories,
+the writer can instead look for a path observed in the ecoinvent 3.9.1 SimaPro
+9.5 reference export:
+
+.. code-block:: python
+
+   from brightpath import SimaProCategoryMode
+
+   preview = inventory.render(
+       category_mode=SimaProCategoryMode.INFER_EXISTING,
+   )
+   output = inventory.write_csv(
+       "foreground-existing-categories",
+       category_mode=SimaProCategoryMode.INFER_EXISTING,
+   )
+
+The generic pipeline forwards the same explicit option to the SimaPro
+adapter:
+
+.. code-block:: python
+
+   result = pipeline.write(
+       document,
+       "foreground-existing-categories.csv",
+       target_format="simapro_csv",
+       adapter_kwargs={"category_mode": "infer_existing"},
+   )
+
+Resolution first preserves an already observed path, then looks for an exact
+reference-product, unit, and process-role match. A near product name is used
+only when multiple reference products agree on a sufficiently specific
+category hierarchy. Market activities are assigned to an observed ``Market``
+path; other production activities use ``Transformation``. Each replacement is
+included in the render result as a ``simapro_category_inferred`` warning with
+its method, confidence, and candidates. The generic pipeline also retains this
+warning in its operation report. Ambiguous or low-confidence results are
+reported and the supplied custom category is preserved. Rendering and writing
+operate on copies and never change the inventory's canonical data.
+
+For example, ``carbon dioxide, captured`` is not an ecoinvent 3.9.1 reference
+product. The related gas products agree on ``Chemicals/Gases``, so a production
+activity resolves to ``material/Chemicals/Gases/Transformation`` while a market
+activity resolves to ``material/Chemicals/Gases/Market``. Other background
+profiles remain unchanged until an exact, separately attributed category
+catalog is available.
+
 Write SimaPro CSV
 -----------------
 

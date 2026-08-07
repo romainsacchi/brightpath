@@ -28,6 +28,7 @@ from .models import (
     default_biosphere_profile,
 )
 from .normalization import normalize_inventory
+from .profiles.simapro_categories import SimaProCategoryMode
 from .validation import validate_brightway_inventory
 
 if TYPE_CHECKING:
@@ -215,6 +216,7 @@ class SimaProInventory:
         *,
         check_background_links: bool = True,
         check_simapro_rendering: bool = False,
+        category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
         additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
         catalog_provider: CatalogProvider | None = None,
     ) -> ValidationReport:
@@ -224,6 +226,8 @@ class SimaProInventory:
             biosphere identities against the exact background catalog.
         :param check_simapro_rendering: Also check whether canonical data can
             be represented as SimaPro rows.
+        :param category_mode: Preserve supplied production categories or infer
+            paths observed in the exact supported SimaPro reference catalog.
         :param additional_foreground_targets: Valid external foreground
             identities as ``(name, reference product, location, unit)`` tuples.
         :param catalog_provider: Explicit exact-catalog provider. The facade
@@ -238,7 +242,7 @@ class SimaProInventory:
             catalog_provider=catalog_provider,
         )
         if check_simapro_rendering:
-            report.issues.extend(self.render().issues)
+            report.issues.extend(self.render(category_mode=category_mode).issues)
         detected_system_models = set(self.metadata.get("simapro detected system models", ()))
         if len(detected_system_models) > 1:
             report.issues.append(
@@ -266,10 +270,14 @@ class SimaProInventory:
             )
         return report
 
-    def render(self) -> SimaProRenderResult:
+    def render(
+        self,
+        *,
+        category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
+    ) -> SimaProRenderResult:
         """Render rows in memory and return rows plus structured issues."""
 
-        return render_simapro_rows(self._document)
+        return render_simapro_rows(self._document, category_mode=category_mode)
 
     def migrate_background(
         self,
@@ -327,6 +335,7 @@ class SimaProInventory:
         path: str | Path,
         *,
         validate: bool = True,
+        category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
         additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
     ) -> Path:
         """Write a Latin-1 SimaPro CSV file and return its absolute path.
@@ -334,6 +343,8 @@ class SimaProInventory:
         :param path: Destination. ``.csv`` is added when no suffix is given.
         :param validate: Validate structure, background links, and rendering
             before writing.
+        :param category_mode: Preserve supplied production categories or infer
+            paths observed in the exact supported SimaPro reference catalog.
         :param additional_foreground_targets: Valid external foreground
             identities used by validation.
         :raises brightpath.InventoryValidationError: If enabled validation has
@@ -345,11 +356,12 @@ class SimaProInventory:
         if validate:
             report = self.validate(
                 check_simapro_rendering=True,
+                category_mode=category_mode,
                 additional_foreground_targets=additional_foreground_targets,
             )
             if report.has_errors:
                 raise InventoryValidationError(report)
-        destination, _result = write_simapro_csv(self._document, path)
+        destination, _result = write_simapro_csv(self._document, path, category_mode=category_mode)
         return destination
 
     def to_brightway(self) -> "BrightwayInventory":

@@ -10,6 +10,26 @@ Facade API
 .. autoclass:: brightpath.SimaProInventory
    :members:
 
+SimaPro category inference
+--------------------------
+
+.. autoclass:: brightpath.SimaProCategoryMode
+   :members:
+   :undoc-members:
+
+.. autoclass:: brightpath.profiles.simapro_categories.SimaProCategoryResolution
+   :members:
+
+.. autoclass:: brightpath.profiles.simapro_categories.SimaProCategoryCatalog
+   :members:
+
+.. autoclass:: brightpath.profiles.simapro_categories.SimaProCategoryReference
+   :members:
+
+.. autofunction:: brightpath.profiles.simapro_categories.resolve_simapro_category
+
+.. autofunction:: brightpath.profiles.simapro_categories.load_simapro_category_catalog
+
 Exact context
 -------------
 

@@ -25,6 +25,12 @@ from brightpath.models import (
     default_biosphere_profile,
 )
 from brightpath.profiles import format_simapro_technosphere_name, parse_simapro_technosphere_name
+from brightpath.profiles.simapro_categories import (
+    SimaProCategoryMode,
+    coerce_simapro_category_mode,
+    resolve_simapro_category,
+    split_simapro_category,
+)
 from brightpath.utils import (
     ALLOWED_BIOSPHERE_CATEGORIES,
     check_simapro_inventory,
@@ -52,20 +58,6 @@ logger = logging.getLogger(__name__)
 _INVENTORY_PATH_PATTERN = re.compile(r"^(?P<path>activity\[\d+\](?:\.exchanges\[\d+\])?):")
 _DETECTED_SYSTEM_MODELS_KEY = "simapro detected system models"
 _SIMAPRO_NUMBER_FORMAT = ".15g"
-_SIMAPRO_CATEGORY_TYPES = frozenset(
-    {
-        "material",
-        "energy",
-        "transport",
-        "processing",
-        "use",
-        "waste treatment",
-        "waste scenario",
-    }
-)
-_SIMAPRO_CATEGORY_TYPE_ALIASES = {
-    "materials": "material",
-}
 _SIMAPRO_PROCESS_IDENTIFIER_PATTERN = re.compile(r"^.{8}\d{15}$")
 _SIMAPRO_GENERATED_IDENTIFIER_PREFIX = "BRTPATH0"
 _LATIN1_TEXT_REPLACEMENTS = str.maketrans(
@@ -374,6 +366,8 @@ def _simapro_biosphere_reference(identities) -> frozenset[tuple[str, str, str]]:
 def write_simapro_csv(
     document: InventoryDocument,
     path: str | Path,
+    *,
+    category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
 ) -> tuple[Path, SimaProRenderResult]:
     destination = Path(path).expanduser()
     if destination.suffix == "":
@@ -383,7 +377,7 @@ def write_simapro_csv(
     destination = destination.resolve()
     destination.parent.mkdir(parents=True, exist_ok=True)
 
-    result = render_simapro_rows(document)
+    result = render_simapro_rows(document, category_mode=category_mode)
     if result.has_errors:
         detail = "\n".join(issue.message for issue in result.issues if issue.severity == "error")
         raise SimaProSerializationError(f"SimaPro rendering failed:\n{detail}")
@@ -437,8 +431,12 @@ def _latin1_safe_text(value: str) -> str:
     return "".join(normalized_parts)
 
 
-def render_simapro_rows(document: InventoryDocument) -> SimaProRenderResult:
-    return _SimaProRenderer(document).render()
+def render_simapro_rows(
+    document: InventoryDocument,
+    *,
+    category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
+) -> SimaProRenderResult:
+    return _SimaProRenderer(document, category_mode=category_mode).render()
 
 
 def is_simapro_final_waste_flow(exchange: dict) -> bool:
@@ -543,24 +541,32 @@ def format_biosphere_exchange(
 
 
 class _SimaProRenderer:
-    def __init__(self, document: InventoryDocument) -> None:
+    def __init__(
+        self,
+        document: InventoryDocument,
+        *,
+        category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
+    ) -> None:
         self.document = document
         self.profile = document.background_profile.normalized()
+        self.category_mode = coerce_simapro_category_mode(category_mode)
         self.generated_at = datetime.datetime.now()
         self.fields = get_simapro_fields_list()
         self.units = get_simapro_units()
         self.headers = get_simapro_headers()
         self.biosphere = get_simapro_biosphere()
         self.subcompartments = get_simapro_subcompartments()
+        self.inventories = self.document.data
+        self.category_issues = self._resolve_categories()
 
     def render(self) -> SimaProRenderResult:
-        issues = self._preflight_issues()
+        issues = [*self.category_issues, *self._preflight_issues()]
         if any(issue.severity == "error" for issue in issues):
             return SimaProRenderResult(rows=[], issues=issues)
 
         try:
             rows = self._header_rows()
-            inventories = [flag_exchanges(activity) for activity in self.document.data]
+            inventories = [flag_exchanges(activity) for activity in self.inventories]
             for activity in inventories:
                 rows.extend(self._activity_rows(activity))
             rows.extend(self._metadata_rows())
@@ -611,7 +617,7 @@ class _SimaProRenderer:
             )
 
         errors, _warnings = inspect_brightway_inventory(
-            self.document.data,
+            self.inventories,
             require_simapro_category=True,
             validate_units=True,
         )
@@ -634,7 +640,7 @@ class _SimaProRenderer:
 
         issues.extend(self._parameter_issues(self.document.database_parameters, "database_parameters"))
         issues.extend(self._parameter_issues(self.document.project_parameters, "project_parameters"))
-        for activity_index, activity in enumerate(self.document.data):
+        for activity_index, activity in enumerate(self.inventories):
             if isinstance(activity, dict):
                 try:
                     production = find_production_exchange(activity)
@@ -661,6 +667,81 @@ class _SimaProRenderer:
                     self._parameter_issues(
                         activity.get("parameters"),
                         f"activity[{activity_index}].parameters",
+                    )
+                )
+        return issues
+
+    def _resolve_categories(self) -> list[Issue]:
+        if self.category_mode is SimaProCategoryMode.PRESERVE:
+            return []
+
+        issues = []
+        for activity_index, activity in enumerate(self.inventories):
+            if not isinstance(activity, dict):
+                continue
+            try:
+                production = find_production_exchange(activity)
+                current = production.get("simapro category", "")
+                resolution = resolve_simapro_category(
+                    activity,
+                    profile=self.profile,
+                    current_category=current,
+                )
+            except (KeyError, TypeError):
+                continue
+            except ValueError as error:
+                issues.append(
+                    Issue(
+                        severity="error",
+                        code="simapro_category_inference_failed",
+                        message=str(error),
+                        path=f"activity[{activity_index}].exchanges",
+                        suggested_fix="Verify the category resource integrity and the supplied category syntax.",
+                    )
+                )
+                continue
+
+            production_index = next(
+                (index for index, exchange in enumerate(activity.get("exchanges") or ()) if exchange is production),
+                0,
+            )
+            path = f"activity[{activity_index}].exchanges[{production_index}]"
+            if resolution.changed:
+                production["simapro category"] = resolution.category
+                candidates = ", ".join(repr(candidate) for candidate in resolution.candidates)
+                issues.append(
+                    Issue(
+                        severity="warning",
+                        code="simapro_category_inferred",
+                        message=(
+                            f"Replaced SimaPro category {resolution.original_category or '<missing>'!r} with "
+                            f"{resolution.category!r} using {resolution.method} "
+                            f"(confidence {resolution.confidence:.3f}; candidates: {candidates or 'none'})."
+                        ),
+                        path=path,
+                    )
+                )
+            elif resolution.method == "catalog_unavailable":
+                issues.append(
+                    Issue(
+                        severity="warning",
+                        code="simapro_category_catalog_unavailable",
+                        message=resolution.reason,
+                        path=path,
+                        suggested_fix="Preserve the supplied category or provide a supported exact SimaPro category catalog.",
+                    )
+                )
+            elif resolution.method == "unresolved" and current:
+                issues.append(
+                    Issue(
+                        severity="warning",
+                        code="simapro_category_unresolved",
+                        message=(
+                            f"Could not replace unobserved SimaPro category {resolution.original_category!r}: "
+                            f"{resolution.reason}"
+                        ),
+                        path=path,
+                        suggested_fix="Choose one of the reported reference candidates or preserve the custom category.",
                     )
                 )
         return issues
@@ -1067,13 +1148,7 @@ _EMPTY_SECTIONS = {
 
 
 def _split_simapro_category(category: str) -> tuple[str, str]:
-    parts = [part.strip() for part in str(category).split("/")]
-    category_type = parts[0].lower() if parts else ""
-    category_type = _SIMAPRO_CATEGORY_TYPE_ALIASES.get(category_type, category_type)
-    if category_type not in _SIMAPRO_CATEGORY_TYPES:
-        supported = ", ".join(sorted(_SIMAPRO_CATEGORY_TYPES))
-        raise ValueError(f"Unsupported SimaPro category type {parts[0]!r}; expected one of: {supported}.")
-    return category_type, "\\".join(part for part in parts[1:] if part)
+    return split_simapro_category(category)
 
 
 def _format_simapro_number(value: Real) -> str:
