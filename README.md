@@ -45,6 +45,13 @@ and 3,954 of 4,362 ecoinvent 3.10 biosphere identities present in the inspected
 UVEK openLCA database build. A missing exact reference is an export error; it is
 never replaced with an unlinked lookalike flow.
 
+Foreground processes are assigned an openLCA category as well. Explicit
+openLCA categories are preserved, while SimaPro categories and inferred
+product matches are translated through process-category observations from the
+exact target database. Unresolved UVEK datasets use its existing
+`material/Others/unspecified` category instead of appearing at the process-tree
+root.
+
 ## Installation
 
 BrightPath supports Python 3.12.

@@ -255,6 +255,18 @@ the inspected openLCA database build, representability preflight and writing
 fail instead of emitting a package that imports silently with a disconnected
 network or zero LCIA score.
 
+Foreground processes are also placed in the openLCA process tree. An explicit
+``openlca category`` is preserved first, followed by a category already present
+in an openLCA process template and a supplied production-exchange
+``simapro category``. If none is available, BrightPath reuses the SimaPro
+product, unit, and process-role matching algorithm over category observations
+from the exact target openLCA database. The selected value is therefore a
+native target path, not an assumed SimaPro hierarchy. A dataset without a
+sufficiently specific match uses the target's existing
+``material/Others/unspecified`` category rather than appearing at the
+process-tree root. In UVEK 2025, for example, ``carbon dioxide, captured``
+resolves to the native ``material/chemicals/gases\\transformation`` path.
+
 File round-trip limits
 ----------------------
 
