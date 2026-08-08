@@ -19,6 +19,10 @@ from typing import Any
 
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import SerializationError
+from brightpath.formats.openlca_categories import (
+    build_openlca_process_category_catalog,
+    resolve_openlca_process_category,
+)
 from brightpath.formats.openlca_references import (
     OpenLCABiosphereReference,
     OpenLCATechnosphereReference,
@@ -113,6 +117,7 @@ _DATASET_MAPPED_KEYS = frozenset(
         "unit",
         "code",
         "comment",
+        "openlca category",
         "exchanges",
         "parameters",
     }
@@ -559,6 +564,8 @@ def _process_to_legacy_dataset(
         "exchanges": [],
     }
     dataset.update(_brightpath_other_properties(raw_process))
+    if process.category:
+        dataset["openlca category"] = str(process.category)
     dataset[_PROCESS_TEMPLATE_KEY] = deepcopy(raw_process)
     if location_raw := _raw_ref_entity(process.location, raw_locations):
         dataset[_LOCATION_TEMPLATE_KEY] = location_raw
@@ -972,6 +979,7 @@ class _OpenLCAPackageBuilder:
         self.schema = schema
         self.metadata = deepcopy(metadata)
         self.reference_catalog = load_openlca_reference_catalog(context)
+        self.category_catalog = build_openlca_process_category_catalog(self.reference_catalog)
 
         self.actors: dict[str, Any] = {}
         self.currencies: dict[str, Any] = {}
@@ -1050,6 +1058,11 @@ class _OpenLCAPackageBuilder:
         )
         process.name = str(dataset.get("name") or process.name or "")
         process.description = str(dataset.get("comment") or process.description or "")
+        process.category = resolve_openlca_process_category(
+            dataset,
+            current_category=process.category,
+            catalog=self.category_catalog,
+        ).category
         process.process_type = process.process_type or self.schema.ProcessType.UNIT_PROCESS
         process.other_properties = _merge_brightpath_other_properties(
             process.other_properties, _dataset_extras(dataset)
