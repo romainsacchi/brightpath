@@ -11,8 +11,8 @@ sources:
 - the UVEK 2025 Brightway database and its source openLCA process filenames;
 - the ecoinvent 3.10 biosphere identity database used by UVEK 2025; and
 - the “UVEK 2025 Version 2” openLCA database backup dated 2026-03-09, which
-  supplied exact process, product-flow, elementary-flow, flow-property, unit,
-  and location UUIDs.
+  supplied exact process categories plus process, product-flow,
+  elementary-flow, flow-property, unit, and location UUIDs.
 
 The source database was distributed under the legacy BAFU label. BrightPath
 normalizes that input name and publishes it as UVEK. The resource records exact

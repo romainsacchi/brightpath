@@ -32,6 +32,8 @@ def test_packaged_openlca_reference_manifest_matches_resource_bytes_and_counts()
     assert resource["size"] == len(raw)
     assert resource["sha256"] == hashlib.sha256(raw).hexdigest()
     assert resource["technosphere_references"] == len(payload["technosphere"]) == 11_747
+    assert resource["process_category_references"] == payload["coverage"]["process_category_references"] == 11_747
+    assert all(row["category"] for row in payload["technosphere"])
     assert resource["biosphere_references"] == len(payload["biosphere"]) == 3_954
     assert payload["coverage"]["missing_biosphere_references"] == 408
 
@@ -73,6 +75,7 @@ def test_reference_generator_joins_brightway_identities_to_openlca_entity_refs(m
                 "flow_property_name": "Mass",
                 "unit_ref_id": "00000000-0000-4000-8000-000000000006",
                 "unit": "kg",
+                "category": "material/chemicals/gases\\transformation",
             }
         ],
         "flows": [
@@ -96,11 +99,14 @@ def test_reference_generator_joins_brightway_identities_to_openlca_entity_refs(m
         source="test",
     )
 
+    assert payload["schema_version"] == 2
     assert payload["technosphere"][0]["process_id"] == "00000000-0000-3000-8000-000000000001"
     assert payload["technosphere"][0]["flow_id"] == "00000000-0000-3000-8000-000000000004"
+    assert payload["technosphere"][0]["category"] == "material/chemicals/gases\\transformation"
     assert payload["biosphere"][0]["flow_id"] == flow["code"]
     assert payload["coverage"] == {
         "technosphere_references": 1,
+        "process_category_references": 1,
         "biosphere_references": 1,
         "missing_biosphere_references": 0,
     }

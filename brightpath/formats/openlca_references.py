@@ -35,6 +35,7 @@ class OpenLCATechnosphereReference:
     unit_name: str
     location_id: str
     location: str
+    category: str
 
 
 @dataclass(frozen=True)
@@ -82,7 +83,7 @@ def _load_catalog(path: Path) -> OpenLCAReferenceCatalog:
         payload = json.loads(raw.decode("utf-8"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
         raise ValueError(f"Could not load openLCA reference catalog {path}: {error}") from error
-    if payload.get("schema_version") != 1 or payload.get("format") != "openlca_jsonld":
+    if payload.get("schema_version") != 2 or payload.get("format") != "openlca_jsonld":
         raise ValueError(f"Unsupported openLCA reference catalog schema in {path}.")
     manifest_resource = _manifest_resource(path)
     if manifest_resource.get("size") != len(raw) or manifest_resource.get("sha256") != hashlib.sha256(raw).hexdigest():
@@ -92,7 +93,12 @@ def _load_catalog(path: Path) -> OpenLCAReferenceCatalog:
     coverage = payload.get("coverage")
     if not isinstance(coverage, dict):
         raise ValueError(f"OpenLCA reference catalog {path} has invalid coverage metadata.")
-    for field in ("technosphere_references", "biosphere_references", "missing_biosphere_references"):
+    for field in (
+        "technosphere_references",
+        "process_category_references",
+        "biosphere_references",
+        "missing_biosphere_references",
+    ):
         if coverage.get(field) != manifest_resource.get(field):
             raise ValueError(
                 f"OpenLCA reference catalog {path} has {field!r} metadata that conflicts with its manifest."
@@ -120,6 +126,7 @@ def _load_catalog(path: Path) -> OpenLCAReferenceCatalog:
             unit_name=_text(row, "unit_name", label),
             location_id=_uuid(row, "location_id", label),
             location=identity[2],
+            category=_text(row, "category", label),
         )
 
     biosphere: dict[BiosphereIdentity, OpenLCABiosphereReference] = {}

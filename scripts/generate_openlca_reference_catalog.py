@@ -77,6 +77,7 @@ def generate_catalog(
                 "unit_id": _required(row, "unit_ref_id", label=f"openLCA process {process_id}"),
                 "unit_name": _required(row, "unit", label=f"openLCA process {process_id}"),
                 "location_id": _required(row, "location_ref_id", label=f"openLCA process {process_id}"),
+                "category": _required(row, "category", label=f"openLCA process {process_id}"),
             }
         )
 
@@ -112,7 +113,7 @@ def generate_catalog(
     technosphere.sort(key=lambda row: (row["name"], row["reference_product"], row["location"], row["unit"]))
     biosphere.sort(key=lambda row: (row["name"], row["categories"], row["unit"]))
     return {
-        "schema_version": 1,
+        "schema_version": 2,
         "format": "openlca_jsonld",
         "profile": {
             "technosphere": technosphere_profile,
@@ -121,6 +122,7 @@ def generate_catalog(
         "source": source,
         "coverage": {
             "technosphere_references": len(technosphere),
+            "process_category_references": len(technosphere),
             "biosphere_references": len(biosphere),
             "missing_biosphere_references": len(missing_biosphere),
         },
