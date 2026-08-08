@@ -22,7 +22,8 @@ Format boundaries
 -----------------
 
 * The built-in registry supports Brightway Excel, Brightway block CSV,
-  Brightway block TSV, and SimaPro CSV as file detection/read/write adapters.
+  Brightway block TSV, openLCA JSON-LD ZIP, and SimaPro CSV as file
+  detection/read/write adapters.
 * Only Brightway Excel and SimaPro CSV have dedicated v1 facades. Brightway
   CSV/TSV use the generic pipeline.
 * CSV suffixes are ambiguous. Detection inspects content and reports absent or
@@ -44,6 +45,13 @@ Format boundaries
   admit them; built-in Brightway Excel admits only the ``bw2io`` dialect.
 * BrightPath writes exchange artifacts. It does not install databases into
   Brightway, SimaPro, or another LCA application.
+* A process-only openLCA JSON-LD package can reference entities already present
+  in a target database. For UVEK 2025 with the ecoinvent 3.10 biosphere,
+  BrightPath packages exact references for all 11,747 UVEK technosphere
+  identities and 3,954 characterized elementary-flow identities found in the
+  inspected UVEK openLCA database build. The remaining 408 packaged ecoinvent
+  3.10 biosphere identities are not present under the same UUID in that build;
+  exporting one of them fails instead of creating an uncharacterized duplicate.
 
 Migration boundaries
 --------------------
@@ -142,3 +150,8 @@ The packaged identity-catalog manifest has status ``legal_review_required``.
 It records integrity and provenance but is not a license grant. Redistribution
 approval or separately licensed/local provider data is a mandatory gate before
 a stable public release.
+
+The packaged openLCA reference catalog has the same
+``legal_review_required`` status. It contains identities and entity UUIDs, not
+background exchange amounts or complete inventories. Its integrity manifest
+and attribution live under ``data/export/openlca_references``.

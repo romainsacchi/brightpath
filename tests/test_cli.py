@@ -105,6 +105,7 @@ def test_formats_json_comes_from_capability_snapshot(capsys):
         "brightway_excel",
         "brightway_csv",
         "brightway_tsv",
+        "openlca_jsonld",
         "simapro_csv",
     }
 

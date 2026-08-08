@@ -31,11 +31,19 @@ The full Sphinx guide starts at [`docs/index.rst`](docs/index.rst).
 | ecoinvent technosphere migration | Cut-off edges 3.5→3.12; reverse is inferred and policy-controlled |
 | ecoinvent biosphere migration | Edges 3.5→3.12; reverse is inferred and policy-controlled |
 | Reference catalogs | ecoinvent 3.6–3.12 cut-off/consequential and UVEK 2025 cut-off |
-| UVEK | Valid in Brightway and SimaPro; `BAFU` accepted only as an input alias |
+| UVEK | Valid in Brightway, SimaPro, and linked openLCA JSON-LD for UVEK 2025; `BAFU` accepted only as an input alias |
 | OpenLCA Excel / ecoSpold2 | Structurally reserved, but no adapter is registered or advertised |
 
 Run `brightpath formats` to discover capabilities from the installed adapters
 and migration resources instead of relying on this static table.
+
+UVEK 2025 openLCA exports use packaged references to the existing UVEK process,
+product-flow, flow-property, unit, location, and characterized elementary-flow
+UUIDs. Background entities are referenced but not copied into the foreground
+package. The reference catalog covers every packaged UVEK technosphere identity
+and 3,954 of 4,362 ecoinvent 3.10 biosphere identities present in the inspected
+UVEK openLCA database build. A missing exact reference is an export error; it is
+never replaced with an unlinked lookalike flow.
 
 ## Installation
 
