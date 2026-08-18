@@ -231,10 +231,41 @@ The same format-only operation works for UVEK:
 
    assert uvek_csv.value.context.background == uvek_background
 
+   uvek_openlca = pipeline.convert(uvek.value, "openlca_jsonld")
+   written = pipeline.write(
+       uvek_openlca.value,
+       "foreground-uvek.zip",
+       target_format="openlca_jsonld",
+   )
+   if not written.succeeded:
+       raise RuntimeError(written.report.to_json(indent=2))
+
 This format-only step is not an ecoinvent-to-UVEK mapping. Cross-family
 background migration remains a separate explicit operation. The only packaged
 cross-family route is the heuristic forward ecoinvent 3.6–3.12 to UVEK 2025
 route; UVEK-to-ecoinvent migration remains unavailable.
+
+The UVEK 2025 openLCA writer resolves each external exchange against a
+format-specific exact-reference catalog. Technosphere exchanges use the
+existing process and product-flow UUIDs; biosphere exchanges use elementary
+flow UUIDs already characterized in the target database. These background
+entities are references only and are not copied into the foreground ZIP. If an
+identity is valid in the software-neutral background catalog but absent from
+the inspected openLCA database build, representability preflight and writing
+fail instead of emitting a package that imports silently with a disconnected
+network or zero LCIA score.
+
+Foreground processes are also placed in the openLCA process tree. An explicit
+``openlca category`` is preserved first, followed by a category already present
+in an openLCA process template and a supplied production-exchange
+``simapro category``. If none is available, BrightPath reuses the SimaPro
+product, unit, and process-role matching algorithm over category observations
+from the exact target openLCA database. The selected value is therefore a
+native target path, not an assumed SimaPro hierarchy. A dataset without a
+sufficiently specific match uses the target's existing
+``material/Others/unspecified`` category rather than appearing at the
+process-tree root. In UVEK 2025, for example, ``carbon dioxide, captured``
+resolves to the native ``material/chemicals/gases\\transformation`` path.
 
 File round-trip limits
 ----------------------

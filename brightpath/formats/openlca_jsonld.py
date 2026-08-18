@@ -19,6 +19,15 @@ from typing import Any
 
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import SerializationError
+from brightpath.formats.openlca_categories import (
+    build_openlca_process_category_catalog,
+    resolve_openlca_process_category,
+)
+from brightpath.formats.openlca_references import (
+    OpenLCABiosphereReference,
+    OpenLCATechnosphereReference,
+    load_openlca_reference_catalog,
+)
 from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFormat, default_biosphere_profile
 
 _ROOT_MANIFEST = "olca-schema.json"
@@ -108,6 +117,7 @@ _DATASET_MAPPED_KEYS = frozenset(
         "unit",
         "code",
         "comment",
+        "openlca category",
         "exchanges",
         "parameters",
     }
@@ -387,7 +397,7 @@ def render_openlca_jsonld_package(document: InventoryDocument) -> _RenderedPacka
     """Build all openLCA root entities in memory without writing a ZIP archive."""
 
     schema, _zipio = _olca_modules()
-    builder = _OpenLCAPackageBuilder(schema, document.metadata)
+    builder = _OpenLCAPackageBuilder(schema, document.metadata, document.context)
     return builder.build(document)
 
 
@@ -554,6 +564,8 @@ def _process_to_legacy_dataset(
         "exchanges": [],
     }
     dataset.update(_brightpath_other_properties(raw_process))
+    if process.category:
+        dataset["openlca category"] = str(process.category)
     dataset[_PROCESS_TEMPLATE_KEY] = deepcopy(raw_process)
     if location_raw := _raw_ref_entity(process.location, raw_locations):
         dataset[_LOCATION_TEMPLATE_KEY] = location_raw
@@ -963,9 +975,11 @@ def _schema_ref(entity: Any, **overrides: Any) -> Any:
 
 
 class _OpenLCAPackageBuilder:
-    def __init__(self, schema: Any, metadata: dict[str, Any]) -> None:
+    def __init__(self, schema: Any, metadata: dict[str, Any], context: InventoryContext) -> None:
         self.schema = schema
         self.metadata = deepcopy(metadata)
+        self.reference_catalog = load_openlca_reference_catalog(context)
+        self.category_catalog = build_openlca_process_category_catalog(self.reference_catalog)
 
         self.actors: dict[str, Any] = {}
         self.currencies: dict[str, Any] = {}
@@ -1044,6 +1058,11 @@ class _OpenLCAPackageBuilder:
         )
         process.name = str(dataset.get("name") or process.name or "")
         process.description = str(dataset.get("comment") or process.description or "")
+        process.category = resolve_openlca_process_category(
+            dataset,
+            current_category=process.category,
+            catalog=self.category_catalog,
+        ).category
         process.process_type = process.process_type or self.schema.ProcessType.UNIT_PROCESS
         process.other_properties = _merge_brightpath_other_properties(
             process.other_properties, _dataset_extras(dataset)
@@ -1193,44 +1212,56 @@ class _OpenLCAPackageBuilder:
                 )
                 default_provider = local[0]
             else:
-                flow_property_ref, unit_ref = self._ensure_quantity_entities(
-                    unit_name=str(exchange.get("unit") or ""),
-                    flow_property_template=_require_mapping(
-                        exchange.get(_FLOW_PROPERTY_TEMPLATE_KEY),
-                        _FLOW_PROPERTY_TEMPLATE_KEY,
-                    ),
-                    unit_group_template=_require_mapping(
-                        exchange.get(_UNIT_GROUP_TEMPLATE_KEY),
-                        _UNIT_GROUP_TEMPLATE_KEY,
-                    ),
-                    label=f"exchange {exchange.get('name')!r}",
-                )
-                flow = self._ensure_flow(
-                    exchange=exchange,
-                    flow_type=(
-                        self.schema.FlowType.ELEMENTARY_FLOW
-                        if exchange_type == "biosphere"
-                        else self.schema.FlowType.PRODUCT_FLOW
-                    ),
-                    flow_template=_require_mapping(exchange.get(_FLOW_TEMPLATE_KEY), _FLOW_TEMPLATE_KEY),
-                    flow_property_ref=flow_property_ref,
-                    location_ref=self._ensure_location(
+                background_reference = self._background_reference(exchange_type, exchange)
+                if background_reference is not None:
+                    flow_ref, flow_property_ref, unit_ref, location_ref, default_provider = (
+                        self._linked_background_refs(background_reference)
+                    )
+                else:
+                    flow_property_ref, unit_ref = self._ensure_quantity_entities(
+                        unit_name=str(exchange.get("unit") or ""),
+                        flow_property_template=_require_mapping(
+                            exchange.get(_FLOW_PROPERTY_TEMPLATE_KEY),
+                            _FLOW_PROPERTY_TEMPLATE_KEY,
+                        ),
+                        unit_group_template=_require_mapping(
+                            exchange.get(_UNIT_GROUP_TEMPLATE_KEY),
+                            _UNIT_GROUP_TEMPLATE_KEY,
+                        ),
+                        label=f"exchange {exchange.get('name')!r}",
+                    )
+                    flow = self._ensure_flow(
+                        exchange=exchange,
+                        flow_type=(
+                            self.schema.FlowType.ELEMENTARY_FLOW
+                            if exchange_type == "biosphere"
+                            else self.schema.FlowType.PRODUCT_FLOW
+                        ),
+                        flow_template=_require_mapping(exchange.get(_FLOW_TEMPLATE_KEY), _FLOW_TEMPLATE_KEY),
+                        flow_property_ref=flow_property_ref,
+                        location_ref=self._ensure_location(
+                            str(exchange.get("location") or ""),
+                            _require_mapping(exchange.get(_LOCATION_TEMPLATE_KEY), _LOCATION_TEMPLATE_KEY),
+                        ),
+                        default_name=(
+                            str(exchange.get("name") or "")
+                            if exchange_type == "biosphere"
+                            else str(exchange.get("reference product") or exchange.get("product") or "")
+                        ),
+                        categories=tuple(exchange.get("categories") or ()),
+                    )
+                    flow_ref = _schema_ref(
+                        flow,
+                        flow_type=flow.flow_type,
+                        ref_unit=str(exchange.get("unit") or ""),
+                    )
+                    location_ref = self._ensure_location(
                         str(exchange.get("location") or ""),
                         _require_mapping(exchange.get(_LOCATION_TEMPLATE_KEY), _LOCATION_TEMPLATE_KEY),
-                    ),
-                    default_name=(
-                        str(exchange.get("name") or "")
-                        if exchange_type == "biosphere"
-                        else str(exchange.get("reference product") or exchange.get("product") or "")
-                    ),
-                    categories=tuple(exchange.get("categories") or ()),
-                )
-                flow_ref = _schema_ref(flow, flow_type=flow.flow_type, ref_unit=str(exchange.get("unit") or ""))
-                location_ref = self._ensure_location(
-                    str(exchange.get("location") or ""),
-                    _require_mapping(exchange.get(_LOCATION_TEMPLATE_KEY), _LOCATION_TEMPLATE_KEY),
-                )
-                default_provider = self._default_provider(dataset, exchange)
+                    )
+                    default_provider = (
+                        self._default_provider(dataset, exchange) if exchange_type == "technosphere" else None
+                    )
 
             entity.is_input = exchange_type == "technosphere" or (
                 exchange_type == "biosphere" and tuple(exchange.get("categories") or ())[:1] == ("natural resource",)
@@ -1302,6 +1333,76 @@ class _OpenLCAPackageBuilder:
             ref_type=self.schema.RefType.Process,
         )
         return ref
+
+    def _background_reference(
+        self,
+        exchange_type: str,
+        exchange: dict[str, Any],
+    ) -> OpenLCATechnosphereReference | OpenLCABiosphereReference | None:
+        catalog = self.reference_catalog
+        if catalog is None:
+            return None
+        if exchange_type == "technosphere":
+            identity = (
+                str(exchange.get("name") or ""),
+                str(exchange.get("reference product") or exchange.get("product") or ""),
+                str(exchange.get("location") or ""),
+                str(exchange.get("unit") or ""),
+            )
+            reference = catalog.technosphere.get(identity)
+        else:
+            identity = (
+                str(exchange.get("name") or ""),
+                tuple(str(value) for value in exchange.get("categories") or ()),
+                str(exchange.get("unit") or ""),
+            )
+            reference = catalog.biosphere.get(identity)
+        if reference is None:
+            raise SerializationError(
+                f"Exchange {exchange.get('name')!r} has no exact {exchange_type} reference in the packaged "
+                "openLCA target-database catalog. Exporting a synthetic external flow would leave the imported "
+                "process unlinked."
+            )
+        return reference
+
+    def _linked_background_refs(
+        self,
+        reference: OpenLCATechnosphereReference | OpenLCABiosphereReference,
+    ) -> tuple[Any, Any, Any, Any | None, Any | None]:
+        is_technosphere = isinstance(reference, OpenLCATechnosphereReference)
+        flow_ref = self.schema.Ref(
+            id=reference.flow_id,
+            name=reference.flow_name,
+            flow_type=(self.schema.FlowType.PRODUCT_FLOW if is_technosphere else self.schema.FlowType.ELEMENTARY_FLOW),
+            ref_unit=reference.unit_name,
+            ref_type=self.schema.RefType.Flow,
+        )
+        flow_property_ref = self.schema.Ref(
+            id=reference.flow_property_id,
+            name=reference.flow_property_name,
+            ref_type=self.schema.RefType.FlowProperty,
+        )
+        unit_ref = self.schema.Ref(
+            id=reference.unit_id,
+            name=reference.unit_name,
+            ref_type=self.schema.RefType.Unit,
+        )
+        if not is_technosphere:
+            return flow_ref, flow_property_ref, unit_ref, None, None
+
+        location_ref = self.schema.Ref(
+            id=reference.location_id,
+            name=reference.location,
+            ref_type=self.schema.RefType.Location,
+        )
+        provider_ref = self.schema.Ref(
+            id=reference.process_id,
+            name=reference.process_name,
+            location=reference.location,
+            process_type=self.schema.ProcessType.UNIT_PROCESS,
+            ref_type=self.schema.RefType.Process,
+        )
+        return flow_ref, flow_property_ref, unit_ref, location_ref, provider_ref
 
     def _store_exchange_extras(self, entity: Any, exchange: dict[str, Any]) -> None:
         extras = _exchange_extras(exchange)
