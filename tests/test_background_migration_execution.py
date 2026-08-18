@@ -293,9 +293,7 @@ def test_reverse_biosphere_migration_falls_back_to_unique_child_compartment():
 
     assert result.succeeded, result.report.to_dict()
     assert result.value.data[0]["exchanges"][0]["categories"] == list(target_identity[1])
-    assert "migration.biosphere_parent_compartment_fallback" in {
-        issue.code for issue in result.report.issues
-    }
+    assert "migration.biosphere_parent_compartment_fallback" in {issue.code for issue in result.report.issues}
 
 
 def test_reverse_preference_resolves_polystyrene_fae_without_ambiguity():
@@ -622,22 +620,14 @@ def test_unrepresentable_biosphere_unit_change_is_removed_with_a_warning():
 
     assert result.succeeded
     assert result.value.data[0]["exchanges"] == []
-    assert "migration.biosphere_exchange_removed_unsafe_unit" in {
-        issue.code for issue in result.report.issues
-    }
-    assert "migration.biosphere_exchange_removed_unsafe_unit" in {
-        loss.code for loss in result.report.losses
-    }
+    assert "migration.biosphere_exchange_removed_unsafe_unit" in {issue.code for issue in result.report.issues}
+    assert "migration.biosphere_exchange_removed_unsafe_unit" in {loss.code for loss in result.report.losses}
 
 
 @pytest.mark.parametrize("reverse", [False, True])
 def test_standard_cubic_meter_and_sm3_biosphere_units_use_a_factor_of_one(reverse):
     resource = load_biosphere_resources()[("3.8", "3.9")]
-    rule = next(
-        rule
-        for rule in resource["replace"]
-        if rule["source"]["name"] == "Gas, natural, in ground"
-    )
+    rule = next(rule for rule in resource["replace"] if rule["source"]["name"] == "Gas, natural, in ground")
     source = background("3.9", "3.9") if reverse else background("3.8", "3.8")
     target = background("3.8", "3.8") if reverse else background("3.9", "3.9")
     source_specification = rule["target"] if reverse else rule["source"]
