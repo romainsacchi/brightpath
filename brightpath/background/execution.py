@@ -446,9 +446,7 @@ def _apply_biosphere_step(
         target_biosphere_identities=target_biosphere_identities,
     )
     _apply_factored_biosphere_replacements(data, factored_replacements, step.direction, report)
-    _apply_unambiguous_biosphere_compartment_fallback(
-        data, target_biosphere_identities, report
-    )
+    _apply_unambiguous_biosphere_compartment_fallback(data, target_biosphere_identities, report)
     return report, losses
 
 
@@ -910,9 +908,7 @@ def _apply_unambiguous_biosphere_compartment_fallback(
             )
 
 
-def _biosphere_compartments_are_related(
-    source: tuple[str, ...], target: tuple[str, ...]
-) -> bool:
+def _biosphere_compartments_are_related(source: tuple[str, ...], target: tuple[str, ...]) -> bool:
     """Return whether two category paths differ only by parent/child depth."""
     return source == target[: len(source)] or target == source[: len(target)]
 

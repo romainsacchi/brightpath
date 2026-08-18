@@ -423,7 +423,7 @@ def test_write_csv_rejects_wrong_suffix_and_normalizes_non_latin1_text(tmp_path)
     with path.open(newline="", encoding="latin-1") as handle:
         cells = [cell for row in csv.reader(handle, delimiter=";") for cell in row]
     comment = next(cell for cell in cells if "unsupported snowman" in cell)
-    assert f"25 \N{DEGREE SIGN}C-50 \N{DEGREE SIGN}C" in comment
+    assert "25 \N{DEGREE SIGN}C-50 \N{DEGREE SIGN}C" in comment
     assert "CO2 reuse" in comment
     assert 'smart quotes "ok"' in comment
     assert "unsupported snowman: ?" in comment
