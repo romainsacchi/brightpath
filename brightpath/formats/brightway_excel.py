@@ -390,6 +390,10 @@ def _serialize_value(value, *, field: str) -> str | bool | numbers.Real:
         if field == _PROFILE_METADATA_FIELDS["version"]:
             return _json_value(value, field=field)
         return value
+    if field == "categories" and isinstance(value, (list, tuple)):
+        if all(item is None or isinstance(item, (str, bool, numbers.Real)) for item in value):
+            return "::".join("" if item is None else str(item) for item in value)
+        return _json_value(value, field=field)
     if isinstance(value, tuple):
         if all(item is None or isinstance(item, (str, bool, numbers.Real)) for item in value):
             return "::".join("" if item is None else str(item) for item in value)

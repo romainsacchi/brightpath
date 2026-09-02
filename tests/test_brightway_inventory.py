@@ -93,6 +93,26 @@ def test_excel_round_trip_embeds_exact_biosphere_context(tmp_path):
     assert loaded.context == context
 
 
+def test_excel_round_trip_serializes_list_biosphere_categories_as_bw2io_path(tmp_path):
+    categories = ["natural resource", "in ground"]
+    biosphere_exchange = {
+        "name": "Water, unspecified natural origin",
+        "categories": categories,
+        "unit": "cubic meter",
+        "amount": 1.0,
+        "type": "biosphere",
+    }
+    source = BrightwayInventory.from_data(
+        minimal_inventory(biosphere_exchange),
+        background_profile=profile("3.12"),
+    )
+
+    path = source.write_excel(tmp_path / "list-categories", validate=False)
+    loaded = BrightwayInventory.from_excel(path)
+
+    assert loaded.data[0]["exchanges"][1]["categories"] == tuple(categories)
+
+
 def test_normalize_is_copy_on_write():
     data = minimal_inventory()
     data[0]["product"] = data[0].pop("reference product")
