@@ -362,6 +362,67 @@ def _resource_metadata(*, name: str, description: str, axis: str, source: dict, 
     }
 
 
+def apply_reviewed_overrides(resource: dict, overrides: dict, targets: set[tuple]) -> None:
+    """Apply audited exact-identity decisions, rejecting stale or invalid inputs."""
+
+    fields = ("name", "reference product", "location", "unit")
+
+    def identity(record):
+        return tuple(record[field] for field in fields)
+
+    indexed = {identity(rule["source"]): rule for rule in resource["replace"]}
+    seen = set()
+    pending = []
+    for decision in overrides["decisions"]:
+        source = identity(decision["source"])
+        target = identity(decision["target"])
+        if source in seen or source not in indexed or target not in targets:
+            raise ValueError(f"Invalid or duplicate reviewed UVEK identity: {source}")
+        seen.add(source)
+        current = indexed[source]
+        if identity(current["target"]) not in (identity(decision["previous_target"]), target):
+            raise ValueError(f"Reviewed UVEK decision conflicts with regenerated target: {source}")
+        normalized_source_unit = normalize_unit(source[3])
+        normalized_target_unit = normalize_unit(target[3])
+        passenger_distance_alias = {normalized_source_unit, normalized_target_unit} == {
+            "person kilometer",
+            "person-kilometer",
+        }
+        if normalized_source_unit != normalized_target_unit and not passenger_distance_alias:
+            raise ValueError(f"Reviewed UVEK decision changes units: {source}")
+        confidence = decision["confidence"]
+        if isinstance(confidence, bool) or not isinstance(confidence, (int, float)) or not 0 <= confidence <= 1:
+            raise ValueError(f"Invalid reviewed confidence: {source}")
+        pending.append((current, decision, passenger_distance_alias))
+    for current, decision, passenger_distance_alias in pending:
+        current.update(
+            target=decision["target"],
+            mapping_method=decision["mapping_method"],
+            confidence=decision["confidence"],
+            review_provenance={
+                "source_revision": overrides["source_revision"],
+                "branch_method": decision["branch_method"],
+                "reason": decision["reason"],
+                "limitations": decision.get("limitations", []),
+            },
+        )
+        if "inventory_evidence" in decision:
+            provenance = current["review_provenance"]
+            provenance["comparison_source_revision"] = provenance.pop("source_revision")
+            provenance["inventory_evidence"] = dict(decision["inventory_evidence"])
+        if passenger_distance_alias:
+            current["conversion_factor"] = 1.0
+        else:
+            current.pop("conversion_factor", None)
+    resource["coverage"]["mapping_methods"] = dict(
+        sorted(Counter(rule["mapping_method"] for rule in resource["replace"]).items())
+    )
+    resource["coverage"]["mean_confidence"] = round(
+        sum(rule["confidence"] for rule in resource["replace"]) / len(resource["replace"]), 6
+    )
+    resource["methodology"]["reviewed_overrides"] = "brightpath/data/export/uvek_reviewed_overrides.json"
+
+
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
     uvek_payload = _load_catalog(catalog_directory / "uvek__2025__cutoff.json")
     uvek_targets = {TechnosphereIdentity.from_row(row) for row in uvek_payload["technosphere"]}
@@ -422,6 +483,12 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         "mapping_methods": dict(sorted(method_counts.items())),
         "mean_confidence": round(confidence_total / len(technosphere_sources), 6),
     }
+    overrides_path = Path(__file__).resolve().parents[1] / "brightpath/data/export/uvek_reviewed_overrides.json"
+    apply_reviewed_overrides(
+        technosphere,
+        json.loads(overrides_path.read_text(encoding="utf-8")),
+        {_technosphere_key(target) for target in uvek_targets},
+    )
 
     biosphere = _resource_metadata(
         name="ecoinvent-3.x-to-ecoinvent-3.10-biosphere-for-uvek-2025",

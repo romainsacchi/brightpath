@@ -39,6 +39,35 @@ documented unit-conversion factors. Curated correspondences take precedence wher
 and the units are compatible or have an explicit factor. All other targets are selected by a
 deterministic name, product, compartment, location, and unit similarity heuristic.
 
+The technosphere resource additionally applies the audited decisions in
+`data/export/uvek_reviewed_overrides.json`, derived from Karin Treyer's CLIC
+`uvek-mapping-3.10` workbook at revision
+`ecf7a035492d9e2042d7180091b3299aae16bf6e` (https://github.com/romainsacchi/clic).
+Each decision retains its previous target, source provenance, and selection
+reason. See `docs/uvek-mapping-review.md` for safeguards and deferred conflicts.
+The expanded pairwise review additionally checks energy carrier/fuel/technology,
+waste role/material/route, nutrient mass basis, and co-product chemical families.
+Coarse proxies and deprecated/geographic targets are explicitly flagged. These
+are identity-level compatibility improvements, not equivalence claims.
+
+Review version 3 adds scoped adjudication of the remaining low-confidence
+alternatives and traces agreeing targets through the branch's decision files.
+The follow-up audit distinguishes exact-source records, inherited-location
+choices and scripted reuse; agreement alone does not raise confidence. See
+`docs/uvek_followup_decisions.json` and `docs/uvek_followup_summary.json` for
+decisions, limitations and input hashes. Equivalent passenger-distance unit
+spellings retain an explicit factor of 1.0; no inventory amount is rescaled.
+
+Review version 4 additionally inspects the local ecoinvent 3.10 cut-off and UVEK
+2025 reference production and selected operating-burden metadata for the seedling
+and CHP priority batch. Fifty-nine selections are third candidates from the full
+UVEK catalog, not targets selected by the CLIC branch. Runtime provenance therefore
+labels the branch as the comparison source and separately identifies the inventory
+evidence and candidate origin. See `docs/uvek_priority_inventory_evidence.json`
+and `docs/uvek_priority_summary.json`. Only sparse interpretive evidence is
+published, not full proprietary inventories. Different versions, allocation models,
+plant capacities and emission-control performance are not established as equivalent.
+
 These resources enable compatibility workflows only. They do not assert scientific equivalence.
 Each rule records its method and confidence, planning emits `migration.heuristic_mapping`, and
 execution verifies every resulting link against the exact UVEK 2025 technosphere or ecoinvent 3.10
