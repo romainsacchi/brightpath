@@ -285,8 +285,8 @@ def test_render_matches_observed_simapro_process_grammar_and_row_shapes():
     assert row_after(rows, "Category type") == ["material"]
     assert row_after(rows, "Process identifier") == ["EI3ARUNI000000000000001"]
     assert row_after(rows, "Type") == ["Unit process"]
-    assert row_after(rows, "Process name") == ["test process GLO"]
-    assert row_after(rows, "Geography") == ["Unspecified"]
+    assert row_after(rows, "Process name") == ["test product {GLO}| test process | Cut-off, U"]
+    assert row_after(rows, "Geography") == ["GLO"]
     assert row_after(rows, "Input parameters") == []
     assert row_after(rows, "Calculated parameters") == []
 
@@ -818,3 +818,60 @@ def test_from_csv_validates_path_and_suffix(tmp_path):
     wrong_suffix.write_text("not simapro", encoding="utf-8")
     with pytest.raises(ValueError, match=r"\.csv"):
         SimaProInventory.from_csv(wrong_suffix, background_profile=profile())
+
+
+@pytest.mark.parametrize(
+    "overrides,expected",
+    [
+        ({"location": "CH"}, "CH"),
+        ({"location": "EUR"}, "EUR"),
+        ({"location": "GLO"}, "GLO"),
+        ({"location": "CH", "simapro metadata": {"Geography": "Switzerland"}}, "Switzerland"),
+        ({"location": "CH", "geography": "Explicit geography"}, "Explicit geography"),
+    ],
+)
+def test_geography_uses_location_without_overwriting_explicit_metadata(overrides, expected):
+    activity = minimal_activity(**overrides)
+    before = deepcopy(activity)
+    inventory = SimaProInventory.from_data([activity], background_profile=profile())
+    result = inventory.render()
+    assert not result.has_errors, result.issues
+    assert row_after(result.rows, "Geography") == [expected]
+    assert inventory.data == [before]
+    assert inventory.render().rows == result.rows
+
+
+@pytest.mark.parametrize("model,suffix", [("cutoff", "Cut-off, U"), ("consequential", "Conseq, U")])
+def test_process_display_names_match_legacy_and_distinguish_reference_products(model, suffix):
+    datasets = [
+        minimal_activity(location="CH", **{"reference product": product}) for product in ("heat", "electricity")
+    ]
+    for dataset in datasets:
+        dataset["exchanges"][0].update(
+            {
+                "reference product": dataset["reference product"],
+                "product": dataset["reference product"],
+                "location": "CH",
+            }
+        )
+    original = deepcopy(datasets)
+    inventory = SimaProInventory.from_data(datasets, background_profile=BackgroundProfile("ecoinvent", "3.12", model))
+    result = inventory.render()
+    assert not result.has_errors, result.issues
+    names = [result.rows[i + 1][0] for i, row in enumerate(result.rows) if row == ["Process name"]]
+    assert names == [f"{product} {{CH}}| test process | {suffix}" for product in ("heat", "electricity")]
+    assert inventory.data == original
+
+
+@pytest.mark.parametrize(
+    "override",
+    [
+        {"simapro metadata": {"Process name": "Native display name"}},
+        {"simapro process name": "Native display name"},
+    ],
+)
+def test_process_display_name_preserves_explicit_override(override):
+    inventory = SimaProInventory.from_data([minimal_activity(**override)], background_profile=profile())
+    result = inventory.render()
+    assert not result.has_errors, result.issues
+    assert row_after(result.rows, "Process name") == ["Native display name"]

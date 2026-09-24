@@ -64,6 +64,7 @@ class SimaProCategoryMode(str, Enum):
 
     PRESERVE = "preserve"
     INFER_EXISTING = "infer_existing"
+    INFER_CLASSIFICATIONS = "infer_classifications"
 
 
 @dataclass(frozen=True)

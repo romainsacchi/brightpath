@@ -4,6 +4,7 @@ import csv
 import datetime
 import hashlib
 import logging
+import math
 import re
 import tempfile
 import unicodedata
@@ -31,6 +32,7 @@ from brightpath.profiles.simapro_categories import (
     resolve_simapro_category,
     split_simapro_category,
 )
+from brightpath.profiles.simapro_waste import resolve_classified_waste
 from brightpath.utils import (
     ALLOWED_BIOSPHERE_CATEGORIES,
     check_simapro_inventory,
@@ -308,8 +310,14 @@ def normalize_simapro_import_data(
                     exchange["location"] = dataset["location"]
                     exchange["database"] = database_name
                     _restore_simapro_category(dataset, exchange)
-                    if is_a_waste_treatment(exchange["name"], profile.family):
-                        exchange["amount"] *= -1
+                    category = dataset.get("simapro metadata", {}).get("Category type")
+                    waste = (
+                        str(category).strip().lower() == "waste treatment"
+                        if category
+                        else is_a_waste_treatment(exchange["name"], profile.family)
+                    )
+                    if waste:
+                        exchange = _reflect_simapro_exchange(exchange)
 
                 elif exchange_type in {"technosphere", "substitution"}:
                     name, product, location = parse_simapro_technosphere_name(
@@ -322,11 +330,18 @@ def normalize_simapro_import_data(
                     exchange["reference product"] = product
                     exchange["location"] = location
                     exchange.pop("input", None)
-                    if is_a_waste_treatment(name, profile.family):
-                        exchange["amount"] *= -1
+                    categories = exchange.get("categories") or ()
+                    section = categories if isinstance(categories, str) else categories[0] if categories else ""
+                    waste = (
+                        section == "Waste to treatment"
+                        if section in {"Waste to treatment", "Materials/fuels", "Electricity/heat", "Avoided products"}
+                        else is_a_waste_treatment(name, profile.family)
+                    )
+                    if waste:
+                        exchange = _reflect_simapro_exchange(exchange)
                     if exchange_type == "substitution":
                         exchange["type"] = "technosphere"
-                        exchange["amount"] *= -1
+                        exchange = _reflect_simapro_exchange(exchange)
 
                 elif exchange_type == "biosphere":
                     exchange.update(
@@ -558,6 +573,7 @@ class _SimaProRenderer:
         self.subcompartments = get_simapro_subcompartments()
         self.inventories = self.document.data
         self.category_issues = self._resolve_categories()
+        self.category_issues.extend(self._apply_category_paths())
 
     def render(self) -> SimaProRenderResult:
         issues = [*self.category_issues, *self._preflight_issues()]
@@ -565,6 +581,20 @@ class _SimaProRenderer:
             return SimaProRenderResult(rows=[], issues=issues)
 
         try:
+            self._waste_suppliers = {}
+            supplier_labels = {}
+            for activity in self.inventories:
+                key = _supplier_identity(activity)
+                label = _latin1_safe_text(self._format_technosphere(activity)).casefold()
+                if label in supplier_labels and supplier_labels[label] != key:
+                    raise SimaProSerializationError(
+                        f"Ambiguous SimaPro supplier label {label!r}: {supplier_labels[label]!r} and {key!r}."
+                    )
+                supplier_labels[label] = key
+                waste = _simapro_activity_is_waste(activity, self.profile.family)
+                if key in self._waste_suppliers and self._waste_suppliers[key] != waste:
+                    raise SimaProSerializationError(f"Conflicting SimaPro supplier categories for {key!r}.")
+                self._waste_suppliers[key] = waste
             rows = self._header_rows()
             inventories = [flag_exchanges(activity) for activity in self.inventories]
             for activity in inventories:
@@ -671,9 +701,82 @@ class _SimaProRenderer:
                 )
         return issues
 
+    def _apply_category_paths(self) -> list[Issue]:
+        """Apply caller-supplied folders without changing the category type."""
+        issues = []
+        for index, activity in enumerate(self.inventories):
+            if not isinstance(activity, dict) or "simapro category path" not in activity:
+                continue
+            try:
+                path = activity["simapro category path"]
+                if not isinstance(path, str) or not path.strip():
+                    raise ValueError("simapro category path must be a non-empty string.")
+                parts = [part.strip() for part in re.split(r"[/\\]", path)]
+                if any(not part or part in {".", ".."} for part in parts):
+                    raise ValueError("simapro category path must contain non-empty folder names.")
+                production = find_production_exchange(activity)
+                if not production.get("simapro category"):
+                    continue  # Folder metadata cannot resolve an unknown waste status.
+                kind, _ = _split_simapro_category(production["simapro category"])
+                production["simapro category"] = "/".join([kind, *parts])
+            except (KeyError, TypeError, ValueError) as error:
+                issues.append(
+                    Issue(
+                        severity="error",
+                        code="simapro_category_path_invalid",
+                        message=str(error),
+                        path=f"activity[{index}]",
+                    )
+                )
+        return issues
+
+    def _resolve_classification_categories(self) -> list[Issue]:
+        issues = []
+        for index, activity in enumerate(self.inventories):
+            if not isinstance(activity, dict):
+                continue
+            try:
+                resolution = resolve_classified_waste(activity)
+                if resolution.rule == "explicit_category":
+                    continue
+                detail = f"{resolution.rule}; ISIC={resolution.isic!r}; CPC={resolution.cpc!r}"
+                if resolution.waste is None:
+                    issues.append(
+                        Issue(
+                            severity="error",
+                            code="simapro_waste_unresolved",
+                            message=f"Waste status requires an explicit SimaPro category: {detail}.",
+                            path=f"activity[{index}]",
+                        )
+                    )
+                    continue
+                category = "waste treatment" if resolution.waste else "material"
+                find_production_exchange(activity)["simapro category"] = category + "/Classified"
+                issues.append(
+                    Issue(
+                        severity="warning",
+                        code="simapro_waste_classified",
+                        message=f"Selected {category!r}: {detail}.",
+                        path=f"activity[{index}]",
+                    )
+                )
+            except (KeyError, TypeError, ValueError) as error:
+                issues.append(
+                    Issue(
+                        severity="error",
+                        code="simapro_waste_unresolved",
+                        message=str(error),
+                        path=f"activity[{index}]",
+                    )
+                )
+        return issues
+
     def _resolve_categories(self) -> list[Issue]:
         if self.category_mode is SimaProCategoryMode.PRESERVE:
             return []
+
+        if self.category_mode is SimaProCategoryMode.INFER_CLASSIFICATIONS:
+            return self._resolve_classification_categories()
 
         issues = []
         for activity_index, activity in enumerate(self.inventories):
@@ -784,7 +887,7 @@ class _SimaProRenderer:
     def _activity_rows(self, activity: dict):
         rows = []
         dataset_link_name = ""
-        is_waste = is_activity_waste_treatment(activity, self.profile.family)
+        is_waste = _simapro_activity_is_waste(activity, self.profile.family)
         for field_name in self.fields:
             if is_waste and field_name == "Products":
                 continue
@@ -811,7 +914,11 @@ class _SimaProRenderer:
                 category_type, _subcategory = _split_simapro_category(production["simapro category"])
                 rows.extend([[category_type], []])
             elif field_name == "Geography":
-                rows.extend(self._activity_metadata_rows(field_name, activity, default="Unspecified"))
+                rows.extend(
+                    self._activity_metadata_rows(
+                        field_name, activity, default=activity.get("location") or "Unspecified"
+                    )
+                )
             elif field_name == "Date":
                 rows.extend(
                     self._activity_metadata_rows(
@@ -829,7 +936,7 @@ class _SimaProRenderer:
             elif field_name in {"Waste treatment", "Products"}:
                 rows.extend(self._product_rows(dataset_link_name, activity, field_name))
             elif field_name in {"Materials/fuels", "Electricity/heat"}:
-                rows.extend(self._technosphere_rows(field_name, activity, is_waste))
+                rows.extend(self._technosphere_rows(field_name, activity))
             elif field_name == "Resources":
                 rows.extend(self._biosphere_rows(activity, "natural resource"))
             elif field_name.startswith("Emissions to"):
@@ -958,6 +1065,12 @@ class _SimaProRenderer:
             return str(activity["simapro process name"])
         name = str(activity["name"])
         location = str(activity.get("location") or "GLO")
+        if self.profile.family == "ecoinvent":
+            # Match Premise's legacy display convention without changing the
+            # supplier-link naming rules or overriding imported display names.
+            product = activity["reference product"]
+            suffix = {"cutoff": "Cut-off, U", "consequential": "Conseq, U"}[self.profile.system_model]
+            return f"{product} {{{location}}}| {name} | {suffix}"
         return f"{name} {location}"
 
     def _process_identifier_rows(self, activity: dict):
@@ -994,7 +1107,7 @@ class _SimaProRenderer:
     def _product_rows(self, dataset_name: str, activity: dict, field_name: str):
         production = find_production_exchange(activity)
         amount = production["amount"]
-        if field_name == "Waste treatment" and amount < 0:
+        if field_name == "Waste treatment":
             amount = abs(amount)
         production["used"] = True
         _category_type, subcategory = _split_simapro_category(production["simapro category"])
@@ -1023,7 +1136,7 @@ class _SimaProRenderer:
             [],
         ]
 
-    def _technosphere_rows(self, field_name: str, activity: dict, is_waste_activity: bool):
+    def _technosphere_rows(self, field_name: str, activity: dict):
         rows = []
         want_energy = field_name == "Electricity/heat"
         for exchange in get_technosphere_exchanges(activity):
@@ -1031,9 +1144,9 @@ class _SimaProRenderer:
                 continue
             if is_blacklisted(exchange, self.profile.family):
                 continue
-            if is_a_waste_treatment(exchange["name"], self.profile.family):
+            if self._supplier_is_waste(exchange):
                 continue
-            amount = abs(exchange["amount"]) if is_waste_activity and exchange["amount"] < 0 else exchange["amount"]
+            amount = exchange["amount"]
             rows.append(self._technosphere_exchange_row(exchange, amount))
             exchange["used"] = True
         rows.append([])
@@ -1044,12 +1157,30 @@ class _SimaProRenderer:
         for exchange in get_technosphere_exchanges(activity):
             if is_blacklisted(exchange, self.profile.family):
                 continue
-            if not is_a_waste_treatment(exchange["name"], self.profile.family):
+            if not self._supplier_is_waste(exchange):
                 continue
-            rows.append(self._technosphere_exchange_row(exchange, abs(exchange["amount"])))
+            if exchange.get("formula"):
+                raise SimaProSerializationError(
+                    "Resolve waste exchange formulas explicitly before numeric SimaPro export."
+                )
+            rendered = _reflect_simapro_exchange(exchange)
+            rows.append(self._technosphere_exchange_row(rendered, rendered["amount"]))
             exchange["used"] = True
         rows.append([])
         return rows
+
+    def _supplier_is_waste(self, exchange: dict) -> bool:
+        key = _supplier_identity(exchange)
+        if key in self._waste_suppliers:
+            return self._waste_suppliers[key]
+        category = exchange.get("simapro category")
+        if category:
+            return _split_simapro_category(category)[0] == "waste treatment"
+        if self.category_mode is SimaProCategoryMode.INFER_CLASSIFICATIONS:
+            raise SimaProSerializationError(
+                f"External supplier {key!r} needs an explicit SimaPro category; waste status cannot be inferred from its name."
+            )
+        return is_a_waste_treatment(exchange["name"], self.profile.family)
 
     def _technosphere_exchange_row(self, exchange: dict, amount: float):
         uncertainty = _simapro_uncertainty_type(exchange.get("uncertainty type"))
@@ -1069,10 +1200,9 @@ class _SimaProRenderer:
         for exchange in get_biosphere_exchanges(activity, category):
             if is_blacklisted(exchange, self.profile.family):
                 continue
-            rendered = deepcopy(exchange)
-            if category != "natural resource" and rendered["name"].lower() == "water":
-                rendered["unit"] = "kilogram"
-                rendered["amount"] *= 1000
+            rendered = exchange
+            if category != "natural resource" and exchange["name"].lower() == "water":
+                rendered = _water_emission_in_kilograms(exchange)
             rows.append(self._biosphere_exchange_row(rendered))
             exchange["used"] = True
         rows.append([])
@@ -1082,7 +1212,7 @@ class _SimaProRenderer:
         uncertainty = _simapro_uncertainty_type(exchange.get("uncertainty type"))
         categories = exchange["categories"]
         subcompartment = ""
-        if len(categories) > 1:
+        if len(categories) > 1 and categories[1] not in ("", "unspecified"):
             try:
                 subcompartment = self.subcompartments[categories[1]]
             except KeyError as exc:
@@ -1100,6 +1230,78 @@ class _SimaProRenderer:
             _format_simapro_number(exchange.get("max", exchange.get("maximum", 0))),
             exchange.get("comment"),
         ]
+
+
+def _supplier_identity(record: dict) -> tuple:
+    return (
+        record.get("name"),
+        record.get("reference product") or record.get("product"),
+        record.get("location", "GLO"),
+        record.get("unit"),
+    )
+
+
+def _simapro_activity_is_waste(activity: dict, family: str) -> bool:
+    category = find_production_exchange(activity).get("simapro category")
+    if category:
+        return _split_simapro_category(category)[0] == "waste treatment"
+    return is_activity_waste_treatment(activity, family)
+
+
+def _reflect_simapro_exchange(exchange: dict) -> dict:
+    """Reflect a signed quantity and its distribution without changing spread."""
+    result = deepcopy(exchange)
+    kind = result.get("uncertainty type", 0)
+    if kind not in {0, 1, 2, 3, 4, 5}:
+        raise SimaProSerializationError(f"Cannot reverse SimaPro exchange uncertainty type {kind!r}.")
+    result["amount"] = -result["amount"]
+    if kind != 2 and result.get("loc") is not None:
+        result["loc"] = -result["loc"]
+    if kind == 2 or "negative" in result:
+        result["negative"] = result["amount"] < 0
+    for lower, upper in (("minimum", "maximum"), ("min", "max")):
+        low, high = result.pop(lower, None), result.pop(upper, None)
+        if high is not None:
+            result[lower] = -high
+        if low is not None:
+            result[upper] = -low
+    if result.get("formula"):
+        result["formula"] = f"-({result['formula']})"
+    return result
+
+
+def _water_emission_in_kilograms(exchange: dict) -> dict:
+    """Convert an emission's quantity and distribution together on a detached copy.
+
+    Preserve the existing SimaPro water convention (1000 kg/m3), but only
+    apply it to volume inputs. No assumption is made for other physical units.
+    """
+    rendered = deepcopy(exchange)
+    unit = rendered["unit"]
+    if unit not in {"cubic meter", "kilogram"}:
+        raise SimaProSerializationError(f"Cannot convert Water emission from {unit!r} to kilograms.")
+    uncertainty = rendered.get("uncertainty type", 0)
+    if uncertainty not in {0, 1, 2, 3, 4, 5}:
+        raise SimaProSerializationError(f"Unsupported Water emission uncertainty type {uncertainty!r}.")
+    if rendered.get("formula"):
+        raise SimaProSerializationError(
+            "Water emission formulas cannot be preserved by the numeric SimaPro exchange writer. "
+            "Resolve the formula explicitly before export."
+        )
+    if unit == "kilogram":
+        return rendered
+    factor = 1000.0
+    rendered["unit"] = "kilogram"
+    rendered["amount"] *= factor
+    if rendered.get("loc") is not None:
+        rendered["loc"] = rendered["loc"] + math.log(factor) if uncertainty == 2 else rendered["loc"] * factor
+    if uncertainty == 3 and rendered.get("scale") is not None:
+        rendered["scale"] *= factor
+    # A lognormal scale is dimensionless and must remain unchanged.
+    for bound in ("minimum", "maximum", "min", "max"):
+        if rendered.get(bound) is not None:
+            rendered[bound] *= factor
+    return rendered
 
 
 _ACTIVITY_METADATA_FIELDS = {

@@ -6,6 +6,30 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- Align default ecoinvent SimaPro process display names with Premise: reference product, location, activity and system model; preserve explicit names.
+
+- Fill SimaPro Geography from the dataset location when no explicit geography is supplied.
+
+- Preserve full SimaPro market supplier names and qualifiers; reject ambiguous serialized supplier labels before export.
+
+- Restrict SimaPro market-name rewriting to actual market prefixes, preserving distinct suppliers whose names contain “to generic market for”.
+
+- Wrote waste-treatment reference flows with positive magnitudes, preserving their
+  quantities, while sign-flipping links to waste suppliers in both ecoinvent and
+  UVEK exports. Ordinary signed inputs remain unchanged.
+- Preserved ecoinvent waste credits with reversible sign conversion instead of
+  absolute values. Reflected uncertainty locations, signs, and bounds together,
+  and kept ordinary inputs inside waste processes signed.
+- Used explicit SimaPro process categories and included supplier categories for
+  waste classification, and explicit CSV sections on import. Conflicting supplier
+  categories and unsupported reflected export distributions/formulas now fail.
+- Converted SimaPro water emissions only when supplied in cubic meters, scaling
+  normal uncertainty and distribution bounds with the amount while preserving
+  lognormal scale. Already-kilogram emissions remain unchanged. Unsupported
+  water units, distributions, and unevaluated exchange formulas now fail explicitly.
+- Rendered explicit empty or `unspecified` SimaPro biosphere subcompartments as
+  blank fields without remapping other unknown compartments.
+
 - Add explicit preservation of method-package metadata conflicts as separate,
   uncharacterized openLCA flows with stable UUIDs and coverage diagnostics.
   Keep strict rejection as the default and retain source identifier checks.
@@ -58,6 +82,10 @@ All notable changes to this project will be documented in this file.
   exact candidate contexts from a complete technosphere profile while comparing biosphere catalogs.
 
 ### Added
+
+- Add opt-in ISIC/CPC waste inference for SimaPro, preserving explicit categories and requiring review of ambiguous cases.
+  Check reference-product names, units and signs before inferring recovered products; conflicting metadata and positive treatment references require review.
+- Accept caller-supplied folder hierarchies independently of waste classification.
 
 - Added SimaPro biosphere-profile inference across all available exact catalogs. A profile is
   returned only for a unique best exchange-coverage result; ties and no-match outcomes are reported.

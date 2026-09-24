@@ -256,3 +256,138 @@ format/separator declarations, process fields, and exchange sections. A
 ``.csv`` suffix alone is not evidence. When the application already knows the
 source, pass ``FormatProfile("simapro_csv")`` or CLI
 ``--source-format simapro_csv``.
+
+Water emission units and uncertainty
+------------------------------------
+
+The writer retains its existing water-emission convention of 1000 kg per m3.
+For biosphere exchanges named ``Water`` outside natural resources, it converts
+``cubic meter`` quantities to ``kilogram`` and scales the distribution together
+with the amount. Normal standard deviations and uniform/triangular bounds are
+scaled by 1000; lognormal scale is dimensionless and stays unchanged. Negative
+amounts retain their sign. Exchanges already in kilograms and natural-resource
+water are not converted.
+
+Other units, unsupported water distribution types, and unevaluated water
+exchange formulas raise a serialization error. Resolve such formulas explicitly
+before export; the exchange writer currently emits numeric amounts, whereas
+calculated parameter sections support formulas. Input inventories are unchanged.
+
+An empty or ``unspecified`` biosphere subcompartment is written as a blank field.
+Other unknown subcompartments still require an explicit mapping.
+
+Regression tests parse the emitted uncertainty fields with Brightway's
+`SimaPro CSV extractor <https://docs.brightway.dev/en/latest/_modules/bw2io/extractors/simapro_csv.html>`_,
+which interprets normal uncertainty as squared standard deviation and lognormal
+uncertainty as squared geometric standard deviation. This checks the numeric
+representation; it does not substitute for importing a complete scenario into
+SimaPro.
+
+Waste signs and supplier categories
+---------------------------------------------
+
+For both ecoinvent and UVEK contexts, the reference flow in the ``Waste treatment``
+section is written with a positive magnitude: both +1 and -1 become +1. The
+quantity is preserved, so -2 becomes +2 rather than being replaced by one.
+Links to waste suppliers in ``Waste to treatment`` are sign-reversed, not made
+absolute: positive and negative exchanges remain distinguishable, including credits. Ordinary material and energy inputs
+inside a waste process retain their signs. Normal and lognormal spread are
+unchanged by sign reflection; distribution bounds are negated and exchanged,
+and location/sign fields follow the reflected distribution.
+
+The production ``simapro category`` determines the process section. For links
+to included suppliers, that supplier's category also determines the exchange
+section. Explicit external-exchange categories take precedence over the existing
+name heuristic. Conflicting categories for the same included supplier identity
+fail serialization. Generic Brightway ``type="process"`` does not override a
+waste category. On import, explicit SimaPro process categories and exchange
+sections take precedence over name heuristics.
+
+Unsupported distribution types and unevaluated formulas on reflected export
+exchanges fail explicitly. Import sign reflection preserves formulas by negating
+them. For supplier links, +2 becomes -2 and -2 becomes +2.
+External suppliers without
+categories still use the existing name heuristic; this is not proof of their
+classification in a target library.
+
+Regression tests cover signed distributions and complete linked inventories in
+cut-off and consequential contexts. The exported CSVs are read back through the
+Brightway importer, and technosphere matrices and solved supplier demands are
+compared. Native SimaPro import and LCIA validation remain necessary before a
+complete Premise scenario uses this backend by default.
+
+The category/section consistency requirement is also enforced by
+`Brightway's SimaPro process parser <https://docs.brightway.dev/projects/bw-simapro-csv/en/stable/_modules/bw_simapro_csv/blocks/process.html>`_.
+
+Classification-based waste inference
+------------------------------------
+
+Pass ``category_mode="infer_classifications"`` to ``render`` or ``write_csv``
+to infer waste status from ISIC revision 4 and CPC metadata. Explicit production
+``simapro category`` values remain authoritative, including native round trips.
+Inferred processes use a generic ``Classified`` folder: folder naming is separate
+from waste status. Included supplier classifications also control the section
+and sign of links to those suppliers.
+
+ISIC waste treatment/recovery and sewage sectors provide supporting evidence;
+the actual reference product, unit and sign constrain inference. Recovered energy,
+fertiliser, compost, biogas and dried poultry manure are ordinary products only
+when their reference names, CPC codes and unit dimensions agree and their
+reference amounts are positive. Negative recovered products and energy CPC codes
+attached to kilograms of waste require review. A treatment activity name alone
+does not justify classifying its allocated products as waste treatment. Unlisted
+positive treatment products and services remain unresolved. CPC waste goods alone
+do not imply waste treatment.
+Ambiguous markets, incomplete classifications and conflicting evidence raise
+``simapro_waste_unresolved`` errors. Review these cases and supply explicit
+production categories before export. External links require explicit categories
+if the supplier is absent; this mode never falls back to name keywords.
+
+These are conservative inference rules, not an official ISIC-to-SimaPro mapping.
+Their sources are the UN ISIC revision 4 classes 3700, 3821/3822 and 3830,
+and CPC waste-treatment service groups 941/943. They do not establish classification
+accuracy against the legacy Premise exporter, whose lookup is also a convention.
+
+Classification definitions: `ISIC 3821 <https://unstats.un.org/unsd/classifications/Econ/Structure/Detail/en/27/3821>`_,
+`ISIC 3830 <https://unstats.un.org/unsd/classifications/Econ/Detail/EN/27/3830>`_,
+and `CPC 943 <https://unstats.un.org/unsd/classifications/Econ/Structure/Detail/EN/1073/943>`_.
+
+The reference-product distinction follows
+`ecoinvent's activity and product documentation <https://support.ecoinvent.org/activities-products>`_.
+
+One reviewed exception identifies the Swiss ``treatment of effluent from nitrogen
+trifluoride production, wastewater treatment, class 3`` dataset as waste treatment,
+even with a positive reference quantity. It requires the matching effluent reference
+product, cubic-metre unit, ISIC 3700 and CPC 39990. The audit rule is
+``reviewed_nf3_effluent_treatment``; explicit SimaPro categories still take precedence.
+
+Market supplier names
+---------------------
+
+Market names retain their complete activity text, including technology, period,
+vehicle-size and scenario qualifiers. A market reference product does not replace
+its activity name. Packaged global-market abbreviations apply only to unqualified
+canonical market names. Before rendering, Brightpath rejects distinct included
+supplier identities whose serialized labels collide after Latin-1 conversion and
+case folding; no partial CSV is emitted. The same formatter names production
+outputs and technosphere links.
+
+Caller-supplied folder hierarchies
+----------------------------------
+
+Set dataset metadata ``simapro category path`` to a slash-separated folder path
+(e.g. an ISIC division/group/class hierarchy). The writer applies it after resolving
+the production category, preserving the product or waste-treatment category type.
+It also applies to explicit production categories. Without this metadata, supplied
+folders remain unchanged, and inferred categories use ``Classified``. Folder metadata
+never resolves unknown waste status. Premise supplies the same hierarchy and fallbacks
+as its openLCA export through ``assign_simapro_category_paths`` on its prepared payload.
+
+The SimaPro ``Geography`` field defaults to the dataset's ``location`` (including
+country, regional and global codes). Explicit ``geography`` or native SimaPro
+``Geography`` metadata remains authoritative.
+
+Default ecoinvent process display names follow Premise's legacy convention:
+``reference product {location}| activity name | Cut-off, U`` (or ``Conseq, U``).
+Explicit native ``Process name`` metadata or ``simapro process name`` remains
+authoritative. This display field is separate from supplier-link labels.
