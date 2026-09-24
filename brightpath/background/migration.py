@@ -13,6 +13,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Iterable
 
+from brightpath.background.uvek_export import load_uvek_export_resource
+from brightpath.background.patches import PATCH_VERSIONS, patch_pair, patch_resource
 from brightpath.core.context import BackgroundContext, BiosphereProfile, TechnosphereProfile, VersionResolution
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.core.reports import Issue, Loss, Severity, StageKind, StageReport
@@ -252,6 +254,39 @@ def _plan_technosphere(
     if source_profile == target_profile:
         return ()
     if source_profile.family != target_profile.family:
+        if source_profile.family == "uvek" and target_profile.family == "ecoinvent":
+            resource = load_uvek_export_resource()
+            if source_profile == TechnosphereProfile(**resource["source_profile"]) and (
+                target_profile.system_model == "cutoff"
+                and target_profile.version in {"3.6", "3.7", "3.8", "3.9", "3.9.1", "3.10", "3.10.1", "3.11", "3.12"}
+            ):
+                initial = (
+                    MigrationRouteStep(
+                        axis,
+                        source_profile.version,
+                        resource["target_profile"]["version"],
+                        "forward",
+                        resource["name"],
+                        replacement_rules=len(resource["rules"]),
+                    ),
+                )
+                hub = BackgroundContext(TechnosphereProfile(**resource["target_profile"]), source.biosphere)
+                return initial + _plan_technosphere(
+                    hub,
+                    target,
+                    hub.technosphere.resolve_migration_series(),
+                    target_resolution,
+                    policy,
+                    issues,
+                    losses,
+                )
+            _unavailable_issue(
+                issues,
+                axis,
+                "uvek_route",
+                "The reviewed UVEK export requires UVEK 2025 and a supported ecoinvent cut-off target.",
+            )
+            return ()
         if source_profile.family == "ecoinvent" and target_profile.family == "uvek":
             return _plan_uvek_technosphere(
                 source_profile,
@@ -295,11 +330,13 @@ def _plan_technosphere(
         )
         return ()
     if source_resolution.migration_series == target_resolution.migration_series:
+        if patch_pair(source_profile.version, target_profile.version):
+            return _patch_steps(axis, source_profile.version, target_profile.version, issues)
         _same_series_issue(issues, axis, source_resolution, target_resolution)
         return ()
 
     resources = load_technosphere_resources(source_profile.system_model)
-    return _resolve_steps(
+    steps = _resolve_steps(
         axis,
         source_resolution.migration_series,
         target_resolution.migration_series,
@@ -308,6 +345,7 @@ def _plan_technosphere(
         issues,
         losses,
     )
+    return steps + _target_patch_steps(axis, target_resolution, issues)
 
 
 def _plan_biosphere(
@@ -359,12 +397,14 @@ def _plan_biosphere(
         )
         return ()
     if source_resolution.migration_series == target_resolution.migration_series:
+        if patch_pair(source_profile.version, target_profile.version):
+            return _patch_steps(axis, source_profile.version, target_profile.version, issues)
         _same_series_issue(issues, axis, source_resolution, target_resolution)
         return ()
 
     resources = load_biosphere_resources()
     try:
-        return _resolve_steps(
+        steps = _resolve_steps(
             axis,
             source_resolution.migration_series,
             target_resolution.migration_series,
@@ -373,6 +413,7 @@ def _plan_biosphere(
             issues,
             losses,
         )
+        return steps + _target_patch_steps(axis, target_resolution, issues)
     except _BiosphereRouteGap:
         return _resolve_biosphere_gap(
             source_resolution.migration_series,
@@ -382,6 +423,27 @@ def _plan_biosphere(
             issues,
             losses,
         )
+
+
+def _target_patch_steps(axis, resolution, issues):
+    if PATCH_VERSIONS.get(resolution.migration_series) == resolution.exact_version:
+        return _patch_steps(axis, resolution.migration_series, resolution.exact_version, issues)
+    return ()
+
+
+def _patch_steps(axis, source, target, issues):
+    resource = patch_resource(source, target, axis.value)
+    issues.append(
+        Issue(
+            severity=Severity.INFO,
+            code="migration.patch_identity_validation",
+            message=f"Preserve shared {axis.value} identities from {source} to {target}; validate every target link. Background coefficients and LCIA results are not equivalent.",
+            stage=StageKind.MIGRATION_PLANNING,
+            path=f"background.{axis.value}",
+            details={"source": source, "target": target, "resource": resource["name"]},
+        )
+    )
+    return (MigrationRouteStep(axis, source, target, "forward", resource["name"]),)
 
 
 class _BiosphereRouteGap(Exception):

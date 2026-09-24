@@ -6,6 +6,8 @@ from dataclasses import dataclass
 
 from .adapters import AdapterRegistry, default_adapter_registry
 from .background import PackageCatalogProvider
+from .background.uvek_export import load_uvek_export_resource
+from .background.patches import compatibility_resource
 from .migrations.resources import (
     load_biosphere_resources,
     load_technosphere_resources,
@@ -123,6 +125,31 @@ def migration_capabilities() -> tuple[MigrationCapability, ...]:
         )
         for source_version in uvek["source_profile"]["versions"]
         for system_model in uvek["source_profile"]["system_models"]
+    )
+    export = load_uvek_export_resource()
+    values.extend(
+        MigrationCapability(
+            axis=axis,
+            family="ecoinvent",
+            system_model="cutoff" if axis == "technosphere" else "",
+            source_series=source,
+            target_series=target,
+            forward="identity_target_validated",
+            reverse="identity_target_validated",
+        )
+        for source, target in compatibility_resource()["patches"].items()
+        for axis in ("technosphere", "biosphere")
+    )
+    values.append(
+        MigrationCapability(
+            axis="technosphere",
+            family=export["source_profile"]["family"],
+            target_family=export["target_profile"]["family"],
+            system_model="cutoff",
+            source_series=export["source_profile"]["version"],
+            target_series=export["target_profile"]["version"],
+            reverse="unavailable",
+        )
     )
     return tuple(values)
 

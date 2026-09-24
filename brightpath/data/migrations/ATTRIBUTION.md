@@ -1,5 +1,16 @@
 # Migration Resource Attribution
 
+The dedicated `uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json` resource is generated
+by `scripts/generate_uvek_export.py`. Its source evidence is the IEA PVPS
+T12-33:2026 conversion ledger (https://doi.org/10.69766/WJTE1771), the public
+premise PV/PAN supporting inventories, and explicit directional proxy decisions.
+The source hashes, citations and rationales are preserved in
+`docs/uvek_export_evidence.json` and `docs/uvek_export_overrides.json`. Public
+supporting recipes are not ecoinvent inventory extracts. Existing cut-off
+disaggregation recipes retain their upstream provenance. No numeric similarity
+confidence is invented for this directional resource. The full catalog review
+lists unresolved suppliers separately; generated candidates are not approval.
+
 Except for the new 3.11→3.12 biosphere edge described below, the ecoinvent migration JSON files in
 `ecoinvent/cutoff/` and `ecoinvent/biosphere/` were originally copied from the `premise` repository
 at commit `43355ef7c21e8587812d1615cc956252c5a7c4e6`:
@@ -72,3 +83,15 @@ These resources enable compatibility workflows only. They do not assert scientif
 Each rule records its method and confidence, planning emits `migration.heuristic_mapping`, and
 execution verifies every resulting link against the exact UVEK 2025 technosphere or ecoinvent 3.10
 biosphere catalog before committing.
+# Exact patch links and reverse proxies
+
+`compatibility/patch-links.json` is BrightPath-authored compatibility metadata.
+Patch routes retain shared link identities and require exact-target validation;
+they do not update background inventories or reproduce corrected LCIA scores.
+Evidence: https://support.ecoinvent.org/ecoinvent-version-3.10.1 and
+https://support.ecoinvent.org/ecoinvent-version-3.9.1 .
+
+The reverse-only unspecified-organic-chemical proxy uses the documented replacement
+of the legacy generic flow by six organic product groups in ecoinvent 3.12:
+https://support.ecoinvent.org/ecoinvent-version-3.12 (Change Report section 5.6).
+This is an explicitly lossy proxy decision, not an inverted equivalence mapping.

@@ -10,7 +10,7 @@ import pytest
 
 from brightpath.core import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
 from brightpath.exceptions import SerializationError
-from brightpath.formats.openlca_jsonld import write_openlca_jsonld
+from brightpath.formats.openlca_jsonld import write_openlca_jsonld, load_openlca_jsonld
 from brightpath.formats.openlca_methods import OpenLCAMethodMapping
 from brightpath.models import InventoryDocument
 
@@ -300,3 +300,53 @@ def test_conflicting_source_uuid_rows_still_fail(package):
         csv.writer(stream).writerow(["Other emission", "water", "unspecified", "kilogram", uid("flow")])
     with pytest.raises(ValueError, match="Conflicting biosphere"):
         OpenLCAMethodMapping(*package)
+
+
+@pytest.mark.parametrize("change", ["name", "category", "unit"])
+def test_preserve_conflicts_avoids_package_uuid_and_reports(package, tmp_path, change):
+    root, source = package
+    folder = "unit_groups" if change == "unit" else "flows"
+    file = next((root / folder).glob("*.json"))
+    value = json.loads(file.read_text())
+    if change == "name":
+        value["name"] = "Different substance"
+    elif change == "category":
+        value["category"] = "Elementary flows/Emission to soil/agricultural"
+    else:
+        value["units"][0]["name"] = "m3"
+    file.write_text(json.dumps(value))
+    mapping = OpenLCAMethodMapping(root, source, biosphere_version="3.8", conflict_policy="preserve")
+    doc = document(version="3.8")
+    before = deepcopy(doc.data)
+    path = write_openlca_jsonld(doc, tmp_path / "conflict.zip", method_mapping=mapping)
+    entities = read_zip(path)
+    process = next(v for k, v in entities.items() if k.startswith("processes/"))
+    exc = process["exchanges"][1]
+    assert exc["flow"]["@id"] != uid("flow")
+    assert f"flows/{uid('flow')}.json" not in entities
+    flow = entities[f"flows/{exc['flow']['@id']}.json"]
+    assert flow["name"] == "Test emission"
+    assert exc["amount"] == 2
+    report = mapping.audit(doc)
+    assert report["source_flows_absent_from_package"] == 1
+    assert report["source_flows_conflicting_with_package"] == 1
+    conflict = next(f for f in report["inventory_unmapped_flows"] if f["reason"] == "conflicting_method_package_flow")
+    assert conflict["conflict"]["source_uuid"] == uid("flow")
+    assert conflict["conflict"]["export_uuid"] == exc["flow"]["@id"]
+    assert conflict["uuid"] == exc["flow"]["@id"]
+    assert doc.data == before
+    loaded = load_openlca_jsonld(path, context=doc.context)
+    reexported = write_openlca_jsonld(loaded, tmp_path / "roundtrip.zip", method_mapping=mapping)
+    again_process = next(v for k, v in read_zip(reexported).items() if k.startswith("processes/"))
+    assert again_process["exchanges"][1]["flow"]["@id"] == exc["flow"]["@id"]
+    again = OpenLCAMethodMapping(root, source, biosphere_version="3.8", conflict_policy="preserve")
+    assert again.resolve(doc.data[0]["exchanges"][1]) == mapping.resolve(doc.data[0]["exchanges"][1])
+    contradictory = deepcopy(doc.data[0]["exchanges"][1])
+    contradictory["input"] = ("biosphere", uid("missing"))
+    with pytest.raises(SerializationError, match="conflicts with UUID"):
+        mapping.resolve(contradictory)
+
+
+def test_unknown_conflict_policy_rejected(package):
+    with pytest.raises(ValueError, match="conflict_policy"):
+        OpenLCAMethodMapping(*package, conflict_policy="ignore")

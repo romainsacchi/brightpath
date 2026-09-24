@@ -37,6 +37,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    workflows/simapro
    workflows/conversion
    workflows/migration
+   workflows/uvek-export
    workflows/validation
    workflows/analysis
    limitations

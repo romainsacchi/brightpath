@@ -1485,7 +1485,10 @@ class _OpenLCAPackageBuilder:
         if not flow_id or flow_id not in self.flows:
             return
         flow = self.flows[flow_id]
-        other_properties = deepcopy(flow.other_properties) if isinstance(flow.other_properties, dict) else {}
+        # These schema entities belong to this builder, not to the caller.
+        # Copy only the incoming metadata below: copying all previous consumers
+        # here makes a widely used supplier take quadratic time to serialize.
+        other_properties = flow.other_properties if isinstance(flow.other_properties, dict) else {}
         by_process = other_properties.setdefault(_BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY, {})
         values = by_process.setdefault(str(process_id), {})
         internal_id = str(entity.internal_id or "")
@@ -1586,12 +1589,18 @@ class _OpenLCAPackageBuilder:
             # Exchange metadata is scoped separately and is not a flow definition.
             retained = {}
             for definition in (old, new):
-                properties = definition.get("otherProperties", {})
+                # Schema to_dict() shares otherProperties with the entity.
+                # Detach its outer mapping without copying every prior exchange.
+                properties = dict(definition.get("otherProperties", {}))
                 for key in (_BRIGHTPATH_FLOW_EXCHANGE_PROPERTIES_KEY, _BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY):
                     value = properties.pop(key, None)
                     if value is not None:
-                        retained[key] = _merge_flow_definition(retained.get(key, {}), value, flow.id, key)
-                if not properties:
+                        retained[key] = (
+                            _merge_flow_definition(retained[key], value, flow.id, key) if key in retained else value
+                        )
+                if properties:
+                    definition["otherProperties"] = properties
+                else:
                     definition.pop("otherProperties", None)
             merged = _merge_flow_definition(old, new, flow.id)
             if retained:

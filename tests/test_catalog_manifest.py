@@ -18,5 +18,5 @@ def test_packaged_catalog_manifest_matches_every_catalog_byte_for_byte():
 
     assert packaged == expected
     assert packaged["status"] == "legal_review_required"
-    assert len(packaged["resources"]) == 15
+    assert len(packaged["resources"]) == 17
     assert all(resource["sha256"] for resource in packaged["resources"])

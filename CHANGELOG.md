@@ -6,10 +6,17 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- Add explicit preservation of method-package metadata conflicts as separate,
+  uncharacterized openLCA flows with stable UUIDs and coverage diagnostics.
+  Keep strict rejection as the default and retain source identifier checks.
+
 - Generalize local openLCA method mappings to explicit ecoinvent 3.5–3.12
   biosphere versions, preserving patch releases. Read legacy JSON-LD categories
   and reference flags and semicolon-delimited source CSVs. Explain the required
   JSON-LD conversion for `.zolca` backups.
+
+- Avoid repeatedly copying accumulated per-flow exchange metadata when exporting
+  full scenarios with widely used suppliers.
 
 - Added opt-in local ecoinvent 3.12 openLCA method-package mapping with exact
   elementary-flow and quantity references, UUID-scoped gas-volume labels, and

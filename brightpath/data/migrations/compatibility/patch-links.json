@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "name": "ecoinvent-reviewed-patch-links",
+  "status": "active",
+  "patches": {"3.9": "3.9.1", "3.10": "3.10.1"},
+  "semantics": "Preserve shared identity fields only. Exact target validation is mandatory. Removed suppliers are errors, not deletions. Background coefficients, uncertainty and LCIA are not equivalent.",
+  "evidence": [
+    "https://support.ecoinvent.org/ecoinvent-version-3.9.1",
+    "https://support.ecoinvent.org/ecoinvent-version-3.10.1",
+    "docs/patch-catalog-comparison.json"
+  ],
+  "reverse_proxies": [
+    {
+      "source_version": "3.12",
+      "target_version": "3.11",
+      "source": {"name": "market for chemical, organic, unspecified", "reference product": "chemical, organic, unspecified", "location": "GLO", "unit": "kilogram"},
+      "target": {"name": "market for chemical, organic", "reference product": "chemical, organic", "location": "GLO", "unit": "kilogram"},
+      "rationale": "Use the older generic organic-chemical market when the unspecified-organics proxy is unavailable. Both represent unweighted chemical averages, but composition and impacts differ; no scientific equivalence is claimed.",
+      "evidence": "https://support.ecoinvent.org/ecoinvent-version-3.12"
+    }
+  ]
+}

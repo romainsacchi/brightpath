@@ -19,6 +19,7 @@ from .migration import (
     MigrationRouteStep,
     plan_background_migration,
 )
+from .uvek_export import migration_resource_fingerprint
 from .validation import validate_background_links
 
 __all__ = (
@@ -38,4 +39,5 @@ __all__ = (
     "execute_background_migration",
     "plan_background_migration",
     "validate_background_links",
+    "migration_resource_fingerprint",
 )

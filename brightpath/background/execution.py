@@ -5,6 +5,7 @@ from __future__ import annotations
 import math
 from collections.abc import Iterable, Mapping, Sequence
 from copy import deepcopy
+from dataclasses import replace
 from typing import Any
 
 from brightpath.background.catalogs import (
@@ -19,8 +20,10 @@ from brightpath.background.migration import (
     MigrationRouteStep,
     plan_background_migration,
 )
+from brightpath.background.uvek_export import apply_uvek_export
+from brightpath.background.patches import compatibility_resource, patch_pair, patch_resource
 from brightpath.background.validation import validate_background_links
-from brightpath.core.context import BackgroundContext, BiosphereProfile, InventoryContext
+from brightpath.core.context import BackgroundContext, BiosphereProfile, InventoryContext, TechnosphereProfile
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.core.reports import (
     Change,
@@ -112,13 +115,46 @@ def execute_background_migration(
     if not plan.executable:
         return _result(document, source, target, policy, stages, committed=False)
 
+    hub = BackgroundContext(TechnosphereProfile("ecoinvent", "3.12", "cutoff"), BiosphereProfile("ecoinvent", "3.12"))
+    if source.technosphere.family == "uvek" and target.technosphere.family == "ecoinvent" and target != hub:
+        first = execute_background_migration(document, hub, provider, policy, foreground_targets)
+        stages.extend(first.report.stages)
+        if first.report.has_errors:
+            return _result(document, source, target, policy, stages, committed=False)
+        second = execute_background_migration(first.value, target, provider, policy, foreground_targets)
+        stages.extend(second.report.stages)
+        return _result(
+            document if second.report.has_errors else second.value,
+            source,
+            target,
+            policy,
+            stages,
+            committed=not second.report.has_errors,
+        )
+
     working_data = document.data
-    migration_stage = _execute_plan(working_data, plan, policy, provider)
+    helpers = []
+    if source.technosphere.family == "uvek" and target.technosphere.family == "ecoinvent":
+        directional_stage, helpers = apply_uvek_export(
+            working_data,
+            policy,
+            foreground_targets,
+            database_name=document.database_name,
+        )
+        stages.append(directional_stage)
+        if directional_stage.has_errors:
+            stages[-1] = _rolled_back_stage(directional_stage, "UVEK export failed")
+            return _result(document, source, target, policy, stages, committed=False)
+        execution_plan = replace(plan, technosphere_steps=())
+    else:
+        execution_plan = plan
+    migration_stage = _execute_external_links(working_data, execution_plan, policy, provider, foreground_targets)
     stages.append(migration_stage)
     if migration_stage.has_errors:
         stages[-1] = _rolled_back_stage(migration_stage, "migration application failed")
         return _result(document, source, target, policy, stages, committed=False)
 
+    working_data.extend(helpers)
     candidate = document
     if source != target or working_data != document.data:
         candidate = document.replace(
@@ -126,7 +162,7 @@ def execute_background_migration(
             context=InventoryContext(format=document.context.format, background=target),
         )
 
-    if policy.validate_target:
+    if policy.validate_target or any(patch_pair(step.source_version, step.target_version) for step in plan.steps):
         target_validation = _validation_with_policy(
             validate_background_links(
                 candidate.data,
@@ -135,7 +171,11 @@ def execute_background_migration(
                 foreground_technosphere_targets=foreground_targets,
             ),
             role="target",
-            policy=policy,
+            policy=(
+                replace(policy, on_unresolved_link=PolicyAction.ERROR, on_invalid_target=PolicyAction.ERROR)
+                if any(patch_pair(step.source_version, step.target_version) for step in plan.steps)
+                else policy
+            ),
         )
         target_validation = _enforce_minimum_coverage(target_validation, policy)
         stages.append(target_validation)
@@ -144,6 +184,31 @@ def execute_background_migration(
             return _result(document, source, target, policy, stages, committed=False)
 
     return _result(candidate, source, target, policy, stages, committed=True)
+
+
+def _execute_external_links(data, plan, policy, provider, foreground_targets):
+    identities = set(foreground_targets) | {
+        tuple(dataset.get(field, "") for field in ("name", "reference product", "location", "unit")) for dataset in data
+    }
+    protected = []
+    for dataset in data:
+        for exchange in dataset.get("exchanges", []):
+            identity = tuple(exchange.get(field, "") for field in ("name", "reference product", "location", "unit"))
+            if exchange.get("type") == "production" or (
+                exchange.get("type") in {"technosphere", "substitution"} and identity in identities
+            ):
+                protected.append((exchange, exchange["type"]))
+                exchange["type"] = "foreground-preserved"
+    try:
+        projected = [{"exchanges": dataset.get("exchanges", [])} for dataset in data]
+        report = _execute_plan(projected, plan, policy, provider)
+        for dataset, converted in zip(data, projected, strict=True):
+            if "exchanges" in dataset:
+                dataset["exchanges"] = converted["exchanges"]
+        return report
+    finally:
+        for exchange, kind in protected:
+            exchange["type"] = kind
 
 
 def _validate_arguments(
@@ -341,6 +406,8 @@ def _execution_resources(
 
 
 def _resource_for_step(step: MigrationRouteStep, resources: Mapping[tuple[str, str], dict]) -> dict:
+    if patch_pair(step.source_version, step.target_version):
+        return patch_resource(step.source_version, step.target_version, step.axis.value)
     pair = (
         (step.source_version, step.target_version)
         if step.direction == "forward"
@@ -378,6 +445,36 @@ def _apply_technosphere_step(
         _apply_disaggregation(data, disaggregations, report)
         _apply_factored_disaggregation(data, factored_disaggregations, report)
     else:
+        for rule in compatibility_resource()["reverse_proxies"]:
+            if (step.source_version, step.target_version) != (rule["source_version"], rule["target_version"]):
+                continue
+            for dataset in data:
+                for exchange in dataset.get("exchanges", []):
+                    if exchange.get("type") not in {"technosphere", "substitution"}:
+                        continue
+                    if not all(exchange.get(key) == value for key, value in rule["source"].items()):
+                        continue
+                    report.issues.append(
+                        _legacy_issue(
+                            _severity(policy.on_information_loss).value,
+                            "migration_reverse_proxy",
+                            rule["rationale"] + " Evidence: " + rule["evidence"],
+                        )
+                    )
+                    losses.append(
+                        Loss(
+                            code="migration.reverse_proxy",
+                            message=rule["rationale"],
+                            stage=StageKind.BACKGROUND_MIGRATION,
+                            details={"source": rule["source"], "target": rule["target"], "evidence": rule["evidence"]},
+                        )
+                    )
+                    if policy.on_information_loss is PolicyAction.ERROR:
+                        return report, losses
+                    exchange.update(rule["target"])
+                    exchange.pop("input", None)
+                    exchange.pop("database", None)
+                    report.technosphere_replacements += 1
         disaggregations, factored_disaggregations, findings = _prepare_technosphere_disaggregations(
             data, resource.get("disaggregate", []), step, policy, report, step_index
         )
@@ -1138,6 +1235,15 @@ def _result(
     *,
     committed: bool,
 ) -> OperationResult[InventoryDocument]:
+    if not committed:
+        stages = tuple(
+            (
+                _rolled_back_stage(stage, "transaction rolled back")
+                if stage.stage == StageKind.BACKGROUND_MIGRATION and stage.changes
+                else stage
+            )
+            for stage in stages
+        )
     return OperationResult(
         value=value,
         report=OperationReport(

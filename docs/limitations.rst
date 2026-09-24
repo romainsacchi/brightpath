@@ -116,10 +116,22 @@ numerical LCIA comparisons in openLCA.
 
 For 3.6 and 3.8, all 3,598 and 4,006 package flow/quantity definitions,
 respectively, passed schema checks using package-derived CSVs. Those checks do
-not establish compatibility with an independent inventory. The inspected
-Premise 3.8 CSV contains eight UUIDs with conflicting source identities and is
-rejected; use a corrected, authoritative source CSV rather than dropping or
-merging the conflicting records.
+not establish compatibility with an independent inventory. Premise's 3.8 CSV
+contained eight conflicting UUID aliases; the corrected table retains the
+identities from the imported ecoinvent 3.8 XML biosphere definitions.
+
+Conflicting package metadata normally raises an error. With the explicit
+``conflict_policy="preserve"`` option, known source flows whose package name,
+compartment, or unit differs are emitted as uncharacterized local flows under
+separate deterministic UUIDs. Their names, amounts, units and compartments stay
+unchanged. The coverage report records ``package_conflicts`` and marks affected
+inventory entries as ``conflicting_method_package_flow``, including original
+and exported UUIDs and both identities. This policy prevents an incompatible
+package flow from supplying characterization merely because its UUID matches.
+It does not accept contradictory source identities or malformed quantity
+references. Review these exclusions before interpreting results; even spelling
+differences remain excluded until independently verified. Premise uses this
+policy for 3.8 and retains strict rejection for 3.12.
 
 The converted 3.5 JSON-LD package contains 51 methods, 878 impact categories,
 and 3,442 elementary flows. All flow/quantity definitions passed the same
@@ -180,8 +192,12 @@ Migration boundaries
 * Rules that change units without numeric conversion factors are skipped and
   reported. BrightPath never changes a unit while retaining an unconverted
   amount.
-* Consequential version-to-version, cross-system-model, UVEK-to-ecoinvent, and
-  UVEK-version migrations are unavailable.
+* Consequential version-to-version, cross-system-model, and UVEK-version
+  migrations are unavailable.
+* UVEK 2025 cut-off to ecoinvent 3.12 cut-off has an explicit directional
+  resource. Its 354 approved supplier identities do not cover the whole catalog:
+  11,393 identities remain explicitly unresolved and block conversion when used.
+  See :doc:`workflows/uvek-export` for proxy policies and generated recipes.
 * The ecoinvent 3.6–3.12 to UVEK 2025 route is a heuristic compatibility map,
   not an equivalence map. It always reports ``migration.heuristic_mapping`` and
   must be reviewed before assessment results are used.

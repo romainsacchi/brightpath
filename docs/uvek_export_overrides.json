@@ -1,0 +1,50 @@
+{
+  "schema_version": 1,
+  "candidates": [
+    {
+      "source_name": "Transport, freight, lorry, 3.5t-7.5t gross weight, fleet average",
+      "source_location": "RER",
+      "source_unit": "ton kilometer",
+      "target": {
+        "name": "market for transport, freight, lorry, unspecified",
+        "reference product": "transport, freight, lorry, diesel, unspecified",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "factor": 1.0,
+      "classification": "proxy",
+      "rationale": "Explicit coarse freight proxy: retain European tonne-kilometres and a fleet mix instead of inventing EURO-standard shares. The target mixes truck sizes and represents diesel freight; the UVEK 3.5-7.5 t weight class, payload and fleet composition are not reproduced. Not equivalent to the originally published EURO 5 service.",
+      "evidence": ["UVEK 2025 and ecoinvent 3.12 cut-off reference catalogs", "User-authorized documented proxies; directional review 2026-09-15"]
+    },
+    {
+      "source_name": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+      "source_location": "RER",
+      "source_unit": "ton kilometer",
+      "target": {
+        "name": "market group for transport, freight, light commercial vehicle, fleet average",
+        "reference product": "transport, freight, light commercial vehicle, fleet average",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "factor": 1.0,
+      "classification": "proxy",
+      "rationale": "Explicit light-commercial freight proxy for the 3.5 t gross-weight fleet service. European geography and tonne-kilometre basis are retained; the target market group does not establish identical vehicle payload, utilization or fleet composition.",
+      "evidence": ["UVEK 2025 and ecoinvent 3.12 cut-off reference catalogs", "IEA PVPS T12-33:2026 light-commercial transport source and documented native proxy"]
+    },
+    {
+      "source_name": "Transport, freight, lorry, 16t-32t gross weight, fleet average",
+      "source_location": "CH",
+      "source_unit": "ton kilometer",
+      "target": {
+        "name": "market for transport, freight, lorry, unspecified",
+        "reference product": "transport, freight, lorry, diesel, unspecified",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "factor": 1.0,
+      "classification": "proxy",
+      "rationale": "Explicit coarse geographic freight proxy: use European diesel fleet freight rather than inventing a Swiss EURO-standard distribution. Tonne-kilometres are retained, but Swiss geography, 16-32 t size class, payload and fleet composition are not reproduced. The source is the canonical full-service UVEK supplier, not the original operation-only Betrieb boundary.",
+      "evidence": ["UVEK 2025 and ecoinvent 3.12 cut-off reference catalogs", "User-authorized documented proxies; directional review 2026-09-15"]
+    }
+  ]
+}

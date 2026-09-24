@@ -79,13 +79,30 @@ class OpenLCAMethodMapping:
     The default remains 3.12 for compatibility. Directory and ZIP
     packages are supported. Import the original method package into openLCA
     before the inventory: characterized flows are exported as external references.
+
+    ``conflict_policy="error"`` rejects incompatible package metadata. Explicit
+    ``"preserve"`` keeps conflicting source flows under deterministic separate IDs
+    without characterization and records both identities in the coverage report.
+    It does not relax contradictory source UUID or malformed quantity checks.
     """
 
-    def __init__(self, package: str | Path, biosphere_csv: str | Path, *, biosphere_version: str = "3.12"):
+    def __init__(
+        self,
+        package: str | Path,
+        biosphere_csv: str | Path,
+        *,
+        biosphere_version: str = "3.12",
+        conflict_policy: str = "error",
+    ):
         if not isinstance(biosphere_version, str) or not re.fullmatch(
             r"3\.(?:[5-9]|1[0-2])(?:\.[0-9]+)?", biosphere_version
         ):
             raise ValueError("Specify an exact ecoinvent biosphere version from 3.5 through 3.12.")
+        if conflict_policy not in {"error", "preserve"}:
+            raise ValueError("conflict_policy must be error or preserve.")
+        self.conflict_policy = conflict_policy
+        self._conflicts = {}
+        self._export_source_codes = {}
         self.biosphere_version = biosphere_version
         self.source = str(Path(package).expanduser().resolve())
         self._source = {}
@@ -134,7 +151,10 @@ class OpenLCAMethodMapping:
             if parts and parts[0] == "Elementary flows":
                 parts = parts[1:]
             if name != flow.get("name") or _categories(categories) != _categories(parts):
-                raise ValueError(f"Flow {code} has an incompatible name or compartment.")
+                if self.conflict_policy == "error":
+                    raise ValueError(f"Flow {code} has an incompatible name or compartment.")
+                self._preserve_conflict(code, flow, parts, "name_or_compartment_mismatch")
+                continue
             factors = [
                 f
                 for f in flow.get("flowProperties", [])
@@ -155,7 +175,10 @@ class OpenLCAMethodMapping:
             if code in _STANDARD_GAS_IDS and unit == "standard cubic meter":
                 expected = "m3"
             if expected != target_unit.get("name"):
-                raise ValueError(f"Flow {code} has incompatible units: {unit!r} / {target_unit.get('name')!r}.")
+                if self.conflict_policy == "error":
+                    raise ValueError(f"Flow {code} has incompatible units: {unit!r} / {target_unit.get('name')!r}.")
+                self._preserve_conflict(code, flow, parts, "unit_mismatch", target_unit.get("name"))
+                continue
             self._references[code] = OpenLCABiosphereReference(
                 flow_id=code,
                 flow_name=name,
@@ -164,8 +187,32 @@ class OpenLCAMethodMapping:
                 unit_id=_uuid(target_unit["@id"]),
                 unit_name=target_unit["name"],
             )
-        if not self._references:
+        if not self._references and not self._conflicts:
             raise ValueError("The method package has no UUID matches with the biosphere CSV.")
+
+    def _preserve_conflict(self, code, flow, categories, reason, unit=None):
+        identity = self._source[code]
+        export_id = str(
+            uuid.uuid5(
+                uuid.NAMESPACE_URL,
+                json.dumps(
+                    ["brightpath-openlca-conflicting-biosphere-v1", self.biosphere_version, code, identity],
+                    ensure_ascii=False,
+                ),
+            )
+        )
+        self._export_source_codes[export_id] = code
+        self._conflicts[code] = {
+            "source_uuid": code,
+            "export_uuid": export_id,
+            "source_name": identity[0],
+            "source_categories": list(identity[1]),
+            "source_unit": identity[2],
+            "package_name": flow.get("name"),
+            "package_categories": categories,
+            "package_unit": unit,
+            "reason": reason,
+        }
 
     @staticmethod
     def _read_entities(path):
@@ -203,14 +250,18 @@ class OpenLCAMethodMapping:
             )
 
     def resolve(self, exchange):
-        """Return source UUID and reference, rejecting contradictory identifiers."""
+        """Return export UUID and reference, rejecting contradictory source identifiers."""
         identity = _identity(exchange)
         code = self._identities.get(identity)
         supplied = (exchange.get("openlca flow") or {}).get("@id")
+        if supplied:
+            supplied = _uuid(supplied)
+            supplied = self._export_source_codes.get(supplied, supplied)
         link = exchange.get("input")
         if isinstance(link, (tuple, list)) and len(link) == 2:
             try:
                 link_code = str(uuid.UUID(str(link[1])))
+                link_code = self._export_source_codes.get(link_code, link_code)
             except ValueError:
                 link_code = None
             if link_code is not None:
@@ -224,6 +275,8 @@ class OpenLCAMethodMapping:
             ):
                 raise SerializationError(f"Elementary flow {identity!r} conflicts with UUID {supplied}.")
             code = supplied
+        if code in self._conflicts:
+            return self._conflicts[code]["export_uuid"], None
         return code, self._references.get(code)
 
     def audit(self, document):
@@ -242,12 +295,19 @@ class OpenLCAMethodMapping:
                     matched.add(code)
                 else:
                     identity = _identity(exchange)
+                    source_code = self._export_source_codes.get(code, code)
+                    conflict = self._conflicts.get(source_code)
                     missing[(code, identity)] = {
                         "uuid": code,
                         "name": identity[0],
                         "categories": list(identity[1]),
                         "unit": identity[2],
-                        "reason": "absent_from_method_package" if code in self._source else "unknown_source_flow",
+                        "reason": (
+                            "conflicting_method_package_flow"
+                            if conflict
+                            else "absent_from_method_package" if code in self._source else "unknown_source_flow"
+                        ),
+                        **({"conflict": deepcopy(conflict)} if conflict else {}),
                     }
         return deepcopy(
             {
@@ -255,7 +315,10 @@ class OpenLCAMethodMapping:
                 "biosphere": {"family": "ecoinvent", "version": self.biosphere_version},
                 "source_flows": len(self._source),
                 "mapped_source_flows": len(self._references),
-                "source_flows_absent_from_package": len(self._source) - len(self._references),
+                "source_flows_absent_from_package": len(self._source) - len(self._references) - len(self._conflicts),
+                "conflict_policy": self.conflict_policy,
+                "source_flows_conflicting_with_package": len(self._conflicts),
+                "package_conflicts": list(self._conflicts.values()),
                 "inventory_biosphere_exchanges": count,
                 "inventory_mapped_flows": len(matched),
                 "inventory_unmapped_flows": list(missing.values()),
