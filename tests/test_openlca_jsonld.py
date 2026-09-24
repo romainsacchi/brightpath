@@ -517,3 +517,130 @@ def test_explicit_unregionalized_product_is_shared_across_supplier_locations(tmp
         ("producer 0", "CH"),
         ("producer 1", "FR"),
     ]
+
+
+@pytest.mark.parametrize(
+    "amount, negative, expected_sign", [(2.0, None, 1), (-2.0, None, -1), (2.0, True, -1), (-2.0, False, 1)]
+)
+def test_lognormal_export_and_import_convert_geometric_parameters(tmp_path, amount, negative, expected_sign):
+    import math
+
+    document = _collision_document(compartments=("air",), locations=("CH",))
+    data = document.data
+    exchange = data[0]["exchanges"][1]
+    exchange.update(amount=amount, **{"uncertainty type": 2, "loc": math.log(2), "scale": 0.2})
+    if negative is not None:
+        exchange["negative"] = negative
+    source = InventoryDocument(data=data, context=document.context)
+    before = source.data
+    path = write_openlca_jsonld(source, tmp_path / "uncertainty.zip")
+    producer = next(p for p in _zip_entities(path, "processes").values() if p["name"] == "producer 0")
+    rendered = producer["exchanges"][1]
+    assert rendered["amount"] == amount
+    assert rendered["uncertainty"]["geomMean"] == pytest.approx(expected_sign * 2)
+    assert rendered["uncertainty"]["geomSd"] == pytest.approx(math.exp(0.2))
+    loaded = load_openlca_jsonld(path, context=source.context)
+    row = next(d for d in loaded.data if d["name"] == "producer 0")
+    result = row["exchanges"][1]
+    assert result["loc"] == pytest.approx(math.log(2))
+    assert result["scale"] == pytest.approx(0.2)
+    assert result["negative"] == (expected_sign < 0)
+    assert result["amount"] == amount
+    assert source.data == before
+    second = write_openlca_jsonld(loaded, tmp_path / "again.zip")
+    p2 = next(p for p in _zip_entities(second, "processes").values() if p["name"] == "producer 0")
+    assert p2["exchanges"][1]["uncertainty"] == rendered["uncertainty"]
+
+
+@pytest.mark.parametrize(
+    "loc, scale",
+    [(None, 0.2), (0, None), (float("nan"), 0.2), (0, float("inf")), (0, -0.1), (1000, 0.2), (-1000, 0.2), (0, 1000)],
+)
+def test_invalid_lognormal_export_leaves_existing_archive_untouched(tmp_path, loc, scale):
+    document = _collision_document(compartments=("air",), locations=("CH",))
+    data = document.data
+    data[0]["exchanges"][1].update({"uncertainty type": 2, "loc": loc, "scale": scale})
+    path = tmp_path / "existing.zip"
+    path.write_bytes(b"existing archive")
+    with pytest.raises(SerializationError, match="Lognormal uncertainty"):
+        write_openlca_jsonld(InventoryDocument(data=data, context=document.context), path)
+    assert path.read_bytes() == b"existing archive"
+
+
+@pytest.mark.parametrize(
+    "geom_mean, geom_sd", [(0, 2), (2, 0.5), (None, 2), (2, None), (float("inf"), 2), (2, float("nan"))]
+)
+def test_invalid_imported_lognormal_is_rejected(geom_mean, geom_sd):
+    from brightpath.formats.openlca_jsonld import _legacy_uncertainty
+    import olca_schema as schema
+
+    value = schema.Uncertainty(
+        distribution_type=schema.UncertaintyType.LOG_NORMAL_DISTRIBUTION, geom_mean=geom_mean, geom_sd=geom_sd
+    )
+    with pytest.raises(SerializationError, match="Lognormal uncertainty"):
+        _legacy_uncertainty(value)
+
+
+@pytest.mark.parametrize("uncertainty_type", [6, 7, 99])
+def test_unsupported_uncertainty_is_not_silently_dropped(tmp_path, uncertainty_type):
+    document = _collision_document(compartments=("air",), locations=("CH",))
+    data = document.data
+    data[0]["exchanges"][1]["uncertainty type"] = uncertainty_type
+    with pytest.raises(SerializationError, match="Unsupported openLCA uncertainty type"):
+        write_openlca_jsonld(InventoryDocument(data=data, context=document.context), tmp_path / "unsupported.zip")
+
+
+def test_lognormal_parameters_and_zero_spread_round_trip(tmp_path):
+    import math
+
+    document = _collision_document(compartments=("air",), locations=("CH",))
+    data = document.data
+    parameter = {
+        "name": "factor",
+        "amount": -2.0,
+        "uncertainty type": 2,
+        "loc": math.log(2),
+        "scale": 0.0,
+        "negative": True,
+    }
+    data[0]["parameters"] = [parameter]
+    source = InventoryDocument(
+        data=data,
+        context=document.context,
+        database_parameters=[parameter],
+        project_parameters=[dict(parameter, name="project factor")],
+    )
+    path = write_openlca_jsonld(source, tmp_path / "parameters.zip")
+    producer = next(p for p in _zip_entities(path, "processes").values() if p["name"] == "producer 0")
+    parameters = [*producer["parameters"], *_zip_entities(path, "parameters").values()]
+    assert len(parameters) == 3
+    for value in parameters:
+        assert value["uncertainty"]["geomMean"] == -2
+        assert value["uncertainty"]["geomSd"] == 1
+    loaded = load_openlca_jsonld(path, context=source.context)
+    producer = next(p for p in loaded.data if p["name"] == "producer 0")
+    for value in [*producer["parameters"], *loaded.database_parameters, *loaded.project_parameters]:
+        assert value["loc"] == pytest.approx(math.log(2))
+        assert value["scale"] == 0
+        assert value["negative"] is True
+
+
+@pytest.mark.parametrize(
+    "kind, fields",
+    [
+        (0, {}),
+        (1, {}),
+        (3, {"loc": -2.0, "scale": 0.5}),
+        (4, {"minimum": 1.0, "maximum": 3.0}),
+        (5, {"minimum": 1.0, "maximum": 3.0, "loc": 2.0}),
+    ],
+)
+def test_other_supported_uncertainty_types_keep_their_parameters(kind, fields):
+    import olca_schema as schema
+    from brightpath.formats.openlca_jsonld import _schema_uncertainty, _legacy_uncertainty
+
+    result = _schema_uncertainty(schema, {"uncertainty type": kind, **fields})
+    if kind in (0, 1):
+        assert result is None
+    else:
+        assert _legacy_uncertainty(result) == {"uncertainty type": kind, **fields}

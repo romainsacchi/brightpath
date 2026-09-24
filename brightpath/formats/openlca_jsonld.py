@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import importlib
 import json
+import math
 import uuid
 import zipfile
 from copy import deepcopy
@@ -137,6 +138,7 @@ _EXCHANGE_MAPPED_KEYS = frozenset(
         "formula",
         "comment",
         "uncertainty type",
+        "negative",
         "loc",
         "scale",
         "shape",
@@ -154,6 +156,7 @@ _PARAMETER_MAPPED_KEYS = frozenset(
         "group",
         "comment",
         "uncertainty type",
+        "negative",
         "loc",
         "scale",
         "shape",
@@ -774,10 +777,15 @@ def _legacy_uncertainty(uncertainty: Any) -> dict[str, Any]:
 
     name = str(getattr(distribution, "name", distribution))
     if name == "LOG_NORMAL_DISTRIBUTION":
+        mean = _finite_uncertainty_number(uncertainty.geom_mean, "geomMean")
+        spread = _finite_uncertainty_number(uncertainty.geom_sd, "geomSd")
+        if mean == 0 or spread < 1:
+            raise SerializationError("Lognormal uncertainty requires nonzero geomMean and geomSd >= 1.")
         return {
             "uncertainty type": 2,
-            "loc": uncertainty.geom_mean if uncertainty.geom_mean is not None else uncertainty.mean,
-            "scale": uncertainty.geom_sd if uncertainty.geom_sd is not None else uncertainty.sd,
+            "loc": math.log(abs(mean)),
+            "scale": math.log(spread),
+            "negative": mean < 0,
             **({"minimum": uncertainty.minimum} if uncertainty.minimum is not None else {}),
             **({"maximum": uncertainty.maximum} if uncertainty.maximum is not None else {}),
         }
@@ -910,6 +918,7 @@ def _exchange_extras(exchange: dict[str, Any]) -> dict[str, Any]:
         key: deepcopy(value)
         for key, value in exchange.items()
         if key not in _EXCHANGE_MAPPED_KEYS | _EXCHANGE_TEMPLATE_KEYS
+        or (key == "negative" and exchange.get("uncertainty type") != 2)
     }
 
 
@@ -918,6 +927,7 @@ def _parameter_extras(parameter: dict[str, Any], *, target: str) -> dict[str, An
         key: deepcopy(value)
         for key, value in parameter.items()
         if key not in _PARAMETER_MAPPED_KEYS | _PARAMETER_TEMPLATE_KEYS
+        or (key == "negative" and parameter.get("uncertainty type") != 2)
     }
     if parameter.get("group"):
         extras.setdefault("group", deepcopy(parameter.get("group")))
@@ -926,17 +936,38 @@ def _parameter_extras(parameter: dict[str, Any], *, target: str) -> dict[str, An
     return extras
 
 
+def _finite_uncertainty_number(value: Any, field: str) -> float:
+    try:
+        number = float(value)
+    except (TypeError, ValueError, OverflowError) as error:
+        raise SerializationError(f"Lognormal uncertainty requires a finite {field} value; got {value!r}.") from error
+    if not math.isfinite(number):
+        raise SerializationError(f"Lognormal uncertainty requires a finite {field} value; got {value!r}.")
+    return number
+
+
 def _schema_uncertainty(schema: Any, legacy: dict[str, Any]) -> Any | None:
     uncertainty_type = legacy.get("uncertainty type")
-    if uncertainty_type in (None, "", 0):
+    if uncertainty_type in (None, "", 0, 1):
         return None
     uncertainty = schema.Uncertainty()
     if uncertainty_type == 2:
         uncertainty.distribution_type = schema.UncertaintyType.LOG_NORMAL_DISTRIBUTION
-        if legacy.get("loc") is not None:
-            uncertainty.geom_mean = float(legacy["loc"])
-        if legacy.get("scale") is not None:
-            uncertainty.geom_sd = float(legacy["scale"])
+        loc = _finite_uncertainty_number(legacy.get("loc"), "loc")
+        scale = _finite_uncertainty_number(legacy.get("scale"), "scale")
+        if scale < 0:
+            raise SerializationError("Lognormal uncertainty requires scale >= 0.")
+        try:
+            mean, spread = math.exp(loc), math.exp(scale)
+        except OverflowError as error:
+            raise SerializationError("Lognormal uncertainty overflows openLCA geometric parameters.") from error
+        if mean == 0 or not math.isfinite(mean) or not math.isfinite(spread):
+            raise SerializationError("Lognormal uncertainty cannot be represented as finite, nonzero geometric values.")
+        negative = legacy.get("negative")
+        if negative is None:
+            negative = float(legacy.get("amount") or 0) < 0
+        uncertainty.geom_mean = -mean if negative else mean
+        uncertainty.geom_sd = spread
     elif uncertainty_type == 3:
         uncertainty.distribution_type = schema.UncertaintyType.NORMAL_DISTRIBUTION
         if legacy.get("loc") is not None:
@@ -950,7 +981,7 @@ def _schema_uncertainty(schema: Any, legacy: dict[str, Any]) -> Any | None:
         if legacy.get("loc") is not None:
             uncertainty.mode = float(legacy["loc"])
     else:
-        return None
+        raise SerializationError(f"Unsupported openLCA uncertainty type: {uncertainty_type!r}.")
     if legacy.get("minimum") is not None:
         uncertainty.minimum = float(legacy["minimum"])
     if legacy.get("maximum") is not None:
@@ -1299,6 +1330,7 @@ class _OpenLCAPackageBuilder:
         entity = _hydrate_entity(self.schema.Parameter, template)
         entity.name = str(parameter.get("name") or entity.name or "")
         entity.value = float(parameter["amount"]) if parameter.get("amount") is not None else None
+        entity.uncertainty = _schema_uncertainty(self.schema, parameter)
         entity.formula = str(parameter.get("formula") or "") or None
         entity.description = str(parameter.get("comment") or "") or None
         entity.parameter_scope = self.schema.ParameterScope.PROCESS_SCOPE
@@ -1314,6 +1346,7 @@ class _OpenLCAPackageBuilder:
         entity = _hydrate_entity(self.schema.Parameter, template)
         entity.name = str(parameter.get("name") or entity.name or "")
         entity.value = float(parameter["amount"]) if parameter.get("amount") is not None else None
+        entity.uncertainty = _schema_uncertainty(self.schema, parameter)
         entity.formula = str(parameter.get("formula") or "") or None
         entity.description = str(parameter.get("comment") or "") or None
         entity.parameter_scope = self.schema.ParameterScope.GLOBAL_SCOPE

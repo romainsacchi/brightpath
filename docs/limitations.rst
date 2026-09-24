@@ -62,6 +62,34 @@ Format boundaries
   cannot be reconstructed automatically. Distinct generated IDs alone do not
   establish compatibility with a target database's LCIA methods.
 
+openLCA uncertainty conversion
+-----------------------------
+
+Brightway lognormal ``loc`` and ``scale`` describe the underlying normal
+distribution. JSON-LD export writes ``geomMean = exp(loc)`` and
+``geomSd = exp(scale)``; import takes their natural logarithms. An explicit
+``negative`` flag controls the sign of ``geomMean``. When the flag is absent,
+export infers it from the exchange or parameter amount. The amount itself is
+unchanged. Import restores ``loc = log(abs(geomMean))`` and the sign flag.
+This applies to exchanges and process, database, and project parameters.
+
+Both log-space parameters must be finite, with ``scale >= 0``. Missing values,
+overflow, underflow to zero, zero geometric means, and geometric standard
+deviations below one are rejected. Uncertainty types 0 and 1 export without a
+distribution; unsupported types fail rather than silently losing uncertainty.
+Older archives containing unconverted log-space values must be regenerated from
+the original inventory: they cannot reliably be identified or repaired on import.
+
+This conversion follows the `JSON-LD uncertainty field definitions
+<https://greendelta.github.io/olca-schema/classes/Uncertainty.html>`_. It does not
+establish Monte Carlo equivalence: the inspected `openLCA sampler
+<https://github.com/GreenDelta/olca-modules/blob/efe43c244a988d584b5029e3d5f44c975fdecf1f/olca-core/src/main/java/org/openlca/core/math/rand/LogNormal.java>`_
+subtracts half the log-variance from the underlying normal mean. BrightPath
+does not compensate for that application-specific shift in the schema fields.
+Likewise, retained lognormal minimum/maximum metadata does not establish that
+openLCA applies Brightway's truncation semantics. Target-application stochastic
+parity requires separate validation.
+
 Migration boundaries
 --------------------
 

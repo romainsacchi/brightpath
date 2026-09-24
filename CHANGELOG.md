@@ -6,6 +6,11 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- Convert Brightway lognormal log-space parameters to openLCA geometric parameters
+  and back, including signed distributions and process/global parameters. Reject
+  invalid lognormal parameters and unsupported uncertainty types instead of
+  silently producing incomplete uncertainty data. Existing JSON-LD exports with
+  unconverted parameters must be regenerated from their original inventories.
 - Prevented olca-schema's generated IDs and timestamps from bypassing deterministic
   export identities or being mistaken for source metadata.
 - Prevented synthetic openLCA flow UUID collisions between elementary-flow
