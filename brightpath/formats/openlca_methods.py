@@ -1,9 +1,10 @@
-"""Local ecoinvent 3.12 method-package references; no licensed data are bundled."""
+"""Local version-specific ecoinvent method-package references; no licensed data are bundled."""
 
 from __future__ import annotations
 
 import csv
 import json
+import re
 import uuid
 import zipfile
 from copy import deepcopy
@@ -48,6 +49,13 @@ def _identity(exchange):
     return (exchange.get("name"), tuple(exchange.get("categories") or ()), exchange.get("unit"))
 
 
+def _source_identity(identity, code):
+    name, categories, unit = identity
+    if code in _STANDARD_GAS_IDS and unit == "Sm3":
+        unit = "standard cubic meter"
+    return name, categories, unit
+
+
 def _uuid(value):
     try:
         return str(uuid.UUID(str(value)))
@@ -55,29 +63,54 @@ def _uuid(value):
         raise ValueError(f"Invalid elementary-flow UUID: {value!r}.") from error
 
 
+def _reference_flag(record, current, legacy):
+    if current in record and legacy in record and record[current] != record[legacy]:
+        raise ValueError(f"Conflicting {current} and {legacy} flags.")
+    return record.get(current, record.get(legacy, False))
+
+
 class OpenLCAMethodMapping:
-    """Match a local method package to an explicit ecoinvent 3.12 biosphere CSV.
+    """Match a local method package to an explicit versioned ecoinvent biosphere CSV.
 
     The CSV has no header and contains name, compartment, subcompartment, unit,
-    and UUID (the Premise ``flows_biosphere_312.csv`` layout). Directory and ZIP
+    and UUID (the Premise biosphere CSV layout), separated by commas or semicolons.
+    The caller declares the exact version of the CSV and method package via
+    ``biosphere_version``; versions are not inferred from filenames or flow metadata.
+    The default remains 3.12 for compatibility. Directory and ZIP
     packages are supported. Import the original method package into openLCA
     before the inventory: characterized flows are exported as external references.
     """
 
-    def __init__(self, package: str | Path, biosphere_csv: str | Path):
+    def __init__(self, package: str | Path, biosphere_csv: str | Path, *, biosphere_version: str = "3.12"):
+        if not isinstance(biosphere_version, str) or not re.fullmatch(
+            r"3\.(?:[5-9]|1[0-2])(?:\.[0-9]+)?", biosphere_version
+        ):
+            raise ValueError("Specify an exact ecoinvent biosphere version from 3.5 through 3.12.")
+        self.biosphere_version = biosphere_version
         self.source = str(Path(package).expanduser().resolve())
         self._source = {}
         self._identities = {}
         with Path(biosphere_csv).open(encoding="utf-8-sig", newline="") as stream:
-            for row in csv.reader(stream):
+            delimiters = []
+            for delimiter in (",", ";"):
+                stream.seek(0)
+                if len(next(csv.reader(stream, delimiter=delimiter), [])) == 5:
+                    delimiters.append(delimiter)
+            if len(delimiters) != 1:
+                raise ValueError("Biosphere CSV must have five comma- or semicolon-separated columns.")
+            stream.seek(0)
+            for row in csv.reader(stream, delimiter=delimiters[0]):
                 if len(row) != 5:
                     raise ValueError("Biosphere CSV rows must contain exactly five columns.")
                 name, compartment, subcompartment, unit, code = row
                 code = _uuid(code)
                 identity = (name, (compartment, subcompartment), unit)
-                if code in self._source or identity in self._identities:
-                    raise ValueError(f"Duplicate biosphere UUID or identity: {row!r}.")
-                self._source[code] = identity
+                normalized = _source_identity(identity, code)
+                if (code in self._source and self._source[code] != normalized) or (
+                    identity in self._identities and self._identities[identity] != code
+                ):
+                    raise ValueError(f"Conflicting biosphere UUID or identity: {row!r}.")
+                self._source[code] = normalized
                 self._identities[identity] = code
         if not self._source:
             raise ValueError("The biosphere CSV is empty.")
@@ -91,12 +124,22 @@ class OpenLCAMethodMapping:
                 raise ValueError(f"Flow {code} is not an elementary flow.")
             # The first category segment in ecoinvent's method package is
             # "Elementary flows"; compare normalized compartment labels below it.
-            parts = str(flow.get("category", "")).split("/")
+            category = flow.get("category", "")
+            if isinstance(category, dict):
+                parts = [*category.get("categoryPath", []), category.get("name", "")]
+            elif isinstance(category, str):
+                parts = category.split("/")
+            else:
+                raise ValueError(f"Flow {code} has an invalid category.")
             if parts and parts[0] == "Elementary flows":
                 parts = parts[1:]
             if name != flow.get("name") or _categories(categories) != _categories(parts):
                 raise ValueError(f"Flow {code} has an incompatible name or compartment.")
-            factors = [f for f in flow.get("flowProperties", []) if f.get("isRefFlowProperty")]
+            factors = [
+                f
+                for f in flow.get("flowProperties", [])
+                if _reference_flag(f, "isRefFlowProperty", "referenceFlowProperty")
+            ]
             if len(factors) != 1 or factors[0].get("conversionFactor") != 1:
                 raise ValueError(f"Flow {code} must have exactly one reference quantity with factor 1.")
             try:
@@ -104,7 +147,7 @@ class OpenLCAMethodMapping:
                 group = entities["unit_groups"][prop["unitGroup"]["@id"]]
             except KeyError as error:
                 raise ValueError(f"Flow {code} has a missing quantity or unit group.") from error
-            units = [u for u in group.get("units", []) if u.get("isRefUnit")]
+            units = [u for u in group.get("units", []) if _reference_flag(u, "isRefUnit", "referenceUnit")]
             if len(units) != 1 or units[0].get("conversionFactor") != 1:
                 raise ValueError(f"Flow {code} must have exactly one reference unit with factor 1.")
             target_unit = units[0]
@@ -126,6 +169,10 @@ class OpenLCAMethodMapping:
 
     @staticmethod
     def _read_entities(path):
+        if path.suffix.lower() == ".zolca":
+            raise ValueError(
+                "A .zolca database backup is not a JSON-LD package. Export it as JSON-LD from openLCA first."
+            )
         result = {folder: {} for folder in ("flows", "flow_properties", "unit_groups")}
 
         def add(folder, content):
@@ -150,8 +197,10 @@ class OpenLCAMethodMapping:
     def check_context(self, context):
         """Require the exact biosphere version, independently of the technosphere."""
         profile = context.background.biosphere
-        if (profile.family, profile.version) != ("ecoinvent", "3.12"):
-            raise SerializationError("This method mapping requires an explicit ecoinvent 3.12 biosphere context.")
+        if (profile.family, profile.version) != ("ecoinvent", self.biosphere_version):
+            raise SerializationError(
+                f"This method mapping requires an explicit ecoinvent {self.biosphere_version} biosphere context."
+            )
 
     def resolve(self, exchange):
         """Return source UUID and reference, rejecting contradictory identifiers."""
@@ -170,7 +219,9 @@ class OpenLCAMethodMapping:
                 supplied = link_code
         if supplied:
             supplied = _uuid(supplied)
-            if (code and code != supplied) or (supplied in self._source and self._source[supplied] != identity):
+            if (code and code != supplied) or (
+                supplied in self._source and self._source[supplied] != _source_identity(identity, supplied)
+            ):
                 raise SerializationError(f"Elementary flow {identity!r} conflicts with UUID {supplied}.")
             code = supplied
         return code, self._references.get(code)
@@ -201,7 +252,7 @@ class OpenLCAMethodMapping:
         return deepcopy(
             {
                 "source": self.source,
-                "biosphere": {"family": "ecoinvent", "version": "3.12"},
+                "biosphere": {"family": "ecoinvent", "version": self.biosphere_version},
                 "source_flows": len(self._source),
                 "mapped_source_flows": len(self._references),
                 "source_flows_absent_from_package": len(self._source) - len(self._references),

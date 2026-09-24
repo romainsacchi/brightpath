@@ -207,3 +207,96 @@ def test_standard_volume_alias_is_uuid_scoped(package):
     exchange = document().data[0]["exchanges"][1]
     exchange["unit"] = "standard cubic meter"
     assert mapping.resolve(exchange)[1].unit_name == "m3"
+
+
+@pytest.mark.parametrize(
+    "version", ["3.5", "3.6", "3.7", "3.7.1", "3.8", "3.9", "3.9.1", "3.10", "3.10.1", "3.11", "3.12"]
+)
+@pytest.mark.parametrize("legacy", [False, True])
+def test_versioned_packages_and_legacy_schema(package, tmp_path, version, legacy):
+    root, source = package
+    if legacy:
+        for folder, current, old in [
+            ("flows", "isRefFlowProperty", "referenceFlowProperty"),
+            ("unit_groups", "isRefUnit", "referenceUnit"),
+        ]:
+            path = next((root / folder).glob("*.json"))
+            value = json.loads(path.read_text())
+            items = value["flowProperties"] if folder == "flows" else value["units"]
+            for item in items:
+                item[old] = item.pop(current)
+            if folder == "flows":
+                value["category"] = {
+                    "name": "low population density",
+                    "categoryPath": ["Elementary flows", "Emission to air"],
+                }
+            path.write_text(json.dumps(value))
+        source.write_text(source.read_text().replace(",", ";"))
+    mapping = OpenLCAMethodMapping(root, source, biosphere_version=version)
+    doc = document(version=version)
+    assert mapping.audit(doc)["biosphere"]["version"] == version
+    path = write_openlca_jsonld(doc, tmp_path / "versioned.zip", method_mapping=mapping)
+    process = next(v for k, v in read_zip(path).items() if k.startswith("processes/"))
+    assert process["exchanges"][1]["flow"]["@id"] == uid("flow")
+    assert process["exchanges"][1]["unit"]["@id"] == uid("unit")
+    other = "3.11" if version != "3.11" else "3.12"
+    with pytest.raises(SerializationError, match="biosphere context"):
+        mapping.check_context(document(version=other).context)
+
+
+def test_patch_version_is_not_collapsed(package):
+    mapping = OpenLCAMethodMapping(*package, biosphere_version="3.9.1")
+    with pytest.raises(SerializationError, match="3.9.1 biosphere"):
+        mapping.check_context(document(version="3.9").context)
+
+
+def test_zolca_backup_explains_required_conversion(package):
+    with pytest.raises(ValueError, match="Export it as JSON-LD"):
+        OpenLCAMethodMapping(package[0].with_suffix(".zolca"), package[1], biosphere_version="3.5")
+
+
+@pytest.mark.parametrize("version", ["", "3", "3.4", "3.13", "3.9.x", 3.12, None])
+def test_invalid_biosphere_version(package, version):
+    with pytest.raises(ValueError, match="exact ecoinvent biosphere version"):
+        OpenLCAMethodMapping(*package, biosphere_version=version)
+
+
+def test_conflicting_reference_flags_rejected(package):
+    path = next((package[0] / "flows").glob("*.json"))
+    value = json.loads(path.read_text())
+    value["flowProperties"][0]["referenceFlowProperty"] = False
+    path.write_text(json.dumps(value))
+    with pytest.raises(ValueError, match="Conflicting"):
+        OpenLCAMethodMapping(*package)
+
+
+def test_gas_unit_alias_rows_share_one_source_uuid(package):
+    root, source = package
+    code = "7c337428-fb1b-45c7-bbb2-2ee4d29e17ba"
+    path = next((root / "flows").glob("*.json"))
+    value = json.loads(path.read_text())
+    value["@id"] = code
+    path.write_text(json.dumps(value))
+    path = next((root / "unit_groups").glob("*.json"))
+    value = json.loads(path.read_text())
+    value["units"][0]["name"] = "m3"
+    path.write_text(json.dumps(value))
+    with source.open("w", newline="") as stream:
+        csv.writer(stream).writerows(
+            [
+                ["Test emission", "air", "non-urban air or from high stacks", unit, code]
+                for unit in ("standard cubic meter", "Sm3")
+            ]
+        )
+    mapping = OpenLCAMethodMapping(root, source, biosphere_version="3.9.1")
+    for unit in ("standard cubic meter", "Sm3"):
+        exchange = document().data[0]["exchanges"][1]
+        exchange.update(unit=unit, input=("biosphere", code))
+        assert mapping.resolve(exchange)[1].unit_name == "m3"
+
+
+def test_conflicting_source_uuid_rows_still_fail(package):
+    with package[1].open("a") as stream:
+        csv.writer(stream).writerow(["Other emission", "water", "unspecified", "kilogram", uid("flow")])
+    with pytest.raises(ValueError, match="Conflicting biosphere"):
+        OpenLCAMethodMapping(*package)

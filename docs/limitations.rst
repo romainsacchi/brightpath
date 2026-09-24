@@ -62,11 +62,11 @@ Format boundaries
   cannot be reconstructed automatically. Distinct generated IDs alone do not
   establish compatibility with a target database's LCIA methods.
 
-Local ecoinvent 3.12 method references
--------------------------------------
+Local versioned ecoinvent method references
+------------------------------------------
 
 Use an explicit local method mapping when exporting inventories intended for
-an ecoinvent 3.12 openLCA method package::
+a version-matched ecoinvent openLCA method package::
 
     from brightpath.formats.openlca_methods import OpenLCAMethodMapping
     from brightpath.formats.openlca_jsonld import write_openlca_jsonld
@@ -74,26 +74,59 @@ an ecoinvent 3.12 openLCA method package::
     mapping = OpenLCAMethodMapping(
         "path/to/ecoinvent 3.12 LCIA Methods 2025-12-01",
         "path/to/flows_biosphere_312.csv",
+        biosphere_version="3.12",
     )
     coverage = mapping.audit(document)
     write_openlca_jsonld(document, "inventory.zip", method_mapping=mapping)
 
 The package may be a directory or a ZIP with ``flows``, ``flow_properties``,
 and ``unit_groups`` at its root. The source CSV uses Premise's headerless
-five-column layout: name, compartment, subcompartment, unit, UUID. Neither
+five-column layout: name, compartment, subcompartment, unit, UUID, using commas
+or semicolons. Neither
 licensed method data nor a dependency on a local Premise checkout is bundled.
-The caller supplies both files and an exact ecoinvent 3.12 biosphere context;
+The caller supplies both files and an exact matching ecoinvent biosphere context;
 the technosphere profile remains independent. With ``InventoryPipeline.write``,
 pass the mapping through ``adapter_kwargs={"method_mapping": mapping}``.
+
+The mapping accepts explicit ecoinvent versions from 3.5 through 3.12, including
+patch releases such as 3.9.1; patch versions are never silently collapsed.
+``biosphere_version`` defaults to 3.12 for existing callers. The caller is
+responsible for choosing a matching package and CSV: shared flow UUIDs and entity
+version fields cannot reliably establish the database release. Legacy JSON-LD
+category objects and reference flags (as in the 3.6–3.8 downloads) are supported
+alongside current JSON-LD fields. A ``.zolca`` file is a database backup, not
+JSON-LD: restore it in openLCA and export the method package as JSON-LD first.
 
 Import the original method package into the target openLCA database first.
 Matched exchanges reference its existing flow, flow-property, and unit UUIDs;
 they do not duplicate these definitions in the process package. UUID matching
 is checked against source names, normalized compartments, and units. Four
 known compartment-label correspondences are supported. Standard cubic metres
-map to the package's ``m3`` label only for the two specific ecoinvent natural-gas
+(including the source alias ``Sm3``) map to the package's ``m3`` label only for
+the two specific ecoinvent natural-gas
 and mine-gas flow UUIDs; this is not a general volume conversion. Exchange
 amounts remain unchanged. Conflicting identifiers or incompatible units fail.
+
+Local compatibility checks covered downloaded JSON-LD packages for 3.5, 3.6, 3.7,
+3.8, 3.9.1, 3.10, 3.11, and 3.12. Matching against independent Premise source
+CSVs produced these counts (unique source UUIDs / matched UUIDs): 3.7
+4,329 / 3,610; 3.9.1 4,709 / 1,960; 3.10 4,362 / 3,579; 3.11
+9,795 / 8,529; and 3.12 9,850 / 8,955. These are flow-reference checks, not
+numerical LCIA comparisons in openLCA.
+
+For 3.6 and 3.8, all 3,598 and 4,006 package flow/quantity definitions,
+respectively, passed schema checks using package-derived CSVs. Those checks do
+not establish compatibility with an independent inventory. The inspected
+Premise 3.8 CSV contains eight UUIDs with conflicting source identities and is
+rejected; use a corrected, authoritative source CSV rather than dropping or
+merging the conflicting records.
+
+The converted 3.5 JSON-LD package contains 51 methods, 878 impact categories,
+and 3,442 elementary flows. All flow/quantity definitions passed the same
+package-derived checks, and an export referencing all 3,442 flows preserved
+flow, flow-property, and unit UUIDs and exchange amounts. An independent 3.5
+inventory mapping and numerical LCIA comparison remain untested. No loader
+changes were needed for the converted package.
 
 The inspected 2025-12-01 package matches 8,955 of the 9,850 source flows. Flows
 absent from the package are retained with their source UUIDs and locally
