@@ -52,6 +52,15 @@ Format boundaries
   inspected UVEK openLCA database build. The remaining 408 packaged ecoinvent
   3.10 biosphere identities are not present under the same UUID in that build;
   exporting one of them fails instead of creating an uncharacterized duplicate.
+* Generated openLCA elementary-flow IDs distinguish compartments and
+  subcompartments; generated product-flow IDs distinguish supplier locations.
+  Explicit openLCA flow IDs and packaged reference IDs are preserved. Conflicting
+  definitions of one flow ID cause export to fail instead of silently replacing
+  the earlier definition. These generated IDs differ from earlier exports;
+  re-export affected inventories and import into a fresh target database to avoid
+  retaining obsolete synthetic flows. Compartments already lost in older exports
+  cannot be reconstructed automatically. Distinct generated IDs alone do not
+  establish compatibility with a target database's LCIA methods.
 
 Migration boundaries
 --------------------

@@ -4,6 +4,18 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.0a1 - Unreleased
 
+### Fixed
+
+- Prevented olca-schema's generated IDs and timestamps from bypassing deterministic
+  export identities or being mistaken for source metadata.
+- Prevented synthetic openLCA flow UUID collisions between elementary-flow
+  compartments and between product supplier locations. Explicit openLCA UUIDs
+  remain unchanged; incompatible definitions of one UUID now fail serialization.
+- Preserved exchange metadata on shared openLCA flows by scoping it to process
+  and exchange IDs, with support for reading the older metadata layout.
+- Changed generated flow UUIDs: re-export affected JSON-LD inventories and import
+  into a fresh target database to avoid retaining obsolete synthetic flows.
+
 ### Breaking
 
 - Deleted `BrightwayConverter` and `SimaproConverter` and replaced them with the independent

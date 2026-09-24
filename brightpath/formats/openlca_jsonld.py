@@ -44,6 +44,7 @@ _PARAMETER_TEMPLATE_KEY = "openlca parameter"
 _BRIGHTPATH_OTHER_PROPERTIES_KEY = "brightpath"
 _GLOBAL_PARAMETER_TARGET_KEY = "brightpath parameter target"
 _BRIGHTPATH_FLOW_EXCHANGE_PROPERTIES_KEY = "brightpathExchangeProperties"
+_BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY = "brightpathExchangePropertiesByProcess"
 
 _SUPPORTED_AUXILIARY_FOLDERS = frozenset(
     {
@@ -474,6 +475,11 @@ def _hydrate_entity(entity_class: Any, raw_entity: dict[str, Any] | None) -> Any
     post_init = getattr(entity, "__post_init__", None)
     if callable(post_init):
         post_init()
+    # olca-schema supplies random IDs and current timestamps for missing values.
+    # They are not source metadata: let the writer's deterministic fallbacks run.
+    for attribute, key in (("id", "@id"), ("last_change", "lastChange")):
+        if hasattr(entity, attribute) and not (raw_entity or {}).get(key):
+            setattr(entity, attribute, None)
     return entity
 
 
@@ -673,7 +679,7 @@ def _exchange_to_legacy(
     legacy.update(_brightpath_other_properties(raw_exchange))
     legacy[_EXCHANGE_TEMPLATE_KEY] = deepcopy(raw_exchange)
     if raw_flow := raw_flows.get(str(flow.id or "")):
-        legacy.update(_flow_exchange_properties(raw_flow, raw_exchange))
+        legacy.update(_flow_exchange_properties(raw_flow, raw_exchange, str(process.id or "")))
         legacy[_FLOW_TEMPLATE_KEY] = raw_flow
     if flow_property is not None and flow_property.id and flow_property.id in raw_flow_properties:
         legacy[_FLOW_PROPERTY_TEMPLATE_KEY] = raw_flow_properties[flow_property.id]
@@ -740,10 +746,17 @@ def _brightpath_other_properties(raw_entity: dict[str, Any]) -> dict[str, Any]:
     return deepcopy(brightpath) if isinstance(brightpath, dict) else {}
 
 
-def _flow_exchange_properties(raw_flow: dict[str, Any], raw_exchange: dict[str, Any]) -> dict[str, Any]:
+def _flow_exchange_properties(
+    raw_flow: dict[str, Any], raw_exchange: dict[str, Any], process_id: str
+) -> dict[str, Any]:
     other_properties = raw_flow.get("otherProperties")
     if not isinstance(other_properties, dict):
         return {}
+    by_process = other_properties.get(_BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY)
+    if isinstance(by_process, dict) and process_id in by_process:
+        values = by_process[process_id]
+        selected = values.get(str(raw_exchange.get("internalId") or "")) if isinstance(values, dict) else None
+        return deepcopy(selected) if isinstance(selected, dict) else {}
     values = other_properties.get(_BRIGHTPATH_FLOW_EXCHANGE_PROPERTIES_KEY)
     if not isinstance(values, dict):
         return {}
@@ -1157,7 +1170,7 @@ class _OpenLCAPackageBuilder:
             if entity.internal_id is None:
                 next_internal_id += 1
                 entity.internal_id = next_internal_id
-            self._store_exchange_extras(entity, exchange)
+            self._store_exchange_extras(entity, exchange, process.id)
             exchanges.append(entity)
         process.exchanges = exchanges
         process.last_internal_id = max((exchange.internal_id or 0 for exchange in exchanges), default=0)
@@ -1404,7 +1417,7 @@ class _OpenLCAPackageBuilder:
         )
         return flow_ref, flow_property_ref, unit_ref, location_ref, provider_ref
 
-    def _store_exchange_extras(self, entity: Any, exchange: dict[str, Any]) -> None:
+    def _store_exchange_extras(self, entity: Any, exchange: dict[str, Any], process_id: str) -> None:
         extras = _exchange_extras(exchange)
         if not extras:
             return
@@ -1413,11 +1426,15 @@ class _OpenLCAPackageBuilder:
             return
         flow = self.flows[flow_id]
         other_properties = deepcopy(flow.other_properties) if isinstance(flow.other_properties, dict) else {}
-        values = other_properties.get(_BRIGHTPATH_FLOW_EXCHANGE_PROPERTIES_KEY)
-        if not isinstance(values, dict):
-            values = {}
-        values[str(entity.internal_id or "")] = deepcopy(extras)
-        other_properties[_BRIGHTPATH_FLOW_EXCHANGE_PROPERTIES_KEY] = values
+        by_process = other_properties.setdefault(_BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY, {})
+        values = by_process.setdefault(str(process_id), {})
+        internal_id = str(entity.internal_id or "")
+        if internal_id in values and values[internal_id] != extras:
+            raise SerializationError(
+                f"Flow {flow_id!r} has conflicting exchange metadata for process {process_id!r}, "
+                f"exchange {internal_id!r}."
+            )
+        values[internal_id] = deepcopy(extras)
         flow.other_properties = other_properties
 
     def _ensure_location(self, code: str, template: dict[str, Any]) -> Any | None:
@@ -1483,14 +1500,19 @@ class _OpenLCAPackageBuilder:
         categories: tuple[str, ...] = (),
     ) -> Any:
         flow = _hydrate_entity(self.schema.Flow, flow_template)
-        flow.id = str(flow.id or _stable_uuid("flow", flow_type.value, default_name, str(exchange.get("unit") or "")))
+        if flow.flow_type is not None and flow.flow_type != flow_type:
+            raise SerializationError(f"Flow {flow.id!r} has conflicting flowType: {flow.flow_type} versus {flow_type}.")
         flow.name = str(default_name or flow.name or "")
         flow.flow_type = flow.flow_type or flow_type
         if flow.flow_type == self.schema.FlowType.ELEMENTARY_FLOW:
             encoded = _encode_biosphere_categories(categories)
             if encoded:
                 flow.category = encoded
-        flow.location = location_ref
+        # A flow's explicit geography is independent of the consuming process.
+        # Imported unregionalized flows must remain unregionalized.
+        if not flow_template.get("@id") and flow.location is None and flow_type != self.schema.FlowType.ELEMENTARY_FLOW:
+            flow.location = location_ref
+        flow.id = str(flow.id or _generated_flow_uuid(flow, str(exchange.get("unit") or "")))
         flow.flow_properties = [
             self.schema.FlowPropertyFactor(
                 flow_property=flow_property_ref,
@@ -1498,8 +1520,49 @@ class _OpenLCAPackageBuilder:
                 is_ref_flow_property=True,
             )
         ]
+        existing = self.flows.get(flow.id)
+        if existing is not None:
+            old, new = existing.to_dict(), flow.to_dict()
+            # Exchange metadata is scoped separately and is not a flow definition.
+            retained = {}
+            for definition in (old, new):
+                properties = definition.get("otherProperties", {})
+                for key in (_BRIGHTPATH_FLOW_EXCHANGE_PROPERTIES_KEY, _BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY):
+                    value = properties.pop(key, None)
+                    if value is not None:
+                        retained[key] = _merge_flow_definition(retained.get(key, {}), value, flow.id, key)
+                if not properties:
+                    definition.pop("otherProperties", None)
+            merged = _merge_flow_definition(old, new, flow.id)
+            if retained:
+                merged.setdefault("otherProperties", {}).update(retained)
+            flow = self.schema.Flow.from_dict(merged)
         self.flows[flow.id] = flow
         return flow
+
+
+def _generated_flow_uuid(flow: Any, unit: str) -> str:
+    """Generate collision-safe IDs without changing UUIDs for other entity types."""
+    category = str(flow.category or "") if flow.flow_type.value == "ELEMENTARY_FLOW" else ""
+    location = str(getattr(flow.location, "id", "") or getattr(flow.location, "name", "") or "")
+    identity = ["flow-v2", flow.flow_type.value, flow.name, unit, category, location]
+    payload = json.dumps(identity, ensure_ascii=False, separators=(",", ":"))
+    return str(uuid.uuid5(uuid.NAMESPACE_URL, f"brightpath:openlca:{payload}"))
+
+
+def _merge_flow_definition(existing: Any, incoming: Any, flow_id: str, field: str = "") -> Any:
+    """Merge complementary fields, rejecting contradictory definitions of one ID."""
+    if isinstance(existing, dict) and isinstance(incoming, dict):
+        merged = deepcopy(existing)
+        for key, value in incoming.items():
+            path = f"{field}.{key}" if field else key
+            merged[key] = (
+                _merge_flow_definition(merged[key], value, flow_id, path) if key in merged else deepcopy(value)
+            )
+        return merged
+    if existing == incoming:
+        return deepcopy(existing)
+    raise SerializationError(f"Flow {flow_id!r} has conflicting {field}: {existing!r} versus {incoming!r}.")
 
 
 def _encode_biosphere_categories(categories: tuple[str, ...]) -> str:

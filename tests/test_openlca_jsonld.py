@@ -291,3 +291,229 @@ def test_analyze_inventory_reports_openlca_jsonld_candidates(tmp_path):
     assert result.detected_software == "openlca"
     assert result.detected_format == SOURCE_FORMAT_OPENLCA_JSONLD
     assert [candidate.name for candidate in result.candidates] == ["input process", "output process"]
+
+
+def _collision_document(compartments=("air", "water"), locations=("CH", "FR")):
+    data = []
+    for index, location in enumerate(locations):
+        name = f"producer {index}"
+        data.append(
+            {
+                "name": name,
+                "reference product": "shared product",
+                "location": location,
+                "unit": "kilogram",
+                "exchanges": [
+                    {"type": "production", "name": name, "product": "shared product", "unit": "kilogram", "amount": 1},
+                    *[
+                        {
+                            "type": "biosphere",
+                            "name": "Zinc",
+                            "unit": "kilogram",
+                            "categories": (compartment,) if isinstance(compartment, str) else compartment,
+                            "amount": 0.1,
+                            "audit note": f"process {index} emission {number}",
+                        }
+                        for number, compartment in enumerate(compartments)
+                    ],
+                ],
+            }
+        )
+    data.append(
+        {
+            "name": "consumer",
+            "reference product": "service",
+            "location": "GLO",
+            "unit": "kilogram",
+            "exchanges": [
+                {"type": "production", "name": "consumer", "product": "service", "unit": "kilogram", "amount": 1},
+                *[
+                    {
+                        "type": "technosphere",
+                        "name": row["name"],
+                        "product": row["reference product"],
+                        "location": row["location"],
+                        "unit": row["unit"],
+                        "amount": 2,
+                    }
+                    for row in data
+                ],
+            ],
+        }
+    )
+    return InventoryDocument(data=data, context=_context())
+
+
+def _zip_entities(path, folder):
+    with zipfile.ZipFile(path) as archive:
+        return {
+            entity["@id"]: entity
+            for name in archive.namelist()
+            if name.startswith(folder + "/")
+            for entity in [json.loads(archive.read(name))]
+        }
+
+
+def test_elementary_compartments_and_shared_metadata_survive_round_trip(tmp_path):
+    document = _collision_document(("air", "water", "soil", ("air", "urban air close to ground")))
+    before = document.data
+    path = write_openlca_jsonld(document, tmp_path / "compartments.zip")
+    flows = _zip_entities(path, "flows")
+    zinc = {key: value for key, value in flows.items() if value["name"] == "Zinc"}
+    assert len(zinc) == 4
+    assert {value["category"] for value in zinc.values()} == {
+        "Emissions to air",
+        "Emissions to water",
+        "Emissions to soil",
+        "Emissions to air/urban air close to ground",
+    }
+    assert all("location" not in flow for flow in zinc.values())
+    for process in _zip_entities(path, "processes").values():
+        if process["name"].startswith("producer"):
+            assert [flows[exc["flow"]["@id"]]["category"] for exc in process["exchanges"][1:]] == [
+                "Emissions to air",
+                "Emissions to water",
+                "Emissions to soil",
+                "Emissions to air/urban air close to ground",
+            ]
+    loaded = load_openlca_jsonld(path, context=document.context)
+    for row in loaded.data:
+        if row["name"].startswith("producer"):
+            index = row["name"].split()[-1]
+            assert [exc["audit note"] for exc in row["exchanges"][1:]] == [
+                f"process {index} emission {n}" for n in range(4)
+            ]
+    second = write_openlca_jsonld(loaded, tmp_path / "roundtrip.zip")
+    assert set(_zip_entities(second, "flows")) == set(flows)
+    assert document.data == before
+
+
+@pytest.mark.parametrize("locations, expected_products", [(("CH", "FR"), 2), (("CH", "CH"), 1)])
+def test_product_identity_and_provider_links(tmp_path, locations, expected_products):
+    path = write_openlca_jsonld(_collision_document(locations=locations), tmp_path / "products.zip")
+    flows, processes = _zip_entities(path, "flows"), _zip_entities(path, "processes")
+    products = [flow for flow in flows.values() if flow["name"] == "shared product"]
+    assert len(products) == expected_products
+    consumer = next(p for p in processes.values() if p["name"] == "consumer")
+    for index, exchange in enumerate(consumer["exchanges"][1:]):
+        supplier = processes[exchange["defaultProvider"]["@id"]]
+        assert supplier["name"] == f"producer {index}"
+        assert exchange["flow"]["@id"] == supplier["exchanges"][0]["flow"]["@id"]
+    assert len({p["location"]["@id"] for p in products}) == expected_products
+
+
+def test_flow_ids_and_definitions_do_not_depend_on_order(tmp_path):
+    document = _collision_document()
+    first = write_openlca_jsonld(document, tmp_path / "first.zip")
+    repeated = write_openlca_jsonld(document, tmp_path / "repeated.zip")
+    reordered = InventoryDocument(data=list(reversed(document.data)), context=document.context)
+    second = write_openlca_jsonld(reordered, tmp_path / "reordered.zip")
+    assert _zip_entities(first, "flows") == _zip_entities(second, "flows") == _zip_entities(repeated, "flows")
+
+
+def test_explicit_shared_flow_keeps_id_and_own_location(tmp_path):
+    document = _collision_document()
+    data = document.data
+    explicit_id = "7993cc25-0c1b-413c-a8cd-929220916c5d"
+    for index, row in enumerate(data[:2]):
+        for exc in row["exchanges"][1:]:
+            exc["categories"] = ("air",)
+            exc["openlca flow"] = {
+                "@id": explicit_id,
+                "location": {"@type": "Location", "@id": "shared-region", "name": "Explicit region"},
+            }
+        # Complementary flow metadata must survive either registration order.
+        row["exchanges"][1]["openlca flow"]["description" if index == 0 else "cas"] = (
+            "description" if index == 0 else "7440-66-6"
+        )
+    path = write_openlca_jsonld(InventoryDocument(data=data, context=document.context), tmp_path / "explicit.zip")
+    flow = _zip_entities(path, "flows")[explicit_id]
+    assert flow["location"]["@id"] == "shared-region"
+    assert flow["description"] == "description"
+    assert flow["cas"] == "7440-66-6"
+
+
+@pytest.mark.parametrize("conflict", ["category", "name", "unit", "location", "flowType", "description"])
+def test_conflicting_explicit_flow_id_fails_without_overwriting_archive(tmp_path, conflict):
+    document = _collision_document(compartments=("air",))
+    data = document.data
+    explicit_id = "7993cc25-0c1b-413c-a8cd-929220916c5d"
+    for row in data[:2]:
+        row["exchanges"][1]["openlca flow"] = {"@id": explicit_id}
+    left, right = data[0]["exchanges"][1], data[1]["exchanges"][1]
+    if conflict == "category":
+        right["categories"] = ("water",)
+    elif conflict in ("name", "unit"):
+        right[conflict] = "Other substance" if conflict == "name" else "gram"
+    elif conflict == "location":
+        for index, exc in enumerate((left, right)):
+            exc["openlca flow"]["location"] = {"@type": "Location", "@id": f"region-{index}"}
+    elif conflict == "flowType":
+        right["openlca flow"]["flowType"] = "PRODUCT_FLOW"
+    else:
+        left["openlca flow"]["description"] = "left"
+        right["openlca flow"]["description"] = "right"
+    path = tmp_path / "existing.zip"
+    path.write_bytes(b"existing archive")
+    with pytest.raises(SerializationError, match=explicit_id + ".*conflicting"):
+        write_openlca_jsonld(InventoryDocument(data=data, context=document.context), path)
+    assert path.read_bytes() == b"existing archive"
+
+
+def test_legacy_exchange_metadata_is_still_read(tmp_path):
+    path = write_openlca_jsonld(_collision_document(compartments=("air",), locations=("CH",)), tmp_path / "new.zip")
+    legacy = tmp_path / "legacy.zip"
+    with zipfile.ZipFile(path) as source, zipfile.ZipFile(legacy, "w") as target:
+        for name in source.namelist():
+            content = source.read(name)
+            if name.startswith("flows/"):
+                flow = json.loads(content)
+                if flow["name"] == "Zinc":
+                    properties = flow["otherProperties"]
+                    values = properties.pop("brightpathExchangePropertiesByProcess")
+                    properties["brightpathExchangeProperties"] = next(iter(values.values()))
+                    content = json.dumps(flow).encode()
+            target.writestr(name, content)
+    loaded = load_openlca_jsonld(legacy, context=_context())
+    producer = next(row for row in loaded.data if row["name"] == "producer 0")
+    assert producer["exchanges"][1]["audit note"] == "process 0 emission 0"
+
+
+def test_generated_ids_use_structured_fields_and_ignore_brightway_codes(tmp_path):
+    document = _collision_document(compartments=("air",))
+    data = document.data
+    left, right = data[0]["exchanges"][1], data[1]["exchanges"][1]
+    left.update(name="substance::variant", unit="kilogram", code="same-brightway-code")
+    right.update(name="substance", unit="variant::kilogram", code="same-brightway-code")
+    path = write_openlca_jsonld(InventoryDocument(data=data, context=document.context), tmp_path / "fields.zip")
+    elementary = [f for f in _zip_entities(path, "flows").values() if f["flowType"] == "ELEMENTARY_FLOW"]
+    assert len(elementary) == 2
+    assert all(f["@id"] != "same-brightway-code" for f in elementary)
+
+
+def test_category_normalization_deduplicates_equivalent_compartments(tmp_path):
+    document = _collision_document(
+        compartments=((" AIR ", " urban air close to ground "), ("air", "urban air close to ground"))
+    )
+    path = write_openlca_jsonld(document, tmp_path / "normalized.zip")
+    elementary = [f for f in _zip_entities(path, "flows").values() if f["flowType"] == "ELEMENTARY_FLOW"]
+    assert len(elementary) == 1
+    assert elementary[0]["category"] == "Emissions to air/urban air close to ground"
+
+
+def test_explicit_unregionalized_product_is_shared_across_supplier_locations(tmp_path):
+    document = _collision_document()
+    data = document.data
+    explicit_id = "7993cc25-0c1b-413c-a8cd-929220916c5d"
+    for row in data[:2]:
+        row["exchanges"][0]["openlca flow"] = {"@id": explicit_id}
+    path = write_openlca_jsonld(InventoryDocument(data=data, context=document.context), tmp_path / "shared.zip")
+    assert "location" not in _zip_entities(path, "flows")[explicit_id]
+    loaded = load_openlca_jsonld(path, context=document.context)
+    again = write_openlca_jsonld(loaded, tmp_path / "again.zip")
+    assert "location" not in _zip_entities(again, "flows")[explicit_id]
+    consumer = next(row for row in loaded.data if row["name"] == "consumer")
+    assert [(e["name"], e["location"]) for e in consumer["exchanges"][1:]] == [
+        ("producer 0", "CH"),
+        ("producer 1", "FR"),
+    ]
