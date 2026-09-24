@@ -62,6 +62,48 @@ Format boundaries
   cannot be reconstructed automatically. Distinct generated IDs alone do not
   establish compatibility with a target database's LCIA methods.
 
+Local ecoinvent 3.12 method references
+-------------------------------------
+
+Use an explicit local method mapping when exporting inventories intended for
+an ecoinvent 3.12 openLCA method package::
+
+    from brightpath.formats.openlca_methods import OpenLCAMethodMapping
+    from brightpath.formats.openlca_jsonld import write_openlca_jsonld
+
+    mapping = OpenLCAMethodMapping(
+        "path/to/ecoinvent 3.12 LCIA Methods 2025-12-01",
+        "path/to/flows_biosphere_312.csv",
+    )
+    coverage = mapping.audit(document)
+    write_openlca_jsonld(document, "inventory.zip", method_mapping=mapping)
+
+The package may be a directory or a ZIP with ``flows``, ``flow_properties``,
+and ``unit_groups`` at its root. The source CSV uses Premise's headerless
+five-column layout: name, compartment, subcompartment, unit, UUID. Neither
+licensed method data nor a dependency on a local Premise checkout is bundled.
+The caller supplies both files and an exact ecoinvent 3.12 biosphere context;
+the technosphere profile remains independent. With ``InventoryPipeline.write``,
+pass the mapping through ``adapter_kwargs={"method_mapping": mapping}``.
+
+Import the original method package into the target openLCA database first.
+Matched exchanges reference its existing flow, flow-property, and unit UUIDs;
+they do not duplicate these definitions in the process package. UUID matching
+is checked against source names, normalized compartments, and units. Four
+known compartment-label correspondences are supported. Standard cubic metres
+map to the package's ``m3`` label only for the two specific ecoinvent natural-gas
+and mine-gas flow UUIDs; this is not a general volume conversion. Exchange
+amounts remain unchanged. Conflicting identifiers or incompatible units fail.
+
+The inspected 2025-12-01 package matches 8,955 of the 9,850 source flows. Flows
+absent from the package are retained with their source UUIDs and locally
+created quantity definitions. Unknown source flows are also retained and
+reported separately. Export writes ``inventory.biosphere-coverage.json`` with
+inventory-specific missing-flow details. Presence in the package does not
+imply a characterization factor in every method; absence does not imply no
+environmental impact. This mapping does not supply external technosphere
+provider IDs or validate openLCA calculation-engine results.
+
 openLCA uncertainty conversion
 -----------------------------
 

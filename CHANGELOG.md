@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- Added opt-in local ecoinvent 3.12 openLCA method-package mapping with exact
+  elementary-flow and quantity references, UUID-scoped gas-volume labels, and
+  an inventory coverage sidecar. Preserve source UUIDs for missing flows.
+
 - Convert Brightway lognormal log-space parameters to openLCA geometric parameters
   and back, including signed distributions and process/global parameters. Reject
   invalid lognormal parameters and unsupported uncertainty types instead of

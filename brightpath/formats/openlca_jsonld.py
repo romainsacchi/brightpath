@@ -24,6 +24,7 @@ from brightpath.formats.openlca_categories import (
     build_openlca_process_category_catalog,
     resolve_openlca_process_category,
 )
+from brightpath.formats.openlca_methods import OpenLCAMethodMapping
 from brightpath.formats.openlca_references import (
     OpenLCABiosphereReference,
     OpenLCATechnosphereReference,
@@ -361,8 +362,10 @@ def load_openlca_jsonld(
 def write_openlca_jsonld(
     document: InventoryDocument,
     path: str | Path,
+    *,
+    method_mapping: OpenLCAMethodMapping | None = None,
 ) -> Path:
-    """Write an inventory document as a zipped openLCA JSON-LD package."""
+    """Write a ZIP, optionally linking to a local method package and auditing coverage."""
 
     if not isinstance(document, InventoryDocument):
         raise TypeError("document must be an InventoryDocument.")
@@ -376,7 +379,8 @@ def write_openlca_jsonld(
     destination = destination.resolve()
     destination.parent.mkdir(parents=True, exist_ok=True)
 
-    rendered = render_openlca_jsonld_package(document)
+    coverage = method_mapping.audit(document) if method_mapping is not None else None
+    rendered = render_openlca_jsonld_package(document, method_mapping=method_mapping)
     with zipio.ZipWriter(destination) as writer:
         for store in (
             rendered.actors,
@@ -394,14 +398,22 @@ def write_openlca_jsonld(
             for entity in store.values():
                 writer.write(entity)
 
+    if coverage is not None:
+        destination.with_suffix(".biosphere-coverage.json").write_text(
+            json.dumps(coverage, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+        )
     return destination
 
 
-def render_openlca_jsonld_package(document: InventoryDocument) -> _RenderedPackage:
+def render_openlca_jsonld_package(
+    document: InventoryDocument, *, method_mapping: OpenLCAMethodMapping | None = None
+) -> _RenderedPackage:
     """Build all openLCA root entities in memory without writing a ZIP archive."""
 
     schema, _zipio = _olca_modules()
-    builder = _OpenLCAPackageBuilder(schema, document.metadata, document.context)
+    if method_mapping is not None:
+        method_mapping.check_context(document.context)
+    builder = _OpenLCAPackageBuilder(schema, document.metadata, document.context, method_mapping)
     return builder.build(document)
 
 
@@ -1019,7 +1031,14 @@ def _schema_ref(entity: Any, **overrides: Any) -> Any:
 
 
 class _OpenLCAPackageBuilder:
-    def __init__(self, schema: Any, metadata: dict[str, Any], context: InventoryContext) -> None:
+    def __init__(
+        self,
+        schema: Any,
+        metadata: dict[str, Any],
+        context: InventoryContext,
+        method_mapping: OpenLCAMethodMapping | None = None,
+    ) -> None:
+        self.method_mapping = method_mapping
         self.schema = schema
         self.metadata = deepcopy(metadata)
         self.reference_catalog = load_openlca_reference_catalog(context)
@@ -1262,6 +1281,11 @@ class _OpenLCAPackageBuilder:
                         self._linked_background_refs(background_reference)
                     )
                 else:
+                    if exchange_type == "biosphere" and self.method_mapping is not None:
+                        code, _reference = self.method_mapping.resolve(exchange)
+                        if code:
+                            exchange = deepcopy(exchange)
+                            exchange.setdefault(_FLOW_TEMPLATE_KEY, {})["@id"] = code
                     flow_property_ref, unit_ref = self._ensure_quantity_entities(
                         unit_name=str(exchange.get("unit") or ""),
                         flow_property_template=_require_mapping(
@@ -1385,6 +1409,9 @@ class _OpenLCAPackageBuilder:
         exchange_type: str,
         exchange: dict[str, Any],
     ) -> OpenLCATechnosphereReference | OpenLCABiosphereReference | None:
+        if exchange_type == "biosphere" and self.method_mapping is not None:
+            _code, reference = self.method_mapping.resolve(exchange)
+            return reference
         catalog = self.reference_catalog
         if catalog is None:
             return None
