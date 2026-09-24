@@ -101,14 +101,23 @@ def _format_ecoinvent_name(
     formatted = f"{product} {{{location}}}| {process}"
 
     for market_name in ("market for", "market group for"):
-        if market_name not in name.lower():
+        if name.lower() != market_name and not name.lower().startswith(market_name + " "):
             continue
         formatted = f"{product} {{{location}}}"
         lower_product = product[0].lower() + product[1:]
-        if location == "GLO" and lower_product in _ecoinvent_market_exceptions():
+        canonical_market = f"{market_name} {lower_product}"
+        if (
+            location == "GLO"
+            and lower_product in _ecoinvent_market_exceptions()
+            and name.lower() in {market_name, canonical_market}
+        ):
             formatted += f"| {market_name}"
+        elif name.lower() == market_name:
+            formatted += f"| {canonical_market}"
         else:
-            formatted += f"| {market_name} {lower_product}"
+            # Keep supplier qualifiers and market products that differ from the
+            # reference product. Normalize only the market prefix's casing.
+            formatted += f"| {market_name}{name[len(market_name):]}"
         break
 
     suffixes = {

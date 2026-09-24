@@ -247,3 +247,70 @@ def test_format_biosphere_exchange_applies_ei310_name_normalizers(
 
     assert result["name"] == expected_name
     assert result["categories"] == expected_categories
+
+
+@pytest.mark.parametrize("system_model,suffix", [("cutoff", "Cut-off, U"), ("consequential", "Consequential, U")])
+def test_generic_market_conversion_suppliers_keep_distinct_names(system_model, suffix):
+    names = [
+        "cottonseed to generic market for energy feed",
+        "cottonseed, organic to generic market for energy feed",
+        "conversion to market group for energy feed",
+        "market formation service",
+    ]
+    labels = [
+        format_simapro_technosphere_name(
+            name=name,
+            reference_product="energy feed, gross",
+            location="IN",
+            unit="megajoule",
+            profile=BackgroundProfile("ecoinvent", "3.12", system_model),
+        )
+        for name in names
+    ]
+    assert len(set(labels)) == len(names)
+    for name, label in zip(names, labels, strict=True):
+        assert label == f"Energy feed, gross {{IN}}| {name[0].upper() + name[1:]} | {suffix}"
+
+
+@pytest.mark.parametrize(
+    "name,market",
+    [
+        ("market for electricity", "market for"),
+        ("Market group for electricity", "market group for"),
+        ("market for", "market for"),
+    ],
+)
+def test_actual_market_prefixes_still_normalize(name, market):
+    assert (
+        format_simapro_technosphere_name(
+            name=name,
+            reference_product="electricity",
+            location="CH",
+            unit="kilowatt hour",
+            profile=BackgroundProfile("ecoinvent", "3.12", "cutoff"),
+        )
+        == f"Electricity {{CH}}| {market} electricity | Cut-off, U"
+    )
+
+
+@pytest.mark.parametrize(
+    "name,product",
+    [
+        ("market for wind turbine, 4.5MW, onshore, direct drive", "wind turbine, 4.5MW, onshore"),
+        ("market for battery capacity, Li-ion, LFP", "electricity storage capacity"),
+        ("market for battery capacity, Li-ion, NMC811", "electricity storage capacity"),
+        ("market group for electricity, high voltage, 20-year period", "electricity, high voltage"),
+        ("market for heat, secondary, district or industrial", "heat, district or industrial"),
+        ("market for transport, freight, lorry, 40 metric ton", "transport, freight, lorry"),
+        ("market for ethylene vinyl acetate copolymer, special grade", "ethylene vinyl acetate copolymer"),
+    ],
+)
+def test_market_names_preserve_supplier_qualifiers(name, product):
+    label = format_simapro_technosphere_name(
+        name=name,
+        reference_product=product,
+        location="GLO",
+        unit="kilogram",
+        profile=ecoinvent_profile(),
+    )
+    assert label == f"{product[0].upper() + product[1:]} {{GLO}}| {name} | Cut-off, U"
