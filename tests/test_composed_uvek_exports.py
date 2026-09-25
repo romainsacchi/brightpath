@@ -71,7 +71,7 @@ def test_removed_patch_supplier_is_rejected_even_with_permissive_policy():
     old = provider.load_technosphere(context("3.9").technosphere).identities
     new = provider.load_technosphere(context("3.9.1").technosphere).identities
     removed = next(iter(old - new))
-    exchange = dict(zip(("name", "reference product", "location", "unit"), removed))
+    exchange = dict(zip(("name", "reference product", "location", "unit"), removed, strict=True))
     initial = inventory(context("3.9"), [{**exchange, "type": "technosphere", "amount": 1}])
     original = deepcopy(initial.data)
     with pytest.raises(MigrationError):

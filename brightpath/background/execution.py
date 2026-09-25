@@ -20,8 +20,8 @@ from brightpath.background.migration import (
     MigrationRouteStep,
     plan_background_migration,
 )
-from brightpath.background.uvek_export import apply_uvek_export
 from brightpath.background.patches import compatibility_resource, patch_pair, patch_resource
+from brightpath.background.uvek_export import apply_uvek_export
 from brightpath.background.validation import validate_background_links
 from brightpath.core.context import BackgroundContext, BiosphereProfile, InventoryContext, TechnosphereProfile
 from brightpath.core.policies import MigrationPolicy, PolicyAction

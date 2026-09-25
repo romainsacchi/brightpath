@@ -6,8 +6,8 @@ from dataclasses import dataclass
 
 from .adapters import AdapterRegistry, default_adapter_registry
 from .background import PackageCatalogProvider
-from .background.uvek_export import load_uvek_export_resource
 from .background.patches import compatibility_resource
+from .background.uvek_export import load_uvek_export_resource
 from .migrations.resources import (
     load_biosphere_resources,
     load_technosphere_resources,

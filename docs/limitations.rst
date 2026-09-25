@@ -63,7 +63,7 @@ Format boundaries
   establish compatibility with a target database's LCIA methods.
 
 Local versioned ecoinvent method references
-------------------------------------------
+-------------------------------------------
 
 Use an explicit local method mapping when exporting inventories intended for
 a version-matched ecoinvent openLCA method package::
@@ -150,7 +150,7 @@ environmental impact. This mapping does not supply external technosphere
 provider IDs or validate openLCA calculation-engine results.
 
 openLCA uncertainty conversion
------------------------------
+------------------------------
 
 Brightway lognormal ``loc`` and ``scale`` describe the underlying normal
 distribution. JSON-LD export writes ``geomMean = exp(loc)`` and

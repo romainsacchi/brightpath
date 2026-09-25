@@ -571,8 +571,9 @@ def test_invalid_lognormal_export_leaves_existing_archive_untouched(tmp_path, lo
     "geom_mean, geom_sd", [(0, 2), (2, 0.5), (None, 2), (2, None), (float("inf"), 2), (2, float("nan"))]
 )
 def test_invalid_imported_lognormal_is_rejected(geom_mean, geom_sd):
-    from brightpath.formats.openlca_jsonld import _legacy_uncertainty
     import olca_schema as schema
+
+    from brightpath.formats.openlca_jsonld import _legacy_uncertainty
 
     value = schema.Uncertainty(
         distribution_type=schema.UncertaintyType.LOG_NORMAL_DISTRIBUTION, geom_mean=geom_mean, geom_sd=geom_sd
@@ -637,7 +638,8 @@ def test_lognormal_parameters_and_zero_spread_round_trip(tmp_path):
 )
 def test_other_supported_uncertainty_types_keep_their_parameters(kind, fields):
     import olca_schema as schema
-    from brightpath.formats.openlca_jsonld import _schema_uncertainty, _legacy_uncertainty
+
+    from brightpath.formats.openlca_jsonld import _legacy_uncertainty, _schema_uncertainty
 
     result = _schema_uncertainty(schema, {"uncertainty type": kind, **fields})
     if kind in (0, 1):

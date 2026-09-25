@@ -13,8 +13,8 @@ from enum import Enum
 from pathlib import Path
 from typing import Iterable
 
-from brightpath.background.uvek_export import load_uvek_export_resource
 from brightpath.background.patches import PATCH_VERSIONS, patch_pair, patch_resource
+from brightpath.background.uvek_export import load_uvek_export_resource
 from brightpath.core.context import BackgroundContext, BiosphereProfile, TechnosphereProfile, VersionResolution
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.core.reports import Issue, Loss, Severity, StageKind, StageReport

@@ -10,7 +10,7 @@ import pytest
 
 from brightpath.core import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
 from brightpath.exceptions import SerializationError
-from brightpath.formats.openlca_jsonld import write_openlca_jsonld, load_openlca_jsonld
+from brightpath.formats.openlca_jsonld import load_openlca_jsonld, write_openlca_jsonld
 from brightpath.formats.openlca_methods import OpenLCAMethodMapping
 from brightpath.models import InventoryDocument
 
