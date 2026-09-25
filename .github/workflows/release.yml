@@ -12,7 +12,7 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: "Release version, for example 0.1.0"
+        description: "Release version, for example 1.0.0"
         required: true
 
 permissions:
@@ -32,15 +32,18 @@ jobs:
       - name: Install package and development tools
         run: |
           python -m pip install --upgrade pip
-          python -m pip install -e ".[dev]"
+          python -m pip install -e ".[dev,docs]"
 
       - name: Check formatting
         run: |
-          python -m black --check brightpath tests
-          python -m isort --check-only brightpath tests
+          python -m black --check brightpath tests docs/conf.py
+          python -m isort --check-only brightpath tests docs/conf.py
 
       - name: Lint
-        run: python -m ruff check brightpath tests
+        run: python -m ruff check brightpath tests docs/conf.py
+
+      - name: Build documentation
+        run: python -m sphinx -W --keep-going -b html docs docs/_build/html
 
       - name: Security scan
         run: python -m bandit -r brightpath
@@ -85,9 +88,12 @@ jobs:
       - name: Determine release version
         id: version
         shell: bash
+        env:
+          RELEASE_EVENT: ${{ github.event_name }}
+          REQUESTED_VERSION: ${{ inputs.version }}
         run: |
-          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
-            VERSION="${{ github.event.inputs.version }}"
+          if [[ "${RELEASE_EVENT}" == "workflow_dispatch" ]]; then
+            VERSION="${REQUESTED_VERSION}"
           else
             VERSION="${GITHUB_REF_NAME#v}"
           fi
