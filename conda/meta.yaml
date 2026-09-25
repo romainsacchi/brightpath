@@ -17,27 +17,29 @@ build:
 
 requirements:
   host:
-    - python >=3.10,<3.12
+    - python >=3.12
     - pip
-    - setuptools
+    - setuptools >=77
     - wheel
-    - pyyaml
+    - pyyaml >=6
     - xlsxwriter >=3
   run:
-    - python >=3.10,<3.12
+    - python >=3.12
     - bw2io
-    - pyyaml
+    - olca-schema >=2.6.2,<3
+    - pyyaml >=6
     - xlsxwriter >=3
 
 test:
   imports:
     - brightpath
     - yaml
+    - olca_schema
   requires:
-    # Ensure the test env uses a Python version where bw2io wheels/conda pkgs exist
-    - python >=3.10,<3.12
+    - python >=3.12
     - pytest
     - bw2io
+    - olca-schema >=2.6.2,<3
     - xlsxwriter >=3
 
 about:

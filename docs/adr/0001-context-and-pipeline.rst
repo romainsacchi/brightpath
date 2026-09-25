@@ -48,5 +48,5 @@ allowlists. The built-in Brightway Excel adapter admits only the ``bw2io``
 dialect. The legacy non-transactional ``migrate_inventory`` function is not
 exported from ``brightpath.migrations``.
 
-BrightPath 1.0 supports Python 3.10 and 3.11. The codebase already uses Python
-3.10 syntax, so claiming Python 3.9 support would be inaccurate.
+BrightPath 1.0 requires Python 3.12 or newer. CI and documentation builds
+use Python 3.12, matching the minimum declared in the package metadata.
