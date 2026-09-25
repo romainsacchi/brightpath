@@ -242,8 +242,8 @@ def test_legacy_loader_uses_directory_provider_manifest_integrity(tmp_path, monk
 
 
 def test_clean_credential_value_strips_rtf_delimiters():
-    assert SCRIPT_MODULE.clean_credential_value("Romain.Sacchi\\") == "Romain.Sacchi"
-    assert SCRIPT_MODULE.clean_credential_value("!052388.Dream}") == "!052388.Dream"
+    assert SCRIPT_MODULE.clean_credential_value("example-user\\") == "example-user"
+    assert SCRIPT_MODULE.clean_credential_value("example-password}") == "example-password"
 
 
 def test_load_credentials_prefers_environment_variables(monkeypatch):
