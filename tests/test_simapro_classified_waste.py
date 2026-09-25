@@ -49,7 +49,7 @@ def test_explicit_category_and_multiple_codes():
 
 
 @pytest.mark.parametrize("amount", [-2, -0.5])
-def test_inferred_supplier_controls_both_sections_and_signs(amount):
+def test_inferred_supplier_controls_both_sections_and_signs(amount, fixed_simapro_clock):
     supplier = classified(amount=amount)
     customer = process("consumer")
     customer["exchanges"].append(link(supplier, -3))

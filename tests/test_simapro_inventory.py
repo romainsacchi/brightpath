@@ -830,7 +830,7 @@ def test_from_csv_validates_path_and_suffix(tmp_path):
         ({"location": "CH", "geography": "Explicit geography"}, "Explicit geography"),
     ],
 )
-def test_geography_uses_location_without_overwriting_explicit_metadata(overrides, expected):
+def test_geography_uses_location_without_overwriting_explicit_metadata(overrides, expected, fixed_simapro_clock):
     activity = minimal_activity(**overrides)
     before = deepcopy(activity)
     inventory = SimaProInventory.from_data([activity], background_profile=profile())
