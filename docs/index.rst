@@ -20,7 +20,7 @@ only the requested background profiles and linked identities. Neither
 operation assumes the other.
 
 The built-in registry currently provides Brightway Excel, Brightway block CSV,
-Brightway block TSV, and SimaPro CSV file adapters. OpenLCA Excel and ecoSpold2
+Brightway block TSV, SimaPro CSV, and process-only openLCA JSON-LD ZIP adapters. OpenLCA Excel and ecoSpold2
 are reserved in the model but remain unregistered and unimplemented. Query the
 installed capabilities with ``brightpath formats``.
 

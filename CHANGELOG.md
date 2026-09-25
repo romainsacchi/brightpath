@@ -2,67 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0a1 - Unreleased
-
-### Fixed
-
-- Align default ecoinvent SimaPro process display names with Premise: reference product, location, activity and system model; preserve explicit names.
-
-- Fill SimaPro Geography from the dataset location when no explicit geography is supplied.
-
-- Preserve full SimaPro market supplier names and qualifiers; reject ambiguous serialized supplier labels before export.
-
-- Restrict SimaPro market-name rewriting to actual market prefixes, preserving distinct suppliers whose names contain “to generic market for”.
-
-- Wrote waste-treatment reference flows with positive magnitudes, preserving their
-  quantities, while sign-flipping links to waste suppliers in both ecoinvent and
-  UVEK exports. Ordinary signed inputs remain unchanged.
-- Preserved ecoinvent waste credits with reversible sign conversion instead of
-  absolute values. Reflected uncertainty locations, signs, and bounds together,
-  and kept ordinary inputs inside waste processes signed.
-- Used explicit SimaPro process categories and included supplier categories for
-  waste classification, and explicit CSV sections on import. Conflicting supplier
-  categories and unsupported reflected export distributions/formulas now fail.
-- Converted SimaPro water emissions only when supplied in cubic meters, scaling
-  normal uncertainty and distribution bounds with the amount while preserving
-  lognormal scale. Already-kilogram emissions remain unchanged. Unsupported
-  water units, distributions, and unevaluated exchange formulas now fail explicitly.
-- Rendered explicit empty or `unspecified` SimaPro biosphere subcompartments as
-  blank fields without remapping other unknown compartments.
-
-- Add explicit preservation of method-package metadata conflicts as separate,
-  uncharacterized openLCA flows with stable UUIDs and coverage diagnostics.
-  Keep strict rejection as the default and retain source identifier checks.
-
-- Generalize local openLCA method mappings to explicit ecoinvent 3.5–3.12
-  biosphere versions, preserving patch releases. Read legacy JSON-LD categories
-  and reference flags and semicolon-delimited source CSVs. Explain the required
-  JSON-LD conversion for `.zolca` backups.
-
-- Avoid repeatedly copying accumulated per-flow exchange metadata when exporting
-  full scenarios with widely used suppliers.
-
-- Added opt-in local ecoinvent 3.12 openLCA method-package mapping with exact
-  elementary-flow and quantity references, UUID-scoped gas-volume labels, and
-  an inventory coverage sidecar. Preserve source UUIDs for missing flows.
-
-- Convert Brightway lognormal log-space parameters to openLCA geometric parameters
-  and back, including signed distributions and process/global parameters. Reject
-  invalid lognormal parameters and unsupported uncertainty types instead of
-  silently producing incomplete uncertainty data. Existing JSON-LD exports with
-  unconverted parameters must be regenerated from their original inventories.
-- Prevented olca-schema's generated IDs and timestamps from bypassing deterministic
-  export identities or being mistaken for source metadata.
-- Prevented synthetic openLCA flow UUID collisions between elementary-flow
-  compartments and between product supplier locations. Explicit openLCA UUIDs
-  remain unchanged; incompatible definitions of one UUID now fail serialization.
-- Preserved exchange metadata on shared openLCA flows by scoping it to process
-  and exchange IDs, with support for reading the older metadata layout.
-- Changed generated flow UUIDs: re-export affected JSON-LD inventories and import
-  into a fresh target database to avoid retaining obsolete synthetic flows.
+## 1.0.0 - Unreleased
 
 ### Breaking
 
+- Raised the minimum supported Python version to 3.12.
+- Changed generated openLCA flow UUIDs to distinguish compartments and supplier locations.
+  Re-export affected inventories into a fresh target database to avoid obsolete synthetic flows.
+- Corrected openLCA lognormal uncertainty serialization. Regenerate existing JSON-LD exports
+  with unconverted parameters from their original inventories.
 - Deleted `BrightwayConverter` and `SimaproConverter` and replaced them with the independent
   `BrightwayInventory` and `SimaProInventory` APIs.
 - Separated file-format operations from background family, version, and system-model migration.
@@ -83,10 +31,29 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
-- Add opt-in ISIC/CPC waste inference for SimaPro, preserving explicit categories and requiring review of ambiguous cases.
-  Check reference-product names, units and signs before inferring recovered products; conflicting metadata and positive treatment references require review.
-- Accept caller-supplied folder hierarchies independently of waste classification.
+- Added opt-in ISIC/CPC waste inference for SimaPro, preserving explicit categories
+  and requiring review of ambiguous cases. Reference-product names, units and signs
+  constrain recovered-product inference; conflicting metadata and positive treatment
+  references require review.
+- Added caller-supplied SimaPro folder hierarchies independently of waste classification.
 
+- Added detection, reading, and writing of process-only openLCA JSON-LD ZIP packages.
+- Added optional openLCA reference linking for UVEK 2025 with its ecoinvent 3.10 biosphere,
+  and native process-category inference from classifications and reference catalogs.
+  Explicit source categories are preserved.
+- Added opt-in mapping to locally supplied ecoinvent openLCA method packages for explicit
+  biosphere versions 3.5–3.12, preserving patch releases. Mapping uses exact elementary-flow
+  and quantity references, UUID-scoped gas-volume labels, and an inventory coverage sidecar.
+  Missing package flows retain their source UUIDs. `.zolca` backups require JSON-LD conversion.
+- Added an explicit option to preserve method-package metadata conflicts as separate,
+  uncharacterized flows with stable UUIDs and coverage diagnostics. Strict rejection remains
+  the default, and contradictory source identifiers still fail validation.
+- Added a reviewed, directional UVEK 2025 to ecoinvent 3.12 cut-off migration route with
+  documented proxies and supporting recipes, composable with older ecoinvent migration routes.
+  Coverage is partial: proxies require explicit permission and unresolved suppliers still fail.
+- Added exact ecoinvent 3.9.1 and 3.10.1 catalogs and audited compatibility edges that retain
+  patch-version identities, plus a documented UVEK export workflow.
+- Added inference of existing SimaPro process categories.
 - Added SimaPro biosphere-profile inference across all available exact catalogs. A profile is
   returned only for a unique best exchange-coverage result; ties and no-match outcomes are reported.
 - Added copy-on-write `InventoryDocument`, `BrightwayInventory`, and `SimaProInventory` models.
@@ -126,6 +93,54 @@ All notable changes to this project will be documented in this file.
 
 ### Fixed
 
+- Aligned default ecoinvent SimaPro process display names with Premise: reference
+  product, location, activity and system model. Explicit names are preserved.
+- Filled SimaPro Geography from the dataset location when no explicit geography is supplied.
+- Preserved full SimaPro market supplier names and qualifiers, rejecting ambiguous
+  serialized supplier labels before export.
+- Restricted SimaPro market-name rewriting to actual market prefixes, preserving
+  distinct suppliers whose names contain “to generic market for”.
+
+- Wrote waste-treatment reference flows with positive magnitudes, preserving their
+  quantities, while sign-flipping links to waste suppliers in both ecoinvent and
+  UVEK exports. Ordinary signed inputs remain unchanged.
+- Preserved ecoinvent waste credits with reversible sign conversion instead of
+  absolute values. Reflected uncertainty locations, signs, and bounds together,
+  and kept ordinary inputs inside waste processes signed.
+- Used explicit SimaPro process categories and included supplier categories for
+  waste classification, and explicit CSV sections on import. Conflicting supplier
+  categories and unsupported reflected export distributions/formulas now fail.
+- Converted SimaPro water emissions only when supplied in cubic meters, scaling
+  normal uncertainty and distribution bounds with the amount while preserving
+  lognormal scale. Already-kilogram emissions remain unchanged. Unsupported
+  water units, distributions, and unevaluated exchange formulas now fail explicitly.
+- Rendered explicit empty or `unspecified` SimaPro biosphere subcompartments as
+  blank fields without remapping other unknown compartments.
+- Aligned Conda requirements with Python 3.12 and openLCA dependencies, added strict
+  documentation checks to the release workflow, and included maintainer scripts
+  and the changelog and required review fixtures in source distributions.
+- Included shared pytest fixtures in source archives so SimaPro tests using the
+  fixed export clock also run from an extracted distribution.
+- Passed manually supplied release versions through environment variables before
+  shell evaluation, avoiding direct interpolation into release scripts.
+- Replaced credential-like catalog-test examples with synthetic values.
+- Prevented synthetic openLCA flow UUID collisions between elementary-flow compartments and
+  product supplier locations. Explicit UUIDs remain unchanged; incompatible definitions of
+  one UUID fail serialization.
+- Prevented olca-schema-generated IDs and timestamps from overriding deterministic identities
+  or being mistaken for source metadata.
+- Preserved shared-flow exchange metadata by scoping it to process and exchange IDs, with
+  support for reading the older metadata layout. Removed repeated copying of accumulated
+  metadata to improve large scenario exports.
+- Converted Brightway lognormal log-space parameters to openLCA geometric parameters and back,
+  including signed distributions and process/global parameters. Invalid lognormal parameters
+  and unsupported uncertainty types now fail instead of producing incomplete uncertainty data.
+- Supported legacy JSON-LD category objects and reference flags in method-package mappings,
+  and semicolon-delimited biosphere source CSVs.
+- Fixed Brightway biosphere-category serialization, SimaPro foreground process rendering,
+  and Unicode normalization in SimaPro CSV exports.
+- Improved reviewed ecoinvent-to-UVEK mappings, UUID-less reverse biosphere matching, and
+  unambiguous compartment fallbacks while retaining safeguards for unsafe unit changes.
 - Accepted `hectare` and `ha` as valid Brightway technosphere units during inventory validation and catalog matching.
 - Accepted `person kilometer` plus legacy `product` technosphere fields during Brightway inventory normalization.
 - Replaced repeated full-catalog canonical technosphere scans with indexed matching to keep large workbook analysis responsive.
