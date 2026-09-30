@@ -179,6 +179,8 @@ class AnalysisResult:
     file_issues: list[Issue] = field(default_factory=list)
     candidates: list[CandidateSummary] = field(default_factory=list)
     inventory_data: list[dict] = field(default_factory=list)
+    database_parameters: list[dict] = field(default_factory=list)
+    project_parameters: list[dict] = field(default_factory=list)
 
     @property
     def has_errors(self) -> bool:

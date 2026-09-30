@@ -36,6 +36,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    workflows/brightway
    workflows/simapro
    workflows/conversion
+   workflows/parameters
    workflows/migration
    workflows/uvek-export
    workflows/validation

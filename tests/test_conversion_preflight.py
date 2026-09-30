@@ -124,7 +124,7 @@ def test_unknown_simapro_fields_are_aggregated_and_follow_policy():
     assert dataset_loss.details["fields"] == ("custom_dataset",)
 
 
-def test_exchange_formula_and_rounding_are_explicit_losses():
+def test_exchange_formula_is_preserved_and_rounding_remains_an_explicit_loss():
     technosphere = {
         "type": "technosphere",
         "name": "market for product",
@@ -137,13 +137,9 @@ def test_exchange_formula_and_rounding_are_explicit_losses():
 
     report = _preflight(_document(data=[_activity(extra_exchanges=(technosphere,))]))
 
-    assert {
-        "simapro_exchange_amount_rounded",
-        "simapro_exchange_formula_unsupported",
-    }.issubset(_loss_codes(report))
-    formula = next(loss for loss in report.losses if loss.code == "simapro_exchange_formula_unsupported")
+    assert "simapro_exchange_amount_rounded" in _loss_codes(report)
+    assert "simapro_exchange_formula_unsupported" not in _loss_codes(report)
     rounding = next(loss for loss in report.losses if loss.code == "simapro_exchange_amount_rounded")
-    assert formula.path == "datasets[0].exchanges[1].formula"
     assert rounding.details["after"] == pytest.approx(1.23456789012346)
 
 

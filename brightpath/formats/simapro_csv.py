@@ -1,8 +1,10 @@
 from __future__ import annotations
 
+import base64
 import csv
 import datetime
 import hashlib
+import json
 import logging
 import math
 import re
@@ -109,6 +111,47 @@ _LATIN1_TEXT_REPLACEMENTS = str.maketrans(
 
 class _Formula(str):
     pass
+
+
+def _parameter_comment(parameter):
+    payload = json.dumps(parameter, ensure_ascii=True, allow_nan=False, separators=(",", ":"))
+    encoded = base64.b64encode(payload.encode("utf-8")).decode("ascii")
+    return f"{parameter.get('comment') or ''} [BrightPath parameter v1:{encoded}]".strip()
+
+
+def _restore_parameter_metadata(parameter):
+    comment = parameter.get("comment") or ""
+    match = re.search(r" \[BrightPath parameter v1:([A-Za-z0-9+/=]+)\]$", " " + comment)
+    if not match or len(match[1]) > 65536:
+        return
+    try:
+        metadata = json.loads(base64.b64decode(match[1], validate=True))
+    except (ValueError, UnicodeError):
+        return
+    if (
+        not isinstance(metadata, dict)
+        or str(metadata.get("name", "")).casefold() != str(parameter.get("name", "")).casefold()
+    ):
+        return
+    native = deepcopy(parameter)
+    for key in ("name", "formula", "amount", "uncertainty type", "loc", "scale", "shape", "minimum", "maximum"):
+        if key in native and key in metadata:
+            metadata[key] = native[key]
+    metadata["comment"] = comment[: max(0, match.start() - 1)].rstrip()
+    if not metadata["comment"]:
+        metadata.pop("comment")
+    parameter.clear()
+    parameter.update(metadata)
+
+
+def _exchange_amount(exchange, amount):
+    if not exchange.get("formula"):
+        return _format_simapro_number(amount)
+    if amount != exchange["amount"]:
+        if amount != -exchange["amount"]:
+            raise SimaProSerializationError("Cannot preserve a formula through an unknown amount transformation.")
+        return _Formula(f"-({exchange['formula']})")
+    return _Formula(str(exchange["formula"]))
 
 
 @dataclass
@@ -952,7 +995,7 @@ class _SimaProRenderer:
             elif field_name == "Calculated parameters":
                 parameters = [parameter for parameter in (activity.get("parameters") or []) if parameter.get("formula")]
                 rows.extend(
-                    [parameter["name"], _Formula(str(parameter["formula"])), parameter.get("comment")]
+                    [parameter["name"], _Formula(str(parameter["formula"])), _parameter_comment(parameter)]
                     for parameter in parameters
                 )
                 rows.append([])
@@ -973,7 +1016,7 @@ class _SimaProRenderer:
         if calculated:
             rows.append([f"{scope} Calculated parameters".strip()])
             rows.extend(
-                [parameter["name"], _Formula(str(parameter["formula"])), parameter.get("comment")]
+                [parameter["name"], _Formula(str(parameter["formula"])), _parameter_comment(parameter)]
                 for parameter in calculated
             )
             rows.append([])
@@ -984,13 +1027,13 @@ class _SimaProRenderer:
         amount = parameter.get("amount", parameter.get("loc"))
         return [
             parameter["name"],
-            f"{amount:.12g}",
+            f"{amount:.17g}",
             uncertainty,
             f"{convert_sd_to_sd2(parameter.get('scale', 1), uncertainty):.12g}",
             f"{parameter.get('min', parameter.get('minimum', 0)):.12g}",
             f"{parameter.get('max', parameter.get('maximum', 0)):.12g}",
             "Yes" if parameter.get("hidden") else "No",
-            parameter.get("comment"),
+            _parameter_comment(parameter),
         ]
 
     @staticmethod
@@ -1116,7 +1159,7 @@ class _SimaProRenderer:
                 [
                     dataset_name,
                     self.units[production["unit"]],
-                    _format_simapro_number(amount),
+                    _exchange_amount(production, amount),
                     production.get("simapro waste type") or "All waste types",
                     subcategory,
                     production.get("comment"),
@@ -1127,7 +1170,7 @@ class _SimaProRenderer:
             [
                 dataset_name,
                 self.units[production["unit"]],
-                _format_simapro_number(amount),
+                _exchange_amount(production, amount),
                 _format_simapro_number(production["allocation"] if production.get("allocation") is not None else 100),
                 production.get("simapro waste type") or "not defined",
                 subcategory,
@@ -1159,10 +1202,6 @@ class _SimaProRenderer:
                 continue
             if not self._supplier_is_waste(exchange):
                 continue
-            if exchange.get("formula"):
-                raise SimaProSerializationError(
-                    "Resolve waste exchange formulas explicitly before numeric SimaPro export."
-                )
             rendered = _reflect_simapro_exchange(exchange)
             rows.append(self._technosphere_exchange_row(rendered, rendered["amount"]))
             exchange["used"] = True
@@ -1187,7 +1226,7 @@ class _SimaProRenderer:
         return [
             self._format_technosphere(exchange),
             self.units[exchange["unit"]],
-            _format_simapro_number(amount),
+            _exchange_amount(exchange, amount),
             uncertainty,
             _format_simapro_number(convert_sd_to_sd2(exchange.get("scale", 1), uncertainty)),
             _format_simapro_number(exchange.get("min", exchange.get("minimum", 0))),
@@ -1223,7 +1262,7 @@ class _SimaProRenderer:
             self.biosphere.get(exchange["name"], exchange["name"]),
             subcompartment,
             self.units[exchange["unit"]],
-            _format_simapro_number(exchange["amount"]),
+            _exchange_amount(exchange, exchange["amount"]),
             uncertainty,
             _format_simapro_number(convert_sd_to_sd2(exchange.get("scale", 1), uncertainty)),
             _format_simapro_number(exchange.get("min", exchange.get("minimum", 0))),
@@ -1283,16 +1322,13 @@ def _water_emission_in_kilograms(exchange: dict) -> dict:
     uncertainty = rendered.get("uncertainty type", 0)
     if uncertainty not in {0, 1, 2, 3, 4, 5}:
         raise SimaProSerializationError(f"Unsupported Water emission uncertainty type {uncertainty!r}.")
-    if rendered.get("formula"):
-        raise SimaProSerializationError(
-            "Water emission formulas cannot be preserved by the numeric SimaPro exchange writer. "
-            "Resolve the formula explicitly before export."
-        )
     if unit == "kilogram":
         return rendered
     factor = 1000.0
     rendered["unit"] = "kilogram"
     rendered["amount"] *= factor
+    if rendered.get("formula"):
+        rendered["formula"] = f"({rendered['formula']}) * 1000"
     if rendered.get("loc") is not None:
         rendered["loc"] = rendered["loc"] + math.log(factor) if uncertainty == 2 else rendered["loc"] * factor
     if uncertainty == 3 and rendered.get("scale") is not None:
@@ -1474,6 +1510,9 @@ def _split_global_parameters(parameters, scopes: dict[str, str]) -> tuple[list[d
 
 
 def _normalize_parameter_identifiers(parameters: list[dict]) -> dict[str, str]:
+    for parameter in parameters:
+        if isinstance(parameter, dict):
+            _restore_parameter_metadata(parameter)
     mapping = {
         str(parameter["name"]): str(parameter["name"]).lower()
         for parameter in parameters

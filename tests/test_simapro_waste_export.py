@@ -179,7 +179,7 @@ def test_external_supplier_explicit_category_overrides_name_heuristic():
     assert section_rows(rows, "Waste to treatment")[0][2] == "0.5"
 
 
-@pytest.mark.parametrize("fields", [{"uncertainty type": 6}, {"formula": "waste_parameter"}])
+@pytest.mark.parametrize("fields", [{"uncertainty type": 6}])
 def test_unsupported_waste_reflection_fails_explicitly(fields):
     waste = process("disposal service", "waste treatment/Test", -1)
     consumer = process("consumer")
@@ -188,6 +188,18 @@ def test_unsupported_waste_reflection_fails_explicitly(fields):
         [consumer, waste], background_profile=BackgroundProfile("ecoinvent", "3.12", "cutoff")
     )
     assert source.render().has_errors
+
+
+def test_waste_formula_follows_signed_amount_without_mutation():
+    waste = process("disposal service", "waste treatment/Test", -1)
+    consumer = process("consumer")
+    consumer["parameters"] = [{"name": "waste_parameter", "amount": -0.5}]
+    consumer["exchanges"].append(link(waste, -0.5, formula="waste_parameter"))
+    before = deepcopy([consumer, waste])
+    source, rows = render([consumer, waste])
+    assert section_rows(rows, "Waste to treatment")[0][2] == "-(waste_parameter)"
+    assert source.data == before
+    assert [consumer, waste] == before
 
 
 @pytest.mark.parametrize(

@@ -31,6 +31,9 @@ convert format and/or update background links
 
 ## What can I do with it?
 
+See the [parameter and round-trip guide](docs/workflows/parameters.rst) for shared
+parameter scopes and formulas.
+
 | I want to… | BrightPath can… |
 |---|---|
 | Move a Brightway inventory to SimaPro | Read Brightway Excel and write SimaPro CSV |

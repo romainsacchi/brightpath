@@ -1354,11 +1354,11 @@ class _OpenLCAPackageBuilder:
         entity = _hydrate_entity(self.schema.Parameter, template)
         entity.name = str(parameter.get("name") or entity.name or "")
         entity.value = float(parameter["amount"]) if parameter.get("amount") is not None else None
-        entity.uncertainty = _schema_uncertainty(self.schema, parameter)
         entity.formula = str(parameter.get("formula") or "") or None
         entity.description = str(parameter.get("comment") or "") or None
         entity.parameter_scope = self.schema.ParameterScope.PROCESS_SCOPE
-        entity.is_input_parameter = True
+        entity.is_input_parameter = not bool(entity.formula)
+        entity.uncertainty = _schema_uncertainty(self.schema, parameter) if not entity.formula else None
         entity.other_properties = _merge_brightpath_other_properties(
             entity.other_properties,
             _parameter_extras(parameter, target=""),
@@ -1370,11 +1370,11 @@ class _OpenLCAPackageBuilder:
         entity = _hydrate_entity(self.schema.Parameter, template)
         entity.name = str(parameter.get("name") or entity.name or "")
         entity.value = float(parameter["amount"]) if parameter.get("amount") is not None else None
-        entity.uncertainty = _schema_uncertainty(self.schema, parameter)
         entity.formula = str(parameter.get("formula") or "") or None
         entity.description = str(parameter.get("comment") or "") or None
         entity.parameter_scope = self.schema.ParameterScope.GLOBAL_SCOPE
-        entity.is_input_parameter = True
+        entity.is_input_parameter = not bool(entity.formula)
+        entity.uncertainty = _schema_uncertainty(self.schema, parameter) if not entity.formula else None
         entity.other_properties = _merge_brightpath_other_properties(
             entity.other_properties,
             _parameter_extras(parameter, target=target),

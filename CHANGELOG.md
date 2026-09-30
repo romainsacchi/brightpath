@@ -31,6 +31,8 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Preserved shared parameter scopes in upload analysis, SimaPro exchange expressions
+  and parameter metadata, and openLCA calculated/input parameter semantics.
 - Kept biosphere chemical formulas out of exchange amount-expression fields and
   advanced the migration fingerprint to invalidate old fingerprint-checked exports.
 

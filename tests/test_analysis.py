@@ -1349,6 +1349,8 @@ def test_analyze_simapro_csv_surfaces_validation_warnings_from_converted_invento
 
     class FakeSimaProInventory:
         data = inventory_data
+        database_parameters = []
+        project_parameters = []
 
         @classmethod
         def from_csv(cls, *args, **kwargs):
@@ -1404,6 +1406,8 @@ def test_analyze_simapro_csv_validates_background_links_from_converted_inventory
 
     class FakeSimaProInventory:
         data = inventory_data
+        database_parameters = []
+        project_parameters = []
 
         @classmethod
         def from_csv(cls, *args, **kwargs):
@@ -1492,6 +1496,8 @@ def test_analyze_simapro_csv_infers_unique_biosphere_catalog(tmp_path, monkeypat
 
     class FakeSimaProInventory:
         data = inventory_data
+        database_parameters = []
+        project_parameters = []
 
         @classmethod
         def from_csv(cls, *args, **kwargs):
@@ -1556,6 +1562,8 @@ def test_analyze_simapro_csv_reports_ambiguous_biosphere_catalogs(tmp_path, monk
 
     class FakeSimaProInventory:
         data = inventory_data
+        database_parameters = []
+        project_parameters = []
 
         @classmethod
         def from_csv(cls, *args, **kwargs):
@@ -1608,6 +1616,8 @@ def test_analyze_simapro_csv_reports_unmatched_biosphere_catalogs(tmp_path, monk
 
     class FakeSimaProInventory:
         data = inventory_data
+        database_parameters = []
+        project_parameters = []
 
         @classmethod
         def from_csv(cls, *args, **kwargs):

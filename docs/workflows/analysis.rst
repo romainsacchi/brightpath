@@ -44,6 +44,9 @@ Analyze a file
            print("dataset", issue.severity, issue.code, issue.message)
 
 Candidate summaries also expose ``description_hint`` and ``source_hint``.
+The result retains ``database_parameters`` and ``project_parameters`` independently
+of activity parameters in ``inventory_data``. Keep those definitions when extracting
+an individual candidate. See :doc:`parameters` for preservation rules.
 BrightPath reads dedicated dataset metadata when present and can split a
 trailing ``Source:`` section from a comment.
 

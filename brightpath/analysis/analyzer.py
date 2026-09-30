@@ -187,7 +187,7 @@ def analyze_inventory(
         validation. The application provider is used when omitted.
     :param additional_foreground_targets: External foreground identities that
         should be accepted during link validation.
-    :return: Detected format, resolved profile, normalized inventory data,
+    :return: Detected format, resolved profile, normalized inventory data, shared parameters,
         file issues, and per-dataset candidate summaries.
 
     Parsing and validation failures are captured as issues whenever possible;
@@ -341,6 +341,8 @@ def _analyze_openlca_jsonld(
     try:
         package = load_openlca_jsonld_package(path)
         inventory_data = package.data
+        result.database_parameters = deepcopy(package.database_parameters or [])
+        result.project_parameters = deepcopy(package.project_parameters or [])
     except Exception as exc:
         result.file_issues.extend(
             _exception_to_file_issues(
@@ -421,6 +423,8 @@ def _analyze_brightway_inventory_data(
     with _capture_warnings() as collector:
         try:
             inventory_data = loader(path)
+            result.database_parameters = deepcopy(getattr(inventory_data, "database_parameters", []))
+            result.project_parameters = deepcopy(getattr(inventory_data, "project_parameters", []))
         except Exception as exc:
             result.file_issues.extend(
                 _exception_to_file_issues(
@@ -598,6 +602,8 @@ def _analyze_simapro_csv(
                 catalog_provider=parsing_provider,
             )
             inventory_data = inventory.data
+            result.database_parameters = deepcopy(inventory.database_parameters or [])
+            result.project_parameters = deepcopy(inventory.project_parameters or [])
             result.file_issues.extend(
                 issue
                 for issue in inventory.validate(check_background_links=False).issues
@@ -842,6 +848,13 @@ def _simapro_profile_conflict(
     return f"source_profile conflicts with source_context.technosphere for: {fields}."
 
 
+class _ParameterInventoryData(list):
+    def __init__(self, importer):
+        super().__init__(importer.data)
+        self.database_parameters = deepcopy(importer.database_parameters or [])
+        self.project_parameters = deepcopy(importer.project_parameters or [])
+
+
 def _load_brightway_excel_without_validation(path: Path) -> list[dict]:
     if not path.is_file():
         raise FileNotFoundError("The file could not be found.")
@@ -852,7 +865,7 @@ def _load_brightway_excel_without_validation(path: Path) -> list[dict]:
     if "biosphere-2-3-categories" not in bw2io.migrations:
         bw2io.create_core_migrations()
     importer.apply_strategies()
-    return importer.data
+    return _ParameterInventoryData(importer)
 
 
 def _load_brightway_delimited_without_validation(path: Path) -> list[dict]:
@@ -870,7 +883,7 @@ def _load_brightway_delimited_without_validation(path: Path) -> list[dict]:
     if "biosphere-2-3-categories" not in bw2io.migrations:
         bw2io.create_core_migrations()
     importer.apply_strategies()
-    return importer.data
+    return _ParameterInventoryData(importer)
 
 
 def _build_candidates(inventory_data: list[dict]) -> list[CandidateSummary]:

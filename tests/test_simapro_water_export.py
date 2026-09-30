@@ -143,7 +143,6 @@ def test_short_bound_aliases_are_scaled():
     [
         ({"unit": "megajoule"}, "Cannot convert Water"),
         ({"uncertainty type": 6}, "Unsupported Water emission uncertainty"),
-        ({"formula": "water_parameter"}, "formulas cannot be preserved"),
         ({"categories": ("air", "unknown compartment")}, "No SimaPro subcompartment mapping"),
     ],
 )
@@ -152,3 +151,21 @@ def test_unsupported_water_conversion_is_reported(fields, detail):
     assert result.has_errors
     assert not result.rows
     assert any(detail in issue.message for issue in result.issues)
+
+
+@pytest.mark.parametrize(
+    "unit,factor,expression", [("cubic meter", 1000, "(water_parameter) * 1000"), ("kilogram", 1, "water_parameter")]
+)
+def test_water_formula_and_uncertainty_use_the_same_unit_conversion(unit, factor, expression):
+    from brightpath.formats.simapro_csv import _water_emission_in_kilograms
+
+    exchange = water(unit=unit, formula="water_parameter", **{"uncertainty type": 3, "loc": 0.002, "scale": 0.0001})
+    before = deepcopy(exchange)
+    converted = _water_emission_in_kilograms(exchange)
+    assert converted["amount"] == pytest.approx(0.002 * factor)
+    assert converted["loc"] == pytest.approx(0.002 * factor)
+    assert converted["scale"] == pytest.approx(0.0001 * factor)
+    assert converted["formula"] == expression
+    assert exchange == before
+    row = water_row(inventory(exchange).render())
+    assert row[3] == expression

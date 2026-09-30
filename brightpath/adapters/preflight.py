@@ -68,6 +68,9 @@ _SIMAPRO_DATASET_FIELDS = frozenset(
 _SIMAPRO_METADATA_FIELDS = frozenset({"Process name", "Category type", *_ACTIVITY_METADATA_FIELDS})
 _SIMAPRO_PARAMETER_FIELDS = frozenset(
     {
+        "unit",
+        "group",
+        "negative",
         "name",
         "amount",
         "formula",
@@ -661,16 +664,6 @@ def _inspect_simapro_exchange(
     _add_unsupported_fields(findings, policy, path, "exchange", sorted(unsupported))
     _add_product_alias_ambiguity(exchange, path, "exchange", findings, policy)
 
-    if exchange.get("formula") not in (None, ""):
-        findings.add_loss(
-            code="simapro_exchange_formula_unsupported",
-            message="SimaPro CSV exchange rows do not preserve canonical exchange formulas.",
-            path=f"{path}.formula",
-            action=policy.on_unsupported_feature,
-            category="unsupported_feature",
-            details={"formula": str(exchange["formula"])},
-        )
-
     status = _simapro_exchange_status(document, exchange)
     if status == "final_waste":
         findings.add_loss(
@@ -818,13 +811,9 @@ def _inspect_parameter_collection(
             continue
         parameter_path = f"{path}[{index}]"
         unsupported = set(parameter) - _SIMAPRO_PARAMETER_FIELDS
-        if parameter.get("formula") and "amount" in parameter:
-            unsupported.add("amount")
         _add_unsupported_fields(findings, policy, parameter_path, "parameter", sorted(unsupported))
 
         if parameter.get("formula"):
-            ignored = sorted(set(parameter).intersection({"uncertainty type", *_UNCERTAINTY_FIELDS, "hidden"}))
-            _add_unsupported_fields(findings, policy, parameter_path, "calculated parameter", ignored)
             continue
 
         amount = parameter.get("amount", parameter.get("loc"))
@@ -833,7 +822,7 @@ def _inspect_parameter_collection(
             policy,
             path=f"{parameter_path}.amount",
             value=amount,
-            precision=".12g",
+            precision=".17g",
             code="simapro_parameter_amount_rounded",
         )
         _add_uncertainty_loss(parameter, parameter_path, ".12g", findings, policy)
