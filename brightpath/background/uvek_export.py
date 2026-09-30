@@ -29,7 +29,7 @@ def migration_resource_fingerprint() -> str:
     manifest = (DATA_DIR / "migrations/RESOURCE_MANIFEST.json").read_bytes()
     catalogs = (DATA_DIR / "export/reference_catalogs/RESOURCE_MANIFEST.json").read_bytes()
     return hashlib.sha256(
-        __version__.encode() + b"uvek-export-v2-composed-patch-routes" + manifest + catalogs
+        __version__.encode() + b"uvek-export-v3-preserve-amount-formulas" + manifest + catalogs
     ).hexdigest()
 
 

@@ -31,6 +31,9 @@ All notable changes to this project will be documented in this file.
 
 ### Added
 
+- Kept biosphere chemical formulas out of exchange amount-expression fields and
+  advanced the migration fingerprint to invalidate old fingerprint-checked exports.
+
 - Added opt-in ISIC/CPC waste inference for SimaPro, preserving explicit categories
   and requiring review of ambiguous cases. Reference-product names, units and signs
   constrain recovered-product inference; conflicting metadata and positive treatment

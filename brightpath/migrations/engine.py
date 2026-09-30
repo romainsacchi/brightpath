@@ -537,7 +537,7 @@ def _apply_technosphere_target(entity: dict, target: dict) -> None:
 
 def _apply_biosphere_target(exchange: dict, target: dict) -> None:
     for field, value in target.items():
-        if field in {"comment", "allocation"}:
+        if field in {"comment", "allocation", "formula"}:
             continue
         if field == "unit":
             exchange[field] = _canonical_unit(value)
