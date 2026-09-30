@@ -32,7 +32,7 @@ convert format and/or update background links
 ## What can I do with it?
 
 See the [parameter and round-trip guide](docs/workflows/parameters.rst) for shared
-parameter scopes and formulas.
+parameter scopes, formulas, UVEK foreground identity and linked openLCA imports.
 
 | I want to… | BrightPath can… |
 |---|---|

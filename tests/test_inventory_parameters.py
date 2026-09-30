@@ -1,9 +1,13 @@
 import csv
+import json
+import math
+from copy import deepcopy
 from io import BytesIO
+from zipfile import ZipFile
 
 import pytest
 from openpyxl import load_workbook
-from preservation_helpers import Profile, export_snapshots, synthetic_snapshot
+from preservation_helpers import Profile, assert_preserved, export_snapshots, import_artifact, synthetic_snapshot
 
 from brightpath import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
 from brightpath.analysis import analyze_inventory
@@ -15,6 +19,37 @@ SUPPLIER = {
     "location": "CH",
     "unit": "kilowatt hour",
 }
+
+
+@pytest.mark.parametrize("source_format", ["brightway", "openlca", "simapro"])
+@pytest.mark.parametrize("target_format", ["brightway", "openlca", "simapro"])
+def test_parameters_survive_all_format_pairs(source_format, target_format):
+    source = synthetic_snapshot(SUPPLIER)
+    before = deepcopy(source)
+    artifact = export_snapshots([source], PROFILE, source_format)
+    restored = import_artifact(artifact, PROFILE)
+    assert_preserved(source, restored[0])
+    exported = export_snapshots(restored, PROFILE, target_format)
+    assert_preserved(source, import_artifact(exported, PROFILE)[0])
+    assert source == before
+
+
+def test_openlca_calculated_parameters_and_native_uncertainty():
+    snapshot = synthetic_snapshot(SUPPLIER)
+    snapshot["parameters"][0].update({"uncertainty type": 2, "loc": math.log(2), "scale": 0.2})
+    artifact = export_snapshots([snapshot], PROFILE, "openlca")
+    with ZipFile(BytesIO(artifact.content)) as archive:
+        entities = {name: json.loads(archive.read(name)) for name in archive.namelist() if name.endswith(".json")}
+    process = next(value for name, value in entities.items() if name.startswith("processes/"))
+    parameters = {parameter["name"]: parameter for parameter in process["parameters"]}
+    assert parameters["dose"]["isInputParameter"] is False
+    assert parameters["dose"]["formula"] == "shared * efficiency"
+    assert not parameters["dose"].get("uncertainty")
+    assert parameters["efficiency"]["isInputParameter"] is True
+    uncertainty = parameters["efficiency"]["uncertainty"]
+    assert uncertainty["geomMean"] == pytest.approx(2)
+    assert uncertainty["geomSd"] == pytest.approx(math.exp(0.2))
+    assert_preserved(snapshot, import_artifact(artifact, PROFILE)[0])
 
 
 def test_excel_formulas_are_literal_text_not_executable_cells():

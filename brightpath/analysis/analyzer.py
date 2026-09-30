@@ -182,7 +182,7 @@ def analyze_inventory(
         can infer missing fields. SimaPro analysis uses a complete profile as
         the exact technosphere axis while inferring only the biosphere profile.
     :param source_context: Exact format, technosphere, and biosphere context
-        used directly when parsing SimaPro CSV.
+        used directly when parsing SimaPro CSV and linked openLCA JSON-LD.
     :param catalog_provider: Exact catalogs used for SimaPro parsing and link
         validation. The application provider is used when omitted.
     :param additional_foreground_targets: External foreground identities that
@@ -247,6 +247,8 @@ def analyze_inventory(
         return _analyze_openlca_jsonld(
             path=resolved_path,
             source_profile=profile,
+            source_context=source_context,
+            legacy_source_profile=source_profile,
             additional_foreground_targets=normalized_foreground_targets,
         )
     if resolved_format == SOURCE_FORMAT_SIMAPRO_CSV:
@@ -330,16 +332,23 @@ def _analyze_openlca_jsonld(
     *,
     path: Path,
     source_profile: BackgroundProfile,
+    source_context: InventoryContext | None,
+    legacy_source_profile: BackgroundProfile | None,
     additional_foreground_targets: frozenset[tuple[str, str, str, str]],
 ) -> AnalysisResult:
     result = AnalysisResult(
         detected_software=SOFTWARE_OPENLCA,
         detected_format=SOURCE_FORMAT_OPENLCA_JSONLD,
         source_profile=source_profile,
+        source_context=source_context,
     )
 
     try:
-        package = load_openlca_jsonld_package(path)
+        if source_context is not None:
+            conflict = _simapro_profile_conflict(legacy_source_profile, source_profile)
+            if conflict:
+                raise ValueError(conflict)
+        package = load_openlca_jsonld_package(path, context=source_context)
         inventory_data = package.data
         result.database_parameters = deepcopy(package.database_parameters or [])
         result.project_parameters = deepcopy(package.project_parameters or [])

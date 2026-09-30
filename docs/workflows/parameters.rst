@@ -48,3 +48,19 @@ Identity migration must not copy that field over an exchange's amount expression
 Existing expressions, and the absence of an expression, are preserved in both
 directions. The resource itself is unchanged. The migration fingerprint changes so
 clients using it for export caches can invalidate results from the old implementation.
+
+Linked openLCA packages
+------------------------
+
+``load_openlca_jsonld_package`` accepts an exact ``InventoryContext``. The document
+loader and upload analyzer forward that context, including an explicit biosphere
+selection. Missing external flows can be resolved against the integrity-checked
+UVEK 2025 cut-off catalog with the ecoinvent 3.10 biosphere. Other or incomplete
+contexts cannot use that catalog as a fallback.
+
+Resolution checks flow/provider UUIDs, quantity and unit references, supplied labels,
+geography, direction, embedded definitions and metadata conflicts. Amounts, formulas,
+uncertainty and original exchange references remain intact. Unknown or ambiguous
+references fail rather than being matched by name. Local providers remain local.
+The reader neither rewrites the ZIP nor fabricates background inventories or quantity
+entities. Exports still require the matching background installed in openLCA.

@@ -35,6 +35,8 @@ All notable changes to this project will be documented in this file.
   and parameter metadata, and openLCA calculated/input parameter semantics.
 - Preserved distinct UVEK SimaPro activity/product identities and bundled foreground
   links with bounded, validated round-trip metadata.
+- Resolved linked UVEK openLCA imports against the exact integrity-checked reference
+  catalog, rejecting conflicting identifiers, quantities and metadata.
 - Kept biosphere chemical formulas out of exchange amount-expression fields and
   advanced the migration fingerprint to invalidate old fingerprint-checked exports.
 

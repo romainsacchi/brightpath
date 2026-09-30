@@ -31,6 +31,7 @@ from brightpath.formats.openlca_references import (
     load_openlca_reference_catalog,
 )
 from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFormat, default_biosphere_profile
+from brightpath.units import normalize_unit
 
 _ROOT_MANIFEST = "olca-schema.json"
 _FORMAT_ID = InventoryFormat.OPENLCA_JSONLD.value
@@ -224,10 +225,13 @@ def load_openlca_jsonld_package(
     path: str | Path,
     *,
     database_name: str | None = None,
+    context: InventoryContext | None = None,
 ) -> OpenLCAJSONLDPackage:
     """Parse a zipped openLCA JSON-LD package into BrightPath dictionaries."""
 
     schema, _zipio = _olca_modules()
+    if context is not None and context.format.format_id != _FORMAT_ID:
+        raise ValueError(f"Explicit context format must be {_FORMAT_ID}.")
     source = Path(path).expanduser()
     if not source.is_file():
         raise FileNotFoundError(f"openLCA JSON-LD package not found: {source}")
@@ -250,6 +254,7 @@ def load_openlca_jsonld_package(
         raise ValueError("openLCA JSON-LD packages must contain at least one Process entity.")
 
     flow_lookup = _materialize_entities(schema.Flow, raw_entities.get("flows", []))
+    external_exchanges = _resolve_external_references(schema, raw_entities, context, flow_lookup)
     flow_property_lookup = _materialize_entities(schema.FlowProperty, raw_entities.get("flow_properties", []))
     unit_group_lookup = _materialize_entities(schema.UnitGroup, raw_entities.get("unit_groups", []))
     location_lookup = _materialize_entities(schema.Location, raw_entities.get("locations", []))
@@ -281,6 +286,7 @@ def load_openlca_jsonld_package(
                 raw_unit_groups=_raw_entity_lookup(raw_entities.get("unit_groups", [])),
                 location_lookup=location_lookup,
                 raw_locations=_raw_entity_lookup(raw_entities.get("locations", [])),
+                external_exchanges=external_exchanges,
             )
         )
 
@@ -324,7 +330,6 @@ def load_openlca_jsonld(
 ) -> InventoryDocument:
     """Load a zipped openLCA JSON-LD package into an inventory document."""
 
-    package = load_openlca_jsonld_package(path, database_name=database_name)
     if context is None:
         if background_profile is None:
             raise TypeError("background_profile or context must be provided.")
@@ -349,6 +354,7 @@ def load_openlca_jsonld(
         if biosphere_profile is not None and biosphere_profile != context.background.biosphere:
             raise ValueError("biosphere_profile conflicts with context.biosphere.")
 
+    package = load_openlca_jsonld_package(path, database_name=database_name, context=context)
     return InventoryDocument(
         data=package.data,
         context=context,
@@ -549,6 +555,163 @@ def _select_quantitative_reference(process: Any, flow_lookup: dict[str, Any]) ->
     return non_elementary_outputs[0]
 
 
+def _check_external_ref(value, expected_id, label, *, name=None, unit=False, kind=None):
+    if not isinstance(value, dict) or value.get("@id") != expected_id:
+        raise ValueError(f"External openLCA {label} identifier conflicts with the exact reference catalog.")
+    if kind is not None and value.get("@type", kind) != kind:
+        raise ValueError(f"External openLCA {label} type conflicts with the exact reference catalog.")
+    if name is not None and value.get("name") not in (None, ""):
+        actual = normalize_unit(value["name"]) if unit else value["name"]
+        expected = normalize_unit(name) if unit else name
+        if actual != expected:
+            raise ValueError(f"External openLCA {label} name conflicts with the exact reference catalog.")
+
+
+def _check_embedded_external(reference, identity, flow_type, entities):
+    flow = entities["flows"].get(reference.flow_id)
+    if flow is not None:
+        _check_external_ref(flow, reference.flow_id, "flow definition", name=reference.flow_name, kind="Flow")
+        if flow.get("flowType") != flow_type:
+            raise ValueError("External openLCA flow definition has a conflicting flow type.")
+        factors = [
+            factor
+            for factor in flow.get("flowProperties", [])
+            if (factor.get("flowProperty") or {}).get("@id") == reference.flow_property_id
+        ]
+        reference_factors = [factor for factor in flow.get("flowProperties", []) if factor.get("isRefFlowProperty")]
+        if (
+            len(reference_factors) != 1
+            or len(factors) != 1
+            or factors[0].get("conversionFactor") != 1
+            or not factors[0].get("isRefFlowProperty")
+        ):
+            raise ValueError("External openLCA flow definition has conflicting quantity factors.")
+        if flow_type == "ELEMENTARY_FLOW" and _decode_biosphere_categories(flow.get("category")) != identity[1]:
+            raise ValueError("External openLCA flow definition has conflicting biosphere categories.")
+    quantity = entities["flow_properties"].get(reference.flow_property_id)
+    if quantity is not None:
+        _check_external_ref(
+            quantity,
+            reference.flow_property_id,
+            "quantity definition",
+            name=reference.flow_property_name,
+            kind="FlowProperty",
+        )
+        group = entities["unit_groups"].get((quantity.get("unitGroup") or {}).get("@id"))
+        if group is not None:
+            units = [unit for unit in group.get("units", []) if unit.get("@id") == reference.unit_id]
+            if len(units) != 1:
+                raise ValueError("External openLCA unit group conflicts with the catalog unit identifier.")
+            _check_external_ref(units[0], reference.unit_id, "unit definition", name=reference.unit_name, unit=True)
+
+
+def _resolve_external_references(schema, raw_entities, context, flow_lookup):
+    catalog = load_openlca_reference_catalog(context) if context is not None else None
+    if catalog is None:
+        return {}
+    entities = {}
+    for folder in ("flows", "flow_properties", "unit_groups", "locations", "processes"):
+        rows = raw_entities.get(folder, [])
+        entities[folder] = _raw_entity_lookup(rows)
+        if len(entities[folder]) != len(rows):
+            raise ValueError(f"Missing or duplicate openLCA identifiers in {folder}.")
+    technosphere = {}
+    biosphere = {}
+    for identity, reference in catalog.technosphere.items():
+        technosphere.setdefault((reference.flow_id, reference.process_id), []).append((identity, reference))
+    for identity, reference in catalog.biosphere.items():
+        biosphere.setdefault(reference.flow_id, []).append((identity, reference))
+    known_product_flows = {key[0] for key in technosphere}
+    known_providers = {key[1] for key in technosphere}
+    local_outputs = {
+        (exchange.get("flow") or {}).get("@id")
+        for process in raw_entities.get("processes", [])
+        for exchange in process.get("exchanges", [])
+        if not exchange.get("isInput", False)
+        and entities["flows"].get((exchange.get("flow") or {}).get("@id"), {}).get("flowType") == "PRODUCT_FLOW"
+    }
+    resolved = {}
+    for process in raw_entities.get("processes", []):
+        for index, exchange in enumerate(process.get("exchanges", [])):
+            flow_ref = exchange.get("flow") or {}
+            provider = exchange.get("defaultProvider") or {}
+            flow_id = flow_ref.get("@id")
+            provider_id = provider.get("@id")
+            if flow_id in entities["flows"]:
+                if (
+                    provider_id in entities["processes"]
+                    or exchange.get("isQuantitativeReference")
+                    or not provider_id
+                    and flow_id in local_outputs
+                ):
+                    continue
+                if (
+                    flow_id not in biosphere
+                    and flow_id not in known_product_flows
+                    and provider_id not in known_providers
+                ):
+                    continue
+            candidates = technosphere.get((flow_id, provider_id), []) if provider_id else biosphere.get(flow_id, [])
+            if len(candidates) != 1:
+                raise ValueError(
+                    f"Unknown or ambiguous external openLCA flow/provider identifiers: {flow_id!r}, {provider_id!r}. "
+                    "Provide definitions or the exact supported source profile."
+                )
+            identity, reference = candidates[0]
+            is_technosphere = isinstance(reference, OpenLCATechnosphereReference)
+            flow_type = "PRODUCT_FLOW" if is_technosphere else "ELEMENTARY_FLOW"
+            _check_external_ref(flow_ref, reference.flow_id, "flow", name=reference.flow_name, kind="Flow")
+            if flow_ref.get("flowType", flow_type) != flow_type:
+                raise ValueError("External openLCA flow type conflicts with the exact reference catalog.")
+            if flow_ref.get("refUnit") and normalize_unit(flow_ref["refUnit"]) != normalize_unit(reference.unit_name):
+                raise ValueError("External openLCA reference unit conflicts with the exact reference catalog.")
+            _check_external_ref(
+                exchange.get("flowProperty"),
+                reference.flow_property_id,
+                "quantity",
+                name=reference.flow_property_name,
+                kind="FlowProperty",
+            )
+            _check_external_ref(
+                exchange.get("unit"), reference.unit_id, "unit", name=reference.unit_name, unit=True, kind="Unit"
+            )
+            expected_input = is_technosphere or identity[1][:1] == ("natural resource",)
+            if exchange.get("isInput", False) is not expected_input or exchange.get("isQuantitativeReference"):
+                raise ValueError("External openLCA exchange direction conflicts with its catalog identity.")
+            if is_technosphere:
+                _check_external_ref(
+                    provider, reference.process_id, "provider", name=reference.process_name, kind="Process"
+                )
+                if provider.get("location") not in (None, "", reference.location):
+                    raise ValueError("External openLCA provider location conflicts with the exact reference catalog.")
+                if exchange.get("location"):
+                    _check_external_ref(
+                        exchange["location"],
+                        reference.location_id,
+                        "location",
+                        name=reference.location,
+                        kind="Location",
+                    )
+                location = entities["locations"].get(reference.location_id)
+                if location is not None and location.get("code") not in (None, "", reference.location):
+                    raise ValueError("External openLCA location definition conflicts with the exact reference catalog.")
+                legacy = dict(zip(("name", "reference product", "location", "unit"), identity, strict=True))
+                legacy["type"] = "technosphere"
+            else:
+                if provider:
+                    raise ValueError("External openLCA elementary flows cannot have a process provider.")
+                legacy = {"type": "biosphere", "name": identity[0], "categories": identity[1], "unit": identity[2]}
+            _check_embedded_external(reference, identity, flow_type, entities)
+            if flow_id not in flow_lookup:
+                flow_lookup[flow_id] = schema.Flow(
+                    id=flow_id,
+                    name=reference.flow_name,
+                    flow_type=getattr(schema.FlowType, flow_type),
+                )
+            resolved[(process["@id"], index)] = legacy
+    return resolved
+
+
 def _require_flow(exchange: Any, flow_lookup: dict[str, Any], process_label: str) -> Any:
     flow_id = str(getattr(getattr(exchange, "flow", None), "id", "") or "")
     if not flow_id:
@@ -573,6 +736,7 @@ def _process_to_legacy_dataset(
     raw_unit_groups: dict[str, dict[str, Any]],
     location_lookup: dict[str, Any],
     raw_locations: dict[str, dict[str, Any]],
+    external_exchanges: dict,
 ) -> dict[str, Any]:
     process_location = _resolve_location_code(process.location, location_lookup)
     dataset = {
@@ -610,6 +774,7 @@ def _process_to_legacy_dataset(
             raw_unit_groups=raw_unit_groups,
             location_lookup=location_lookup,
             raw_locations=raw_locations,
+            external_identity=external_exchanges.get((process.id, index)),
         )
         dataset["exchanges"].append(legacy_exchange)
 
@@ -640,13 +805,17 @@ def _exchange_to_legacy(
     raw_unit_groups: dict[str, dict[str, Any]],
     location_lookup: dict[str, Any],
     raw_locations: dict[str, dict[str, Any]],
+    external_identity: dict | None = None,
 ) -> dict[str, Any]:
     flow = _require_flow(exchange, flow_lookup, str(process.name or process.id or "unnamed process"))
     flow_property = _resolve_flow_property(exchange, flow, flow_property_lookup)
     flow_type = flow.flow_type
     legacy: dict[str, Any] = {}
 
-    if flow_type == flow_type.ELEMENTARY_FLOW:
+    if external_identity is not None:
+        legacy.update(external_identity)
+        location_ref = exchange.location
+    elif flow_type == flow_type.ELEMENTARY_FLOW:
         legacy["type"] = "biosphere"
         legacy["name"] = str(flow.name or "")
         legacy["categories"] = _decode_biosphere_categories(flow.category)
@@ -676,7 +845,11 @@ def _exchange_to_legacy(
         legacy["name"] = provider_name
         legacy["location"] = provider_location
 
-    unit_name = _resolve_unit_name(exchange, flow, flow_property_lookup, unit_group_lookup)
+    unit_name = (
+        external_identity["unit"]
+        if external_identity is not None
+        else _resolve_unit_name(exchange, flow, flow_property_lookup, unit_group_lookup)
+    )
     if unit_name:
         legacy["unit"] = unit_name
     if exchange.amount is not None:
@@ -691,8 +864,13 @@ def _exchange_to_legacy(
     else:
         legacy["code"] = producer.process_id
     legacy.update(_legacy_uncertainty(exchange.uncertainty))
-    legacy.update(_brightpath_other_properties(raw_exchange))
+    extras = _brightpath_other_properties(raw_exchange)
+    if external_identity is not None and set(extras).intersection(_EXCHANGE_MAPPED_KEYS | _EXCHANGE_TEMPLATE_KEYS):
+        raise ValueError("External openLCA reference metadata cannot override identity or exchange values.")
+    legacy.update(extras)
     legacy[_EXCHANGE_TEMPLATE_KEY] = deepcopy(raw_exchange)
+    if external_identity is not None:
+        return legacy
     if raw_flow := raw_flows.get(str(flow.id or "")):
         legacy.update(_flow_exchange_properties(raw_flow, raw_exchange, str(process.id or "")))
         legacy[_FLOW_TEMPLATE_KEY] = raw_flow
