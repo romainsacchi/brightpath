@@ -33,6 +33,8 @@ All notable changes to this project will be documented in this file.
 
 - Preserved shared parameter scopes in upload analysis, SimaPro exchange expressions
   and parameter metadata, and openLCA calculated/input parameter semantics.
+- Preserved distinct UVEK SimaPro activity/product identities and bundled foreground
+  links with bounded, validated round-trip metadata.
 - Kept biosphere chemical formulas out of exchange amount-expression fields and
   advanced the migration fingerprint to invalidate old fingerprint-checked exports.
 

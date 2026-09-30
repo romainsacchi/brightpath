@@ -36,6 +36,13 @@ lose information that the receiving format cannot represent independently.
 Identity and migration safeguards
 ----------------------------------------
 
+UVEK SimaPro CSV uses a bounded ``BrightPath activity v1`` marker in the process
+comment to preserve distinct activity and reference-product identities. Bundled
+foreground links and self-links are restored by exact identity. Native background
+supplier labels keep the UVEK convention. Conflicting labels, duplicate foreground
+identities and malformed markers are rejected; old unannotated files retain their
+legacy interpretation rather than guessing a lost reference product.
+
 Biosphere mapping resources use ``formula`` for chemical metadata, such as ``CO2``.
 Identity migration must not copy that field over an exchange's amount expression.
 Existing expressions, and the absence of an expression, are preserved in both

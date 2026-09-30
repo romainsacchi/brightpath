@@ -35,6 +35,7 @@ from brightpath.profiles.simapro_categories import (
     split_simapro_category,
 )
 from brightpath.profiles.simapro_waste import resolve_classified_waste
+from brightpath.units import normalize_unit
 from brightpath.utils import (
     ALLOWED_BIOSPHERE_CATEGORIES,
     check_simapro_inventory,
@@ -64,6 +65,8 @@ _DETECTED_SYSTEM_MODELS_KEY = "simapro detected system models"
 _SIMAPRO_NUMBER_FORMAT = ".15g"
 _SIMAPRO_PROCESS_IDENTIFIER_PATTERN = re.compile(r"^.{8}\d{15}$")
 _SIMAPRO_GENERATED_IDENTIFIER_PREFIX = "BRTPATH0"
+_ACTIVITY_IDENTITY_FIELDS = ("name", "reference product", "location", "unit")
+_ACTIVITY_METADATA_LIMIT = 65536
 _LATIN1_TEXT_REPLACEMENTS = str.maketrans(
     {
         "\u00a0": " ",
@@ -152,6 +155,62 @@ def _exchange_amount(exchange, amount):
             raise SimaProSerializationError("Cannot preserve a formula through an unknown amount transformation.")
         return _Formula(f"-({exchange['formula']})")
     return _Formula(str(exchange["formula"]))
+
+
+def _validate_activity_identity(identity):
+    if (
+        not isinstance(identity, dict)
+        or set(identity) != set(_ACTIVITY_IDENTITY_FIELDS)
+        or any(not isinstance(value, str) or not value.strip() or len(value) > 4096 for value in identity.values())
+    ):
+        raise ValueError("Invalid BrightPath activity identity metadata.")
+
+
+def _restore_activity_identity(dataset, profile):
+    comment = dataset.get("comment") or ""
+    if profile.family != "uvek" or "[BrightPath activity " not in comment:
+        return False
+    match = re.search(r"(?:^| )\[BrightPath activity v1:([A-Za-z0-9+/=]+)\]$", comment)
+    if not match or len(match[1]) > _ACTIVITY_METADATA_LIMIT:
+        raise ValueError("Invalid or oversized BrightPath activity identity metadata.")
+    try:
+        identity = json.loads(base64.b64decode(match[1], validate=True))
+    except (ValueError, UnicodeError, RecursionError) as error:
+        raise ValueError("Invalid BrightPath activity identity metadata.") from error
+    _validate_activity_identity(identity)
+    link_name = format_simapro_technosphere_name(
+        name=identity["name"],
+        reference_product=identity["reference product"],
+        location=identity["location"],
+        unit=identity["unit"],
+        profile=profile,
+    )
+    if _latin1_safe_cell(link_name).strip() != str(dataset["simapro name"]).strip() or normalize_unit(
+        identity["unit"]
+    ) != normalize_unit(dataset["unit"]):
+        raise ValueError("BrightPath activity identity metadata conflicts with the native SimaPro product row.")
+    dataset.update({key: identity[key] for key in ("name", "reference product", "location")})
+    dataset["comment"] = comment[: match.start()].rstrip()
+    return True
+
+
+def _restore_local_activity_links(data, restored):
+    local = {}
+    for dataset in data:
+        key = (dataset["simapro name"], normalize_unit(dataset["unit"]))
+        if key in local:
+            raise ValueError("Ambiguous foreground SimaPro product name and unit.")
+        local[key] = dataset
+    for dataset in data:
+        for exchange in dataset.get("exchanges", []):
+            if exchange.get("type") != "technosphere":
+                continue
+            key = (exchange["simapro name"], normalize_unit(exchange["unit"]))
+            supplier = local.get(key)
+            if supplier is not None and id(supplier) in restored:
+                for field in ("name", "reference product", "location"):
+                    exchange[field] = supplier[field]
+                exchange["product"] = supplier["reference product"]
 
 
 @dataclass
@@ -287,6 +346,7 @@ def normalize_simapro_import_data(
         version_mapping = load_simapro_brightway_biosphere_mapping(reference_version)
     parameter_name_mapping = parameter_name_mapping or {}
 
+    restored_identities = set()
     try:
         for dataset in normalized:
             dataset.pop("filename", None)
@@ -324,6 +384,8 @@ def normalize_simapro_import_data(
                 profile=profile,
             )
             dataset["database"] = database_name
+            if _restore_activity_identity(dataset, profile):
+                restored_identities.add(id(dataset))
             local_parameter_names = _normalize_parameter_identifiers(dataset.get("parameters") or [])
             formula_name_mapping = {**parameter_name_mapping, **local_parameter_names}
             for parameter in dataset.get("parameters") or []:
@@ -401,6 +463,8 @@ def normalize_simapro_import_data(
                 converted_exchanges.append(exchange)
             dataset["exchanges"] = converted_exchanges
 
+        if restored_identities:
+            _restore_local_activity_links(normalized, restored_identities)
         return normalized
     except Exception as exc:
         _attach_partial_data(exc, normalized)
@@ -624,6 +688,7 @@ class _SimaProRenderer:
             return SimaProRenderResult(rows=[], issues=issues)
 
         try:
+            self._validate_local_link_names()
             self._waste_suppliers = {}
             supplier_labels = {}
             for activity in self.inventories:
@@ -1092,12 +1157,39 @@ class _SimaProRenderer:
             profile=self.profile,
         )
 
+    def _validate_local_link_names(self):
+        if self.profile.family != "uvek":
+            return
+        local = {}
+        for activity in self.inventories:
+            key = (_latin1_safe_cell(self._format_technosphere(activity)), normalize_unit(activity["unit"]))
+            if key in local:
+                raise SimaProSerializationError("Ambiguous foreground SimaPro product name and unit.")
+            local[key] = tuple(activity[field] for field in _ACTIVITY_IDENTITY_FIELDS)
+        for activity in self.inventories:
+            for exchange in activity.get("exchanges", []):
+                if exchange.get("type") not in {"technosphere", "substitution"}:
+                    continue
+                key = (_latin1_safe_cell(self._format_technosphere(exchange)), normalize_unit(exchange["unit"]))
+                if key in local and tuple(exchange[field] for field in _ACTIVITY_IDENTITY_FIELDS) != local[key]:
+                    raise SimaProSerializationError(
+                        "A supplier conflicts with a foreground SimaPro product name and unit."
+                    )
+
     def _comment(self, activity: dict) -> str:
         parts = []
         if activity.get("comment"):
             parts.append(str(activity["comment"]))
         if activity.get("source"):
             parts.append(f"Source: {activity['source']}")
+        if self.profile.family == "uvek":
+            identity = {key: activity.get(key) for key in _ACTIVITY_IDENTITY_FIELDS}
+            _validate_activity_identity(identity)
+            payload = json.dumps(identity, ensure_ascii=True, separators=(",", ":"))
+            encoded = base64.b64encode(payload.encode("utf-8")).decode("ascii")
+            if len(encoded) > _ACTIVITY_METADATA_LIMIT:
+                raise SimaProSerializationError("Oversized BrightPath activity identity metadata.")
+            parts.append(f"[BrightPath activity v1:{encoded}]")
         return " ".join(parts)
 
     def _process_name(self, activity: dict) -> str:
