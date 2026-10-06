@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0 - Unreleased
+## 1.0.0a2 - Unreleased
 
 ### Packaging
 
@@ -110,6 +110,9 @@ All notable changes to this project will be documented in this file.
   and a stable-release legal-review gate for generated reference catalogs.
 
 ### Fixed
+
+- Use short pytest parameter IDs for oversized SimaPro metadata so the Windows
+  test run stays within the environment-variable length limit.
 
 - Aligned default ecoinvent SimaPro process display names with Premise: reference
   product, location, activity and system model. Explicit names are preserved.

@@ -2,8 +2,9 @@
 
 Initial review: 2026-09-24, on `main` after `6f94021`. Commit preparation and
 validation refreshed on 2026-09-25 against `5c9a0d8` plus the release-preparation
-changes. The package remains `1.0.0a1`; the changelog describes the upcoming
-1.0.0 release. No release was tagged or published.
+changes. Those reviews used `1.0.0a1`. Preparation on 2026-10-06 targets a draft
+`1.0.0a2` prerelease; the changelog and package version now match that target.
+Package publication remains a separate step.
 
 ## Corrections made
 
@@ -88,7 +89,7 @@ noted in the initial review.
 4. When ready, synchronize `pyproject.toml`, `brightpath/__init__.py`, and the
    version assertion in `tests/test_brightway_inventory.py` to `1.0.0`; update
    the README alpha notice and date the changelog. They intentionally still
-   identify the package as `1.0.0a1` during preparation.
+   identify the package as `1.0.0a2` during preparation.
 5. Run CI on the final commit, including Linux, macOS, and Windows tests, then
    confirm PyPI trusted publishing and Anaconda credentials/environments are
    configured before creating the release tag. These external settings were
