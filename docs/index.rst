@@ -48,6 +48,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    :caption: Maintainer guide
 
    architecture
+   simapro-reference-evidence
    adr/index
    api
 

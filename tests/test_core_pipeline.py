@@ -338,8 +338,8 @@ def test_migrate_noop_preserves_format_and_returns_reported_document():
 def test_strict_simapro_preflight_rejects_a_blacklisted_exchange_as_explicit_loss():
     blacklisted = {
         "type": "biosphere",
-        "name": "Oxygen",
-        "categories": ("air", "urban air close to ground"),
+        "name": "Gangue, in ground",
+        "categories": ("natural resource", "in ground"),
         "unit": "kilogram",
         "amount": 1.0,
     }

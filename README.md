@@ -102,6 +102,11 @@ print(f"Created {output}")
 Use the background family, version, and system model that the source file actually
 uses. BrightPath needs this information to interpret and validate its links.
 
+Ecoinvent SimaPro exports preserve reviewed biosphere flows and supported final-waste
+indicators across versions. Optional `category_mode="infer_classifications"` resolves
+waste status and non-waste category types independently; ambiguous roles require review.
+See the [SimaPro evidence and limitations](docs/simapro-reference-evidence.rst).
+
 ### SimaPro CSV to Brightway Excel
 
 The reverse workflow is just as short:

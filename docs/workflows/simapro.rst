@@ -391,3 +391,20 @@ Default ecoinvent process display names follow Premise's legacy convention:
 ``reference product {location}| activity name | Cut-off, U`` (or ``Conseq, U``).
 Explicit native ``Process name`` metadata or ``simapro process name`` remains
 authoritative. This display field is separate from supplier-link labels.
+
+Ecoinvent flow and category preservation
+-----------------------------------------
+
+Reviewed oxygen, radionuclide, turbine-water, land-occupation and energy flows
+are retained across ecoinvent versions. Supported inventory indicators are
+written to ``Final waste flows``; unknown indicators require review. Native
+final-waste rows are preserved when reading CSV files.
+
+With ``infer_classifications``, non-waste outputs receive a category type based
+on their reference product, unit and CPC evidence. Non-waste status alone does
+not imply ``material``. Ambiguous roles produce ``simapro_category_type_unresolved``
+instead of a generic category. Explicit categories and native category-type
+metadata take precedence; folder paths remain independent.
+
+See :doc:`../simapro-reference-evidence` for the evidence, audit command,
+version boundaries and remaining limitations.

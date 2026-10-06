@@ -28,12 +28,14 @@ from brightpath.models import (
     default_biosphere_profile,
 )
 from brightpath.profiles import format_simapro_technosphere_name, parse_simapro_technosphere_name
+from brightpath.profiles.simapro_biosphere import restore_final_waste_flow, validate_ecoinvent_flow
 from brightpath.profiles.simapro_categories import (
     SimaProCategoryMode,
     coerce_simapro_category_mode,
     resolve_simapro_category,
     split_simapro_category,
 )
+from brightpath.profiles.simapro_category_types import resolve_category_type
 from brightpath.profiles.simapro_waste import resolve_classified_waste
 from brightpath.units import normalize_unit
 from brightpath.utils import (
@@ -405,6 +407,8 @@ def normalize_simapro_import_data(
                 raw_exchange_name = exchange.get("simapro name") or exchange.get("name", "")
                 exchange["simapro name"] = raw_exchange_name
                 if is_simapro_final_waste_flow(exchange):
+                    restore_final_waste_flow(exchange)
+                    converted_exchanges.append(exchange)
                     continue
 
                 exchange_type = exchange.get("type")
@@ -801,6 +805,21 @@ class _SimaProRenderer:
                                     path=f"activity[{activity_index}].exchanges",
                                 )
                             )
+                if self.profile.family == "ecoinvent":
+                    for exchange_index, exchange in enumerate(activity.get("exchanges", [])):
+                        if not isinstance(exchange, dict) or exchange.get("type") != "biosphere":
+                            continue
+                        try:
+                            validate_ecoinvent_flow(exchange)
+                        except (ValueError, TypeError) as error:
+                            issues.append(
+                                Issue(
+                                    severity="error",
+                                    code="simapro_biosphere_unresolved",
+                                    message=str(error),
+                                    path=f"activity[{activity_index}].exchanges[{exchange_index}]",
+                                )
+                            )
                 issues.extend(
                     self._parameter_issues(
                         activity.get("parameters"),
@@ -844,6 +863,11 @@ class _SimaProRenderer:
             if not isinstance(activity, dict):
                 continue
             try:
+                production = find_production_exchange(activity)
+                explicit_type = (activity.get("simapro metadata") or {}).get("Category type")
+                if not production.get("simapro category") and explicit_type:
+                    kind, _ = _split_simapro_category(explicit_type)
+                    production["simapro category"] = kind + "/Classified"
                 resolution = resolve_classified_waste(activity)
                 if resolution.rule == "explicit_category":
                     continue
@@ -858,8 +882,21 @@ class _SimaProRenderer:
                         )
                     )
                     continue
-                category = "waste treatment" if resolution.waste else "material"
-                find_production_exchange(activity)["simapro category"] = category + "/Classified"
+                category_resolution = resolve_category_type(activity, resolution)
+                category = category_resolution.category_type
+                if category is None:
+                    issues.append(
+                        Issue(
+                            severity="error",
+                            code="simapro_category_type_unresolved",
+                            message=f"Non-waste status does not determine Category type: {category_resolution.rule}; {detail}.",
+                            path=f"activity[{index}]",
+                            suggested_fix="Supply an explicit SimaPro category for this reference product.",
+                        )
+                    )
+                    continue
+                detail += f"; category rule={category_resolution.rule}"
+                production["simapro category"] = category + "/Classified"
                 issues.append(
                     Issue(
                         severity="warning",
@@ -1039,6 +1076,8 @@ class _SimaProRenderer:
                 rows.extend(self._process_identifier_rows(activity))
             elif field_name in _ACTIVITY_METADATA_FIELDS:
                 rows.extend(self._activity_metadata_rows(field_name, activity))
+            elif field_name == "Final waste flows":
+                rows.extend(self._final_waste_rows(activity))
             elif field_name in _EMPTY_SECTIONS:
                 rows.append([])
             elif field_name in {"Waste treatment", "Products"}:
@@ -1325,6 +1364,16 @@ class _SimaProRenderer:
             _format_simapro_number(exchange.get("max", exchange.get("maximum", 0))),
             exchange.get("comment"),
         ]
+
+    def _final_waste_rows(self, activity: dict):
+        rows = []
+        for exchange in get_biosphere_exchanges(activity, "inventory indicator"):
+            row = self._biosphere_exchange_row({**exchange, "categories": ("inventory indicator",)})
+            row[1] = exchange.get("simapro subcompartment", "")
+            rows.append(row)
+            exchange["used"] = True
+        rows.append([])
+        return rows
 
     def _biosphere_rows(self, activity: dict, category: str):
         rows = []
