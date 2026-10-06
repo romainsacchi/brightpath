@@ -1,0 +1,39 @@
+{% set version = "2.6.2" %}
+
+package:
+  name: olca-schema
+  version: {{ version }}
+
+source:
+  url: https://files.pythonhosted.org/packages/source/o/olca-schema/olca_schema-{{ version }}.tar.gz
+  sha256: 899b29e3658aff8907b3c649fa0e27771b659613a50ce89c7c9672971b15c29f
+
+build:
+  noarch: python
+  number: 0
+  script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation . -vv
+
+requirements:
+  host:
+    - python 3.12
+    - pip
+    - setuptools
+    - setuptools-scm
+    - wheel
+  run:
+    - python >=3.12
+
+test:
+  requires:
+    - python 3.12
+  imports:
+    - olca_schema
+    - olca_schema.zipio
+    - olca_schema.units
+  commands:
+    - python -c "from importlib.metadata import version; assert version('olca-schema') == '{{ version }}'"
+
+about:
+  home: https://github.com/GreenDelta/olca-schema
+  license: CC0-1.0
+  summary: Read and write data sets in the openLCA schema format.

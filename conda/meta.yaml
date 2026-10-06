@@ -10,14 +10,14 @@ source:
 build:
   noarch: python
   number: 0
-  script: {{ PYTHON }} -m pip install --no-deps --ignore-installed . -vv
+  script: {{ PYTHON }} -m pip install --no-deps --no-build-isolation --ignore-installed . -vv
   script_env:
     - VERSION
     - CONDA_BLD_PATH
 
 requirements:
   host:
-    - python >=3.12
+    - python 3.12
     - pip
     - setuptools >=77
     - wheel
@@ -36,7 +36,7 @@ test:
     - yaml
     - olca_schema
   requires:
-    - python >=3.12
+    - python 3.12
     - pytest
     - bw2io
     - olca-schema >=2.6.2,<3
