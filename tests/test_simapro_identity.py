@@ -200,6 +200,7 @@ def test_invalid_or_stale_identity_metadata_fails_without_mutating_input(snapsho
         "[BrightPath activity v1:" + "A" * 65540 + "]",
         "[BrightPath activity v1:bm90LWpzb24=]",
     ],
+    ids=["invalid-base64", "truncated-base64", "trailing-edit", "unsupported-version", "oversized", "invalid-json"],
 )
 def test_malformed_metadata_is_not_silently_accepted(snapshot, marker):
     from brightpath.formats.simapro_csv import _restore_activity_identity
