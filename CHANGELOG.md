@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.0 - Unreleased
 
+### Packaging
+
+- Build the mandatory `olca-schema` Conda dependency from a checksum-pinned PyPI
+  source and publish it alongside BrightPath. It remains required for both pip
+  and Conda installations.
+- Pin Conda build and test environments to Python 3.12 and verify an openLCA
+  JSON-LD round trip in the installed BrightPath package.
+- Include the Conda recipes and package smoke test in source distributions.
+
 ### Breaking
 
 - Raised the minimum supported Python version to 3.12.

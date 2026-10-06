@@ -179,7 +179,12 @@ jobs:
           mkdir -p "${HOME}/conda-bld"
           conda config --set anaconda_upload no
           export CONDA_BLD_PATH="${HOME}/conda-bld"
-          conda build conda/ --old-build-string
+          conda build conda/olca-schema/ --python 3.12 --old-build-string --package-format 1
+          conda build conda/meta.yaml --channel local --old-build-string --package-format 1
+          anaconda -t "${ANACONDA_API_TOKEN}" upload \
+            -u "${ANACONDA_USER}" \
+            "${CONDA_BLD_PATH}"/noarch/olca-schema-*.tar.bz2 \
+            --force
           anaconda -t "${ANACONDA_API_TOKEN}" upload \
             -u "${ANACONDA_USER}" \
             "${CONDA_BLD_PATH}/noarch/brightpath-${VERSION}-py_0.tar.bz2" \

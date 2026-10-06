@@ -73,12 +73,16 @@ noted in the initial review.
    manifests (`legal_review_required`). Integrity checks do not establish
    redistribution permission. Record the review outcome or use the documented
    separately licensed/local-provider approach.
-2. Make `olca-schema >=2.6.2,<3` available on a configured Conda channel and verify
-   the complete Conda build. The Anaconda package search returned no matching
-   package during this review; the conda-forge package endpoint returned 404.
-   The corrected recipe declares the dependency, but its availability remains
-   a Conda publishing blocker in the initial review. Channel availability was
-   not rechecked during commit preparation.
+2. Publish the required `olca-schema` Conda package alongside BrightPath. The
+   release workflow now builds `conda/olca-schema/` from the checksum-pinned
+   PyPI 2.6.2 source, then builds BrightPath with the local channel and uploads
+   the dependency first. Both pip and Conda keep `olca-schema` mandatory. The
+   BrightPath recipe tests an openLCA JSON-LD round trip with the installed
+   packages. On 2026-10-06, both Conda packages built and passed their package
+   tests locally on macOS with Python 3.12; the 50 openLCA adapter tests also
+   passed. The resulting BrightPath package retains the explicit
+   `olca-schema >=2.6.2,<3` runtime dependency. Nothing was uploaded; the Linux
+   release workflow still needs to run before tagging.
 3. Check whether the removed credential-like test literals were real. If so,
    rotate them; replacing working-tree literals does not remove Git history.
 4. When ready, synchronize `pyproject.toml`, `brightpath/__init__.py`, and the
