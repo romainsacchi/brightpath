@@ -155,8 +155,8 @@ def test_substitution_blacklist_final_waste_and_unused_are_distinguished():
         },
         {
             "type": "biosphere",
-            "name": "Oxygen",
-            "categories": ("air", "urban air close to ground"),
+            "name": "Gangue, in ground",
+            "categories": ("natural resource", "in ground"),
             "unit": "kilogram",
             "amount": 1.0,
         },

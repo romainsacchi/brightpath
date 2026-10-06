@@ -316,14 +316,14 @@ def test_render_generates_stable_simapro_identifier_from_canonical_code():
     assert row_after(inventory.render().rows, "Type") == ["Unit process"]
 
 
-def test_render_is_non_mutating_and_reports_unused_exchanges():
+def test_render_is_non_mutating_and_reports_unreviewed_exclusions():
     data = [
         minimal_activity(
             extra_exchanges=[
                 {
                     "type": "biosphere",
-                    "name": "Oxygen",
-                    "categories": ("air", "urban air close to ground"),
+                    "name": "Gangue, in ground",
+                    "categories": ("natural resource", "in ground"),
                     "unit": "kilogram",
                     "amount": 1.0,
                 }
@@ -338,7 +338,7 @@ def test_render_is_non_mutating_and_reports_unused_exchanges():
     assert data == source
     assert inventory.data == source
     assert [issue.code for issue in result.issues] == ["simapro_exchange_unused"]
-    assert "Oxygen" in result.issues[0].message
+    assert "Gangue" in result.issues[0].message
 
 
 def test_waste_treatment_activity_uses_waste_section():
@@ -678,7 +678,7 @@ def test_normalize_import_data_does_not_treat_incineration_plant_products_as_was
     assert normalized[0]["exchanges"][0]["amount"] == 1.0
 
 
-def test_normalize_import_data_drops_final_waste_but_preserves_zero_and_empty_datasets():
+def test_normalize_import_data_preserves_final_waste_zero_and_empty_datasets():
     raw = [
         {
             "name": "Wastewater {GLO}| treatment of | Cut-off, U",
@@ -720,9 +720,12 @@ def test_normalize_import_data_drops_final_waste_but_preserves_zero_and_empty_da
     )
 
     assert len(normalized) == 2
-    assert len(normalized[0]["exchanges"]) == 2
+    assert len(normalized[0]["exchanges"]) == 3
     assert normalized[0]["exchanges"][0]["type"] == "production"
-    assert normalized[0]["exchanges"][1]["amount"] == 0.0
+    assert normalized[0]["exchanges"][1]["type"] == "biosphere"
+    assert normalized[0]["exchanges"][1]["categories"] == ("inventory indicator", "waste")
+    assert normalized[0]["exchanges"][1]["amount"] == 1000.0
+    assert normalized[0]["exchanges"][2]["amount"] == 0.0
     assert normalized[1]["exchanges"] == []
 
 

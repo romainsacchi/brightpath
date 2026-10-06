@@ -23,7 +23,7 @@ def classified(name="treatment of sludge", isic="3821", cpc="34659", amount=1):
         ("treatment of waste", "3821", "39990", -1, True),
         ("dismantling", "3830", "39990", -1, True),
         ("treatment of x-ray film", "3830", "41310", 1, None),
-        ("market for waste paper", "3821", "39240", 1, None),
+        ("market for waste paper", "3821", "39240", 1, False),
         ("aluminium turning", "2592", "39363", 1, False),
         ("cement production", "2394", "39990", -1, None),
         ("treatment of waste", "2394", "39990", 1, None),
@@ -66,7 +66,7 @@ def test_inferred_supplier_controls_both_sections_and_signs(amount, fixed_simapr
 
 
 def test_unresolved_blocks_export_and_external_supplier_does_not_use_keywords():
-    data = classified(name="market for waste paper", cpc="39240")
+    data = classified(name="market for unspecified waste", cpc="39990")
     inventory = SimaProInventory.from_data([data], background_profile=BackgroundProfile("ecoinvent", "3.12", "cutoff"))
     result = inventory.render(category_mode="infer_classifications")
     assert result.has_errors and not result.rows
@@ -228,7 +228,7 @@ def test_folder_path_is_independent_of_waste_status(waste):
 
 
 def test_folder_path_does_not_resolve_ambiguous_waste_status():
-    data = classified(name="market for waste paper", cpc="39240")
+    data = classified(name="market for unspecified waste", cpc="39990")
     data["simapro category path"] = "38 - Waste/382 - Treatment"
     inventory = SimaProInventory.from_data([data], background_profile=BackgroundProfile("ecoinvent", "3.12", "cutoff"))
     result = inventory.render(category_mode="infer_classifications")

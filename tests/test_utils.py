@@ -327,7 +327,9 @@ def test_flag_exchanges_marks_all_exchanges_unused():
 
 
 def test_blacklist_and_waste_detection():
-    assert utils.is_blacklisted({"name": "Oxygen"}, "ecoinvent") is True
+    assert utils.is_blacklisted({"name": "Oxygen"}, "ecoinvent") is False
+    assert utils.is_blacklisted({"name": "Oxygen"}, "uvek") is True
+    assert utils.is_blacklisted({"name": "Gangue, in ground"}, "ecoinvent") is True
     assert utils.is_blacklisted({"name": "not blacklisted"}, "ecoinvent") is False
     assert utils.is_a_waste_treatment("treatment of municipal waste", "ecoinvent") is True
     assert utils.is_a_waste_treatment("treatment of aluminium scrap", "ecoinvent") is False

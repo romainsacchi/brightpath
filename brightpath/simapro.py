@@ -226,7 +226,7 @@ class SimaProInventory:
             biosphere identities against the exact background catalog.
         :param check_simapro_rendering: Also check whether canonical data can
             be represented as SimaPro rows.
-        :param category_mode: Preserve supplied production categories, infer waste status with
+        :param category_mode: Preserve supplied production categories, infer waste status and non-waste category type with
             ``infer_classifications``, or infer
             paths observed in the exact supported SimaPro reference catalog.
         :param additional_foreground_targets: Valid external foreground
@@ -344,7 +344,7 @@ class SimaProInventory:
         :param path: Destination. ``.csv`` is added when no suffix is given.
         :param validate: Validate structure, background links, and rendering
             before writing.
-        :param category_mode: Preserve supplied production categories, infer waste status with
+        :param category_mode: Preserve supplied production categories, infer waste status and non-waste category type with
             ``infer_classifications``, or infer
             paths observed in the exact supported SimaPro reference catalog.
         :param additional_foreground_targets: Valid external foreground

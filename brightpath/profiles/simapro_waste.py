@@ -132,6 +132,11 @@ def resolve_classified_waste(activity: Mapping) -> WasteResolution:
             return result(False, "recovered_" + recovered + "_product")
     if service and sector and not waste_sector:
         return result(None, "conflicting_service_and_sector")
+    # CPC 392/393 identify recoverable non-metal/metal waste commodities.
+    # Positive mass-based market output is a supplied material, not a treatment
+    # service. This product-role rule is independent of dataset/version names.
+    if market and amount > 0 and product.startswith(("392", "393")) and unit in _MASS_UNITS and not service:
+        return result(False, "positive_recyclable_material_market")
     if waste_sector or service:
         if amount < 0:
             return result(True, "waste_sector_negative_reference")

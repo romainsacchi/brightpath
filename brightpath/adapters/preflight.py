@@ -40,7 +40,7 @@ from brightpath.utils import (
 from .base import FormatDescriptor, coerce_format_descriptor
 
 _STAGE = StageKind.CONVERSION_PREFLIGHT
-_SIMAPRO_BIOSPHERE_CATEGORIES = frozenset({"natural resource", "air", "water", "soil"})
+_SIMAPRO_BIOSPHERE_CATEGORIES = frozenset({"natural resource", "air", "water", "soil", "inventory indicator"})
 _STRICT_CONVERSION_POLICY = ConversionPolicy.strict()
 _TRANSIENT_EXCHANGE_FIELDS = frozenset({"input", "output"})
 
@@ -654,7 +654,7 @@ def _inspect_simapro_exchange(
     if exchange_type == "production":
         supported.update({"simapro category", "allocation", "simapro waste type"})
     if exchange_type == "biosphere":
-        supported.add("categories")
+        supported.update({"categories", "simapro section", "simapro subcompartment"})
     if is_simapro_final_waste_flow(dict(exchange)):
         supported.add("categories")
 

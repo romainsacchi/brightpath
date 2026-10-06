@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.0a2 - Unreleased
 
+### SimaPro export preservation
+
+- Retain reviewed ecoinvent biosphere flows across releases instead of omitting
+  oxygen, radionuclides, turbine water, road/reservoir occupation and biomass energy.
+- Render the two evidenced landfill inventory indicators in Final waste flows and
+  preserve native final-waste rows on import. Unsupported indicators are explicit errors.
+- Infer non-waste category types independently of waste status, retaining energy,
+  transport, processing and use when supported by product evidence. Unknown roles
+  require review instead of silently defaulting to material.
+- Recognize positive mass-based recyclable-material markets from CPC 392/393,
+  preserving supplier-link signs. Explicit categories remain authoritative.
+- Add a local-reference audit and cross-version/system-model regression tests.
+
 ### Packaging
 
 - Build the mandatory `olca-schema` Conda dependency from a checksum-pinned PyPI

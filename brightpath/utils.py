@@ -17,7 +17,7 @@ from . import DATA_DIR
 logger = logging.getLogger(__name__)
 
 ALLOWED_EXCHANGE_TYPES = {"production", "technosphere", "biosphere"}
-ALLOWED_BIOSPHERE_CATEGORIES = {"natural resource", "air", "water", "soil"}
+ALLOWED_BIOSPHERE_CATEGORIES = {"natural resource", "air", "water", "soil", "inventory indicator"}
 DATASET_UNIT_ALIASES = {
     "kg": "kilogram",
     "kwh": "kilowatt hour",
