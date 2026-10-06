@@ -66,6 +66,9 @@ BrightPath requires Python 3.12.
 python -m pip install brightpath
 ```
 
+Installation includes the mandatory `olca-schema` dependency used for openLCA
+JSON-LD import and export. No optional extra is needed.
+
 Check what your installed version supports:
 
 ```bash

@@ -429,7 +429,7 @@ def _olca_modules() -> tuple[Any, Any]:
         zipio = importlib.import_module("olca_schema.zipio")
     except ModuleNotFoundError as error:
         raise RuntimeError(
-            "openLCA JSON-LD support requires the optional 'olca-schema' dependency. "
+            "openLCA JSON-LD support requires the 'olca-schema' dependency. "
             "Install BrightPath in a Python 3.12+ environment with its declared dependencies."
         ) from error
     return schema, zipio
