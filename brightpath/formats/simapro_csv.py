@@ -28,7 +28,11 @@ from brightpath.models import (
     default_biosphere_profile,
 )
 from brightpath.profiles import format_simapro_technosphere_name, parse_simapro_technosphere_name
-from brightpath.profiles.simapro_biosphere import restore_final_waste_flow, validate_ecoinvent_flow
+from brightpath.profiles.simapro_biosphere import (
+    resolve_ecoinvent_flow_name,
+    restore_final_waste_flow,
+    validate_ecoinvent_flow,
+)
 from brightpath.profiles.simapro_categories import (
     SimaProCategoryMode,
     coerce_simapro_category_mode,
@@ -72,6 +76,7 @@ _SIMAPRO_GENERATED_IDENTIFIER_PREFIX = "BRTPATH0"
 # before the supplied import log's 999-error cap; see the reference evidence.
 _SIMAPRO_IDENTIFIER_INTEGER_MAX = 2**31 - 1
 _SIMAPRO_CATEGORY_PATH_LIMIT = 255
+_SIMAPRO_CATEGORY_COMPONENT_LIMIT = 60
 _SIMAPRO_SYSTEM_DESCRIPTION_NAME_LIMIT = 50
 _ACTIVITY_IDENTITY_FIELDS = ("name", "reference product", "location", "unit")
 _ACTIVITY_METADATA_LIMIT = 65536
@@ -803,19 +808,14 @@ class _SimaProRenderer:
                     "metadata.system description.name",
                 )
             )
+            category = system.get("category") or system.get("Category") or "Others"
+            issues.extend(self._category_path_issues(category, "metadata.system description.category"))
         for activity_index, activity in enumerate(self.inventories):
             if isinstance(activity, dict):
                 try:
                     production = find_production_exchange(activity)
                     kind, subcategory = _split_simapro_category(production["simapro category"])
-                    issues.extend(
-                        self._text_limit_issues(
-                            subcategory,
-                            _SIMAPRO_CATEGORY_PATH_LIMIT,
-                            "Category path",
-                            f"activity[{activity_index}].exchanges",
-                        )
-                    )
+                    issues.extend(self._category_path_issues(subcategory, f"activity[{activity_index}].exchanges"))
                     if kind == "waste treatment":
                         for field_name in ("Multiple output allocation", "Substitution allocation"):
                             value = self._activity_metadata_rows(field_name, activity)[0][0]
@@ -892,6 +892,19 @@ class _SimaProRenderer:
                 suggested_fix="Use a shorter label and retain the full description in documentation.",
             )
         ]
+
+    def _category_path_issues(self, category, path):
+        issues = self._text_limit_issues(category, _SIMAPRO_CATEGORY_PATH_LIMIT, "Category path", path)
+        for component in re.split(r"[/\\]", category):
+            issues.extend(
+                self._text_limit_issues(
+                    component,
+                    _SIMAPRO_CATEGORY_COMPONENT_LIMIT,
+                    "Category folder name",
+                    path,
+                )
+            )
+        return issues
 
     def _apply_category_paths(self) -> list[Issue]:
         """Apply caller-supplied folders without changing the category type."""
@@ -1083,6 +1096,13 @@ class _SimaProRenderer:
             value = metadata.get(metadata_field.lower())
             if not isinstance(value, dict):
                 continue
+            value = dict(value)
+            if metadata_field == "System description":
+                # Native definitions require a category independently of the
+                # process category. Preserve custom metadata and caller input.
+                category = value.pop("category", None) or value.pop("Category", None) or "Others"
+                name = value.pop("name", None) or value.pop("Name", None)
+                value = {"Name": name, "Category": category.replace("/", "\\"), **value}
             rows.extend([[metadata_field], []])
             for key, item in value.items():
                 rows.extend([[key], [item], []])
@@ -1468,8 +1488,11 @@ class _SimaProRenderer:
                 raise SimaProSerializationError(
                     f"No SimaPro subcompartment mapping for {categories[1]!r} on {exchange['name']!r}."
                 ) from exc
+        name = self.biosphere.get(exchange["name"], exchange["name"])
+        if self.profile.family == "ecoinvent":
+            name = resolve_ecoinvent_flow_name(exchange, name)
         return [
-            self.biosphere.get(exchange["name"], exchange["name"]),
+            name,
             subcompartment,
             self.units[exchange["unit"]],
             _exchange_amount(exchange, exchange["amount"]),

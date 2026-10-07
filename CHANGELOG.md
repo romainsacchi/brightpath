@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0a3 - Unreleased
+## 1.0.0a4 - Unreleased
+
+- Enforce SimaPro's separate 60-character category-folder limit in addition to
+  the total path limit, and include the required category in system descriptions.
+- Preserve the native `Water, salt, ocean` resource name for ecoinvent quantities
+  in cubic metres instead of mapping it to the incompatible legacy cooling-water
+  substance. Quantities and uncertainty are unchanged.
+
+## 1.0.0a3
 
 - Keep generated SimaPro process identifiers within the numeric range accepted
   by Desktop and detect duplicate identifiers before writing.

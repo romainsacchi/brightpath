@@ -120,3 +120,16 @@ documentation, and preserve a mapping when shortening folder labels. These are
 CSV representation constraints, independent of ecoinvent release or system model.
 The logs are incomplete after their cap; passing these checks does not establish
 successful native import or LCIA equivalence.
+
+The second native import reached the end of the file with 204 errors: 202
+category-folder length errors (a separate 60-character limit for each folder),
+one salt-water name/quantity mismatch, and one missing system-description
+category. Category paths are now checked at both levels, and generated system
+descriptions include ``Category: Others`` unless a custom category was supplied.
+
+The salt-water mismatch came from a legacy name-only alias changing the
+volume-based ``Water, salt, ocean`` resource into ``Water, cooling, salt, ocean``.
+The native reference contains 281 resource exchanges named ``Water, salt, ocean``
+in m3. Ecoinvent exports now retain that name for this resource in cubic metres,
+without inventing a mass conversion or changing amounts or uncertainty. This
+profile rule applies across ecoinvent versions and leaves UVEK aliases unchanged.
