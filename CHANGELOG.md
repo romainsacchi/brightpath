@@ -2,7 +2,26 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0a2 - Unreleased
+## 1.0.0a4 - 2026-10-07
+
+### SimaPro Desktop compatibility
+
+- Enforce SimaPro's separate 60-character category-folder limit in addition to
+  the total path limit, and include the required category in system descriptions.
+- Preserve the native `Water, salt, ocean` resource name for ecoinvent quantities
+  in cubic metres instead of mapping it to the incompatible legacy cooling-water
+  substance. Quantities and uncertainty are unchanged.
+
+- Keep generated SimaPro process identifiers within the numeric range accepted
+  by Desktop and detect duplicate identifiers before writing.
+- Write `Waste treatment allocation` for waste-treatment processes instead of
+  the disallowed multiple-output and substitution-allocation fields. Reject
+  non-default metadata in disallowed fields rather than silently losing it.
+- Reject category paths longer than 255 characters and system-description names
+  or references longer than 50 characters with structured diagnostics.
+- Add synthetic regressions based on Desktop 9.5.0.2 import logs, independently
+  of the source ecoinvent version. Exercise the shared format rules with both
+  ecoinvent and UVEK profiles, without requiring Premise.
 
 ### SimaPro export preservation
 
@@ -16,6 +35,17 @@ All notable changes to this project will be documented in this file.
 - Recognize positive mass-based recyclable-material markets from CPC 392/393,
   preserving supplier-link signs. Explicit categories remain authoritative.
 - Add a local-reference audit and cross-version/system-model regression tests.
+
+### Validation and release tooling
+
+- Confirm native SimaPro import without errors or warnings for a full ecoinvent
+  3.12 cut-off scenario containing 42,758 processes and 1,331,278 exchange rows.
+  This confirms that export's importability; LCIA equivalence is not implied.
+- Run Conda build and upload tools in the base environment where they are
+  installed, fixing the previous release's missing `conda build` command.
+- Consolidate the unreleased 1.0.0a3 fixes into this release.
+
+## 1.0.0a2 - 2026-10-06
 
 ### Packaging
 

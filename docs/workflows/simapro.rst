@@ -408,3 +408,32 @@ metadata take precedence; folder paths remain independent.
 
 See :doc:`../simapro-reference-evidence` for the evidence, audit command,
 version boundaries and remaining limitations.
+
+Desktop import limits
+---------------------
+
+Generated process identifiers stay within the numeric range observed in Desktop
+imports and must be unique. Waste-treatment processes use their own allocation
+metadata field. System-description names and references must fit 50 characters;
+product and waste-treatment folder paths must fit 255 characters, with each
+folder name limited to 60 characters. System-description definitions include a
+category (``Others`` when omitted). Longer values
+produce ``simapro_text_too_long`` errors before writing. Keep detailed provenance
+in the system-description body, and shorten folder labels in the calling
+application with an explicit original-to-shortened mapping.
+
+Scope of the compatibility rules
+----------------------------------------
+
+These checks belong to Brightpath's shared SimaPro writer. They apply to supported
+inventories loaded through any input adapter or supplied through the Python API;
+they do not depend on Premise names, scenarios, database size, or a particular
+ecoinvent release. Regression tests exercise the format constraints with both
+ecoinvent and UVEK profiles.
+
+Biosphere names, units, and category inference remain profile-aware. For example,
+the volume-based ``Water, salt, ocean`` rule applies to ecoinvent resources across
+versions and system models; it does not rewrite UVEK aliases. Unsupported flows,
+missing mappings, ambiguous categories, or invalid source data still require
+review. Premise supplies its own scenario provenance and shortened ISIC folder
+hierarchy before calling the writer; other callers can supply their own labels.

@@ -10,6 +10,7 @@ from brightpath.units import normalize_unit
 
 FINAL_WASTE_NAMES = frozenset({"Waste mass, total, placed in landfill", "Organic carbon, placed in landfill"})
 TURBINE_WATER = "Water, turbine use, unspecified natural origin"
+SALT_WATER = "Water, salt, ocean"
 # Native SimaPro stores these radionuclides in kBq, not kg or Bq.
 _RADIONUCLIDES = frozenset(
     {
@@ -26,10 +27,22 @@ REVIEWED_ECOINVENT_FLOW_UNITS = {
     "Oxygen": "kilogram",
     "Occupation, traffic area, road network": "square meter-year",
     TURBINE_WATER: "cubic meter",
+    SALT_WATER: "cubic meter",
     "Volume occupied, reservoir": "cubic meter-year",
     "Energy, gross calorific value, in biomass, primary forest": "megajoule",
     **{name: "kilo Becquerel" for name in _RADIONUCLIDES},
 }
+
+
+def resolve_ecoinvent_flow_name(exchange: Mapping, mapped_name: str) -> str:
+    """Keep the native volume-based salt-water resource distinct from cooling water."""
+    if (
+        exchange.get("name") == SALT_WATER
+        and (exchange.get("categories") or (None,))[0] == "natural resource"
+        and normalize_unit(exchange.get("unit", "")) == "cubic meter"
+    ):
+        return SALT_WATER
+    return mapped_name
 
 
 def validate_ecoinvent_flow(exchange: Mapping) -> None:

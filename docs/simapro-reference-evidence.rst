@@ -93,3 +93,51 @@ Brightpath dependency before these changes can affect a full scenario export.
 Its pre-export filtering and explicit category overrides cannot be corrected
 by a downstream writer. Native SimaPro import and LCIA comparison remain
 separate validation steps.
+
+Desktop import constraints
+--------------------------
+
+A 2026-10-07 import attempt in SimaPro Desktop 9.5.0.2 supplied two diagnostic
+logs, each capped at 999 records. Before the error cap, 714 process identifiers
+were rejected and 161 were not flagged. All rejected identifiers had a first
+ten-digit numeric component above 2**31 - 1; all unflagged identifiers were below
+that boundary. This is an inference from the observed importer behavior, not a
+published identifier specification. The writer now generates an eight-character
+prefix plus fifteen digits with the first ten digits below one billion, preserves
+native identifiers inside the observed range, and rejects duplicate output IDs.
+
+The same logs rejected 284 allocation keywords on waste-treatment processes.
+The native reference uses ``Waste treatment allocation`` for these processes,
+with ``Multiple output allocation`` and ``Substitution allocation`` reserved for
+other process categories. Non-default values in disallowed fields must be reviewed
+instead of silently discarded.
+
+The warning log records 988 system-description labels exceeding 50 characters
+and ten folder paths exceeding 255 characters. Brightpath now validates both
+limits before writing, including document-level system-description definitions.
+Callers should use short reference labels, keep full descriptions in the associated
+documentation, and preserve a mapping when shortening folder labels. These are
+CSV representation constraints, independent of ecoinvent release or system model.
+The logs are incomplete after their cap; passing these checks does not establish
+successful native import or LCIA equivalence.
+
+The second native import reached the end of the file with 204 errors: 202
+category-folder length errors (a separate 60-character limit for each folder),
+one salt-water name/quantity mismatch, and one missing system-description
+category. Category paths are now checked at both levels, and generated system
+descriptions include ``Category: Others`` unless a custom category was supplied.
+
+The salt-water mismatch came from a legacy name-only alias changing the
+volume-based ``Water, salt, ocean`` resource into ``Water, cooling, salt, ocean``.
+The native reference contains 281 resource exchanges named ``Water, salt, ocean``
+in m3. Ecoinvent exports now retain that name for this resource in cubic metres,
+without inventing a mass conversion or changing amounts or uncertainty. This
+profile rule applies across ecoinvent versions and leaves UVEK aliases unchanged.
+
+On 2026-10-07 the user confirmed that the corrected full ecoinvent 3.12 cut-off
+REMIND SSP1-PkBudg1000 2050 export imported into SimaPro without errors or warnings.
+The local audit retained 42,758 processes and 1,331,278 exchange rows, including
+485 salt-water resource rows in m3. Complete folder paths were at most 182
+characters and individual folder names at most 60. This validates native import
+for that export; it is not evidence of LCIA equivalence or universal coverage of
+arbitrary input inventories.
