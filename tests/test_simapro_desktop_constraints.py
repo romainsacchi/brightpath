@@ -169,4 +169,8 @@ def test_ocean_salt_water_uses_native_volume_based_name(version, model):
     assert float(row[5]) == pytest.approx(0.005**2)
     assert not any(row and row[0] == "Water, cooling, salt, ocean" for row in result.rows)
     assert data == source.data == before
-    assert source.render().rows == result.rows
+    repeated = source.render()
+    assert not repeated.has_errors
+    # Export timestamps can change between renders; the resource row must not.
+    assert next(item for item in repeated.rows if item and item[0] == "Water, salt, ocean") == row
+    assert data == source.data == before
