@@ -133,3 +133,11 @@ The native reference contains 281 resource exchanges named ``Water, salt, ocean`
 in m3. Ecoinvent exports now retain that name for this resource in cubic metres,
 without inventing a mass conversion or changing amounts or uncertainty. This
 profile rule applies across ecoinvent versions and leaves UVEK aliases unchanged.
+
+On 2026-10-07 the user confirmed that the corrected full ecoinvent 3.12 cut-off
+REMIND SSP1-PkBudg1000 2050 export imported into SimaPro without errors or warnings.
+The local audit retained 42,758 processes and 1,331,278 exchange rows, including
+485 salt-water resource rows in m3. Complete folder paths were at most 182
+characters and individual folder names at most 60. This validates native import
+for that export; it is not evidence of LCIA equivalence or universal coverage of
+arbitrary input inventories.
