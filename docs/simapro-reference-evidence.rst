@@ -93,3 +93,30 @@ Brightpath dependency before these changes can affect a full scenario export.
 Its pre-export filtering and explicit category overrides cannot be corrected
 by a downstream writer. Native SimaPro import and LCIA comparison remain
 separate validation steps.
+
+Desktop import constraints
+--------------------------
+
+A 2026-10-07 import attempt in SimaPro Desktop 9.5.0.2 supplied two diagnostic
+logs, each capped at 999 records. Before the error cap, 714 process identifiers
+were rejected and 161 were not flagged. All rejected identifiers had a first
+ten-digit numeric component above 2**31 - 1; all unflagged identifiers were below
+that boundary. This is an inference from the observed importer behavior, not a
+published identifier specification. The writer now generates an eight-character
+prefix plus fifteen digits with the first ten digits below one billion, preserves
+native identifiers inside the observed range, and rejects duplicate output IDs.
+
+The same logs rejected 284 allocation keywords on waste-treatment processes.
+The native reference uses ``Waste treatment allocation`` for these processes,
+with ``Multiple output allocation`` and ``Substitution allocation`` reserved for
+other process categories. Non-default values in disallowed fields must be reviewed
+instead of silently discarded.
+
+The warning log records 988 system-description labels exceeding 50 characters
+and ten folder paths exceeding 255 characters. Brightpath now validates both
+limits before writing, including document-level system-description definitions.
+Callers should use short reference labels, keep full descriptions in the associated
+documentation, and preserve a mapping when shortening folder labels. These are
+CSV representation constraints, independent of ecoinvent release or system model.
+The logs are incomplete after their cap; passing these checks does not establish
+successful native import or LCIA equivalence.

@@ -1715,7 +1715,11 @@ def test_analyze_simapro_csv_reports_missing_exact_biosphere_catalog(tmp_path):
 
 
 def test_analyze_simapro_csv_attaches_duplicate_identity_errors(tmp_path):
-    filepath = make_simapro_csv(tmp_path, [minimal_activity(), minimal_activity()], filename="duplicates.csv")
+    filepath = make_simapro_csv(
+        tmp_path,
+        [minimal_activity(code="first"), minimal_activity(code="second")],
+        filename="duplicates.csv",
+    )
 
     result = analyze_inventory(
         path=filepath,

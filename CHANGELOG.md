@@ -2,7 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0a2 - Unreleased
+## 1.0.0a3 - Unreleased
+
+- Keep generated SimaPro process identifiers within the numeric range accepted
+  by Desktop and detect duplicate identifiers before writing.
+- Write `Waste treatment allocation` for waste-treatment processes instead of
+  the disallowed multiple-output and substitution-allocation fields. Reject
+  non-default metadata in disallowed fields rather than silently losing it.
+- Reject category paths longer than 255 characters and system-description names
+  or references longer than 50 characters with structured diagnostics.
+- Add synthetic regressions based on Desktop 9.5.0.2 import logs, independently
+  of the source ecoinvent version.
+
+## 1.0.0a2
 
 ### SimaPro export preservation
 

@@ -65,8 +65,14 @@ logger = logging.getLogger(__name__)
 _INVENTORY_PATH_PATTERN = re.compile(r"^(?P<path>activity\[\d+\](?:\.exchanges\[\d+\])?):")
 _DETECTED_SYSTEM_MODELS_KEY = "simapro detected system models"
 _SIMAPRO_NUMBER_FORMAT = ".15g"
-_SIMAPRO_PROCESS_IDENTIFIER_PATTERN = re.compile(r"^.{8}\d{15}$")
+_SIMAPRO_PROCESS_IDENTIFIER_PATTERN = re.compile(r"^.{8}[0-9]{15}$")
 _SIMAPRO_GENERATED_IDENTIFIER_PREFIX = "BRTPATH0"
+# Desktop 9.5 rejects identifiers whose first ten numeric digits overflow a
+# signed 32-bit integer. This boundary separates every accepted/rejected ID
+# before the supplied import log's 999-error cap; see the reference evidence.
+_SIMAPRO_IDENTIFIER_INTEGER_MAX = 2**31 - 1
+_SIMAPRO_CATEGORY_PATH_LIMIT = 255
+_SIMAPRO_SYSTEM_DESCRIPTION_NAME_LIMIT = 50
 _ACTIVITY_IDENTITY_FIELDS = ("name", "reference product", "location", "unit")
 _ACTIVITY_METADATA_LIMIT = 65536
 _LATIN1_TEXT_REPLACEMENTS = str.maketrans(
@@ -695,6 +701,7 @@ class _SimaProRenderer:
             self._validate_local_link_names()
             self._waste_suppliers = {}
             supplier_labels = {}
+            process_identifiers = set()
             for activity in self.inventories:
                 key = _supplier_identity(activity)
                 label = _latin1_safe_text(self._format_technosphere(activity)).casefold()
@@ -707,6 +714,10 @@ class _SimaProRenderer:
                 if key in self._waste_suppliers and self._waste_suppliers[key] != waste:
                     raise SimaProSerializationError(f"Conflicting SimaPro supplier categories for {key!r}.")
                 self._waste_suppliers[key] = waste
+                identifier = self._process_identifier_rows(activity)[0][0]
+                if identifier in process_identifiers:
+                    raise SimaProSerializationError(f"Duplicate SimaPro process identifier {identifier!r}.")
+                process_identifiers.add(identifier)
             rows = self._header_rows()
             inventories = [flag_exchanges(activity) for activity in self.inventories]
             for activity in inventories:
@@ -782,11 +793,41 @@ class _SimaProRenderer:
 
         issues.extend(self._parameter_issues(self.document.database_parameters, "database_parameters"))
         issues.extend(self._parameter_issues(self.document.project_parameters, "project_parameters"))
+        system = self.document.metadata.get("system description")
+        if isinstance(system, dict):
+            issues.extend(
+                self._text_limit_issues(
+                    system.get("name", ""),
+                    _SIMAPRO_SYSTEM_DESCRIPTION_NAME_LIMIT,
+                    "System description name",
+                    "metadata.system description.name",
+                )
+            )
         for activity_index, activity in enumerate(self.inventories):
             if isinstance(activity, dict):
                 try:
                     production = find_production_exchange(activity)
-                    _split_simapro_category(production["simapro category"])
+                    kind, subcategory = _split_simapro_category(production["simapro category"])
+                    issues.extend(
+                        self._text_limit_issues(
+                            subcategory,
+                            _SIMAPRO_CATEGORY_PATH_LIMIT,
+                            "Category path",
+                            f"activity[{activity_index}].exchanges",
+                        )
+                    )
+                    if kind == "waste treatment":
+                        for field_name in ("Multiple output allocation", "Substitution allocation"):
+                            value = self._activity_metadata_rows(field_name, activity)[0][0]
+                            if value not in (None, "", "Unspecified"):
+                                issues.append(
+                                    Issue(
+                                        severity="error",
+                                        code="simapro_metadata_not_allowed",
+                                        message=f"{field_name!r} is not allowed for waste treatment; preserve its meaning in a comment or supply Waste treatment allocation.",
+                                        path=f"activity[{activity_index}]",
+                                    )
+                                )
                 except (KeyError, TypeError, ValueError) as exc:
                     if production := next(
                         (
@@ -805,6 +846,15 @@ class _SimaProRenderer:
                                     path=f"activity[{activity_index}].exchanges",
                                 )
                             )
+                system_name = self._activity_metadata_rows("System description", activity)[0][0]
+                issues.extend(
+                    self._text_limit_issues(
+                        system_name,
+                        _SIMAPRO_SYSTEM_DESCRIPTION_NAME_LIMIT,
+                        "System description reference",
+                        f"activity[{activity_index}]",
+                    )
+                )
                 if self.profile.family == "ecoinvent":
                     for exchange_index, exchange in enumerate(activity.get("exchanges", [])):
                         if not isinstance(exchange, dict) or exchange.get("type") != "biosphere":
@@ -827,6 +877,21 @@ class _SimaProRenderer:
                     )
                 )
         return issues
+
+    @staticmethod
+    def _text_limit_issues(value, limit, label, path):
+        length = len(_latin1_safe_text(str(value or "")))
+        if length <= limit:
+            return []
+        return [
+            Issue(
+                severity="error",
+                code="simapro_text_too_long",
+                message=f"{label} is {length} characters; SimaPro allows at most {limit}.",
+                path=path,
+                suggested_fix="Use a shorter label and retain the full description in documentation.",
+            )
+        ]
 
     def _apply_category_paths(self) -> list[Issue]:
         """Apply caller-supplied folders without changing the category type."""
@@ -1034,6 +1099,10 @@ class _SimaProRenderer:
         dataset_link_name = ""
         is_waste = _simapro_activity_is_waste(activity, self.profile.family)
         for field_name in self.fields:
+            if is_waste and field_name in {"Multiple output allocation", "Substitution allocation"}:
+                continue
+            if not is_waste and field_name == "Waste treatment allocation":
+                continue
             if is_waste and field_name == "Products":
                 continue
             if not is_waste and field_name == "Waste treatment":
@@ -1491,6 +1560,7 @@ _ACTIVITY_METADATA_FIELDS = {
     "Generator",
     "Multiple output allocation",
     "Substitution allocation",
+    "Waste treatment allocation",
     "Cut off rules",
     "Capital goods",
     "Technology",
@@ -1512,6 +1582,7 @@ _ACTIVITY_METADATA_DEFAULTS = {
     "Representativeness": "Unspecified",
     "Multiple output allocation": "Unspecified",
     "Substitution allocation": "Unspecified",
+    "Waste treatment allocation": "Unspecified",
     "Cut off rules": "Unspecified",
     "Capital goods": "Unspecified",
     "Boundary with nature": "Unspecified",
@@ -1543,14 +1614,19 @@ def _format_simapro_number(value: Real) -> str:
 
 def _simapro_process_identifier(value, activity: dict) -> str:
     candidate = str(value or "").strip()
-    if _SIMAPRO_PROCESS_IDENTIFIER_PATTERN.fullmatch(candidate):
+    if (
+        _SIMAPRO_PROCESS_IDENTIFIER_PATTERN.fullmatch(candidate)
+        and int(candidate[8:18]) <= _SIMAPRO_IDENTIFIER_INTEGER_MAX
+    ):
         return candidate
 
     seed = candidate or "|".join(
         str(activity.get(field) or "") for field in ("name", "reference product", "location", "unit")
     )
     digest = hashlib.sha256(seed.encode("utf-8")).digest()
-    numeric_suffix = int.from_bytes(digest[:8], "big") % 10**15
+    # Keep the ten-digit numeric component below one billion, comfortably
+    # inside the desktop importer's observed signed-32-bit range.
+    numeric_suffix = int.from_bytes(digest[:8], "big") % 10**14
     return f"{_SIMAPRO_GENERATED_IDENTIFIER_PREFIX}{numeric_suffix:015d}"
 
 

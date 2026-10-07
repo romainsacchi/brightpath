@@ -408,3 +408,14 @@ metadata take precedence; folder paths remain independent.
 
 See :doc:`../simapro-reference-evidence` for the evidence, audit command,
 version boundaries and remaining limitations.
+
+Desktop import limits
+---------------------
+
+Generated process identifiers stay within the numeric range observed in Desktop
+imports and must be unique. Waste-treatment processes use their own allocation
+metadata field. System-description names and references must fit 50 characters;
+product and waste-treatment folder paths must fit 255 characters. Longer values
+produce ``simapro_text_too_long`` errors before writing. Keep detailed provenance
+in the system-description body, and shorten folder labels in the calling
+application with an explicit original-to-shortened mapping.
