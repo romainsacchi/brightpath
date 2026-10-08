@@ -49,6 +49,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
 
    architecture
    migration-audit
+   recycled-paper-migration
    simapro-reference-evidence
    adr/index
    api

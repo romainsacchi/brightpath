@@ -21,6 +21,16 @@ Each JSON resource contains its own contributors, creation timestamp, generator 
 and license metadata. At the time of import, these resources identify `ecoinvent_migrate` as their
 generator and declare the Creative Commons Attribution 4.0 International (`CC-BY-4.0`) license.
 
+On 2026-10-08, BrightPath supplemented the 3.10-to-3.11 cut-off resource with one
+reviewed tissue-paper-output rename in RER. The upstream rules cover a different
+reference product, `waste paper, sorted`, and remain unchanged. Read-only comparison
+of licensed 3.10 and 3.11 cut-off metadata verifies the same tissue-paper product
+UUID, unit, geography and whitespace-normalized recycled/deinked process description.
+The rule's `brightpath_review` records its evidence and description digest; see
+`docs/recycled-paper-migration.rst`. Only sparse identity metadata is published,
+not proprietary inventories. Exact patch-target validation remains required and
+no equivalence of background coefficients or impacts is claimed.
+
 The `ecoinvent-3.11-biosphere-ecoinvent-3.12-biosphere.json` resource was generated directly with
 `ecoinvent_migrate` 0.6.2 from licensed ecoinvent 3.11 and 3.12 master data on 2026-07-22. The
 official change report contains an empty `EE Deletions` sheet, which causes the high-level generator

@@ -4,6 +4,15 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+### Background migration
+
+- Add the missing RER tissue-paper-output rename between ecoinvent 3.10/3.10.1
+  and 3.11. Licensed process metadata confirms recycled, deinked production;
+  the existing waste-paper-output rules remain unchanged. Native forward and
+  backward migrations and composed UVEK routes preserve quantities and
+  uncertainty and still validate exact targets. See the recycled-paper migration
+  evidence guide; this does not assert equal background impacts.
+
 ### Migration release safeguards
 
 - Fix a biosphere reverse-migration crash discovered by the exhaustive audit:

@@ -161,12 +161,13 @@ validated probes.
      - 0
      - 0
 
-The remaining supplier failure at 3.10/3.10.1 is
+The initial supplier failure at 3.10/3.10.1 was
 ``Paper, recycling, with deinking, at plant`` (RER): its migrated supplier
 ``tissue paper production, recycled`` (RER) does not exist in those exact target
-catalogs. It remains blocked pending a reviewed mapping, not replaced by a
-similar-looking supplier. Older targets also expose reverse-rule ambiguities
-and missing catalog identities.
+catalogs. It is corrected by the reviewed output-specific rename documented
+in :doc:`recycled-paper-migration`, not by a similar-looking supplier guess.
+Other suppliers in older targets still expose reverse-rule ambiguities and
+missing catalog identities. The table above records the initial baseline.
 
 The static scan records 483 collision candidates: 478 require further review,
 four have an explicit reverse preference, and one has an explicit proxy.
@@ -183,6 +184,20 @@ approved resolutions.
 
 Remaining scope
 ~~~~~~~~~~~~~~~
+
+After the reviewed tissue-paper correction, the source and independently
+installed-wheel audits agree on all 42,444 probes: 40,922 supported, 1,497
+blocked and 25 reported omissions. Exactly seven cases change, all the
+same RER paper supplier changing from blocked to supported at 3.6, 3.7,
+3.8, 3.9, 3.9.1, 3.10 and 3.10.1. The other 42,437 outcomes are unchanged,
+including output hashes and every biosphere result. All 354 approved supplier
+probes now pass at 3.10, 3.10.1, 3.11 and 3.12 under the declared policy.
+
+The baseline update accepts only those coverage improvements, the changed
+migration-manifest digest and collision candidate indices shifted by the
+inserted rule. All 483 collision findings retain their identities, rule
+content and dispositions; no new collision is introduced. The prior baseline
+correctly rejected these changes before review. There are no audit errors.
 
 This is exhaustive for the declared UVEK supplier/biosphere matrix, not for
 every possible foreground inventory, uncertainty distribution, system model,
