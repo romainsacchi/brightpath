@@ -108,3 +108,91 @@ def test_organic_reverse_proxy_is_explicit_and_policy_controlled():
     result = initial.migrate_background(context("3.10.1"), policy=POLICY)
     assert result.data[0]["exchanges"][1]["name"] == "market for chemical, organic"
     assert any("proxy" in issue.code for issue in result.last_migration_report.issues)
+
+
+@pytest.mark.parametrize("source_family,source_version", [("uvek", "2025"), ("ecoinvent", "3.12")])
+@pytest.mark.parametrize("target_version", ["3.10.1", "3.11", "3.12"])
+def test_primary_aluminium_preserves_production_role_and_uncertainty(source_family, source_version, target_version):
+    source_identity = (
+        {"name": "Aluminium, primary, at plant", "reference product": "Aluminium, primary, at plant", "location": "RER"}
+        if source_family == "uvek"
+        else {
+            "name": "aluminium production, primary, ingot",
+            "reference product": "aluminium, primary, ingot",
+            "location": "IAI Area, Western and Central Europe",
+        }
+    )
+    exchange = {
+        **source_identity,
+        "unit": "kilogram",
+        "type": "technosphere",
+        "amount": 0.808,
+        "uncertainty type": 3,
+        "loc": 0.808,
+        "scale": 0.1,
+    }
+    initial = inventory(context(source_version, source_family), [exchange])
+    original = deepcopy(initial.data)
+    result = initial.migrate_background(context(target_version), policy=POLICY)
+    migrated = result.data[0]["exchanges"][1]
+    assert migrated["name"] == "aluminium production, primary, ingot"
+    assert migrated["reference product"] == "aluminium, primary, ingot"
+    assert migrated["location"] == (
+        "IAI Area, Western and Central Europe" if target_version == "3.12" else "IAI Area, EU27 & EFTA"
+    )
+    for field in ("amount", "uncertainty type", "loc", "scale", "unit"):
+        assert migrated[field] == exchange[field]
+    codes = {issue.code for issue in result.last_migration_report.issues}
+    assert ("migration.reverse_proxy" in codes) == (target_version != "3.12")
+    assert "migration.replacement_ambiguous" not in codes
+    assert initial.data == original
+    assert result.migrate_background(context(target_version)).data == result.data
+
+
+def test_primary_aluminium_reverse_proxy_respects_information_loss_policy():
+    from brightpath.background.execution import _apply_technosphere_step
+    from brightpath.migrations.resources import load_technosphere_resources
+
+    exchange = {
+        "name": "aluminium production, primary, ingot",
+        "reference product": "aluminium, primary, ingot",
+        "location": "IAI Area, Western and Central Europe",
+        "unit": "kilogram",
+        "type": "technosphere",
+        "amount": 0.808,
+    }
+    initial = inventory(context("3.12"), [exchange])
+    original = deepcopy(initial.data)
+    policy = MigrationPolicy(on_inferred_reverse=PolicyAction.WARN)
+    with pytest.raises(MigrationError):
+        initial.migrate_background(context("3.11"), policy=policy)
+    assert initial.data == original
+    step = plan_background_migration(context("3.12"), context("3.11"), POLICY).technosphere_steps[0]
+    candidate = deepcopy(original)
+    report, losses = _apply_technosphere_step(
+        candidate, load_technosphere_resources("cutoff")[("3.11", "3.12")], step, policy, 0
+    )
+    assert any(issue.code == "migration_reverse_proxy" and issue.severity == "error" for issue in report.issues)
+    assert any(loss.code == "migration.reverse_proxy" for loss in losses)
+    assert candidate == original
+
+
+@pytest.mark.parametrize(
+    "name", ["aluminium production, primary, ingot", "aluminium, ingot, primary, import from Rest of Europe"]
+)
+def test_primary_aluminium_forward_mappings_remain_unchanged(name):
+    exchange = {
+        "name": name,
+        "reference product": "aluminium, primary, ingot",
+        "location": "IAI Area, EU27 & EFTA",
+        "unit": "kilogram",
+        "type": "technosphere",
+        "amount": 0.808,
+    }
+    initial = inventory(context("3.11"), [exchange])
+    result = initial.migrate_background(context("3.12"), policy=POLICY)
+    migrated = result.data[0]["exchanges"][1]
+    assert migrated["name"] == "aluminium production, primary, ingot"
+    assert migrated["location"] == "IAI Area, Western and Central Europe"
+    assert migrated["amount"] == 0.808
+    assert not any(issue.code == "migration.reverse_proxy" for issue in result.last_migration_report.issues)

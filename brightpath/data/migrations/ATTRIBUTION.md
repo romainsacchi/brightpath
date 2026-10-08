@@ -95,3 +95,16 @@ The reverse-only unspecified-organic-chemical proxy uses the documented replacem
 of the legacy generic flow by six organic product groups in ecoinvent 3.12:
 https://support.ecoinvent.org/ecoinvent-version-3.12 (Change Report section 5.6).
 This is an explicitly lossy proxy decision, not an inverted equivalence mapping.
+
+The reverse-only European primary-aluminium proxy (2026-10-08) resolves the two
+3.11 source activities merged into `aluminium production, primary, ingot` in
+`IAI Area, Western and Central Europe` by the packaged Premise 3.11-to-3.12
+resource. It retains the older production activity in `IAI Area, EU27 & EFTA`,
+rather than changing the supplier role to `aluminium, ingot, primary, import
+from Rest of Europe`. This is consistent with the directional UVEK rule
+`uvek-ei312-3a6bb39ff4b6f558`, whose stated intent is primary European production.
+The reverse choice is a documented proxy, not a unique mathematical inverse:
+regional coverage, supply composition and impacts may differ. Execution records
+`migration.reverse_proxy`, respects the information-loss policy, and validates
+the result against the exact target catalog. Both original forward rules remain
+unchanged. No exchange amount, uncertainty or published inventory is rewritten.

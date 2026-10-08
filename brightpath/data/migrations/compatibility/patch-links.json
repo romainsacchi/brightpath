@@ -13,6 +13,14 @@
     {
       "source_version": "3.12",
       "target_version": "3.11",
+      "source": {"name": "aluminium production, primary, ingot", "reference product": "aluminium, primary, ingot", "location": "IAI Area, Western and Central Europe", "unit": "kilogram"},
+      "target": {"name": "aluminium production, primary, ingot", "reference product": "aluminium, primary, ingot", "location": "IAI Area, EU27 & EFTA", "unit": "kilogram"},
+      "rationale": "Retain primary aluminium production when reversing the 3.12 merge of European production and the import-from-Rest-of-Europe activity. Use the older production activity, not the import activity. Regional coverage, supply composition and impacts can differ; this is a lossy compatibility proxy, not scientific equivalence.",
+      "evidence": "ecoinvent/cutoff/ecoinvent-3.11-cutoff-ecoinvent-3.12-cutoff.json: the production and import rules share one target; uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json rule uvek-ei312-3a6bb39ff4b6f558 preserves primary European production."
+    },
+    {
+      "source_version": "3.12",
+      "target_version": "3.11",
       "source": {"name": "market for chemical, organic, unspecified", "reference product": "chemical, organic, unspecified", "location": "GLO", "unit": "kilogram"},
       "target": {"name": "market for chemical, organic", "reference product": "chemical, organic", "location": "GLO", "unit": "kilogram"},
       "rationale": "Use the older generic organic-chemical market when the unspecified-organics proxy is unavailable. Both represent unweighted chemical averages, but composition and impacts differ; no scientific equivalence is claimed.",

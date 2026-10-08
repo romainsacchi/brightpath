@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Background migration
+
+- Resolve the ambiguous reverse mapping for European primary aluminium in
+  ecoinvent 3.12-to-3.11 migrations, including composed UVEK exports to 3.11 and
+  3.10.1. A documented compatibility proxy retains primary production instead
+  of selecting the merged import activity.
+- Report the proxy's regional and supply-composition limitations, preserve
+  quantities and uncertainty, and retain strict rejection of unreviewed
+  ambiguities. Refresh the resource manifest and conversion fingerprint.
+
 ## 1.0.0a4 - 2026-10-07
 
 ### SimaPro Desktop compatibility
