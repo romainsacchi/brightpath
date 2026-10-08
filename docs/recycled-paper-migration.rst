@@ -94,5 +94,6 @@ including uncertainty, while source snapshots remain unchanged.
 
 A separate synthetic paper foreground passes all three export/reimport
 formats across seven CLIC targets, including parameter and uncertainty
-preservation. This correction is unreleased and does not change a running
-CLIC deployment or its dependency pin.
+preservation. This correction is included in BrightPath 1.0.0a6. Publishing
+the dependency does not change a running CLIC deployment: its dependency pin
+and both web and export-worker images must also be updated.

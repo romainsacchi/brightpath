@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 1.0.0a6 - 2026-10-08
 
 ### Background migration
 
@@ -28,6 +28,20 @@ All notable changes to this project will be documented in this file.
   exceptions and broken rollback or preservation invariants always fail.
 - Retain full diagnostic reports as CI artifacts; distinguish regression-gate
   success from scientific equivalence or universal export compatibility.
+
+### CLIC compatibility and remaining limits
+
+- Retain the reviewed aluminium reverse proxy released in 1.0.0a5. The
+  corrected paper mapping passes the 20-version public TOPCon basket in
+  Brightway, SimaPro and openLCA at ecoinvent 3.10.1, 3.11 and 3.12.
+- The 42,444-probe audit records 40,922 supported cases, 1,497 blocked cases
+  and 25 explicit biosphere omissions. All 354 approved supplier probes pass
+  at 3.10, 3.10.1, 3.11 and 3.12 under the documented policy; older-target
+  ambiguities and unreviewed suppliers remain errors.
+- CLIC's traceable SimaPro category shortening is a separate application fix;
+  installing this release alone does not change CLIC or relax BrightPath's
+  Desktop validation. Rebuild CLIC web and export-worker images together with
+  its matching application update. No published inventory rewrite is required.
 
 ## 1.0.0a5 - 2026-10-08
 
