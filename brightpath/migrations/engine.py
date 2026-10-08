@@ -464,7 +464,10 @@ def _shared_catalog_target(
         candidate.update(target)
         if _biosphere_catalog_identity(candidate) in target_biosphere_identities:
             targets.append(target)
-    unique_targets = list({tuple(sorted(target.items())): target for target in targets}.values())
+    unique_targets = []
+    for target in targets:
+        if target not in unique_targets:
+            unique_targets.append(target)
     if len(unique_targets) != 1:
         return None
     return unique_targets[0]
