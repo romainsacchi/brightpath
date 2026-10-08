@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+### Migration release safeguards
+
+- Fix a biosphere reverse-migration crash discovered by the exhaustive audit:
+  shared targets with list-valued categories now compare structurally instead
+  of being used as unhashable dictionary keys. Distinct candidates remain
+  ambiguous; quantities and uncertainty are unchanged.
+
+- Audit every approved UVEK supplier and every source biosphere identity across
+  exact packaged ecoinvent cut-off targets, including composed migrations and
+  generated helpers. Report blocked identities without choosing new proxies.
+- Inventory forward/reverse resource collisions and gate CI and publication on
+  reviewed coverage/output baselines using the newly built wheel. Unexpected
+  exceptions and broken rollback or preservation invariants always fail.
+- Retain full diagnostic reports as CI artifacts; distinguish regression-gate
+  success from scientific equivalence or universal export compatibility.
+
 ## 1.0.0a5 - 2026-10-08
 
 ### Background migration
