@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 1.0.0a5 - 2026-10-08
 
 ### Background migration
 
@@ -13,6 +13,15 @@ All notable changes to this project will be documented in this file.
 - Report the proxy's regional and supply-composition limitations, preserve
   quantities and uncertainty, and retain strict rejection of unreviewed
   ambiguities. Refresh the resource manifest and conversion fingerprint.
+- Include the fix from commit `8feafa6` and regressions for native and composed
+  routes, information-loss policy rejection, and unchanged forward mappings.
+
+### Known limitation
+
+- The expanded CLIC photovoltaic basket still contains SimaPro category folder
+  names exceeding the Desktop limit of 60 characters. This release fixes the
+  background migration ambiguity; those category names must be corrected before
+  the complete basket can export to SimaPro. Strict format validation is retained.
 
 ## 1.0.0a4 - 2026-10-07
 
