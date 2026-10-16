@@ -116,6 +116,15 @@ accepts only the migration-manifest change and the added schema-definition
 digest. Existing unsupported cases remain blocked; neither mapping confidence
 nor numerical recipes are adjusted to make the audit pass.
 
+The forward crosswalk is additionally tested exhaustively: all 31,488 supplier
+rules execute against real supported source catalogs with complete target-link
+coverage. This test exposed an existing amount-factor bug: uncertainty locations,
+spreads, bounds and formulas previously remained unscaled. Unit-factor execution
+now shares the reverse exporter's scaling routine. Unsupported distributions
+roll back with structured errors, including under permissive policy. All
+mapping scores, factors, targets and evidence remain unchanged; the seven
+existing helper outputs retain their pre-upgrade hashes.
+
 Runtime metadata cleanup subsequently removes duplicated catalog filenames,
 generation-method descriptions and evidence hashes from UVEK resources. Forward
 reviews retain rationale and limitations; comparison revisions, activity codes

@@ -1,11 +1,20 @@
 import json
 import math
 
+import pytest
+
 from brightpath import DATA_DIR
 from brightpath.background import BiosphereCatalog, InMemoryCatalogProvider, TechnosphereCatalog
 from brightpath.background.execution import execute_background_migration
 from brightpath.background.migration import plan_background_migration
-from brightpath.core import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
+from brightpath.core import (
+    BackgroundContext,
+    BiosphereProfile,
+    FormatProfile,
+    InventoryContext,
+    MigrationPolicy,
+    TechnosphereProfile,
+)
 from brightpath.migrations.engine import _canonical_unit
 from brightpath.migrations.resources import load_uvek_biosphere_resource, load_uvek_technosphere_resource
 from brightpath.models import InventoryDocument
@@ -148,3 +157,148 @@ def test_uvek_plan_and_execution_migrate_both_axes_transactionally():
     assert _technosphere_rule_identity(result.value.data[0]["exchanges"][0]) == target_technosphere_identity
     assert _biosphere_identity(result.value.data[0]["exchanges"][1]) == target_biosphere_identity
     assert document.context.background == source
+
+
+def test_every_forward_rule_executes_from_a_real_supported_source_catalog():
+    """Exercise all 31,488 rules, including factors, against exact catalog profiles."""
+    from copy import deepcopy
+
+    from brightpath.background import PackageCatalogProvider
+
+    resource = load_uvek_technosphere_resource()
+    provider = PackageCatalogProvider()
+    remaining = {_technosphere_rule_identity(rule["source"]): rule for rule in resource["replace"]}
+    profiles = sorted(
+        (TechnosphereProfile(**profile) for profile in resource["source_profiles"]),
+        key=lambda profile: (tuple(int(part) for part in profile.version.split(".")), profile.system_model == "cutoff"),
+        reverse=True,
+    )
+    target = BackgroundContext(TechnosphereProfile("uvek", "2025", "cutoff"), BiosphereProfile("ecoinvent", "3.10"))
+    target_biosphere = provider.load_biosphere(target.biosphere).identities
+    checked = 0
+    for profile in profiles:
+        available = provider.load_technosphere(profile).identities
+        selected = [remaining.pop(key) for key in sorted(available & remaining.keys())]
+        if not selected:
+            continue
+        source = BackgroundContext(profile, BiosphereProfile("ecoinvent", profile.version))
+        name, categories, unit = min(provider.load_biosphere(source.biosphere).identities & target_biosphere)
+        output = {
+            "name": f"Schema test {profile.version} {profile.system_model}",
+            "reference product": "schema test output",
+            "location": "GLO",
+            "unit": "unit",
+        }
+        data = [
+            {
+                **output,
+                "exchanges": [
+                    {**output, "type": "production", "amount": 1},
+                    *[
+                        {
+                            **rule["source"],
+                            "type": "technosphere",
+                            "amount": 2,
+                            "uncertainty type": 3,
+                            "loc": 2,
+                            "scale": 0.1,
+                            "schema_rule_id": rule["id"],
+                        }
+                        for rule in selected
+                    ],
+                    {"name": name, "categories": list(categories), "unit": unit, "type": "biosphere", "amount": 1},
+                ],
+            }
+        ]
+        original = deepcopy(data)
+        document = InventoryDocument(data=data, context=InventoryContext(FormatProfile("brightway_excel"), source))
+        result = execute_background_migration(document, target, provider)
+        assert result.succeeded, (profile, [issue.to_dict() for issue in result.report.issues])
+        assert data == original == document.data
+        assert result.value.context.background == target
+        assert result.value.data[0]["exchanges"][0] == original[0]["exchanges"][0]
+        converted = result.value.data[0]["exchanges"][1:-1]
+        assert len(converted) == len(selected)
+        for exchange, rule in zip(converted, selected, strict=True):
+            assert _technosphere_rule_identity(exchange)[:3] == _technosphere_rule_identity(rule["target"])[:3]
+            assert _canonical_unit(exchange["unit"]) == _canonical_unit(rule["target"]["unit"])
+            assert exchange["schema_rule_id"] == rule["id"]
+            factor = rule.get("conversion_factor", 1)
+            assert exchange["amount"] == pytest.approx(2 * factor)
+            assert exchange["loc"] == pytest.approx(2 * factor)
+            assert exchange["scale"] == pytest.approx(0.1 * abs(factor))
+        assert result.report.stages[-1].metrics["technosphere"]["coverage"] == 1
+        assert result.report.stages[-1].metrics["biosphere"]["coverage"] == 1
+        checked += len(selected)
+    assert not remaining
+    assert checked == resource["coverage"]["mapped_identities"] == 31488
+
+
+def _factored_document(uncertainty):
+    from brightpath.background import PackageCatalogProvider
+
+    source = BackgroundContext(
+        TechnosphereProfile("ecoinvent", "3.12", "cutoff"), BiosphereProfile("ecoinvent", "3.12")
+    )
+    target = BackgroundContext(TechnosphereProfile("uvek", "2025", "cutoff"), BiosphereProfile("ecoinvent", "3.10"))
+    provider = PackageCatalogProvider()
+    catalog = provider.load_technosphere(source.technosphere).identities
+    rule = next(
+        rule
+        for rule in load_uvek_technosphere_resource()["replace"]
+        if rule.get("conversion_factor", 1) != 1 and _technosphere_rule_identity(rule["source"]) in catalog
+    )
+    data = [
+        {
+            "name": "Synthetic foreground",
+            "reference product": "service",
+            "location": "GLO",
+            "unit": "unit",
+            "exchanges": [{**rule["source"], "type": "technosphere", "amount": 2, **uncertainty}],
+        }
+    ]
+    return (
+        InventoryDocument(data=data, context=InventoryContext(FormatProfile("brightway_excel"), source)),
+        target,
+        provider,
+        rule["conversion_factor"],
+    )
+
+
+@pytest.mark.parametrize("distribution", [0, 1, 2, 3, 4])
+def test_forward_unit_factors_scale_uncertainty_and_formulas_consistently(distribution):
+    uncertainty = {"uncertainty type": distribution, "minimum": 1, "maximum": 3, "formula": "input_amount"}
+    if distribution != 4:
+        uncertainty["loc"] = math.log(2) if distribution == 2 else 2
+    if distribution in (2, 3):
+        uncertainty["scale"] = 0.2
+    original, target, provider, factor = _factored_document(uncertainty)
+    before = original.data
+    result = execute_background_migration(original, target, provider)
+    assert result.succeeded
+    assert original.data == before
+    exchange = result.value.data[0]["exchanges"][0]
+    assert exchange["amount"] == pytest.approx(2 * factor)
+    assert exchange["minimum"] == pytest.approx(factor)
+    assert exchange["maximum"] == pytest.approx(3 * factor)
+    assert exchange["formula"] == f"(input_amount) * ({factor!r})"
+    if "loc" in uncertainty:
+        expected = math.log(2) + math.log(factor) if distribution == 2 else 2 * factor
+        assert exchange["loc"] == pytest.approx(expected)
+    if distribution in (2, 3):
+        assert exchange["scale"] == pytest.approx(0.2 if distribution == 2 else 0.2 * abs(factor))
+
+
+@pytest.mark.parametrize("policy", [MigrationPolicy.strict(), MigrationPolicy.permissive()])
+@pytest.mark.parametrize("uncertainty", [{"uncertainty type": 8}, {"uncertainty type": 3, "loc": "invalid"}])
+def test_unsafe_forward_uncertainty_scaling_rolls_back_under_every_policy(policy, uncertainty):
+    original, target, provider, _ = _factored_document(uncertainty)
+    before = original.data
+    result = execute_background_migration(original, target, provider, policy)
+    assert not result.succeeded
+    assert result.value is original
+    assert original.data == before
+    # Planning losses remain visible; failed execution must commit no changes.
+    assert not result.report.changes
+    assert result.report.metadata["committed"] is False
+    assert "migration.amount_scaling_invalid" in {issue.code for issue in result.report.issues}

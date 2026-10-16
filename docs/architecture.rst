@@ -188,7 +188,8 @@ Reviewed UVEK-to-ecoinvent cut-off exports use an independent directional
 resource and foreground recipes. Both UVEK directions share the named v3
 migration schema; standard ecoinvent files normalize into that representation
 without changing their on-disk attribution or rule bodies. See
-:doc:`migration-resource-schema`.
+:doc:`migration-resource-schema`. Amount-factor execution shares uncertainty
+and formula scaling across the two directions and rolls back unsupported cases.
 
 Policies and reports
 --------------------
@@ -249,6 +250,8 @@ Module ownership
      - Transactional rule execution and endpoint validation
    * - ``brightpath.migrations.schema`` / ``resources``
      - Common migration representation, validation, serialization and loading
+   * - ``brightpath.migrations.scaling``
+     - Shared quantity, uncertainty and formula scaling
    * - ``brightpath.brightway`` / ``simapro``
      - v1 convenience facades
    * - ``brightpath.analysis``

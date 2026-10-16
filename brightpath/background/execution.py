@@ -54,6 +54,7 @@ from brightpath.migrations.resources import (
     load_uvek_biosphere_resource,
     load_uvek_technosphere_resource,
 )
+from brightpath.migrations.scaling import scale_exchange
 from brightpath.models import InventoryDocument
 
 _STRICT_POLICY = MigrationPolicy.strict()
@@ -327,7 +328,10 @@ def _execute_plan(
     )
     for step_index, step in enumerate(plan.technosphere_steps):
         resource = _resource_for_step(step, technosphere_resources)
-        step_report, step_losses = _apply_technosphere_step(data, resource, step, policy, step_index)
+        try:
+            step_report, step_losses = _apply_technosphere_step(data, resource, step, policy, step_index)
+        except (ValueError, TypeError, OverflowError) as error:
+            return _invalid_scaling_stage(issues, losses, step_metrics, step, step_index, error)
         translated = _translate_legacy_issues(step_report, policy, step.axis, step_index)
         issues.extend(translated)
         losses.extend(step_losses)
@@ -343,14 +347,17 @@ def _execute_plan(
         step_index = offset + axis_index
         resource = _resource_for_step(step, biosphere_resources)
         target_biosphere_identities = _step_target_biosphere_identities(provider, plan.target.biosphere.family, step)
-        step_report, step_losses = _apply_biosphere_step(
-            data,
-            resource,
-            step,
-            policy,
-            step_index,
-            target_biosphere_identities=target_biosphere_identities,
-        )
+        try:
+            step_report, step_losses = _apply_biosphere_step(
+                data,
+                resource,
+                step,
+                policy,
+                step_index,
+                target_biosphere_identities=target_biosphere_identities,
+            )
+        except (ValueError, TypeError, OverflowError) as error:
+            return _invalid_scaling_stage(issues, losses, step_metrics, step, step_index, error)
         translated = _translate_legacy_issues(step_report, policy, step.axis, step_index)
         issues.extend(translated)
         losses.extend(step_losses)
@@ -362,6 +369,20 @@ def _execute_plan(
             return _migration_stage(issues, (), losses, step_metrics, rolled_back=True)
 
     return _migration_stage(issues, changes, losses, step_metrics, rolled_back=False)
+
+
+def _invalid_scaling_stage(issues, losses, step_metrics, step, step_index, error):
+    issues.append(
+        Issue(
+            Severity.ERROR,
+            "migration.amount_scaling_invalid",
+            str(error),
+            StageKind.BACKGROUND_MIGRATION,
+            path=f"background.{step.axis.value}.steps[{step_index}]",
+            details={"resource": step.resource_name},
+        )
+    )
+    return _migration_stage(issues, (), losses, step_metrics, rolled_back=True)
 
 
 def _step_target_biosphere_identities(
@@ -1012,7 +1033,7 @@ def _biosphere_compartments_are_related(source: tuple[str, ...], target: tuple[s
 
 def _apply_amount_factor(entity: dict, factor: float | None) -> None:
     if factor is not None and "amount" in entity:
-        entity["amount"] = float(entity["amount"]) * factor
+        scale_exchange(entity, factor)
 
 
 def _conversion_factor(rule: Mapping, target: Mapping, *, reverse: bool) -> float | None:
