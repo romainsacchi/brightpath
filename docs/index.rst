@@ -38,6 +38,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    workflows/conversion
    workflows/parameters
    workflows/migration
+   workflows/ecoinvent-to-uvek
    workflows/uvek-export
    workflows/validation
    workflows/analysis
@@ -48,6 +49,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    :caption: Maintainer guide
 
    architecture
+   migration-resource-schema
    migration-audit
    recycled-paper-migration
    simapro-reference-evidence

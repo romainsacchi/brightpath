@@ -241,9 +241,10 @@ The same format-only operation works for UVEK:
        raise RuntimeError(written.report.to_json(indent=2))
 
 This format-only step is not an ecoinvent-to-UVEK mapping. Cross-family
-background migration remains a separate explicit operation. The only packaged
-cross-family route is the heuristic forward ecoinvent 3.6–3.12 to UVEK 2025
-route; UVEK-to-ecoinvent migration remains unavailable.
+background migration remains a separate explicit operation. The packaged
+ecoinvent 3.6–3.12 to UVEK 2025 route is heuristic. Independently reviewed
+UVEK-to-ecoinvent cut-off exports use directional rules and supporting recipes;
+see :doc:`uvek-export`. Both directions share :doc:`../migration-resource-schema`.
 
 The UVEK 2025 openLCA writer resolves each external exchange against a
 format-specific exact-reference catalog. Technosphere exchanges use the

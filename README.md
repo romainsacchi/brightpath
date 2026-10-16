@@ -299,6 +299,7 @@ OpenLCA Excel and ecoSpold2 are not currently supported.
 - Packaged ecoinvent cut-off migrations connect releases from 3.5 through 3.12.
 - Reverse migrations are inferred and require permissive review.
 - A heuristic ecoinvent-to-UVEK 2025 route is available and must be reviewed.
+- Reviewed UVEK-to-ecoinvent cut-off exports use independent directional rules and supporting recipes.
 - Consequential version-to-version and cross-system-model migrations are not available.
 
 Support is discovered from the installed package, so `brightpath formats` is the
@@ -312,6 +313,7 @@ authoritative list for your installation.
 - [SimaPro workflows](docs/workflows/simapro.rst) — reading, validation, categories, and writing
 - [Conversion guide](docs/workflows/conversion.rst) — format changes and information-loss policies
 - [Migration guide](docs/workflows/migration.rst) — background updates and review policies
+- [Shared migration schema](docs/migration-resource-schema.rst) — rule structure, optional confidence, evidence and recipes
 - [Validation guide](docs/workflows/validation.rst) — understand and resolve reported issues
 - [API reference](docs/api.rst) — complete Python interface
 

@@ -4,6 +4,7 @@ import json
 import pytest
 
 from brightpath import DATA_DIR
+from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.generate_uvek_migration_resources import apply_reviewed_overrides
 from scripts.review_uvek_mapping import identity, select
 
@@ -78,7 +79,7 @@ def test_rejects_unit_changes():
 
 
 def test_packaged_overrides_are_idempotent_valid_and_preserve_unselected_rules():
-    resource = json.loads((DATA_DIR / "migrations/uvek/ecoinvent-to-uvek-2025.json").read_text())
+    resource = copy.deepcopy(load_uvek_technosphere_resource())
     overrides = json.loads((DATA_DIR / "export/uvek_reviewed_overrides.json").read_text())
     catalog = json.loads((DATA_DIR / "export/reference_catalogs/uvek__2025__cutoff.json").read_text())
     targets = {(row["name"], row["reference_product"], row["location"], row["unit"]) for row in catalog["technosphere"]}
@@ -90,7 +91,7 @@ def test_packaged_overrides_are_idempotent_valid_and_preserve_unselected_rules()
     for decision in overrides["decisions"]:
         current = indexed[identity(decision["source"])]
         assert current["target"] == decision["target"]
-        assert current["mapping_method"] == decision["mapping_method"]
+        assert current["mapping_method"] == decision["mapping_method"].removeprefix("clic_")
 
 
 @pytest.mark.parametrize("problem", ["duplicate", "stale", "target", "unit"])
@@ -237,7 +238,7 @@ def test_waste_energy_coproduct_is_not_treated_as_waste_disposal():
 
 
 def test_butane_coproduct_is_updated_in_packaged_resource():
-    resource = json.loads((DATA_DIR / "migrations/uvek/ecoinvent-to-uvek-2025.json").read_text())
+    resource = load_uvek_technosphere_resource()
     selected = next(
         row
         for row in resource["replace"]
@@ -251,4 +252,4 @@ def test_butane_coproduct_is_updated_in_packaged_resource():
     )
     assert selected["target"]["name"] == "Chemicals organic, at plant"
     assert selected["confidence"] == 0.4
-    assert selected["mapping_method"] == "clic_pairwise_review"
+    assert selected["mapping_method"] == "pairwise_review"

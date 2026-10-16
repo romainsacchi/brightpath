@@ -198,6 +198,9 @@ ecoinvent 3.10. Both resources are deterministic heuristics. Planning records
 metadata; it does not claim that the selected activities are scientifically
 equivalent.
 
+For the forward resource's fields, compact storage layout and catalog coverage,
+see :doc:`ecoinvent-to-uvek`.
+
 The ecoinvent 3.11→3.12 biosphere resource records stable-UUID flow renames
 identified from the release master data. A complete cut-off target can
 therefore migrate both axes to 3.12:
@@ -236,7 +239,6 @@ No resources are advertised for:
 
 * consequential version migration;
 * cross-system-model migration;
-* UVEK-to-ecoinvent migration;
 * migration between UVEK versions;
 * unsupported background families.
 
@@ -244,3 +246,8 @@ The forward ecoinvent-to-UVEK route is available only for the packaged 3.6–3.1
 source series and UVEK 2025 target. It is intentionally approximate, advertises
 no reverse route, and remains subject to exact source and target catalog
 validation.
+
+Reviewed UVEK-to-ecoinvent cut-off exports use independently authored directional
+rules and optional foreground recipes. See :doc:`uvek-export`. Both UVEK
+directions use :doc:`../migration-resource-schema`; sharing a schema does not
+authorize inferred reversal of the heuristic crosswalk.

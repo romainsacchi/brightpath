@@ -95,7 +95,7 @@ def test_aluminium_regression_is_detected_without_loosening_ambiguity_policy(mon
     source = BackgroundContext(TechnosphereProfile("uvek", "2025", "cutoff"), BiosphereProfile("ecoinvent", "3.10"))
     rule = next(
         rule
-        for rule in load_uvek_export_resource()["rules"]
+        for rule in load_uvek_export_resource()["replace"]
         if rule["source"]["name"] == "Aluminium, primary, at plant" and rule["source"]["location"] == "RER"
     )
     cases = [{"id": rule["id"], "exchange": {**rule["source"], "type": "technosphere"}}]
@@ -115,7 +115,7 @@ def test_aluminium_regression_is_detected_without_loosening_ambiguity_policy(mon
 
 def test_recipe_helpers_are_included_in_audited_output(monkeypatch):
     source = BackgroundContext(TechnosphereProfile("uvek", "2025", "cutoff"), BiosphereProfile("ecoinvent", "3.10"))
-    rule = next(rule for rule in load_uvek_export_resource()["rules"] if "recipe" in rule)
+    rule = next(rule for rule in load_uvek_export_resource()["replace"] if "recipe_ref" in rule["target"])
     fingerprints = []
     original_digest = audit.digest
 
@@ -285,7 +285,7 @@ def test_full_audit_discovers_all_targets_and_does_not_sample_suppliers_or_flows
         for profile in provider.technosphere_profiles()
         if profile.family == "ecoinvent" and profile.system_model == "cutoff"
     ]
-    rules = load_uvek_export_resource()["rules"]
+    rules = load_uvek_export_resource()["replace"]
     assert len(observed) == len(profiles) * 2 == len(report["routes"])
     for cases, source, target in observed:
         if target.technosphere.family == "ecoinvent":

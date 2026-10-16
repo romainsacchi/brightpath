@@ -271,9 +271,11 @@ def run_migration_audit(*, progress=None, workers=1):
         raise ValueError("workers must be positive.")
     provider = PackageCatalogProvider()
     resource = load_uvek_export_resource()
-    source = BackgroundContext(TechnosphereProfile(**resource["source_profile"]), BiosphereProfile("ecoinvent", "3.10"))
+    source = BackgroundContext(
+        TechnosphereProfile(**resource["source_profiles"][0]), BiosphereProfile("ecoinvent", "3.10")
+    )
     supplier_cases = [
-        {"id": rule["id"], "exchange": {**rule["source"], "type": "technosphere"}} for rule in resource["rules"]
+        {"id": rule["id"], "exchange": {**rule["source"], "type": "technosphere"}} for rule in resource["replace"]
     ]
     biosphere_cases = [
         {
@@ -322,9 +324,13 @@ def run_migration_audit(*, progress=None, workers=1):
         "policy": AUDIT_POLICY.to_dict(),
         "resources": {
             relative: hashlib.sha256((DATA_DIR / relative).read_bytes()).hexdigest()
-            for relative in ("migrations/RESOURCE_MANIFEST.json", "export/reference_catalogs/RESOURCE_MANIFEST.json")
+            for relative in (
+                "migrations/RESOURCE_MANIFEST.json",
+                "export/reference_catalogs/RESOURCE_MANIFEST.json",
+                "schemas/migration-v3.schema.json",
+            )
         },
-        "unresolved_uvek_suppliers": len(resource["unresolved"]),
+        "unresolved_uvek_suppliers": resource["coverage"]["unresolved_identities"],
         "routes": {name: result["summary"] for name, result in routes.items()},
         "collisions": {
             "count": len(collisions),

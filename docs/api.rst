@@ -1,6 +1,19 @@
 API reference
 =============
 
+Migration resource schema
+-------------------------
+
+.. autofunction:: brightpath.migrations.resources.load_migration_resource
+
+.. autofunction:: brightpath.migrations.schema.normalize_migration_resource
+
+.. autofunction:: brightpath.migrations.schema.validate_migration_resource
+
+.. autofunction:: brightpath.migrations.schema.dumps_migration_resource
+
+.. autofunction:: brightpath.migrations.schema.rule_review
+
 Facade API
 ----------
 

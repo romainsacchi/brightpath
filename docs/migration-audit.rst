@@ -103,6 +103,27 @@ To update the baseline:
 Without ``--baseline``, the script writes a discovery report and exits nonzero
 to require review. Unexpected loader errors also fail the command.
 
+Both UVEK directions now use the named ``brightpath.migration`` schema,
+version 3. The ecoinvent-style operation lists, inline supplier identities and
+shared review references are validated by the same packaged JSON Schema and
+semantic checks. Upstream ecoinvent rules and attribution remain unchanged and
+normalize when loaded. Resource and schema-definition digests are included in
+the baseline and migration fingerprint.
+
+The schema upgrade preserves all 42,444 reverse-route case outcomes, output
+hashes and collision findings in source and wheel audits. Baseline review
+accepts only the migration-manifest change and the added schema-definition
+digest. Existing unsupported cases remain blocked; neither mapping confidence
+nor numerical recipes are adjusted to make the audit pass.
+
+Runtime metadata cleanup subsequently removes duplicated catalog filenames,
+generation-method descriptions and evidence hashes from UVEK resources. Forward
+reviews retain rationale and limitations; comparison revisions, activity codes
+and candidate histories stay in the authoring ledgers. The tissue-paper
+supplement likewise keeps rationale and its evidence link, with detailed review
+identifiers in its dedicated document. Only the migration-manifest digest changes
+in the audit baseline; operational rules, coverage and helper outputs are preserved.
+
 Limitations and next layers
 ---------------------------
 

@@ -179,10 +179,16 @@ removes uncommitted changes from the report.
 
 Technosphere and biosphere resources connect adjacent ecoinvent release series
 from 3.5→3.6 through 3.11→3.12. Consequential version-to-version, cross-model,
-UVEK-to-ecoinvent, and UVEK-version migration remain unavailable. A
+and UVEK-version migration remain unavailable. A
 separate ecoinvent 3.6–3.12 to UVEK 2025 compatibility resource is explicitly
 heuristic, records a warning and loss, and is verified against the exact UVEK
 target catalog before commit.
+
+Reviewed UVEK-to-ecoinvent cut-off exports use an independent directional
+resource and foreground recipes. Both UVEK directions share the named v3
+migration schema; standard ecoinvent files normalize into that representation
+without changing their on-disk attribution or rule bodies. See
+:doc:`migration-resource-schema`.
 
 Policies and reports
 --------------------
@@ -241,6 +247,8 @@ Module ownership
      - Pure route and policy planning
    * - ``brightpath.background.execution``
      - Transactional rule execution and endpoint validation
+   * - ``brightpath.migrations.schema`` / ``resources``
+     - Common migration representation, validation, serialization and loading
    * - ``brightpath.brightway`` / ``simapro``
      - v1 convenience facades
    * - ``brightpath.analysis``

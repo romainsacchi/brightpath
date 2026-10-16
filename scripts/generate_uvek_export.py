@@ -11,7 +11,15 @@ from collections import Counter, defaultdict
 from functools import lru_cache
 from pathlib import Path
 
-from brightpath.background.uvek_export import IDENTITY_FIELDS, RESOURCE_NAME, identity, validate_resource
+from brightpath.background.uvek_export import IDENTITY_FIELDS, RESOURCE_NAME, identity
+from brightpath.migrations.schema import (
+    MIGRATION_SCHEMA,
+    MIGRATION_SCHEMA_VERSION,
+    dumps_migration_resource,
+    intern_review,
+    normalize_migration_resource,
+    validate_migration_resource,
+)
 from brightpath.units import normalize_unit
 
 
@@ -197,9 +205,10 @@ def build(root, evidence):
             "rationale": entry["recipe"]["rationale"],
             "evidence": entry["recipe"]["evidence"],
         }
-    rules, unresolved, review = [], [], []
+    rules, review = [], []
+    review_resource = {"reviews": {}}
     target_index = candidate_index(targets)
-    forward = load(directory / "migrations/uvek/ecoinvent-to-uvek-2025.json")
+    forward = normalize_migration_resource(load(directory / "migrations/uvek/ecoinvent-to-uvek-2025.json"))
     suggestions = defaultdict(set)
     for rule in forward["replace"]:
         if identity(rule["source"]) in targets:
@@ -221,7 +230,16 @@ def build(root, evidence):
                 decision["classification"] = "proxy"
         if decision is not None:
             rule_id = "uvek-ei312-" + hashlib.sha256(json.dumps(source).encode()).hexdigest()[:16]
-            rules.append({"id": rule_id, "source": source_record, **decision})
+            rule = {
+                "id": rule_id,
+                "source": source_record,
+                "target": {"recipe_ref": decision["recipe"]} if "recipe" in decision else decision["target"],
+                "classification": decision["classification"],
+                "review_ref": intern_review(review_resource, {key: decision[key] for key in ("rationale", "evidence")}),
+            }
+            if "factor" in decision:
+                rule["conversion_factor"] = decision["factor"]
+            rules.append(rule)
             review.append(
                 {
                     "source": source_record,
@@ -235,7 +253,6 @@ def build(root, evidence):
                 if len(signatures) > 1
                 else "No reviewed directional correspondence; similarity and reversed forward rules are not approval."
             )
-            unresolved.append({"source": source_record, "reason": reason})
             review.append(
                 {
                     "source": source_record,
@@ -255,29 +272,30 @@ def build(root, evidence):
                 raise ValueError(f"Public recipe has a non-background dependency: {identity(exchange)}")
     coverage = {
         "source_identities": len(sources),
-        "approved_identities": len(rules),
-        "unresolved_identities": len(unresolved),
+        "mapped_identities": len(rules),
+        "unresolved_identities": len(sources) - len(rules),
         "dispositions": dict(Counter(entry["disposition"] for entry in review)),
     }
     resource = {
-        "schema_version": 1,
+        "schema": MIGRATION_SCHEMA,
+        "schema_version": MIGRATION_SCHEMA_VERSION,
         "status": "active",
         "axis": "technosphere",
         "quality": "reviewed",
         "name": "uvek-2025-to-ecoinvent-3.12-cutoff",
         "source_id": "uvek-2025-cutoff",
         "target_id": "ecoinvent-3.12-cutoff",
-        "source_profile": {"family": "uvek", "version": "2025", "system_model": "cutoff"},
+        "source_profiles": [{"family": "uvek", "version": "2025", "system_model": "cutoff"}],
         "target_profile": {"family": "ecoinvent", "version": "3.12", "system_model": "cutoff"},
-        "rules": rules,
+        "replace": rules,
+        "disaggregate": [],
+        "delete": [],
+        "reverse_policy": "explicit_only",
+        "reviews": review_resource["reviews"],
         "recipes": recipes,
-        "unresolved": unresolved,
         "coverage": coverage,
-        "evidence_sha256": hashlib.sha256(
-            json.dumps({"source": evidence, "overrides": overrides}, sort_keys=True).encode()
-        ).hexdigest(),
     }
-    validate_resource(resource)
+    validate_migration_resource(resource)
     return resource, {"coverage": coverage, "review": review, "scientific_equivalence": False}
 
 
@@ -293,7 +311,7 @@ def main():
         write(evidence_path, extract_evidence(args))
     resource, review = build(args.root, load(evidence_path))
     path = args.root / "brightpath/data/migrations/uvek" / RESOURCE_NAME
-    write(path, resource)
+    path.write_text(dumps_migration_resource(resource), encoding="utf-8")
     write(args.root / "docs/uvek_export_review.json", review)
     manifest_path = args.root / "brightpath/data/migrations/RESOURCE_MANIFEST.json"
     manifest = load(manifest_path)
@@ -305,7 +323,7 @@ def main():
             "name": resource["name"],
             "source_id": resource["source_id"],
             "target_id": resource["target_id"],
-            "schema_version": 1,
+            "schema_version": resource["schema_version"],
             "status": "active",
             "licenses": [],
             "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),

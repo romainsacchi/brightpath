@@ -10,6 +10,11 @@ supporting recipes are not ecoinvent inventory extracts. Existing cut-off
 disaggregation recipes retain their upstream provenance. No numeric similarity
 confidence is invented for this directional resource. The full catalog review
 lists unresolved suppliers separately; generated candidates are not approval.
+The shared schema-version-3 resource retains approved rules, the seven required
+public supporting recipes, and coverage counts. It does not duplicate unresolved
+source identities from the packaged UVEK catalog. Those identities, reasons and
+candidate suggestions belong to `docs/uvek_export_review.json`; an absent rule
+always remains unresolved at runtime.
 
 Except for the new 3.11→3.12 biosphere edge described below, the ecoinvent migration JSON files in
 `ecoinvent/cutoff/` and `ecoinvent/biosphere/` were originally copied from the `premise` repository
@@ -26,7 +31,8 @@ reviewed tissue-paper-output rename in RER. The upstream rules cover a different
 reference product, `waste paper, sorted`, and remain unchanged. Read-only comparison
 of licensed 3.10 and 3.11 cut-off metadata verifies the same tissue-paper product
 UUID, unit, geography and whitespace-normalized recycled/deinked process description.
-The rule's `brightpath_review` records its evidence and description digest; see
+The rule's `brightpath_review` records its rationale and evidence link. Review
+dates, activity/product UUIDs and the description digest stay in
 `docs/recycled-paper-migration.rst`. Only sparse identity metadata is published,
 not proprietary inventories. Exact patch-target validation remains required and
 no equivalence of background coefficients or impacts is claimed.
@@ -64,7 +70,15 @@ The technosphere resource additionally applies the audited decisions in
 `data/export/uvek_reviewed_overrides.json`, derived from Karin Treyer's CLIC
 `uvek-mapping-3.10` workbook at revision
 `ecf7a035492d9e2042d7180091b3299aae16bf6e` (https://github.com/romainsacchi/clic).
-Each decision retains its previous target, source provenance, and selection
+Both UVEK directions use the named `brightpath.migration` schema, version 3,
+with ecoinvent-style `replace`, `disaggregate` and `delete` operations. Supplier
+identities are inline; evidence is shared through `review_ref` and `reviews`.
+Confidence scores, factors, classifications and mapping explanations are preserved;
+missing confidence stays absent. Legacy review `reason` becomes `rationale`.
+Upstream ecoinvent rules and attribution stay unchanged and normalize on loading. The source identities
+and all 2,576 review links are retained; 104 distinct runtime review records are stored
+once. See `docs/workflows/ecoinvent-to-uvek.rst` for fields and current coverage.
+The authoring decision ledger retains previous targets, source provenance, and selection
 reason. See `docs/uvek-mapping-review.md` for safeguards and deferred conflicts.
 The expanded pairwise review additionally checks energy carrier/fuel/technology,
 waste role/material/route, nutrient mass basis, and co-product chemical families.
@@ -82,12 +96,21 @@ spellings retain an explicit factor of 1.0; no inventory amount is rescaled.
 Review version 4 additionally inspects the local ecoinvent 3.10 cut-off and UVEK
 2025 reference production and selected operating-burden metadata for the seedling
 and CHP priority batch. Fifty-nine selections are third candidates from the full
-UVEK catalog, not targets selected by the CLIC branch. Runtime provenance therefore
+UVEK catalog, not targets selected by the CLIC branch. The authoring ledger
 labels the branch as the comparison source and separately identifies the inventory
 evidence and candidate origin. See `docs/uvek_priority_inventory_evidence.json`
 and `docs/uvek_priority_summary.json`. Only sparse interpretive evidence is
 published, not full proprietary inventories. Different versions, allocation models,
 plant capacities and emission-control performance are not established as equivalent.
+
+Runtime resources omit comparison-branch methods, revision identifiers, activity
+codes, evidence hashes and duplicate input catalog filenames. Detailed history
+remains in the ledgers and documents cited above; the integrity manifest still
+verifies every packaged migration resource. Generators retain only rationale,
+limitations and necessary evidence citations in shared runtime reviews.
+Runtime method labels omit the historical `clic_` prefix; the authoring ledger
+retains the original labels and source attribution. These labels describe how a
+mapping was selected and do not create a dependency on CLIC.
 
 These resources enable compatibility workflows only. They do not assert scientific equivalence.
 Each rule records its method and confidence, planning emits `migration.heuristic_mapping`, and

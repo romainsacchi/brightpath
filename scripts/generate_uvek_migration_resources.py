@@ -20,6 +20,17 @@ from typing import Iterable, Sequence
 import yaml
 from bw2io.units import normalize_units as normalize_unit
 
+from brightpath.migrations.schema import (
+    MIGRATION_SCHEMA,
+    MIGRATION_SCHEMA_VERSION,
+    dumps_migration_resource,
+    intern_review,
+    normalize_migration_resource,
+    profile_list,
+    rule_identifier,
+    validate_migration_resource,
+)
+
 ECOINVENT_VERSIONS = ("3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12")
 ECOINVENT_SYSTEM_MODELS = ("cutoff", "consequential")
 UVEK_VERSION = "2025"
@@ -343,19 +354,19 @@ def _load_conversion_factors(path: Path) -> dict[str, float]:
 
 def _resource_metadata(*, name: str, description: str, axis: str, source: dict, target: dict) -> dict:
     return {
-        "schema_version": 1,
+        "schema": MIGRATION_SCHEMA,
+        "schema_version": MIGRATION_SCHEMA_VERSION,
         "status": "active",
         "name": name,
         "description": description,
         "axis": axis,
         "quality": "heuristic",
-        "source_profile": source,
+        "source_profiles": profile_list(source),
         "target_profile": target,
-        "methodology": {
-            "curated_precedence": "brightpath/data/export/ecoinvent_to_uvek_mapping.csv",
-            "fallback": "deterministic token and string similarity with unit-compatible targets",
-            "scientific_equivalence": False,
-        },
+        "reverse_policy": "explicit_only",
+        "recipes": {},
+        "reviews": {},
+        "coverage": {},
         "replace": [],
         "disaggregate": [],
         "delete": [],
@@ -397,19 +408,17 @@ def apply_reviewed_overrides(resource: dict, overrides: dict, targets: set[tuple
     for current, decision, passenger_distance_alias in pending:
         current.update(
             target=decision["target"],
-            mapping_method=decision["mapping_method"],
+            mapping_method=decision["mapping_method"].removeprefix("clic_"),
             confidence=decision["confidence"],
-            review_provenance={
-                "source_revision": overrides["source_revision"],
-                "branch_method": decision["branch_method"],
-                "reason": decision["reason"],
-                "limitations": decision.get("limitations", []),
-            },
         )
-        if "inventory_evidence" in decision:
-            provenance = current["review_provenance"]
-            provenance["comparison_source_revision"] = provenance.pop("source_revision")
-            provenance["inventory_evidence"] = dict(decision["inventory_evidence"])
+        # Detailed comparison history stays in the decision ledger. Runtime
+        # reviews explain the selected mapping and its limitations only.
+        provenance = {
+            "rationale": decision["reason"],
+            "limitations": decision.get("limitations", []),
+        }
+        current["review_ref"] = intern_review(resource, provenance)
+        current.pop("review_provenance", None)
         if passenger_distance_alias:
             current["conversion_factor"] = 1.0
         else:
@@ -420,7 +429,8 @@ def apply_reviewed_overrides(resource: dict, overrides: dict, targets: set[tuple
     resource["coverage"]["mean_confidence"] = round(
         sum(rule["confidence"] for rule in resource["replace"]) / len(resource["replace"]), 6
     )
-    resource["methodology"]["reviewed_overrides"] = "brightpath/data/export/uvek_reviewed_overrides.json"
+    referenced = {rule["review_ref"] for rule in resource["replace"] if "review_ref" in rule}
+    resource["reviews"] = {key: value for key, value in resource.get("reviews", {}).items() if key in referenced}
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
@@ -428,12 +438,10 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
     uvek_targets = {TechnosphereIdentity.from_row(row) for row in uvek_payload["technosphere"]}
     technosphere_sources: set[TechnosphereIdentity] = set()
     biosphere_sources: set[BiosphereIdentity] = set()
-    source_catalogs = []
     for version in ECOINVENT_VERSIONS:
         for system_model in ECOINVENT_SYSTEM_MODELS:
             filename = f"ecoinvent__{version}__{system_model}.json"
             payload = _load_catalog(catalog_directory / filename)
-            source_catalogs.append(filename)
             technosphere_sources.update(TechnosphereIdentity.from_row(row) for row in payload["technosphere"])
             biosphere_sources.update(BiosphereIdentity.from_row(row) for row in payload["biosphere"])
 
@@ -460,12 +468,12 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         },
         target={"family": "uvek", "version": UVEK_VERSION, "system_model": UVEK_SYSTEM_MODEL},
     )
-    technosphere["source_catalogs"] = source_catalogs
     method_counts: Counter[str] = Counter()
     confidence_total = 0.0
     for source in sorted(technosphere_sources, key=_technosphere_key):
         target, method, confidence, conversion_factor = technosphere_matcher.match(source)
         rule = {
+            "id": rule_identifier(technosphere["name"], source.as_rule_identity()),
             "source": source.as_rule_identity(),
             "target": target.as_rule_identity(),
             "mapping_method": method,
@@ -480,6 +488,7 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         "source_identities": len(technosphere_sources),
         "target_identities": len(uvek_targets),
         "mapped_identities": len(technosphere["replace"]),
+        "unresolved_identities": 0,
         "mapping_methods": dict(sorted(method_counts.items())),
         "mean_confidence": round(confidence_total / len(technosphere_sources), 6),
     }
@@ -506,6 +515,7 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         target, method, confidence = biosphere_matcher.match(source)
         biosphere["replace"].append(
             {
+                "id": rule_identifier(biosphere["name"], source.as_rule_identity()),
                 "source": source.as_rule_identity(),
                 "target": target.as_rule_identity(),
                 "mapping_method": method,
@@ -518,9 +528,12 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         "source_identities": len(biosphere_sources),
         "target_identities": len(biosphere_targets),
         "mapped_identities": len(biosphere["replace"]),
+        "unresolved_identities": 0,
         "mapping_methods": dict(sorted(method_counts.items())),
         "mean_confidence": round(confidence_total / len(biosphere_sources), 6),
     }
+    validate_migration_resource(technosphere)
+    validate_migration_resource(biosphere)
     return technosphere, biosphere
 
 
@@ -534,7 +547,7 @@ def _biosphere_key(identity: BiosphereIdentity) -> tuple[str, tuple[str, ...], s
 
 def _write_resource(path: Path, payload: dict) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    path.write_text(dumps_migration_resource(normalize_migration_resource(payload)), encoding="utf-8")
 
 
 def main(argv: Sequence[str] | None = None) -> None:

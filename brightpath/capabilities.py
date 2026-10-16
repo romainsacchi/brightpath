@@ -116,15 +116,14 @@ def migration_capabilities() -> tuple[MigrationCapability, ...]:
     values.extend(
         MigrationCapability(
             axis="technosphere",
-            family=uvek["source_profile"]["family"],
+            family=profile["family"],
             target_family=uvek["target_profile"]["family"],
-            system_model=system_model,
-            source_series=source_version,
+            system_model=profile["system_model"],
+            source_series=profile["version"],
             target_series=uvek["target_profile"]["version"],
             reverse="unavailable",
         )
-        for source_version in uvek["source_profile"]["versions"]
-        for system_model in uvek["source_profile"]["system_models"]
+        for profile in uvek["source_profiles"]
     )
     export = load_uvek_export_resource()
     values.extend(
@@ -143,10 +142,10 @@ def migration_capabilities() -> tuple[MigrationCapability, ...]:
     values.append(
         MigrationCapability(
             axis="technosphere",
-            family=export["source_profile"]["family"],
+            family=export["source_profiles"][0]["family"],
             target_family=export["target_profile"]["family"],
             system_model="cutoff",
-            source_series=export["source_profile"]["version"],
+            source_series=export["source_profiles"][0]["version"],
             target_series=export["target_profile"]["version"],
             reverse="unavailable",
         )

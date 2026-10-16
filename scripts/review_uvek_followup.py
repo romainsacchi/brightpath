@@ -12,6 +12,8 @@ from pathlib import Path
 
 import openpyxl
 
+from brightpath.migrations.schema import normalize_migration_resource
+
 if __package__:
     from .review_uvek_mapping import FIELDS, identity, unit_key
 else:
@@ -377,7 +379,7 @@ def main():
     catalog = json.loads((root / "brightpath/data/export/reference_catalogs/uvek__2025__cutoff.json").read_text())
     targets = {(row["name"], row["reference_product"], row["location"], row["unit"]) for row in catalog["technosphere"]}
     result, audit, agreement, summary = followup(
-        json.loads(args.resource.read_text()),
+        normalize_migration_resource(json.loads(args.resource.read_text())),
         json.loads(args.overrides.read_text()),
         comparison,
         json.loads(args.ledger.read_text()),

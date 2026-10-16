@@ -10,6 +10,8 @@ import math
 from collections import Counter
 from pathlib import Path
 
+from brightpath.migrations.schema import normalize_migration_resource
+
 if __package__:
     from .review_uvek_mapping import FIELDS, identity
 else:
@@ -231,7 +233,7 @@ def main():
     parser.add_argument("--target-database", required=True)
     args = parser.parse_args()
     root = Path(__file__).resolve().parents[1]
-    resource = json.loads(args.resource.read_text())
+    resource = normalize_migration_resource(json.loads(args.resource.read_text()))
     indexed = {identity(row["source"]): row for row in resource["replace"]}
     with args.followup_report.open(newline="") as handle:
         pending = [

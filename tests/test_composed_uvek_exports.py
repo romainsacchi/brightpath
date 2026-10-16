@@ -80,7 +80,7 @@ def test_removed_patch_supplier_is_rejected_even_with_permissive_policy():
 
 
 def test_composed_recipe_migrates_helpers_and_preserves_consumers():
-    rule = next(rule for rule in load_uvek_export_resource()["rules"] if "recipe" in rule)
+    rule = next(rule for rule in load_uvek_export_resource()["replace"] if "recipe_ref" in rule["target"])
     exchange = {**rule["source"], "type": "technosphere", "amount": 2, "uncertainty type": 3, "loc": 2, "scale": 0.1}
     initial = inventory(context("2025", "uvek"), [exchange, deepcopy(exchange)])
     original = deepcopy(initial.data)

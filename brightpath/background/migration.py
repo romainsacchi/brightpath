@@ -256,7 +256,7 @@ def _plan_technosphere(
     if source_profile.family != target_profile.family:
         if source_profile.family == "uvek" and target_profile.family == "ecoinvent":
             resource = load_uvek_export_resource()
-            if source_profile == TechnosphereProfile(**resource["source_profile"]) and (
+            if source_profile in [TechnosphereProfile(**profile) for profile in resource["source_profiles"]] and (
                 target_profile.system_model == "cutoff"
                 and target_profile.version in {"3.6", "3.7", "3.8", "3.9", "3.9.1", "3.10", "3.10.1", "3.11", "3.12"}
             ):
@@ -267,7 +267,7 @@ def _plan_technosphere(
                         resource["target_profile"]["version"],
                         "forward",
                         resource["name"],
-                        replacement_rules=len(resource["rules"]),
+                        replacement_rules=len(resource["replace"]),
                     ),
                 )
                 hub = BackgroundContext(TechnosphereProfile(**resource["target_profile"]), source.biosphere)
@@ -527,13 +527,15 @@ def _plan_uvek_technosphere(
     losses: list[Loss],
 ) -> tuple[MigrationRouteStep, ...]:
     resource = load_uvek_technosphere_resource()
-    source_specification = resource["source_profile"]
     target_specification = resource["target_profile"]
     supported = (
-        source_profile.family == source_specification["family"]
+        any(
+            source_profile.family == profile["family"]
+            and source_profile.system_model == profile["system_model"]
+            and source_resolution.migration_series == profile["version"]
+            for profile in resource["source_profiles"]
+        )
         and target_profile.family == target_specification["family"]
-        and source_profile.system_model in source_specification["system_models"]
-        and source_resolution.migration_series in source_specification["versions"]
         and target_profile.version == target_specification["version"]
         and target_profile.system_model == target_specification["system_model"]
     )
@@ -565,7 +567,7 @@ def _plan_uvek_biosphere(
     losses: list[Loss],
 ) -> tuple[MigrationRouteStep, ...] | None:
     resource = load_uvek_biosphere_resource()
-    if source_resolution.migration_series not in resource["source_profile"]["versions"]:
+    if source_resolution.migration_series not in {profile["version"] for profile in resource["source_profiles"]}:
         return None
     _heuristic_mapping_finding(MigrationAxis.BIOSPHERE, resource, issues, losses)
     return _materialize_steps(
@@ -630,6 +632,14 @@ def _materialize_steps(
     for step_index, (current, neighbor, direction) in enumerate(route):
         forward_pair = (current, neighbor) if direction == "forward" else (neighbor, current)
         resource = resources[forward_pair]
+        if direction == "backward" and resource.get("reverse_policy") == "explicit_only":
+            _unavailable_issue(
+                issues,
+                axis,
+                "explicit_reverse_required",
+                "This resource requires an independently authored reverse migration.",
+            )
+            continue
         step = MigrationRouteStep(
             axis=axis,
             source_version=current,

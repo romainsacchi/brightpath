@@ -7,6 +7,8 @@ import pytest
 
 from brightpath import DATA_DIR, BackgroundProfile, BrightwayInventory
 from brightpath.core import MigrationPolicy
+from brightpath.migrations.resources import load_uvek_technosphere_resource
+from brightpath.migrations.schema import rule_review
 from scripts.review_uvek_mapping import identity
 from scripts.review_uvek_priority_inventory import DIESEL_SOURCE, WOOD_SOURCE, assess, target_for
 
@@ -149,18 +151,19 @@ def test_all_packaged_inventory_decisions_are_reproducible_from_sparse_evidence(
     assert sum(row["confidence"] < 0.5 for row in decisions) == 52
 
 
-def test_packaged_resource_preserves_comparison_and_inventory_provenance():
+def test_packaged_resource_preserves_decisions_without_inventory_audit_details():
     _, _, decisions = packaged()
-    resource = json.loads((DATA_DIR / "migrations/uvek/ecoinvent-to-uvek-2025.json").read_text())
+    resource = load_uvek_technosphere_resource()
     indexed = {identity(row["source"]): row for row in resource["replace"]}
     assert len(resource["replace"]) == 31488
     assert sum(row["confidence"] < 0.5 for row in resource["replace"]) == 21618
     for decision in decisions:
         current = indexed[identity(decision["source"])]
         assert current["target"] == decision["target"]
-        assert current["review_provenance"]["inventory_evidence"] == decision["inventory_evidence"]
-        assert "comparison_source_revision" in current["review_provenance"]
-        assert "source_revision" not in current["review_provenance"]
+        assert rule_review(resource, current) == {
+            "rationale": decision["reason"],
+            "limitations": decision.get("limitations", []),
+        }
         assert current.get("conversion_factor", 1) == 1
 
 

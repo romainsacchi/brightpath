@@ -6,6 +6,7 @@ import openpyxl
 import pytest
 
 from brightpath import DATA_DIR
+from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.generate_uvek_migration_resources import apply_reviewed_overrides
 from scripts.review_uvek_followup import (
     CURATION_FILES,
@@ -218,7 +219,7 @@ def test_packaged_followup_ledger_and_resource_agree():
     root = Path(__file__).resolve().parents[1]
     ledger = json.loads((root / "docs/uvek_followup_decisions.json").read_text())
     overrides = json.loads((DATA_DIR / "export/uvek_reviewed_overrides.json").read_text())
-    resource = json.loads((DATA_DIR / "migrations/uvek/ecoinvent-to-uvek-2025.json").read_text())
+    resource = load_uvek_technosphere_resource()
     selected = [decision for decision in overrides["decisions"] if decision["mapping_method"] == "clic_followup_review"]
     expected = sum(group["entries"] for group in ledger["groups"] if group["outcome"].startswith("accept_"))
     assert len(selected) == expected == 164

@@ -12,6 +12,8 @@ from pathlib import Path
 
 import openpyxl
 
+from brightpath.migrations.schema import normalize_migration_resource
+
 if __package__:
     from .uvek_pairwise import decide
 else:
@@ -124,7 +126,7 @@ def select(current, candidate):
 
 
 def review(workbook_path, resource_path, output_directory, revision):
-    resource = json.loads(resource_path.read_text())
+    resource = normalize_migration_resource(json.loads(resource_path.read_text()))
     catalog_path = (
         Path(__file__).resolve().parents[1] / "brightpath/data/export/reference_catalogs/uvek__2025__cutoff.json"
     )

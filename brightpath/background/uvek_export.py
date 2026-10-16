@@ -12,7 +12,8 @@ from brightpath import DATA_DIR, __version__
 from brightpath.core.policies import PolicyAction
 from brightpath.core.reports import Change, Issue, Loss, Severity, StageKind, StageReport
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import _load_resource_manifest, _verify_manifest_entry
+from brightpath.migrations.resources import load_migration_resource
+from brightpath.migrations.schema import SCHEMA_PATH, normalize_migration_resource, rule_review
 
 RESOURCE_NAME = "uvek-2025-to-ecoinvent-3.12-cutoff.json"
 IDENTITY_FIELDS = ("name", "reference product", "location", "unit")
@@ -29,105 +30,16 @@ def migration_resource_fingerprint() -> str:
     manifest = (DATA_DIR / "migrations/RESOURCE_MANIFEST.json").read_bytes()
     catalogs = (DATA_DIR / "export/reference_catalogs/RESOURCE_MANIFEST.json").read_bytes()
     return hashlib.sha256(
-        __version__.encode() + b"uvek-export-v4-preserve-simapro-identity" + manifest + catalogs
+        __version__.encode() + b"migration-schema-v3" + manifest + catalogs + SCHEMA_PATH.read_bytes()
     ).hexdigest()
 
 
 @lru_cache(maxsize=1)
 def load_uvek_export_resource():
     """Load and integrity-check the reviewed UVEK-to-ecoinvent resource."""
-    path = DATA_DIR / "migrations/uvek" / RESOURCE_NAME
-    try:
-        raw = path.read_bytes()
-        resource = json.loads(raw)
-        if not isinstance(resource, dict):
-            raise ValueError("Expected a migration resource object.")
-        _verify_manifest_entry(path, raw, resource, _load_resource_manifest())
-        validate_resource(resource)
-    except (OSError, ValueError, TypeError, KeyError) as error:
-        raise MigrationError(f"Invalid directional UVEK resource: {error}") from error
+    resource = load_migration_resource(DATA_DIR / "migrations/uvek" / RESOURCE_NAME)
+    _validate_export_binding(resource)
     return resource
-
-
-def validate_resource(resource):
-    """Reject conflicting rules, malformed coefficients, and cyclic recipes."""
-    if not isinstance(resource, dict):
-        raise ValueError("Expected a migration resource object.")
-    if resource.get("schema_version") != 1 or resource.get("quality") != "reviewed":
-        raise ValueError("Expected a reviewed schema-version-1 resource.")
-    if resource.get("source_profile") != {"family": "uvek", "version": "2025", "system_model": "cutoff"}:
-        raise ValueError("Unexpected source profile.")
-    if resource.get("target_profile") != {"family": "ecoinvent", "version": "3.12", "system_model": "cutoff"}:
-        raise ValueError("Unexpected target profile.")
-    if resource.get("status") != "active" or resource.get("axis") != "technosphere":
-        raise ValueError("Expected an active technosphere resource.")
-    seen = set()
-    rule_ids = set()
-    recipes = resource["recipes"]
-    for rule in resource["rules"]:
-        source = identity(rule["source"])
-        if not all(isinstance(value, str) and value for value in source) or source in seen:
-            raise ValueError(f"Missing or duplicate source identity: {source}")
-        seen.add(source)
-        if not rule.get("id") or rule["id"] in rule_ids:
-            raise ValueError("Missing or duplicate rule identifier.")
-        rule_ids.add(rule["id"])
-        if rule.get("classification") not in {"correspondence", "proxy"}:
-            raise ValueError("A rule must distinguish correspondences and proxies.")
-        if not rule.get("rationale") or not rule.get("evidence"):
-            raise ValueError("A rule needs evidence and a rationale.")
-        if ("recipe" in rule) == ("target" in rule):
-            raise ValueError("A rule needs exactly one target or recipe.")
-        if "factor" in rule:
-            _finite_factor(rule["factor"])
-        if "recipe" in rule:
-            if rule["recipe"] not in recipes:
-                raise ValueError("Missing recipe.")
-            if recipes[rule["recipe"]]["unit"] != source[3]:
-                raise ValueError("Recipe output unit differs from source unit.")
-        else:
-            if not all(identity(rule["target"])):
-                raise ValueError("Incomplete target identity.")
-            _finite_factor(rule["factor"])
-    for entry in resource["unresolved"]:
-        source = identity(entry["source"])
-        if not all(source) or source in seen or not entry.get("reason"):
-            raise ValueError("Missing, duplicate, or conflicting unresolved entry.")
-        seen.add(source)
-    if len(seen) != resource["coverage"]["source_identities"]:
-        raise ValueError("Catalog disposition count does not match coverage.")
-    visiting, visited = set(), set()
-
-    def visit(recipe_id):
-        if recipe_id in visiting:
-            raise ValueError("Cyclic recipe dependency.")
-        if recipe_id in visited:
-            return
-        visiting.add(recipe_id)
-        recipe = recipes[recipe_id]
-        if not recipe.get("unit") or not recipe.get("inputs") or not recipe.get("evidence"):
-            raise ValueError("Recipe lacks output unit, inputs, or evidence.")
-        for exchange in recipe["inputs"]:
-            amount = exchange["amount"]
-            if isinstance(amount, bool) or not isinstance(amount, (float, int)) or not math.isfinite(amount):
-                raise ValueError("Recipe coefficient must be finite.")
-            if "recipe" in exchange:
-                if exchange["recipe"] not in recipes:
-                    raise ValueError("Missing dependent recipe.")
-                visit(exchange["recipe"])
-            elif exchange.get("type") == "technosphere":
-                if not all(identity(exchange)):
-                    raise ValueError("Incomplete recipe supplier.")
-            elif exchange.get("type") == "biosphere":
-                if not exchange.get("name") or not exchange.get("unit") or not exchange.get("categories"):
-                    raise ValueError("Incomplete recipe biosphere flow.")
-            else:
-                raise ValueError("Invalid recipe exchange type.")
-        visiting.remove(recipe_id)
-        visited.add(recipe_id)
-
-    for recipe_id in recipes:
-        visit(recipe_id)
 
 
 def _finite_factor(value):
@@ -168,11 +80,27 @@ def scale_exchange(exchange, factor):
         exchange["formula"] = f"({exchange['formula']}) * ({factor!r})"
 
 
+def _validate_export_binding(resource):
+    """Check the supported route binding after direction-independent schema validation."""
+    if (
+        resource.get("axis") != "technosphere"
+        or resource.get("quality") != "reviewed"
+        or resource["source_profiles"] != [{"family": "uvek", "version": "2025", "system_model": "cutoff"}]
+        or resource["target_profile"] != {"family": "ecoinvent", "version": "3.12", "system_model": "cutoff"}
+    ):
+        raise MigrationError("The reviewed UVEK export requires its registered source and target profiles.")
+    if resource["disaggregate"] or resource["delete"]:
+        raise MigrationError("The UVEK recipe exporter supports replacement operations only.")
+
+
 def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, database_name="brightpath-inventory"):
     """Transform external suppliers only; return a report and target-native helpers."""
-    resource = resource if resource is not None else load_uvek_export_resource()
-    rules = {identity(rule["source"]): rule for rule in resource["rules"]}
-    unresolved = {identity(entry["source"]): entry for entry in resource["unresolved"]}
+    if resource is None:
+        resource = load_uvek_export_resource()
+    else:
+        resource = normalize_migration_resource(resource)
+        _validate_export_binding(resource)
+    rules = {identity(rule["source"]): rule for rule in resource["replace"]}
     foreground = {identity(dataset) for dataset in data} | set(foreground_targets)
     codes = {dataset.get("code") for dataset in data if dataset.get("code")}
     issues, changes, losses = [], [], []
@@ -250,36 +178,40 @@ def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, dat
             path = f"datasets[{dataset_index}].exchanges[{exchange_index}]"
             rule = rules.get(source)
             if rule is None:
-                reason = unresolved.get(source, {}).get("reason", "No reviewed source correspondence is packaged.")
                 issues.append(
                     Issue(
                         Severity.ERROR,
                         "migration.uvek_supplier_unresolved",
-                        reason,
+                        "No reviewed directional correspondence; similarity and reversed forward rules are not approval.",
                         STAGE,
                         path=path,
                         details={"source": dict(zip(IDENTITY_FIELDS, source, strict=True))},
                     )
                 )
                 continue
+            review = rule_review(resource, rule)
             details = {
                 "rule_id": rule["id"],
                 "source": rule["source"],
                 "classification": rule["classification"],
-                "rationale": rule["rationale"],
-                "evidence": rule["evidence"],
+                "rationale": review["rationale"],
+                "evidence": review["evidence"],
                 "resource": resource["name"],
             }
             if rule["classification"] == "proxy":
                 severity = Severity.ERROR if policy.on_information_loss == PolicyAction.ERROR else Severity.WARNING
                 issues.append(
-                    Issue(severity, "migration.documented_proxy", rule["rationale"], STAGE, path=path, details=details)
+                    Issue(
+                        severity, "migration.documented_proxy", review["rationale"], STAGE, path=path, details=details
+                    )
                 )
-                losses.append(Loss("migration.documented_proxy", rule["rationale"], STAGE, path=path, details=details))
+                losses.append(
+                    Loss("migration.documented_proxy", review["rationale"], STAGE, path=path, details=details)
+                )
             before = deepcopy(exchange)
             try:
-                target = helper(rule["recipe"]) if "recipe" in rule else rule["target"]
-                scale_exchange(exchange, rule.get("factor", 1))
+                target = helper(rule["target"]["recipe_ref"]) if "recipe_ref" in rule["target"] else rule["target"]
+                scale_exchange(exchange, rule.get("conversion_factor", 1))
             except (ValueError, KeyError, TypeError, OverflowError) as error:
                 issues.append(
                     Issue(
@@ -297,10 +229,11 @@ def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, dat
                 exchange["product"] = target["reference product"]
             exchange.pop("input", None)
             exchange.pop("database", None)
-            note = f"BrightPath {rule['id']}: {rule['rationale']}"
+            note = f"BrightPath {rule['id']}: {review['rationale']}"
             exchange["comment"] = "\n".join(filter(None, (exchange.get("comment"), note)))
             details.update(
-                target=dict(zip(IDENTITY_FIELDS, identity(target), strict=True)), factor=rule.get("factor", 1)
+                target=dict(zip(IDENTITY_FIELDS, identity(target), strict=True)),
+                factor=rule.get("conversion_factor", 1),
             )
             changes.append(
                 Change(

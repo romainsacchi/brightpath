@@ -104,7 +104,7 @@ def test_reviewed_output_rule_does_not_replace_the_upstream_waste_product_rules(
     assert rule["source"]["location"] == rule["target"]["location"] == "RER"
     assert rule["source"]["unit"] == rule["target"]["unit"] == "kg"
     assert rule["target"]["name"] == NEW_NAME
-    assert rule["brightpath_review"]["product_uuid"] == "e04720d0-1b18-41bd-b729-93cfc5f862ab"
+    assert rule["brightpath_review"].keys() == {"rationale", "evidence"}
     assert rule["brightpath_review"]["evidence"] == "docs/recycled-paper-migration.rst"
     waste_rules = [rule for rule in rules if rule["source"]["reference product"] == "waste paper, sorted"]
     assert {rule["source"]["location"] for rule in waste_rules} == {"GLO", "RER"}

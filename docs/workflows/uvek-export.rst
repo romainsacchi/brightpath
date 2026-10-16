@@ -60,11 +60,26 @@ catalog entry does not prevent conversion of an otherwise covered inventory.
 Coverage and review
 -------------------
 
+This resource uses the same named ``brightpath.migration`` schema, version 3,
+as the forward ecoinvent-to-UVEK crosswalk. Rules live in ``replace``, direct
+targets are inline identities, helper targets use ``recipe_ref``, and evidence
+is shared through ``review_ref`` and ``reviews``. Factors use
+``conversion_factor``. No confidence values are invented for the reviewed
+reverse rules; their classifications and evidence are retained. See
+:doc:`../migration-resource-schema` for the full contract.
+
 All 11,747 packaged UVEK identities have a disposition: 167 reviewed
 correspondences, 180 documented proxies, seven public supporting recipes, and
 11,393 unresolved identities. Most of the catalog still needs substantive
 directional evidence review. The unresolved disposition is not a scientific
 review or approval of its suggested candidates.
+
+The runtime resource stores approved rules, required supporting recipes, and
+coverage counts. Unresolved identities are the source catalog entries without an
+approved rule; they are listed with reasons and candidates only in the separate
+review output, ``docs/uvek_export_review.json``. Unlisted suppliers still fail
+conversion under every policy. The seven public recipes contain quantities
+needed to generate foreground helpers; they are not background inventory dumps.
 
 The initial approved evidence comes from the IEA PVPS T12-33:2026 conversion
 ledger and public supporting recipes, plus three explicitly documented freight

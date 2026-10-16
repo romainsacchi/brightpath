@@ -1,5 +1,8 @@
+import json
 import math
+import runpy
 from copy import deepcopy
+from pathlib import Path
 
 import pytest
 
@@ -15,13 +18,14 @@ from brightpath import (
 from brightpath.background import PackageCatalogProvider, plan_background_migration
 from brightpath.background.catalogs import TechnosphereCatalog
 from brightpath.background.uvek_export import (
+    IDENTITY_FIELDS,
     apply_uvek_export,
     identity,
     load_uvek_export_resource,
     scale_exchange,
-    validate_resource,
 )
 from brightpath.core.policies import MigrationPolicy, PolicyAction
+from brightpath.migrations.schema import validate_migration_resource as validate_resource
 
 
 def contexts():
@@ -64,13 +68,17 @@ def test_entire_catalog_has_a_disposition_and_approved_endpoints_exist():
     source, target = contexts()
     provider = PackageCatalogProvider()
     catalog = provider.load_technosphere(source.background.technosphere).identities
-    dispositions = resource["rules"] + resource["unresolved"]
-    assert len(dispositions) == len(catalog) == 11747
-    assert {identity(entry["source"]) for entry in dispositions} == catalog
+    approved = {identity(rule["source"]) for rule in resource["replace"]}
+    assert "unresolved" not in resource
+    assert "evidence_sha256" not in resource
+    assert approved <= catalog
+    assert resource["coverage"]["source_identities"] == len(catalog) == 11747
+    assert resource["coverage"]["mapped_identities"] == len(approved) == 354
+    assert resource["coverage"]["unresolved_identities"] == len(catalog - approved) == 11393
     target_identities = provider.load_technosphere(target.technosphere).identities
     biosphere = provider.load_biosphere(target.biosphere).identities
-    for rule in resource["rules"]:
-        if "target" in rule:
+    for rule in resource["replace"]:
+        if "recipe_ref" not in rule["target"]:
             assert identity(rule["target"]) in target_identities
     for recipe in resource["recipes"].values():
         for exchange in recipe["inputs"]:
@@ -83,8 +91,8 @@ def test_entire_catalog_has_a_disposition_and_approved_endpoints_exist():
 def test_direct_export_preserves_original_and_supports_noop():
     rule = next(
         rule
-        for rule in load_uvek_export_resource()["rules"]
-        if rule["classification"] == "correspondence" and rule["factor"] == 1
+        for rule in load_uvek_export_resource()["replace"]
+        if rule["classification"] == "correspondence" and rule["conversion_factor"] == 1
     )
     original = data_for(rule)
     saved = deepcopy(original)
@@ -99,7 +107,7 @@ def test_direct_export_preserves_original_and_supports_noop():
 
 
 def test_helpers_are_deduplicated_and_preserve_consumer_uncertainty():
-    rule = next(rule for rule in load_uvek_export_resource()["rules"] if "recipe" in rule)
+    rule = next(rule for rule in load_uvek_export_resource()["replace"] if "recipe_ref" in rule["target"])
     data = data_for(rule)
     data[0]["exchanges"].append(deepcopy(data[0]["exchanges"][1]))
     source, target = contexts()
@@ -119,7 +127,7 @@ def test_helpers_are_deduplicated_and_preserve_consumer_uncertainty():
 
 
 def test_foreground_matching_background_is_protected():
-    rule = load_uvek_export_resource()["rules"][0]
+    rule = load_uvek_export_resource()["replace"][0]
     data = data_for(rule)
     supplier = {**rule["source"], "exchanges": [{**rule["source"], "type": "production", "amount": 1}]}
     data.append(supplier)
@@ -129,15 +137,22 @@ def test_foreground_matching_background_is_protected():
     assert inventory.migrate_background(target, additional_foreground_targets=[identity(supplier)]).data == data[:1]
 
 
-def test_unresolved_supplier_fails_and_rolls_back():
+@pytest.mark.parametrize("catalog_entry", [True, False])
+def test_unresolved_supplier_fails_and_rolls_back(catalog_entry):
     resource = load_uvek_export_resource()
-    data = data_for(resource["unresolved"][0])
     source, target = contexts()
+    catalog = PackageCatalogProvider().load_technosphere(source.background.technosphere).identities
+    approved = {identity(rule["source"]) for rule in resource["replace"]}
+    unresolved = min(catalog - approved) if catalog_entry else ("Unknown supplier", "unknown", "CH", "kilogram")
+    data = data_for({"source": dict(zip(IDENTITY_FIELDS, unresolved, strict=True))})
     inventory = BrightwayInventory.from_data(data, context=source)
     for policy in (MigrationPolicy.strict(), MigrationPolicy.permissive()):
         with pytest.raises(MigrationError) as caught:
             inventory.migrate_background(target, policy=policy)
-        assert "migration.uvek_supplier_unresolved" in {issue.code for issue in caught.value.report.issues}
+        expected_code = (
+            "migration.uvek_supplier_unresolved" if catalog_entry else "background.technosphere_link_unresolved"
+        )
+        assert expected_code in {issue.code for issue in caught.value.report.issues}
         assert inventory.data == data
 
 
@@ -180,8 +195,8 @@ def test_uncertainty_scaling_and_formula():
 
 def test_resource_rejects_duplicates_and_cycles():
     resource = deepcopy(load_uvek_export_resource())
-    resource["rules"].append(deepcopy(resource["rules"][0]))
-    with pytest.raises(ValueError, match="duplicate"):
+    resource["replace"].append(deepcopy(resource["replace"][0]))
+    with pytest.raises(ValueError, match="[Dd]uplicate"):
         validate_resource(resource)
     resource = deepcopy(load_uvek_export_resource())
     recipe_id = next(iter(resource["recipes"]))
@@ -190,9 +205,79 @@ def test_resource_rejects_duplicates_and_cycles():
         validate_resource(resource)
 
 
+@pytest.mark.parametrize(
+    "field,value",
+    [("source_identities", 0), ("mapped_identities", 355), ("unresolved_identities", -1), ("dispositions", {})],
+)
+def test_resource_rejects_inconsistent_coverage(field, value):
+    resource = deepcopy(load_uvek_export_resource())
+    resource["coverage"][field] = value
+    with pytest.raises(ValueError, match="coverage"):
+        validate_resource(resource)
+
+
+@pytest.mark.parametrize("include_unresolved", [True, False])
+def test_generator_keeps_unresolved_identities_in_review_only(tmp_path, include_unresolved):
+    generator = runpy.run_path(str(Path(__file__).resolve().parents[1] / "scripts/generate_uvek_export.py"))
+    source = {"name": "Reviewed source", "reference product": "product", "location": "CH", "unit": "kilogram"}
+    unresolved = {**source, "name": "Unreviewed source"}
+    target = {**source, "name": "Reviewed target"}
+
+    def write(relative, value):
+        path = tmp_path / relative
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps(value), encoding="utf-8")
+
+    def catalog(rows):
+        return {"technosphere": [{**row, "reference_product": row["reference product"]} for row in rows]}
+
+    sources = [source, unresolved] if include_unresolved else [source]
+    write("brightpath/data/export/reference_catalogs/uvek__2025__cutoff.json", catalog(sources))
+    write("brightpath/data/export/reference_catalogs/ecoinvent__3.12__cutoff.json", catalog([target]))
+    from brightpath.migrations.schema import normalize_migration_resource
+
+    forward = normalize_migration_resource(
+        {
+            "name": "synthetic-forward",
+            "axis": "technosphere",
+            "source_profile": {"family": "ecoinvent", "version": "3.12", "system_model": "cutoff"},
+            "target_profile": {"family": "uvek", "version": "2025", "system_model": "cutoff"},
+            "replace": [],
+        }
+    )
+    write("brightpath/data/migrations/uvek/ecoinvent-to-uvek-2025.json", forward)
+    write("docs/uvek_export_overrides.json", {"candidates": []})
+    recipe = {
+        **target,
+        "inputs": [{**target, "type": "technosphere", "amount": 0.5}],
+        "rationale": "Synthetic public supporting recipe.",
+        "evidence": ["Synthetic test evidence."],
+    }
+    evidence = {"candidates": [], "aliases": [], "recipes": [{"source": source, "recipe": recipe}]}
+    original = deepcopy(evidence)
+    resource, review = generator["build"](tmp_path, evidence)
+
+    assert evidence == original
+    assert resource["schema_version"] == 3
+    assert "unresolved" not in resource
+    assert resource["coverage"]["unresolved_identities"] == int(include_unresolved)
+    assert resource["coverage"] == review["coverage"]
+    assert list(resource["recipes"].values()) == [recipe]
+    assert resource["replace"][0]["source"] == source
+    if include_unresolved:
+        unreviewed = next(entry for entry in review["review"] if entry["source"] == unresolved)
+        assert unreviewed["disposition"] == "unresolved"
+        assert unreviewed["reason"]
+        assert unreviewed["candidates"] == [target]
+    else:
+        assert review["review"] == [
+            {"source": source, "disposition": "recipe", "rule_id": resource["replace"][0]["id"]}
+        ]
+
+
 def test_helper_code_collision_is_an_error():
     resource = load_uvek_export_resource()
-    rule = next(rule for rule in resource["rules"] if "recipe" in rule)
+    rule = next(rule for rule in resource["replace"] if "recipe_ref" in rule["target"])
     policy = MigrationPolicy(on_information_loss=PolicyAction.WARN)
     report, helpers = apply_uvek_export(data_for(rule), policy)
     assert not report.has_errors
@@ -207,7 +292,7 @@ def catalogs():
     return PackageCatalogProvider()
 
 
-@pytest.mark.parametrize("rule", load_uvek_export_resource()["rules"], ids=lambda rule: rule["id"])
+@pytest.mark.parametrize("rule", load_uvek_export_resource()["replace"], ids=lambda rule: rule["id"])
 def test_every_approved_rule_executes_with_complete_target_coverage(rule, catalogs):
     source, target = contexts()
     inventory = BrightwayInventory.from_data(data_for(rule), context=source)
@@ -222,7 +307,7 @@ def test_every_approved_rule_executes_with_complete_target_coverage(rule, catalo
 
 
 def test_target_failure_rolls_back_directional_changes(monkeypatch):
-    rule = next(rule for rule in load_uvek_export_resource()["rules"] if rule["classification"] == "correspondence")
+    rule = next(rule for rule in load_uvek_export_resource()["replace"] if rule["classification"] == "correspondence")
     source, target = contexts()
     data = data_for(rule)
     provider = PackageCatalogProvider()
@@ -244,8 +329,8 @@ def test_target_failure_rolls_back_directional_changes(monkeypatch):
 
 def test_nested_recipe_dependencies_are_included():
     resource = deepcopy(load_uvek_export_resource())
-    rule = next(rule for rule in resource["rules"] if "recipe" in rule)
-    parent = rule["recipe"]
+    rule = next(rule for rule in resource["replace"] if "recipe_ref" in rule["target"])
+    parent = rule["target"]["recipe_ref"]
     child = next(
         recipe_id
         for recipe_id, recipe in resource["recipes"].items()
@@ -262,3 +347,22 @@ def test_nested_recipe_dependencies_are_included():
     parent_input = generated[parent]["exchanges"][1]
     assert identity(parent_input) == identity(generated[child])
     assert parent_input["amount"] == 0.5
+
+
+@pytest.mark.parametrize("change", ["quality", "profile", "operation"])
+def test_schema_valid_but_unsupported_export_bindings_fail_without_mutation(change):
+    resource = deepcopy(load_uvek_export_resource())
+    if change == "quality":
+        resource["quality"] = "heuristic"
+    elif change == "profile":
+        resource["target_profile"]["version"] = "3.11"
+        resource["target_id"] = "ecoinvent-3.11-cutoff"
+    else:
+        resource["delete"] = [{"source": {**resource["replace"][0]["source"], "name": "Unrelated supplier"}}]
+        resource["coverage"] = {}
+    validate_resource(resource)
+    data = data_for(resource["replace"][0])
+    original = deepcopy(data)
+    with pytest.raises(MigrationError):
+        apply_uvek_export(data, MigrationPolicy.permissive(), resource=resource)
+    assert data == original

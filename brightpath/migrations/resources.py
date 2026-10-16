@@ -9,6 +9,7 @@ from pathlib import Path
 from brightpath import DATA_DIR
 from brightpath.core.context import resolve_migration_series
 from brightpath.exceptions import MigrationError
+from brightpath.migrations.schema import normalize_migration_resource
 
 _PROFILE_ID = re.compile(r"^ecoinvent-(?P<version>\d+(?:\.\d+){1,2})-(?P<kind>cutoff|consequential|biosphere)$")
 _UVEK_TECHNOSPHERE_RESOURCE = "ecoinvent-to-uvek-2025.json"
@@ -48,19 +49,33 @@ def available_ecoinvent_versions(system_model: str = "cutoff") -> tuple[str, ...
     return tuple(sorted({version for pair in resources for version in pair}, key=_version_key))
 
 
+def load_migration_resource(path: Path) -> dict:
+    """Integrity-check a packaged resource and return the shared migration representation.
+
+    :param path: Path to a resource covered by the packaged migration manifest.
+    :returns: A validated, independently owned schema-version-3 resource.
+    :raises MigrationError: If loading, integrity or schema validation fails.
+    """
+    try:
+        raw = path.read_bytes()
+        payload = json.loads(raw.decode("utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as error:
+        raise MigrationError(f"Could not load migration resource {path}.") from error
+    if not isinstance(payload, dict):
+        raise MigrationError(f"Migration resource {path} must contain an object.")
+    _verify_manifest_entry(path, raw, payload, _load_resource_manifest())
+    resource = normalize_migration_resource(payload)
+    resource["_path"] = str(path)
+    return resource
+
+
 def _load_resources(directory: Path, *, expected_kind: str) -> dict[tuple[str, str], dict]:
     if not directory.is_dir():
         return {}
 
     resources = {}
-    manifest = _load_resource_manifest()
     for path in sorted(directory.glob("*.json")):
-        try:
-            raw = path.read_bytes()
-            payload = json.loads(raw.decode("utf-8"))
-        except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-            raise MigrationError(f"Could not load migration resource {path}.") from exc
-        _verify_manifest_entry(path, raw, payload, manifest)
+        payload = load_migration_resource(path)
 
         source_version, source_kind = _parse_profile_id(payload.get("source_id"), path)
         target_version, target_kind = _parse_profile_id(payload.get("target_id"), path)
@@ -76,21 +91,17 @@ def _load_resources(directory: Path, *, expected_kind: str) -> dict[tuple[str, s
 
 def _load_uvek_resource(filename: str, *, expected_axis: str) -> dict:
     path = DATA_DIR / "migrations" / "uvek" / filename
-    try:
-        raw = path.read_bytes()
-        payload = json.loads(raw.decode("utf-8"))
-    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
-        raise MigrationError(f"Could not load migration resource {path}.") from exc
-    if not isinstance(payload, dict):
-        raise MigrationError(f"Migration resource {path} must contain an object.")
-    _verify_manifest_entry(path, raw, payload, _load_resource_manifest())
+    payload = load_migration_resource(path)
     if payload.get("status") != "active":
         raise MigrationError(f"Migration resource {path} is not active.")
     if payload.get("axis") != expected_axis:
         raise MigrationError(f"Migration resource {path} does not describe the {expected_axis} axis.")
     if payload.get("quality") != "heuristic":
         raise MigrationError(f"Migration resource {path} must declare its heuristic quality.")
-    _validate_profile(payload.get("source_profile"), path, role="source")
+    if any("recipe_ref" in rule["target"] for rule in payload["replace"]):
+        raise MigrationError("The heuristic UVEK route does not execute foreground recipes.")
+    for profile in payload["source_profiles"]:
+        _validate_profile(profile, path, role="source")
     _validate_profile(payload.get("target_profile"), path, role="target")
     _validate_rule_lists(payload, path, expected_axis=expected_axis)
     payload["_path"] = str(path)
