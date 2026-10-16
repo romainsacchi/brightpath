@@ -2,6 +2,54 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.0a7 - 2026-10-16
+
+### Shared migration resources
+
+- Use the validated `brightpath.migration` schema, version 3, for both UVEK
+  technosphere directions. The common structure follows ecoinvent's `replace`,
+  `disaggregate` and `delete` operations, with explicit source/target profiles,
+  optional confidence scores, shared review records and foreground recipes.
+- Remove duplicated unresolved supplier catalogs, comparison revisions, activity
+  identifiers, evidence hashes and generation metadata from runtime mappings.
+  Keep decision history in the existing authoring ledgers and review documents.
+  Rename runtime mapping methods to omit the historical `clic_` prefix.
+- Preserve all 31,488 forward mappings, 354 reviewed reverse mappings, confidence
+  scores, quantity factors, proxy classifications and seven public helper recipes.
+  Mapping coverage and scientific limitations remain unchanged. Upstream ecoinvent
+  rule bodies and attribution are retained; their legacy files normalize on load.
+- Package the offline JSON Schema and require `jsonschema>=4.18,<5` in both pip
+  and Conda installations. Extend the installed-package smoke test to load and
+  validate both UVEK technosphere resources.
+- Read and write authoring JSON and migration-resource test inputs explicitly as
+  UTF-8, preserving non-ASCII identities and evidence on Windows. Exercise the
+  authoring utilities with both UTF-8 and legacy Windows default encodings.
+
+### Quantity and uncertainty preservation
+
+- Scale uncertainty locations, spreads, bounds, signs and formulas together with
+  exchange amounts when generic background migration applies a conversion factor.
+  Share the existing reviewed UVEK export scaling implementation across directions.
+- Roll back unsupported uncertainty distributions and malformed statistics with
+  a structured `migration.amount_scaling_invalid` error under strict and permissive
+  policies. Exercise every forward supplier rule against exact supported catalogs.
+
+### Compatibility and upgrade notes
+
+- Keep public inventory import/export APIs unchanged. Code that directly reads
+  migration resources must adopt v3: `rules` becomes `replace`, `factor` becomes
+  `conversion_factor`, helper references use `target.recipe_ref`, and profile
+  scopes use `source_profiles`. Review evidence is resolved through `review_ref`
+  and `reviews`; unresolved suppliers are absent rules, counted in `coverage`.
+  See the shared migration-schema guide and maintainer upgrade script.
+- Refresh the migration fingerprint so applications can invalidate cached exports.
+  Downstream applications should update their exact dependency pin and rebuild
+  all conversion processes together. CLIC's UVEK test fixtures that directly read
+  the previous resource structure need corresponding updates.
+- Retain the 42,444-case reverse-route regression baseline: 40,922 supported,
+  1,497 blocked and 25 explicit biosphere omissions. Unreviewed suppliers and
+  ambiguous older-target migrations remain subject to the same policies.
+
 ## 1.0.0a6 - 2026-10-08
 
 ### Background migration

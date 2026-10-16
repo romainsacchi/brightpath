@@ -1,11 +1,18 @@
-"""Verify openLCA exchange using the installed Conda packages."""
+"""Verify openLCA exchange and migration schemas using the installed packages."""
 
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
+from brightpath.background.uvek_export import load_uvek_export_resource
 from brightpath.core import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
 from brightpath.formats.openlca_jsonld import load_openlca_jsonld, write_openlca_jsonld
+from brightpath.migrations.resources import load_uvek_technosphere_resource
 from brightpath.models import InventoryDocument
+
+for resource in (load_uvek_technosphere_resource(), load_uvek_export_resource()):
+    assert resource["schema"] == "brightpath.migration"
+    assert resource["schema_version"] == 3
+    assert resource["replace"]
 
 context = InventoryContext(
     FormatProfile("openlca_jsonld"),
