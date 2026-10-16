@@ -1,5 +1,6 @@
 import json
 from copy import deepcopy
+from pathlib import Path
 
 import pytest
 
@@ -46,14 +47,14 @@ def test_generator_uses_the_same_shared_writer(migration_resource, tmp_path):
     for filename in ("ecoinvent-to-uvek-2025.json", "uvek-2025-to-ecoinvent-3.12-cutoff.json"):
         path = tmp_path / filename
         _write_resource(path, migration_resource)
-        assert path.read_text() == dumps_migration_resource(migration_resource)
-        assert json.loads(path.read_text()) == migration_resource
+        assert path.read_text(encoding="utf-8") == dumps_migration_resource(migration_resource)
+        assert json.loads(path.read_text(encoding="utf-8")) == migration_resource
 
 
 def test_both_packaged_uvek_resources_use_one_schema():
     for filename, count in (("ecoinvent-to-uvek-2025.json", 31488), ("uvek-2025-to-ecoinvent-3.12-cutoff.json", 354)):
         path = DATA_DIR / "migrations/uvek" / filename
-        result = json.loads(path.read_text())
+        result = json.loads(path.read_text(encoding="utf-8"))
         validate_migration_resource(result)
         assert result["schema"] == "brightpath.migration"
         assert result["schema_version"] == 3
@@ -96,7 +97,7 @@ def test_all_mapping_values_and_runtime_evidence_match_the_baseline(filename, ex
     # projecting reviews to the retained rationale and limitations fields.
     import hashlib
 
-    migration_resource = json.loads((DATA_DIR / "migrations/uvek" / filename).read_text())
+    migration_resource = json.loads((DATA_DIR / "migrations/uvek" / filename).read_text(encoding="utf-8"))
     fields = ("source", "target", "conversion_factor", "classification", "confidence", "mapping_method")
     rows = []
     for rule in migration_resource["replace"]:
@@ -116,7 +117,7 @@ def test_all_mapping_values_and_runtime_evidence_match_the_baseline(filename, ex
 
 def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     for path in (DATA_DIR / "migrations/uvek").glob("*.json"):
-        resource = json.loads(path.read_text())
+        resource = json.loads(path.read_text(encoding="utf-8"))
         assert not {"methodology", "source_catalogs", "evidence_sha256"} & resource.keys()
         for review in resource.get("reviews", {}).values():
             assert review.keys() <= {"rationale", "limitations", "evidence"}
@@ -124,6 +125,25 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
         assert not any(key.startswith("clic_") for key in resource["coverage"].get("mapping_methods", {}))
     forward = load_uvek_technosphere_resource()
     assert all(review.keys() == {"rationale", "limitations"} for review in forward["reviews"].values())
+
+
+@pytest.mark.parametrize("default_encoding", ["utf-8", "cp1252"])
+def test_authoring_json_io_preserves_unicode_with_any_default_encoding(tmp_path, monkeypatch, default_encoding):
+    from scripts.generate_uvek_export import load, write
+
+    original_open = Path.open
+
+    def legacy_open(path, mode="r", buffering=-1, encoding=None, errors=None, newline=None):
+        if "b" not in mode and encoding is None:
+            encoding = default_encoding
+        return original_open(path, mode, buffering, encoding, errors, newline)
+
+    monkeypatch.setattr(Path, "open", legacy_open)
+    path = tmp_path / "unicode-evidence.json"
+    evidence = {"rationale": "Zürich → Genève", "confidence": 0.5}
+    write(path, evidence)
+    assert json.loads(path.read_bytes().decode("utf-8")) == evidence
+    assert load(path) == evidence
 
 
 def test_all_generated_helpers_match_the_pre_upgrade_output_baseline():

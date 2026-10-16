@@ -266,14 +266,14 @@ def test_exact_versions_and_unknown_metadata_survive_normalization(migration_res
 
 
 def test_offline_definition_and_all_upstream_resources_are_valid_without_rewriting():
-    definition = json.loads(SCHEMA_PATH.read_text())
+    definition = json.loads(SCHEMA_PATH.read_text(encoding="utf-8"))
     Draft202012Validator.check_schema(definition)
     paths = list((DATA_DIR / "migrations/ecoinvent").rglob("*.json"))
     before = {path: hashlib.sha256(path.read_bytes()).hexdigest() for path in paths}
     for resources in (load_technosphere_resources("cutoff"), load_biosphere_resources()):
         for migration_resource in resources.values():
             validate_migration_resource(migration_resource)
-            original = json.loads(Path(migration_resource["_path"]).read_text())
+            original = json.loads(Path(migration_resource["_path"]).read_text(encoding="utf-8"))
             for field in ("contributors", "licenses", "mapping", "version", "created", "homepage"):
                 if field in original:
                     assert migration_resource[field] == original[field]
