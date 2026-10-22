@@ -91,6 +91,18 @@ The result is an absolute :class:`pathlib.Path` ending in ``.xlsx``. Writing
 validates by default. ``validate=False`` skips that facade preflight but cannot
 make an unserializable value valid.
 
+Excel, CSV and TSV exports include an exchange ``database`` column. Production
+and links to activities included in the document use ``database_name`` (default
+``brightpath-inventory``). Missing external labels use the exact technosphere
+profile, for example ``ecoinvent-3.12-cutoff`` or ``uvek-2025-cutoff``, and
+``biosphere`` for elementary flows. Explicit external labels, such as
+``biosphere3``, are preserved; an exchange's input key supplies a missing label
+before the profile defaults are used. Source inventories are unchanged.
+
+These labels let Activity Browser group dependencies and map them to databases
+already installed in the receiving project. Database names can differ locally;
+select the corresponding background and biosphere databases during import.
+
 Brightway CSV and TSV
 ---------------------
 

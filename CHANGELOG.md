@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.0a8 - 2026-10-22
+
+- Include exchange `database` labels in Brightway Excel, CSV and TSV exports
+  for Activity Browser imports. Production and links to included foreground
+  activities use the document database name. Missing external labels default
+  to the exact technosphere profile (for example `ecoinvent-3.12-cutoff`) or
+  `biosphere`; explicit external database names and input-key labels survive.
+- Keep database labelling confined to export copies, preserving source data,
+  formulas, parameters, uncertainty and independent background profiles.
+- Database labels describe dependencies; users can map them to their local
+  database names in Activity Browser. Background databases are not included.
+
 ## 1.0.0a7 - 2026-10-16
 
 ### Shared migration resources

@@ -17,6 +17,7 @@ from bw2io import CSVImporter
 
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import ExcelSerializationError
+from brightpath.formats.brightway_databases import labelled_brightway_data
 from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFormat, default_biosphere_profile
 
 from .brightway_excel import (
@@ -201,7 +202,7 @@ def _render_rows(document: InventoryDocument) -> list[list]:
     rows.append([])
 
     _append_parameter_section(rows, "Database parameters", document.database_parameters)
-    for activity in document.data:
+    for activity in labelled_brightway_data(document):
         _append_activity(rows, activity)
         rows.append([])
     return rows

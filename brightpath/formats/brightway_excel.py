@@ -13,6 +13,7 @@ from bw2io.importers.excel import ExcelImporter
 
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import ExcelSerializationError
+from brightpath.formats.brightway_databases import labelled_brightway_data
 from brightpath.models import (
     BackgroundProfile,
     InventoryDocument,
@@ -220,7 +221,7 @@ def write_brightway_excel(
             bold,
         )
 
-        for activity in document.data:
+        for activity in labelled_brightway_data(document):
             row = _write_activity(sheet, row, activity, bold)
             row += 1
     finally:
