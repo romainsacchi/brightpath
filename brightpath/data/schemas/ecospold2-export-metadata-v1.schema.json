@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brightpath.dev/schemas/ecospold2-export-metadata-v1.schema.json",
+  "type": "object",
+  "required": ["schema_version"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1},
+    "defaults": {"$ref": "#/$defs/metadata"},
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["selector", "metadata"],
+        "additionalProperties": false,
+        "properties": {
+          "selector": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": false,
+            "properties": {
+              "code": {"type": "string", "minLength": 1},
+              "name": {"type": "string", "minLength": 1},
+              "reference_product": {"type": "string", "minLength": 1},
+              "location": {"type": "string", "minLength": 1},
+              "unit": {"type": "string", "minLength": 1}
+            }
+          },
+          "metadata": {"$ref": "#/$defs/metadata"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "uuid": {"type": "string", "format": "uuid"},
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "id": {"$ref": "#/$defs/uuid"},
+        "name": {"type": "string"},
+        "email": {"type": "string"},
+        "company_id": {"$ref": "#/$defs/uuid"},
+        "company_code": {"type": "string"}
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "activity_id": {"$ref": "#/$defs/uuid"},
+        "activity_name_id": {"$ref": "#/$defs/uuid"},
+        "geography_id": {"$ref": "#/$defs/uuid"},
+        "activity_type": {"type": "integer", "minimum": 1, "maximum": 2},
+        "special_activity_type": {"type": "integer", "minimum": 0, "maximum": 10},
+        "technology_level": {"type": "integer", "minimum": 0, "maximum": 5},
+        "technology_comment": {"type": "string"},
+        "copyright": {"type": "boolean"},
+        "data_published_in": {"type": "integer", "minimum": 0, "maximum": 2},
+        "published_source_id": {"$ref": "#/$defs/uuid"},
+        "published_source_context_id": {"$ref": "#/$defs/uuid"},
+        "published_source_year": {"type": "string"},
+        "published_source_first_author": {"type": "string"},
+        "access_restricted_to": {"type": "integer", "minimum": 0},
+        "time_period": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "start_date": {"type": "string", "format": "date"},
+            "end_date": {"type": "string", "format": "date"},
+            "data_valid_for_entire_period": {"type": "boolean"},
+            "comment": {"type": "string"}
+          }
+        },
+        "macroeconomic_scenario": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "id": {"$ref": "#/$defs/uuid"},
+            "name": {"type": "string"},
+            "comment": {"type": "string"}
+          }
+        },
+        "data_entry_person": {"$ref": "#/$defs/person"},
+        "data_generator_person": {"$ref": "#/$defs/person"},
+        "file_attributes": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "major_release": {"type": "integer", "minimum": 0},
+            "minor_release": {"type": "integer", "minimum": 0},
+            "major_revision": {"type": "integer", "minimum": 0},
+            "minor_revision": {"type": "integer", "minimum": 0},
+            "default_language": {"type": "string", "minLength": 2, "maxLength": 5},
+            "context_id": {"$ref": "#/$defs/uuid"},
+            "context_name": {"type": "string"}
+          }
+        },
+        "classifications": {"type": "array", "items": {"type": "object"}},
+        "raw": {"type": "object"}
+      }
+    }
+  }
+}

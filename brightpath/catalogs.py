@@ -4,7 +4,7 @@ import json
 import os
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Mapping
 
 from . import DATA_DIR
 from .background.catalogs import CatalogIntegrityError, catalog_provider_from_environment
@@ -88,6 +88,8 @@ def write_background_catalog(
     *,
     technosphere: Iterable[tuple[str, str, str, str]],
     biosphere: Iterable[tuple[str, tuple[str, ...], str]],
+    technosphere_references: Mapping[tuple[str, str, str, str], tuple[str, str]] | None = None,
+    biosphere_references: Mapping[tuple[str, tuple[str, ...], str], str] | None = None,
     output_dir: Path | None = None,
 ) -> Path:
     """Write a reference-catalog JSON file and return its absolute path."""
@@ -96,7 +98,19 @@ def write_background_catalog(
     directory = output_dir or catalog_directory()
     directory.mkdir(parents=True, exist_ok=True)
 
+    technosphere_identities = sorted(set(technosphere))
+    biosphere_identities = sorted(set(biosphere))
+    technosphere_references = dict(technosphere_references or {})
+    biosphere_references = dict(biosphere_references or {})
+    unknown_technosphere = set(technosphere_references) - set(technosphere_identities)
+    unknown_biosphere = set(biosphere_references) - set(biosphere_identities)
+    if unknown_technosphere:
+        raise ValueError(f"Technosphere UUID reference has unknown identity {next(iter(unknown_technosphere))!r}.")
+    if unknown_biosphere:
+        raise ValueError(f"Biosphere UUID reference has unknown identity {next(iter(unknown_biosphere))!r}.")
+
     payload = {
+        "schema_version": 2 if technosphere_references or biosphere_references else 1,
         "profile": {
             "family": normalized.family,
             "version": normalized.version,
@@ -108,16 +122,29 @@ def write_background_catalog(
                 "reference_product": reference_product,
                 "location": location,
                 "unit": unit,
+                **(
+                    {
+                        "activity_id": technosphere_references[(name, reference_product, location, unit)][0],
+                        "flow_id": technosphere_references[(name, reference_product, location, unit)][1],
+                    }
+                    if (name, reference_product, location, unit) in technosphere_references
+                    else {}
+                ),
             }
-            for name, reference_product, location, unit in sorted(set(technosphere))
+            for name, reference_product, location, unit in technosphere_identities
         ],
         "biosphere": [
             {
                 "name": name,
                 "categories": list(categories),
                 "unit": unit,
+                **(
+                    {"flow_id": biosphere_references[(name, categories, unit)]}
+                    if (name, categories, unit) in biosphere_references
+                    else {}
+                ),
             }
-            for name, categories, unit in sorted(set(biosphere))
+            for name, categories, unit in biosphere_identities
         ],
     }
 

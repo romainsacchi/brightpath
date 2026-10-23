@@ -108,6 +108,48 @@ def test_package_provider_loads_exact_profiles_and_digests():
     assert bio.identities
     assert len(tech.digest) == 64
     assert len(bio.digest) == 64
+    assert len(tech.references) == len(tech.identities)
+    assert len(bio.references) == len(bio.identities)
+
+
+def test_directory_provider_loads_uuid_references(tmp_path):
+    identity = ("market", "product", "GLO", "kilogram")
+    flow_identity = ("Carbon dioxide, fossil", ("air",), "kilogram")
+    (tmp_path / "ecoinvent__3.10__cutoff.json").write_text(
+        json.dumps(
+            {
+                "schema_version": 2,
+                "profile": {"family": "ecoinvent", "version": "3.10", "system_model": "cutoff"},
+                "technosphere": [
+                    {
+                        "name": identity[0],
+                        "reference_product": identity[1],
+                        "location": identity[2],
+                        "unit": identity[3],
+                        "activity_id": "11111111-1111-4111-8111-111111111111",
+                        "flow_id": "22222222-2222-4222-8222-222222222222",
+                    }
+                ],
+                "biosphere": [
+                    {
+                        "name": flow_identity[0],
+                        "categories": list(flow_identity[1]),
+                        "unit": flow_identity[2],
+                        "flow_id": "33333333-3333-4333-8333-333333333333",
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    provider = DirectoryCatalogProvider(tmp_path)
+
+    assert provider.load_technosphere(technosphere()).references[identity] == (
+        "11111111-1111-4111-8111-111111111111",
+        "22222222-2222-4222-8222-222222222222",
+    )
+    assert provider.load_biosphere(biosphere()).references[flow_identity] == ("33333333-3333-4333-8333-333333333333")
 
 
 def test_directory_provider_rejects_a_manifest_digest_mismatch(tmp_path):

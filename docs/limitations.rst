@@ -22,16 +22,16 @@ Format boundaries
 -----------------
 
 * The built-in registry supports Brightway Excel, Brightway block CSV,
-  Brightway block TSV, openLCA JSON-LD ZIP, SimaPro CSV, and ecoSpold1 XML as file
-  detection/read/write adapters.
+  Brightway block TSV, openLCA JSON-LD ZIP, SimaPro CSV, ecoSpold1 XML, and
+  ecoSpold2 as detection/read/write adapters. ecoSpold2 also reads package directories.
 * Only Brightway Excel and SimaPro CSV have dedicated v1 facades. Brightway
   CSV/TSV use the generic pipeline.
 * CSV suffixes are ambiguous. Detection inspects content and reports absent or
   tied evidence; callers should pass an explicit format when known.
 * SimaPro CSV is semicolon-delimited and Latin-1 encoded. It has stricter unit,
   category, section, and field representation than the canonical inventory.
-* OpenLCA Excel and ecoSpold2 are reserved identifiers/namespaces only. They
-  have no registered adapter and do not appear in ``brightpath formats``.
+* OpenLCA Excel is a reserved identifier only. It has no registered adapter and
+  does not appear in ``brightpath formats``.
 * Custom format identifiers are valid canonical context values.
   ``InventoryDocument.inventory_format`` returns their string ID while
   retaining enum members for known legacy IDs. A custom format is executable
@@ -45,6 +45,12 @@ Format boundaries
   elementary-flow definition, LCIA, directory, or ZIP artifacts. Export
   requires structured source, person, classification, and time-period metadata;
   free-form comments are never interpreted as citations.
+* The ecoSpold2 adapter is limited to activity datasets with exactly one
+  reference output. Child datasets, allocations, transfer coefficients,
+  substitutions, multi-output activities, LCIA datasets, and elementary-flow
+  definition files are unsupported. Export requires structured temporal and
+  person metadata. External technosphere and biosphere exchanges require exact
+  ecoSpold2 UUIDs from preserved source fields or an explicit reference catalog.
 * A generic adapter does not accept arbitrary format qualifiers. Its
   ``compatible_format_versions`` and ``compatible_dialects`` must explicitly
   admit them; built-in Brightway Excel admits only the ``bw2io`` dialect.

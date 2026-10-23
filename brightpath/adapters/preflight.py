@@ -17,6 +17,8 @@ from brightpath.core.reports import Change, Issue, Loss, Severity, StageKind, St
 from brightpath.formats.brightway_delimited import _render_rows as render_brightway_rows
 from brightpath.formats.ecospold1 import render_ecospold1
 from brightpath.formats.ecospold1_metadata import coerce_ecospold1_profile
+from brightpath.formats.ecospold2 import render_ecospold2_package
+from brightpath.formats.ecospold2_metadata import coerce_ecospold2_profile, coerce_ecospold2_references
 from brightpath.formats.openlca_jsonld import render_openlca_jsonld_package
 from brightpath.formats.simapro_csv import (
     _ACTIVITY_METADATA_FIELDS,
@@ -324,6 +326,232 @@ def validate_ecospold1_format(document: InventoryDocument, descriptor: FormatDes
     )
     _add_context_mismatch(document, target, findings)
     return _findings_report(findings, document, target, label="format validation")
+
+
+def preflight_ecospold2_conversion(
+    document: InventoryDocument,
+    descriptor: FormatDescriptor,
+    policy: ConversionPolicy,
+    *,
+    metadata_profile: object | None = None,
+    reference_catalog: object | None = None,
+    generated_at: object | None = None,
+    package_mode: str | None = None,
+) -> StageReport:
+    """Validate the supported single-output ecoSpold2 target contract."""
+
+    _require_document_and_policy(document, policy)
+    target = coerce_format_descriptor(descriptor)
+    findings = _inspect_ecospold2(
+        document,
+        stage=_STAGE,
+        policy=policy,
+        metadata_profile=metadata_profile,
+        reference_catalog=reference_catalog,
+    )
+    if package_mode and str(package_mode).strip().lower() not in {"single", "zip", "directory"}:
+        findings.add_condition(
+            code="ecospold2.package_mode_invalid",
+            message="ecoSpold2 package_mode must be 'single', 'zip', or 'directory'.",
+            path="package_mode",
+            action=PolicyAction.ERROR,
+        )
+    if package_mode and str(package_mode).strip().lower() == "single" and len(document.data) != 1:
+        findings.add_condition(
+            code="ecospold2.single_file_dataset_count",
+            message=f"A single ecoSpold2 file requires exactly one dataset; found {len(document.data)}.",
+            path="datasets",
+            action=PolicyAction.ERROR,
+        )
+    if not any(issue.severity is Severity.ERROR for issue in findings.issues):
+        try:
+            render_ecospold2_package(
+                document,
+                metadata_profile=metadata_profile,
+                reference_catalog=reference_catalog,
+                generated_at=generated_at,  # type: ignore[arg-type]
+            )
+        except Exception as error:
+            findings.add_condition(
+                code="ecospold2.package_unrepresentable",
+                message=str(error) or type(error).__name__,
+                path="",
+                action=PolicyAction.ERROR,
+                details={"exception_type": type(error).__name__},
+                suggested_fix="Correct the reported ecoSpold2 metadata, UUID references, or inventory values.",
+            )
+    return _findings_report(findings, document, target, policy=policy, label="representability")
+
+
+def validate_ecospold2_format(document: InventoryDocument, descriptor: FormatDescriptor) -> StageReport:
+    """Validate the supported ecoSpold2 source subset without writing XML."""
+
+    if not isinstance(document, InventoryDocument):
+        raise TypeError("document must be an InventoryDocument.")
+    target = coerce_format_descriptor(descriptor)
+    findings = _inspect_ecospold2(
+        document,
+        stage=StageKind.FORMAT_VALIDATION,
+        policy=_STRICT_CONVERSION_POLICY,
+        metadata_profile=None,
+        reference_catalog=None,
+    )
+    _add_context_mismatch(document, target, findings)
+    return _findings_report(findings, document, target, label="format validation")
+
+
+def _inspect_ecospold2(
+    document: InventoryDocument,
+    *,
+    stage: StageKind,
+    policy: ConversionPolicy,
+    metadata_profile: object | None,
+    reference_catalog: object | None,
+) -> "_Findings":
+    findings = _Findings(stage)
+    try:
+        profile = coerce_ecospold2_profile(metadata_profile)
+    except Exception as error:
+        findings.add_condition(
+            code="ecospold2.metadata_invalid",
+            message=str(error) or type(error).__name__,
+            path="metadata_profile",
+            action=PolicyAction.ERROR,
+            details={"exception_type": type(error).__name__},
+            suggested_fix="Correct the structured ecoSpold2 metadata profile.",
+        )
+        return findings
+    try:
+        coerce_ecospold2_references(reference_catalog)
+    except Exception as error:
+        findings.add_condition(
+            code="ecospold2.references_invalid",
+            message=str(error) or type(error).__name__,
+            path="reference_catalog",
+            action=PolicyAction.ERROR,
+            details={"exception_type": type(error).__name__},
+            suggested_fix="Correct the ecoSpold2 UUID reference catalog.",
+        )
+        return findings
+
+    for parameter_kind in ("database_parameters", "project_parameters"):
+        values = getattr(document, parameter_kind, ())
+        if values:
+            findings.add_loss(
+                code=f"ecospold2.{parameter_kind}_unsupported",
+                message=f"ecoSpold2 activity datasets cannot preserve Brightway {parameter_kind.replace('_', ' ')}.",
+                path=parameter_kind,
+                action=policy.on_information_loss,
+                category="information_loss",
+                details={"count": len(values)},
+            )
+
+    for dataset_index, dataset in enumerate(document.data):
+        path = f"datasets[{dataset_index}]"
+        if not isinstance(dataset, Mapping):
+            findings.add_condition(
+                code="ecospold2.dataset_invalid",
+                message="ecoSpold2 datasets must be mappings.",
+                path=path,
+                action=PolicyAction.ERROR,
+            )
+            continue
+        exchanges = dataset.get("exchanges")
+        if not isinstance(exchanges, list):
+            findings.add_condition(
+                code="ecospold2.exchanges_invalid",
+                message="ecoSpold2 datasets require an exchange list.",
+                path=f"{path}.exchanges",
+                action=PolicyAction.ERROR,
+            )
+            continue
+        productions = [
+            exchange for exchange in exchanges if isinstance(exchange, Mapping) and exchange.get("type") == "production"
+        ]
+        if len(productions) != 1:
+            findings.add_condition(
+                code="ecospold2.multiple_outputs_unsupported",
+                message=f"The supported ecoSpold2 subset requires exactly one production exchange; found {len(productions)}.",
+                path=f"{path}.exchanges",
+                action=PolicyAction.ERROR,
+                details={"production_exchanges": len(productions)},
+                suggested_fix="Split multi-output processes or choose a format that supports their allocation model.",
+            )
+        embedded = dataset.get("ecospold2")
+        raw = embedded.get("raw", {}) if isinstance(embedded, Mapping) else {}
+        for raw_name, code, label in (
+            ("allocation_count", "ecospold2.allocation_unsupported", "allocation records"),
+            ("transfer_coefficient_count", "ecospold2.transfer_coefficients_unsupported", "transfer coefficients"),
+        ):
+            count = raw.get(raw_name, 0) if isinstance(raw, Mapping) else 0
+            if count:
+                findings.add_condition(
+                    code=code,
+                    message=f"ecoSpold2 {label} are outside the supported single-output subset.",
+                    path=f"{path}.ecospold2.raw.{raw_name}",
+                    action=PolicyAction.ERROR,
+                    details={"count": count},
+                )
+        for raw_name, code, label in (
+            ("review_count", "ecospold2.reviews_not_preserved", "review records"),
+            ("impact_indicator_count", "ecospold2.impact_indicators_not_preserved", "impact indicators"),
+        ):
+            count = raw.get(raw_name, 0) if isinstance(raw, Mapping) else 0
+            if count:
+                findings.add_loss(
+                    code=code,
+                    message=f"ecoSpold2 {label} are not preserved by the supported process exchange route.",
+                    path=f"{path}.ecospold2.raw.{raw_name}",
+                    action=policy.on_information_loss,
+                    category="information_loss",
+                    details={"count": count},
+                )
+        try:
+            metadata = profile.metadata_for(dataset)
+        except Exception as error:
+            findings.add_condition(
+                code="ecospold2.metadata_invalid",
+                message=str(error) or type(error).__name__,
+                path=f"{path}.ecospold2",
+                action=PolicyAction.ERROR,
+                details={"exception_type": type(error).__name__},
+            )
+        else:
+            for missing in metadata.missing_required():
+                findings.add_condition(
+                    code="ecospold2.required_metadata_missing",
+                    message=f"Required ecoSpold2 metadata field {missing!r} is missing.",
+                    path=f"{path}.ecospold2.{missing}",
+                    action=PolicyAction.ERROR,
+                    suggested_fix="Supply structured metadata with --ecospold2-metadata; free-form comments are not parsed.",
+                )
+        for exchange_index, exchange in enumerate(exchanges):
+            exchange_path = f"{path}.exchanges[{exchange_index}]"
+            if not isinstance(exchange, Mapping):
+                findings.add_condition(
+                    code="ecospold2.exchange_invalid",
+                    message="ecoSpold2 exchanges must be mappings.",
+                    path=exchange_path,
+                    action=PolicyAction.ERROR,
+                )
+                continue
+            exchange_type = exchange.get("type")
+            if exchange_type not in {"production", "technosphere", "biosphere"}:
+                findings.add_condition(
+                    code="ecospold2.exchange_type_unsupported",
+                    message=f"Exchange type {exchange_type!r} is not supported by the single-output ecoSpold2 adapter.",
+                    path=f"{exchange_path}.type",
+                    action=PolicyAction.ERROR,
+                )
+            amount = exchange.get("amount")
+            if isinstance(amount, bool) or not isinstance(amount, Real) or not math.isfinite(float(amount)):
+                findings.add_condition(
+                    code="ecospold2.exchange_amount_invalid",
+                    message="ecoSpold2 exchange amounts must be finite numbers.",
+                    path=f"{exchange_path}.amount",
+                    action=PolicyAction.ERROR,
+                )
+    return findings
 
 
 def _inspect_ecospold1(

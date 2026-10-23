@@ -9,7 +9,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Iterable, Sequence
 
-from brightpath.adapters import default_adapter_registry
+from brightpath.adapters import ArtifactKind, default_adapter_registry
 from brightpath.background.catalogs import CatalogProvider, catalog_provider_from_environment
 from brightpath.background.execution import execute_background_migration
 from brightpath.capabilities import capability_snapshot
@@ -31,6 +31,7 @@ from brightpath.core.reports import (
     StageReport,
 )
 from brightpath.formats.ecospold1_metadata import EcoSpold1ExportProfile
+from brightpath.formats.ecospold2_metadata import EcoSpold2ExportProfile, EcoSpold2ReferenceCatalog
 
 EXIT_SUCCESS = 0
 EXIT_USAGE = 2
@@ -74,6 +75,21 @@ def build_parser() -> argparse.ArgumentParser:
         "--ecospold1-metadata",
         type=Path,
         help="Structured YAML or JSON metadata profile used when exporting ecoSpold1.",
+    )
+    convert.add_argument(
+        "--ecospold2-metadata",
+        type=Path,
+        help="Structured YAML or JSON metadata profile used when exporting ecoSpold2.",
+    )
+    convert.add_argument(
+        "--ecospold2-references",
+        type=Path,
+        help="UUID reference catalog for external ecoSpold2 technosphere and elementary flows.",
+    )
+    convert.add_argument(
+        "--ecospold2-package-mode",
+        choices=("single", "zip", "directory"),
+        help="ecoSpold2 output shape; inferred from the destination when omitted.",
     )
     convert.add_argument("--dry-run", action="store_true", help="Run conversion preflight without writing.")
     _add_source_context_options(convert)
@@ -170,7 +186,7 @@ def _run_formats(arguments: argparse.Namespace) -> int:
 def _run_inspect(arguments: argparse.Namespace) -> int:
     hint = _source_hint(arguments)
     pipeline, _provider = _application_services()
-    read_result = pipeline.read(arguments.source, hint=hint)
+    read_result = pipeline.read(arguments.source, hint=hint, artifact_kind=_source_artifact_kind(arguments.source))
     reports = (("read", read_result.report),)
     report = _combine_reports(OperationKind.READ, reports, arguments)
     document = read_result.value
@@ -182,7 +198,7 @@ def _run_inspect(arguments: argparse.Namespace) -> int:
 def _run_validate(arguments: argparse.Namespace) -> int:
     hint = _source_hint(arguments)
     pipeline, _provider = _application_services()
-    read_result = pipeline.read(arguments.source, hint=hint)
+    read_result = pipeline.read(arguments.source, hint=hint, artifact_kind=_source_artifact_kind(arguments.source))
     if read_result.value is None or not read_result.succeeded:
         reports = (("read", read_result.report),)
         report = _combine_reports(OperationKind.VALIDATE, reports, arguments)
@@ -202,7 +218,7 @@ def _run_convert(arguments: argparse.Namespace) -> int:
     conversion_policy = _conversion_policy(arguments.policy)
     adapter_options = _conversion_adapter_options(arguments)
     pipeline, _provider = _application_services()
-    read_result = pipeline.read(arguments.source, hint=hint)
+    read_result = pipeline.read(arguments.source, hint=hint, artifact_kind=_source_artifact_kind(arguments.source))
     if read_result.value is None or not read_result.succeeded:
         reports = (("read", read_result.report),)
         report = _combine_reports(OperationKind.CONVERT, reports, arguments)
@@ -261,7 +277,7 @@ def _run_migrate(arguments: argparse.Namespace) -> int:
     target = _target_background(arguments)
     migration_policy = _migration_policy(arguments.policy)
     pipeline, provider = _application_services()
-    read_result = pipeline.read(arguments.source, hint=hint)
+    read_result = pipeline.read(arguments.source, hint=hint, artifact_kind=_source_artifact_kind(arguments.source))
     if read_result.value is None or not read_result.succeeded:
         reports = (("read", read_result.report),)
         report = _combine_reports(OperationKind.MIGRATE, reports, arguments)
@@ -385,20 +401,44 @@ def _conversion_policy(name: str) -> ConversionPolicy:
 
 
 def _conversion_adapter_options(arguments: argparse.Namespace) -> dict:
-    metadata_path = getattr(arguments, "ecospold1_metadata", None)
+    ecospold1_metadata = getattr(arguments, "ecospold1_metadata", None)
+    ecospold2_metadata = getattr(arguments, "ecospold2_metadata", None)
+    ecospold2_references = getattr(arguments, "ecospold2_references", None)
+    ecospold2_package_mode = getattr(arguments, "ecospold2_package_mode", None)
     target_format = str(getattr(arguments, "target_format", "")).strip().lower().replace("-", "_")
-    if metadata_path is not None and target_format != "ecospold1":
+    if ecospold1_metadata is not None and target_format != "ecospold1":
         raise _UsageError("--ecospold1-metadata can only be used with --target-format ecospold1.")
-    if target_format != "ecospold1":
-        return {}
-    try:
-        profile = EcoSpold1ExportProfile.from_file(metadata_path) if metadata_path is not None else None
-    except (OSError, TypeError, ValueError) as error:
-        raise _UsageError(f"Invalid ecoSpold1 metadata profile: {error}") from error
-    return {
-        "metadata_profile": profile,
-        "generated_at": datetime.now(timezone.utc).replace(microsecond=0),
-    }
+    if any(value is not None for value in (ecospold2_metadata, ecospold2_references, ecospold2_package_mode)):
+        if target_format != "ecospold2":
+            raise _UsageError("ecoSpold2 export options can only be used with --target-format ecospold2.")
+    generated_at = datetime.now(timezone.utc).replace(microsecond=0)
+    if target_format == "ecospold1":
+        try:
+            profile = EcoSpold1ExportProfile.from_file(ecospold1_metadata) if ecospold1_metadata is not None else None
+        except (OSError, TypeError, ValueError) as error:
+            raise _UsageError(f"Invalid ecoSpold1 metadata profile: {error}") from error
+        return {"metadata_profile": profile, "generated_at": generated_at}
+    if target_format == "ecospold2":
+        try:
+            profile = EcoSpold2ExportProfile.from_file(ecospold2_metadata) if ecospold2_metadata is not None else None
+            references = (
+                EcoSpold2ReferenceCatalog.from_file(ecospold2_references) if ecospold2_references is not None else None
+            )
+        except (OSError, TypeError, ValueError) as error:
+            raise _UsageError(f"Invalid ecoSpold2 export configuration: {error}") from error
+        return {
+            "metadata_profile": profile,
+            "reference_catalog": references,
+            "generated_at": generated_at,
+            "package_mode": ecospold2_package_mode,
+        }
+    return {}
+
+
+def _source_artifact_kind(path: Path) -> ArtifactKind:
+    """Return the physical artifact kind used for content detection."""
+
+    return ArtifactKind.DIRECTORY if path.is_dir() else ArtifactKind.FILE
 
 
 def _migration_policy(name: str) -> MigrationPolicy:

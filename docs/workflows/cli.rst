@@ -15,7 +15,7 @@ Discover installed capabilities
 
 The result is generated from the installed adapter registry, non-placeholder
 migration resources, and available catalog profiles. Reserved but
-unimplemented formats such as OpenLCA Excel and ecoSpold2 do not appear.
+unimplemented formats such as OpenLCA Excel do not appear.
 
 Supply a source context
 -----------------------
@@ -117,6 +117,25 @@ in dry-run preflight and writing; prose comments are not parsed:
      --dry-run
 
 See :doc:`ecospold1` for the metadata structure and supported subset.
+
+ecoSpold2 exports use a metadata profile plus an exact UUID reference catalog
+for external exchanges:
+
+.. code-block:: console
+
+   brightpath convert-format foreground.xlsx foreground.zip \
+     --source-format brightway_excel \
+     --source-technosphere-family ecoinvent \
+     --source-technosphere-version 3.10 \
+     --source-technosphere-system-model cutoff \
+     --source-biosphere-family ecoinvent \
+     --source-biosphere-version 3.10 \
+     --target-format ecospold2 \
+     --ecospold2-metadata metadata.yaml \
+     --ecospold2-references references.yaml \
+     --dry-run
+
+See :doc:`ecospold2` for package modes and schemas.
 
 .. code-block:: console
 

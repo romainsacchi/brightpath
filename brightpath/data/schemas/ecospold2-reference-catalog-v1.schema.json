@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brightpath.dev/schemas/ecospold2-reference-catalog-v1.schema.json",
+  "type": "object",
+  "required": ["schema_version"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": 1},
+    "technosphere": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["identity", "activity_id", "flow_id"],
+        "additionalProperties": false,
+        "properties": {
+          "identity": {"$ref": "#/$defs/technosphere_identity"},
+          "activity_id": {"$ref": "#/$defs/uuid"},
+          "flow_id": {"$ref": "#/$defs/uuid"}
+        }
+      }
+    },
+    "biosphere": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["identity", "flow_id"],
+        "additionalProperties": false,
+        "properties": {
+          "identity": {"$ref": "#/$defs/biosphere_identity"},
+          "flow_id": {"$ref": "#/$defs/uuid"}
+        }
+      }
+    },
+    "units": {"type": "array", "items": {"$ref": "#/$defs/named_reference"}},
+    "geographies": {"type": "array", "items": {"$ref": "#/$defs/geography_reference"}}
+  },
+  "$defs": {
+    "uuid": {"type": "string", "format": "uuid"},
+    "technosphere_identity": {
+      "type": "object",
+      "required": ["name", "reference_product", "location", "unit"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "reference_product": {"type": "string", "minLength": 1},
+        "location": {"type": "string", "minLength": 1},
+        "unit": {"type": "string", "minLength": 1}
+      }
+    },
+    "biosphere_identity": {
+      "type": "object",
+      "required": ["name", "categories", "unit"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "categories": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 1}},
+        "unit": {"type": "string", "minLength": 1}
+      }
+    },
+    "named_reference": {
+      "type": "object",
+      "required": ["name", "id"],
+      "additionalProperties": false,
+      "properties": {"name": {"type": "string", "minLength": 1}, "id": {"$ref": "#/$defs/uuid"}}
+    },
+    "geography_reference": {
+      "type": "object",
+      "required": ["shortname", "id"],
+      "additionalProperties": false,
+      "properties": {"shortname": {"type": "string", "minLength": 1}, "id": {"$ref": "#/$defs/uuid"}}
+    }
+  }
+}

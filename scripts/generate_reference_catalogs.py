@@ -166,33 +166,49 @@ def export_catalog(
     biosphere_name: str,
     output_dir: Path | None = None,
 ) -> Path:
-    technosphere = sorted(
-        {
-            (
-                str(activity.get("name") or ""),
-                str(activity.get("reference product") or ""),
-                str(activity.get("location") or ""),
-                str(activity.get("unit") or ""),
-            )
-            for activity in bd.Database(database_name)
-        }
-    )
-    biosphere = sorted(
-        {
-            (
-                str(flow.get("name") or ""),
-                tuple(str(item) for item in flow.get("categories", ())),
-                str(flow.get("unit") or ""),
-            )
-            for flow in bd.Database(biosphere_name)
-        }
-    )
+    technosphere_references = {}
+    for activity in bd.Database(database_name):
+        identity = (
+            str(activity.get("name") or ""),
+            str(activity.get("reference product") or ""),
+            str(activity.get("location") or ""),
+            str(activity.get("unit") or ""),
+        )
+        reference = (
+            str(activity.get("activity") or ""),
+            str(activity.get("flow") or ""),
+        )
+        _add_unique_reference(technosphere_references, identity, reference, database_name)
+
+    biosphere_references = {}
+    for flow in bd.Database(biosphere_name):
+        identity = (
+            str(flow.get("name") or ""),
+            tuple(str(item) for item in flow.get("categories", ())),
+            str(flow.get("unit") or ""),
+        )
+        _add_unique_reference(
+            biosphere_references,
+            identity,
+            str(flow.get("code") or ""),
+            biosphere_name,
+        )
     return write_background_catalog(
         profile,
-        technosphere=technosphere,
-        biosphere=biosphere,
+        technosphere=technosphere_references,
+        biosphere=biosphere_references,
+        technosphere_references=technosphere_references,
+        biosphere_references=biosphere_references,
         output_dir=output_dir,
     )
+
+
+def _add_unique_reference(target: dict, identity: tuple, reference: object, source: str) -> None:
+    if not all(identity) or not reference or (isinstance(reference, tuple) and not all(reference)):
+        raise ValueError(f"Missing identity or UUID reference in {source}: {identity!r} -> {reference!r}.")
+    previous = target.setdefault(identity, reference)
+    if previous != reference:
+        raise ValueError(f"Ambiguous UUID references in {source} for {identity!r}: {previous!r} != {reference!r}.")
 
 
 def load_brightway_excel_inventory(path: str | Path) -> list[dict]:
@@ -223,16 +239,19 @@ def export_uvek_catalog(
         password=password,
         skip_import=skip_import,
     )
-    biosphere = sorted(
-        {
-            (
-                str(flow.get("name") or ""),
-                tuple(str(item) for item in flow.get("categories", ())),
-                str(flow.get("unit") or ""),
-            )
-            for flow in bd.Database(biosphere_name)
-        }
-    )
+    biosphere_references = {}
+    for flow in bd.Database(biosphere_name):
+        identity = (
+            str(flow.get("name") or ""),
+            tuple(str(item) for item in flow.get("categories", ())),
+            str(flow.get("unit") or ""),
+        )
+        _add_unique_reference(
+            biosphere_references,
+            identity,
+            str(flow.get("code") or ""),
+            biosphere_name,
+        )
     return write_background_catalog(
         BackgroundProfile(
             family="uvek",
@@ -240,7 +259,8 @@ def export_uvek_catalog(
             system_model="cutoff",
         ),
         technosphere=collect_technosphere_catalog_entries(inventory_data),
-        biosphere=biosphere,
+        biosphere=biosphere_references,
+        biosphere_references=biosphere_references,
         output_dir=output_dir,
     )
 

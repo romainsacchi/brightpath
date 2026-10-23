@@ -120,6 +120,12 @@ class EcoSpold1SerializationError(SerializationError):
     format_code = "ecospold1.serialization_failed"
 
 
+class EcoSpold2SerializationError(SerializationError):
+    """Raised when inventory values cannot be represented in ecoSpold2 XML."""
+
+    format_code = "ecospold2.serialization_failed"
+
+
 def _validation_operation_report(validation: Any, result: Any) -> OperationReport:
     stages = []
     if validation is not None:

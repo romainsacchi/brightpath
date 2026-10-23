@@ -20,3 +20,13 @@ def test_packaged_catalog_manifest_matches_every_catalog_byte_for_byte():
     assert packaged["status"] == "legal_review_required"
     assert len(packaged["resources"]) == 17
     assert all(resource["sha256"] for resource in packaged["resources"])
+    complete = {
+        resource["file"]
+        for resource in packaged["resources"]
+        if resource["technosphere_uuid_references"] == resource["technosphere_identities"]
+        and resource["biosphere_uuid_references"] == resource["biosphere_identities"]
+    }
+    ecoinvent_resources = {
+        resource["file"] for resource in packaged["resources"] if resource["profile"]["family"] == "ecoinvent"
+    }
+    assert complete == ecoinvent_resources

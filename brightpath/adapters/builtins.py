@@ -15,6 +15,7 @@ from brightpath.core.reports import StageReport
 from brightpath.formats.brightway_delimited import load_brightway_delimited, write_brightway_delimited
 from brightpath.formats.brightway_excel import load_brightway_excel, write_brightway_excel
 from brightpath.formats.ecospold1 import ECOSPOLD1_NAMESPACE, load_ecospold1, write_ecospold1
+from brightpath.formats.ecospold2 import load_ecospold2, validate_ecospold2_package, write_ecospold2
 from brightpath.formats.openlca_jsonld import load_openlca_jsonld, write_openlca_jsonld
 from brightpath.formats.simapro_csv import (
     SimaProRenderResult,
@@ -27,10 +28,12 @@ from .base import AdapterCapabilities, ArtifactKind, DetectionCandidate, FormatD
 from .preflight import (
     preflight_brightway_conversion,
     preflight_ecospold1_conversion,
+    preflight_ecospold2_conversion,
     preflight_openlca_jsonld_conversion,
     preflight_simapro_conversion,
     validate_brightway_format,
     validate_ecospold1_format,
+    validate_ecospold2_format,
     validate_openlca_jsonld_format,
     validate_simapro_format,
 )
@@ -73,6 +76,14 @@ _ECOSPOLD1_CAPABILITIES = AdapterCapabilities(
     can_validate_format=True,
     can_preflight_conversion=True,
     compatible_format_versions={"1"},
+)
+_ECOSPOLD2_CAPABILITIES = AdapterCapabilities(
+    read_artifact_kinds={ArtifactKind.FILE, ArtifactKind.DIRECTORY},
+    write_artifact_kinds={ArtifactKind.FILE, ArtifactKind.DIRECTORY},
+    detection_artifact_kinds={ArtifactKind.FILE, ArtifactKind.DIRECTORY},
+    can_validate_format=True,
+    can_preflight_conversion=True,
+    compatible_format_versions={"2"},
 )
 
 _MAX_ZIP_ENTRIES = 20_000
@@ -416,6 +427,93 @@ class EcoSpold1Adapter:
 
 
 @dataclass(frozen=True)
+class EcoSpold2Adapter:
+    """Read, detect, validate, and write single-output ecoSpold2 packages."""
+
+    descriptor: FormatDescriptor = field(default_factory=lambda: FormatDescriptor(InventoryFormat.ECOSPOLD2.value))
+    capabilities: AdapterCapabilities = _ECOSPOLD2_CAPABILITIES
+
+    def detect(
+        self,
+        artifact: object,
+        *,
+        artifact_kind: ArtifactKind,
+    ) -> DetectionCandidate | None:
+        """Detect an XSD-valid ecoSpold2 file, ZIP package, or directory."""
+
+        kind = ArtifactKind(artifact_kind)
+        if kind not in self.capabilities.detection_artifact_kinds:
+            return None
+        try:
+            path = Path(artifact)  # type: ignore[arg-type]
+            if (kind is ArtifactKind.FILE and not path.is_file()) or (
+                kind is ArtifactKind.DIRECTORY and not path.is_dir()
+            ):
+                return None
+            errors = validate_ecospold2_package(path)
+        except (OSError, TypeError, ValueError):
+            return None
+        if errors:
+            return None
+        return DetectionCandidate(
+            self.descriptor,
+            0.99,
+            ("XSD-valid ecoSpold2 activity dataset namespace and package structure found.",),
+        )
+
+    def read(
+        self,
+        artifact: object,
+        *,
+        background_profile: BackgroundProfile | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
+        context: InventoryContext | None = None,
+        database_name: str | None = None,
+    ) -> InventoryDocument:
+        """Load ecoSpold2 activities with an explicit background context."""
+
+        return load_ecospold2(
+            artifact,  # type: ignore[arg-type]
+            background_profile=background_profile,
+            biosphere_profile=biosphere_profile,
+            context=context,
+            database_name=database_name,
+        )
+
+    def write(self, document: object, artifact: object, **kwargs: Any) -> Path:
+        """Serialize single-output activities to ecoSpold2."""
+
+        return write_ecospold2(document, artifact, **kwargs)  # type: ignore[arg-type]
+
+    def validate_format(self, document: InventoryDocument) -> StageReport:
+        """Validate the supported single-output ecoSpold2 source subset."""
+
+        return validate_ecospold2_format(document, self.descriptor)
+
+    def preflight_conversion(
+        self,
+        document: InventoryDocument,
+        *,
+        policy: ConversionPolicy,
+        metadata_profile: object | None = None,
+        reference_catalog: object | None = None,
+        generated_at: object | None = None,
+        package_mode: str | None = None,
+    ) -> StageReport:
+        """Resolve metadata and UUID references, then validate representability."""
+
+        return preflight_ecospold2_conversion(
+            document,
+            self.descriptor,
+            policy,
+            metadata_profile=metadata_profile,
+            reference_catalog=reference_catalog,
+            generated_at=generated_at,
+            package_mode=package_mode,
+        )
+
+
+@dataclass(frozen=True)
 class SimaProCSVAdapter:
     """Read, detect, and write SimaPro process CSV exports."""
 
@@ -691,6 +789,7 @@ def default_adapter_registry() -> AdapterRegistry:
             BrightwayDelimitedAdapter(FormatDescriptor(InventoryFormat.BRIGHTWAY_CSV.value), ","),
             BrightwayDelimitedAdapter(FormatDescriptor(InventoryFormat.BRIGHTWAY_TSV.value), "\t"),
             EcoSpold1Adapter(),
+            EcoSpold2Adapter(),
             OpenLCAJSONLDAdapter(),
             SimaProCSVAdapter(),
         )

@@ -136,6 +136,34 @@ def test_write_background_catalog_round_trips(tmp_path, monkeypatch):
     assert loaded.biosphere == frozenset({("Carbon dioxide, fossil", ("air",), "kilogram")})
 
 
+def test_write_background_catalog_includes_uuid_references(tmp_path):
+    profile = BackgroundProfile(family="ecoinvent", version="3.10", system_model="cutoff")
+    technosphere_identity = ("dataset a", "product a", "CH", "kilogram")
+    biosphere_identity = ("Carbon dioxide, fossil", ("air",), "kilogram")
+
+    path = write_background_catalog(
+        profile,
+        technosphere={technosphere_identity},
+        biosphere={biosphere_identity},
+        technosphere_references={
+            technosphere_identity: (
+                "11111111-1111-4111-8111-111111111111",
+                "22222222-2222-4222-8222-222222222222",
+            )
+        },
+        biosphere_references={
+            biosphere_identity: "33333333-3333-4333-8333-333333333333",
+        },
+        output_dir=tmp_path,
+    )
+
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assert payload["schema_version"] == 2
+    assert payload["technosphere"][0]["activity_id"] == "11111111-1111-4111-8111-111111111111"
+    assert payload["technosphere"][0]["flow_id"] == "22222222-2222-4222-8222-222222222222"
+    assert payload["biosphere"][0]["flow_id"] == "33333333-3333-4333-8333-333333333333"
+
+
 def test_load_background_catalog_uses_independent_exact_provider_axes(monkeypatch):
     profile = BackgroundProfile("ecoinvent", "3.10.1", "cutoff")
     technosphere_profile = TechnosphereProfile("ecoinvent", "3.10.1", "cutoff")

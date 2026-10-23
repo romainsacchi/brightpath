@@ -20,9 +20,9 @@ only the requested background profiles and linked identities. Neither
 operation assumes the other.
 
 The built-in registry currently provides Brightway Excel, Brightway block CSV,
-Brightway block TSV, SimaPro CSV, process-only openLCA JSON-LD ZIP, and
-single-output ecoSpold1 XML adapters. OpenLCA Excel and ecoSpold2
-are reserved in the model but remain unregistered and unimplemented. Query the
+Brightway block TSV, SimaPro CSV, process-only openLCA JSON-LD ZIP,
+single-output ecoSpold1 XML, and single-output ecoSpold2 package adapters.
+OpenLCA Excel is reserved in the model but remains unregistered. Query the
 installed capabilities with ``brightpath formats``.
 
 Start with :doc:`getting-started`, then choose the task-oriented guide.
@@ -38,6 +38,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    workflows/simapro
    workflows/conversion
    workflows/ecospold1
+   workflows/ecospold2
    workflows/parameters
    workflows/migration
    workflows/ecoinvent-to-uvek

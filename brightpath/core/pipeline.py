@@ -494,7 +494,11 @@ class InventoryPipeline:
         adapter_options: Mapping[str, Any] | None = None,
     ) -> tuple[InventoryDocument | None, FormatAdapter | None, tuple[StageReport, ...]]:
         stages: list[StageReport] = []
-        if document.context.format.format_id == "ecospold1" and descriptor.format_id != "ecospold1":
+        externally_configured_formats = {"ecospold1", "ecospold2"}
+        if (
+            document.context.format.format_id in externally_configured_formats
+            and descriptor.format_id != document.context.format.format_id
+        ):
             try:
                 source_adapter = self.registry.get(document.context.format)
             except LookupError:
@@ -563,10 +567,10 @@ class InventoryPipeline:
             metrics={"background_unchanged": converted.context.background == document.context.background},
         )
         stages.extend((preflight, conversion))
-        # ecoSpold1 target validation requires the same external metadata profile
-        # already consumed by its preflight renderer. Other adapters validate
-        # directly from the converted document.
-        if policy.validate_target and descriptor.format_id != "ecospold1":
+        # ecoSpold targets require the same external metadata and reference
+        # profiles already consumed by their preflight renderers. Other
+        # adapters validate directly from the converted document.
+        if policy.validate_target and descriptor.format_id not in externally_configured_formats:
             target_validation = validate_adapter_format(converted, adapter)
             target_validation = _apply_conversion_target_policy(target_validation, policy.on_invalid_target)
             stages.append(target_validation)

@@ -16,6 +16,8 @@ def build_manifest(directory: Path) -> dict:
         raw = path.read_bytes()
         payload = json.loads(raw.decode("utf-8"))
         profile = payload["profile"]
+        technosphere_rows = payload.get("technosphere", ())
+        biosphere_rows = payload.get("biosphere", ())
         resources.append(
             {
                 "file": path.name,
@@ -27,14 +29,21 @@ def build_manifest(directory: Path) -> dict:
                     "version": str(profile["version"]),
                     "system_model": str(profile["system_model"]),
                 },
-                "technosphere_identities": len(payload.get("technosphere", ())),
-                "biosphere_identities": len(payload.get("biosphere", ())),
+                "technosphere_identities": len(technosphere_rows),
+                "biosphere_identities": len(biosphere_rows),
+                "technosphere_uuid_references": sum(
+                    bool(row.get("activity_id") and row.get("flow_id")) for row in technosphere_rows
+                ),
+                "biosphere_uuid_references": sum(bool(row.get("flow_id")) for row in biosphere_rows),
             }
         )
     return {
         "schema_version": 1,
         "status": "legal_review_required",
-        "description": "Identity-only validation catalogs generated from locally installed background databases.",
+        "description": (
+            "Validation identities and ecoSpold2 UUID references generated from locally installed "
+            "background releases."
+        ),
         "generator": "scripts/generate_reference_catalogs.py",
         "resources": resources,
     }

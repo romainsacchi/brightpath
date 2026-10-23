@@ -94,11 +94,14 @@ The built-in registry currently contains:
 - `brightway_csv`
 - `brightway_tsv`
 - `simapro_csv`
+- `openlca_jsonld`
+- `ecospold1`
+- `ecospold2`
 
-All four detect, read, and write files. Brightway and SimaPro CSV are
+These adapters detect, read, and write their declared artifact kinds. Brightway and SimaPro CSV are
 distinguished by bounded content evidence; the `.csv` suffix is never a silent
-default. OpenLCA Excel and ecoSpold2 remain reserved identifiers and canonical
-extension namespaces, but no adapter is registered or advertised.
+default. OpenLCA Excel remains a reserved identifier and canonical extension
+namespace, but no adapter is registered or advertised.
 
 Qualified descriptor lookup selects an exact version/dialect first. A generic
 adapter is eligible only when `compatible_format_versions` and
@@ -179,6 +182,6 @@ classes will not return.
 - UVEK is independent of software format.
 - CSV ambiguity is reported rather than guessed.
 - Placeholder data cannot advertise or execute a route.
-- OpenLCA Excel and ecoSpold2 remain undiscoverable until complete adapters and
-  independent fixtures pass their contracts.
+- Reserved formats remain undiscoverable until complete adapters and independent
+  fixtures pass their contracts.
 - No proprietary background inventory is packaged.

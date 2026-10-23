@@ -12,6 +12,18 @@ All notable changes to this project will be documented in this file.
   descriptions are not interpreted.
 - Add adapter options shared by conversion preflight and writing so dry runs
   validate the same ecoSpold1 metadata used for serialization.
+- Add XSD-validated ecoSpold2 activity detection, reading, and deterministic
+  single-file, ZIP, and directory writing for the single-output process subset.
+- Add structured ecoSpold2 export metadata and exact UUID reference catalogs;
+  free-form descriptions are never parsed for required person or time fields.
+- Load exact packaged ecoinvent ecoSpold2 UUID references automatically from
+  the document context, with manifest-audited per-profile coverage and a strict
+  exact-release enrichment script.
+- Include complete activity, intermediate-flow, and elementary-flow UUID
+  coverage for every packaged ecoinvent profile from 3.6 through 3.12,
+  including the 3.9.1 and 3.10.1 cut-off patch profiles.
+- Verify generated ecoSpold2 packages with ``bw2io`` extraction, strategies,
+  and database writing in an isolated Brightway project.
 
 ## 1.0.0a8 - 2026-10-22
 

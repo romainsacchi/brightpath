@@ -41,7 +41,8 @@ class InventoryFormat(str, Enum):
     Brightway Excel and SimaPro CSV have dedicated facade support. Brightway
     CSV and TSV are registered pipeline formats. openLCA JSON-LD is supported
     as a zipped process package, and ecoSpold1 supports single-output process
-    XML. OpenLCA Excel and ecospold2 remain reserved for future adapters.
+    XML, and ecoSpold2 supports single-output activity packages. OpenLCA Excel
+    remains reserved for a future adapter.
     Custom adapters may use identifiers outside this
     compatibility enum.
     """

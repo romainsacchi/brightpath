@@ -12,6 +12,7 @@ from brightpath.adapters.builtins import (
     BrightwayDelimitedAdapter,
     BrightwayExcelAdapter,
     EcoSpold1Adapter,
+    EcoSpold2Adapter,
     OpenLCAJSONLDAdapter,
     SimaProCSVAdapter,
     default_adapter_registry,
@@ -76,6 +77,13 @@ def _document(format_id: str) -> InventoryDocument:
                 "country_code": "CH",
             },
         }
+    if format_id == "ecospold2":
+        dataset["ecospold2"] = {
+            "time_period": {"start_date": "2020-01-01", "end_date": "2020-12-31"},
+            "macroeconomic_scenario": {"name": "Business as usual"},
+            "data_entry_person": {"name": "Jane Smith", "email": "jane@example.org"},
+            "data_generator_person": {"name": "Jane Smith", "email": "jane@example.org"},
+        }
     return InventoryDocument(
         data=[dataset],
         context=_context(format_id),
@@ -88,6 +96,7 @@ def test_builtin_adapters_are_immutable_format_adapters():
 
     assert isinstance(adapter, FormatAdapter)
     assert isinstance(EcoSpold1Adapter(), FormatAdapter)
+    assert isinstance(EcoSpold2Adapter(), FormatAdapter)
     assert isinstance(OpenLCAJSONLDAdapter(), FormatAdapter)
     assert isinstance(SimaProCSVAdapter(), FormatAdapter)
     with pytest.raises(FrozenInstanceError):
@@ -100,6 +109,7 @@ def test_builtin_adapters_are_immutable_format_adapters():
         (BrightwayExcelAdapter(), "brightway_excel"),
         (BrightwayDelimitedAdapter(FormatDescriptor("brightway_csv"), ","), "brightway_csv"),
         (EcoSpold1Adapter(), "ecospold1"),
+        (EcoSpold2Adapter(), "ecospold2"),
         (OpenLCAJSONLDAdapter(), "openlca_jsonld"),
         (SimaProCSVAdapter(), "simapro_csv"),
     ],
@@ -107,7 +117,7 @@ def test_builtin_adapters_are_immutable_format_adapters():
 def test_builtin_adapters_expose_validation_and_conversion_preflight_hooks(adapter, format_id):
     if format_id == "openlca_jsonld":
         pytest.importorskip("olca_schema")
-    if format_id == "ecospold1":
+    if format_id in {"ecospold1", "ecospold2"}:
         pytest.importorskip("pyecospold")
     document = _document(format_id)
 
@@ -265,6 +275,7 @@ def test_default_registry_advertises_and_detects_only_implemented_file_adapters(
         FormatDescriptor("brightway_csv"),
         FormatDescriptor("brightway_tsv"),
         FormatDescriptor("ecospold1"),
+        FormatDescriptor("ecospold2"),
         FormatDescriptor("openlca_jsonld"),
         FormatDescriptor("simapro_csv"),
     )

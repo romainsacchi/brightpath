@@ -189,9 +189,9 @@ discovery; execution failures or malformed reports remain contract errors.
 catalog provider; the SimaPro adapter uses this dependency for biosphere-name
 normalization.
 
-OpenLCA Excel and ecoSpold2 are reserved identifiers and extension namespaces,
-but no built-in adapter advertises them. ``brightpath formats`` is the
-authoritative installed-capability view.
+OpenLCA Excel is a reserved identifier and extension namespace, but no built-in
+adapter advertises it. ecoSpold2 is registered for the documented single-output
+subset. ``brightpath formats`` is the authoritative installed-capability view.
 
 Policies
 --------

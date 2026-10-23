@@ -6,9 +6,11 @@ import hashlib
 import json
 import os
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from pathlib import Path
+from types import MappingProxyType
 from typing import Iterable, Mapping
+from uuid import UUID
 
 from brightpath.core.context import BiosphereProfile, TechnosphereProfile
 
@@ -33,11 +35,18 @@ class TechnosphereCatalog:
     digest: str = ""
     schema_version: int = 1
     source: str = ""
+    references: Mapping[TechnosphereIdentity, tuple[str, str]] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if not isinstance(self.profile, TechnosphereProfile):
             raise TypeError("profile must be a TechnosphereProfile.")
         object.__setattr__(self, "identities", frozenset(self.identities))
+        object.__setattr__(
+            self,
+            "references",
+            MappingProxyType(dict(self.references or {})),
+        )
+        _validate_technosphere_references(self.references, self.identities)
         _validate_digest(self.digest)
         _validate_schema_version(self.schema_version)
 
@@ -51,11 +60,18 @@ class BiosphereCatalog:
     digest: str = ""
     schema_version: int = 1
     source: str = ""
+    references: Mapping[BiosphereIdentity, str] = field(default_factory=dict)
 
     def __post_init__(self) -> None:
         if not isinstance(self.profile, BiosphereProfile):
             raise TypeError("profile must be a BiosphereProfile.")
         object.__setattr__(self, "identities", frozenset(self.identities))
+        object.__setattr__(
+            self,
+            "references",
+            MappingProxyType(dict(self.references or {})),
+        )
+        _validate_biosphere_references(self.references, self.identities)
         _validate_digest(self.digest)
         _validate_schema_version(self.schema_version)
 
@@ -143,12 +159,14 @@ class DirectoryCatalogProvider(CatalogProvider):
                 f"Catalog {path} embeds {embedded.label()}, not requested profile {profile.label()}."
             )
         identities = frozenset(_parse_technosphere_rows(payload.get("technosphere"), path))
+        references = _parse_technosphere_references(payload.get("technosphere"), path)
         catalog = TechnosphereCatalog(
             profile=profile,
             identities=identities,
             digest=digest,
             schema_version=_schema_version(payload, path),
             source=str(path.resolve()),
+            references=references,
         )
         self._technosphere_cache[profile] = catalog
         return catalog
@@ -170,21 +188,34 @@ class DirectoryCatalogProvider(CatalogProvider):
                     f"Catalog {path} does not match requested biosphere profile {profile.label()}."
                 )
             identities = frozenset(_parse_biosphere_rows(payload.get("biosphere"), path))
-            loaded.append((path, payload, digest, identities))
+            references = _parse_biosphere_references(payload.get("biosphere"), path)
+            loaded.append((path, payload, digest, identities, references))
 
-        schema_versions = {_schema_version(payload, path) for path, payload, _digest, _identities in loaded}
+        schema_versions = {
+            _schema_version(payload, path) for path, payload, _digest, _identities, _references in loaded
+        }
         if len(schema_versions) != 1:
-            sources = ", ".join(path.name for path, _payload, _digest, _identities in loaded)
+            sources = ", ".join(path.name for path, _payload, _digest, _identities, _references in loaded)
             raise CatalogIntegrityError(
                 f"Biosphere catalog shards for {profile.label()} use inconsistent schema versions: {sources}."
             )
-        identities = frozenset(identity for _path, _payload, _digest, rows in loaded for identity in rows)
+        identities = frozenset(identity for _path, _payload, _digest, rows, _references in loaded for identity in rows)
+        references: dict[BiosphereIdentity, str] = {}
+        for path, _payload, _digest, _identities, rows in loaded:
+            for identity, flow_id in rows.items():
+                previous = references.setdefault(identity, flow_id)
+                if previous != flow_id:
+                    raise CatalogIntegrityError(
+                        f"Biosphere catalog shards disagree on the UUID for {identity!r}: "
+                        f"{previous} != {flow_id} in {path}."
+                    )
         catalog = BiosphereCatalog(
             profile=profile,
             identities=identities,
             digest=_composite_biosphere_digest(profile, loaded, identities),
             schema_version=next(iter(schema_versions)),
-            source=";".join(str(path.resolve()) for path, _payload, _digest, _identities in loaded),
+            source=";".join(str(path.resolve()) for path, _payload, _digest, _identities, _references in loaded),
+            references=references,
         )
         self._biosphere_cache[profile] = catalog
         return catalog
@@ -328,16 +359,30 @@ def _verify_manifest_resource(path: Path, payload: dict, digest: str, manifest: 
         raise CatalogIntegrityError(f"Catalog {path} technosphere count does not match its manifest.")
     if resource.get("biosphere_identities") != len(payload.get("biosphere", ())):
         raise CatalogIntegrityError(f"Catalog {path} biosphere count does not match its manifest.")
+    technosphere_references = sum(
+        bool(row.get("activity_id") and row.get("flow_id"))
+        for row in payload.get("technosphere", ())
+        if isinstance(row, dict)
+    )
+    biosphere_references = sum(
+        bool(row.get("flow_id")) for row in payload.get("biosphere", ()) if isinstance(row, dict)
+    )
+    if resource.get("technosphere_uuid_references", technosphere_references) != technosphere_references:
+        raise CatalogIntegrityError(f"Catalog {path} technosphere UUID count does not match its manifest.")
+    if resource.get("biosphere_uuid_references", biosphere_references) != biosphere_references:
+        raise CatalogIntegrityError(f"Catalog {path} biosphere UUID count does not match its manifest.")
 
 
 def _composite_biosphere_digest(
     profile: BiosphereProfile,
-    loaded: list[tuple[Path, dict, str, frozenset[BiosphereIdentity]]],
+    loaded: list[tuple[Path, dict, str, frozenset[BiosphereIdentity], Mapping[BiosphereIdentity, str]]],
     identities: frozenset[BiosphereIdentity],
 ) -> str:
     payload = {
         "profile": {"family": profile.family, "version": profile.version},
-        "sources": [{"file": path.name, "sha256": digest} for path, _payload, digest, _identities in loaded],
+        "sources": [
+            {"file": path.name, "sha256": digest} for path, _payload, digest, _identities, _references in loaded
+        ],
         "identities": [
             {"name": name, "categories": list(categories), "unit": unit}
             for name, categories, unit in sorted(identities)
@@ -401,6 +446,68 @@ def _parse_biosphere_rows(rows, path: Path) -> Iterable[BiosphereIdentity]:
         if not identity[0] or not all(identity[1]) or not identity[2]:
             raise CatalogIntegrityError(f"Catalog {path} biosphere row {index} contains an empty identity field.")
         yield identity
+
+
+def _parse_technosphere_references(rows: object, path: Path) -> dict[TechnosphereIdentity, tuple[str, str]]:
+    references = {}
+    for index, (row, identity) in enumerate(zip(rows or (), _parse_technosphere_rows(rows, path), strict=True)):
+        activity_id = str(row.get("activity_id") or "")
+        flow_id = str(row.get("flow_id") or "")
+        if bool(activity_id) != bool(flow_id):
+            raise CatalogIntegrityError(
+                f"Catalog {path} technosphere row {index} must provide both activity_id and flow_id."
+            )
+        if activity_id:
+            _validate_uuid(activity_id, path=path, row=index, field_name="activity_id")
+            _validate_uuid(flow_id, path=path, row=index, field_name="flow_id")
+            references[identity] = (activity_id, flow_id)
+    return references
+
+
+def _parse_biosphere_references(rows: object, path: Path) -> dict[BiosphereIdentity, str]:
+    references = {}
+    for index, (row, identity) in enumerate(zip(rows or (), _parse_biosphere_rows(rows, path), strict=True)):
+        flow_id = str(row.get("flow_id") or "")
+        if flow_id:
+            _validate_uuid(flow_id, path=path, row=index, field_name="flow_id")
+            references[identity] = flow_id
+    return references
+
+
+def _validate_technosphere_references(
+    references: Mapping[TechnosphereIdentity, tuple[str, str]],
+    identities: frozenset[TechnosphereIdentity],
+) -> None:
+    unknown = set(references) - identities
+    if unknown:
+        raise CatalogIntegrityError(f"Technosphere UUID reference has unknown identity {next(iter(unknown))!r}.")
+    for activity_id, flow_id in references.values():
+        _validate_uuid(activity_id)
+        _validate_uuid(flow_id)
+
+
+def _validate_biosphere_references(
+    references: Mapping[BiosphereIdentity, str], identities: frozenset[BiosphereIdentity]
+) -> None:
+    unknown = set(references) - identities
+    if unknown:
+        raise CatalogIntegrityError(f"Biosphere UUID reference has unknown identity {next(iter(unknown))!r}.")
+    for flow_id in references.values():
+        _validate_uuid(flow_id)
+
+
+def _validate_uuid(
+    value: str,
+    *,
+    path: Path | None = None,
+    row: int | None = None,
+    field_name: str = "UUID",
+) -> None:
+    try:
+        UUID(value)
+    except (AttributeError, TypeError, ValueError) as error:
+        location = f"Catalog {path} row {row} {field_name}" if path is not None else field_name
+        raise CatalogIntegrityError(f"{location} is not a valid UUID: {value!r}.") from error
 
 
 def _schema_version(payload: dict, path: Path) -> int:

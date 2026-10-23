@@ -9,15 +9,17 @@ def test_format_capabilities_are_derived_from_production_adapters():
         "brightway_csv",
         "brightway_tsv",
         "ecospold1",
+        "ecospold2",
         "openlca_jsonld",
         "simapro_csv",
     }
     assert capabilities["brightway_excel"].read == ("file",)
     assert capabilities["openlca_jsonld"].write == ("file",)
     assert capabilities["ecospold1"].write == ("file",)
+    assert capabilities["ecospold2"].read == ("directory", "file")
+    assert capabilities["ecospold2"].write == ("directory", "file")
     assert capabilities["simapro_csv"].write == ("file",)
     assert "openlca_excel" not in capabilities
-    assert "ecospold2" not in capabilities
 
 
 def test_migration_capabilities_advertise_only_active_routes():

@@ -278,9 +278,10 @@ categories, field sets, and Latin-1 encoding. Always inspect the conversion and
 write reports; successful parsing alone is not proof of lossless file
 round-trip behavior.
 
-OpenLCA Excel and ecoSpold2 have no registered adapters. Conversion to those
-reserved identifiers fails capability preflight rather than writing an
-approximate file.
+OpenLCA Excel has no registered adapter. Conversion to that reserved identifier
+fails capability preflight rather than writing an approximate file. ecoSpold2
+conversion is available for the single-output subset documented in
+:doc:`ecospold2`.
 
 Qualified target descriptors
 ----------------------------
