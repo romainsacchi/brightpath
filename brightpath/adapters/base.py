@@ -263,5 +263,6 @@ class FormatAdapter(Protocol):
         document: InventoryDocument,
         *,
         policy: ConversionPolicy,
+        **kwargs: Any,
     ) -> StageReport:
         """Report whether ``document`` is representable by this adapter."""

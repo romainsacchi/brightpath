@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Iterable, Sequence
 
@@ -29,6 +30,7 @@ from brightpath.core.reports import (
     StageKind,
     StageReport,
 )
+from brightpath.formats.ecospold1_metadata import EcoSpold1ExportProfile
 
 EXIT_SUCCESS = 0
 EXIT_USAGE = 2
@@ -68,6 +70,11 @@ def build_parser() -> argparse.ArgumentParser:
     convert.add_argument("source", type=Path)
     convert.add_argument("destination", type=Path)
     convert.add_argument("--target-format", required=True, help="Registered target format identifier.")
+    convert.add_argument(
+        "--ecospold1-metadata",
+        type=Path,
+        help="Structured YAML or JSON metadata profile used when exporting ecoSpold1.",
+    )
     convert.add_argument("--dry-run", action="store_true", help="Run conversion preflight without writing.")
     _add_source_context_options(convert)
     _add_common_options(convert)
@@ -193,6 +200,7 @@ def _run_validate(arguments: argparse.Namespace) -> int:
 def _run_convert(arguments: argparse.Namespace) -> int:
     hint = _source_hint(arguments)
     conversion_policy = _conversion_policy(arguments.policy)
+    adapter_options = _conversion_adapter_options(arguments)
     pipeline, _provider = _application_services()
     read_result = pipeline.read(arguments.source, hint=hint)
     if read_result.value is None or not read_result.succeeded:
@@ -205,6 +213,7 @@ def _run_convert(arguments: argparse.Namespace) -> int:
         read_result.value,
         arguments.target_format,
         policy=conversion_policy,
+        adapter_options=adapter_options,
     )
     reports: tuple[tuple[str, OperationReport], ...] = (
         ("read", read_result.report),
@@ -230,6 +239,7 @@ def _run_convert(arguments: argparse.Namespace) -> int:
         arguments.destination,
         target_format=arguments.target_format,
         policy=conversion_policy,
+        adapter_options=adapter_options,
     )
     reports += (("write", write_result.report),)
     report = _combine_reports(OperationKind.CONVERT, reports, arguments)
@@ -372,6 +382,23 @@ def _target_background(arguments: argparse.Namespace) -> BackgroundContext:
 
 def _conversion_policy(name: str) -> ConversionPolicy:
     return ConversionPolicy.strict() if name == "strict" else ConversionPolicy.permissive()
+
+
+def _conversion_adapter_options(arguments: argparse.Namespace) -> dict:
+    metadata_path = getattr(arguments, "ecospold1_metadata", None)
+    target_format = str(getattr(arguments, "target_format", "")).strip().lower().replace("-", "_")
+    if metadata_path is not None and target_format != "ecospold1":
+        raise _UsageError("--ecospold1-metadata can only be used with --target-format ecospold1.")
+    if target_format != "ecospold1":
+        return {}
+    try:
+        profile = EcoSpold1ExportProfile.from_file(metadata_path) if metadata_path is not None else None
+    except (OSError, TypeError, ValueError) as error:
+        raise _UsageError(f"Invalid ecoSpold1 metadata profile: {error}") from error
+    return {
+        "metadata_profile": profile,
+        "generated_at": datetime.now(timezone.utc).replace(microsecond=0),
+    }
 
 
 def _migration_policy(name: str) -> MigrationPolicy:

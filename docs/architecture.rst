@@ -123,7 +123,8 @@ unqualified request without a generic adapter may return multiple qualified
 adapters and require disambiguation.
 
 The built-in registry contains Brightway Excel, Brightway CSV, Brightway TSV,
-and SimaPro CSV. ``InventoryFormat`` also reserves OpenLCA Excel and ecoSpold2,
+SimaPro CSV, openLCA JSON-LD, and single-output ecoSpold1 XML.
+``InventoryFormat`` also reserves OpenLCA Excel and ecoSpold2,
 but enum membership does not confer capability; no adapter means those formats
 are undiscoverable and unsupported.
 

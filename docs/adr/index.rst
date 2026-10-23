@@ -10,3 +10,4 @@ cross-format and cross-background pipeline.
    0001-context-and-pipeline
    0002-strict-loss-and-migration-policy
    0003-catalog-and-resource-governance
+   0004-ecospold1-single-output

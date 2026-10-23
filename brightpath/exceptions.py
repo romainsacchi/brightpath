@@ -114,6 +114,12 @@ class SimaProSerializationError(SerializationError):
     format_code = "simapro_csv.serialization_failed"
 
 
+class EcoSpold1SerializationError(SerializationError):
+    """Raised when inventory values cannot be represented in ecoSpold1 XML."""
+
+    format_code = "ecospold1.serialization_failed"
+
+
 def _validation_operation_report(validation: Any, result: Any) -> OperationReport:
     stages = []
     if validation is not None:

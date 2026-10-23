@@ -40,8 +40,9 @@ class InventoryFormat(str, Enum):
 
     Brightway Excel and SimaPro CSV have dedicated facade support. Brightway
     CSV and TSV are registered pipeline formats. openLCA JSON-LD is supported
-    as a zipped process package. OpenLCA Excel and ecospold2 remain reserved
-    for future adapters. Custom adapters may use identifiers outside this
+    as a zipped process package, and ecoSpold1 supports single-output process
+    XML. OpenLCA Excel and ecospold2 remain reserved for future adapters.
+    Custom adapters may use identifiers outside this
     compatibility enum.
     """
 
@@ -51,6 +52,7 @@ class InventoryFormat(str, Enum):
     SIMAPRO_CSV = "simapro_csv"
     OPENLCA_JSONLD = "openlca_jsonld"
     OPENLCA_EXCEL = "openlca_excel"
+    ECOSPOLD1 = "ecospold1"
     ECOSPOLD2 = "ecospold2"
 
 
@@ -386,6 +388,8 @@ def _source_namespace(profile: FormatProfile) -> str:
         return "simapro"
     if profile.format_id.startswith("openlca"):
         return "openlca"
+    if profile.format_id == "ecospold1":
+        return "ecospold1"
     if profile.format_id.startswith("ecospold"):
         return "ecospold2"
     return profile.format_id

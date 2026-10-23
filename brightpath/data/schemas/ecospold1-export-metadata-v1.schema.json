@@ -1,0 +1,108 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://brightpath.dev/schemas/ecospold1-export-metadata-v1.schema.json",
+  "title": "BrightPath ecoSpold1 export metadata profile",
+  "type": "object",
+  "required": ["schema_version"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "defaults": {"$ref": "#/$defs/metadata"},
+    "datasets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["selector", "metadata"],
+        "additionalProperties": false,
+        "properties": {
+          "selector": {
+            "type": "object",
+            "minProperties": 1,
+            "additionalProperties": false,
+            "properties": {
+              "code": {"type": "string", "minLength": 1},
+              "name": {"type": "string", "minLength": 1},
+              "reference_product": {"type": "string", "minLength": 1},
+              "location": {"type": "string", "minLength": 1},
+              "unit": {"type": "string", "minLength": 1}
+            }
+          },
+          "metadata": {"$ref": "#/$defs/metadata"}
+        }
+      }
+    }
+  },
+  "additionalProperties": false,
+  "$defs": {
+    "person": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "number": {"type": "integer", "minimum": 1},
+        "name": {"type": "string"},
+        "address": {"type": "string"},
+        "company_code": {"type": "string", "maxLength": 7},
+        "country_code": {"type": "string", "maxLength": 2},
+        "telephone": {"type": "string"},
+        "telefax": {"type": "string"},
+        "email": {"type": "string"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "number": {"type": "integer", "minimum": 1},
+        "source_type": {"type": "integer", "minimum": 0, "maximum": 7},
+        "first_author": {"type": "string"},
+        "additional_authors": {"type": "string"},
+        "year": {"type": "integer", "minimum": 1, "maximum": 9999},
+        "title": {"type": "string"},
+        "page_numbers": {"type": "string"},
+        "name_of_editors": {"type": "string"},
+        "title_of_anthology": {"type": "string"},
+        "place_of_publication": {"type": "string"},
+        "publisher": {"type": "string"},
+        "journal": {"type": "string"},
+        "volume_number": {"type": "integer", "minimum": 1},
+        "issue_number": {"type": "string"},
+        "text": {"type": "string"}
+      }
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "category": {"type": "string"},
+            "subcategory": {"type": "string"}
+          }
+        },
+        "time_period": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "start_date": {"type": "string", "format": "date"},
+            "end_date": {"type": "string", "format": "date"},
+            "data_valid_for_entire_period": {"type": "boolean"},
+            "text": {"type": "string"}
+          }
+        },
+        "source": {"$ref": "#/$defs/source"},
+        "sources": {"type": "array", "items": {"$ref": "#/$defs/source"}},
+        "data_entry_person": {"$ref": "#/$defs/person"},
+        "data_generator_person": {"$ref": "#/$defs/person"},
+        "copyright": {"type": "boolean"},
+        "data_published_in": {"type": "integer", "minimum": 0, "maximum": 2},
+        "access_restricted_to": {"type": "integer", "minimum": 0, "maximum": 3},
+        "quality_network": {"type": "integer"},
+        "technology": {"type": "string"},
+        "geography_text": {"type": "string"},
+        "dataset_version": {"type": "string"},
+        "internal_version": {"type": "string"}
+      }
+    }
+  }
+}

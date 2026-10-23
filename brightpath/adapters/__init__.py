@@ -11,6 +11,7 @@ from .base import (
 from .builtins import (
     BrightwayDelimitedAdapter,
     BrightwayExcelAdapter,
+    EcoSpold1Adapter,
     OpenLCAJSONLDAdapter,
     SimaProCSVAdapter,
     default_adapter_registry,
@@ -24,6 +25,7 @@ __all__ = (
     "ArtifactKind",
     "BrightwayDelimitedAdapter",
     "BrightwayExcelAdapter",
+    "EcoSpold1Adapter",
     "DetectionCandidate",
     "DetectionIssue",
     "DetectionReport",

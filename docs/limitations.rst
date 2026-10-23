@@ -22,7 +22,7 @@ Format boundaries
 -----------------
 
 * The built-in registry supports Brightway Excel, Brightway block CSV,
-  Brightway block TSV, openLCA JSON-LD ZIP, and SimaPro CSV as file
+  Brightway block TSV, openLCA JSON-LD ZIP, SimaPro CSV, and ecoSpold1 XML as file
   detection/read/write adapters.
 * Only Brightway Excel and SimaPro CSV have dedicated v1 facades. Brightway
   CSV/TSV use the generic pipeline.
@@ -40,6 +40,11 @@ Format boundaries
   requires ``can_preflight_conversion``. Registry construction rejects missing
   flags and non-callable hooks before capability discovery. Runtime hook
   failures and malformed reports fail safely.
+* The ecoSpold1 adapter is limited to process datasets with exactly one
+  reference output and no allocation records. It does not support multi-output,
+  elementary-flow definition, LCIA, directory, or ZIP artifacts. Export
+  requires structured source, person, classification, and time-period metadata;
+  free-form comments are never interpreted as citations.
 * A generic adapter does not accept arbitrary format qualifiers. Its
   ``compatible_format_versions`` and ``compatible_dialects`` must explicitly
   admit them; built-in Brightway Excel admits only the ``bw2io`` dialect.

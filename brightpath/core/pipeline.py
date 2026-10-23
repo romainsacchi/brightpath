@@ -296,13 +296,15 @@ class InventoryPipeline:
         target_format: object,
         *,
         policy: ConversionPolicy = _STRICT_CONVERSION_POLICY,
+        adapter_options: Mapping[str, Any] | None = None,
     ) -> OperationResult[InventoryDocument | None]:
         """Preflight a format conversion and change only the format context."""
 
         _require_document(document)
         _require_conversion_policy(policy)
+        options = _copy_adapter_kwargs(adapter_options)
         descriptor = coerce_format_descriptor(target_format)
-        converted, _adapter, stages = self._prepare_conversion(document, descriptor, policy)
+        converted, _adapter, stages = self._prepare_conversion(document, descriptor, policy, options)
         return OperationResult(
             converted,
             OperationReport(
@@ -347,6 +349,7 @@ class InventoryPipeline:
         policy: ConversionPolicy = _STRICT_CONVERSION_POLICY,
         sidecar: str | Path | bool | None = None,
         adapter_kwargs: Mapping[str, Any] | None = None,
+        adapter_options: Mapping[str, Any] | None = None,
     ) -> OperationResult[Path | None]:
         """Preflight and write an inventory, optionally with an audit sidecar.
 
@@ -359,12 +362,13 @@ class InventoryPipeline:
         _require_conversion_policy(policy)
         _validate_sidecar_argument(sidecar)
         kwargs = _copy_adapter_kwargs(adapter_kwargs)
+        options = _copy_adapter_kwargs(adapter_options)
         descriptor = (
             coerce_format_descriptor(target_format)
             if target_format is not None
             else _registered_profile_descriptor(document.context.format)
         )
-        converted, adapter, prepared_stages = self._prepare_conversion(document, descriptor, policy)
+        converted, adapter, prepared_stages = self._prepare_conversion(document, descriptor, policy, options)
         stages = list(prepared_stages)
         metadata = {
             "source_format": document.context.format.format_id,
@@ -375,7 +379,7 @@ class InventoryPipeline:
             return OperationResult(None, OperationReport(OperationKind.WRITE, stages=tuple(stages), metadata=metadata))
 
         try:
-            adapter_result = adapter.write(converted, artifact, **kwargs)
+            adapter_result = adapter.write(converted, artifact, **options, **kwargs)
             output, returned_render = _adapter_output(adapter_result)
         except Exception as error:
             stage_kind = StageKind.SERIALIZATION if isinstance(error, SerializationError) else StageKind.WRITE
@@ -487,7 +491,19 @@ class InventoryPipeline:
         document: InventoryDocument,
         descriptor: FormatDescriptor,
         policy: ConversionPolicy,
+        adapter_options: Mapping[str, Any] | None = None,
     ) -> tuple[InventoryDocument | None, FormatAdapter | None, tuple[StageReport, ...]]:
+        stages: list[StageReport] = []
+        if document.context.format.format_id == "ecospold1" and descriptor.format_id != "ecospold1":
+            try:
+                source_adapter = self.registry.get(document.context.format)
+            except LookupError:
+                source_adapter = None
+            if source_adapter is not None:
+                source_validation = validate_adapter_format(document, source_adapter)
+                stages.append(source_validation)
+                if source_validation.has_errors:
+                    return None, None, tuple(stages)
         adapter, capability_issues = self._writable_adapter(descriptor)
         if adapter is None:
             preflight = StageReport(
@@ -497,7 +513,7 @@ class InventoryPipeline:
                 metrics={"target_format": _descriptor_details(descriptor), "policy": policy.to_dict()},
             )
         else:
-            representability = preflight_conversion(document, adapter, policy)
+            representability = preflight_conversion(document, adapter, policy, adapter_options=adapter_options)
             preflight = StageReport(
                 StageKind.CONVERSION_PREFLIGHT,
                 label=representability.label,
@@ -507,7 +523,7 @@ class InventoryPipeline:
                 metrics=representability.metrics,
             )
         if preflight.has_errors or adapter is None:
-            return None, adapter, (preflight,)
+            return None, adapter, tuple([*stages, preflight])
 
         source_format = document.context.format
         target_profile = _target_format_profile(source_format, descriptor)
@@ -538,7 +554,7 @@ class InventoryPipeline:
                     ),
                 ),
             )
-            return None, adapter, (preflight, conversion)
+            return None, adapter, tuple([*stages, preflight, conversion])
 
         conversion = StageReport(
             StageKind.FORMAT_CONVERSION,
@@ -546,8 +562,11 @@ class InventoryPipeline:
             changes=changes,
             metrics={"background_unchanged": converted.context.background == document.context.background},
         )
-        stages = [preflight, conversion]
-        if policy.validate_target:
+        stages.extend((preflight, conversion))
+        # ecoSpold1 target validation requires the same external metadata profile
+        # already consumed by its preflight renderer. Other adapters validate
+        # directly from the converted document.
+        if policy.validate_target and descriptor.format_id != "ecospold1":
             target_validation = validate_adapter_format(converted, adapter)
             target_validation = _apply_conversion_target_policy(target_validation, policy.on_invalid_target)
             stages.append(target_validation)

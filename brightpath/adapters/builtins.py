@@ -14,6 +14,7 @@ from brightpath.core.policies import ConversionPolicy
 from brightpath.core.reports import StageReport
 from brightpath.formats.brightway_delimited import load_brightway_delimited, write_brightway_delimited
 from brightpath.formats.brightway_excel import load_brightway_excel, write_brightway_excel
+from brightpath.formats.ecospold1 import ECOSPOLD1_NAMESPACE, load_ecospold1, write_ecospold1
 from brightpath.formats.openlca_jsonld import load_openlca_jsonld, write_openlca_jsonld
 from brightpath.formats.simapro_csv import (
     SimaProRenderResult,
@@ -25,9 +26,11 @@ from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFor
 from .base import AdapterCapabilities, ArtifactKind, DetectionCandidate, FormatDescriptor
 from .preflight import (
     preflight_brightway_conversion,
+    preflight_ecospold1_conversion,
     preflight_openlca_jsonld_conversion,
     preflight_simapro_conversion,
     validate_brightway_format,
+    validate_ecospold1_format,
     validate_openlca_jsonld_format,
     validate_simapro_format,
 )
@@ -62,6 +65,14 @@ _OPENLCA_JSONLD_CAPABILITIES = AdapterCapabilities(
     detection_artifact_kinds={ArtifactKind.FILE},
     can_validate_format=True,
     can_preflight_conversion=True,
+)
+_ECOSPOLD1_CAPABILITIES = AdapterCapabilities(
+    read_artifact_kinds={ArtifactKind.FILE},
+    write_artifact_kinds={ArtifactKind.FILE},
+    detection_artifact_kinds={ArtifactKind.FILE},
+    can_validate_format=True,
+    can_preflight_conversion=True,
+    compatible_format_versions={"1"},
 )
 
 _MAX_ZIP_ENTRIES = 20_000
@@ -322,6 +333,86 @@ class BrightwayExcelAdapter:
         """Report target representability using Brightway writer rules."""
 
         return preflight_brightway_conversion(document, self.descriptor, policy)
+
+
+@dataclass(frozen=True)
+class EcoSpold1Adapter:
+    """Read, detect, validate, and write single-output ecoSpold1 process XML."""
+
+    descriptor: FormatDescriptor = field(default_factory=lambda: FormatDescriptor(InventoryFormat.ECOSPOLD1.value))
+    capabilities: AdapterCapabilities = _ECOSPOLD1_CAPABILITIES
+
+    def detect(
+        self,
+        artifact: object,
+        *,
+        artifact_kind: ArtifactKind,
+    ) -> DetectionCandidate | None:
+        """Detect the ecoSpold1 root namespace from bounded XML content."""
+
+        if ArtifactKind(artifact_kind) is not ArtifactKind.FILE:
+            return None
+        path = _file_path(artifact)
+        if path is None:
+            return None
+        text = _decoded_text_prefix(path)
+        if not text or "\x00" in text:
+            return None
+        prefix = text[:64_000]
+        if ECOSPOLD1_NAMESPACE not in prefix or "ecoSpold" not in prefix:
+            return None
+        return DetectionCandidate(
+            self.descriptor,
+            0.99,
+            ("ecoSpold1 root namespace and ecoSpold element found.",),
+        )
+
+    def read(
+        self,
+        artifact: object,
+        *,
+        background_profile: BackgroundProfile | None = None,
+        biosphere_profile: BiosphereProfile | None = None,
+        context: InventoryContext | None = None,
+        database_name: str | None = None,
+    ) -> InventoryDocument:
+        """Load ecoSpold1 XML with an explicit background context."""
+
+        return load_ecospold1(
+            artifact,  # type: ignore[arg-type]
+            background_profile=background_profile,
+            biosphere_profile=biosphere_profile,
+            context=context,
+            database_name=database_name,
+        )
+
+    def write(self, document: object, artifact: object, **kwargs: Any) -> Path:
+        """Serialize a single-output inventory to XSD-valid ecoSpold1 XML."""
+
+        return write_ecospold1(document, artifact, **kwargs)  # type: ignore[arg-type]
+
+    def validate_format(self, document: InventoryDocument) -> StageReport:
+        """Validate the supported single-output source subset."""
+
+        return validate_ecospold1_format(document, self.descriptor)
+
+    def preflight_conversion(
+        self,
+        document: InventoryDocument,
+        *,
+        policy: ConversionPolicy,
+        metadata_profile: object | None = None,
+        generated_at: object | None = None,
+    ) -> StageReport:
+        """Resolve metadata and validate target representability."""
+
+        return preflight_ecospold1_conversion(
+            document,
+            self.descriptor,
+            policy,
+            metadata_profile=metadata_profile,
+            generated_at=generated_at,
+        )
 
 
 @dataclass(frozen=True)
@@ -599,6 +690,7 @@ def default_adapter_registry() -> AdapterRegistry:
             BrightwayExcelAdapter(),
             BrightwayDelimitedAdapter(FormatDescriptor(InventoryFormat.BRIGHTWAY_CSV.value), ","),
             BrightwayDelimitedAdapter(FormatDescriptor(InventoryFormat.BRIGHTWAY_TSV.value), "\t"),
+            EcoSpold1Adapter(),
             OpenLCAJSONLDAdapter(),
             SimaProCSVAdapter(),
         )

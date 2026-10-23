@@ -8,11 +8,13 @@ def test_format_capabilities_are_derived_from_production_adapters():
         "brightway_excel",
         "brightway_csv",
         "brightway_tsv",
+        "ecospold1",
         "openlca_jsonld",
         "simapro_csv",
     }
     assert capabilities["brightway_excel"].read == ("file",)
     assert capabilities["openlca_jsonld"].write == ("file",)
+    assert capabilities["ecospold1"].write == ("file",)
     assert capabilities["simapro_csv"].write == ("file",)
     assert "openlca_excel" not in capabilities
     assert "ecospold2" not in capabilities

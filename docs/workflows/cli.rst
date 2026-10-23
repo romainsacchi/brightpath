@@ -100,6 +100,24 @@ Conversion preflight owns representability, loss, and ambiguity policy. The
 post-conversion target check owns intrinsic grammar only and cannot override a
 preflight decision.
 
+ecoSpold1 exports accept a structured metadata profile. The profile participates
+in dry-run preflight and writing; prose comments are not parsed:
+
+.. code-block:: console
+
+   brightpath convert-format foreground.xlsx foreground.xml \
+     --source-format brightway_excel \
+     --source-technosphere-family ecoinvent \
+     --source-technosphere-version 3.10 \
+     --source-technosphere-system-model cutoff \
+     --source-biosphere-family ecoinvent \
+     --source-biosphere-version 3.10 \
+     --target-format ecospold1 \
+     --ecospold1-metadata metadata.yaml \
+     --dry-run
+
+See :doc:`ecospold1` for the metadata structure and supported subset.
+
 .. code-block:: console
 
    brightpath convert-format foreground.xlsx foreground.csv \

@@ -217,6 +217,9 @@ catalog provider; it is ``True`` for the built-in SimaPro adapter.
 .. autoclass:: brightpath.adapters.BrightwayDelimitedAdapter
    :members:
 
+.. autoclass:: brightpath.adapters.EcoSpold1Adapter
+   :members:
+
 .. autoclass:: brightpath.adapters.SimaProCSVAdapter
    :members:
 
@@ -232,9 +235,28 @@ catalog provider; it is ``True`` for the built-in SimaPro adapter.
 
 .. autofunction:: brightpath.adapters.preflight.validate_simapro_format
 
+.. autofunction:: brightpath.adapters.preflight.validate_ecospold1_format
+
 .. autofunction:: brightpath.adapters.preflight.preflight_brightway_conversion
 
 .. autofunction:: brightpath.adapters.preflight.preflight_simapro_conversion
+
+.. autofunction:: brightpath.adapters.preflight.preflight_ecospold1_conversion
+
+ecoSpold1 metadata
+------------------
+
+.. autoclass:: brightpath.formats.ecospold1_metadata.EcoSpold1ExportProfile
+   :members:
+
+.. autoclass:: brightpath.formats.ecospold1_metadata.EcoSpold1DatasetMetadata
+   :members:
+
+.. autofunction:: brightpath.formats.ecospold1.load_ecospold1
+
+.. autofunction:: brightpath.formats.ecospold1.write_ecospold1
+
+.. autofunction:: brightpath.formats.ecospold1.validate_ecospold1_xml
 
 Catalog providers
 -----------------

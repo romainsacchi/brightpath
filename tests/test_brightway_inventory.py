@@ -49,6 +49,7 @@ def test_v1_public_api_removes_converter_exports():
     assert not hasattr(brightpath, "SimaproConverter")
     assert InventoryFormat.OPENLCA_JSONLD.value == "openlca_jsonld"
     assert InventoryFormat.OPENLCA_EXCEL.value == "openlca_excel"
+    assert InventoryFormat.ECOSPOLD1.value == "ecospold1"
     assert InventoryFormat.ECOSPOLD2.value == "ecospold2"
 
 

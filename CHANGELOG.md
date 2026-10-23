@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- Add XSD-validated ecoSpold1 XML detection, reading, and writing for process
+  datasets with one reference output and no allocation records.
+- Preserve ecoSpold1 provenance as structured dataset metadata and require an
+  explicit YAML/JSON metadata profile when other formats do not provide the
+  mandatory source, person, classification, and time-period fields. Free-form
+  descriptions are not interpreted.
+- Add adapter options shared by conversion preflight and writing so dry runs
+  validate the same ecoSpold1 metadata used for serialization.
+
 ## 1.0.0a8 - 2026-10-22
 
 - Include exchange `database` labels in Brightway Excel, CSV and TSV exports

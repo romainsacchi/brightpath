@@ -6,7 +6,7 @@
 **Convert and update foreground life-cycle inventories without losing track of what changed.**
 
 BrightPath helps LCA practitioners move foreground inventories between Brightway,
-SimaPro, and openLCA exchange formats. It can also update links from one ecoinvent
+SimaPro, openLCA, and ecoSpold1 exchange formats. It can also update links from one ecoinvent
 release to another. Every operation can be checked before the result is used.
 
 > **Project status — work in progress**
@@ -39,6 +39,7 @@ parameter scopes, formulas, UVEK foreground identity and linked openLCA imports.
 | Move a Brightway inventory to SimaPro | Read Brightway Excel and write SimaPro CSV |
 | Move a SimaPro inventory to Brightway | Read SimaPro CSV and write Brightway Excel |
 | Exchange foreground processes with openLCA | Read and write process-only JSON-LD ZIP packages |
+| Exchange legacy single-output processes | Read and write XSD-valid ecoSpold1 XML |
 | Check a file before importing it | Report structural, format, and background-link problems |
 | Update an inventory to a newer ecoinvent release | Migrate technosphere and biosphere links while keeping the file format |
 
@@ -66,8 +67,8 @@ BrightPath requires Python 3.12.
 python -m pip install brightpath
 ```
 
-Installation includes the mandatory `olca-schema` dependency used for openLCA
-JSON-LD import and export. No optional extra is needed.
+Installation includes mandatory `olca-schema` and `pyecospold` dependencies for
+openLCA JSON-LD exchange and ecoSpold1 schema validation. No optional extra is needed.
 
 Check what your installed version supports:
 
@@ -290,6 +291,7 @@ for issue in uvek_inventory.last_migration_report.issues:
 | Brightway block CSV/TSV | ✓ | ✓ | Content is inspected because CSV extensions are ambiguous |
 | SimaPro CSV | ✓ | ✓ | Semicolon-delimited, Latin-1 exchange files |
 | openLCA JSON-LD ZIP | ✓ | ✓ | Process-only exchange packages |
+| ecoSpold1 XML | ✓ | ✓ | Single-output process datasets; structured provenance is required |
 
 OpenLCA Excel and ecoSpold2 are not currently supported.
 
@@ -312,6 +314,7 @@ authoritative list for your installation.
 - [Brightway workflows](docs/workflows/brightway.rst) — Excel, CSV, TSV, and Python usage
 - [SimaPro workflows](docs/workflows/simapro.rst) — reading, validation, categories, and writing
 - [Conversion guide](docs/workflows/conversion.rst) — format changes and information-loss policies
+- [ecoSpold1 workflow](docs/workflows/ecospold1.rst) — single-output scope and metadata profiles
 - [Migration guide](docs/workflows/migration.rst) — background updates and review policies
 - [Shared migration schema](docs/migration-resource-schema.rst) — rule structure, optional confidence, evidence and recipes
 - [Validation guide](docs/workflows/validation.rst) — understand and resolve reported issues

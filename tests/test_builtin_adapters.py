@@ -11,6 +11,7 @@ from brightpath.adapters.base import ArtifactKind, FormatAdapter, FormatDescript
 from brightpath.adapters.builtins import (
     BrightwayDelimitedAdapter,
     BrightwayExcelAdapter,
+    EcoSpold1Adapter,
     OpenLCAJSONLDAdapter,
     SimaProCSVAdapter,
     default_adapter_registry,
@@ -33,28 +34,50 @@ def _context(format_id: str) -> InventoryContext:
 
 
 def _document(format_id: str) -> InventoryDocument:
-    return InventoryDocument(
-        data=[
+    dataset = {
+        "name": "test process",
+        "reference product": "test product",
+        "location": "GLO",
+        "unit": "kilogram",
+        "comment": "Documented foreground dataset.",
+        "exchanges": [
             {
+                "type": "production",
                 "name": "test process",
                 "reference product": "test product",
+                "product": "test product",
                 "location": "GLO",
                 "unit": "kilogram",
-                "comment": "Documented foreground dataset.",
-                "exchanges": [
-                    {
-                        "type": "production",
-                        "name": "test process",
-                        "reference product": "test product",
-                        "product": "test product",
-                        "location": "GLO",
-                        "unit": "kilogram",
-                        "amount": 1.0,
-                        "simapro category": "Materials/Test",
-                    }
-                ],
+                "amount": 1.0,
+                "simapro category": "Materials/Test",
             }
         ],
+    }
+    if format_id == "ecospold1":
+        dataset["ecospold1"] = {
+            "classification": {"category": "Test", "subcategory": "Processes"},
+            "time_period": {"start_date": "2020-01-01", "end_date": "2020-12-31"},
+            "source": {
+                "first_author": "Smith J.",
+                "year": 2020,
+                "title": "Synthetic test inventory",
+                "place_of_publication": "Zurich",
+            },
+            "data_entry_person": {
+                "name": "Jane Smith",
+                "address": "Example Institute",
+                "company_code": "EXAMPLE",
+                "country_code": "CH",
+            },
+            "data_generator_person": {
+                "name": "Jane Smith",
+                "address": "Example Institute",
+                "company_code": "EXAMPLE",
+                "country_code": "CH",
+            },
+        }
+    return InventoryDocument(
+        data=[dataset],
         context=_context(format_id),
         database_name="adapter-test",
     )
@@ -64,6 +87,7 @@ def test_builtin_adapters_are_immutable_format_adapters():
     adapter = BrightwayExcelAdapter()
 
     assert isinstance(adapter, FormatAdapter)
+    assert isinstance(EcoSpold1Adapter(), FormatAdapter)
     assert isinstance(OpenLCAJSONLDAdapter(), FormatAdapter)
     assert isinstance(SimaProCSVAdapter(), FormatAdapter)
     with pytest.raises(FrozenInstanceError):
@@ -75,6 +99,7 @@ def test_builtin_adapters_are_immutable_format_adapters():
     [
         (BrightwayExcelAdapter(), "brightway_excel"),
         (BrightwayDelimitedAdapter(FormatDescriptor("brightway_csv"), ","), "brightway_csv"),
+        (EcoSpold1Adapter(), "ecospold1"),
         (OpenLCAJSONLDAdapter(), "openlca_jsonld"),
         (SimaProCSVAdapter(), "simapro_csv"),
     ],
@@ -82,6 +107,8 @@ def test_builtin_adapters_are_immutable_format_adapters():
 def test_builtin_adapters_expose_validation_and_conversion_preflight_hooks(adapter, format_id):
     if format_id == "openlca_jsonld":
         pytest.importorskip("olca_schema")
+    if format_id == "ecospold1":
+        pytest.importorskip("pyecospold")
     document = _document(format_id)
 
     validation = adapter.validate_format(document)
@@ -237,6 +264,7 @@ def test_default_registry_advertises_and_detects_only_implemented_file_adapters(
         FormatDescriptor("brightway_excel"),
         FormatDescriptor("brightway_csv"),
         FormatDescriptor("brightway_tsv"),
+        FormatDescriptor("ecospold1"),
         FormatDescriptor("openlca_jsonld"),
         FormatDescriptor("simapro_csv"),
     )

@@ -10,8 +10,9 @@ BrightPath supports Python 3.12.
 
    python -m pip install brightpath
 
-Installation includes the mandatory ``olca-schema`` dependency used for openLCA
-JSON-LD import and export. No optional extra is needed.
+Installation includes mandatory ``olca-schema`` and ``pyecospold`` dependencies
+for openLCA JSON-LD exchange and ecoSpold1 schema validation. No optional extra
+is needed.
 
 For an editable development installation:
 
