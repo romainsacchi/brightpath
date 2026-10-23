@@ -407,6 +407,12 @@ Upload analysis
 .. autodata:: brightpath.analysis.SOURCE_FORMAT_SIMAPRO_CSV
    :annotation: = "simapro_csv"
 
+.. autodata:: brightpath.analysis.SOURCE_FORMAT_ECOSPOLD1
+   :annotation: = "ecospold1"
+
+.. autodata:: brightpath.analysis.SOURCE_FORMAT_ECOSPOLD2
+   :annotation: = "ecospold2"
+
 Facade compatibility models
 ---------------------------
 

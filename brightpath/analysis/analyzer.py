@@ -34,6 +34,8 @@ from brightpath.core import (
     InventoryContext,
 )
 from brightpath.exceptions import InventoryValidationError
+from brightpath.formats.ecospold1 import load_ecospold1
+from brightpath.formats.ecospold2 import load_ecospold2
 from brightpath.formats.openlca_jsonld import load_openlca_jsonld_package
 from brightpath.formats.simapro_csv import format_biosphere_exchange
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
@@ -49,9 +51,12 @@ SOURCE_FORMAT_BRIGHTWAY_CSV = "brightway_csv"
 SOURCE_FORMAT_BRIGHTWAY_TSV = "brightway_tsv"
 SOURCE_FORMAT_OPENLCA_JSONLD = "openlca_jsonld"
 SOURCE_FORMAT_SIMAPRO_CSV = "simapro_csv"
+SOURCE_FORMAT_ECOSPOLD1 = "ecospold1"
+SOURCE_FORMAT_ECOSPOLD2 = "ecospold2"
 SOFTWARE_BRIGHTWAY = "brightway"
 SOFTWARE_OPENLCA = "openlca"
 SOFTWARE_SIMAPRO = "simapro"
+SOFTWARE_ECOSPOLD = "ecospold"
 
 _ACTIVITY_PATH_PATTERN = re.compile(
     r"^(?P<path>activity\[(?P<index>\d+)\](?:\.exchanges\[(?P<exchange_index>\d+)\])?):\s*(?P<message>.+)$"
@@ -182,7 +187,8 @@ def analyze_inventory(
         can infer missing fields. SimaPro analysis uses a complete profile as
         the exact technosphere axis while inferring only the biosphere profile.
     :param source_context: Exact format, technosphere, and biosphere context
-        used directly when parsing SimaPro CSV and linked openLCA JSON-LD.
+        used directly when parsing SimaPro CSV, linked openLCA JSON-LD, and
+        ecoSpold1/2 inventories.
     :param catalog_provider: Exact catalogs used for SimaPro parsing and link
         validation. The application provider is used when omitted.
     :param additional_foreground_targets: External foreground identities that
@@ -249,6 +255,30 @@ def analyze_inventory(
             source_profile=profile,
             source_context=source_context,
             legacy_source_profile=source_profile,
+            additional_foreground_targets=normalized_foreground_targets,
+        )
+    if resolved_format == SOURCE_FORMAT_ECOSPOLD1:
+        return _analyze_ecospold_inventory(
+            path=resolved_path,
+            source_profile=profile,
+            source_context=source_context,
+            legacy_source_profile=source_profile,
+            detected_format=SOURCE_FORMAT_ECOSPOLD1,
+            loader=load_ecospold1,
+            parse_error_code="ecospold1_parse_failed",
+            catalog_provider=catalog_provider,
+            additional_foreground_targets=normalized_foreground_targets,
+        )
+    if resolved_format == SOURCE_FORMAT_ECOSPOLD2:
+        return _analyze_ecospold_inventory(
+            path=resolved_path,
+            source_profile=profile,
+            source_context=source_context,
+            legacy_source_profile=source_profile,
+            detected_format=SOURCE_FORMAT_ECOSPOLD2,
+            loader=load_ecospold2,
+            parse_error_code="ecospold2_parse_failed",
+            catalog_provider=catalog_provider,
             additional_foreground_targets=normalized_foreground_targets,
         )
     if resolved_format == SOURCE_FORMAT_SIMAPRO_CSV:
@@ -410,6 +440,131 @@ def _analyze_openlca_jsonld(
             file_issues=result.file_issues,
         )
         result.file_issues.extend(background_file_issues)
+    return result
+
+
+def _analyze_ecospold_inventory(
+    *,
+    path: Path,
+    source_profile: BackgroundProfile,
+    source_context: InventoryContext | None,
+    legacy_source_profile: BackgroundProfile | None,
+    detected_format: str,
+    loader,
+    parse_error_code: str,
+    catalog_provider: CatalogProvider | None,
+    additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+) -> AnalysisResult:
+    """Analyze an ecoSpold document through its registered public reader."""
+
+    result = AnalysisResult(
+        detected_software=SOFTWARE_ECOSPOLD,
+        detected_format=detected_format,
+        source_profile=source_profile,
+        source_context=source_context,
+    )
+    warnings: list[Issue] = []
+    inventory_data: list[dict] = []
+
+    if source_context is not None:
+        conflict = _simapro_profile_conflict(legacy_source_profile, source_profile)
+        if conflict:
+            result.file_issues.append(
+                Issue(
+                    severity="error",
+                    code="ecospold_source_profile_conflict",
+                    message=conflict,
+                    suggested_fix=(
+                        "Remove source_profile or make its specified fields match " "source_context.technosphere."
+                    ),
+                )
+            )
+            return result
+
+    with _capture_warnings() as collector:
+        try:
+            if source_context is not None:
+                document = loader(path, context=source_context)
+            else:
+                document = loader(path, background_profile=source_profile)
+            inventory_data = document.data
+            result.database_parameters = deepcopy(document.database_parameters or [])
+            result.project_parameters = deepcopy(document.project_parameters or [])
+        except Exception as exc:
+            result.file_issues.extend(_exception_to_file_issues(exc, default_code=parse_error_code))
+
+    warnings.extend(_warning_issues(collector.messages))
+    if source_context is None:
+        result.source_profile, profile_issues = _resolve_background_profile(
+            inventory_data,
+            source_profile,
+        )
+        result.file_issues.extend(profile_issues)
+
+    inventory_data = _normalize_inventory_for_validation(
+        inventory_data,
+        result.source_profile,
+        additional_foreground_targets=additional_foreground_targets,
+    )
+    result.inventory_data = deepcopy(inventory_data)
+    result.candidates = _build_candidates(inventory_data)
+
+    if inventory_data:
+        validation_errors, validation_warnings = inspect_brightway_inventory(
+            inventory_data,
+            require_simapro_category=False,
+        )
+        if validation_errors:
+            _attach_activity_issues(
+                candidates=result.candidates,
+                candidate_issues=_issues_from_brightway_validation_messages(
+                    validation_errors,
+                    severity="error",
+                    code="inventory_validation_error",
+                ),
+                file_issues=result.file_issues,
+            )
+        if validation_warnings:
+            _attach_activity_issues(
+                candidates=result.candidates,
+                candidate_issues=_issues_from_brightway_validation_messages(
+                    validation_warnings,
+                    severity="warning",
+                    code="inventory_validation_warning",
+                ),
+                file_issues=result.file_issues,
+            )
+        if source_context is not None:
+            provider, provider_issue = _resolve_simapro_catalog_provider(catalog_provider)
+            if provider_issue is not None:
+                result.file_issues.append(provider_issue)
+            elif provider is not None:
+                background_issues, background_file_issues = _validate_exact_analysis_background_links(
+                    inventory_data,
+                    source_context,
+                    provider,
+                    additional_foreground_targets=additional_foreground_targets,
+                )
+                _attach_activity_issues(
+                    candidates=result.candidates,
+                    candidate_issues=background_issues,
+                    file_issues=result.file_issues,
+                )
+                result.file_issues.extend(background_file_issues)
+        else:
+            background_issues, background_file_issues = _validate_background_links(
+                inventory_data,
+                result.source_profile,
+                additional_foreground_targets=additional_foreground_targets,
+            )
+            _attach_activity_issues(
+                candidates=result.candidates,
+                candidate_issues=background_issues,
+                file_issues=result.file_issues,
+            )
+            result.file_issues.extend(background_file_issues)
+
+    result.file_issues.extend(warnings)
     return result
 
 

@@ -8,6 +8,7 @@ from lxml import etree
 
 from brightpath import cli
 from brightpath.adapters import ArtifactKind, EcoSpold1Adapter, default_adapter_registry
+from brightpath.analysis import analyze_inventory, infer_source_format
 from brightpath.background import InMemoryCatalogProvider
 from brightpath.core import (
     BackgroundContext,
@@ -121,6 +122,27 @@ def _profile(**default_overrides) -> dict:
     }
     defaults.update(default_overrides)
     return {"schema_version": 1, "defaults": defaults}
+
+
+def test_public_analyzer_dispatches_ecospold1(tmp_path):
+    dataset = _dataset()
+    dataset["exchanges"] = dataset["exchanges"][:1]
+    path = write_ecospold1(
+        _document(dataset),
+        tmp_path / "inventory.xml",
+        metadata_profile=_profile(),
+        generated_at="2024-01-01T00:00:00+00:00",
+    )
+
+    assert infer_source_format(path) == "ecospold1"
+    result = analyze_inventory(path=path, source_context=_context("ecospold1"))
+
+    assert result.detected_software == "ecospold"
+    assert result.detected_format == "ecospold1"
+    assert len(result.candidates) == 1
+    assert result.candidates[0].name == dataset["name"]
+    issues = [*result.file_issues, *(issue for candidate in result.candidates for issue in candidate.issues)]
+    assert not [issue for issue in issues if issue.severity == "error"]
 
 
 def test_render_is_xsd_valid_and_uses_correct_exchange_groups():

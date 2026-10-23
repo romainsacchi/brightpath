@@ -10,7 +10,9 @@ This API retains the v1 ``BackgroundProfile`` result projection for upload
 compatibility. Brightway analysis may infer a missing or partial legacy source
 profile. SimaPro accepts either an exact ``InventoryContext`` or a complete
 technosphere ``BackgroundProfile`` from which upload analysis can infer only
-the biosphere profile. Use :class:`~brightpath.InventoryPipeline` when an
+the biosphere profile. Linked openLCA JSON-LD and ecoSpold1/2 analysis accept an
+exact ``InventoryContext``; ecoSpold analysis is restricted to the documented
+single-output dataset scope. Use :class:`~brightpath.InventoryPipeline` when an
 application also needs immutable stage reports, format conversion, or migration.
 
 Analyze a file

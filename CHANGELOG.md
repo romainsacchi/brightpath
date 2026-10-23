@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 1.0.0a9 - 2026-10-23
 
 - Add XSD-validated ecoSpold1 XML detection, reading, and writing for process
   datasets with one reference output and no allocation records.
@@ -22,8 +22,13 @@ All notable changes to this project will be documented in this file.
 - Include complete activity, intermediate-flow, and elementary-flow UUID
   coverage for every packaged ecoinvent profile from 3.6 through 3.12,
   including the 3.9.1 and 3.10.1 cut-off patch profiles.
+- Refresh the migration-audit resource digest for the expanded reference
+  catalogs without changing the established route-result baselines.
 - Verify generated ecoSpold2 packages with ``bw2io`` extraction, strategies,
   and database writing in an isolated Brightway project.
+- Route content-detected ecoSpold1 and ecoSpold2 uploads through the public
+  analysis API, returning canonical candidate snapshots, structured format and
+  background-link issues, preserved metadata, and the exact source context.
 
 ## 1.0.0a8 - 2026-10-22
 
