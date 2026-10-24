@@ -10,6 +10,7 @@ def test_format_capabilities_are_derived_from_production_adapters():
         "brightway_tsv",
         "ecospold1",
         "ecospold2",
+        "ilcd",
         "openlca_jsonld",
         "simapro_csv",
     }

@@ -8,7 +8,8 @@ Treat the following concerns as independent axes:
 
 - **File format:** Brightway Excel, Brightway CSV/TSV, and SimaPro CSV have registered read/write
   adapters. openLCA JSON-LD ZIP packages are supported for process-only exchange. ecoSpold1 XML and
-  ecoSpold2 files/packages are supported for single-output process datasets. OpenLCA Excel is reserved
+  ecoSpold2 files/packages are supported for single-output process datasets. ILCD 1.1 ZIP/directory
+  packages support single-reference processes with explicit core/openLCA dialects. OpenLCA Excel is reserved
   but is not a supported adapter.
 - **Background family:** `ecoinvent` or `uvek`.
 - **Background version:** for example ecoinvent `3.6` through `3.12`, or UVEK `2025`.
@@ -36,7 +37,7 @@ format after an ecoinvent migration must be supported.
 - `background/` owns independent catalog providers, technosphere/biosphere validation, migration
   planning, and transactional execution.
 - `formats/` contains syntax-only Brightway Excel/CSV/TSV, openLCA JSON-LD ZIP, ecoSpold1 XML,
-  ecoSpold2 package, and SimaPro CSV readers and writers.
+  ecoSpold2 package, ILCD process package, and SimaPro CSV readers and writers.
 - `profiles/` contains background-family naming behavior used by format adapters.
 - `migrations/` retains low-level migration rule application, while `data/migrations/` contains
   attributed, integrity-manifested Premise resources. New orchestration belongs in `background/`.

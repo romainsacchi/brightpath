@@ -9,6 +9,14 @@ from .ecospold2 import (
     validate_ecospold2_xml,
     write_ecospold2,
 )
+from .ilcd import (
+    load_ilcd,
+    load_ilcd_package,
+    render_ilcd_package,
+    validate_ilcd_package,
+    validate_ilcd_xml,
+    write_ilcd,
+)
 from .openlca_jsonld import load_openlca_jsonld, load_openlca_jsonld_package, write_openlca_jsonld
 from .simapro_csv import load_simapro_csv, render_simapro_rows, write_simapro_csv
 
@@ -17,6 +25,12 @@ __all__ = (
     "load_brightway_delimited",
     "load_ecospold1",
     "load_ecospold2",
+    "load_ilcd",
+    "load_ilcd_package",
+    "render_ilcd_package",
+    "validate_ilcd_package",
+    "validate_ilcd_xml",
+    "write_ilcd",
     "load_openlca_jsonld",
     "load_openlca_jsonld_package",
     "load_simapro_csv",

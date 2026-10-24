@@ -36,6 +36,7 @@ from brightpath.core import (
 from brightpath.exceptions import InventoryValidationError
 from brightpath.formats.ecospold1 import load_ecospold1
 from brightpath.formats.ecospold2 import load_ecospold2
+from brightpath.formats.ilcd import load_ilcd
 from brightpath.formats.openlca_jsonld import load_openlca_jsonld_package
 from brightpath.formats.simapro_csv import format_biosphere_exchange
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
@@ -53,6 +54,7 @@ SOURCE_FORMAT_OPENLCA_JSONLD = "openlca_jsonld"
 SOURCE_FORMAT_SIMAPRO_CSV = "simapro_csv"
 SOURCE_FORMAT_ECOSPOLD1 = "ecospold1"
 SOURCE_FORMAT_ECOSPOLD2 = "ecospold2"
+SOURCE_FORMAT_ILCD = "ilcd"
 SOFTWARE_BRIGHTWAY = "brightway"
 SOFTWARE_OPENLCA = "openlca"
 SOFTWARE_SIMAPRO = "simapro"
@@ -177,6 +179,7 @@ def analyze_inventory(
     source_context: InventoryContext | None = None,
     catalog_provider: CatalogProvider | None = None,
     additional_foreground_targets: Optional[Iterable[tuple[str, str, str, str]]] = None,
+    ilcd_reference_catalog=None,
 ) -> AnalysisResult:
     """Parse an inventory upload and return structured intake information.
 
@@ -249,6 +252,31 @@ def analyze_inventory(
             detected_format=SOURCE_FORMAT_BRIGHTWAY_TSV,
             additional_foreground_targets=normalized_foreground_targets,
         )
+    if resolved_format == SOURCE_FORMAT_ILCD:
+        result = _analyze_ecospold_inventory(
+            path=resolved_path,
+            source_profile=profile,
+            source_context=source_context,
+            legacy_source_profile=source_profile,
+            detected_format=SOURCE_FORMAT_ILCD,
+            loader=load_ilcd,
+            parse_error_code="ilcd.parse_failed",
+            catalog_provider=catalog_provider,
+            additional_foreground_targets=normalized_foreground_targets,
+            adapter_kwargs={"reference_catalog": ilcd_reference_catalog},
+        )
+        result.detected_software = "unknown"
+        for index, dataset in enumerate(result.inventory_data):
+            for finding in dataset.get("ilcd", {}).get("issues", []):
+                result.candidates[index].issues.append(
+                    Issue(
+                        finding.get("severity", "error"),
+                        finding["code"],
+                        finding["message"],
+                        path=f"activity[{index}].{finding.get('path', '')}",
+                    )
+                )
+        return result
     if resolved_format == SOURCE_FORMAT_OPENLCA_JSONLD:
         return _analyze_openlca_jsonld(
             path=resolved_path,
@@ -301,6 +329,7 @@ def validate_inventory(
     source_context: InventoryContext | None = None,
     catalog_provider: CatalogProvider | None = None,
     additional_foreground_targets: Optional[Iterable[tuple[str, str, str, str]]] = None,
+    ilcd_reference_catalog=None,
 ) -> AnalysisResult:
     """Analyze an upload and raise if any returned issue is an error.
 
@@ -316,6 +345,7 @@ def validate_inventory(
         source_context=source_context,
         catalog_provider=catalog_provider,
         additional_foreground_targets=additional_foreground_targets,
+        ilcd_reference_catalog=ilcd_reference_catalog,
     )
     if result.has_errors:
         raise InventoryValidationError(
@@ -454,6 +484,7 @@ def _analyze_ecospold_inventory(
     parse_error_code: str,
     catalog_provider: CatalogProvider | None,
     additional_foreground_targets: frozenset[tuple[str, str, str, str]],
+    adapter_kwargs: dict | None = None,
 ) -> AnalysisResult:
     """Analyze an ecoSpold document through its registered public reader."""
 
@@ -484,9 +515,9 @@ def _analyze_ecospold_inventory(
     with _capture_warnings() as collector:
         try:
             if source_context is not None:
-                document = loader(path, context=source_context)
+                document = loader(path, context=source_context, **(adapter_kwargs or {}))
             else:
-                document = loader(path, background_profile=source_profile)
+                document = loader(path, background_profile=source_profile, **(adapter_kwargs or {}))
             inventory_data = document.data
             result.database_parameters = deepcopy(document.database_parameters or [])
             result.project_parameters = deepcopy(document.project_parameters or [])
@@ -1306,7 +1337,7 @@ def _exception_to_file_issues(
     return [
         Issue(
             severity="error",
-            code=default_code,
+            code=getattr(exc, "code", default_code),
             message=line,
         )
         for line in _exception_lines(exc)

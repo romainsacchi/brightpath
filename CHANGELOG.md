@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.0a10 - Unreleased
+
+- Add ILCD 1.1 single-reference process import/export, local reference resolution,
+  pinned offline schemas, deterministic ZIPs and transactional publication.
+- Preserve per-process ILCD metadata and reference closure in JSON-compatible
+  snapshots. Add exact reference mappings and explicit openLCA supplier extensions.
+- Add process-scoped arithmetic, representable uncertainty, candidate analysis,
+  structured preflight errors and ILCD CLI configuration/dry runs.
+- Add independent openLCA import/export verification using synthetic processes.
+- Resolve ILCD openLCA background references automatically from exact ecoinvent
+  UUID catalogs and the verified UVEK build, with used-reference XML generation
+  and consistent quantity, formula, and uncertainty conversion.
+
 ## 1.0.0a9 - 2026-10-23
 
 - Add XSD-validated ecoSpold1 XML detection, reading, and writing for process

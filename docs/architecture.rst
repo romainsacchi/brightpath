@@ -124,7 +124,12 @@ adapters and require disambiguation.
 
 The built-in registry contains Brightway Excel, Brightway CSV, Brightway TSV,
 SimaPro CSV, openLCA JSON-LD, single-output ecoSpold1 XML, and single-output
-ecoSpold2 packages. ``InventoryFormat`` also reserves OpenLCA Excel, but enum
+ecoSpold2 packages, and ILCD 1.1 single-reference process packages.
+ILCD retains per-process XML/reference closures for independently stored CLIC
+snapshots and separates core from openLCA uncertainty conventions explicitly.
+Its openLCA export derives used references from exact background UUID catalogs;
+the pipeline injects its catalog provider for both preflight and writing.
+``InventoryFormat`` also reserves OpenLCA Excel, but enum
 membership does not confer capability; no adapter means a format is
 undiscoverable and unsupported.
 

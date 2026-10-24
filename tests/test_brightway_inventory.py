@@ -43,7 +43,7 @@ def profile(version="3.10"):
 
 
 def test_v1_public_api_removes_converter_exports():
-    assert brightpath.__version__ == "1.0.0a9"
+    assert brightpath.__version__ == "1.0.0a10"
     assert brightpath.BrightwayInventory is BrightwayInventory
     assert not hasattr(brightpath, "BrightwayConverter")
     assert not hasattr(brightpath, "SimaproConverter")
@@ -51,6 +51,7 @@ def test_v1_public_api_removes_converter_exports():
     assert InventoryFormat.OPENLCA_EXCEL.value == "openlca_excel"
     assert InventoryFormat.ECOSPOLD1.value == "ecospold1"
     assert InventoryFormat.ECOSPOLD2.value == "ecospold2"
+    assert InventoryFormat.ILCD.value == "ilcd"
 
 
 def test_background_profile_normalizes_aliases_but_preserves_exact_patch_versions():

@@ -282,6 +282,32 @@ ecoSpold2 metadata and references
 
 .. autofunction:: brightpath.formats.ecospold2.validate_ecospold2_package
 
+ILCD process packages
+---------------------
+
+.. autoclass:: brightpath.formats.ilcd.ILCDProcessPackage
+   :members:
+
+.. autoclass:: brightpath.formats.ilcd_metadata.ILCDExportProfile
+   :members:
+
+.. autoclass:: brightpath.formats.ilcd_references.ILCDReferenceCatalog
+   :members:
+
+.. autofunction:: brightpath.formats.ilcd_background.automatic_references
+
+.. autofunction:: brightpath.formats.ilcd.load_ilcd
+
+.. autofunction:: brightpath.formats.ilcd.load_ilcd_package
+
+.. autofunction:: brightpath.formats.ilcd.render_ilcd_package
+
+.. autofunction:: brightpath.formats.ilcd.write_ilcd
+
+.. autofunction:: brightpath.formats.ilcd.validate_ilcd_xml
+
+.. autofunction:: brightpath.formats.ilcd.validate_ilcd_package
+
 Catalog providers
 -----------------
 

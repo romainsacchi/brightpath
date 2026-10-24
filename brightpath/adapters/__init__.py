@@ -17,6 +17,7 @@ from .builtins import (
     SimaProCSVAdapter,
     default_adapter_registry,
 )
+from .ilcd import ILCDAdapter
 from .preflight import preflight_conversion, validate_adapter_format
 from .registry import AdapterRegistry, DetectionIssue, DetectionReport
 
@@ -28,6 +29,7 @@ __all__ = (
     "BrightwayExcelAdapter",
     "EcoSpold1Adapter",
     "EcoSpold2Adapter",
+    "ILCDAdapter",
     "DetectionCandidate",
     "DetectionIssue",
     "DetectionReport",

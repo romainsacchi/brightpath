@@ -12,3 +12,4 @@ cross-format and cross-background pipeline.
    0003-catalog-and-resource-governance
    0004-ecospold1-single-output
    0005-ecospold2-single-output
+   0006-ilcd-process-packages

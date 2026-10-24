@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from contextlib import redirect_stdout
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Iterable, Sequence
@@ -32,6 +33,8 @@ from brightpath.core.reports import (
 )
 from brightpath.formats.ecospold1_metadata import EcoSpold1ExportProfile
 from brightpath.formats.ecospold2_metadata import EcoSpold2ExportProfile, EcoSpold2ReferenceCatalog
+from brightpath.formats.ilcd_metadata import ILCDExportProfile
+from brightpath.formats.ilcd_references import ILCDReferenceCatalog
 
 EXIT_SUCCESS = 0
 EXIT_USAGE = 2
@@ -92,6 +95,14 @@ def build_parser() -> argparse.ArgumentParser:
         help="ecoSpold2 output shape; inferred from the destination when omitted.",
     )
     convert.add_argument("--dry-run", action="store_true", help="Run conversion preflight without writing.")
+    convert.add_argument("--ilcd-metadata", type=Path, help="Structured ILCD process metadata defaults and overrides.")
+    convert.add_argument(
+        "--ilcd-references", type=Path, help="Exact ILCD reference mapping and supporting XML resources."
+    )
+    convert.add_argument(
+        "--ilcd-dialect", choices=("core", "openlca"), help="ILCD dialect; openlca preserves selected suppliers."
+    )
+    convert.add_argument("--ilcd-package-mode", choices=("zip", "directory"), help="ILCD output package shape.")
     _add_source_context_options(convert)
     _add_common_options(convert)
 
@@ -153,6 +164,17 @@ def _add_common_options(parser: argparse.ArgumentParser) -> None:
 
 
 def _add_source_context_options(parser: argparse.ArgumentParser) -> None:
+    parser.add_argument(
+        "--source-ilcd-dialect",
+        choices=("core", "openlca"),
+        help="Explicit ILCD uncertainty convention for source XML.",
+    )
+    parser.add_argument(
+        "--source-ilcd-references", type=Path, help="Exact ILCD identities and reference XML used for import."
+    )
+    parser.add_argument(
+        "--source-ilcd-reference-directory", type=Path, help="Local ILCD dependencies for standalone process XML."
+    )
     parser.add_argument("--source-format", help="Explicit registered source format identifier.")
     parser.add_argument("--source-technosphere-family")
     parser.add_argument("--source-technosphere-version")
@@ -186,7 +208,7 @@ def _run_formats(arguments: argparse.Namespace) -> int:
 def _run_inspect(arguments: argparse.Namespace) -> int:
     hint = _source_hint(arguments)
     pipeline, _provider = _application_services()
-    read_result = pipeline.read(arguments.source, hint=hint, artifact_kind=_source_artifact_kind(arguments.source))
+    read_result = _read_source(pipeline, arguments, hint)
     reports = (("read", read_result.report),)
     report = _combine_reports(OperationKind.READ, reports, arguments)
     document = read_result.value
@@ -198,7 +220,7 @@ def _run_inspect(arguments: argparse.Namespace) -> int:
 def _run_validate(arguments: argparse.Namespace) -> int:
     hint = _source_hint(arguments)
     pipeline, _provider = _application_services()
-    read_result = pipeline.read(arguments.source, hint=hint, artifact_kind=_source_artifact_kind(arguments.source))
+    read_result = _read_source(pipeline, arguments, hint)
     if read_result.value is None or not read_result.succeeded:
         reports = (("read", read_result.report),)
         report = _combine_reports(OperationKind.VALIDATE, reports, arguments)
@@ -218,7 +240,7 @@ def _run_convert(arguments: argparse.Namespace) -> int:
     conversion_policy = _conversion_policy(arguments.policy)
     adapter_options = _conversion_adapter_options(arguments)
     pipeline, _provider = _application_services()
-    read_result = pipeline.read(arguments.source, hint=hint, artifact_kind=_source_artifact_kind(arguments.source))
+    read_result = _read_source(pipeline, arguments, hint)
     if read_result.value is None or not read_result.succeeded:
         reports = (("read", read_result.report),)
         report = _combine_reports(OperationKind.CONVERT, reports, arguments)
@@ -277,7 +299,7 @@ def _run_migrate(arguments: argparse.Namespace) -> int:
     target = _target_background(arguments)
     migration_policy = _migration_policy(arguments.policy)
     pipeline, provider = _application_services()
-    read_result = pipeline.read(arguments.source, hint=hint, artifact_kind=_source_artifact_kind(arguments.source))
+    read_result = _read_source(pipeline, arguments, hint)
     if read_result.value is None or not read_result.succeeded:
         reports = (("read", read_result.report),)
         report = _combine_reports(OperationKind.MIGRATE, reports, arguments)
@@ -400,17 +422,70 @@ def _conversion_policy(name: str) -> ConversionPolicy:
     return ConversionPolicy.strict() if name == "strict" else ConversionPolicy.permissive()
 
 
+def _read_source(pipeline, arguments: argparse.Namespace, hint):
+    # Third-party inventory readers print progress. Keep machine-readable JSON
+    # on stdout while retaining those diagnostics on stderr.
+    with redirect_stdout(sys.stderr if arguments.json_output else sys.stdout):
+        return pipeline.read(
+            arguments.source,
+            hint=hint,
+            artifact_kind=_source_artifact_kind(arguments.source),
+            **_source_reader_options(arguments),
+        )
+
+
+def _source_reader_options(arguments: argparse.Namespace) -> dict:
+    references = getattr(arguments, "source_ilcd_references", None)
+    directory = getattr(arguments, "source_ilcd_reference_directory", None)
+    dialect = getattr(arguments, "source_ilcd_dialect", None)
+    if references is None and directory is None and dialect is None:
+        return {}
+    selected = getattr(arguments, "source_format", None)
+    if selected is not None and selected != "ilcd":
+        raise _UsageError("ILCD source options require source format ilcd.")
+    try:
+        kwargs = {}
+        if references is not None:
+            kwargs["reference_catalog"] = ILCDReferenceCatalog.from_file(references)
+        if directory is not None:
+            kwargs["reference_directory"] = directory
+        if dialect is not None:
+            kwargs["dialect"] = dialect
+        return {"adapter_kwargs": kwargs}
+    except (OSError, ValueError, TypeError) as error:
+        raise _UsageError(f"Invalid ILCD import configuration: {error}") from error
+
+
 def _conversion_adapter_options(arguments: argparse.Namespace) -> dict:
     ecospold1_metadata = getattr(arguments, "ecospold1_metadata", None)
     ecospold2_metadata = getattr(arguments, "ecospold2_metadata", None)
     ecospold2_references = getattr(arguments, "ecospold2_references", None)
     ecospold2_package_mode = getattr(arguments, "ecospold2_package_mode", None)
     target_format = str(getattr(arguments, "target_format", "")).strip().lower().replace("-", "_")
+    ilcd_options = {
+        name: getattr(arguments, f"ilcd_{name}", None) for name in ("metadata", "references", "dialect", "package_mode")
+    }
+    if any(value is not None for value in ilcd_options.values()) and target_format != "ilcd":
+        raise _UsageError("ILCD export options can only be used with --target-format ilcd.")
     if ecospold1_metadata is not None and target_format != "ecospold1":
         raise _UsageError("--ecospold1-metadata can only be used with --target-format ecospold1.")
     if any(value is not None for value in (ecospold2_metadata, ecospold2_references, ecospold2_package_mode)):
         if target_format != "ecospold2":
             raise _UsageError("ecoSpold2 export options can only be used with --target-format ecospold2.")
+    if target_format == "ilcd":
+        try:
+            return {
+                "metadata_profile": (
+                    ILCDExportProfile.from_file(ilcd_options["metadata"]) if ilcd_options["metadata"] else None
+                ),
+                "reference_catalog": (
+                    ILCDReferenceCatalog.from_file(ilcd_options["references"]) if ilcd_options["references"] else None
+                ),
+                "dialect": ilcd_options["dialect"],
+                "package_mode": ilcd_options["package_mode"],
+            }
+        except (OSError, TypeError, ValueError) as error:
+            raise _UsageError(f"Invalid ILCD export configuration: {error}") from error
     generated_at = datetime.now(timezone.utc).replace(microsecond=0)
     if target_format == "ecospold1":
         try:

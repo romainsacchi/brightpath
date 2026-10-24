@@ -276,6 +276,7 @@ def test_default_registry_advertises_and_detects_only_implemented_file_adapters(
         FormatDescriptor("brightway_tsv"),
         FormatDescriptor("ecospold1"),
         FormatDescriptor("ecospold2"),
+        FormatDescriptor("ilcd"),
         FormatDescriptor("openlca_jsonld"),
         FormatDescriptor("simapro_csv"),
     )

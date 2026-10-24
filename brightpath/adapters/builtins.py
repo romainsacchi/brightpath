@@ -783,6 +783,8 @@ class BrightwayDelimitedAdapter:
 def default_adapter_registry() -> AdapterRegistry:
     """Return a fresh immutable registry of production-ready file adapters."""
 
+    from .ilcd import ILCDAdapter
+
     return AdapterRegistry(
         (
             BrightwayExcelAdapter(),
@@ -790,6 +792,7 @@ def default_adapter_registry() -> AdapterRegistry:
             BrightwayDelimitedAdapter(FormatDescriptor(InventoryFormat.BRIGHTWAY_TSV.value), "\t"),
             EcoSpold1Adapter(),
             EcoSpold2Adapter(),
+            ILCDAdapter(),
             OpenLCAJSONLDAdapter(),
             SimaProCSVAdapter(),
         )

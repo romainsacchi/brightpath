@@ -23,7 +23,8 @@ Format boundaries
 
 * The built-in registry supports Brightway Excel, Brightway block CSV,
   Brightway block TSV, openLCA JSON-LD ZIP, SimaPro CSV, ecoSpold1 XML, and
-  ecoSpold2 as detection/read/write adapters. ecoSpold2 also reads package directories.
+  ecoSpold2 and ILCD 1.1 process packages as detection/read/write adapters.
+  ecoSpold2 and ILCD also read package directories.
 * Only Brightway Excel and SimaPro CSV have dedicated v1 facades. Brightway
   CSV/TSV use the generic pipeline.
 * CSV suffixes are ambiguous. Detection inspects content and reports absent or
@@ -294,3 +295,17 @@ The packaged openLCA reference catalog has the same
 ``legal_review_required`` status. It contains identities and entity UUIDs, not
 background exchange amounts or complete inventories. Its integrity manifest
 and attribution live under ``data/export/openlca_references``.
+
+ILCD process exchange
+---------------------
+
+ILCD supports one product reference output and explicit local quantitative
+references. Core ILCD rejects selected-supplier loss; the openLCA dialect
+preserves those links through exchange extensions and generates used references
+from exact ecoinvent catalogs or the verified UVEK openLCA build. Unknown units,
+uncovered identities, and different target UUID conventions need explicit mappings.
+No EF-to-ecoinvent mappings
+are bundled. Allocation, waste-treatment reference inputs, additional product
+outputs, EPDs, eILCD models, parameter uncertainty, and unrepresentable uncertainty
+precision remain explicit errors. Missing auxiliary source/contact XML is
+preserved as an external reference with a warning. See :doc:`workflows/ilcd`.

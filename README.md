@@ -6,7 +6,7 @@
 **Convert and update foreground life-cycle inventories without losing track of what changed.**
 
 BrightPath helps LCA practitioners move foreground inventories between Brightway,
-SimaPro, openLCA, ecoSpold1, and ecoSpold2 exchange formats. It can also update links from one ecoinvent
+SimaPro, openLCA, ecoSpold1, ecoSpold2, and ILCD 1.1 process exchange formats. It can also update links from one ecoinvent
 release to another. Every operation can be checked before the result is used.
 
 > **Project status — work in progress**
@@ -294,6 +294,7 @@ for issue in uvek_inventory.last_migration_report.issues:
 | openLCA JSON-LD ZIP | ✓ | ✓ | Process-only exchange packages |
 | ecoSpold1 XML | ✓ | ✓ | Single-output process datasets; structured provenance is required |
 | ecoSpold2 | ✓ | ✓ | Single-output activity files, ZIPs, and directories; structured metadata and exact external UUIDs are required |
+| ILCD 1.1 | ✓ | ✓ | Single-reference process ZIPs/directories; automatic exact-catalog references for openLCA; explicit metadata and mapping overrides |
 
 OpenLCA Excel is not currently supported.
 
@@ -318,6 +319,7 @@ authoritative list for your installation.
 - [Conversion guide](docs/workflows/conversion.rst) — format changes and information-loss policies
 - [ecoSpold1 workflow](docs/workflows/ecospold1.rst) — single-output scope and metadata profiles
 - [ecoSpold2 workflow](docs/workflows/ecospold2.rst) — package shapes, metadata, and UUID references
+- [ILCD workflow](docs/workflows/ilcd.rst) — process packages, reference mappings, dialects, and uncertainty conventions
 - [Migration guide](docs/workflows/migration.rst) — background updates and review policies
 - [Shared migration schema](docs/migration-resource-schema.rst) — rule structure, optional confidence, evidence and recipes
 - [Validation guide](docs/workflows/validation.rst) — understand and resolve reported issues
@@ -347,3 +349,7 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and
 
 BrightPath source code is distributed under the [BSD-3-Clause license](LICENSE).
 Packaged migration resources retain the licenses declared in their files.
+
+ILCD process packages support one reference product output, offline XML validation,
+and deterministic ZIP export. See [the ILCD workflow](docs/workflows/ilcd.rst) for
+metadata requirements, exact reference catalogs, supplier extensions, and limitations.

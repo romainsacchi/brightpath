@@ -169,9 +169,10 @@ class InventoryPipeline:
                     issues=(
                         Issue(
                             Severity.ERROR,
-                            "parse.failed",
+                            getattr(error, "code", "parse.failed"),
                             str(error) or type(error).__name__,
                             StageKind.PARSE,
+                            path=getattr(error, "path", ""),
                             details={"format": _descriptor_details(descriptor)},
                         ),
                     ),
@@ -304,6 +305,9 @@ class InventoryPipeline:
         _require_conversion_policy(policy)
         options = _copy_adapter_kwargs(adapter_options)
         descriptor = coerce_format_descriptor(target_format)
+        descriptor, options = _resolve_ilcd_dialect(descriptor, options)
+        if descriptor.format_id == "ilcd":
+            options.setdefault("catalog_provider", self.catalog_provider)
         converted, _adapter, stages = self._prepare_conversion(document, descriptor, policy, options)
         return OperationResult(
             converted,
@@ -368,6 +372,9 @@ class InventoryPipeline:
             if target_format is not None
             else _registered_profile_descriptor(document.context.format)
         )
+        descriptor, options = _resolve_ilcd_dialect(descriptor, options)
+        if descriptor.format_id == "ilcd":
+            options.setdefault("catalog_provider", self.catalog_provider)
         converted, adapter, prepared_stages = self._prepare_conversion(document, descriptor, policy, options)
         stages = list(prepared_stages)
         metadata = {
@@ -383,7 +390,9 @@ class InventoryPipeline:
             output, returned_render = _adapter_output(adapter_result)
         except Exception as error:
             stage_kind = StageKind.SERIALIZATION if isinstance(error, SerializationError) else StageKind.WRITE
-            code = "serialization.failed" if stage_kind is StageKind.SERIALIZATION else "write.failed"
+            code = getattr(
+                error, "code", "serialization.failed" if stage_kind is StageKind.SERIALIZATION else "write.failed"
+            )
             stages.append(
                 StageReport(
                     stage_kind,
@@ -394,6 +403,7 @@ class InventoryPipeline:
                             code,
                             str(error) or type(error).__name__,
                             stage_kind,
+                            path=getattr(error, "path", ""),
                             details={"format": _descriptor_details(descriptor)},
                         ),
                     ),
@@ -494,7 +504,7 @@ class InventoryPipeline:
         adapter_options: Mapping[str, Any] | None = None,
     ) -> tuple[InventoryDocument | None, FormatAdapter | None, tuple[StageReport, ...]]:
         stages: list[StageReport] = []
-        externally_configured_formats = {"ecospold1", "ecospold2"}
+        externally_configured_formats = {"ecospold1", "ecospold2", "ilcd"}
         if (
             document.context.format.format_id in externally_configured_formats
             and descriptor.format_id != document.context.format.format_id
@@ -793,6 +803,21 @@ def _sidecar_path(sidecar: str | Path | bool | None, output: Path) -> Path | Non
 def _validate_sidecar_argument(sidecar: object) -> None:
     if sidecar is not None and not isinstance(sidecar, (str, Path, bool)):
         raise TypeError("sidecar must be a path, boolean, or None.")
+
+
+def _resolve_ilcd_dialect(descriptor: FormatDescriptor, options: dict) -> tuple[FormatDescriptor, dict]:
+    # The target dialect selects an uncertainty convention, so it must agree in
+    # preflight, the converted context, and the writer options.
+    if descriptor.format_id != "ilcd":
+        return descriptor, options
+    configured = options.get("dialect")
+    if configured and descriptor.dialect and configured != descriptor.dialect:
+        raise ValueError("The ILCD target descriptor and dialect option conflict.")
+    dialect = configured or descriptor.dialect
+    if dialect:
+        options["dialect"] = dialect
+        descriptor = FormatDescriptor(descriptor.format_id, descriptor.version, dialect)
+    return descriptor, options
 
 
 def _copy_adapter_kwargs(value: Mapping[str, Any] | None) -> dict[str, Any]:
