@@ -42,6 +42,8 @@ All notable changes to this project will be documented in this file.
 
 - Preserve checksummed ILCD schemas and UVEK unit-review evidence across Windows
   checkouts, and write the standalone ILCD test fixture explicitly as UTF-8.
+- Resolve local schema file URIs on Windows while retaining offline-only schema
+  resolution and rejecting external paths and remote hosts.
 - Pin the alpha version in installation instructions and extend installed-package
   smoke checks to load the native UVEK 2026 catalog and all four directed release
   resources, then exercise both process and biosphere migration directions.

@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import shutil
 import zipfile
 from copy import deepcopy
 
@@ -25,6 +26,7 @@ from brightpath.core import (
 )
 from brightpath.core.pipeline import InventoryPipeline
 from brightpath.core.policies import ConversionPolicy
+from brightpath.formats import ilcd_package
 from brightpath.formats.ilcd import (
     load_ilcd,
     load_ilcd_package,
@@ -632,6 +634,34 @@ def test_schema_manifest_and_offline_load():
     for resource in manifest["resources"]:
         assert hashlib.sha256((SCHEMA_DIRECTORY / resource["path"]).read_bytes()).hexdigest() == resource["sha256"]
     assert schema("Process") is not None
+
+
+@pytest.mark.parametrize("single_slash", [False, True])
+def test_schema_file_uris_resolve_offline_with_encoded_paths(tmp_path, monkeypatch, single_slash):
+    directory = tmp_path / "schemas with spaces"
+    shutil.copytree(SCHEMA_DIRECTORY, directory)
+    monkeypatch.setattr(ilcd_package, "SCHEMA_DIRECTORY", directory)
+    uri = (directory / "ILCD_ProcessDataSet.xsd").as_uri()
+    if single_slash:
+        uri = uri.replace("file:///", "file:/", 1)
+    parser = etree.XMLParser(resolve_entities=False, no_network=True, load_dtd=False)
+    parser.resolvers.add(ilcd_package._SchemaResolver())
+    assert etree.XMLSchema(etree.parse(uri, parser)) is not None
+
+
+@pytest.mark.parametrize(
+    "uri",
+    [
+        "https://example.invalid/schema.xsd",
+        "file://remote/schema.xsd",
+        "file:///outside/schema.xsd",
+        "file:///outside/schema.xsd?query=1",
+        "file:///outside/schema.xsd#fragment",
+    ],
+)
+def test_schema_resolver_rejects_external_uris(uri):
+    with pytest.raises(OSError, match="External schema resolution is disabled"):
+        ilcd_package._SchemaResolver().resolve(uri, None, None)
 
 
 def test_standalone_process_with_explicit_reference_directory(tmp_path, native_resources):

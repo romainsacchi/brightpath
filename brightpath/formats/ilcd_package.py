@@ -11,6 +11,7 @@ from dataclasses import dataclass
 from functools import lru_cache
 from pathlib import Path, PurePosixPath
 from urllib.parse import unquote, urlsplit
+from urllib.request import url2pathname
 from uuid import UUID
 
 from lxml import etree
@@ -90,7 +91,13 @@ class _SchemaResolver(etree.Resolver):
     def resolve(self, url, public_id, context):
         if url in {"http://www.w3.org/2001/xml.xsd", "https://www.w3.org/2001/xml.xsd"}:
             return self.resolve_filename(str(SCHEMA_DIRECTORY / "ext" / "xml.xsd"), context)
-        path = Path(url).resolve()
+        if url.startswith("file:"):
+            parts = urlsplit(url)
+            if parts.netloc not in {"", "localhost"} or parts.query or parts.fragment:
+                raise OSError("External schema resolution is disabled.")
+            path = Path(url2pathname(parts.path)).resolve()
+        else:
+            path = Path(url).resolve()
         if not path.is_relative_to(SCHEMA_DIRECTORY.resolve()):
             raise OSError("External schema resolution is disabled.")
         return self.resolve_filename(str(path), context)
