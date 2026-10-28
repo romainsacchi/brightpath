@@ -14,6 +14,10 @@ on:
       version:
         description: "Release version, for example 1.0.0"
         required: true
+      anaconda_only:
+        description: "Recover Anaconda publication from an existing GitHub/PyPI release"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -21,6 +25,7 @@ permissions:
 jobs:
   quality:
     name: Quality checks
+    if: ${{ !inputs.anaconda_only }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -50,6 +55,7 @@ jobs:
 
   test:
     name: Test (${{ matrix.os }}, Python ${{ matrix.python-version }})
+    if: ${{ !inputs.anaconda_only }}
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -74,6 +80,7 @@ jobs:
 
   build:
     name: Build distributions
+    if: ${{ !inputs.anaconda_only }}
     runs-on: ubuntu-latest
     needs: [quality, test]
     outputs:
@@ -172,11 +179,36 @@ jobs:
 
   publish-anaconda:
     name: Publish to Anaconda
+    if: ${{ !cancelled() && (needs.build.result == 'success' || (github.event_name == 'workflow_dispatch' && inputs.anaconda_only)) }}
     runs-on: ubuntu-latest
     needs: build
     environment: anaconda
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.anaconda_only && format('refs/tags/v{0}', inputs.version) || github.ref }}
+
+      - name: Verify published release for Anaconda recovery
+        if: ${{ inputs.anaconda_only }}
+        env:
+          VERSION: ${{ inputs.version }}
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          IS_DRAFT="$(gh release view "v${VERSION}" --repo "$GITHUB_REPOSITORY" --json isDraft --jq '.isDraft')"
+          test "$IS_DRAFT" = false
+          python - <<'PY'
+          import json
+          import os
+          import tomllib
+          from urllib.parse import quote
+          from urllib.request import urlopen
+
+          version = os.environ["VERSION"]
+          with open("pyproject.toml", "rb") as handle:
+              assert tomllib.load(handle)["project"]["version"] == version
+          with urlopen(f"https://pypi.org/pypi/brightpath/{quote(version, safe='')}/json", timeout=30) as response:
+              assert json.load(response)["info"]["version"] == version
+          PY
 
       - uses: conda-incubator/setup-miniconda@v3
         with:
@@ -188,24 +220,25 @@ jobs:
       - name: Build and upload conda package
         shell: bash -l {0}
         env:
-          VERSION: ${{ needs.build.outputs.version }}
+          VERSION: ${{ needs.build.outputs.version || inputs.version }}
+          ANACONDA_CLIENT_FORCE_STANDALONE: "1"
           ANACONDA_API_TOKEN: ${{ secrets.ANACONDA_CLOUD }}
           ANACONDA_USER: ${{ vars.ANACONDA_USER || 'romainsacchi' }}
         run: |
           conda install --name base -y anaconda-client conda-build
           conda activate base
           conda build --version
-          anaconda --version
+          python -m binstar_client.scripts.cli --version
           mkdir -p "${HOME}/conda-bld"
           conda config --set anaconda_upload no
           export CONDA_BLD_PATH="${HOME}/conda-bld"
           conda build conda/olca-schema/ --python 3.12 --old-build-string --package-format 1
           conda build conda/meta.yaml --channel local --old-build-string --package-format 1
-          anaconda -t "${ANACONDA_API_TOKEN}" upload \
+          python -m binstar_client.scripts.cli -t "${ANACONDA_API_TOKEN}" upload \
             -u "${ANACONDA_USER}" \
             "${CONDA_BLD_PATH}"/noarch/olca-schema-*.tar.bz2 \
             --force
-          anaconda -t "${ANACONDA_API_TOKEN}" upload \
+          python -m binstar_client.scripts.cli -t "${ANACONDA_API_TOKEN}" upload \
             -u "${ANACONDA_USER}" \
             "${CONDA_BLD_PATH}/noarch/brightpath-${VERSION}-py_0.tar.bz2" \
             --force
