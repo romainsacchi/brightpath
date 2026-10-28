@@ -63,9 +63,10 @@ cannot silently change the database behind your model.
 ## Installation
 
 BrightPath requires Python 3.12.
+Pin the alpha version for reproducible workflows:
 
 ```bash
-python -m pip install brightpath
+python -m pip install "brightpath==1.0.0a10"
 ```
 
 Installation includes mandatory `olca-schema` and `pyecospold` dependencies for

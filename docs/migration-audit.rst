@@ -240,3 +240,21 @@ and the full collection of published CLIC baskets require separate end-to-end
 tests. A deployment should additionally preflight actual baskets and show
 dataset-specific compatibility rather than treating a route as universally
 exportable. This audit does not change CLIC's UI or publication workflow.
+
+Alpha 10 resource expansion
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The UVEK 2026 catalog and four directed release resources change the migration
+and reference-catalog manifest digests. An installed-wheel audit retains all
+42,444 established UVEK 2025/ecoinvent case outcomes, output fingerprints,
+route warnings and losses, policies, and all 483 collision findings. The
+reviewed baseline change accepts only those two manifest digests; coverage
+remains 40,922 supported, 1,497 blocked and 25 explicit omissions.
+
+The matrix above still describes the UVEK 2025/ecoinvent export routes. Native
+UVEK 2025/2026 routes are additionally exercised by the source test suite and
+installed-package smoke checks, including every safe process correspondence,
+the reviewed factor-of-1 unit labels, biosphere correspondences, uncertainty,
+idempotence, and rollback for unsupported links. Their separate partial
+coverage is documented in :doc:`workflows/uvek-2026`; it is not counted as
+complete support by this regression matrix.

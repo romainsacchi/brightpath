@@ -2,7 +2,9 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0a10 - Unreleased
+## 1.0.0a10 - 2026-10-28
+
+### ILCD process exchange
 
 - Add ILCD 1.1 single-reference process import/export, local reference resolution,
   pinned offline schemas, deterministic ZIPs and transactional publication.
@@ -14,6 +16,37 @@ All notable changes to this project will be documented in this file.
 - Resolve ILCD openLCA background references automatically from exact ecoinvent
   UUID catalogs and the verified UVEK build, with used-reference XML generation
   and consistent quantity, formula, and uncertainty conversion.
+
+### UVEK 2026 background migration
+
+- Add the original UVEK 2026 reference catalog with 11,947 process identities
+  and 2,679 native biosphere identities. Retain native flow names and compartments;
+  the separately remapped ecoinvent 3.10 biosphere remains an explicit profile.
+- Add independent directed UVEK 2025/2026 cut-off process resources and separate
+  native UVEK 2026/ecoinvent 3.10 biosphere resources. Compose cross-family routes
+  through the existing UVEK 2025 mappings and preserve an unchanged biosphere.
+- Apply 755 source-reviewed factor-of-1 reference-unit label correspondences
+  in both process directions, retaining quantities, uncertainty and caller-owned
+  input. Bind each rule to the historical source review and its integrity hashes;
+  these factors do not define general gas-volume or time-unit conversions.
+- Support 11,739 process correspondences in each direction. Keep seven unmatched
+  2025 identities, 207 unmatched 2026 identities and the unapproved washing-machine
+  reference unit explicit; strict execution rejects affected links transactionally.
+- Include 1,290 one-to-one biosphere correspondences, with explicit water factors.
+  Retain ambiguous and unmatched biosphere flows as unresolved: coverage is partial
+  and reference correspondence does not establish equivalent LCIA results.
+- Add reproducible catalog generation and unit-review utilities, exact-resource
+  manifests, capability discovery, CLI dry-run coverage and installed-wheel checks.
+
+### Packaging
+
+- Pin the alpha version in installation instructions and extend installed-package
+  smoke checks to load the native UVEK 2026 catalog and all four directed release
+  resources, then exercise both process and biosphere migration directions.
+- Refresh the migration and reference-catalog manifest digests in the release
+  regression baseline after an installed-wheel audit. All 42,444 existing outcomes,
+  output hashes, policies and 483 collision findings are unchanged: 40,922 cases
+  remain supported, 1,497 blocked and 25 explicitly omitted with warnings.
 
 ## 1.0.0a9 - 2026-10-23
 

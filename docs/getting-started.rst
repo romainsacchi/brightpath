@@ -5,10 +5,11 @@ Installation
 ------------
 
 BrightPath supports Python 3.12.
+Pin the alpha version for reproducible workflows:
 
 .. code-block:: console
 
-   python -m pip install brightpath
+   python -m pip install "brightpath==1.0.0a10"
 
 Installation includes mandatory ``olca-schema`` and ``pyecospold`` dependencies
 for openLCA JSON-LD exchange and ecoSpold1/2 schema validation. No optional extra
