@@ -1,4 +1,4 @@
-"""Verify openLCA exchange and migration schemas using the installed packages."""
+"""Verify installed formats, catalogs and migration routes."""
 
 from pathlib import Path
 from tempfile import TemporaryDirectory
@@ -108,3 +108,58 @@ for source_version, target_version in (("2025", "2026"), ("2026", "2025")):
     assert converted[2]["name"] == biosphere_rule["target"]["name"]
     assert tuple(converted[2]["categories"]) == tuple(biosphere_rule["target"]["categories"])
     assert converted[2]["amount"] == 3
+
+# Exercise an added publisher correspondence with the native biosphere held fixed.
+export_resource = load_uvek_export_resource()
+publisher_rules = [
+    rule for rule in export_resource["replace"] if rule.get("mapping_method") == "publisher_product_correspondence"
+]
+assert len(export_resource["replace"]) == 1424
+assert len(publisher_rules) == 1070
+export_rule = next(
+    rule
+    for rule in publisher_rules
+    if rule["source"]["name"] == "Zirconium oxide, at plant" and rule["source"]["location"] == "AU"
+)
+native_bridge = next(
+    resource for resource in release_resources["technosphere"] if resource["source_profiles"][0]["version"] == "2026"
+)
+native_rule = next(rule for rule in native_bridge["replace"] if rule["target"] == export_rule["source"])
+native_biosphere = next(
+    resource for resource in release_resources["biosphere"] if resource["source_profiles"][0]["version"] == "2026"
+)
+native_flow = next(
+    rule["source"] for rule in native_biosphere["replace"] if rule["source"]["name"] == "Carbon dioxide, fossil"
+)
+native_context = BackgroundContext(TechnosphereProfile("uvek", "2026", "cutoff"), BiosphereProfile("uvek", "2026"))
+export_target = BackgroundContext(TechnosphereProfile("ecoinvent", "3.12", "cutoff"), native_context.biosphere)
+document = InventoryDocument(
+    data=[
+        {
+            **identity,
+            "exchanges": [
+                {**identity, "type": "production", "amount": 1},
+                {
+                    **native_rule["source"],
+                    "type": "technosphere",
+                    "amount": 2,
+                    "uncertainty type": 3,
+                    "loc": 2,
+                    "scale": 0.25,
+                },
+                {**native_flow, "type": "biosphere", "amount": 3},
+            ],
+        }
+    ],
+    context=InventoryContext(FormatProfile("brightway_excel"), native_context),
+)
+original = document.data
+result = execute_background_migration(document, export_target, provider)
+assert result.succeeded, result.report.to_json()
+assert result.value.context.background == export_target
+assert document.data == original
+converted = result.value.data[0]["exchanges"]
+assert converted[0] == original[0]["exchanges"][0]
+assert all(converted[1][field] == value for field, value in export_rule["target"].items())
+assert (converted[1]["amount"], converted[1]["loc"], converted[1]["scale"]) == (2, 2, 0.25)
+assert converted[2] == original[0]["exchanges"][2]

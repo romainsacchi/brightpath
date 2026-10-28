@@ -212,7 +212,7 @@ Migration boundaries
   resource, also reached by UVEK 2026 through the release bridge. Its 1,424
   approved supplier identities do not cover the whole UVEK 2025 catalog:
   10,323 identities remain explicitly unresolved and block conversion when used.
-  The expansion from the 354 rules in ``1.0.0a10`` is unreleased.
+  The expansion from the 354 rules in ``1.0.0a10`` is included in ``1.0.0a11``.
   See :doc:`workflows/uvek-export` for proxy policies and generated recipes.
 * The ecoinvent 3.6–3.12 to UVEK 2025 route is a heuristic compatibility map,
   not an equivalence map. It always reports ``migration.heuristic_mapping`` and

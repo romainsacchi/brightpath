@@ -16,7 +16,7 @@ source identities from the packaged UVEK catalog. Those identities, reasons and
 candidate suggestions belong to `docs/uvek_export_review.json`; an absent rule
 always remains unresolved at runtime.
 
-The unreleased publisher-correspondence cohort adds 1,070 reference-function
+The BrightPath 1.0.0a11 publisher-correspondence cohort adds 1,070 reference-function
 rules while retaining all 354 original rules unchanged. Its source is
 ecoinvent's public **Correspondence File for Intermediate Exchanges**, dated
 2013-09-04, linked from https://support.ecoinvent.org/ecoinvent-version-3.0 :

@@ -75,8 +75,8 @@ from UVEK 2026 through its explicit release bridge. Most of the catalog still ne
 directional evidence review. The unresolved disposition is not a scientific
 review or approval of its suggested candidates.
 
-The expansion from 354 to 1,424 is unreleased; ``1.0.0a10`` contains the initial
-354 rules. No existing rule, proxy or supporting recipe was replaced.
+Version ``1.0.0a11`` expands coverage from 354 to 1,424; ``1.0.0a10`` contains
+the initial 354 rules. No existing rule, proxy or supporting recipe was replaced.
 
 The runtime resource stores approved rules, required supporting recipes, and
 coverage counts. Unresolved identities are the source catalog entries without an

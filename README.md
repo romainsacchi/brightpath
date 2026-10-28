@@ -66,7 +66,7 @@ BrightPath requires Python 3.12.
 Pin the alpha version for reproducible workflows:
 
 ```bash
-python -m pip install "brightpath==1.0.0a10"
+python -m pip install "brightpath==1.0.0a11"
 ```
 
 Installation includes mandatory `olca-schema` and `pyecospold` dependencies for
@@ -305,7 +305,7 @@ OpenLCA Excel is not currently supported.
 - Packaged ecoinvent cut-off migrations connect releases from 3.5 through 3.12.
 - Reverse migrations are inferred and require permissive review.
 - A heuristic ecoinvent-to-UVEK 2025 route is available and must be reviewed.
-- Reviewed UVEK-to-ecoinvent cut-off exports use independent directional rules and supporting recipes.
+- Reviewed UVEK 2025/2026 → ecoinvent 3.12 cut-off exports cover 1,424 supplier identities, including supporting recipes and policy-controlled proxies; coverage remains partial.
 - UVEK 2025 ↔ 2026 cut-off migrations have explicit directional resources, with reported unmatched identities and missing unit factors. The original 2026 biosphere remains independent of ecoinvent 3.10.
 - Consequential version-to-version and cross-system-model migrations are not available.
 

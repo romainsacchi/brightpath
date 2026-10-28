@@ -259,8 +259,8 @@ idempotence, and rollback for unsupported links. Their separate partial
 coverage is documented in :doc:`workflows/uvek-2026`; it is not counted as
 complete support by this regression matrix.
 
-Publisher-correspondence expansion (unreleased)
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Alpha 11 publisher-correspondence expansion
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The publisher-table review in :doc:`workflows/uvek-export` adds 1,070
 reference-function correspondences and retains all original 354 rules,

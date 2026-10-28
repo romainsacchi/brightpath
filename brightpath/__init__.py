@@ -25,7 +25,7 @@ __all__ = (
     "TechnosphereProfile",
     "ValidationReport",
 )
-__version__ = "1.0.0a10"
+__version__ = "1.0.0a11"
 
 from importlib import import_module
 from pathlib import Path

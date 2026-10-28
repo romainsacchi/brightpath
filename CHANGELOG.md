@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## Unreleased
+## 1.0.0a11 - 2026-10-28
 
 - Add 1,070 reviewed reference-function correspondences from UVEK 2025/2026
   to ecoinvent 3.12 cut-off, expanding approved process coverage from 354 to 1,424.
@@ -11,6 +11,14 @@ All notable changes to this project will be documented in this file.
   exact source labels, unchanged units/geography, and stable target product UUIDs.
   Keep ambiguous rows, change flags, multi-output processes and waste-role cases
   unresolved. Biosphere coverage is unchanged.
+- Expand the migration audit to 52,074 probes: 50,552 supported, 1,497 blocked
+  and 25 explicitly omitted with warnings. Preserve all 42,444 prior outcomes,
+  output hashes, policies and 483 collision findings.
+- Verify a publisher-correspondence export from native UVEK 2026 to ecoinvent
+  3.12 in installed-package smoke checks, preserving quantities, uncertainty,
+  caller-owned input and the explicitly unchanged native biosphere.
+- Fix Anaconda publication by invoking the standalone client, with targeted
+  recovery from an already published GitHub/PyPI release.
 
 ## 1.0.0a10 - 2026-10-28
 
