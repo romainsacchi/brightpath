@@ -68,16 +68,22 @@ is shared through ``review_ref`` and ``reviews``. Factors use
 reverse rules; their classifications and evidence are retained. See
 :doc:`../migration-resource-schema` for the full contract.
 
-All 11,747 packaged UVEK identities have a disposition: 167 reviewed
+All 11,747 packaged UVEK 2025 identities have a disposition: 1,237 reviewed
 correspondences, 180 documented proxies, seven public supporting recipes, and
-11,393 unresolved identities. Most of the catalog still needs substantive
+10,323 unresolved identities. All 1,424 approved source identities are reachable
+from UVEK 2026 through its explicit release bridge. Most of the catalog still needs substantive
 directional evidence review. The unresolved disposition is not a scientific
 review or approval of its suggested candidates.
 
+The expansion from 354 to 1,424 is unreleased; ``1.0.0a10`` contains the initial
+354 rules. No existing rule, proxy or supporting recipe was replaced.
+
 The runtime resource stores approved rules, required supporting recipes, and
 coverage counts. Unresolved identities are the source catalog entries without an
-approved rule; they are listed with reasons and candidates only in the separate
-review output, ``docs/uvek_export_review.json``. Unlisted suppliers still fail
+approved rule. The generator lists them with reasons and candidates in a separate
+full-catalog review, using ``docs/uvek_export_review.json`` by default or the
+explicit ``--review-output`` path. Regenerate that local review when resources
+change; it is not a packaged runtime input. Unlisted suppliers still fail
 conversion under every policy. The seven public recipes contain quantities
 needed to generate foreground helpers; they are not background inventory dumps.
 
@@ -89,10 +95,58 @@ are not reproduced. Those coarse decisions are warnings, not equivalent matches.
 
 ``scripts/generate_uvek_export.py`` regenerates the resource, catalog review,
 and integrity manifest from ``docs/uvek_export_evidence.json`` and
-``docs/uvek_export_overrides.json``. Optional explicit ``--pv-*`` inputs rebuild
+``docs/uvek_export_overrides.json``, supplemented by
+``docs/uvek_export_lineage_evidence.json``. Optional explicit ``--pv-*`` inputs rebuild
 the evidence from local source artifacts. Neither execution nor ordinary resource
 generation needs a local premise checkout. Candidate suggestions from the
 ecoinvent-to-UVEK mapping never become approved rules automatically.
+
+Publisher correspondence review
+--------------------------------
+
+The additional 1,070 correspondences use ecoinvent's public
+`Correspondence File for Intermediate Exchanges <https://support.ecoinvent.org/ecoinvent-version-3.0>`_.
+This is a BrightPath-authored reference-function crosswalk, not a
+publisher-certified UVEK-to-ecoinvent mapping. The workbook describes the legacy
+ecoinvent nomenclature; matching a UVEK label to it does not establish common
+dataset UUIDs, inventory coefficients, allocation or LCIA results.
+
+An addition must satisfy every check:
+
+* Source activity and product labels both match the legacy product label, using
+  only case and whitespace normalization. Unit and geography must match exactly.
+* Exactly one publisher row marks the reference product with ``x``. Multi-output
+  rows and every flagged change are excluded, including reference quantity, unit,
+  geography, deletion, input/output role and replacement changes.
+* Exactly one ecoinvent 3.12 cut-off entry matches the published activity and
+  product names, geography and unit. Its reference-product UUID must be unchanged.
+* Labels flagged as waste, recycling or secondary-material cases remain deferred for additional
+  sign and system-boundary review, even if their metadata otherwise matches.
+* Existing reviewed sources take precedence and remain byte-equivalent after
+  projecting the original rule values and reviews. No forward heuristic mapping
+  is inverted, and no geographic fallback or unit factor is inferred.
+
+The :download:`authoring ledger <../uvek_export_lineage_evidence.json>` records the exact publisher row, catalog digests, workbook
+digest and excluded-cohort counts. Its 1,070 new rules execute under strict policy
+from both UVEK releases while retaining uncertainty and caller-owned input. A
+technosphere-only conversion preserves its explicitly selected biosphere; full
+native-biosphere conversion still has the separate limits in :doc:`uvek-2026`.
+
+To reproduce the review from the public workbook::
+
+    python scripts/generate_uvek_export.py \
+      --lineage-workbook /path/to/correspondence_file_intermediate-exchangesv2.2_to_v3.0_20130904.xlsx \
+      --review-output /tmp/uvek-export-review.json
+
+The workbook SHA-256 must be
+``cd598b9c357a1c0f55ca5e00fc9861a753cbdce772a07dd43e8acffcb8f2b959``.
+The workbook and proprietary inventories are not packaged. Subsequent runs can
+replay the checked-in evidence without downloading it again; stale catalogs,
+changed original rules and inconsistent evidence are rejected.
+
+The distinction between mapping coverage and scientific equivalence also follows
+the `LCA wiki mapping guide <https://github.com/sentier-dev/lca-wiki/blob/main/core/use-cases/map-flows-between-nomenclatures.md>`_
+(source IDs ``ecoinvent-kb-glossary`` and ``lca-wiki-editorial``).
 
 Generated foreground helpers
 ----------------------------

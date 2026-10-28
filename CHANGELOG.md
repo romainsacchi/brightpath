@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+- Add 1,070 reviewed reference-function correspondences from UVEK 2025/2026
+  to ecoinvent 3.12 cut-off, expanding approved process coverage from 354 to 1,424.
+  Retain all prior rules, proxies and supporting recipes unchanged.
+- Derive the additions from a pinned public ecoinvent correspondence workbook,
+  exact source labels, unchanged units/geography, and stable target product UUIDs.
+  Keep ambiguous rows, change flags, multi-output processes and waste-role cases
+  unresolved. Biosphere coverage is unchanged.
+
 ## 1.0.0a10 - 2026-10-28
 
 ### ILCD process exchange

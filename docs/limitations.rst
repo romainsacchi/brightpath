@@ -209,8 +209,10 @@ Migration boundaries
   directional resources, with explicit unmatched identities, biosphere
   ambiguities, and missing unit factors. See :doc:`workflows/uvek-2026`.
 * UVEK 2025 cut-off to ecoinvent 3.12 cut-off has an explicit directional
-  resource. Its 354 approved supplier identities do not cover the whole catalog:
-  11,393 identities remain explicitly unresolved and block conversion when used.
+  resource, also reached by UVEK 2026 through the release bridge. Its 1,424
+  approved supplier identities do not cover the whole UVEK 2025 catalog:
+  10,323 identities remain explicitly unresolved and block conversion when used.
+  The expansion from the 354 rules in ``1.0.0a10`` is unreleased.
   See :doc:`workflows/uvek-export` for proxy policies and generated recipes.
 * The ecoinvent 3.6–3.12 to UVEK 2025 route is a heuristic compatibility map,
   not an equivalence map. It always reports ``migration.heuristic_mapping`` and

@@ -258,3 +258,28 @@ the reviewed factor-of-1 unit labels, biosphere correspondences, uncertainty,
 idempotence, and rollback for unsupported links. Their separate partial
 coverage is documented in :doc:`workflows/uvek-2026`; it is not counted as
 complete support by this regression matrix.
+
+Publisher-correspondence expansion (unreleased)
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The publisher-table review in :doc:`workflows/uvek-export` adds 1,070
+reference-function correspondences and retains all original 354 rules,
+reviews, factors and supporting recipes. The approved supplier matrix grows
+to 1,424 cases per target, adding 9,630 successful probes across the nine exact
+cut-off target profiles. UVEK 2026 reaches every added source through its
+explicit 2025 bridge; separate source tests and installed-wheel checks execute
+the complete new cohort under strict policy from both UVEK releases.
+
+The expanded audit contains 52,074 probes: 50,552 supported, 1,497 blocked and
+25 explicitly omitted with warnings. Comparing cases by ID with the alpha 10
+audit verifies that all 42,444 pre-existing outcomes are identical, including
+their output hashes, errors and every biosphere case. The policy and all 483
+collision findings remain unchanged. There are no audit errors.
+
+The reviewed baseline accepts the changed migration-manifest digest, the new
+supplier cases and their output hashes, and the reduced count of unresolved
+UVEK 2025 suppliers (10,323). It does not relax any policy, reclassify an old
+blocker or approve any additional biosphere mapping. These are metadata-backed
+reference-function correspondences, not claims of unchanged inventories,
+allocation or LCIA results. Native UVEK 2026 retains 10,523 process identities
+without an approved export correspondence and its separate biosphere limits.
