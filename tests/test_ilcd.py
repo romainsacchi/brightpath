@@ -638,7 +638,7 @@ def test_standalone_process_with_explicit_reference_directory(tmp_path, native_r
     for name, text in native_resources.items():
         path = tmp_path / name
         path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(text)
+        path.write_text(text, encoding="utf-8")
     result = load_ilcd_package(tmp_path / f"processes/{PROCESS}.xml", reference_directory=tmp_path)
     assert result.data[0]["exchanges"][0]["amount"] == 100
 
