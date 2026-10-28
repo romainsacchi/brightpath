@@ -1,0 +1,177 @@
+UVEK 2025 and 2026
+==================
+
+BrightPath packages the 11,947 process identities and 2,679 native biosphere
+identities from the original UVEK 2026 ecoSpold1 release. Names and biosphere
+categories are retained, including ``unspecified``; unit spellings are
+normalized. This catalog is derived from the original archive, rather than
+the separately processed ecoSpold2 variant with an ecoinvent 3.10 biosphere.
+It contains reference metadata only, with no inventory amounts or invented
+ecoSpold2 UUIDs. ecoSpold2 export still requires actual UUID references.
+
+Choose the biosphere explicitly
+-------------------------------
+
+The packaged UVEK 2025 context uses ecoinvent 3.10 biosphere identities. The
+original UVEK 2026 release has its own biosphere. These are independent axes::
+
+    from brightpath import BackgroundContext, BiosphereProfile, TechnosphereProfile
+
+    uvek_2025 = BackgroundContext(
+        TechnosphereProfile("uvek", "2025", "cutoff"),
+        BiosphereProfile("ecoinvent", "3.10"),
+    )
+    uvek_2026 = BackgroundContext(
+        TechnosphereProfile("uvek", "2026", "cutoff"),
+        BiosphereProfile("uvek", "2026"),
+    )
+
+    # inventory is an existing BrightwayInventory with an explicit source context.
+    migrated = inventory.migrate_background(uvek_2026)
+    migrated.write_excel("foreground-uvek-2026.xlsx")
+
+To go back, call ``migrated.migrate_background(uvek_2025)``. Both directions
+have independent explicit resources and can execute under strict policy when
+all used links are supported. Format conversion is a separate operation.
+For a technosphere-only migration, keep the source biosphere profile in the
+target context. A UVEK 2026 inventory that was already mapped to ecoinvent
+3.10 must declare ``BiosphereProfile("ecoinvent", "3.10")`` explicitly.
+
+The CLI accepts the same independent contexts::
+
+    brightpath migrate-background foreground-2025.xlsx foreground-2026.xlsx \
+      --source-technosphere-family uvek --source-technosphere-version 2025 \
+      --source-technosphere-system-model cutoff \
+      --source-biosphere-family ecoinvent --source-biosphere-version 3.10 \
+      --target-technosphere-family uvek --target-technosphere-version 2026 \
+      --target-technosphere-system-model cutoff \
+      --target-biosphere-family uvek --target-biosphere-version 2026 \
+      --dry-run --json
+
+Remove ``--dry-run`` to write the migrated workbook. ``--json`` includes
+coverage findings; strict failures leave the source inventory unchanged.
+
+Coverage and limits
+-------------------
+
+The process resources contain 10,803 exact identities, two unambiguous legacy
+location-suffix changes, and 179 unit-spelling changes with explicit factors
+of 1. A further 755 correspondences use reviewed, release-specific factors of
+1 for the gas-volume and operating-time label changes described below. There
+are **11,739 executable process correspondences in each direction**.
+The washing-machine correspondence still has no approved numeric factor:
+strict execution rejects its use, and permissive execution skips it and reports
+the loss. No general physical conversion between these units is assumed.
+Seven 2025 identities and 207 2026 identities have no process correspondence.
+
+Source investigation of the 756 unit changes
+--------------------------------------------
+
+A subsequent read-only review compared every unfactored rule with the original
+2025 Brightway workbook and the original 2026 XML. The workbook's SHA-256
+matches the source recorded for the installed 2025 database. Its ``year`` and
+``cubic meter`` labels are already present before Brightway import strategies
+or BrightPath catalog generation.
+
+All 756 records retain the same source filename/UUID, process number,
+name/product/location, reference output amount, supplier identities, and
+per-reference technosphere coefficients. Twenty-five XML supplier locations
+are absent on the exchange but resolve by the unchanged source process number;
+they agree with the workbook. These facts support a **release-specific label
+correspondence with factor 1**, rather than a physical year-to-hour conversion
+or a gas pressure/temperature conversion. This interpretation is an inference
+from source comparison, not a publisher-confirmed correction.
+
+.. list-table:: Applied unit review dispositions
+   :header-rows: 1
+   :widths: 30 10 60
+
+   * - Label change
+     - Processes
+     - Finding
+   * - Cubic meter to normal cubic meter
+     - 669
+     - Explicit factor 1 in both directions for the matched release records.
+       The 2025 comments explicitly mention normal volume for 649 records.
+   * - Year to hour
+     - 86
+     - Explicit factor 1 in both directions for the matched operating-time
+       records. Do not multiply their reference demand by 8,760.
+   * - Year to hour: washing machine
+     - 1
+     - Keep unresolved pending confirmation of the intended functional unit.
+
+The exception is ``Production, washing machine, V-ZUG`` in CH. Its native XML
+declares ``hr`` for a production dataset, has no documented time basis, and
+contains no technosphere inputs that could anchor an operating-time
+interpretation. Matching identifiers and an unchanged production quantity do
+not establish that this unit is scientifically meaningful. Neither a factor
+of 1 nor 8,760 is approved for this record.
+
+The review is stored as :download:`per-process CSV <../uvek_2026_unit_review.csv>`
+and :download:`JSON evidence <../uvek_2026_unit_review.json>`, including source
+hashes, individual checks, coefficient-vector hashes, and the original
+recommendations. These files preserve the historical read-only investigation.
+The two process resources now apply its 755 supported recommendations and
+record the report digest and original review rule ID for every changed rule.
+Generation verifies the unreviewed baseline digest, archive digest, complete
+review coverage, identities, source checks, and both directed factors before
+applying the review. The washing-machine record remains blocked. Biosphere
+mappings, background coefficients and LCIA equivalence require their own assessment.
+
+Reproduce the historical investigation using a separate baseline migration
+directory, then write the new report outside the preserved evidence files::
+
+    mkdir -p /tmp/uvek-unit-baseline
+    python scripts/generate_uvek_2026_resources.py /path/to/original-uvek-2026.zip \
+      --unreviewed --migration-directory /tmp/uvek-unit-baseline
+
+    python scripts/review_uvek_2026_units.py \
+      /path/to/lci-uvek-2025.xlsx /path/to/original-uvek-2026.zip \
+      --resource /tmp/uvek-unit-baseline/uvek-2025-cutoff-to-uvek-2026-cutoff.json \
+      --output /tmp/uvek-unit-baseline/review
+
+The review utility refuses an already reviewed migration resource so that it
+cannot silently replace the historical evidence with a one-record review.
+
+Biosphere correspondence coverage
+---------------------------------
+
+The two biosphere resources contain 1,290 one-to-one correspondences between
+the native release and ecoinvent 3.10. Generation uses explicit compartment
+aliases and bw2io's versioned elementary-flow name migration data, accepting
+only exact destination catalog identities. Four water emission rules include
+explicit mass/volume factors. The native catalog is not renamed.
+Ambiguous matches, including lake/river collapses, are recorded as candidates
+and remain unresolved in both directions. There are 1,389 unresolved native
+identities and 3,072 unresolved ecoinvent 3.10 identities. No flows are deleted
+or assigned arbitrary substitutes. Reports expose incomplete coverage before
+execution, and used links are checked against the exact target catalog.
+
+Cross-family routes to and from ecoinvent pass through UVEK 2025 and retain
+that route's limits, heuristic findings, proxy policies, and foreground recipes.
+See :doc:`ecoinvent-to-uvek` and :doc:`uvek-export`. A correspondence preserves
+the reference identity; it does not assert unchanged background coefficients
+or equivalent LCIA results. Consequential UVEK release migrations and
+cross-system-model migrations remain unavailable.
+
+Reproduce the resources
+-----------------------
+
+The catalog and migration resources record the source archive's SHA-256,
+comparison catalog digests, generator, and biosphere matching provenance.
+Source archive terms apply to the derived reference metadata; the ZIP itself
+and its inventories are not packaged. Regenerate from a local original ZIP::
+
+    python scripts/generate_uvek_2026_resources.py /path/to/original-uvek-2026.zip
+    python scripts/generate_catalog_manifest.py
+    python scripts/generate_migration_manifest.py
+
+The generator applies ``docs/uvek_2026_unit_review.json`` by default. Use
+``--unit-review`` to select an explicit replacement review. ``--unreviewed``
+reproduces the historical baseline and should be used with a separate migration
+output directory as shown above.
+
+Generation does not install or modify a Brightway database. The generator
+accepts the source's namespace-free ecoSpold1 XML directly; this does not
+extend the public ecoSpold1 adapter's ZIP or XML validation capabilities.

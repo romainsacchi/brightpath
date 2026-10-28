@@ -204,8 +204,10 @@ Migration boundaries
 * Rules that change units without numeric conversion factors are skipped and
   reported. BrightPath never changes a unit while retaining an unconverted
   amount.
-* Consequential version-to-version, cross-system-model, and UVEK-version
-  migrations are unavailable.
+* Consequential version-to-version and cross-system-model migrations are
+  unavailable. UVEK 2025/2026 cut-off release migrations have independent
+  directional resources, with explicit unmatched identities, biosphere
+  ambiguities, and missing unit factors. See :doc:`workflows/uvek-2026`.
 * UVEK 2025 cut-off to ecoinvent 3.12 cut-off has an explicit directional
   resource. Its 354 approved supplier identities do not cover the whole catalog:
   11,393 identities remain explicitly unresolved and block conversion when used.
@@ -254,7 +256,7 @@ reverse rules, and endpoint validation. A missing intermediate catalog can
 therefore leave an otherwise resolvable multi-step replacement ambiguous under
 the selected policy.
 
-The packaged catalogs cover ecoinvent 3.6–3.12 and UVEK 2025, while migration
+The packaged catalogs cover ecoinvent 3.6–3.12 and UVEK 2025/2026, while migration
 resources begin at ecoinvent 3.5. Strict 3.5 execution therefore needs a custom
 exact catalog provider.
 

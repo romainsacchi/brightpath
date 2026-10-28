@@ -45,6 +45,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    workflows/migration
    workflows/ecoinvent-to-uvek
    workflows/uvek-export
+   workflows/uvek-2026
    workflows/validation
    workflows/analysis
    limitations

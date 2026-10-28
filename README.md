@@ -300,11 +300,12 @@ OpenLCA Excel is not currently supported.
 
 ### Background data
 
-- Exact reference catalogs are available for ecoinvent 3.6–3.12 and UVEK 2025.
+- Exact reference catalogs are available for ecoinvent 3.6–3.12 and UVEK 2025/2026.
 - Packaged ecoinvent cut-off migrations connect releases from 3.5 through 3.12.
 - Reverse migrations are inferred and require permissive review.
 - A heuristic ecoinvent-to-UVEK 2025 route is available and must be reviewed.
 - Reviewed UVEK-to-ecoinvent cut-off exports use independent directional rules and supporting recipes.
+- UVEK 2025 ↔ 2026 cut-off migrations have explicit directional resources, with reported unmatched identities and missing unit factors. The original 2026 biosphere remains independent of ecoinvent 3.10.
 - Consequential version-to-version and cross-system-model migrations are not available.
 
 Support is discovered from the installed package, so `brightpath formats` is the
@@ -321,6 +322,7 @@ authoritative list for your installation.
 - [ecoSpold2 workflow](docs/workflows/ecospold2.rst) — package shapes, metadata, and UUID references
 - [ILCD workflow](docs/workflows/ilcd.rst) — process packages, reference mappings, dialects, and uncertainty conventions
 - [Migration guide](docs/workflows/migration.rst) — background updates and review policies
+- [UVEK 2026](docs/workflows/uvek-2026.rst) — original reference catalog, both migration directions, biosphere choices, and coverage limits
 - [Shared migration schema](docs/migration-resource-schema.rst) — rule structure, optional confidence, evidence and recipes
 - [Validation guide](docs/workflows/validation.rst) — understand and resolve reported issues
 - [API reference](docs/api.rst) — complete Python interface

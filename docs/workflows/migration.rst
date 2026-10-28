@@ -9,6 +9,9 @@ services:
 * ``execute_background_migration()`` validates the source, applies a plan to a
   copy, validates the target, and commits or rolls back transactionally.
 
+For the original UVEK 2026 release, its native biosphere, and explicit routes
+to and from UVEK 2025, see :doc:`uvek-2026`.
+
 ``InventoryPipeline.migrate()`` is the usual application entry point and
 delegates to the executor with its injected catalog provider.
 
