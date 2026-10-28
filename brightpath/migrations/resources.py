@@ -42,6 +42,35 @@ def load_uvek_biosphere_resource() -> dict:
     return _load_uvek_resource(_UVEK_BIOSPHERE_RESOURCE, expected_axis="biosphere")
 
 
+@lru_cache(maxsize=2)
+def load_uvek_release_resources(axis: str) -> tuple[dict, ...]:
+    """Load explicit UVEK release edges, independently for each background axis.
+
+    These resources retain the original UVEK 2026 biosphere. They are separate
+    from the heuristic ecoinvent-to-UVEK 2025 resource.
+    """
+    filenames = {
+        "technosphere": (
+            "uvek-2025-cutoff-to-uvek-2026-cutoff.json",
+            "uvek-2026-cutoff-to-uvek-2025-cutoff.json",
+        ),
+        "biosphere": (
+            "uvek-2026-biosphere-to-ecoinvent-3.10-biosphere.json",
+            "ecoinvent-3.10-biosphere-to-uvek-2026-biosphere.json",
+        ),
+    }
+    if axis not in filenames:
+        raise ValueError("axis must be technosphere or biosphere.")
+    resources = []
+    for filename in filenames[axis]:
+        resource = load_migration_resource(DATA_DIR / "migrations" / "uvek" / filename)
+        if resource["axis"] != axis or resource["reverse_policy"] != "explicit_only":
+            raise MigrationError(f"Invalid UVEK release edge: {filename}.")
+        _validate_rule_lists(resource, Path(filename), expected_axis=axis)
+        resources.append(resource)
+    return tuple(resources)
+
+
 def available_ecoinvent_versions(system_model: str = "cutoff") -> tuple[str, ...]:
     """Return versions connected by packaged migration resources."""
 

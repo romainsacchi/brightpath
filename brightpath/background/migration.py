@@ -8,7 +8,7 @@ to find resource edges.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from pathlib import Path
 from typing import Iterable
@@ -24,6 +24,7 @@ from brightpath.migrations.resources import (
     load_biosphere_resources,
     load_technosphere_resources,
     load_uvek_biosphere_resource,
+    load_uvek_release_resources,
     load_uvek_technosphere_resource,
 )
 
@@ -253,6 +254,17 @@ def _plan_technosphere(
         return ()
     if source_profile == target_profile:
         return ()
+    direct = _plan_uvek_release(axis, source_profile, target_profile, policy, issues, losses)
+    if direct is not None:
+        return direct
+    if (source_profile == TechnosphereProfile("uvek", "2026", "cutoff") and target_profile.family == "ecoinvent") or (
+        target_profile == TechnosphereProfile("uvek", "2026", "cutoff") and source_profile.family == "ecoinvent"
+    ):
+        hub = replace(source, technosphere=TechnosphereProfile("uvek", "2025", "cutoff"))
+        resolution = hub.technosphere.resolve_migration_series()
+        return _plan_technosphere(
+            source, hub, source_resolution, resolution, policy, issues, losses
+        ) + _plan_technosphere(hub, target, resolution, target_resolution, policy, issues, losses)
     if source_profile.family != target_profile.family:
         if source_profile.family == "uvek" and target_profile.family == "ecoinvent":
             resource = load_uvek_export_resource()
@@ -364,6 +376,20 @@ def _plan_biosphere(
         return ()
     if source_profile == target_profile:
         return ()
+    direct = _plan_uvek_release(axis, source_profile, target_profile, policy, issues, losses)
+    if direct is not None:
+        return direct
+    if (source_profile == BiosphereProfile("uvek", "2026") and target_profile.family == "ecoinvent") or (
+        target_profile == BiosphereProfile("uvek", "2026") and source_profile.family == "ecoinvent"
+    ):
+        hub = replace(
+            target if target_profile.family == "uvek" else source,
+            biosphere=BiosphereProfile("ecoinvent", "3.10"),
+        )
+        resolution = hub.biosphere.resolve_migration_series()
+        return _plan_biosphere(source, hub, source_resolution, resolution, policy, issues, losses) + _plan_biosphere(
+            hub, target, resolution, target_resolution, policy, issues, losses
+        )
     if (
         source.technosphere.family == "ecoinvent"
         and target.technosphere.family == "uvek"
@@ -423,6 +449,54 @@ def _plan_biosphere(
             issues,
             losses,
         )
+
+
+def _plan_uvek_release(axis, source_profile, target_profile, policy, issues, losses):
+    if not any(profile.family == "uvek" and profile.version == "2026" for profile in (source_profile, target_profile)):
+        return None
+    profile_type = TechnosphereProfile if axis is MigrationAxis.TECHNOSPHERE else BiosphereProfile
+    for resource in load_uvek_release_resources(axis.value):
+        if target_profile != profile_type(**resource["target_profile"]):
+            continue
+        if source_profile not in [profile_type(**profile) for profile in resource["source_profiles"]]:
+            continue
+        coverage = resource["coverage"]
+        issues.append(
+            Issue(
+                Severity.INFO,
+                "migration.catalog_correspondence",
+                "Use explicit UVEK release correspondences; shared identities do not imply unchanged background coefficients.",
+                StageKind.MIGRATION_PLANNING,
+                path=f"background.{axis.value}",
+                details={"resource": resource["name"], "coverage": coverage},
+            )
+        )
+        for count_key, code, message in (
+            (
+                "unresolved_identities",
+                "migration.incomplete_resource_coverage",
+                "Some catalog identities have no unambiguous correspondence; every used target link is validated.",
+            ),
+            (
+                "unit_changes_without_factor",
+                "migration.unit_changes_require_factors",
+                "Some process correspondences change units without a documented factor; strict execution rejects their use.",
+            ),
+        ):
+            if coverage.get(count_key):
+                issues.append(
+                    Issue(
+                        Severity.WARNING,
+                        code,
+                        message,
+                        StageKind.MIGRATION_PLANNING,
+                        path=f"background.{axis.value}",
+                        details={"resource": resource["name"], "count": coverage[count_key]},
+                    )
+                )
+        pair = (source_profile.version, target_profile.version)
+        return _materialize_steps(axis, ((*pair, "forward"),), {pair: resource}, policy, issues, losses)
+    return None
 
 
 def _target_patch_steps(axis, resolution, issues):

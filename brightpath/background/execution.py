@@ -52,6 +52,7 @@ from brightpath.migrations.resources import (
     load_biosphere_resources,
     load_technosphere_resources,
     load_uvek_biosphere_resource,
+    load_uvek_release_resources,
     load_uvek_technosphere_resource,
 )
 from brightpath.migrations.scaling import scale_exchange
@@ -116,7 +117,35 @@ def execute_background_migration(
     if not plan.executable:
         return _result(document, source, target, policy, stages, committed=False)
 
-    hub = BackgroundContext(TechnosphereProfile("ecoinvent", "3.12", "cutoff"), BiosphereProfile("ecoinvent", "3.12"))
+    # Cross-family UVEK 2026 routes use the existing independently authored
+    # UVEK 2025 route. Validate the intermediate release and keep rollback
+    # transactional across the complete operation, including foreground recipes.
+    if (
+        source.technosphere == TechnosphereProfile("uvek", "2026", "cutoff")
+        and target.technosphere.family == "ecoinvent"
+    ) or (
+        target.technosphere == TechnosphereProfile("uvek", "2026", "cutoff")
+        and source.technosphere.family == "ecoinvent"
+    ):
+        bridge_biosphere = target.biosphere if source.technosphere.family == "ecoinvent" else source.biosphere
+        bridge = BackgroundContext(TechnosphereProfile("uvek", "2025", "cutoff"), bridge_biosphere)
+        first = execute_background_migration(document, bridge, provider, policy, foreground_targets)
+        stages.extend(first.report.stages)
+        if first.report.has_errors:
+            return _result(document, source, target, policy, stages, committed=False)
+        second = execute_background_migration(first.value, target, provider, policy, foreground_targets)
+        stages.extend(second.report.stages)
+        return _result(
+            document if second.report.has_errors else second.value,
+            source,
+            target,
+            policy,
+            stages,
+            committed=not second.report.has_errors,
+        )
+
+    hub_biosphere = source.biosphere if source.biosphere == target.biosphere else BiosphereProfile("ecoinvent", "3.12")
+    hub = BackgroundContext(TechnosphereProfile("ecoinvent", "3.12", "cutoff"), hub_biosphere)
     if source.technosphere.family == "uvek" and target.technosphere.family == "ecoinvent" and target != hub:
         first = execute_background_migration(document, hub, provider, policy, foreground_targets)
         stages.extend(first.report.stages)
@@ -326,6 +355,13 @@ def _execute_plan(
             else None
         ),
     )
+    for steps, resources, axis in (
+        (plan.technosphere_steps, technosphere_resources, "technosphere"),
+        (plan.biosphere_steps, biosphere_resources, "biosphere"),
+    ):
+        if any("uvek-2026" in step.resource_name for step in steps):
+            for resource in load_uvek_release_resources(axis):
+                resources.update(_execution_resources(steps, {}, resource))
     for step_index, step in enumerate(plan.technosphere_steps):
         resource = _resource_for_step(step, technosphere_resources)
         try:
@@ -346,7 +382,12 @@ def _execute_plan(
     for axis_index, step in enumerate(plan.biosphere_steps):
         step_index = offset + axis_index
         resource = _resource_for_step(step, biosphere_resources)
-        target_biosphere_identities = _step_target_biosphere_identities(provider, plan.target.biosphere.family, step)
+        step_profile = (
+            resource.get("target_profile", {"family": plan.target.biosphere.family})
+            if step.direction == "forward"
+            else resource.get("source_profiles", [{"family": plan.target.biosphere.family}])[0]
+        )
+        target_biosphere_identities = _step_target_biosphere_identities(provider, step_profile["family"], step)
         try:
             step_report, step_losses = _apply_biosphere_step(
                 data,

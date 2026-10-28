@@ -33,16 +33,34 @@ def test_migration_capabilities_advertise_only_active_routes():
     assert ("biosphere", "3.10", "3.10.1") in edges
     assert ("technosphere", "3.9", "3.9.1") in edges
     assert {value.family for value in capabilities} == {"ecoinvent", "uvek"}
-    exports = [value for value in capabilities if value.family == "uvek"]
+    exports = [
+        value
+        for value in capabilities
+        if value.family == "uvek" and value.target_family == "ecoinvent" and value.axis == "technosphere"
+    ]
     assert [(value.source_series, value.target_series, value.target_family) for value in exports] == [
         ("2025", "3.12", "ecoinvent")
     ]
-    uvek = [value for value in capabilities if value.target_family == "uvek"]
+    uvek = [
+        value
+        for value in capabilities
+        if value.target_family == "uvek" and value.family == "ecoinvent" and value.axis == "technosphere"
+    ]
     assert {(value.source_series, value.target_series) for value in uvek} == {
         (version, "2025") for version in ("3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12")
     }
     assert {value.system_model for value in uvek} == {"cutoff", "consequential"}
     assert {value.reverse for value in uvek} == {"unavailable"}
+    release_edges = [value for value in capabilities if value.source_series == "2026" or value.target_series == "2026"]
+    assert {
+        (value.axis, value.family, value.source_series, value.target_family, value.target_series)
+        for value in release_edges
+    } == {
+        ("technosphere", "uvek", "2025", "uvek", "2026"),
+        ("technosphere", "uvek", "2026", "uvek", "2025"),
+        ("biosphere", "uvek", "2026", "ecoinvent", "3.10"),
+        ("biosphere", "ecoinvent", "3.10", "uvek", "2026"),
+    }
 
 
 def test_capability_snapshot_lists_catalog_axes_independently():

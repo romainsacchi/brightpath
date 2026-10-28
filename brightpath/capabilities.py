@@ -11,6 +11,7 @@ from .background.uvek_export import load_uvek_export_resource
 from .migrations.resources import (
     load_biosphere_resources,
     load_technosphere_resources,
+    load_uvek_release_resources,
     load_uvek_technosphere_resource,
 )
 
@@ -150,6 +151,21 @@ def migration_capabilities() -> tuple[MigrationCapability, ...]:
             reverse="unavailable",
         )
     )
+    for axis in ("technosphere", "biosphere"):
+        for resource in load_uvek_release_resources(axis):
+            target = resource["target_profile"]
+            values.extend(
+                MigrationCapability(
+                    axis=axis,
+                    family=source["family"],
+                    target_family=target["family"],
+                    system_model=source.get("system_model", ""),
+                    source_series=source["version"],
+                    target_series=target["version"],
+                    reverse="explicit_resource_available",
+                )
+                for source in resource["source_profiles"]
+            )
     return tuple(values)
 
 
