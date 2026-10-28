@@ -42,7 +42,7 @@ def build_manifest(directory: Path) -> dict:
         "status": "legal_review_required",
         "description": (
             "Validation identities and ecoSpold2 UUID references generated from locally installed "
-            "background releases."
+            "background releases and original release archives."
         ),
         "generator": "scripts/generate_reference_catalogs.py",
         "resources": resources,
