@@ -73,8 +73,8 @@ def test_entire_catalog_has_a_disposition_and_approved_endpoints_exist():
     assert "evidence_sha256" not in resource
     assert approved <= catalog
     assert resource["coverage"]["source_identities"] == len(catalog) == 11747
-    assert resource["coverage"]["mapped_identities"] == len(approved) == 354
-    assert resource["coverage"]["unresolved_identities"] == len(catalog - approved) == 11393
+    assert resource["coverage"]["mapped_identities"] == len(approved) == 1424
+    assert resource["coverage"]["unresolved_identities"] == len(catalog - approved) == 10323
     target_identities = provider.load_technosphere(target.technosphere).identities
     biosphere = provider.load_biosphere(target.biosphere).identities
     for rule in resource["replace"]:

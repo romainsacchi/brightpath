@@ -16,6 +16,27 @@ source identities from the packaged UVEK catalog. Those identities, reasons and
 candidate suggestions belong to `docs/uvek_export_review.json`; an absent rule
 always remains unresolved at runtime.
 
+The unreleased publisher-correspondence cohort adds 1,070 reference-function
+rules while retaining all 354 original rules unchanged. Its source is
+ecoinvent's public **Correspondence File for Intermediate Exchanges**, dated
+2013-09-04, linked from https://support.ecoinvent.org/ecoinvent-version-3.0 :
+
+https://support.ecoinvent.org/hubfs/Knowledge%20Base/Database/Releases/correspondence_file_intermediate-exchangesv2.2_to_v3.0_20130904.xlsx
+
+The source SHA-256 is
+`cd598b9c357a1c0f55ca5e00fc9861a753cbdce772a07dd43e8acffcb8f2b959`.
+The publisher's terms apply; the workbook does not declare an explicit reuse
+license. Only correspondence metadata is derived here, never proprietary
+inventories, amounts or LCIA factors. The public workbook itself is not bundled.
+`scripts/generate_uvek_export.py` records the workbook revision, exact worksheet
+rows, generation method, original-rule fingerprint and catalog digests in
+`docs/uvek_export_lineage_evidence.json`. It requires unchanged units/geography,
+a reference-product row marked `x` without change flags, an unambiguous current
+activity/product identity and the same reference-product UUID. Waste-role and
+multi-output cases are deferred. This is BrightPath's authored nomenclature
+correspondence, not a publisher endorsement of UVEK equivalence. The existing
+directional 2026-to-2025 bridge composes these rules for native UVEK 2026.
+
 Except for the new 3.11→3.12 biosphere edge described below, the ecoinvent migration JSON files in
 `ecoinvent/cutoff/` and `ecoinvent/biosphere/` were originally copied from the `premise` repository
 at commit `43355ef7c21e8587812d1615cc956252c5a7c4e6`:

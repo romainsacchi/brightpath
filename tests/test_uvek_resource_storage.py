@@ -52,7 +52,7 @@ def test_generator_uses_the_same_shared_writer(migration_resource, tmp_path):
 
 
 def test_both_packaged_uvek_resources_use_one_schema():
-    for filename, count in (("ecoinvent-to-uvek-2025.json", 31488), ("uvek-2025-to-ecoinvent-3.12-cutoff.json", 354)):
+    for filename, count in (("ecoinvent-to-uvek-2025.json", 31488), ("uvek-2025-to-ecoinvent-3.12-cutoff.json", 1424)):
         path = DATA_DIR / "migrations/uvek" / filename
         result = json.loads(path.read_text(encoding="utf-8"))
         validate_migration_resource(result)
@@ -101,6 +101,10 @@ def test_all_mapping_values_and_runtime_evidence_match_the_baseline(filename, ex
     fields = ("source", "target", "conversion_factor", "classification", "confidence", "mapping_method")
     rows = []
     for rule in migration_resource["replace"]:
+        # Preserve the exact historical 354-rule contract while testing the
+        # publisher-backed additions independently in test_uvek_export_lineage.
+        if rule.get("mapping_method") == "publisher_product_correspondence":
+            continue
         row = {key: rule[key] for key in fields if key in rule}
         # Compare software-neutral method labels with their historical names.
         if row.get("mapping_method") in {"pairwise_review", "product_checked", "followup_review"}:
