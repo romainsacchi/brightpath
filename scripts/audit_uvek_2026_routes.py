@@ -45,7 +45,11 @@ def main(argv=None):
         differences.append("Partial native-route audit cannot pass the release gate.")
     report["gate"] = {"passed": not differences, "differences": differences}
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(report, indent=2, ensure_ascii=False, allow_nan=False) + "\n", encoding="utf-8")
+    # Complete native reports can exceed a gigabyte. Stream encoder chunks so
+    # publication checks do not need another full string and UTF-8 byte copy.
+    with args.output.open("w", encoding="utf-8") as handle:
+        json.dump(report, handle, indent=2, ensure_ascii=False, allow_nan=False)
+        handle.write("\n")
     for difference in differences:
         print(difference, flush=True)
     return int(bool(differences))
