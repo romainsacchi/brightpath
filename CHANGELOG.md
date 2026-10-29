@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.0a12 - 2026-10-29
+
+- Replace openLCA ZIP exports atomically. Reusing an output path no longer
+  appends duplicate processes or retains removed entities, and failed writes
+  preserve the previous archive. Complete native UVEK inventory checks exposed
+  this issue when repeated against an installed wheel.
+
 ## 1.0.0a11 - 2026-10-29
 
 - Preserve product-exchange classification categories in openLCA round trips
