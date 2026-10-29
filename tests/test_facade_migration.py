@@ -15,7 +15,7 @@ from brightpath.core.context import (
     InventoryContext,
     TechnosphereProfile,
 )
-from brightpath.core.policies import MigrationPolicy
+from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.core.reports import OperationKind, OperationReport
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.engine import _canonical_unit
@@ -237,7 +237,7 @@ def test_legacy_uvek_target_uses_documented_ecoinvent_310_biosphere(facade_type)
 
     migrated = source.migrate_background(
         BackgroundProfile("uvek", "2025", "cutoff"),
-        policy=MigrationPolicy(validate_source=False, validate_target=False),
+        policy=MigrationPolicy(validate_source=False, validate_target=False, on_heuristic_mapping=PolicyAction.WARN),
         catalog_provider=InMemoryCatalogProvider(),
     )
 

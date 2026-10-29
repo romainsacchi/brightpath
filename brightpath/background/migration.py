@@ -622,7 +622,7 @@ def _plan_uvek_technosphere(
             f"to {target_profile.label()}.",
         )
         return ()
-    _heuristic_mapping_finding(MigrationAxis.TECHNOSPHERE, resource, issues, losses)
+    _heuristic_mapping_finding(MigrationAxis.TECHNOSPHERE, resource, policy, issues, losses)
     return _materialize_steps(
         MigrationAxis.TECHNOSPHERE,
         ((source_resolution.migration_series, target_resolution.migration_series, "forward"),),
@@ -643,7 +643,7 @@ def _plan_uvek_biosphere(
     resource = load_uvek_biosphere_resource()
     if source_resolution.migration_series not in {profile["version"] for profile in resource["source_profiles"]}:
         return None
-    _heuristic_mapping_finding(MigrationAxis.BIOSPHERE, resource, issues, losses)
+    _heuristic_mapping_finding(MigrationAxis.BIOSPHERE, resource, policy, issues, losses)
     return _materialize_steps(
         MigrationAxis.BIOSPHERE,
         ((source_resolution.migration_series, target_resolution.migration_series, "forward"),),
@@ -657,6 +657,7 @@ def _plan_uvek_biosphere(
 def _heuristic_mapping_finding(
     axis: MigrationAxis,
     resource: dict,
+    policy: MigrationPolicy,
     issues: list[Issue],
     losses: list[Loss],
 ) -> None:
@@ -669,17 +670,21 @@ def _heuristic_mapping_finding(
         "axis": axis.value,
         "resource": _resource_name(resource),
         "quality": resource.get("quality"),
+        "policy_action": policy.on_heuristic_mapping.value,
         "coverage": resource.get("coverage", {}),
     }
     issues.append(
         Issue(
-            severity=Severity.WARNING,
+            severity=_severity_for_action(policy.on_heuristic_mapping),
             code="migration.heuristic_mapping",
             message=message,
             stage=StageKind.MIGRATION_PLANNING,
             path=path,
             details=details,
-            suggested_fix="Review low-confidence mappings before using converted results for assessment.",
+            suggested_fix=(
+                "Review the correspondence evidence, then explicitly set on_heuristic_mapping='warn' "
+                "to accept heuristic compatibility with reported limitations."
+            ),
         )
     )
     losses.append(

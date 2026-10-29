@@ -125,6 +125,7 @@ class MigrationPolicy(_SerializablePolicy):
     validate_source: bool = True
     validate_target: bool = True
     minimum_coverage: float = 1.0
+    on_heuristic_mapping: PolicyAction = PolicyAction.ERROR
 
     def __post_init__(self) -> None:
         _coerce_actions(self)
@@ -151,6 +152,7 @@ class MigrationPolicy(_SerializablePolicy):
             on_ambiguous_rule=PolicyAction.WARN,
             on_information_loss=PolicyAction.WARN,
             on_deletion=PolicyAction.WARN,
+            on_heuristic_mapping=PolicyAction.WARN,
             on_inferred_reverse=PolicyAction.WARN,
             on_unit_change_without_factor=PolicyAction.WARN,
             on_invalid_target=PolicyAction.WARN,

@@ -57,7 +57,7 @@ Native UVEK 2026 routes have a separate audit entry point. It discovers 90
 independent-axis task/policy combinations from the current exact catalogs:
 release bridges, incoming ecoinvent process mappings, approved outgoing process
 mappings and both biosphere directions. Each runs under strict policy and under
-the explicit information-loss/inferred-reverse warning policy::
+the explicit information-loss, inferred-reverse and heuristic warning policy::
 
    python -m scripts.audit_uvek_2026_routes --list-routes
    python -m scripts.audit_uvek_2026_routes \

@@ -14,10 +14,15 @@ from brightpath.background.catalogs import PackageCatalogProvider
 from brightpath.background.migration import plan_background_migration
 from brightpath.background.uvek_export import identity, load_uvek_export_resource, migration_resource_fingerprint
 from brightpath.core.context import BackgroundContext, BiosphereProfile, TechnosphereProfile
-from brightpath.core.policies import MigrationPolicy
+from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.migrations.resources import load_uvek_release_resources
 
-POLICIES = {"strict": MigrationPolicy.strict(), "warnings": AUDIT_POLICY}
+NATIVE_WARNING_POLICY = MigrationPolicy(
+    on_inferred_reverse=PolicyAction.WARN,
+    on_information_loss=PolicyAction.WARN,
+    on_heuristic_mapping=PolicyAction.WARN,
+)
+POLICIES = {"strict": MigrationPolicy.strict(), "warnings": NATIVE_WARNING_POLICY}
 
 
 def catalog_cases(provider, profile, axis):

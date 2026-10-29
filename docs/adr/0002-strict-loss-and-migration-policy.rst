@@ -16,6 +16,7 @@ corresponding stable loss or migration code:
 * ambiguous format detection or mapping rules;
 * unsupported or omitted fields and exchanges;
 * unresolved source or target background links;
+* heuristic compatibility mappings without explicit acceptance;
 * unit changes without finite amount-conversion factors;
 * partial reverse aggregation;
 * an irreversible deletion actually applied to inventory data;

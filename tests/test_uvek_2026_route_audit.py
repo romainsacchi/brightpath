@@ -29,7 +29,7 @@ def test_all_supported_routes_have_strict_and_warning_tasks_with_independent_axe
         axis = name.split("/")[0]
         assert (source.biosphere == target.biosphere) == (axis == "technosphere")
         assert (source.technosphere == target.technosphere) == (axis == "biosphere")
-        assert policy == (MigrationPolicy.strict() if name.endswith("/strict") else uvek_audit.AUDIT_POLICY)
+        assert policy == (MigrationPolicy.strict() if name.endswith("/strict") else uvek_audit.NATIVE_WARNING_POLICY)
         assert cases and len({row["id"] for row in cases}) == len(cases)
         if source.technosphere.family == "uvek" and target.technosphere.family == "ecoinvent":
             assert target.technosphere.system_model == "cutoff"

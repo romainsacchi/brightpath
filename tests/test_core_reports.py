@@ -186,8 +186,10 @@ def test_policy_factories_are_explicit_and_immutable():
     assert conversion_strict.on_information_loss is PolicyAction.ERROR
     assert conversion_permissive.on_information_loss is PolicyAction.WARN
     assert migration_strict.on_unresolved_link is PolicyAction.ERROR
+    assert migration_strict.on_heuristic_mapping is PolicyAction.ERROR
     assert migration_strict.minimum_coverage == 1.0
     assert migration_permissive.on_unresolved_link is PolicyAction.WARN
+    assert migration_permissive.on_heuristic_mapping is PolicyAction.WARN
     assert migration_permissive.minimum_coverage == 0.0
     with pytest.raises(FrozenInstanceError):
         conversion_strict.validate_target = False

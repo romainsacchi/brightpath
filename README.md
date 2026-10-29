@@ -266,7 +266,12 @@ uvek_background = BackgroundContext(
     biosphere=BiosphereProfile("ecoinvent", "3.10"),
 )
 
-uvek_inventory = inventory.migrate_background(uvek_background)
+from brightpath.core.policies import MigrationPolicy, PolicyAction
+
+uvek_inventory = inventory.migrate_background(
+    uvek_background,
+    policy=MigrationPolicy(on_heuristic_mapping=PolicyAction.WARN),
+)
 output = uvek_inventory.write_excel("foreground-uvek-2025.xlsx")
 print(f"Created {output}")
 ```
@@ -274,7 +279,9 @@ print(f"Created {output}")
 UVEK 2025 uses ecoinvent 3.10 biosphere identities, which is why the target combines
 a UVEK technosphere with an ecoinvent biosphere. The ecoinvent-to-UVEK activity
 mapping is heuristic: it finds compatible UVEK activities but does not claim that
-they are scientifically equivalent. The rules and selected matches are still being
+they are scientifically equivalent. Strict mode refuses these mappings unless
+explicitly accepted as above (CLI: `--allow-heuristic-mapping`). Other checks
+remain strict. The rules and selected matches are still being
 refined and may change between BrightPath releases. Record the package version and
 review the migration report before using the result:
 

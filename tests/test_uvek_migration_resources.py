@@ -15,6 +15,7 @@ from brightpath.core import (
     MigrationPolicy,
     TechnosphereProfile,
 )
+from brightpath.core.policies import PolicyAction
 from brightpath.migrations.engine import _canonical_unit
 from brightpath.migrations.resources import load_uvek_biosphere_resource, load_uvek_technosphere_resource
 from brightpath.models import InventoryDocument
@@ -22,6 +23,7 @@ from brightpath.models import InventoryDocument
 CATALOG_DIRECTORY = DATA_DIR / "export" / "reference_catalogs"
 VERSIONS = ("3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12")
 SYSTEM_MODELS = ("cutoff", "consequential")
+HEURISTIC_POLICY = MigrationPolicy(on_heuristic_mapping=PolicyAction.WARN)
 
 
 def _catalog(version: str, system_model: str = "cutoff") -> dict:
@@ -142,8 +144,8 @@ def test_uvek_plan_and_execution_migrate_both_axes_transactionally():
         ],
     )
 
-    plan = plan_background_migration(source, target)
-    result = execute_background_migration(document, target, provider)
+    plan = plan_background_migration(source, target, HEURISTIC_POLICY)
+    result = execute_background_migration(document, target, provider, HEURISTIC_POLICY)
 
     assert plan.executable
     assert [(step.axis.value, step.direction) for step in plan.steps] == [
@@ -212,7 +214,7 @@ def test_every_forward_rule_executes_from_a_real_supported_source_catalog():
         ]
         original = deepcopy(data)
         document = InventoryDocument(data=data, context=InventoryContext(FormatProfile("brightway_excel"), source))
-        result = execute_background_migration(document, target, provider)
+        result = execute_background_migration(document, target, provider, HEURISTIC_POLICY)
         assert result.succeeded, (profile, [issue.to_dict() for issue in result.report.issues])
         assert data == original == document.data
         assert result.value.context.background == target
@@ -274,7 +276,7 @@ def test_forward_unit_factors_scale_uncertainty_and_formulas_consistently(distri
         uncertainty["scale"] = 0.2
     original, target, provider, factor = _factored_document(uncertainty)
     before = original.data
-    result = execute_background_migration(original, target, provider)
+    result = execute_background_migration(original, target, provider, HEURISTIC_POLICY)
     assert result.succeeded
     assert original.data == before
     exchange = result.value.data[0]["exchanges"][0]
@@ -289,7 +291,7 @@ def test_forward_unit_factors_scale_uncertainty_and_formulas_consistently(distri
         assert exchange["scale"] == pytest.approx(0.2 if distribution == 2 else 0.2 * abs(factor))
 
 
-@pytest.mark.parametrize("policy", [MigrationPolicy.strict(), MigrationPolicy.permissive()])
+@pytest.mark.parametrize("policy", [HEURISTIC_POLICY, MigrationPolicy.permissive()])
 @pytest.mark.parametrize("uncertainty", [{"uncertainty type": 8}, {"uncertainty type": 3, "loc": "invalid"}])
 def test_unsafe_forward_uncertainty_scaling_rolls_back_under_every_policy(policy, uncertainty):
     original, target, provider, _ = _factored_document(uncertainty)

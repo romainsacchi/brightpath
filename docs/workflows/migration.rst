@@ -84,6 +84,7 @@ Strict policy
 
 * exact source validation before rule application;
 * a resource-backed route for every changed background component;
+* explicit acceptance before using heuristic compatibility mappings;
 * no inferred reverse route, ambiguous rule, applied deletion, information
   loss, or unit change without a numeric factor;
 * exact target validation after rule application;
@@ -94,6 +95,12 @@ The migration stage is marked as rolled back and its non-committed changes are
 removed from the report. Deletion-rule counts remain planning metadata, but a
 forward route is rejected for deletion only when a rule actually matches an
 exchange during execution.
+
+Heuristic compatibility has its own ``on_heuristic_mapping`` policy. Setting
+``on_information_loss="warn"`` or permitting inferred reverse routes does not
+accept heuristics. Use ``MigrationPolicy(on_heuristic_mapping="warn")`` after
+reviewing the correspondence evidence. The CLI equivalent is
+``migrate-background --allow-heuristic-mapping``; other checks remain strict.
 
 Permissive review
 -----------------

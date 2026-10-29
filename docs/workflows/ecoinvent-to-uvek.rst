@@ -6,6 +6,22 @@ supplier identities to UVEK 2025 cut-off suppliers. Format conversion is a
 separate operation. Biosphere migration uses the separate
 ``ecoinvent-to-ecoinvent-3.10-biosphere.json`` resource.
 
+Strict policy refuses these heuristic compatibility resources by default with
+``migration.heuristic_mapping``. After reviewing the evidence and limitations,
+accept them explicitly while retaining other strict checks::
+
+    from brightpath.core.policies import MigrationPolicy, PolicyAction
+
+    policy = MigrationPolicy(on_heuristic_mapping=PolicyAction.WARN)
+    converted = inventory.migrate_background(target_context, policy=policy)
+
+For the CLI, add ``--allow-heuristic-mapping`` to ``migrate-background``. This
+does not relax unresolved links, ambiguous rules, missing unit factors or exact
+target validation. The report records the acceptance and heuristic limitations;
+acceptance is not evidence of scientific equivalence. Reviewed UVEK-to-ecoinvent
+exports use their independent directional resource and do not require this
+heuristic permission merely because they cross database families.
+
 Storage and loading
 -------------------
 

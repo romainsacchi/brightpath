@@ -6,6 +6,7 @@ import argparse
 import json
 import sys
 from contextlib import redirect_stdout
+from dataclasses import replace
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable, Iterable, Sequence
@@ -23,7 +24,7 @@ from brightpath.core.context import (
     TechnosphereProfile,
 )
 from brightpath.core.pipeline import InventoryPipeline
-from brightpath.core.policies import ConversionPolicy, MigrationPolicy
+from brightpath.core.policies import ConversionPolicy, MigrationPolicy, PolicyAction
 from brightpath.core.reports import (
     OperationKind,
     OperationReport,
@@ -118,6 +119,11 @@ def build_parser() -> argparse.ArgumentParser:
     migrate.add_argument("--target-biosphere-family", required=True)
     migrate.add_argument("--target-biosphere-version", required=True)
     migrate.add_argument("--dry-run", action="store_true", help="Run migration in memory without writing.")
+    migrate.add_argument(
+        "--allow-heuristic-mapping",
+        action="store_true",
+        help="Accept heuristic background compatibility with warnings while retaining other policy checks.",
+    )
     _add_source_context_options(migrate)
     _add_common_options(migrate)
     return parser
@@ -297,7 +303,7 @@ def _run_convert(arguments: argparse.Namespace) -> int:
 def _run_migrate(arguments: argparse.Namespace) -> int:
     hint = _source_hint(arguments)
     target = _target_background(arguments)
-    migration_policy = _migration_policy(arguments.policy)
+    migration_policy = _migration_policy(arguments.policy, allow_heuristic_mapping=arguments.allow_heuristic_mapping)
     pipeline, provider = _application_services()
     read_result = _read_source(pipeline, arguments, hint)
     if read_result.value is None or not read_result.succeeded:
@@ -516,8 +522,9 @@ def _source_artifact_kind(path: Path) -> ArtifactKind:
     return ArtifactKind.DIRECTORY if path.is_dir() else ArtifactKind.FILE
 
 
-def _migration_policy(name: str) -> MigrationPolicy:
-    return MigrationPolicy.strict() if name == "strict" else MigrationPolicy.permissive()
+def _migration_policy(name: str, *, allow_heuristic_mapping=False) -> MigrationPolicy:
+    policy = MigrationPolicy.strict() if name == "strict" else MigrationPolicy.permissive()
+    return replace(policy, on_heuristic_mapping=PolicyAction.WARN) if allow_heuristic_mapping else policy
 
 
 def _combine_reports(
