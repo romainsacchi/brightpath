@@ -53,6 +53,37 @@ From an installed source checkout:
      --baseline docs/migration-audit-baseline.json \
      --output /tmp/migration-audit.json
 
+Native UVEK 2026 routes have a separate audit entry point. It discovers 90
+independent-axis task/policy combinations from the current exact catalogs:
+release bridges, incoming ecoinvent process mappings, approved outgoing process
+mappings and both biosphere directions. Each runs under strict policy and under
+the explicit information-loss/inferred-reverse warning policy::
+
+   python -m scripts.audit_uvek_2026_routes --list-routes
+   python -m scripts.audit_uvek_2026_routes \
+     --workers 2 --output /tmp/uvek-2026-audit.json
+
+Discovery without a reviewed ``--baseline`` deliberately exits nonzero. Review
+the report before establishing a native-route release baseline. The legacy
+baseline remains independent, allowing its existing probe outcomes to be
+compared without mixing them with the larger native-route inventory.
+
+Every release-bridge and incoming process task probes its full source catalog;
+every biosphere task does the same. Outgoing process tasks probe all 1,424
+approved native supplier identities. The other 10,523 native identities are
+reported separately with their count and a stable identity digest. They are
+outside the approved export cohort, not successful conversions or skipped
+runtime checks. Unavailable outgoing consequential routes are recorded as
+explicit planning findings.
+
+For focused iteration, use ``--route`` with an exact task name returned by
+``--list-routes``. A subset report is marked partial and cannot pass the release
+gate, even against an identical partial baseline. These probes retain the same
+rollback, exact-target validation, finite-quantity and idempotence checks as the
+legacy audit. Synthetic amounts are used throughout; inventories are not
+redistributed. Mechanical success of a heuristic crosswalk remains distinct
+from a scientifically reviewed correspondence.
+
 The JSON report contains every probe identity and outcome, structured errors
 for blocked identities, route-level warning/loss codes, and collision candidate
 identities with their originating rules. Biosphere probes are batched for speed;

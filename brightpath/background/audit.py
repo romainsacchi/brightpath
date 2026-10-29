@@ -141,7 +141,7 @@ def _document(source, cases):
     return InventoryDocument(data=data, context=InventoryContext(FormatProfile("brightway_excel"), source))
 
 
-def _check_success(document, result, target, provider):
+def _check_success(document, result, target, provider, policy=AUDIT_POLICY):
     if result.value.context != InventoryContext(document.context.format, target):
         raise ValueError("Successful migration has the wrong exact target context.")
     if validate_background_links(result.value.data, target, provider).has_errors:
@@ -163,12 +163,12 @@ def _check_success(document, result, target, provider):
             for field in ("amount", "loc", "scale", "minimum", "maximum"):
                 if field in exchange and not math.isfinite(float(exchange[field])):
                     raise ValueError(f"Migration produced a non-finite {field}.")
-    repeated = execute_background_migration(result.value, target, provider, AUDIT_POLICY)
+    repeated = execute_background_migration(result.value, target, provider, policy)
     if not repeated.succeeded or repeated.value.data != result.value.data:
         raise ValueError("Repeated same-context migration is not an unchanged successful no-op.")
 
 
-def audit_cases(cases, source, target, provider, *, batch_size=1):
+def audit_cases(cases, source, target, provider, *, batch_size=1, policy=AUDIT_POLICY):
     """Execute every case, bisecting failed batches to isolate blocked identities.
 
     Successful batch warning/loss codes are reported at route level, never
@@ -187,7 +187,7 @@ def audit_cases(cases, source, target, provider, *, batch_size=1):
         document = _document(source, batch)
         original = document.data
         try:
-            result = execute_background_migration(document, target, provider, AUDIT_POLICY)
+            result = execute_background_migration(document, target, provider, policy)
             if document.data != original or document.context.background != source:
                 raise ValueError("Migration mutated its caller-owned source.")
             if not result.succeeded:
@@ -212,7 +212,7 @@ def audit_cases(cases, source, target, provider, *, batch_size=1):
                     }
                 )
                 return
-            _check_success(document, result, target, provider)
+            _check_success(document, result, target, provider, policy)
             warning_codes.update(issue.code for issue in result.report.issues if issue.severity is Severity.WARNING)
             loss_codes.update(loss.code for loss in result.report.losses)
             migrated = {dataset["code"]: dataset for dataset in result.value.data}
