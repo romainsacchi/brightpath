@@ -224,6 +224,52 @@ def test_plain_comments_are_not_interpreted_as_identity_metadata(snapshot, famil
     assert dataset == before
 
 
+@pytest.mark.parametrize("family,version", [("ecoinvent", "3.12"), ("uvek", "2026")])
+@pytest.mark.parametrize("name", ["Sowing", "Production — α"])
+def test_foreground_case_and_unicode_identity_survive_background_profile_names(tmp_path, family, version, name):
+    from brightpath import BackgroundProfile, SimaProInventory
+
+    supplier = {"name": name, "reference product": "Reference Product", "location": "CH", "unit": "kilogram"}
+    consumer = {**supplier, "name": "Consumer", "reference product": "Final Product", "comment": "Consumer."}
+    data = [
+        {
+            **supplier,
+            "comment": "Original source label.",
+            "exchanges": [
+                {**supplier, "type": "production", "amount": 1, "simapro category": "Materials/Test"},
+            ],
+        },
+        {
+            **consumer,
+            "exchanges": [
+                {**consumer, "type": "production", "amount": 1, "simapro category": "Materials/Test"},
+                {**supplier, "type": "technosphere", "amount": 2},
+            ],
+        },
+    ]
+    before = deepcopy(data)
+    profile = BackgroundProfile(family, version, "cutoff")
+    inventory = SimaProInventory.from_data(data, background_profile=profile)
+    for iteration in range(2):
+        snapshot = deepcopy(inventory.data)
+        path = inventory.write_csv(tmp_path / f"foreground-{iteration}.csv")
+        loaded = SimaProInventory.from_csv(path, background_profile=profile)
+        by_name = {dataset["name"]: dataset for dataset in loaded.data}
+        assert set(by_name) == {name, "Consumer"}
+        for original in before:
+            actual = by_name[original["name"]]
+            assert identity(actual) == identity(original)
+            assert [identity(flow) for flow in actual["exchanges"]] == [
+                identity(flow) for flow in original["exchanges"]
+            ]
+            assert [flow["amount"] for flow in actual["exchanges"]] == [
+                flow["amount"] for flow in original["exchanges"]
+            ]
+        assert inventory.data == snapshot
+        inventory = loaded
+    assert data == before
+
+
 def test_import_refuses_ambiguous_local_names(snapshot):
     from brightpath.formats.simapro_csv import _restore_local_activity_links
 

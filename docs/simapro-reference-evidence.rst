@@ -141,3 +141,13 @@ The local audit retained 42,758 processes and 1,331,278 exchange rows, including
 characters and individual folder names at most 60. This validates native import
 for that export; it is not evidence of LCIA equivalence or universal coverage of
 arbitrary input inventories.
+
+Complete native UVEK 2026 inventory checks on 2026-10-29 found a separate land
+identity collision in the legacy label ``Transformation, to arable``. Exact
+ecoinvent 3.10 and 3.12 catalogs distinguish ``Transformation, to annual crop``
+(UUID ``c3f83a91-4888-41a4-add9-fd01678a1e5f``) from ``Transformation, to arable
+land, unspecified use`` (UUID ``2f1e926a-ec96-432b-b2a6-bd5e3de2ff87``).
+BrightPath writes their full names for ``natural resource/land`` exchanges in
+square metres. Both return to their original identities through the supported
+SimaPro reader, without changing quantities. This check covers BrightPath
+export/reimport; native SimaPro import of these labels remains unverified.

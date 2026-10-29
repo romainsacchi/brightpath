@@ -7,6 +7,7 @@ import pytest
 
 from brightpath import (
     BackgroundProfile,
+    BiosphereProfile,
     BrightwayInventory,
     InventoryFormat,
     SimaProInventory,
@@ -81,6 +82,74 @@ def test_ammonium_ion_alias_round_trip_uses_the_exact_selected_catalog(tmp_path,
         "kilogram",
         12,
     )
+    assert inventory.data == before == data
+
+
+@pytest.mark.parametrize(
+    "version,categories",
+    [
+        ("3.10", ("soil", "agricultural")),
+        ("3.12", ("soil", "agricultural")),
+        ("3.10", ("water", "surface water")),
+        ("3.12", ("water", "surface water")),
+        ("3.10", ("natural resource", "in ground")),
+        ("3.12", ("natural resource", "in ground")),
+        ("3.12", ("air",)),
+    ],
+)
+def test_sulfur_spelling_round_trip_keeps_exact_context_and_quantities(tmp_path, version, categories):
+    flow = {
+        "type": "biosphere",
+        "name": "Sulfur",
+        "categories": categories,
+        "unit": "kilogram",
+        "amount": 2,
+        "uncertainty type": 3,
+        "loc": 2,
+        "scale": 0.1,
+    }
+    data = [minimal_activity(extra_exchanges=[flow])]
+    before = deepcopy(data)
+    inventory = BrightwayInventory.from_data(data, background_profile=profile(version))
+    artifact = inventory.to_simapro().write_csv(tmp_path / "sulfur.csv")
+    restored = SimaProInventory.from_csv(artifact, background_profile=profile(version))
+    assert not restored.validate().has_errors
+    actual = next(exchange for exchange in restored.data[0]["exchanges"] if exchange["type"] == "biosphere")
+    assert (actual["name"], tuple(actual["categories"]), actual["unit"]) == ("Sulfur", categories, "kilogram")
+    assert (actual["amount"], actual["loc"], actual["scale"]) == pytest.approx((2, 2, 0.1))
+    assert inventory.data == before == data
+
+
+@pytest.mark.parametrize("version", ["3.10", "3.12"])
+@pytest.mark.parametrize("technology_family", ["ecoinvent", "uvek"])
+def test_arable_transformation_classes_keep_distinct_wire_labels(tmp_path, version, technology_family):
+    names = ("Transformation, to annual crop", "Transformation, to arable land, unspecified use")
+    data = [
+        minimal_activity(
+            extra_exchanges=[
+                {
+                    "type": "biosphere",
+                    "name": name,
+                    "categories": ("natural resource", "land"),
+                    "unit": "square meter",
+                    "amount": amount,
+                }
+                for name, amount in zip(names, (2, 3), strict=True)
+            ]
+        )
+    ]
+    before = deepcopy(data)
+    background = profile(version) if technology_family == "ecoinvent" else BackgroundProfile("uvek", "2026", "cutoff")
+    biosphere = BiosphereProfile("ecoinvent", version)
+    inventory = BrightwayInventory.from_data(data, background_profile=background, biosphere_profile=biosphere)
+    artifact = inventory.to_simapro().write_csv(tmp_path / "arable.csv")
+    content = artifact.read_text(encoding="latin-1")
+    assert all(name in content for name in names)
+    restored = SimaProInventory.from_csv(artifact, background_profile=background, biosphere_profile=biosphere)
+    assert not restored.validate().has_errors
+    flows = [flow for flow in restored.data[0]["exchanges"] if flow["type"] == "biosphere"]
+    assert [(flow["name"], flow["amount"]) for flow in flows] == list(zip(names, (2, 3), strict=True))
+    assert all(tuple(flow["categories"]) == ("natural resource", "land") for flow in flows)
     assert inventory.data == before == data
 
 

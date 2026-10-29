@@ -1121,6 +1121,9 @@ def _exchange_extras(exchange: dict[str, Any]) -> dict[str, Any]:
         for key, value in exchange.items()
         if key not in _EXCHANGE_MAPPED_KEYS | _EXCHANGE_TEMPLATE_KEYS
         or (key == "negative" and exchange.get("uncertainty type") != 2)
+        # Only elementary-flow compartments are represented by the flow's
+        # category. Product classifications remain per-exchange metadata.
+        or (key == "categories" and exchange.get("type") != "biosphere")
     }
 
 

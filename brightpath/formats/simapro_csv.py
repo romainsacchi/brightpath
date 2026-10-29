@@ -187,7 +187,7 @@ def _validate_activity_identity(identity):
 
 def _restore_activity_identity(dataset, profile):
     comment = dataset.get("comment") or ""
-    if profile.family != "uvek" or "[BrightPath activity " not in comment:
+    if "[BrightPath activity " not in comment:
         return False
     match = re.search(r"(?:^| )\[BrightPath activity v1:([A-Za-z0-9+/=]+)\]$", comment)
     if not match or len(match[1]) > _ACTIVITY_METADATA_LIMIT:
@@ -940,7 +940,7 @@ class _SimaProRenderer:
                         f"activity[{activity_index}]",
                     )
                 )
-                if self.profile.family == "ecoinvent":
+                if self.document.context.background.biosphere.family == "ecoinvent":
                     for exchange_index, exchange in enumerate(activity.get("exchanges", [])):
                         if not isinstance(exchange, dict) or exchange.get("type") != "biosphere":
                             continue
@@ -1395,7 +1395,15 @@ class _SimaProRenderer:
             parts.append(str(activity["comment"]))
         if activity.get("source"):
             parts.append(f"Source: {activity['source']}")
-        if self.profile.family == "uvek":
+        needs_identity = self.profile.family == "uvek"
+        if not needs_identity:
+            parsed = parse_simapro_technosphere_name(
+                _latin1_safe_cell(self._format_technosphere(activity)),
+                unit=activity["unit"],
+                profile=self.profile,
+            )
+            needs_identity = parsed != tuple(activity.get(key) for key in _ACTIVITY_IDENTITY_FIELDS[:3])
+        if needs_identity:
             identity = {key: activity.get(key) for key in _ACTIVITY_IDENTITY_FIELDS}
             _validate_activity_identity(identity)
             payload = json.dumps(identity, ensure_ascii=True, separators=(",", ":"))
@@ -1574,8 +1582,7 @@ class _SimaProRenderer:
                     f"No SimaPro subcompartment mapping for {categories[1]!r} on {exchange['name']!r}."
                 ) from exc
         name = self.biosphere.get(exchange["name"], exchange["name"])
-        if self.profile.family == "ecoinvent":
-            name = resolve_ecoinvent_flow_name(exchange, name)
+        name = resolve_ecoinvent_flow_name(exchange, name)
         return [
             name,
             subcompartment,

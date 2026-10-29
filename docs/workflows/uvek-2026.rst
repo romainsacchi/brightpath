@@ -201,6 +201,48 @@ with explicit reverse-route and recipe-loss acceptance. Helper findings use
 ``generated_helpers`` scope; a failed helper conversion rolls back the entire
 operation.
 
+Complete source-inventory checks
+--------------------------------
+
+Six complete inventories from the original archive were checked in canonical
+form: sowing, particle-board effluent treatment, a brine-water heat pump,
+NMC111 hydroxide, sodium metasilicate and coffee-ground ash disposal. Their
+142 exchanges include newly reviewed biosphere links that failed with the
+earlier correspondence resource. All used links now resolve at ecoinvent 3.12,
+with unchanged source inventories and no omitted exchanges. Brightway Excel,
+openLCA and SimaPro exports were read back and checked for canonical identities
+and quantities. SimaPro's required production classification was supplied
+explicitly. The inventories and coefficients remain private.
+
+This check decodes the vendor's unqualified XML into canonical data and resolves
+supplier references by their original process numbers. It does not broaden the
+registered ecoSpold1 adapter's namespaced/XSD input contract. The exact source
+archive remains bound by the catalog provenance digest.
+
+The checks additionally exposed format round-trip issues: product classifications
+were dropped from openLCA exchange metadata; ecoinvent-style SimaPro names lost
+the original foreground capitalization; and the SimaPro sulfur spelling did
+not return to the exact catalog name. The adapters now preserve the classifications
+and annotated foreground identities and resolve the sulfur alias without
+changing its compartment, unit or quantity.
+
+Four further complete source inventories exercise the independently reviewed
+reverse land mappings: phosphate-rock mining in Morocco and the United States,
+dried poultry manure in Switzerland, and bauxite-mine recultivation. Their
+48 exchanges migrate into the native UVEK 2026 context under explicit warning
+policies for inferred reverse routes, heuristic mappings and information loss.
+Each failed with the earlier reverse biosphere resource. These checks do not
+establish reversibility for unreviewed water or refrigerant links.
+All four pass Brightway Excel and openLCA export/reimport with quantities and
+supported uncertainty parameters preserved. Three also pass SimaPro. The native
+poultry-manure inventory's ``Heat, waste`` flow in ``high. pop.`` is refused by
+the current SimaPro subcompartment mapping; its exchange is not discarded.
+
+SimaPro exports retain the distinct annual-crop and unspecified-arable land
+transformation names rather than collapsing both to a legacy label. Brightway
+Excel, CSV and TSV retain exact biosphere and format version strings, including
+``2026`` versus ``2026.0``, without an explicit profile override on reimport.
+
 Cross-family routes to and from ecoinvent pass through UVEK 2025 and retain
 that route's limits, heuristic findings, proxy policies, and foreground recipes.
 The ``1.0.0a11`` publisher-correspondence expansion supports 1,424 native UVEK

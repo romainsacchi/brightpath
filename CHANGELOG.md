@@ -4,6 +4,16 @@ All notable changes to this project will be documented in this file.
 
 ## 1.0.0a11 - 2026-10-29
 
+- Preserve product-exchange classification categories in openLCA round trips
+  and retain case-sensitive foreground identities and local links when using
+  ecoinvent SimaPro naming. Restore SimaPro's sulfur spelling against exact
+  target compartments. Complete source-inventory checks exposed these issues.
+- Keep annual-crop and unspecified-arable land transformations distinct in
+  SimaPro exports, independently of the technosphere family. Preserve exact
+  biosphere and format version strings in Brightway Excel, CSV and TSV.
+- Preserve the exact review JSON bytes on Windows so publisher-evidence
+  checksums and resource regeneration agree across platforms.
+
 - Add seven publisher-record process correspondences in both UVEK release
   directions. Require explicit information-loss acceptance for the four CH/RER
   wind-component geography revisions; retain the washing-machine unit blocker.

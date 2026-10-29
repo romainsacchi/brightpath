@@ -388,7 +388,11 @@ def _serialize_value(value, *, field: str) -> str | bool | numbers.Real:
             return _json_value(value, field=field)
         return value
     if isinstance(value, str):
-        if field == _PROFILE_METADATA_FIELDS["version"]:
+        if field in {
+            _PROFILE_METADATA_FIELDS["version"],
+            _BIOSPHERE_METADATA_FIELDS["version"],
+            _FORMAT_METADATA_FIELDS["format_version"],
+        }:
             return _json_value(value, field=field)
         return value
     if field == "categories" and isinstance(value, (list, tuple)):

@@ -388,6 +388,34 @@ def test_elementary_compartments_and_shared_metadata_survive_round_trip(tmp_path
     assert document.data == before
 
 
+def test_product_exchange_categories_survive_shared_flow_round_trips(tmp_path):
+    document = _document()
+    data = document.data
+    data[0]["exchanges"][0]["categories"] = ("agricultural", "unspecified")
+    data[1]["exchanges"][0]["categories"] = ("foreground", "operations")
+    # The local input and its producer share a product flow, but carry distinct
+    # classifications. Neither classification is an elementary compartment.
+    data[1]["exchanges"][1]["categories"] = ("transport", "infrastructure")
+    document = document.replace(data=data)
+    before = deepcopy(document.data)
+    for name in ("product-categories.zip", "product-categories-again.zip"):
+        snapshot = deepcopy(document.data)
+        path = write_openlca_jsonld(document, tmp_path / name)
+        loaded = load_openlca_jsonld(path, context=document.context)
+        by_name = {dataset["name"]: dataset for dataset in loaded.data}
+        for source in before:
+            for expected, actual in zip(source["exchanges"], by_name[source["name"]]["exchanges"], strict=True):
+                if "categories" in expected:
+                    assert tuple(actual["categories"]) == tuple(expected["categories"])
+                assert (actual["type"], actual["amount"], actual["unit"]) == (
+                    expected["type"],
+                    expected["amount"],
+                    expected["unit"],
+                )
+        assert document.data == snapshot
+        document = loaded
+
+
 @pytest.mark.parametrize("locations, expected_products", [(("CH", "FR"), 2), (("CH", "CH"), 1)])
 def test_product_identity_and_provider_links(tmp_path, locations, expected_products):
     path = write_openlca_jsonld(_collision_document(locations=locations), tmp_path / "products.zip")
