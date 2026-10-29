@@ -25,8 +25,9 @@ the installed package's exact catalogs and migration engine. It covers:
 The probe policy matches CLIC's export policy: inferred reversal and documented
 information loss produce warnings; ambiguous rules, missing links, explicit
 deletion rules, unsafe technosphere unit changes, and invalid targets remain
-errors. The existing engine separately permits documented omission of
-unrepresentable biosphere unit changes; the audit reports those as
+errors. The explicit information-loss warning policy permits documented omission
+of unrepresentable biosphere unit changes; strict policy rejects the omission
+and rolls back. The audit reports accepted omissions as
 ``omitted_with_warning``, never as fully supported probes. Target coverage must
 be complete. Unavailable routes remain visible rather than being skipped.
 
@@ -61,10 +62,16 @@ the explicit information-loss, inferred-reverse and heuristic warning policy::
 
    python -m scripts.audit_uvek_2026_routes --list-routes
    python -m scripts.audit_uvek_2026_routes \
-     --workers 2 --output /tmp/uvek-2026-audit.json
+     --workers 2 --baseline docs/uvek-2026-audit-baseline.json \
+     --output /tmp/uvek-2026-audit.json
 
-Discovery without a reviewed ``--baseline`` deliberately exits nonzero. Review
-the report before establishing a native-route release baseline. The legacy
+Discovery without a reviewed ``--baseline`` deliberately exits nonzero. The
+reviewed native baseline contains all 90 tasks and 892,550 probes: 443,401
+supported, 449,099 blocked and 50 explicitly omitted under the warning policy.
+There are no audit errors. Counts repeat source identities across policies,
+directions and exact profiles; they are not a global mapping-coverage score.
+Both CI and publication compare the installed wheel against this baseline and
+upload the full audit report. A resource change during a run aborts it. The legacy
 baseline remains independent, allowing its existing probe outcomes to be
 compared without mixing them with the larger native-route inventory.
 
@@ -75,6 +82,41 @@ reported separately with their count and a stable identity digest. They are
 outside the approved export cohort, not successful conversions or skipped
 runtime checks. Unavailable outgoing consequential routes are recorded as
 explicit planning findings.
+
+Selected native-route results are:
+
+.. list-table:: Supported probes by policy
+   :header-rows: 1
+   :widths: 55 15 15
+
+   * - Independent route
+     - Strict
+     - Explicit warnings
+   * - UVEK 2025 process to 2026 (11,747 sources)
+     - 11,742
+     - 11,746
+   * - UVEK 2026 process to 2025 (11,947 sources)
+     - 11,742
+     - 11,746
+   * - Approved UVEK 2026 process to ecoinvent 3.12 (1,424 sources)
+     - 1,237
+     - 1,424
+   * - Native biosphere to ecoinvent 3.12 (2,679 sources)
+     - 1,789
+     - 1,935
+   * - Ecoinvent 3.10 biosphere to native (4,362 sources)
+     - 1,297
+     - 1,297
+   * - Ecoinvent 3.12 biosphere to native (9,850 sources)
+     - 0
+     - 1,471
+
+The release-bridge difference is the four reviewed CH/RER wind revisions; the
+remaining washing-machine unit change remains blocked under both policies.
+The native-to-2025 direction additionally has 200 identities without a release
+correspondence. The ecoinvent 3.12 reverse biosphere route requires acceptance
+of inferred reversal. Incoming ecoinvent process routes require heuristic
+acceptance and remain mechanically validated heuristic conversions.
 
 For focused iteration, use ``--route`` with an exact task name returned by
 ``--list-routes``. A subset report is marked partial and cannot pass the release

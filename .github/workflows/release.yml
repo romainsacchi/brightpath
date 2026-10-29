@@ -150,6 +150,22 @@ jobs:
           path: ${{ runner.temp }}/migration-audit.json
           if-no-files-found: warn
 
+      - name: Audit installed-wheel UVEK 2026 routes
+        run: |
+          cd "$RUNNER_TEMP"
+          python "$GITHUB_WORKSPACE/scripts/audit_uvek_2026_routes.py" \
+            --workers 2 \
+            --baseline "$GITHUB_WORKSPACE/docs/uvek-2026-audit-baseline.json" \
+            --output "$RUNNER_TEMP/uvek-2026-audit.json"
+
+      - name: Upload UVEK 2026 audit
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: uvek-2026-audit
+          path: ${{ runner.temp }}/uvek-2026-audit.json
+          if-no-files-found: warn
+
       - name: Upload distribution artifact
         uses: actions/upload-artifact@v4
         with:

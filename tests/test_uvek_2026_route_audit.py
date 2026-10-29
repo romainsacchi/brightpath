@@ -79,6 +79,10 @@ def test_report_determinism_and_partial_scope_are_explicit(monkeypatch, discover
             uvek_audit.run_uvek_2026_audit(route_names=invalid)
     with pytest.raises(ValueError):
         uvek_audit.run_uvek_2026_audit(workers=0)
+    fingerprints = iter(("before", "after"))
+    monkeypatch.setattr(uvek_audit, "migration_resource_fingerprint", lambda: next(fingerprints))
+    with pytest.raises(RuntimeError, match="changed during the native-route audit"):
+        uvek_audit.run_uvek_2026_audit(route_names=names)
 
 
 def test_runtime_task_honors_the_selected_information_loss_policy(discovery):

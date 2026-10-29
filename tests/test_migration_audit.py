@@ -55,6 +55,31 @@ def test_batched_audit_isolates_failures_and_preserves_inputs(provider):
     )
 
 
+def test_outer_plan_refusal_has_identical_case_findings_without_bisection(monkeypatch):
+    from brightpath.core.policies import MigrationPolicy
+
+    provider = PackageCatalogProvider()
+    source = context("3.12")
+    target = BackgroundContext(TechnosphereProfile("uvek", "2025", "cutoff"), source.biosphere)
+    cases = [case(name) for name in ("Water", "Carbon dioxide, fossil")]
+    cases[0]["exchange"]["unit"] = "cubic meter"
+    cases[0]["exchange"]["categories"] = ["water"]
+    execute = audit.execute_background_migration
+    calls = []
+
+    def counted(*args, **kwargs):
+        calls.append(1)
+        return execute(*args, **kwargs)
+
+    monkeypatch.setattr(audit, "execute_background_migration", counted)
+    policy = MigrationPolicy.strict()
+    batched = audit.audit_cases(cases, source, target, provider, batch_size=128, policy=policy)
+    assert len(calls) == 1
+    singleton = audit.audit_cases(cases, source, target, provider, batch_size=1, policy=policy)
+    assert batched == singleton
+    assert batched["summary"]["statuses"] == {"blocked": 2}
+
+
 @pytest.mark.parametrize(
     "cases,batch_size", [([], 1), ([case("retained"), case("retained")], 1), ([case("retained")], 0)]
 )

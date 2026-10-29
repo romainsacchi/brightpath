@@ -143,6 +143,7 @@ def run_uvek_2026_audit(*, progress=None, workers=1, route_names=None):
     """
     if workers < 1:
         raise ValueError("workers must be positive.")
+    initial_fingerprint = migration_resource_fingerprint()
     tasks, scope = uvek_2026_tasks(PackageCatalogProvider())
     discovered = set(tasks)
     if route_names is not None:
@@ -165,6 +166,10 @@ def run_uvek_2026_audit(*, progress=None, workers=1, route_names=None):
                 if progress:
                     progress(name, routes[name]["summary"])
     routes = dict(sorted(routes.items()))
+    if migration_resource_fingerprint() != initial_fingerprint:
+        raise RuntimeError(
+            "Packaged migration resources changed during the native-route audit; rerun from a stable build."
+        )
     baseline = {
         "schema_version": 1,
         "complete": set(routes) == discovered,
@@ -183,7 +188,7 @@ def run_uvek_2026_audit(*, progress=None, workers=1, route_names=None):
     return {
         "schema_version": 1,
         "brightpath_version": __version__,
-        "migration_fingerprint": migration_resource_fingerprint(),
+        "migration_fingerprint": initial_fingerprint,
         "baseline": baseline,
         "routes": routes,
         "totals": dict(

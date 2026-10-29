@@ -25,7 +25,7 @@ from brightpath.core.context import (
     TechnosphereProfile,
 )
 from brightpath.core.policies import MigrationPolicy, PolicyAction
-from brightpath.core.reports import Severity
+from brightpath.core.reports import Severity, StageKind
 from brightpath.migrations.engine import _canonical_unit
 from brightpath.migrations.resources import load_biosphere_resources, load_technosphere_resources
 from brightpath.models import InventoryDocument
@@ -197,6 +197,20 @@ def audit_cases(cases, source, target, provider, *, batch_size=1, policy=AUDIT_P
                     or not result.report.has_errors
                 ):
                     raise ValueError("Failed migration did not roll back with a structured error.")
+                errors = [issue for issue in result.report.issues if issue.severity is Severity.ERROR]
+                # A refusal at the outer plan applies to every member of this
+                # already source-validated batch. No rule or generated helper
+                # has run. Preserve the same per-case findings without repeating
+                # a policy/route refusal thousands of times through bisection.
+                if (
+                    len(result.report.stages) <= 2
+                    and result.report.stages[-1].stage is StageKind.MIGRATION_PLANNING
+                    and all(issue.stage is StageKind.MIGRATION_PLANNING for issue in errors)
+                ):
+                    outcomes.extend(
+                        {**case, "status": "blocked", "errors": [issue.to_dict() for issue in errors]} for case in batch
+                    )
+                    return
                 if len(batch) > 1:
                     midpoint = len(batch) // 2
                     run(batch[:midpoint])

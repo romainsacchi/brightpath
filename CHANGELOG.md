@@ -2,15 +2,66 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0a11 - 2026-10-28
+## 1.0.0a11 - 2026-10-29
 
+- Add seven publisher-record process correspondences in both UVEK release
+  directions. Require explicit information-loss acceptance for the four CH/RER
+  wind-component geography revisions; retain the washing-machine unit blocker.
+- Add five exact modern land mappings and seven independently checked reverse
+  mappings, raising native biosphere coverage to 1,935/2,679 and reverse coverage
+  to 1,297/4,362. Preserve prior rules and all land-class qualifiers.
+- Convert generated recipe biosphere flows independently to the requested
+  context. Fix the CdTe factory export with a preserved native UVEK biosphere;
+  report helper findings separately and roll back the whole export on failure.
+- Require explicit information-loss acceptance before omitting a biosphere
+  exchange whose unit conversion lacks a factor. Strict execution rolls back.
+
+- Require explicit heuristic-mapping acceptance: strict migration now rejects
+  heuristic compatibility resources. Add `on_heuristic_mapping` and the CLI
+  `--allow-heuristic-mapping` option; accepting heuristics leaves other strict
+  checks intact. Record the policy choice and limitations in migration reports.
+- Add an independent native UVEK 2026 route audit covering strict and warning
+  policies, both background axes and exact packaged catalog versions. Expose
+  unapproved export suppliers and unavailable routes separately; partial audits
+  cannot pass the release gate.
+- Add 158 forward radioactivity correspondences with exact publisher names,
+  contexts and UUIDs and the explicit SI factor 0.001 from Bq to kBq. Increase
+  native biosphere coverage at this review stage to 1,930 of 2,679 identities,
+  leaving 749 unresolved before the subsequent land review.
+  Preserve the previous 1,772 rules and all reverse mappings. Flag 56 additional
+  lake/river compartment merges; strict policy accepts the other 102 additions.
+  Scale amounts, supported uncertainty distributions and BrightPath expressions
+  together. Retain CLIC's separate guard against formula-bearing unit changes.
+- Add 55 further forward native biosphere mappings: 32 publisher context
+  correspondences, 19 guarded CAS-based synonyms, and four exact cubic-meter
+  name-suffix correspondences. Increase native coverage from 1,717 to 1,772
+  identities, leaving 907 unresolved. Preserve all prior mappings and reverse
+  resources. Retain long-term groundwater contexts and flag nine additional
+  surface-water coarsening rules. Reject regional water, dioxin-equivalent,
+  carbon-origin and contradictory-CAS substitutions.
+- Preserve SimaPro ammonium-ion aliases against exact modern ecoinvent catalogs
+  and restore water amount expressions after reversible mass/volume wire scaling.
+  Keep caller-owned inputs and the separate CLIC formula-migration guard intact.
+- Add 427 reviewed forward native UVEK 2026 biosphere mappings to ecoinvent
+  3.10, increasing coverage from 1,290 to 1,717 of 2,679 identities. Bind 402
+  correspondences to publisher UUIDs, 22 to documented lake/river merges,
+  and three to explicit pure-water mass/volume factors. Leave 962 unresolved
+  identities, including nine CAS conflicts, and preserve the reverse resource.
+  Report 81 compartment-coarsening rules through the information-loss policy;
+  strict execution refuses them, while an explicit warning policy retains
+  quantities, uncertainty and per-exchange loss findings.
+- Validate native UVEK 2026 biosphere compartment labels without rewriting them
+  to ecoinvent compartments. Preserve them through Brightway Excel and openLCA
+  round trips and restore unique exact native identities when parsing SimaPro.
+  Refuse SimaPro compartments without a supported section instead of omitting
+  their exchanges. These corrections were found by CLIC integration tests.
 - Add 1,070 reviewed reference-function correspondences from UVEK 2025/2026
   to ecoinvent 3.12 cut-off, expanding approved process coverage from 354 to 1,424.
   Retain all prior rules, proxies and supporting recipes unchanged.
 - Derive the additions from a pinned public ecoinvent correspondence workbook,
   exact source labels, unchanged units/geography, and stable target product UUIDs.
   Keep ambiguous rows, change flags, multi-output processes and waste-role cases
-  unresolved. Biosphere coverage is unchanged.
+  unresolved. This process expansion is independent of the biosphere review.
 - Expand the migration audit to 52,074 probes: 50,552 supported, 1,497 blocked
   and 25 explicitly omitted with warnings. Preserve all 42,444 prior outcomes,
   output hashes, policies and 483 collision findings.
