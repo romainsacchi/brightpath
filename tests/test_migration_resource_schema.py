@@ -8,7 +8,11 @@ from jsonschema import Draft202012Validator
 
 from brightpath import DATA_DIR
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_biosphere_resources, load_technosphere_resources
+from brightpath.migrations.resources import (
+    load_biosphere_resources,
+    load_technosphere_resources,
+    load_uvek_release_resources,
+)
 from brightpath.migrations.schema import (
     SCHEMA_PATH,
     dumps_migration_resource,
@@ -93,6 +97,23 @@ def test_missing_required_fields_are_rejected(migration_resource, key):
     migration_resource.pop(key)
     with pytest.raises(MigrationError):
         validate_migration_resource(migration_resource)
+
+
+def test_technosphere_rule_cannot_declare_biosphere_information_loss(migration_resource):
+    rule = migration_resource["replace"][0]
+    rule["biosphere_information_loss"] = "Wrong background axis."
+    rule["review_ref"] = intern_review(
+        migration_resource, {"rationale": "Reviewed example.", "evidence": ["Example source."]}
+    )
+    with pytest.raises(MigrationError, match="only be declared on biosphere"):
+        validate_migration_resource(migration_resource)
+
+
+def test_biosphere_rule_cannot_declare_technosphere_information_loss():
+    resource = deepcopy(load_uvek_release_resources("biosphere")[0])
+    resource["replace"][0]["technosphere_information_loss"] = "Wrong background axis."
+    with pytest.raises(MigrationError, match="only be declared on technosphere"):
+        validate_migration_resource(resource)
 
 
 @pytest.mark.parametrize(

@@ -23,9 +23,9 @@ def historical_baseline():
     """Reconstruct the evidence snapshot without changing packaged resources."""
     from collections import Counter
 
-    from brightpath.migrations.resources import load_uvek_release_resources
+    from tests.uvek_process_history import before_process_review
 
-    resources = deepcopy(list(load_uvek_release_resources("technosphere")))
+    resources = before_process_review()
     for resource in resources:
         original_review = next(
             key

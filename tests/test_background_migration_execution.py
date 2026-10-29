@@ -595,7 +595,8 @@ def test_reverse_biosphere_rename_uses_complete_non_uuid_identity():
     assert (exchange["name"], tuple(exchange["categories"]), exchange["unit"]) == target_identity
 
 
-def test_unrepresentable_biosphere_unit_change_is_removed_with_a_warning():
+@pytest.mark.parametrize("action", [PolicyAction.ERROR, PolicyAction.WARN, PolicyAction.ALLOW])
+def test_unrepresentable_biosphere_unit_change_requires_explicit_loss_acceptance(action):
     source = background("3.9", "3.9")
     target = background("3.10", "3.10")
     rule = next(
@@ -616,10 +617,10 @@ def test_unrepresentable_biosphere_unit_change_is_removed_with_a_warning():
         ]
     )
 
-    result = execute_background_migration(original, target, provider)
+    result = execute_background_migration(original, target, provider, MigrationPolicy(on_information_loss=action))
 
-    assert result.succeeded
-    assert result.value.data[0]["exchanges"] == []
+    assert result.succeeded == (action is not PolicyAction.ERROR)
+    assert result.value.data[0]["exchanges"] == ([] if result.succeeded else original.data[0]["exchanges"])
     assert "migration.biosphere_exchange_removed_unsafe_unit" in {issue.code for issue in result.report.issues}
     assert "migration.biosphere_exchange_removed_unsafe_unit" in {loss.code for loss in result.report.losses}
 

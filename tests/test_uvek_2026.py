@@ -86,7 +86,15 @@ def test_every_rule_and_unresolved_disposition_belongs_to_exact_catalog(axis):
         assert {identity(rule["target"], axis) for rule in resource["replace"]} <= target
         assert resource["reverse_policy"] == "explicit_only"
         assert not resource["delete"] and not resource["disaggregate"]
-        assert len({identity(rule["target"], axis) for rule in resource["replace"]}) == len(mapped)
+        # Explicit forward biosphere coarsening can have several source flows per target.
+        grouped = {}
+        for rule in resource["replace"]:
+            grouped.setdefault(identity(rule["target"], axis), []).append(rule)
+        for group in grouped.values():
+            if len(group) > 1:
+                assert axis == "biosphere"
+                assert any(rule.get("report_correspondence") for rule in group)
+                assert all(rule.get("review_ref") for rule in group)
 
 
 @pytest.mark.parametrize("source_version,target_version", [("2025", "2026"), ("2026", "2025")])
@@ -95,7 +103,8 @@ def test_all_safe_process_rules_execute_with_uncertainty_metadata_and_round_trip
     safe = [
         rule
         for rule in resource["replace"]
-        if rule["source"]["unit"] == rule["target"]["unit"] or "conversion_factor" in rule
+        if (rule["source"]["unit"] == rule["target"]["unit"] or "conversion_factor" in rule)
+        and not rule.get("technosphere_information_loss")
     ]
     exchanges = [
         {
@@ -140,7 +149,12 @@ def test_both_axes_use_authored_forward_resources_and_preserve_source(source_ver
         if rule["mapping_method"] == "legacy_location_suffix"
     )
     bio_source = "3.10" if source_version == "2025" else "2026"
-    bio_rules = rules("biosphere", bio_source)["replace"]
+    # This regression exercises the original bidirectional correspondence set.
+    bio_rules = [
+        rule
+        for rule in rules("biosphere", bio_source)["replace"]
+        if rule["mapping_method"] == "native_compartment_and_bw2io_name"
+    ]
     original = document(
         context(source_version),
         [

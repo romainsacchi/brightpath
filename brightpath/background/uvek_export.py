@@ -31,7 +31,7 @@ def migration_resource_fingerprint() -> str:
     catalogs = (DATA_DIR / "export/reference_catalogs/RESOURCE_MANIFEST.json").read_bytes()
     return hashlib.sha256(
         __version__.encode()
-        + b"migration-schema-v3-uncertainty-scaling-heuristic-policy-v2"
+        + b"migration-schema-v3-uncertainty-scaling-helper-biosphere-v3"
         + manifest
         + catalogs
         + SCHEMA_PATH.read_bytes()

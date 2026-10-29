@@ -58,11 +58,39 @@ The process resources contain 10,803 exact identities, two unambiguous legacy
 location-suffix changes, and 179 unit-spelling changes with explicit factors
 of 1. A further 755 correspondences use reviewed, release-specific factors of
 1 for the gas-volume and operating-time label changes described below. There
-are **11,739 executable process correspondences in each direction**.
+are **11,746 executable process correspondences in each direction** when the
+four recorded geographic revisions are explicitly accepted. Strict execution
+accepts 11,742 and rejects those four revisions.
 The washing-machine correspondence still has no approved numeric factor:
 strict execution rejects its use, and permissive execution skips it and reports
 the loss. No general physical conversion between these units is assumed.
-Seven 2025 identities and 207 2026 identities have no process correspondence.
+All 2025 identities have a correspondence, including the blocked washing-machine
+rule; 200 native 2026 identities have no process correspondence.
+
+Seven reviewed process records
+--------------------------------
+
+The :download:`process review <../uvek_2026_process_review.json>` checks the
+original workbook and XML filename/UUID, process number, reference unit and
+output quantity. Three records retain their geography and functional demand:
+rapeseed cultivation, refined waste cooking oil and imported reinforcing steel.
+The steel record has revised background coefficients; the correspondence does
+not claim unchanged impacts. Four wind-turbine component records retain their
+reference quantities and technosphere coefficient vectors but change geographic
+scope between CH and RER. Both directions report that revision as information
+loss and require ``MigrationPolicy(on_information_loss=PolicyAction.WARN)``
+or another explicit acceptance action.
+
+These are individually authored release correspondences, with independently
+checked reverse endpoints. No general suffix-stripping or geographic fallback
+is introduced. The six incoming ecoinvent heuristic rules that previously
+stopped at the old CH wind identities can reach these native RER successors
+when both heuristic and geographic-loss policies are explicitly accepted.
+
+Reproduce the review from the original sources with::
+
+    python -m scripts.review_uvek_2026_processes \
+      /path/to/lci-uvek-2025.xlsx /path/to/original-uvek-2026.zip
 
 Source investigation of the 756 unit changes
 --------------------------------------------
@@ -137,16 +165,41 @@ cannot silently replace the historical evidence with a one-record review.
 Biosphere correspondence coverage
 ---------------------------------
 
-The two biosphere resources contain 1,290 one-to-one correspondences between
+The original biosphere resources contain 1,290 one-to-one correspondences between
 the native release and ecoinvent 3.10. Generation uses explicit compartment
 aliases and bw2io's versioned elementary-flow name migration data, accepting
 only exact destination catalog identities. Four water emission rules include
 explicit mass/volume factors. The native catalog is not renamed.
-Ambiguous matches, including lake/river collapses, are recorded as candidates
-and remain unresolved in both directions. There are 1,389 unresolved native
-identities and 3,072 unresolved ecoinvent 3.10 identities. No flows are deleted
+The first forward review below adds 427 mappings, the follow-up adds another
+55, the radioactivity review adds 158 and the land review adds five. There are
+now **1,935 native identities mapped to ecoinvent 3.10**, with **744 unresolved
+native identities**. The reverse resource contains 1,297 rules and 3,065 unresolved
+ecoinvent 3.10 identities; it does not infer a river/lake allocation from a
+surface-water exchange. No flows are deleted
 or assigned arbitrary substitutes. Reports expose incomplete coverage before
 execution, and used links are checked against the exact target catalog.
+
+The :download:`land review CSV <../uvek_2026_land_review.csv>` and
+:download:`JSON evidence <../uvek_2026_land_review.json>` independently approve
+five forward and seven reverse correspondences. Only the seven listed modern
+publisher labels in native ``resources/land`` and ecoinvent
+``natural resource/land`` are eligible. Units, qualifiers and publisher UUIDs
+must match; unspecified compartments and inferred land-class merges remain
+blocked. These additions preserve quantities without a conversion factor.
+
+Reproduce the land review with::
+
+    python -m scripts.review_uvek_2026_land \
+      /path/to/original-uvek-2026.zip \
+      /path/to/correspondence_file_elementary-exchanges_v2.2-v3.0_20130904.xls
+
+Generated process recipes have their own biosphere context. BrightPath checks
+their flows against the requested exact catalog and, when necessary, migrates
+only those helper flows. A technosphere-only export keeps the foreground's
+native biosphere unchanged. The CdTe factory recipe can now follow that path
+with explicit reverse-route and recipe-loss acceptance. Helper findings use
+``generated_helpers`` scope; a failed helper conversion rolls back the entire
+operation.
 
 Cross-family routes to and from ecoinvent pass through UVEK 2025 and retain
 that route's limits, heuristic findings, proxy policies, and foreground recipes.
@@ -155,11 +208,111 @@ The ``1.0.0a11`` publisher-correspondence expansion supports 1,424 native UVEK
 new reference-function correspondences. The published ``1.0.0a10`` contains 354.
 The other 10,523 native process identities still lack an approved ecoinvent
 export correspondence.
-This expansion does not change the native-biosphere mapping coverage above.
+Process and biosphere correspondence coverage are assessed independently.
 See :doc:`ecoinvent-to-uvek` and :doc:`uvek-export`. A correspondence preserves
 the reference identity; it does not assert unchanged background coefficients
 or equivalent LCIA results. Consequential UVEK release migrations and
 cross-system-model migrations remain unavailable.
+
+Forward biosphere review
+------------------------
+
+The source-bound review adds:
+
+* 402 correspondences using the public ecoinvent 2.2/3.0 elementary-exchange
+  workbook and its historical UUIDs, matched against the exact ecoinvent 3.10
+  catalog. Source labels, units and compartments must match the publisher row;
+  conflicting CAS metadata, absent UUIDs and changed target compartments are
+  rejected. This recovers common metal, particulate and NMVOC reference links
+  whose labels changed after ecoinvent 3.0.
+* 22 same-name, same-unit lake/river correspondences to the documented merged
+  surface-water compartment. These are forward mappings only.
+* Three pure-water emission correspondences, with explicit factors of 0.001
+  from kilogram to cubic meter using the 1,000 kg/m3 LCA water convention.
+  The source CAS must be 7732-18-5. The source compartments are groundwater,
+  river and unspecified water. This is not a general mass-to-volume alias.
+
+Eighty-one added rules coarsen lake/river distinctions, including publisher
+correspondences. They declare ``biosphere_information_loss``. Strict policy
+refuses a used coarsening rule transactionally; callers can explicitly select
+``MigrationPolicy(on_information_loss=PolicyAction.WARN)`` to accept it with
+per-exchange warnings and loss records. CLIC already uses this policy for
+generated exports. The other 346 additions execute under strict policy.
+Every added rule reports its identifier and evidence reference when used.
+Existing rules and explicit reverse mappings are preserved.
+CLIC's amount-formula guard is independent: numeric water conversions are
+supported, but a formula-bearing unit change is still refused by CLIC.
+
+The accepted identities occur in 77,102 biosphere exchange rows in the original
+UVEK archive. This is an occurrence count, including zero-amount rows, and does
+not measure impact coverage or confirm an entire inventory can be exported.
+Process suppliers and later ecoinvent migration steps still need exact target
+coverage. Nine identities with contradictory CAS metadata remain blocked.
+
+Review the :download:`decisions and remaining blockers as CSV
+<../uvek_2026_biosphere_review.csv>` or the :download:`source-bound JSON evidence
+<../uvek_2026_biosphere_review.json>`. The evidence records the publisher workbook
+URL, byte digest, sheet and row, original archive digest, target catalog digest,
+and original forward-resource digest. Only reference metadata is distributed.
+The publisher's source terms still apply to its correspondence metadata.
+
+Reproduce the review with the public publisher workbook and local native archive::
+
+    python scripts/review_uvek_2026_biosphere.py \
+      /path/to/original-uvek-2026.zip \
+      /path/to/correspondence_file_elementary-exchanges_v2.2-v3.0_20130904.xls
+
+The generator below applies the review by default. ``--unreviewed`` reproduces
+the original resources without the unit or biosphere reviews. A changed archive,
+publisher workbook, baseline, target UUID, CAS agreement, water factor or missing
+coarsening finding fails authoring validation.
+
+Follow-up review of remaining blockers
+--------------------------------------
+
+A second source-bound review adds 55 forward correspondences while preserving
+the entire initial 1,717-rule resource:
+
+* 32 exact legacy labels with compatible CAS metadata and units, resolving the
+  publisher's context notation against both its historical and new compartment
+  columns. Groundwater and long-term groundwater remain distinct.
+* 19 chemical synonyms with one valid CAS registry number, one publisher UUID,
+  compatible units, matching historical and target contexts, and a unique exact
+  current target. A supplied native chemical formula must agree with the
+  publisher formula. Rows without a legacy substance name or publisher molecular
+  formula are not used for CAS matching. Regional qualifiers, carbon origin,
+  mixtures, totals, bound-substance and dioxin-equivalent bases require manual
+  review; sharing a CAS does not override these distinctions.
+* Four explicitly reviewed ``/m3`` name suffixes with unchanged cubic-meter
+  units: cooling-water resources, unspecified-water resources, standing wood,
+  and one water emission to air. These rules remove a duplicate unit label from
+  the name and do not convert mass, gas reference conditions or quantity.
+
+The follow-up includes 6,898 exchange occurrences in the native archive. Nine
+of its rules coarsen lake/river distinctions and require the information-loss
+policy described above. The other 46 new rules execute under strict policy.
+Thirteen identities with conflicting CAS metadata remain held, including all
+nine identified in the first review. Exact native labels that cannot be tied to
+compatible publisher identities remain blocked; elemental metal labels are not
+silently replaced with chemically distinct ion identities.
+
+Review the :download:`latest decisions and prioritized remaining blockers
+<../uvek_2026_biosphere_followup.csv>` and :download:`follow-up JSON evidence
+<../uvek_2026_biosphere_followup.json>`. The first review remains historical
+evidence. The follow-up pins its byte digest and the complete 1,717-rule baseline,
+as well as the original archive, publisher workbook and target catalog. All new
+rules preserve amounts and amount formulas. CLIC's existing unit-change formula
+guard remains in place for the separate mass/volume water conversions.
+
+Reproduce the follow-up using the same original archive and public workbook::
+
+    python scripts/review_uvek_2026_biosphere_followup.py \
+      /path/to/original-uvek-2026.zip \
+      /path/to/correspondence_file_elementary-exchanges_v2.2-v3.0_20130904.xls
+
+The main resource generator applies these reviews and the radioactivity review
+below by default. Reverse rules, process-supplier coverage and native catalog
+identities are unchanged.
 
 Reproduce the resources
 -----------------------
@@ -181,3 +334,41 @@ output directory as shown above.
 Generation does not install or modify a Brightway database. The generator
 accepts the source's namespace-free ecoSpold1 XML directly; this does not
 extend the public ecoSpold1 adapter's ZIP or XML validation capabilities.
+
+Radioactivity unit review
+-------------------------
+
+The next forward review adds 158 publisher correspondences for native flows
+expressed in ``Becquerel`` whose ecoinvent unit is ``kilo Becquerel``. Each rule
+uses the explicit SI factor **0.001**, so 1,000 Bq becomes 1 kBq. Exact historical
+names (including nuclide and metastable suffixes), compatible CAS numbers,
+historical and target compartments, and a unique publisher UUID are required.
+The factor does not convert radioactivity to mass or absorbed dose. Its sources
+are the `BIPM SI Brochure <https://www.bipm.org/en/publications/si-brochure/>`_
+and the `EPA radiation units reference
+<https://www.epa.gov/radiation/radiation-terms-and-units>`_.
+
+There are 102 additions with unchanged compartment detail, accepted by strict
+policy. The other 56 merge a lake or river into surface water and require the
+explicit information-loss policy described above. This brings the total number
+of forward compartment-coarsening rules to 146. Native ``Radioactive species,
+unspecified`` in Bq remains unresolved because its publisher identity is not
+established. No reverse allocations or substitutions are inferred.
+
+The additions occur in 3,151 original exchange records, including zero-amount
+records; this count does not measure impact coverage. BrightPath scales amounts,
+supported uncertainty parameters and amount expressions together and does not
+scale them again when the target context is already satisfied. CLIC supports
+the numeric conversion path and retains its separate guard against converting
+formula-bearing exchanges across units.
+
+The :download:`radioactivity review CSV <../uvek_2026_radioactivity_review.csv>`
+lists all 907 previous blockers, with 158 accepted and 749 still blocked.
+The :download:`JSON evidence <../uvek_2026_radioactivity_review.json>` pins the
+previous 1,772-rule resource, the parent review, catalog and archive digests,
+publisher rows and the directed SI factor. Reproduce it before regenerating
+the packaged resources and migration manifest::
+
+    python -m scripts.review_uvek_2026_radioactivity \
+      /path/to/original-uvek-2026.zip \
+      /path/to/correspondence_file_elementary-exchanges_v2.2-v3.0_20130904.xls

@@ -1,14 +1,16 @@
 {
   "axis": "biosphere",
   "coverage": {
-    "mapped_identities": 1290,
+    "directional_additions": 7,
+    "mapped_identities": 1297,
     "mapping_methods": {
-      "native_compartment_and_bw2io_name": 1290
+      "native_compartment_and_bw2io_name": 1290,
+      "reviewed_exact_modern_land_identity": 7
     },
     "source_identities": 4362,
     "target_identities": 2679,
     "unit_changes_without_factor": 0,
-    "unresolved_identities": 3072
+    "unresolved_identities": 3065
   },
   "delete": [],
   "disaggregate": [],
@@ -17,6 +19,11 @@
     {
       "name": "BSD-3-Clause",
       "scope": "BrightPath generator, authored mappings and bw2io name migration data"
+    },
+    {
+      "name": "Source publisher terms",
+      "path": "https://support.ecoinvent.org/hubfs/Knowledge%20Base/Database/Releases/correspondence_file_elementary-exchanges_v2.2-v3.0_20130904.xls",
+      "scope": "ecoinvent correspondence reference metadata; no standalone reuse license is asserted"
     }
   ],
   "name": "ecoinvent-3.10-biosphere-to-uvek-2026-biosphere",
@@ -1039,6 +1046,72 @@
     "ecoinvent_biosphere_catalog_sha256": "8046017c4abc8a7bc1f3cbe0be133e2c063ccc65541a84ed378bb0fa43c38e73",
     "format": "ecospold1",
     "generator": "scripts/generate_uvek_2026_resources.py",
+    "land_review": {
+      "file": "uvek_2026_land_review.json",
+      "sha256": "2228ff22829b255823685fe39d320fa83a75c2194a0b1db5b657359f0a77da59",
+      "sources": {
+        "baseline_coverage": {
+          "forward": {
+            "directional_additions": 640,
+            "information_loss_rules": 146,
+            "mapped_identities": 1930,
+            "mapping_methods": {
+              "native_compartment_and_bw2io_name": 1290,
+              "publisher_becquerel_to_kilobecquerel": 158,
+              "publisher_cas_uuid_correspondence": 19,
+              "publisher_context_alias_uuid_correspondence": 32,
+              "publisher_elementary_uuid_correspondence": 402,
+              "reviewed_cubic_meter_name_suffix": 4,
+              "reviewed_lake_river_collapse": 22,
+              "reviewed_water_mass_volume": 3
+            },
+            "source_identities": 2679,
+            "target_identities": 4362,
+            "unit_changes_without_factor": 0,
+            "unresolved_identities": 749
+          },
+          "reverse": {
+            "mapped_identities": 1290,
+            "mapping_methods": {
+              "native_compartment_and_bw2io_name": 1290
+            },
+            "source_identities": 4362,
+            "target_identities": 2679,
+            "unit_changes_without_factor": 0,
+            "unresolved_identities": 3072
+          }
+        },
+        "baseline_forward_sha256": "5b26ac1319a80c55e9f2bad01b603df79566ab7e0f09cff48ada2ff5dbc2fb2b",
+        "baseline_licenses": {
+          "forward": [
+            {
+              "name": "BSD-3-Clause",
+              "scope": "BrightPath generator, authored mappings and bw2io name migration data"
+            },
+            {
+              "name": "Source publisher terms",
+              "path": "https://support.ecoinvent.org/hubfs/Knowledge%20Base/Database/Releases/correspondence_file_elementary-exchanges_v2.2-v3.0_20130904.xls",
+              "scope": "ecoinvent correspondence reference metadata; no standalone reuse license is asserted"
+            }
+          ],
+          "reverse": [
+            {
+              "name": "BSD-3-Clause",
+              "scope": "BrightPath generator, authored mappings and bw2io name migration data"
+            }
+          ]
+        },
+        "baseline_reverse_sha256": "c4b35a56c2db0585c123b31168741e6b1c08c1e24c0c523bb1e79cd0e74d6559",
+        "ecoinvent_catalog_sha256": "8046017c4abc8a7bc1f3cbe0be133e2c063ccc65541a84ed378bb0fa43c38e73",
+        "native_archive_sha256": "ebaab56717a6227b5eb271fcb4c86fb9db206115eb937fb0ec0b10d7accf26c7",
+        "native_catalog_sha256": "56586af27833bc087bd8c71791f48e1851c53e8b4540dfc56a4b6b0752e01cea",
+        "parent_review_sha256": "1c8b0bd4436a3bc5a28e1466c32c75b2fec94609438984fae02524c0d4058344",
+        "publisher_workbook": {
+          "sha256": "1656bd66bd69610e8f76a80949ba9a19f20b7ef4a33b477fd28dc324a3a2cc65",
+          "url": "https://support.ecoinvent.org/hubfs/Knowledge%20Base/Database/Releases/correspondence_file_elementary-exchanges_v2.2-v3.0_20130904.xls"
+        }
+      }
+    },
     "license": "Source archive terms apply; no license declaration supplied in the archive.",
     "process_datasets": 11947,
     "sha256": "ebaab56717a6227b5eb271fcb4c86fb9db206115eb937fb0ec0b10d7accf26c7",
@@ -1842,6 +1915,7 @@
     {"classification": "correspondence", "id": "bp-717d2932c23bdfa5", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, forest, primary (non-use)", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, tropical rain forest", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-b03b6df5452a58d2", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, forest, unspecified", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, forest, unspecified", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-13217bb5f55dfffb", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, heterogeneous, agricultural", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, heterogeneous, agricultural", "unit": "square meter-year"}},
+    {"classification": "correspondence", "id": "bp-c93b98417618d34f", "mapping_method": "reviewed_exact_modern_land_identity", "report_correspondence": true, "review_ref": "r-ec24ae08110eaf3d", "source": {"categories": ["natural resource", "land"], "name": "Occupation, industrial area", "unit": "square meter-year", "uuid": "fe9c3a98-a6d2-452d-a9a4-a13e64f1b95b"}, "target": {"categories": ["resources", "land"], "name": "Occupation, industrial area", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-8ef1daa2cff16058", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, lake, artificial", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, water bodies, artificial", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-b18e2eb53e784b05", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, mineral extraction site", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, mineral extraction site", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-e38c52eb09b424a1", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, pasture, man made", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, pasture, man made", "unit": "square meter-year"}},
@@ -1853,6 +1927,7 @@
     {"classification": "correspondence", "id": "bp-4a6cf5aa30e56f8e", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, seabed, infrastructure", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, seabed, infrastructure", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-f2f62a5caf793293", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, shrub land, sclerophyllous", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, shrub land, sclerophyllous", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-bb584699d3b9d686", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, traffic area, rail network", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, traffic area, rail network", "unit": "square meter-year"}},
+    {"classification": "correspondence", "id": "bp-2a1b96a608c17196", "mapping_method": "reviewed_exact_modern_land_identity", "report_correspondence": true, "review_ref": "r-ec24ae08110eaf3d", "source": {"categories": ["natural resource", "land"], "name": "Occupation, traffic area, rail/road embankment", "unit": "square meter-year", "uuid": "956c5f83-65c8-4607-9749-147cfb9c8f70"}, "target": {"categories": ["resources", "land"], "name": "Occupation, traffic area, rail/road embankment", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-c4a2a34ce30f625e", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, traffic area, road network", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, traffic area, road network", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-0f99922c7a6fe36d", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, unspecified, natural (non-use)", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, unspecified, natural (non-use)", "unit": "square meter-year"}},
     {"classification": "correspondence", "id": "bp-b5863a82a03962e0", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Occupation, urban, continuously built", "unit": "square meter-year"}, "target": {"categories": ["resources", "land"], "name": "Occupation, urban, continuously built", "unit": "square meter-year"}},
@@ -2198,12 +2273,15 @@
     {"classification": "correspondence", "id": "bp-291b1d49ea761bd9", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from forest, unspecified", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from forest, unspecified", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-5b73a88feae924f9", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from heterogeneous, agricultural", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from heterogeneous, agricultural", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-59ab9e0987cbfc54", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from mineral extraction site", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from mineral extraction site", "unit": "square meter"}},
+    {"classification": "correspondence", "id": "bp-8005cf8a6f946721", "mapping_method": "reviewed_exact_modern_land_identity", "report_correspondence": true, "review_ref": "r-ec24ae08110eaf3d", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from pasture, man made", "unit": "square meter", "uuid": "2c126bcc-bb63-4d63-bd72-f02a1e616809"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from pasture, man made", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-a33a8fc3aecbca0f", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from pasture, man made, extensive", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from pasture, man made, extensive", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-a4c717ea33cc61aa", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from pasture, man made, intensive", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from pasture, man made, intensive", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-6a4035129482f9d4", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from permanent crop, irrigated, extensive", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from permanent crop, fruit, extensive", "unit": "square meter"}},
+    {"classification": "correspondence", "id": "bp-a51bea2e8e764e21", "mapping_method": "reviewed_exact_modern_land_identity", "report_correspondence": true, "review_ref": "r-ec24ae08110eaf3d", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from seabed, unspecified", "unit": "square meter", "uuid": "928ba839-d6e5-4d1e-b5fd-122998a9bbe2"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from seabed, unspecified", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-2ebbd29877e882c5", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from shrub land, sclerophyllous", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from shrub land, sclerophyllous", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-6976e94fb03b5a86", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from traffic area, rail/road embankment", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from traffic area, rail/road embankment", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-efb7ba1b334b43ff", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from traffic area, road network", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from traffic area, road network", "unit": "square meter"}},
+    {"classification": "correspondence", "id": "bp-2d90cbd6c3d3363e", "mapping_method": "reviewed_exact_modern_land_identity", "report_correspondence": true, "review_ref": "r-ec24ae08110eaf3d", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from unspecified", "unit": "square meter", "uuid": "29630a65-f38c-48a5-9744-c0121f586640"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from unspecified", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-045ff085ce55eb84", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from unspecified, natural (non-use)", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from unspecified, natural (non-use)", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-84427b82917c8421", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from urban, continuously built", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from urban, continuously built", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-c4bf71b6d776a0c8", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, from urban, discontinuously built", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, from urban, discontinuously built", "unit": "square meter"}},
@@ -2221,6 +2299,7 @@
     {"classification": "correspondence", "id": "bp-b646f81de6c623e4", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to forest, primary (non-use)", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to tropical rain forest", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-a5cedc5267a511cd", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to forest, unspecified", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to forest, unspecified", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-882654ee0c425ecd", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to heterogeneous, agricultural", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to heterogeneous, agricultural", "unit": "square meter"}},
+    {"classification": "correspondence", "id": "bp-45ff493c76a162fe", "mapping_method": "reviewed_exact_modern_land_identity", "report_correspondence": true, "review_ref": "r-ec24ae08110eaf3d", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to industrial area", "unit": "square meter", "uuid": "4624deff-2016-41d4-b2bf-3db8dab88779"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to industrial area", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-3410124ee8e2e1c7", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to lake, artificial", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to water bodies, artificial", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-6fecb7e9c781e5a5", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to mineral extraction site", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to mineral extraction site", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-acaee605a1ea8b70", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to pasture, man made", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to pasture, man made", "unit": "square meter"}},
@@ -2232,6 +2311,7 @@
     {"classification": "correspondence", "id": "bp-9f7622a8c7fab5bb", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to seabed, unspecified", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to sea and ocean", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-04f2e3456c9e2906", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to shrub land, sclerophyllous", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to shrub land, sclerophyllous", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-50ea4d3a336a6b78", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to traffic area, rail network", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to traffic area, rail network", "unit": "square meter"}},
+    {"classification": "correspondence", "id": "bp-3e8f489817be20e6", "mapping_method": "reviewed_exact_modern_land_identity", "report_correspondence": true, "review_ref": "r-ec24ae08110eaf3d", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to traffic area, rail/road embankment", "unit": "square meter", "uuid": "04eb0695-e67b-46e5-9516-da6bde119822"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to traffic area, rail/road embankment", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-5a9868f9759a9f0e", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to traffic area, road network", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to traffic area, road network", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-4d36e9c890e85c52", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to unspecified", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to unknown", "unit": "square meter"}},
     {"classification": "correspondence", "id": "bp-21e69610e67df243", "mapping_method": "native_compartment_and_bw2io_name", "review_ref": "r-966f45735715dbca", "source": {"categories": ["natural resource", "land"], "name": "Transformation, to urban, continuously built", "unit": "square meter"}, "target": {"categories": ["resources", "land"], "name": "Transformation, to urban, continuously built", "unit": "square meter"}},
@@ -2349,6 +2429,17 @@
         "Unit changes require a separately documented numeric factor."
       ],
       "rationale": "Reference identity correspondence only; background coefficients and LCIA results may change."
+    },
+    "r-ec24ae08110eaf3d": {
+      "evidence": [
+        "uvek_2026_land_review.json SHA-256 2228ff22829b255823685fe39d320fa83a75c2194a0b1db5b657359f0a77da59",
+        "https://support.ecoinvent.org/hubfs/Knowledge%20Base/Database/Releases/correspondence_file_elementary-exchanges_v2.2-v3.0_20130904.xls"
+      ],
+      "limitations": [
+        "Only the seven explicitly reviewed modern land labels are eligible.",
+        "No land-class aggregation, unspecified-compartment allocation or inverse water mapping is inferred."
+      ],
+      "rationale": "Exact modern publisher land label, precise land compartment, unchanged unit and published UUID, independently checked for this direction."
     }
   },
   "schema": "brightpath.migration",
@@ -17629,14 +17720,6 @@
         "natural resource",
         "land"
       ],
-      "name": "Occupation, industrial area",
-      "unit": "square meter-year"
-    },
-    {
-      "categories": [
-        "natural resource",
-        "land"
-      ],
       "name": "Occupation, inland waterbody, unspecified",
       "unit": "square meter-year"
     },
@@ -17726,14 +17809,6 @@
         "land"
       ],
       "name": "Occupation, snow and ice (non-use)",
-      "unit": "square meter-year"
-    },
-    {
-      "categories": [
-        "natural resource",
-        "land"
-      ],
-      "name": "Occupation, traffic area, rail/road embankment",
       "unit": "square meter-year"
     },
     {
@@ -23564,14 +23639,6 @@
         "natural resource",
         "land"
       ],
-      "name": "Transformation, from pasture, man made",
-      "unit": "square meter"
-    },
-    {
-      "categories": [
-        "natural resource",
-        "land"
-      ],
       "name": "Transformation, from permanent crop",
       "unit": "square meter"
     },
@@ -23660,14 +23727,6 @@
         "natural resource",
         "land"
       ],
-      "name": "Transformation, from seabed, unspecified",
-      "unit": "square meter"
-    },
-    {
-      "categories": [
-        "natural resource",
-        "land"
-      ],
       "name": "Transformation, from snow and ice (non-use)",
       "unit": "square meter"
     },
@@ -23685,14 +23744,6 @@
         "land"
       ],
       "name": "Transformation, from unknown",
-      "unit": "square meter"
-    },
-    {
-      "categories": [
-        "natural resource",
-        "land"
-      ],
-      "name": "Transformation, from unspecified",
       "unit": "square meter"
     },
     {
@@ -23828,14 +23879,6 @@
         "natural resource",
         "land"
       ],
-      "name": "Transformation, to industrial area",
-      "unit": "square meter"
-    },
-    {
-      "categories": [
-        "natural resource",
-        "land"
-      ],
       "name": "Transformation, to inland waterbody, unspecified",
       "unit": "square meter"
     },
@@ -23925,14 +23968,6 @@
         "land"
       ],
       "name": "Transformation, to snow and ice (non-use)",
-      "unit": "square meter"
-    },
-    {
-      "categories": [
-        "natural resource",
-        "land"
-      ],
-      "name": "Transformation, to traffic area, rail/road embankment",
       "unit": "square meter"
     },
     {

@@ -228,6 +228,20 @@ def validate_migration_resource(resource: dict) -> None:
                 seen_ids.add(rule["id"])
             if "review_ref" in rule and rule["review_ref"] not in resource["reviews"]:
                 raise MigrationError("Unknown migration review reference.")
+            if (
+                rule.get("report_correspondence")
+                or rule.get("biosphere_information_loss")
+                or rule.get("technosphere_information_loss")
+            ):
+                review = rule_review(resource, rule)
+                if not rule.get("id") or not review.get("rationale") or not review.get("evidence"):
+                    raise MigrationError(
+                        "Reported correspondences and information loss require a rule identifier and review evidence."
+                    )
+                if rule.get("biosphere_information_loss") and axis != "biosphere":
+                    raise MigrationError("Biosphere information loss can only be declared on biosphere rules.")
+                if rule.get("technosphere_information_loss") and axis != "technosphere":
+                    raise MigrationError("Technosphere information loss can only be declared on technosphere rules.")
             if operation == "replace":
                 target = rule["target"]
                 if "recipe_ref" in target:

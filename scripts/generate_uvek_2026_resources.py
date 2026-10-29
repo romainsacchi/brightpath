@@ -23,6 +23,11 @@ from brightpath.units import normalize_unit
 GENERATOR = "scripts/generate_uvek_2026_resources.py"
 TECH_FIELDS = ("name", "reference product", "location", "unit")
 DEFAULT_UNIT_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_unit_review.json"
+DEFAULT_BIOSPHERE_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_biosphere_review.json"
+DEFAULT_BIOSPHERE_FOLLOWUP = Path(__file__).resolve().parents[1] / "docs/uvek_2026_biosphere_followup.json"
+DEFAULT_RADIOACTIVITY_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_radioactivity_review.json"
+DEFAULT_LAND_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_land_review.json"
+DEFAULT_PROCESS_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_process_review.json"
 UNIT_REVIEW_CHECKS = {
     "same_source_filename",
     "same_source_uuid",
@@ -380,7 +385,14 @@ def apply_unit_review(resources: list[dict], path: Path) -> list[dict]:
 
 
 def build_resources(
-    archive: Path, catalog_directory: Path, unit_review: Path | None = DEFAULT_UNIT_REVIEW
+    archive: Path,
+    catalog_directory: Path,
+    unit_review: Path | None = DEFAULT_UNIT_REVIEW,
+    biosphere_review: Path | None = DEFAULT_BIOSPHERE_REVIEW,
+    biosphere_followup: Path | None = DEFAULT_BIOSPHERE_FOLLOWUP,
+    radioactivity_review: Path | None = DEFAULT_RADIOACTIVITY_REVIEW,
+    land_review: Path | None = DEFAULT_LAND_REVIEW,
+    process_review: Path | None = DEFAULT_PROCESS_REVIEW,
 ) -> tuple[dict, list[dict]]:
     """Generate a catalog and both explicit directions for each independent axis."""
     catalog = read_archive(archive)
@@ -416,7 +428,28 @@ def build_resources(
             for source, target, method, factor in pairs
         ]
         resources.append(migration_resource(axis, target_profile, source_profile, target, source, reverse, provenance))
-    return catalog, apply_unit_review(resources, unit_review) if unit_review is not None else resources
+    resources = apply_unit_review(resources, unit_review) if unit_review is not None else resources
+    if process_review is not None and unit_review is not None:
+        from scripts.review_uvek_2026_processes import apply_process_review
+
+        resources = apply_process_review(resources, process_review, catalog_directory)
+    if biosphere_review is not None:
+        from scripts.review_uvek_2026_biosphere import apply_review
+
+        resources = apply_review(resources, biosphere_review, catalog_directory)
+    if biosphere_followup is not None and biosphere_review is not None:
+        from scripts.review_uvek_2026_biosphere_followup import apply_followup
+
+        resources = apply_followup(resources, biosphere_followup, catalog_directory)
+        if radioactivity_review is not None:
+            from scripts.review_uvek_2026_radioactivity import apply_radioactivity_review
+
+            resources = apply_radioactivity_review(resources, radioactivity_review, catalog_directory)
+            if land_review is not None:
+                from scripts.review_uvek_2026_land import apply_land_review
+
+                resources = apply_land_review(resources, land_review, catalog_directory)
+    return catalog, resources
 
 
 def main():
@@ -426,6 +459,11 @@ def main():
     parser.add_argument("--migration-directory", type=Path, default=Path("brightpath/data/migrations/uvek"))
     review_options = parser.add_mutually_exclusive_group()
     review_options.add_argument("--unit-review", type=Path, default=DEFAULT_UNIT_REVIEW)
+    parser.add_argument("--biosphere-review", type=Path, default=DEFAULT_BIOSPHERE_REVIEW)
+    parser.add_argument("--biosphere-followup", type=Path, default=DEFAULT_BIOSPHERE_FOLLOWUP)
+    parser.add_argument("--radioactivity-review", type=Path, default=DEFAULT_RADIOACTIVITY_REVIEW)
+    parser.add_argument("--land-review", type=Path, default=DEFAULT_LAND_REVIEW)
+    parser.add_argument("--process-review", type=Path, default=DEFAULT_PROCESS_REVIEW)
     review_options.add_argument(
         "--unreviewed",
         action="store_true",
@@ -433,7 +471,14 @@ def main():
     )
     args = parser.parse_args()
     catalog, resources = build_resources(
-        args.archive, args.catalog_directory, None if args.unreviewed else args.unit_review
+        args.archive,
+        args.catalog_directory,
+        None if args.unreviewed else args.unit_review,
+        biosphere_review=None if args.unreviewed else args.biosphere_review,
+        biosphere_followup=None if args.unreviewed else args.biosphere_followup,
+        radioactivity_review=None if args.unreviewed else args.radioactivity_review,
+        land_review=None if args.unreviewed else args.land_review,
+        process_review=None if args.unreviewed else args.process_review,
     )
     (args.catalog_directory / "uvek__2026__cutoff.json").write_text(
         json.dumps(catalog, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8"

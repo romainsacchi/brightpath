@@ -179,11 +179,35 @@ def execute_background_migration(
     else:
         execution_plan = plan
     migration_stage = _execute_external_links(working_data, execution_plan, policy, provider, foreground_targets)
+    migration_stage_index = len(stages)
     stages.append(migration_stage)
     if migration_stage.has_errors:
         stages[-1] = _rolled_back_stage(migration_stage, "migration application failed")
         return _result(document, source, target, policy, stages, committed=False)
 
+    if helpers and not _helper_biosphere_matches(helpers, target.biosphere, provider):
+        helper_source = BackgroundContext(
+            TechnosphereProfile("ecoinvent", "3.12", "cutoff"), BiosphereProfile("ecoinvent", "3.12")
+        )
+        helper_target = BackgroundContext(helper_source.technosphere, target.biosphere)
+        helper_document = document.replace(
+            data=helpers,
+            context=InventoryContext(format=document.context.format, background=helper_source),
+        )
+        helper_foreground = (
+            *foreground_targets,
+            *(
+                tuple(dataset.get(field, "") for field in ("name", "reference product", "location", "unit"))
+                for dataset in working_data
+            ),
+        )
+        helper_result = execute_background_migration(
+            helper_document, helper_target, provider, policy, helper_foreground
+        )
+        stages.extend(_helper_stage(stage, helpers) for stage in helper_result.report.stages)
+        if helper_result.report.has_errors:
+            return _result(document, source, target, policy, stages, committed=False)
+        helpers = helper_result.value.data
     working_data.extend(helpers)
     candidate = document
     if source != target or working_data != document.data:
@@ -210,10 +234,51 @@ def execute_background_migration(
         target_validation = _enforce_minimum_coverage(target_validation, policy)
         stages.append(target_validation)
         if target_validation.has_errors:
-            stages[-2] = _rolled_back_stage(migration_stage, "target validation failed")
+            stages[migration_stage_index] = _rolled_back_stage(migration_stage, "target validation failed")
             return _result(document, source, target, policy, stages, committed=False)
 
     return _result(candidate, source, target, policy, stages, committed=True)
+
+
+def _helper_biosphere_matches(helpers, profile, provider):
+    """Avoid a migration when recipe flows already match the exact target catalog."""
+
+    flows = {
+        (exchange.get("name", ""), tuple(exchange.get("categories", ())), exchange.get("unit", ""))
+        for helper in helpers
+        for exchange in helper.get("exchanges", ())
+        if exchange.get("type") == "biosphere"
+    }
+    if not flows:
+        return True
+    try:
+        return flows <= provider.load_biosphere(profile).identities
+    except (CatalogNotFoundError, CatalogIntegrityError):
+        # The normal execution path emits structured catalog findings.
+        return False
+
+
+def _helper_stage(stage, helpers):
+    """Identify generated-data findings independently of caller dataset indices."""
+
+    def scoped(finding):
+        path = finding.path
+        if path.startswith("datasets["):
+            path = "generated_helpers[" + path[len("datasets[") :]
+        return replace(finding, path=path, details={**_thaw(finding.details), "scope": "generated_helpers"})
+
+    return replace(
+        stage,
+        label=f"generated helper {stage.label}",
+        issues=tuple(scoped(finding) for finding in stage.issues),
+        changes=tuple(scoped(finding) for finding in stage.changes),
+        losses=tuple(scoped(finding) for finding in stage.losses),
+        metrics={
+            **_thaw(stage.metrics),
+            "scope": "generated_helpers",
+            "helper_codes": [helper.get("code", "") for helper in helpers],
+        },
+    )
 
 
 def _execute_external_links(data, plan, policy, provider, foreground_targets):
@@ -475,7 +540,9 @@ def _resource_for_step(step: MigrationRouteStep, resources: Mapping[tuple[str, s
         if step.direction == "forward"
         else (step.target_version, step.source_version)
     )
-    return deepcopy(resources[pair])
+    # Rule application treats nested resource metadata as read-only and copies
+    # target values into exchanges. Only the operation-local header is mutable.
+    return dict(resources[pair])
 
 
 def _apply_technosphere_step(
@@ -588,7 +655,7 @@ def _apply_biosphere_step(
                     details={"axis": step.axis.value, "step_index": step_index, "count": report.biosphere_deletions},
                 )
             ]
-    prepared = deepcopy(resource)
+    prepared = dict(resource)
     if step.direction == "forward":
         prepared["delete"] = []
     replacements, factored_replacements, losses = _prepare_biosphere_replacements(
@@ -626,6 +693,8 @@ def _prepare_technosphere_replacements(
 
     for rule in rules:
         matches = _matching_technosphere_entities(entity_index, rule[match_side])
+        if _reviewed_correspondence_findings(rule, matches, step, policy, report, losses, step_index):
+            continue
         unit_change = _unit_changes(rule[match_side], rule[replacement_side])
         if not matches or not unit_change:
             safe_replacements.append(rule)
@@ -681,6 +750,8 @@ def _prepare_biosphere_replacements(
     for rule in rules:
         specification = _biosphere_match_specification(rule, match_side)
         matches = _matching_biosphere_entities(entity_index, specification)
+        if _reviewed_correspondence_findings(rule, matches, step, policy, report, losses, step_index):
+            continue
         if not matches or not _unit_changes(rule[match_side], rule[replacement_side]):
             safe.append(rule)
             continue
@@ -696,8 +767,53 @@ def _prepare_biosphere_replacements(
             losses,
             step_index,
             specification,
+            policy,
         )
     return safe, factored, losses
+
+
+def _reviewed_correspondence_findings(rule, matches, step, policy, report, losses, step_index):
+    """Record an authored correspondence and enforce its axis-specific losses."""
+
+    axis = step.axis.value
+    information_loss = rule.get(f"{axis}_information_loss")
+    match_side, replacement_side = ("source", "target") if step.direction == "forward" else ("target", "source")
+    if matches and information_loss:
+        action = policy.on_information_loss
+        for path in matches:
+            message = f"Reviewed {axis} rule {rule['id']}: {information_loss}"
+            report.issues.append(
+                _legacy_issue(_severity(action).value, f"migration_{axis}_information_loss", message, path)
+            )
+            losses.append(
+                Loss(
+                    code=f"migration.{axis}_information_loss",
+                    message=message,
+                    stage=StageKind.BACKGROUND_MIGRATION,
+                    path=path,
+                    details={
+                        "rule_id": rule["id"],
+                        "resource": step.resource_name,
+                        "source": rule[match_side],
+                        "target": rule[replacement_side],
+                        "policy_action": action.value,
+                        "step_index": step_index,
+                    },
+                )
+            )
+        if action is PolicyAction.ERROR:
+            return True
+    if matches and rule.get("report_correspondence"):
+        for path in matches:
+            report.issues.append(
+                _legacy_issue(
+                    "info",
+                    f"migration_reviewed_{axis}_correspondence",
+                    f"Apply reviewed {axis} rule {rule['id']} ({rule.get('mapping_method', 'authored_correspondence')}); see the pinned resource review for evidence and limitations.",
+                    path,
+                )
+            )
+    return False
 
 
 def _remove_unrepresentable_biosphere_exchanges(
@@ -708,12 +824,13 @@ def _remove_unrepresentable_biosphere_exchanges(
     losses: list[Loss],
     step_index: int,
     specification: Mapping,
+    policy: MigrationPolicy,
 ) -> None:
     """Remove elementary flows whose migration changes units without a factor.
 
     A target inventory cannot retain an elementary flow with the wrong unit.
-    For biosphere flows only, CLIC exports remain usable by omitting that
-    exchange and recording an explicit, recoverable warning and loss.
+    Omissions require the information-loss policy's explicit acceptance.
+    Strict execution returns an error and rolls back the complete migration.
     """
 
     source_unit, target_unit = _rule_units(rule, step.direction)
@@ -731,7 +848,7 @@ def _remove_unrepresentable_biosphere_exchanges(
             report.biosphere_deletions += 1
             report.issues.append(
                 _legacy_issue(
-                    severity="warning",
+                    severity=_severity(policy.on_information_loss).value,
                     code="migration_biosphere_exchange_removed_unsafe_unit",
                     message=message,
                     path=path,
@@ -1156,6 +1273,8 @@ def _translate_legacy_issues(
 
 
 def _action_for_legacy_issue(code: str, policy: MigrationPolicy) -> PolicyAction | None:
+    if "_information_loss" in code:
+        return policy.on_information_loss
     if "unit_change" in code:
         return policy.on_unit_change_without_factor
     if "ambiguous" in code:
