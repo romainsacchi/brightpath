@@ -243,6 +243,12 @@ transformation names rather than collapsing both to a legacy label. Brightway
 Excel, CSV and TSV retain exact biosphere and format version strings, including
 ``2026`` versus ``2026.0``, without an explicit profile override on reimport.
 
+Version ``1.0.0a12`` also replaces existing openLCA ZIP outputs atomically. Reusing
+an output path no longer appends duplicate process entries or retains processes
+removed from the exported document. A failed ZIP write leaves the previous
+archive intact. Repeated installed-package checks exposed this independent
+format issue; the reviewed migration resources are unchanged.
+
 Cross-family routes to and from ecoinvent pass through UVEK 2025 and retain
 that route's limits, heuristic findings, proxy policies, and foreground recipes.
 The ``1.0.0a11`` publisher-correspondence expansion supports 1,424 native UVEK

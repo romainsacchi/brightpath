@@ -488,6 +488,59 @@ def test_conflicting_explicit_flow_id_fails_without_overwriting_archive(tmp_path
     assert path.read_bytes() == b"existing archive"
 
 
+def test_rewriting_an_archive_replaces_processes_without_duplicates(tmp_path):
+    document = _document()
+    before = deepcopy(document.data)
+    subset = document.replace(data=[document.data[0]])
+    path = tmp_path / "reused.zip"
+    for expected in (document, subset, document):
+        write_openlca_jsonld(expected, path)
+        with zipfile.ZipFile(path) as archive:
+            names = archive.namelist()
+            assert len(names) == len(set(names))
+        restored = load_openlca_jsonld(path, context=expected.context)
+        assert len(restored.data) == len(expected.data)
+        assert {row["name"] for row in restored.data} == {row["name"] for row in expected.data}
+    assert document.data == before
+    assert not list(tmp_path.glob(".brightpath-openlca-*"))
+
+
+@pytest.mark.parametrize("existing", [False, True])
+def test_failed_zip_write_never_publishes_partial_output(tmp_path, monkeypatch, existing):
+    from brightpath.formats.openlca_jsonld import _olca_modules
+
+    document = _document()
+    before = deepcopy(document.data)
+    path = tmp_path / "inventory.zip"
+    if existing:
+        write_openlca_jsonld(document, path)
+    saved = path.read_bytes() if existing else None
+    _schema, zipio = _olca_modules()
+    original_writer = zipio.ZipWriter
+
+    class FailingWriter:
+        def __init__(self, destination):
+            self.writer = original_writer(destination)
+
+        def __enter__(self):
+            self.writer.__enter__()
+            return self
+
+        def __exit__(self, *arguments):
+            return self.writer.__exit__(*arguments)
+
+        def write(self, entity):
+            self.writer.write(entity)
+            raise OSError("Simulated ZIP write failure")
+
+    monkeypatch.setattr(zipio, "ZipWriter", FailingWriter)
+    with pytest.raises(OSError, match="Simulated ZIP write failure"):
+        write_openlca_jsonld(document, path)
+    assert (path.read_bytes() if path.exists() else None) == saved
+    assert document.data == before
+    assert not list(tmp_path.glob(".brightpath-openlca-*"))
+
+
 def test_legacy_exchange_metadata_is_still_read(tmp_path):
     path = write_openlca_jsonld(_collision_document(compartments=("air",), locations=("CH",)), tmp_path / "new.zip")
     legacy = tmp_path / "legacy.zip"

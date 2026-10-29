@@ -11,6 +11,7 @@ from __future__ import annotations
 import importlib
 import json
 import math
+import tempfile
 import uuid
 import zipfile
 from copy import deepcopy
@@ -375,7 +376,7 @@ def write_openlca_jsonld(
     *,
     method_mapping: OpenLCAMethodMapping | None = None,
 ) -> Path:
-    """Write a ZIP, optionally linking to a local method package and auditing coverage."""
+    """Replace a ZIP atomically, optionally linking and auditing a local method package."""
 
     if not isinstance(document, InventoryDocument):
         raise TypeError("document must be an InventoryDocument.")
@@ -391,22 +392,28 @@ def write_openlca_jsonld(
 
     coverage = method_mapping.audit(document) if method_mapping is not None else None
     rendered = render_openlca_jsonld_package(document, method_mapping=method_mapping)
-    with zipio.ZipWriter(destination) as writer:
-        for store in (
-            rendered.actors,
-            rendered.currencies,
-            rendered.dq_systems,
-            rendered.social_indicators,
-            rendered.sources,
-            rendered.locations,
-            rendered.unit_groups,
-            rendered.flow_properties,
-            rendered.flows,
-            rendered.parameters,
-            rendered.processes,
-        ):
-            for entity in store.values():
-                writer.write(entity)
+    # olca-schema's ZipWriter appends to an existing archive. A fresh sibling
+    # directory prevents duplicate/stale entities and keeps partial writes away
+    # from the caller's destination. Replace only after the writer closes.
+    with tempfile.TemporaryDirectory(prefix=".brightpath-openlca-", dir=destination.parent) as temporary:
+        staged = Path(temporary) / destination.name
+        with zipio.ZipWriter(staged) as writer:
+            for store in (
+                rendered.actors,
+                rendered.currencies,
+                rendered.dq_systems,
+                rendered.social_indicators,
+                rendered.sources,
+                rendered.locations,
+                rendered.unit_groups,
+                rendered.flow_properties,
+                rendered.flows,
+                rendered.parameters,
+                rendered.processes,
+            ):
+                for entity in store.values():
+                    writer.write(entity)
+        staged.replace(destination)
 
     if coverage is not None:
         destination.with_suffix(".biosphere-coverage.json").write_text(
