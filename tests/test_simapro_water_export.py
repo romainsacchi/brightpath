@@ -9,6 +9,41 @@ from bw2io.extractors.simapro_csv import SimaProCSVExtractor
 from brightpath import BackgroundProfile, SimaProInventory
 
 
+@pytest.mark.parametrize("expression", ["dose", "(dose)", "(dose + offset)", "dose + offset * 2"])
+def test_water_expression_round_trip_preserves_volume_basis(tmp_path, expression):
+    flow = water(
+        categories=("air", "non-urban air or from high stacks"),
+        amount=12,
+        formula=expression,
+    )
+    original = inventory(flow)
+    data = original.data
+    data[0]["parameters"] = [{"name": "dose", "amount": 12}, {"name": "offset", "amount": 0}]
+    original = SimaProInventory.from_data(data, background_profile=original.background_profile)
+    before = deepcopy(original.data)
+    path = original.write_csv(tmp_path / "water-expression.csv")
+    restored = SimaProInventory.from_csv(path, background_profile=original.background_profile)
+    result = next(row for row in restored.data[0]["exchanges"] if row["type"] == "biosphere")
+    assert (result["unit"], result["formula"], result["amount"]) == ("cubic meter", expression, 12)
+    assert not any(key.startswith("_brightpath_wire_") for key in result)
+    assert original.data == before
+
+
+def test_water_formula_conversion_requires_wire_unit_and_preserves_precedence():
+    from brightpath.formats.simapro_csv import _mark_wire_water_formulas, _restore_water_formula_units
+
+    exchange = water(unit="kilogram", formula="(dose) + (offset) * 1000")
+    data = [{"exchanges": [exchange]}]
+    _mark_wire_water_formulas(data)
+    exchange["unit"] = "cubic meter"  # bw2io's numeric migration has run.
+    _restore_water_formula_units(data)
+    assert exchange["formula"] == "((dose) + (offset) * 1000) * 0.001"
+    volume = [{"exchanges": [water(unit="cubic meter", formula="(dose) * 1000")]}]
+    _mark_wire_water_formulas(volume)
+    _restore_water_formula_units(volume)
+    assert volume[0]["exchanges"][0]["formula"] == "(dose) * 1000"
+
+
 def inventory(exchange):
     return SimaProInventory.from_data(
         [

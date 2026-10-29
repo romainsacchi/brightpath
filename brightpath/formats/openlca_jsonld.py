@@ -31,6 +31,7 @@ from brightpath.formats.openlca_references import (
     load_openlca_reference_catalog,
 )
 from brightpath.models import BackgroundProfile, InventoryDocument, InventoryFormat, default_biosphere_profile
+from brightpath.profiles.biosphere_categories import UVEK_ROOTS, restore_native_categories, wire_categories
 from brightpath.units import normalize_unit
 
 _ROOT_MANIFEST = "olca-schema.json"
@@ -289,6 +290,9 @@ def load_openlca_jsonld_package(
                 external_exchanges=external_exchanges,
             )
         )
+
+    if context is not None:
+        restore_native_categories(inventory_data, context.background.biosphere)
 
     raw_global_parameters = raw_entities.get("parameters", [])
     database_parameters: list[dict] = []
@@ -819,6 +823,14 @@ def _exchange_to_legacy(
         legacy["type"] = "biosphere"
         legacy["name"] = str(flow.name or "")
         legacy["categories"] = _decode_biosphere_categories(flow.category)
+        original_categories = ((flow.other_properties or {}).get("brightpath") or {}).get("biosphere categories")
+        if original_categories:
+            original_categories = tuple(original_categories)
+            if original_categories[0] not in UVEK_ROOTS or wire_categories(original_categories) != wire_categories(
+                legacy["categories"]
+            ):
+                raise ValueError("Conflicting native biosphere category metadata on openLCA flow.")
+            legacy["categories"] = original_categories
         location_ref = exchange.location or flow.location
     else:
         is_production = str(flow.id or "") == producer.flow_id and not exchange.is_input
@@ -1510,7 +1522,8 @@ class _OpenLCAPackageBuilder:
                     )
 
             entity.is_input = exchange_type == "technosphere" or (
-                exchange_type == "biosphere" and tuple(exchange.get("categories") or ())[:1] == ("natural resource",)
+                exchange_type == "biosphere"
+                and wire_categories(exchange.get("categories"))[:1] == ("natural resource",)
             )
             entity.is_quantitative_reference = False
             entity.is_avoided_product = False
@@ -1749,6 +1762,10 @@ class _OpenLCAPackageBuilder:
             encoded = _encode_biosphere_categories(categories)
             if encoded:
                 flow.category = encoded
+            if categories and categories[0] in UVEK_ROOTS:
+                flow.other_properties = _merge_brightpath_other_properties(
+                    flow.other_properties, {"biosphere categories": list(categories)}
+                )
         # A flow's explicit geography is independent of the consuming process.
         # Imported unregionalized flows must remain unregionalized.
         if not flow_template.get("@id") and flow.location is None and flow_type != self.schema.FlowType.ELEMENTARY_FLOW:

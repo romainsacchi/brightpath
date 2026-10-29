@@ -31,6 +31,7 @@ from brightpath.formats.simapro_csv import (
 )
 from brightpath.models import InventoryDocument
 from brightpath.profiles import format_simapro_technosphere_name
+from brightpath.profiles.biosphere_categories import is_native_uvek_biosphere, wire_categories
 from brightpath.utils import (
     convert_sd_to_sd2,
     get_simapro_biosphere,
@@ -1180,6 +1181,8 @@ def _simapro_exchange_status(document: InventoryDocument, exchange: Mapping[str,
         categories = exchange.get("categories")
         if not isinstance(categories, (tuple, list)) or not categories:
             return "unused"
+        if is_native_uvek_biosphere(document.context.background.biosphere):
+            categories = wire_categories(categories)
         if str(categories[0]) not in _SIMAPRO_BIOSPHERE_CATEGORIES:
             return "unused"
     return "used"

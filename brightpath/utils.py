@@ -13,6 +13,7 @@ import numpy as np
 import yaml
 
 from . import DATA_DIR
+from .profiles.biosphere_categories import STRUCTURAL_BIOSPHERE_ROOTS
 
 logger = logging.getLogger(__name__)
 
@@ -634,10 +635,10 @@ def inspect_brightway_inventory(
                     errors.append(f"{exchange_ctx}: biosphere exchange is missing categories.")
                 elif not isinstance(categories, (tuple, list)):
                     errors.append(f"{exchange_ctx}: biosphere categories must be a tuple or list.")
-                elif categories[0] not in ALLOWED_BIOSPHERE_CATEGORIES:
+                elif categories[0] not in STRUCTURAL_BIOSPHERE_ROOTS:
                     errors.append(
                         f"{exchange_ctx}: unsupported biosphere category `{categories[0]}`; "
-                        f"expected one of {sorted(ALLOWED_BIOSPHERE_CATEGORIES)}."
+                        f"expected one of {sorted(STRUCTURAL_BIOSPHERE_ROOTS)}."
                     )
 
             if exchange_type == "production":

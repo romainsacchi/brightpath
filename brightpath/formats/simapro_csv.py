@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import ast
 import base64
 import csv
 import datetime
@@ -17,7 +18,7 @@ from pathlib import Path
 
 import bw2io
 
-from brightpath.background.catalogs import CatalogProvider
+from brightpath.background.catalogs import CatalogNotFoundError, CatalogProvider
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import SimaProSerializationError
 from brightpath.models import (
@@ -28,6 +29,11 @@ from brightpath.models import (
     default_biosphere_profile,
 )
 from brightpath.profiles import format_simapro_technosphere_name, parse_simapro_technosphere_name
+from brightpath.profiles.biosphere_categories import (
+    is_native_uvek_biosphere,
+    restore_native_categories,
+    wire_categories,
+)
 from brightpath.profiles.simapro_biosphere import (
     resolve_ecoinvent_flow_name,
     restore_final_waste_flow,
@@ -240,6 +246,43 @@ class SimaProRenderResult:
         return any(issue.severity == "error" for issue in self.issues)
 
 
+_WIRE_WATER_FORMULA = "_brightpath_wire_water_formula"
+
+
+def _mark_wire_water_formulas(data):
+    """Remember the wire unit before bw2io's numeric water migration."""
+    for dataset in data:
+        for exchange in dataset.get("exchanges", []):
+            if (
+                str(exchange.get("name", "")).casefold() == "water"
+                and exchange.get("type") == "biosphere"
+                and exchange.get("formula")
+                and normalize_unit(exchange.get("unit", "")) == "kilogram"
+            ):
+                exchange[_WIRE_WATER_FORMULA] = str(exchange["formula"])
+
+
+def _restore_water_formula_units(data):
+    """Keep expressions on the same volume basis as bw2io's converted amount."""
+    for dataset in data:
+        for exchange in dataset.get("exchanges", []):
+            wire_formula = exchange.pop(_WIRE_WATER_FORMULA, None)
+            if wire_formula is None or normalize_unit(exchange.get("unit", "")) != "cubic meter":
+                continue
+            scaled_formula = f"({wire_formula}) * 0.001"
+            if exchange.get("formula") not in {wire_formula, scaled_formula}:
+                raise ValueError("Cannot verify the formula after the SimaPro water unit conversion.")
+            # Undo the exact wrapper emitted by our writer, preserving the source
+            # expression. Otherwise retain the full wire expression and its units.
+            match = re.fullmatch(r"\((.*)\) \* 1000", wire_formula, flags=re.DOTALL)
+            if match:
+                try:
+                    ast.parse(match[1], mode="eval")
+                except (SyntaxError, ValueError, RecursionError):
+                    match = None
+            exchange["formula"] = match[1] if match else scaled_formula
+
+
 def load_simapro_csv(
     path: str | Path,
     *,
@@ -290,7 +333,9 @@ def load_simapro_csv(
         if "default-units" not in bw2io.migrations:
             bw2io.create_core_migrations()
         importer = bw2io.SimaProCSVImporter(filepath=cleaned, name=name)
+        _mark_wire_water_formulas(importer.data)
         importer.apply_strategies()
+        _restore_water_formula_units(importer.data)
         detected_system_models = detect_simapro_system_models(importer.data)
         global_parameters = deepcopy(getattr(importer, "global_parameters", None))
         database_parameters, project_parameters = _split_global_parameters(
@@ -346,13 +391,30 @@ def normalize_simapro_import_data(
     profile = background_profile.normalized()
     selected_biosphere = biosphere_profile or default_biosphere_profile(profile)
     reference_version = selected_biosphere.version
+    technosphere_identities = None
+    if profile.family == "uvek" and catalog_provider is not None:
+        try:
+            technosphere_identities = catalog_provider.load_technosphere(profile.to_technosphere_profile()).identities
+        except CatalogNotFoundError:
+            technosphere_identities = frozenset()
+    native_catalog_identities = None
     if biosphere_flows is None:
         if catalog_provider is None:
             raise TypeError(
                 "catalog_provider or biosphere_flows must be provided for exact SimaPro biosphere normalization."
             )
         catalog = catalog_provider.load_biosphere(selected_biosphere)
-        biosphere_flows = _simapro_biosphere_reference(catalog.identities)
+        native_catalog_identities = catalog.identities
+        identities = catalog.identities
+        if is_native_uvek_biosphere(selected_biosphere):
+            identities = ((name, wire_categories(categories), unit) for name, categories, unit in identities)
+        biosphere_flows = _simapro_biosphere_reference(identities)
+    if is_native_uvek_biosphere(selected_biosphere):
+        if native_catalog_identities is None and catalog_provider is not None:
+            native_catalog_identities = catalog_provider.load_biosphere(selected_biosphere).identities
+        biosphere_flows = frozenset(
+            (name, wire_categories((root,))[0], subcompartment) for name, root, subcompartment in biosphere_flows
+        )
     if biosphere_correspondence is None:
         biosphere_correspondence = load_biosphere_correspondence()
     if version_mapping is None:
@@ -395,6 +457,7 @@ def normalize_simapro_import_data(
                 raw_dataset_name,
                 unit=str(dataset.get("unit") or ""),
                 profile=profile,
+                technosphere_identities=technosphere_identities,
             )
             dataset["database"] = database_name
             if _restore_activity_identity(dataset, profile):
@@ -444,6 +507,7 @@ def normalize_simapro_import_data(
                         raw_exchange_name,
                         unit=str(exchange.get("unit") or ""),
                         profile=profile,
+                        technosphere_identities=technosphere_identities,
                     )
                     exchange["name"] = name
                     exchange["product"] = product
@@ -480,6 +544,7 @@ def normalize_simapro_import_data(
 
         if restored_identities:
             _restore_local_activity_links(normalized, restored_identities)
+        restore_native_categories(normalized, selected_biosphere, identities=native_catalog_identities)
         return normalized
     except Exception as exc:
         _attach_partial_data(exc, normalized)
@@ -694,8 +759,28 @@ class _SimaProRenderer:
         self.biosphere = get_simapro_biosphere()
         self.subcompartments = get_simapro_subcompartments()
         self.inventories = self.document.data
+        native_biosphere_issues = []
+        if is_native_uvek_biosphere(document.context.background.biosphere):
+            for dataset_index, dataset in enumerate(self.inventories):
+                for exchange_index, exchange in enumerate(dataset.get("exchanges", [])):
+                    if exchange.get("type") == "biosphere":
+                        exchange["categories"] = wire_categories(exchange.get("categories"))
+                        if (
+                            exchange.get("amount") != 0
+                            and exchange["categories"]
+                            and exchange["categories"][0] not in ALLOWED_BIOSPHERE_CATEGORIES
+                        ):
+                            native_biosphere_issues.append(
+                                Issue(
+                                    severity="error",
+                                    code="simapro_native_compartment_unsupported",
+                                    message="The native UVEK biosphere compartment has no supported SimaPro section.",
+                                    path=f"activity[{dataset_index}].exchanges[{exchange_index}]",
+                                )
+                            )
         self.category_issues = self._resolve_categories()
         self.category_issues.extend(self._apply_category_paths())
+        self.category_issues.extend(native_biosphere_issues)
 
     def render(self) -> SimaProRenderResult:
         issues = [*self.category_issues, *self._preflight_issues()]

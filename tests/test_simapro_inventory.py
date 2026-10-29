@@ -53,6 +53,37 @@ def row_after(rows, label):
     return rows[rows.index([label]) + 1]
 
 
+@pytest.mark.parametrize("version", ["3.10", "3.10.1", "3.11", "3.12"])
+@pytest.mark.parametrize("subcategory", ["ground-", "ground-, long-term"])
+def test_ammonium_ion_alias_round_trip_uses_the_exact_selected_catalog(tmp_path, version, subcategory):
+    data = [
+        minimal_activity(
+            extra_exchanges=[
+                {
+                    "type": "biosphere",
+                    "name": "Ammonium",
+                    "unit": "kilogram",
+                    "categories": ("water", subcategory),
+                    "amount": 12,
+                }
+            ]
+        )
+    ]
+    before = deepcopy(data)
+    inventory = BrightwayInventory.from_data(data, background_profile=profile(version))
+    artifact = inventory.to_simapro().write_csv(tmp_path / "ammonium.csv")
+    restored = SimaProInventory.from_csv(artifact, background_profile=profile(version))
+    assert not restored.validate().has_errors
+    flow = restored.data[0]["exchanges"][1]
+    assert (flow["name"], tuple(flow["categories"]), flow["unit"], flow["amount"]) == (
+        "Ammonium",
+        ("water", subcategory),
+        "kilogram",
+        12,
+    )
+    assert inventory.data == before == data
+
+
 def test_format_facades_share_a_copy_on_write_document():
     data = [minimal_activity()]
     source = deepcopy(data)

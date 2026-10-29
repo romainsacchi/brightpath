@@ -77,12 +77,13 @@ def parse_simapro_technosphere_name(
     *,
     unit: str = "",
     profile: BackgroundProfile,
+    technosphere_identities=None,
 ) -> tuple[str, str, str]:
     normalized = profile.normalized()
     if normalized.family == "ecoinvent":
         return _parse_ecoinvent_name(text)
     if normalized.family == "uvek":
-        return _parse_uvek_name(text, unit=unit, profile=normalized)
+        return _parse_uvek_name(text, unit=unit, profile=normalized, technosphere_identities=technosphere_identities)
     raise ValueError(f"Unsupported background family for SimaPro names: {normalized.family!r}.")
 
 
@@ -209,16 +210,43 @@ def _parse_uvek_name(
     *,
     unit: str,
     profile: BackgroundProfile,
+    technosphere_identities=None,
 ) -> tuple[str, str, str]:
     if not isinstance(text, str) or not text.strip():
         raise ValueError("Cannot parse an empty SimaPro technosphere exchange name.")
 
     _, reverse = _uvek_simapro_mappings()
     mapped = reverse.get(text.strip(), ())
-    if len(mapped) == 1:
-        name, location, _mapped_unit, reference_product = mapped[0]
-        return name, reference_product, location
-    if len(mapped) > 1:
+    match = re.fullmatch(r"(?P<name>.+)/(?P<location>[^/]+) U", text.strip())
+    if technosphere_identities is None:
+        try:
+            technosphere_identities = load_background_catalog(profile).technosphere
+        except FileNotFoundError:
+            pass
+    if technosphere_identities is not None:
+        # Legacy display mappings can contain a geography suffix inside the
+        # activity name. Such an identity is valid for some 2025 catalogs but
+        # must not override the distinct, exact 2026 identity.
+        candidates = {
+            (name, reference_product, location)
+            for name, location, mapped_unit, reference_product in mapped
+            if (name, reference_product, location, mapped_unit) in technosphere_identities
+            and (not unit or _units_equal(mapped_unit, unit))
+        }
+        if match:
+            name, location = match.group("name").strip(), match.group("location").strip()
+            candidates.update(
+                (candidate_name, reference_product, candidate_location)
+                for candidate_name, reference_product, candidate_location, candidate_unit in technosphere_identities
+                if candidate_name == name
+                and candidate_location == location
+                and (not unit or _units_equal(candidate_unit, unit))
+            )
+        if len(candidates) == 1:
+            return next(iter(candidates))
+        if len(candidates) > 1:
+            raise ValueError(f"Ambiguous UVEK reference product for SimaPro name: {text!r}.")
+    elif mapped:
         unit_matches = [row for row in mapped if _units_equal(row[2], unit)]
         if len(unit_matches) == 1:
             name, location, _mapped_unit, reference_product = unit_matches[0]
@@ -228,27 +256,11 @@ def _parse_uvek_name(
             return next(iter(unique))
         raise ValueError(f"Ambiguous UVEK SimaPro name: {text!r}.")
 
-    match = re.fullmatch(r"(?P<name>.+)/(?P<location>[^/]+) U", text.strip())
     if not match:
         raise ValueError(f"Cannot parse UVEK SimaPro technosphere name: {text!r}.")
     name = match.group("name").strip()
     location = match.group("location").strip()
 
-    try:
-        catalog = load_background_catalog(profile)
-    except FileNotFoundError:
-        return name, name, location
-    candidates = {
-        reference_product
-        for candidate_name, reference_product, candidate_location, candidate_unit in catalog.technosphere
-        if candidate_name == name
-        and candidate_location == location
-        and (not unit or _units_equal(candidate_unit, unit))
-    }
-    if len(candidates) == 1:
-        return name, next(iter(candidates)), location
-    if len(candidates) > 1:
-        raise ValueError(f"Ambiguous UVEK reference product for SimaPro name: {text!r}.")
     return name, name, location
 
 

@@ -137,6 +137,57 @@ def test_uvek_names_use_mapping_and_have_catalog_free_fallback(monkeypatch):
     )
 
 
+@pytest.mark.parametrize("version", ["2025", "2026"])
+def test_uvek_legacy_wire_suffix_is_resolved_against_the_exact_release(version):
+    from brightpath.catalogs import load_background_catalog
+
+    profile = BackgroundProfile("uvek", version, "cutoff")
+    name = "Sodium carbonate from ammonium chloride production, at plant"
+    wire = f"{name}/GLO U"
+    resolved = parse_simapro_technosphere_name(wire, unit="kilogram", profile=profile)
+    assert (*resolved, "kilogram") in load_background_catalog(profile).technosphere
+    if version == "2026":
+        assert resolved == (name, name, "GLO")
+
+
+def test_uvek_name_parser_uses_injected_catalog_and_does_not_guess_between_current_targets(monkeypatch):
+    from brightpath.profiles import simapro as module
+
+    def unexpected_catalog(_profile):
+        raise AssertionError("Injected identities must prevent hidden catalog access.")
+
+    monkeypatch.setattr(module, "load_background_catalog", unexpected_catalog)
+    monkeypatch.setattr(
+        module,
+        "_uvek_simapro_mappings",
+        lambda: (
+            {},
+            {
+                "Wire/GLO U": (("Legacy name", "GLO", "kilogram", "Legacy product"),),
+            },
+        ),
+    )
+    profile = BackgroundProfile("uvek", "2026", "cutoff")
+    current = frozenset({("Wire", "Current product", "GLO", "kilogram")})
+    assert parse_simapro_technosphere_name(
+        "Wire/GLO U", unit="kg", profile=profile, technosphere_identities=current
+    ) == ("Wire", "Current product", "GLO")
+    with pytest.raises(ValueError, match="Ambiguous UVEK"):
+        parse_simapro_technosphere_name(
+            "Wire/GLO U",
+            unit="kg",
+            profile=profile,
+            technosphere_identities=current | {("Legacy name", "Legacy product", "GLO", "kilogram")},
+        )
+    # A known alias in another unit cannot override a current exact identity.
+    assert parse_simapro_technosphere_name(
+        "Wire/GLO U",
+        unit="kilogram",
+        profile=profile,
+        technosphere_identities=current | {("Legacy name", "Legacy product", "GLO", "megajoule")},
+    ) == ("Wire", "Current product", "GLO")
+
+
 def test_technosphere_names_reject_unknown_background_family():
     profile = BackgroundProfile("unknown", "1", "cutoff")
     with pytest.raises(ValueError, match="Unsupported background family"):
