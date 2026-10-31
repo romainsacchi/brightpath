@@ -6,10 +6,19 @@ ecoinvent biosphere profiles, water contexts and kilograms. It uses charged stoc
 Lithium, Manganese, Mercury, Nickel, Potassium, Silver and Zinc ions, plus
 qualified legacy Calcium and Vanadium labels. Sodium retains its separate naming rules.
 
+The names below were checked against the August 2025 substance list for
+SimaPro Professional 10.2. Import nomenclature applies to substances
+independently of the selected product libraries. The CSV syntax version alone
+does not establish that naming convention. Compatibility of the complete file with
+Professional 9.5, 9.6 or 10.4 requires a separate check against the definitions
+for that version.
+See the vendor's `import nomenclature guidance
+<https://support.simapro.com/en/articles/504727-how-can-i-choose-an-import-option-in-simapro-cloud-edition>`_.
+
 The three additional correspondences are ``Caesium I -> Cesium (I)``,
 ``Molybdenum VI -> Molybdenum (VI)`` and ``Strontium II -> Strontium (II)``.
 Actual ecoinvent3.12 elementary-flow metadata explicitly defines the source
-ions as Cs+, Mo+6 and Sr+2. The current public SimaPro10.2 stock provides
+ions as Cs+, Mo+6 and Sr+2. The pinned August 2025 Professional 10.2 list provides
 the corresponding water-emission/kg labels. Molybdenum's explicit Mo+6
 formula agrees. NIST's cesium-ion entry identifies stock CAS18459-37-5 as
 Cs+; ChEBI/Rhea identify stock CAS22537-39-9 as strontium2+ and record
@@ -46,7 +55,7 @@ Qualified modern Chromium display names
 
 Chromium III and Chromium VI use ``Chromium (III)`` and ``Chromium (VI)``
 for the exact selected water-context/kilogram UUIDs in biospheres3.9–3.12.
-The two valences retain their separate canonical UUIDs. Current public10.2
+The two valences retain their separate canonical UUIDs. The pinned Professional 10.2
 stock metadata match the source CAS, formal charged formula, emission role
 and kg unit. Exact legacy factor-one mappings cover all ten contexts.
 
