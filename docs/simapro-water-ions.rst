@@ -15,6 +15,15 @@ for that version.
 See the vendor's `import nomenclature guidance
 <https://support.simapro.com/en/articles/504727-how-can-i-choose-an-import-option-in-simapro-cloud-edition>`_.
 
+The vendor's `Professional 10.3/10.4 release changelog
+<https://pre-support.sharefile.com/d-se9f78a69160a4ceca89be5be0971d161>`_
+was also reviewed. It records substance additions, renames and replacements,
+but does not provide a complete stock with defined compartments, substance
+units and chemical definitions. Its publisher identifiers do not match the
+FlowUUIDs in the checked 10.2 list; these identifiers must not be equated.
+The changelog therefore does not establish complete 10.4 compatibility or
+justify additional aliases. The profile-specific qualifications below remain.
+
 The three additional correspondences are ``Caesium I -> Cesium (I)``,
 ``Molybdenum VI -> Molybdenum (VI)`` and ``Strontium II -> Strontium (II)``.
 Actual ecoinvent3.12 elementary-flow metadata explicitly defines the source
@@ -61,7 +70,7 @@ and kg unit. Exact legacy factor-one mappings cover all ten contexts.
 
 The bare Roman labels are explicitly valid in the public9.4 list; they are
 not declared generally invalid. Their old stock UUIDs are absent from the
-current list, so stock-ID continuity and LCIA equivalence are not claimed.
+pinned 10.2 list, so stock-ID continuity and LCIA equivalence are not claimed.
 The native9.5 lexical record directly witnesses eight of the ten contexts;
 CrIII groundwater-long-term and CrVI ocean were not observed. That limited
 absence does not invalidate the modern qualified correspondence.
