@@ -22,6 +22,7 @@ from brightpath.background.catalogs import CatalogNotFoundError, CatalogProvider
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import SimaProSerializationError
 from brightpath.formats.simapro_sodium_identity import SodiumIdentityGuard, remember_sodium_wire_labels
+from brightpath.formats.simapro_water_ions import WaterIonIdentityGuard, remember_water_ion_wire_labels
 from brightpath.models import (
     BackgroundProfile,
     InventoryDocument,
@@ -336,6 +337,7 @@ def load_simapro_csv(
         importer = bw2io.SimaProCSVImporter(filepath=cleaned, name=name)
         _mark_wire_water_formulas(importer.data)
         remember_sodium_wire_labels(importer.data)
+        remember_water_ion_wire_labels(importer.data, context.background.biosphere)
         importer.apply_strategies()
         _restore_water_formula_units(importer.data)
         detected_system_models = detect_simapro_system_models(importer.data)
@@ -393,6 +395,7 @@ def normalize_simapro_import_data(
     profile = background_profile.normalized()
     selected_biosphere = biosphere_profile or default_biosphere_profile(profile)
     sodium_identity = SodiumIdentityGuard(selected_biosphere, {}, catalog_provider)
+    water_ions = WaterIonIdentityGuard(selected_biosphere, catalog_provider)
     reference_version = selected_biosphere.version
     technosphere_identities = None
     if profile.family == "uvek" and catalog_provider is not None:
@@ -531,6 +534,10 @@ def normalize_simapro_import_data(
                         exchange = _reflect_simapro_exchange(exchange)
 
                 elif exchange_type == "biosphere":
+                    if water_ions.restore_wire_identity(exchange, raw_exchange_name, allowed_flows=biosphere_flows):
+                        exchange.pop("input", None)
+                        converted_exchanges.append(exchange)
+                        continue
                     if not sodium_identity.restore_wire_identity(
                         exchange, raw_exchange_name, allowed_flows=biosphere_flows
                     ):
@@ -765,6 +772,9 @@ class _SimaProRenderer:
         self.biosphere = get_simapro_biosphere()
         self.sodium_identity = SodiumIdentityGuard(
             document.context.background.biosphere, self.biosphere, getattr(self, "catalog_provider", None)
+        )
+        self.water_ions = WaterIonIdentityGuard(
+            document.context.background.biosphere, getattr(self, "catalog_provider", None)
         )
         self.subcompartments = get_simapro_subcompartments()
         self.inventories = self.document.data
@@ -1598,6 +1608,7 @@ class _SimaProRenderer:
                 ) from exc
         name = self.biosphere.get(exchange["name"], exchange["name"])
         name = self.sodium_identity.wire_name(exchange, resolve_ecoinvent_flow_name(exchange, name))
+        name = self.water_ions.wire_name(exchange, name)
         return [
             name,
             subcompartment,
