@@ -21,7 +21,7 @@ import bw2io
 from brightpath.background.catalogs import CatalogNotFoundError, CatalogProvider
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import SimaProSerializationError
-from brightpath.formats.simapro_sodium_identity import SodiumIdentityGuard
+from brightpath.formats.simapro_sodium_identity import SodiumIdentityGuard, remember_sodium_wire_labels
 from brightpath.models import (
     BackgroundProfile,
     InventoryDocument,
@@ -335,6 +335,7 @@ def load_simapro_csv(
             bw2io.create_core_migrations()
         importer = bw2io.SimaProCSVImporter(filepath=cleaned, name=name)
         _mark_wire_water_formulas(importer.data)
+        remember_sodium_wire_labels(importer.data)
         importer.apply_strategies()
         _restore_water_formula_units(importer.data)
         detected_system_models = detect_simapro_system_models(importer.data)
@@ -391,6 +392,7 @@ def normalize_simapro_import_data(
     normalized = deepcopy(data)
     profile = background_profile.normalized()
     selected_biosphere = biosphere_profile or default_biosphere_profile(profile)
+    sodium_identity = SodiumIdentityGuard(selected_biosphere, {}, catalog_provider)
     reference_version = selected_biosphere.version
     technosphere_identities = None
     if profile.family == "uvek" and catalog_provider is not None:
@@ -529,15 +531,18 @@ def normalize_simapro_import_data(
                         exchange = _reflect_simapro_exchange(exchange)
 
                 elif exchange_type == "biosphere":
-                    exchange.update(
-                        format_biosphere_exchange(
-                            exchange,
-                            reference_version,
-                            biosphere_flows,
-                            biosphere_correspondence,
-                            version_mapping=version_mapping,
+                    if not sodium_identity.restore_wire_identity(
+                        exchange, raw_exchange_name, allowed_flows=biosphere_flows
+                    ):
+                        exchange.update(
+                            format_biosphere_exchange(
+                                exchange,
+                                reference_version,
+                                biosphere_flows,
+                                biosphere_correspondence,
+                                version_mapping=version_mapping,
+                            )
                         )
-                    )
                     exchange.pop("input", None)
 
                 converted_exchanges.append(exchange)
@@ -758,6 +763,9 @@ class _SimaProRenderer:
         self.units = get_simapro_units()
         self.headers = get_simapro_headers()
         self.biosphere = get_simapro_biosphere()
+        self.sodium_identity = SodiumIdentityGuard(
+            document.context.background.biosphere, self.biosphere, getattr(self, "catalog_provider", None)
+        )
         self.subcompartments = get_simapro_subcompartments()
         self.inventories = self.document.data
         native_biosphere_issues = []
@@ -840,9 +848,7 @@ class _SimaProRenderer:
 
     def _preflight_issues(self) -> list[Issue]:
         issues = []
-        sodium_guard = SodiumIdentityGuard(
-            self.document.context.background.biosphere, self.biosphere, getattr(self, "catalog_provider", None)
-        )
+        sodium_guard = self.sodium_identity
         if self.profile.family not in {"ecoinvent", "uvek"}:
             issues.append(
                 Issue(
@@ -1591,7 +1597,7 @@ class _SimaProRenderer:
                     f"No SimaPro subcompartment mapping for {categories[1]!r} on {exchange['name']!r}."
                 ) from exc
         name = self.biosphere.get(exchange["name"], exchange["name"])
-        name = resolve_ecoinvent_flow_name(exchange, name)
+        name = self.sodium_identity.wire_name(exchange, resolve_ecoinvent_flow_name(exchange, name))
         return [
             name,
             subcompartment,
