@@ -37,6 +37,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    workflows/cli
    workflows/brightway
    workflows/simapro
+   simapro-sodium-identity
    workflows/conversion
    workflows/ecospold1
    workflows/ecospold2

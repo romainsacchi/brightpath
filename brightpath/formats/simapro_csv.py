@@ -21,6 +21,7 @@ import bw2io
 from brightpath.background.catalogs import CatalogNotFoundError, CatalogProvider
 from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
 from brightpath.exceptions import SimaProSerializationError
+from brightpath.formats.simapro_sodium_identity import SodiumIdentityGuard
 from brightpath.models import (
     BackgroundProfile,
     InventoryDocument,
@@ -839,6 +840,9 @@ class _SimaProRenderer:
 
     def _preflight_issues(self) -> list[Issue]:
         issues = []
+        sodium_guard = SodiumIdentityGuard(
+            self.document.context.background.biosphere, self.biosphere, getattr(self, "catalog_provider", None)
+        )
         if self.profile.family not in {"ecoinvent", "uvek"}:
             issues.append(
                 Issue(
@@ -946,6 +950,11 @@ class _SimaProRenderer:
                             continue
                         try:
                             validate_ecoinvent_flow(exchange)
+                            sodium_issue = sodium_guard.issue(
+                                exchange, f"activity[{activity_index}].exchanges[{exchange_index}]"
+                            )
+                            if sodium_issue is not None:
+                                issues.append(sodium_issue)
                         except (ValueError, TypeError) as error:
                             issues.append(
                                 Issue(
