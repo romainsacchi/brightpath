@@ -95,6 +95,235 @@ def _install_services(monkeypatch, pipeline):
     return provider
 
 
+def _simapro_conversion_fixture(monkeypatch, tmp_path, *, stock_version="10.2", stock_name="Carbon dioxide, fossil"):
+    from openpyxl import Workbook
+
+    from brightpath.background.catalogs import PackageCatalogProvider
+
+    document = _document("simapro_csv")
+    activity = document.data[0]
+    activity["comment"] = "Synthetic CLI substance-list validation fixture."
+    activity["exchanges"] = [
+        {
+            "name": activity["name"],
+            "reference product": activity["reference product"],
+            "location": "GLO",
+            "unit": "kilogram",
+            "amount": 1,
+            "type": "production",
+            "simapro category": "material/Test",
+        },
+        {
+            "name": "Carbon dioxide, fossil",
+            "categories": ("air",),
+            "unit": "kilogram",
+            "amount": 2,
+            "type": "biosphere",
+        },
+    ]
+    document = document.replace(data=[activity])
+    pipeline = FakePipeline(document)
+    pipeline.conversion_result = OperationResult(document, _report(OperationKind.CONVERT, StageKind.FORMAT_CONVERSION))
+    monkeypatch.setattr(cli, "_application_services", lambda: (pipeline, PackageCatalogProvider()))
+    book = Workbook()
+    book.active.append(["Flowable", "Context", "Unit", "FlowUUID", "SupportedNomenclatures"])
+    book.active.append(
+        [stock_name, "Airborne emissions", "kg", "synthetic-stock-carbon", f"Professional {stock_version}"]
+    )
+    reference = tmp_path / "substances.xlsx"
+    book.save(reference)
+    book.close()
+    arguments = [
+        "convert-format",
+        str(tmp_path / "source.xlsx"),
+        str(tmp_path / "output.csv"),
+        "--target-format",
+        "simapro_csv",
+        "--simapro-version",
+        stock_version,
+        "--simapro-substance-list",
+        str(reference),
+        "--json",
+    ]
+    return pipeline, arguments
+
+
+@pytest.mark.parametrize("extra", [[], ["--simapro-substance-list", "does-not-exist.xlsx"]])
+def test_simapro_cli_without_target_version_exports_without_stock_validation(monkeypatch, capsys, tmp_path, extra):
+    pipeline = FakePipeline()
+    _install_services(monkeypatch, pipeline)
+
+    def unexpected(*args, **kwargs):
+        pytest.fail("Stock validation must not run without a target SimaPro version.")
+
+    monkeypatch.setattr(cli, "_simapro_stock_report", unexpected)
+    result = cli.main(
+        ["convert-format", "source.xlsx", str(tmp_path / "output.csv"), "--target-format", "simapro_csv", "--json"]
+        + extra
+    )
+    payload = json.loads(capsys.readouterr().out)
+    assert result == cli.EXIT_SUCCESS, payload
+    assert "simapro_substances" not in payload["reports"]
+    assert [call[0] for call in pipeline.calls] == ["read", "convert", "write"]
+    assert pipeline.calls[-1][3]["adapter_kwargs"] is None
+
+
+def test_simapro_cli_given_version_requires_reference(monkeypatch, capsys, tmp_path):
+    pipeline = FakePipeline()
+    _install_services(monkeypatch, pipeline)
+    result = cli.main(
+        [
+            "convert-format",
+            "source.xlsx",
+            str(tmp_path / "output.csv"),
+            "--target-format",
+            "simapro_csv",
+            "--simapro-version",
+            "10.2",
+            "--json",
+        ]
+    )
+    assert result == cli.EXIT_USAGE
+    assert "--simapro-substance-list" in capsys.readouterr().out
+    assert pipeline.calls == []
+
+
+@pytest.mark.parametrize("stock_version", ["10.2", "10.4"])
+def test_simapro_cli_uses_explicit_software_reference_separately_from_ecoinvent(
+    monkeypatch, capsys, tmp_path, stock_version
+):
+    pipeline, arguments = _simapro_conversion_fixture(monkeypatch, tmp_path, stock_version=stock_version)
+    before = pipeline.document.data
+    result = cli.main(arguments)
+    payload = json.loads(capsys.readouterr().out)
+    assert result == cli.EXIT_SUCCESS, payload
+    stock = payload["reports"]["simapro_substances"]["stages"][0]["metrics"]
+    assert stock["stock_version"] == stock_version
+    assert stock["matched"] == 1
+    assert stock["stock_membership_validated"] is True
+    assert stock["subcompartments_checked"] is False
+    write = next(call for call in pipeline.calls if call[0] == "write")
+    assert write[3]["adapter_kwargs"]["stock_version"] == stock_version
+    assert pipeline.document.context.background.technosphere.version == "3.10"
+    assert pipeline.document.context.background.biosphere.version == "3.10"
+    assert pipeline.document.data == before
+
+
+@pytest.mark.parametrize("extra", [[], ["--dry-run"], ["--policy", "permissive"]])
+def test_simapro_cli_unlisted_substance_blocks_writing_and_dry_run(monkeypatch, capsys, tmp_path, extra):
+    pipeline, arguments = _simapro_conversion_fixture(monkeypatch, tmp_path, stock_name="Different substance")
+    result = cli.main(arguments + extra)
+    payload = json.loads(capsys.readouterr().out)
+    assert result == cli.EXIT_CONVERSION, payload
+    stock = payload["reports"]["simapro_substances"]["stages"][0]
+    assert stock["metrics"]["stock_membership_validated"] is False
+    assert stock["metrics"]["unknown"] == 1
+    assert stock["issues"][0]["details"]["name"] == "Carbon dioxide, fossil"
+    assert all(call[0] != "write" for call in pipeline.calls)
+    assert not (tmp_path / "output.csv").exists()
+
+
+def test_simapro_cli_missing_version_catalogue_never_falls_back(monkeypatch, capsys, tmp_path):
+    pipeline, arguments = _simapro_conversion_fixture(monkeypatch, tmp_path)
+    arguments[arguments.index("--simapro-version") + 1] = "10.4"
+    result = cli.main(arguments)
+    payload = json.loads(capsys.readouterr().out)
+    assert result == cli.EXIT_USAGE, payload
+    assert "10.4" in str(payload)
+    assert pipeline.calls == []
+
+
+def test_simapro_reference_options_are_rejected_for_other_formats(monkeypatch, capsys, tmp_path):
+    pipeline, arguments = _simapro_conversion_fixture(monkeypatch, tmp_path)
+    arguments[arguments.index("--target-format") + 1] = "brightway_csv"
+    assert cli.main(arguments) == cli.EXIT_USAGE
+    assert "only be used" in capsys.readouterr().out
+    assert pipeline.calls == []
+
+
+@pytest.mark.parametrize(
+    "stock_name, expected", [("Carbon dioxide, fossil", cli.EXIT_SUCCESS), ("Other", cli.EXIT_CONVERSION)]
+)
+def test_preserved_simapro_migration_checks_the_receiving_version(monkeypatch, capsys, tmp_path, stock_name, expected):
+    pipeline, conversion_arguments = _simapro_conversion_fixture(monkeypatch, tmp_path, stock_name=stock_name)
+    monkeypatch.setattr(
+        cli,
+        "execute_background_migration",
+        lambda document, *args, **kwargs: OperationResult(
+            document, _report(OperationKind.MIGRATE, StageKind.BACKGROUND_MIGRATION)
+        ),
+    )
+    arguments = [
+        "migrate-background",
+        "source.csv",
+        str(tmp_path / "output.csv"),
+        "--target-technosphere-family",
+        "ecoinvent",
+        "--target-technosphere-version",
+        "3.10",
+        "--target-technosphere-system-model",
+        "cutoff",
+        "--target-biosphere-family",
+        "ecoinvent",
+        "--target-biosphere-version",
+        "3.10",
+        "--simapro-version",
+        "10.2",
+        "--simapro-substance-list",
+        conversion_arguments[conversion_arguments.index("--simapro-substance-list") + 1],
+        "--dry-run",
+        "--json",
+    ]
+    result = cli.main(arguments)
+    payload = json.loads(capsys.readouterr().out)
+    assert result == expected, payload
+    stock = payload["reports"]["simapro_substances"]["stages"][0]["metrics"]
+    assert stock["stock_membership_validated"] is (expected == cli.EXIT_SUCCESS)
+    assert all(call[0] != "write" for call in pipeline.calls)
+
+
+@pytest.mark.parametrize("dry_run", [False, True])
+def test_preserved_simapro_migration_without_software_version_skips_stock_validation(
+    monkeypatch, capsys, tmp_path, dry_run
+):
+    pipeline, _ = _simapro_conversion_fixture(monkeypatch, tmp_path)
+
+    def unexpected(*args, **kwargs):
+        pytest.fail("Stock validation must not run without a target SimaPro version.")
+
+    monkeypatch.setattr(cli, "_simapro_stock_report", unexpected)
+    monkeypatch.setattr(
+        cli,
+        "execute_background_migration",
+        lambda document, *args, **kwargs: OperationResult(
+            document, _report(OperationKind.MIGRATE, StageKind.BACKGROUND_MIGRATION)
+        ),
+    )
+    result = cli.main(
+        [
+            "migrate-background",
+            "source.csv",
+            str(tmp_path / "output.csv"),
+            "--target-technosphere-family",
+            "ecoinvent",
+            "--target-technosphere-version",
+            "3.10",
+            "--target-technosphere-system-model",
+            "cutoff",
+            "--target-biosphere-family",
+            "ecoinvent",
+            "--target-biosphere-version",
+            "3.10",
+            "--json",
+        ]
+        + (["--dry-run"] if dry_run else [])
+    )
+    payload = json.loads(capsys.readouterr().out)
+    assert result == cli.EXIT_SUCCESS, payload
+    assert "simapro_substances" not in payload["reports"]
+    assert [call[0] for call in pipeline.calls] == (["read"] if dry_run else ["read", "write"])
+
+
 def test_formats_json_comes_from_capability_snapshot(capsys):
     exit_code = cli.main(["formats", "--json"])
 
@@ -148,7 +377,7 @@ def test_inspect_builds_an_explicit_context_hint(monkeypatch, capsys, tmp_path):
 
 
 def test_convert_dry_run_preflights_without_writing(monkeypatch, capsys, tmp_path):
-    converted = _document("simapro_csv")
+    converted = _document("brightway_csv")
     pipeline = FakePipeline()
     pipeline.conversion_result = OperationResult(
         converted,
@@ -163,7 +392,7 @@ def test_convert_dry_run_preflights_without_writing(monkeypatch, capsys, tmp_pat
             str(tmp_path / "source.xlsx"),
             str(destination),
             "--target-format",
-            "simapro_csv",
+            "brightway_csv",
             "--dry-run",
             "--json",
         ]
@@ -173,7 +402,7 @@ def test_convert_dry_run_preflights_without_writing(monkeypatch, capsys, tmp_pat
     assert exit_code == cli.EXIT_SUCCESS
     assert [call[0] for call in pipeline.calls] == ["read", "convert"]
     assert payload["dry_run"] is True
-    assert payload["inventory"]["context"]["format"]["format_id"] == "simapro_csv"
+    assert payload["inventory"]["context"]["format"]["format_id"] == "brightway_csv"
     assert not destination.exists()
 
 
@@ -267,7 +496,7 @@ def test_read_and_conversion_failures_have_stable_exit_codes(
             str(tmp_path / "source.xlsx"),
             str(tmp_path / "output.csv"),
             "--target-format",
-            "simapro_csv",
+            "brightway_csv",
             "--json",
         ]
     _install_services(monkeypatch, pipeline)

@@ -176,6 +176,23 @@ brightpath convert-format foreground.xlsx foreground.csv \
 Why so explicit? A `.csv` file can be either Brightway or SimaPro, and similar names
 can refer to different background releases. Explicit inputs make mistakes visible.
 
+SimaPro substance-list validation is **optional**. Exports without
+`--simapro-version` skip this check, even if a substance-list path is supplied.
+To enable it, select the receiving SimaPro version and its matching GLAD workbook:
+
+```bash
+brightpath convert-format foreground.xlsx foreground.csv \
+  --target-format simapro_csv \
+  --simapro-version 10.2 \
+  --simapro-substance-list substances.xlsx
+```
+
+When enabled, an unlisted or unresolved substance blocks the export, including
+during a dry run. Each requested version is checked separately, with no fallback
+to another list. The example uses the published Professional 10.2 list.
+See [substance-list validation](docs/simapro-stock-validation.rst) for the Python
+API, coverage reporting and the current reference-list limits.
+
 ### More conversion recipes
 
 Convert a Brightway block CSV file to the equivalent tab-separated format:

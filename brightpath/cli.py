@@ -26,6 +26,7 @@ from brightpath.core.context import (
 from brightpath.core.pipeline import InventoryPipeline
 from brightpath.core.policies import ConversionPolicy, MigrationPolicy, PolicyAction
 from brightpath.core.reports import (
+    Issue,
     OperationKind,
     OperationReport,
     Severity,
@@ -36,6 +37,8 @@ from brightpath.formats.ecospold1_metadata import EcoSpold1ExportProfile
 from brightpath.formats.ecospold2_metadata import EcoSpold2ExportProfile, EcoSpold2ReferenceCatalog
 from brightpath.formats.ilcd_metadata import ILCDExportProfile
 from brightpath.formats.ilcd_references import ILCDReferenceCatalog
+from brightpath.formats.simapro_csv import render_simapro_rows
+from brightpath.formats.simapro_stock import SimaProStockCatalog, validate_simapro_stock_rows
 
 EXIT_SUCCESS = 0
 EXIT_USAGE = 2
@@ -75,6 +78,15 @@ def build_parser() -> argparse.ArgumentParser:
     convert.add_argument("source", type=Path)
     convert.add_argument("destination", type=Path)
     convert.add_argument("--target-format", required=True, help="Registered target format identifier.")
+    convert.add_argument(
+        "--simapro-version",
+        help="Optional target SimaPro version; enables substance-list validation independently of the background database.",
+    )
+    convert.add_argument(
+        "--simapro-substance-list",
+        type=Path,
+        help="GLAD substance-list workbook containing the exact requested SimaPro Professional version.",
+    )
     convert.add_argument(
         "--ecospold1-metadata",
         type=Path,
@@ -118,6 +130,12 @@ def build_parser() -> argparse.ArgumentParser:
     migrate.add_argument("--target-technosphere-system-model", required=True)
     migrate.add_argument("--target-biosphere-family", required=True)
     migrate.add_argument("--target-biosphere-version", required=True)
+    migrate.add_argument(
+        "--simapro-version", help="Receiving SimaPro version when the preserved output is SimaPro CSV."
+    )
+    migrate.add_argument(
+        "--simapro-substance-list", type=Path, help="Substance-list workbook for that exact SimaPro version."
+    )
     migrate.add_argument("--dry-run", action="store_true", help="Run migration in memory without writing.")
     migrate.add_argument(
         "--allow-heuristic-mapping",
@@ -245,6 +263,7 @@ def _run_convert(arguments: argparse.Namespace) -> int:
     hint = _source_hint(arguments)
     conversion_policy = _conversion_policy(arguments.policy)
     adapter_options = _conversion_adapter_options(arguments)
+    stock_catalog = _simapro_stock_configuration(arguments)
     pipeline, _provider = _application_services()
     read_result = _read_source(pipeline, arguments, hint)
     if read_result.value is None or not read_result.succeeded:
@@ -268,6 +287,14 @@ def _run_convert(arguments: argparse.Namespace) -> int:
         payload = _operation_payload("convert-format", reports, None, dry_run=arguments.dry_run)
         return _finish(arguments, payload, report, EXIT_CONVERSION, artifact_paths=(("source", arguments.source),))
 
+    if stock_catalog is not None:
+        stock_report = _simapro_stock_report(conversion_result.value, stock_catalog, _provider)
+        reports += (("simapro_substances", OperationReport(OperationKind.VALIDATE, stages=(stock_report,))),)
+        if stock_report.has_errors:
+            report = _combine_reports(OperationKind.CONVERT, reports, arguments)
+            payload = _operation_payload("convert-format", reports, None, dry_run=arguments.dry_run)
+            return _finish(arguments, payload, report, EXIT_CONVERSION, artifact_paths=(("source", arguments.source),))
+
     if arguments.dry_run:
         report = _combine_reports(OperationKind.CONVERT, reports, arguments)
         payload = _operation_payload(
@@ -284,6 +311,11 @@ def _run_convert(arguments: argparse.Namespace) -> int:
         target_format=arguments.target_format,
         policy=conversion_policy,
         adapter_options=adapter_options,
+        adapter_kwargs=(
+            {"stock_catalog": stock_catalog, "stock_version": stock_catalog.stock_version}
+            if stock_catalog is not None
+            else None
+        ),
     )
     reports += (("write", write_result.report),)
     report = _combine_reports(OperationKind.CONVERT, reports, arguments)
@@ -300,6 +332,54 @@ def _run_convert(arguments: argparse.Namespace) -> int:
     return _finish(arguments, payload, report, exit_code, artifact_paths=artifacts)
 
 
+def _simapro_stock_configuration(
+    arguments: argparse.Namespace, *, target_format: str | None = None
+) -> SimaProStockCatalog | None:
+    """Enable stock validation only when a receiving software version is supplied."""
+
+    version = getattr(arguments, "simapro_version", None)
+    path = getattr(arguments, "simapro_substance_list", None)
+    target = str(target_format or arguments.target_format).strip().lower().replace("-", "_")
+    if target != "simapro_csv":
+        if version is not None or path is not None:
+            raise _UsageError("SimaPro substance-list options can only be used with --target-format simapro_csv.")
+        return None
+    if version is None:
+        return None
+    if path is None:
+        raise _UsageError(
+            "--simapro-version enables substance-list validation. Supply --simapro-substance-list "
+            "with a reference containing that exact version."
+        )
+    try:
+        return SimaProStockCatalog.load_glad_xlsx(path, stock_version=version)
+    except (OSError, TypeError, ValueError) as error:
+        raise _UsageError(f"Cannot load the requested SimaPro {version} substance list: {error}") from error
+
+
+def _simapro_stock_report(document, stock_catalog, provider) -> StageReport:
+    """Inspect final wire cells without changing the inventory or its background."""
+
+    rendered = render_simapro_rows(document, catalog_provider=provider)
+    if rendered.has_errors:
+        return StageReport(
+            StageKind.FORMAT_VALIDATION,
+            label="SimaPro stock membership",
+            issues=(
+                Issue(
+                    Severity.ERROR,
+                    "simapro_stock_render_failed",
+                    "Substance-list validation requires a successfully rendered SimaPro export.",
+                    StageKind.FORMAT_VALIDATION,
+                ),
+            ),
+            metrics={"stock_membership_validated": False, "stock_version": stock_catalog.stock_version},
+        )
+    return validate_simapro_stock_rows(
+        rendered.rows, stock_catalog=stock_catalog, stock_version=stock_catalog.stock_version
+    )
+
+
 def _run_migrate(arguments: argparse.Namespace) -> int:
     hint = _source_hint(arguments)
     target = _target_background(arguments)
@@ -312,6 +392,7 @@ def _run_migrate(arguments: argparse.Namespace) -> int:
         payload = _operation_payload("migrate-background", reports, None, dry_run=arguments.dry_run)
         return _finish(arguments, payload, report, EXIT_READ, artifact_paths=(("source", arguments.source),))
 
+    stock_catalog = _simapro_stock_configuration(arguments, target_format=read_result.value.context.format.format_id)
     migration_result = execute_background_migration(
         read_result.value,
         target,
@@ -332,6 +413,14 @@ def _run_migrate(arguments: argparse.Namespace) -> int:
         )
         return _finish(arguments, payload, report, EXIT_MIGRATION, artifact_paths=(("source", arguments.source),))
 
+    if stock_catalog is not None:
+        stock_report = _simapro_stock_report(migration_result.value, stock_catalog, provider)
+        reports += (("simapro_substances", OperationReport(OperationKind.VALIDATE, stages=(stock_report,))),)
+        if stock_report.has_errors:
+            report = _combine_reports(OperationKind.MIGRATE, reports, arguments)
+            payload = _operation_payload("migrate-background", reports, None, dry_run=arguments.dry_run)
+            return _finish(arguments, payload, report, EXIT_CONVERSION, artifact_paths=(("source", arguments.source),))
+
     if arguments.dry_run:
         report = _combine_reports(OperationKind.MIGRATE, reports, arguments)
         payload = _operation_payload(
@@ -346,6 +435,11 @@ def _run_migrate(arguments: argparse.Namespace) -> int:
         migration_result.value,
         arguments.destination,
         policy=_conversion_policy(arguments.policy),
+        adapter_kwargs=(
+            {"stock_catalog": stock_catalog, "stock_version": stock_catalog.stock_version}
+            if stock_catalog is not None
+            else None
+        ),
     )
     reports += (("write", write_result.report),)
     report = _combine_reports(OperationKind.MIGRATE, reports, arguments)

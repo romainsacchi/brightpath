@@ -37,6 +37,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    workflows/cli
    workflows/brightway
    workflows/simapro
+   simapro-stock-validation
    simapro-sodium-identity
    simapro-water-ions
    workflows/conversion

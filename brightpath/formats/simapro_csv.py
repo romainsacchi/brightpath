@@ -583,19 +583,41 @@ def write_simapro_csv(
     path: str | Path,
     *,
     category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
+    catalog_provider: CatalogProvider | None = None,
+    stock_catalog=None,
+    stock_version: str | None = None,
+    check_subcompartments: bool = False,
 ) -> tuple[Path, SimaProRenderResult]:
+    """Write CSV; optional stock checks run only with an explicit stock_version."""
+    if stock_version is not None and stock_catalog is None:
+        raise ValueError("An explicit stock_version requires a matching stock_catalog.")
     destination = Path(path).expanduser()
     if destination.suffix == "":
         destination = destination.with_suffix(".csv")
     if destination.suffix.lower() != ".csv":
         raise ValueError("SimaPro exports must use a .csv filename.")
     destination = destination.resolve()
-    destination.parent.mkdir(parents=True, exist_ok=True)
-
-    result = render_simapro_rows(document, category_mode=category_mode)
+    result = render_simapro_rows(document, category_mode=category_mode, catalog_provider=catalog_provider)
     if result.has_errors:
         detail = "\n".join(issue.message for issue in result.issues if issue.severity == "error")
         raise SimaProSerializationError(f"SimaPro rendering failed:\n{detail}")
+
+    if stock_version is not None:
+        from brightpath.core.reports import OperationKind, OperationReport
+        from brightpath.exceptions import InventoryValidationError
+
+        from .simapro_stock import validate_simapro_stock_rows
+
+        report = validate_simapro_stock_rows(
+            result.rows,
+            stock_catalog=stock_catalog,
+            stock_version=stock_version,
+            check_subcompartments=check_subcompartments,
+        )
+        if report.has_errors:
+            raise InventoryValidationError(report=OperationReport(OperationKind.VALIDATE, stages=(report,)))
+
+    destination.parent.mkdir(parents=True, exist_ok=True)
 
     try:
         with destination.open("w", newline="", encoding="latin-1") as handle:
@@ -650,8 +672,9 @@ def render_simapro_rows(
     document: InventoryDocument,
     *,
     category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
+    catalog_provider: CatalogProvider | None = None,
 ) -> SimaProRenderResult:
-    return _SimaProRenderer(document, category_mode=category_mode).render()
+    return _SimaProRenderer(document, category_mode=category_mode, catalog_provider=catalog_provider).render()
 
 
 def is_simapro_final_waste_flow(exchange: dict) -> bool:
@@ -761,8 +784,10 @@ class _SimaProRenderer:
         document: InventoryDocument,
         *,
         category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
+        catalog_provider: CatalogProvider | None = None,
     ) -> None:
         self.document = document
+        self.catalog_provider = catalog_provider
         self.profile = document.background_profile.normalized()
         self.category_mode = coerce_simapro_category_mode(category_mode)
         self.generated_at = datetime.datetime.now()

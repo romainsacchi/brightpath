@@ -15,7 +15,8 @@ from .core.context import (
     TechnosphereProfile,
 )
 from .core.policies import MigrationPolicy
-from .core.reports import OperationReport
+from .core.reports import Issue as CoreIssue
+from .core.reports import OperationReport, StageKind, StageReport
 from .exceptions import InventoryValidationError, MigrationError
 from .formats import load_simapro_csv, render_simapro_rows, write_simapro_csv
 from .formats.simapro_csv import SimaProRenderResult
@@ -33,6 +34,7 @@ from .validation import validate_brightway_inventory
 
 if TYPE_CHECKING:
     from .brightway import BrightwayInventory
+    from .formats.simapro_stock import SimaProStockCatalog
 
 _STRICT_MIGRATION_POLICY = MigrationPolicy.strict()
 _FORMAT_ID = InventoryFormat.SIMAPRO_CSV.value
@@ -243,7 +245,7 @@ class SimaProInventory:
             catalog_provider=catalog_provider,
         )
         if check_simapro_rendering:
-            report.issues.extend(self.render(category_mode=category_mode).issues)
+            report.issues.extend(self.render(category_mode=category_mode, catalog_provider=catalog_provider).issues)
         detected_system_models = set(self.metadata.get("simapro detected system models", ()))
         if len(detected_system_models) > 1:
             report.issues.append(
@@ -275,10 +277,58 @@ class SimaProInventory:
         self,
         *,
         category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
+        catalog_provider: CatalogProvider | None = None,
     ) -> SimaProRenderResult:
         """Render rows in memory and return rows plus structured issues."""
 
-        return render_simapro_rows(self._document, category_mode=category_mode)
+        return render_simapro_rows(self._document, category_mode=category_mode, catalog_provider=catalog_provider)
+
+    def validate_stock(
+        self,
+        *,
+        stock_catalog: SimaProStockCatalog,
+        stock_version: str,
+        check_subcompartments: bool = False,
+        category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
+        catalog_provider: CatalogProvider | None = None,
+    ) -> StageReport:
+        """Check rendered stock membership against an explicit software version.
+
+        Name, main compartment and native wire unit are always checked.
+        Subcompartments are optional and require explicit catalogue coverage.
+        Neither background migration nor stock-name substitution is performed.
+        """
+        from .formats.simapro_stock import validate_simapro_stock_rows
+
+        rendered = self.render(category_mode=category_mode, catalog_provider=catalog_provider)
+        if rendered.has_errors:
+            return StageReport(
+                StageKind.FORMAT_VALIDATION,
+                label="SimaPro stock membership",
+                issues=tuple(
+                    CoreIssue(
+                        issue.severity,
+                        issue.code,
+                        issue.message,
+                        StageKind.FORMAT_VALIDATION,
+                        path=issue.path,
+                        suggested_fix=issue.suggested_fix,
+                    )
+                    for issue in rendered.issues
+                ),
+                metrics={
+                    "stock_version": stock_version,
+                    "stock_state": "unknown",
+                    "stock_membership_validated": False,
+                    "substance_rows_checked": 0,
+                },
+            )
+        return validate_simapro_stock_rows(
+            rendered.rows,
+            stock_catalog=stock_catalog,
+            stock_version=stock_version,
+            check_subcompartments=check_subcompartments,
+        )
 
     def migrate_background(
         self,
@@ -338,6 +388,10 @@ class SimaProInventory:
         validate: bool = True,
         category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
         additional_foreground_targets: Iterable[tuple[str, str, str, str]] = (),
+        catalog_provider: CatalogProvider | None = None,
+        stock_catalog: SimaProStockCatalog | None = None,
+        stock_version: str | None = None,
+        check_subcompartments: bool = False,
     ) -> Path:
         """Write a Latin-1 SimaPro CSV file and return its absolute path.
 
@@ -349,21 +403,40 @@ class SimaProInventory:
             paths observed in the exact supported SimaPro reference catalog.
         :param additional_foreground_targets: Valid external foreground
             identities used by validation.
+        :param catalog_provider: Explicit background provider used for validation
+            and rendering, independently of the stock catalogue.
+        :param stock_catalog: Optional explicit software-version stock catalogue.
+            Used only when ``stock_version`` enables stock validation.
+        :param stock_version: Optional receiving SimaPro version. When supplied,
+            a matching ``stock_catalog`` is required and final rendered cells
+            must pass before writing. Omit it to skip stock validation.
+        :param check_subcompartments: Also check this stock dimension when covered.
         :raises brightpath.InventoryValidationError: If enabled validation has
             errors.
         :raises brightpath.SimaProSerializationError: If rendering or Latin-1
             encoding fails.
         """
 
+        if stock_version is not None and stock_catalog is None:
+            raise ValueError("An explicit stock_version requires a matching stock_catalog.")
         if validate:
             report = self.validate(
                 check_simapro_rendering=True,
                 category_mode=category_mode,
                 additional_foreground_targets=additional_foreground_targets,
+                catalog_provider=catalog_provider,
             )
             if report.has_errors:
                 raise InventoryValidationError(report)
-        destination, _result = write_simapro_csv(self._document, path, category_mode=category_mode)
+        destination, _result = write_simapro_csv(
+            self._document,
+            path,
+            category_mode=category_mode,
+            catalog_provider=catalog_provider,
+            stock_catalog=stock_catalog,
+            stock_version=stock_version,
+            check_subcompartments=check_subcompartments,
+        )
         return destination
 
     def to_brightway(self) -> "BrightwayInventory":
