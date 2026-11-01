@@ -4,9 +4,9 @@ import math
 from copy import deepcopy
 
 import pytest
-from bw2io.extractors.simapro_csv import SimaProCSVExtractor
 
 from brightpath import BackgroundProfile, SimaProInventory
+from brightpath.formats.simapro_csv import _ExpressionPreservingSimaProExtractor
 
 
 @pytest.mark.parametrize("expression", ["dose", "(dose)", "(dose + offset)", "dose + offset * 2"])
@@ -106,12 +106,13 @@ def test_water_distribution_survives_unit_conversion(kind, parameters, category)
     before = source.data
     row = water_row(source.render())
     assert row[1:3] == ["", "kg"]
-    parsed = SimaProCSVExtractor.create_distribution(*row[3:8])
+    parsed = _ExpressionPreservingSimaProExtractor.create_distribution(*row[3:8])
     assert parsed["amount"] == pytest.approx(2)
     if kind == 2:
         assert parsed["loc"] == pytest.approx(math.log(2))
         assert parsed["scale"] == pytest.approx(0.2)
     elif kind == 3:
+        assert row[5] == "0.2"
         assert parsed["loc"] == pytest.approx(2)
         assert parsed["scale"] == pytest.approx(0.1)
     elif kind in (4, 5):
@@ -138,7 +139,7 @@ def test_negative_water_keeps_signed_distribution(kind):
             )
         ).render()
     )
-    parsed = SimaProCSVExtractor.create_distribution(*row[3:8])
+    parsed = _ExpressionPreservingSimaProExtractor.create_distribution(*row[3:8])
     assert parsed["amount"] == pytest.approx(-2)
     assert parsed["negative"]
     if kind in (4, 5):
@@ -158,7 +159,7 @@ def test_water_already_in_kilograms_is_not_converted_again():
             )
         ).render()
     )
-    parsed = SimaProCSVExtractor.create_distribution(*row[3:8])
+    parsed = _ExpressionPreservingSimaProExtractor.create_distribution(*row[3:8])
     assert parsed["amount"] == 2
     assert parsed["scale"] == pytest.approx(0.1)
 

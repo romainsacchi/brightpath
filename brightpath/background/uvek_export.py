@@ -29,11 +29,16 @@ def migration_resource_fingerprint() -> str:
     """Identify the migration implementation and all packaged resource revisions."""
     manifest = (DATA_DIR / "migrations/RESOURCE_MANIFEST.json").read_bytes()
     catalogs = (DATA_DIR / "export/reference_catalogs/RESOURCE_MANIFEST.json").read_bytes()
+    openlca_references = (DATA_DIR / "export/openlca_references/RESOURCE_MANIFEST.json").read_bytes()
     return hashlib.sha256(
         __version__.encode()
         + b"migration-schema-v3-native-source-format-preservation-v4"
+        + b"simapro-normal-two-sigma-v1"
+        + b"simapro-native-land-classes-v1"
+        + b"reverse-biosphere-native-uuid-preference-v1"
         + manifest
         + catalogs
+        + openlca_references
         + SCHEMA_PATH.read_bytes()
     ).hexdigest()
 

@@ -453,6 +453,13 @@ def _execute_plan(
             else resource.get("source_profiles", [{"family": plan.target.biosphere.family}])[0]
         )
         target_biosphere_identities = _step_target_biosphere_identities(provider, step_profile["family"], step)
+        source_biosphere_references, target_biosphere_references = {}, {}
+        if step.direction == "backward":
+            source_family = resource.get("target_profile", {"family": plan.source.biosphere.family})["family"]
+            source_biosphere_references = _step_biosphere_references(provider, source_family, step.source_version)
+            target_biosphere_references = _step_biosphere_references(
+                provider, step_profile["family"], step.target_version
+            )
         try:
             step_report, step_losses = _apply_biosphere_step(
                 data,
@@ -461,6 +468,8 @@ def _execute_plan(
                 policy,
                 step_index,
                 target_biosphere_identities=target_biosphere_identities,
+                source_biosphere_references=source_biosphere_references,
+                target_biosphere_references=target_biosphere_references,
             )
         except (ValueError, TypeError, OverflowError) as error:
             return _invalid_scaling_stage(issues, losses, step_metrics, step, step_index, error)
@@ -489,6 +498,16 @@ def _invalid_scaling_stage(issues, losses, step_metrics, step, step_index, error
         )
     )
     return _migration_stage(issues, (), losses, step_metrics, rolled_back=True)
+
+
+def _step_biosphere_references(provider, family, version):
+    """Return exact step references, or leave legacy behavior when unavailable."""
+    profile = BiosphereProfile(family, version)
+    try:
+        catalog = provider.load_biosphere(profile)
+    except (CatalogNotFoundError, CatalogIntegrityError):
+        return {}
+    return catalog.references if catalog.profile == profile else {}
 
 
 def _step_target_biosphere_identities(
@@ -632,6 +651,8 @@ def _apply_biosphere_step(
     step_index: int,
     *,
     target_biosphere_identities=frozenset(),
+    source_biosphere_references=None,
+    target_biosphere_references=None,
 ) -> tuple[MigrationStepReport, list[Loss]]:
     report = _legacy_step_report(step)
     if step.direction == "forward":
@@ -670,6 +691,8 @@ def _apply_biosphere_step(
         step.direction,
         report,
         target_biosphere_identities=target_biosphere_identities,
+        source_biosphere_references=source_biosphere_references,
+        target_biosphere_references=target_biosphere_references,
     )
     _apply_factored_biosphere_replacements(data, factored_replacements, step.direction, report)
     _apply_unambiguous_biosphere_compartment_fallback(data, target_biosphere_identities, report)
@@ -1015,7 +1038,7 @@ def _apply_factored_disaggregation(data: list[dict], rules: list[dict], report: 
                 converted.append(exchange)
                 continue
             try:
-                amount = float(exchange["amount"])
+                float(exchange["amount"])
                 allocations = [float(target.get("allocation", 1.0)) for target in matching["targets"]]
             except (KeyError, TypeError, ValueError):
                 converted.append(exchange)
@@ -1025,12 +1048,25 @@ def _apply_factored_disaggregation(data: list[dict], rules: list[dict], report: 
                     )
                 )
                 continue
-            for target, allocation in zip(matching["targets"], allocations, strict=True):
-                migrated = deepcopy(exchange)
-                factor = _conversion_factor(matching, target, reverse=False) or 1.0
-                migrated["amount"] = amount * allocation * factor
-                _apply_technosphere_target_with_unit(migrated, target)
-                converted.append(migrated)
+            children = []
+            try:
+                for target, allocation in zip(matching["targets"], allocations, strict=True):
+                    migrated = deepcopy(exchange)
+                    factor = _conversion_factor(matching, target, reverse=False) or 1.0
+                    scale_exchange(migrated, allocation * factor)
+                    _apply_technosphere_target_with_unit(migrated, target)
+                    children.append(migrated)
+            except (TypeError, ValueError, OverflowError) as exc:
+                report.issues.append(
+                    _legacy_issue(
+                        "error",
+                        "migration_disaggregation_scaling_invalid",
+                        f"Could not scale factored disaggregation uncertainty/formula: {exc}.",
+                    )
+                )
+                converted.append(exchange)
+                continue
+            converted.extend(children)
             report.technosphere_disaggregations += 1
         dataset["exchanges"] = converted
 
@@ -1273,6 +1309,10 @@ def _translate_legacy_issues(
 
 
 def _action_for_legacy_issue(code: str, policy: MigrationPolicy) -> PolicyAction | None:
+    # Invalid arithmetic is an error, including when "disaggregation" also
+    # matches the general information-loss policy below.
+    if code.endswith("_scaling_invalid"):
+        return None
     if "_information_loss" in code:
         return policy.on_information_loss
     if "unit_change" in code:

@@ -292,7 +292,7 @@ def test_render_includes_metadata_technosphere_and_biosphere_rows():
     assert "Product {CH}| market for product | Cut-off, U" in cells
     assert "Electricity {CH}| market for electricity | Cut-off, U" in cells
     assert "Normal" in cells
-    assert "0.04" in cells
+    assert "0.4" in cells
     assert "2000" in cells
     assert "kg" in cells
 

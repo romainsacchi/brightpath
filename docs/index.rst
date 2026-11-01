@@ -44,6 +44,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    workflows/ecospold1
    workflows/ecospold2
    workflows/ilcd
+   workflows/native-fossilwater-quantity
    workflows/parameters
    workflows/migration
    workflows/ecoinvent-to-uvek

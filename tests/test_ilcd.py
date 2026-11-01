@@ -129,6 +129,326 @@ def test_automatic_reference_ids_match_native_openlca_keygen():
     assert openlca_key(PROCESS, FLOW) == "bf62d289-bb74-3403-b803-b8f82e4bdedd"
 
 
+@pytest.mark.parametrize("dialect", ["core", "openlca"])
+@pytest.mark.parametrize("unit", ["ton kilometer", "t*km", "tkm"])
+def test_foreground_mass_transport_uses_pinned_quantity_without_rescaling(tmp_path, dialect, unit):
+    record = dataset()
+    record["unit"] = record["exchanges"][0]["unit"] = unit
+    record["exchanges"][0].update({"uncertainty type": 3, "loc": 100, "scale": 0.1})
+    source = document(record)
+    before = source.data
+    path = write_ilcd(source, tmp_path / "transport.zip", metadata_profile=profile(), dialect=dialect)
+    assert not validate_ilcd_package(path)
+    with zipfile.ZipFile(path) as archive:
+        names = archive.namelist()
+        # These are the exact mass-transport property and group in the pinned
+        # openLCA template, not newly minted background flow/provider references.
+        assert "flowproperties/838aaa20-0117-11db-92e3-0800200c9a66.xml" in names
+        group = parse_xml(archive.read("unitgroups/838aaa21-0117-11db-92e3-0800200c9a66.xml"))
+        reference = group.findtext(
+            "u:unitGroupInformation/u:quantitativeReference/u:referenceToReferenceUnit", namespaces=NS
+        )
+        units = group.findall("u:units/u:unit", NS)
+        reference_unit = next(node for node in units if node.get("dataSetInternalID") == reference)
+        assert reference_unit.findtext("u:name", namespaces=NS) == "t*km"
+        assert float(reference_unit.findtext("u:meanValue", namespaces=NS)) == 1
+        kilogram_km = next(node for node in units if node.findtext("u:name", namespaces=NS) == "kg*km")
+        assert float(kilogram_km.findtext("u:meanValue", namespaces=NS)) == 0.001
+        assert sum(name.startswith("flows/") for name in names) == 1
+    restored = load_ilcd(path, context=context())
+    record = restored.data[0]
+    assert record["unit"] == record["exchanges"][0]["unit"] == "ton kilometer"
+    assert record["exchanges"][0]["amount"] == 100
+    assert record["exchanges"][0]["loc"] == 100
+    assert record["exchanges"][0]["scale"] == 0.1
+    again = write_ilcd(restored, tmp_path / "again.zip")
+    assert load_ilcd(again, context=context()).data[0]["exchanges"][0]["amount"] == 100
+    assert source.data == before
+
+
+def test_foreground_mass_transport_preserves_supplier_formula_and_uncertainty(tmp_path):
+    producer = dataset("transport", "Transport service", "Freight transport", 100)
+    producer["unit"] = producer["exchanges"][0]["unit"] = "ton kilometer"
+    consumer = dataset("consumer", "Consumer", "Consumer product", 1)
+    consumer["parameters"] = [{"name": "dose", "amount": 1}]
+    consumer["exchanges"].append(
+        {
+            **{key: producer[key] for key in ("name", "reference product", "location", "unit")},
+            "type": "technosphere",
+            "amount": 2,
+            "formula": "dose * 2",
+            "uncertainty type": 3,
+            "loc": 2,
+            "scale": 0.1,
+        }
+    )
+    source = document(producer, consumer)
+    before = source.data
+    path = write_ilcd(source, tmp_path / "linked.zip", metadata_profile=profile(), dialect="openlca")
+    assert not validate_ilcd_package(path)
+    restored = load_ilcd(path, context=context())
+    by_name = {record["name"]: record for record in restored.data}
+    exchange = by_name["Consumer"]["exchanges"][1]
+    assert exchange["name"] == "Transport service"
+    assert exchange["ilcd"]["process_id"] == by_name["Transport service"]["code"]
+    assert exchange["unit"] == "ton kilometer"
+    assert exchange["amount"] == exchange["loc"] == 2
+    assert exchange["scale"] == 0.1
+    assert exchange["formula"] == "dose * 2"
+    assert source.data == before
+
+
+@pytest.mark.parametrize("dialect", ["core", "openlca"])
+@pytest.mark.parametrize(
+    "uncertainty",
+    [
+        {},
+        {"uncertainty type": 3, "loc": -100, "scale": 0.1},
+        {"uncertainty type": 4, "minimum": -110, "maximum": -90},
+    ],
+)
+def test_waste_reference_input_restores_negative_production(tmp_path, dialect, uncertainty):
+    record = dataset(amount=-100)
+    record["parameters"] = [{"name": "dose", "amount": 100}]
+    record["exchanges"][0].update(uncertainty, formula="-dose")
+    source = document(record)
+    before = source.data
+    path = write_ilcd(source, tmp_path / "waste.zip", metadata_profile=profile(), dialect=dialect)
+    assert not validate_ilcd_package(path)
+    with zipfile.ZipFile(path) as archive:
+        process_path = next(name for name in archive.namelist() if name.startswith("processes/"))
+        root = parse_xml(archive.read(process_path))
+        exchange = root.find("p:exchanges/p:exchange", NS)
+        assert exchange.findtext("p:exchangeDirection", namespaces=NS) == "Input"
+        assert float(exchange.findtext("p:resultingAmount", namespaces=NS)) == 100
+        flow_id = exchange.find("p:referenceToFlowDataSet", NS).get("refObjectId")
+        flow = parse_xml(archive.read(f"flows/{flow_id}.xml"))
+        assert flow.findtext("f:modellingAndValidation/f:LCIMethod/f:typeOfDataSet", namespaces=NS) == "Waste flow"
+    restored = load_ilcd(path, context=context())
+    result = restored.data[0]["exchanges"][0]
+    assert result["amount"] == -100
+    assert result["formula"] == "-dose"
+    for key, value in uncertainty.items():
+        assert result[key] == value
+    repeated = write_ilcd(restored, tmp_path / "again.zip")
+    second = load_ilcd(repeated, context=context()).data[0]["exchanges"][0]
+    assert second["amount"] == -100
+    assert second["formula"] == "-dose"
+    assert source.data == before
+
+
+@pytest.mark.parametrize("amount", [-2, 2])
+def test_linked_waste_output_restores_supplier_and_all_signs(tmp_path, amount):
+    treatment = dataset("treatment", "Treatment", "Waste", -1)
+    consumer = dataset("consumer", "Consumer", "Consumer product", 1)
+    consumer["parameters"] = [{"name": "dose", "amount": amount}]
+    consumer["exchanges"].append(
+        {
+            **{key: treatment[key] for key in ("name", "reference product", "unit", "location")},
+            "type": "technosphere",
+            "amount": amount,
+            "formula": "dose",
+            "uncertainty type": 3,
+            "loc": amount,
+            "scale": 0.1,
+        }
+    )
+    source = document(treatment, consumer)
+    before = source.data
+    path = write_ilcd(source, tmp_path / "linked-waste.zip", metadata_profile=profile(), dialect="openlca")
+    assert not validate_ilcd_package(path)
+    with zipfile.ZipFile(path) as archive:
+        processes = [parse_xml(archive.read(name)) for name in archive.namelist() if name.startswith("processes/")]
+        root = next(root for root in processes if len(root.findall("p:exchanges/p:exchange", NS)) == 2)
+        exchange = root.findall("p:exchanges/p:exchange", NS)[1]
+        assert exchange.findtext("p:exchangeDirection", namespaces=NS) == "Output"
+        assert float(exchange.findtext("p:resultingAmount", namespaces=NS)) == -amount
+    restored = load_ilcd(path, context=context())
+    by_name = {record["name"]: record for record in restored.data}
+    result = by_name["Consumer"]["exchanges"][1]
+    assert by_name["Treatment"]["exchanges"][0]["amount"] == -1
+    assert result["ilcd"]["process_id"] == by_name["Treatment"]["code"]
+    assert result["amount"] == result["loc"] == amount
+    assert result["scale"] == 0.1
+    assert result["formula"] == "dose"
+    assert source.data == before
+
+
+def test_zero_reference_and_product_reference_inputs_remain_errors(tmp_path):
+    with pytest.raises(ILCDError, match="nonzero reference"):
+        render_ilcd_package(document(dataset(amount=0)), metadata_profile=profile())
+    rendered = render_ilcd_package(document(), metadata_profile=profile())
+    name = next(name for name in rendered if name.startswith("processes/"))
+    root = parse_xml(rendered[name])
+    root.find("p:exchanges/p:exchange/p:exchangeDirection", NS).text = "Input"
+    rendered[name] = etree.tostring(root)
+    with pytest.raises(ILCDError) as error:
+        load_ilcd(archive(tmp_path, rendered), context=context())
+    assert error.value.code == "ilcd.reference_flow_unsupported"
+
+
+@pytest.mark.parametrize(
+    "amount, minimum, mode, maximum",
+    [(100, 80, 95, 110), (-100, -110, -95, -80)],
+)
+def test_native_triangular_mode_is_independent_of_nominal_amount(tmp_path, amount, minimum, mode, maximum):
+    record = dataset(amount=amount)
+    uncertainty = {"uncertainty type": 5, "minimum": minimum, "loc": mode, "maximum": maximum}
+    record["exchanges"][0].update(uncertainty)
+    source = document(record)
+    before = source.data
+    with pytest.raises(ILCDError) as error:
+        render_ilcd_package(source, metadata_profile=profile(), dialect="core")
+    assert error.value.code == "ilcd.uncertainty_unsupported"
+    path = write_ilcd(source, tmp_path / "triangle.zip", metadata_profile=profile(), dialect="openlca")
+    assert not validate_ilcd_package(path)
+    with zipfile.ZipFile(path) as archive:
+        name = next(name for name in archive.namelist() if name.startswith("processes/"))
+        exchange = parse_xml(archive.read(name)).find("p:exchanges/p:exchange", NS)
+        assert float(exchange.get(q("olca", "mostLikelyValue"))) == (mode if amount > 0 else -mode)
+        assert exchange.get(q("olca", "amount")) is None
+        assert exchange.get(q("olca", "unitId")) is None
+        assert exchange.get(q("olca", "propertyId")) is None
+    restored = load_ilcd(path, context=context())
+    result = restored.data[0]["exchanges"][0]
+    assert result["amount"] == amount
+    for key, value in uncertainty.items():
+        assert result[key] == value
+    assert source.data == before
+
+
+def test_triangular_unit_conversion_preserves_all_parameters(tmp_path):
+    original, provider = electricity_document()
+    records = original.data
+    exchange = records[0]["exchanges"][1]
+    exchange.pop("scale")
+    exchange.update({"uncertainty type": 5, "minimum": 1, "loc": 1.5, "maximum": 3})
+    source = original.replace(data=records)
+    before = source.data
+    path = write_ilcd(
+        source,
+        tmp_path / "triangle-units.zip",
+        metadata_profile=profile(),
+        dialect="openlca",
+        catalog_provider=provider,
+    )
+    assert not validate_ilcd_package(path)
+    with zipfile.ZipFile(path) as archive:
+        name = next(name for name in archive.namelist() if name.startswith("processes/"))
+        exchange = parse_xml(archive.read(name)).findall("p:exchanges/p:exchange", NS)[1]
+        assert float(exchange.get(q("olca", "mostLikelyValue"))) == pytest.approx(5.4)
+        assert float(exchange.findtext("p:minimumAmount", namespaces=NS)) == pytest.approx(3.6)
+        assert float(exchange.findtext("p:maximumAmount", namespaces=NS)) == pytest.approx(10.8)
+    result = load_ilcd(path, context=context()).data[0]["exchanges"][1]
+    for key, expected in {"amount": 2, "loc": 1.5, "minimum": 1, "maximum": 3}.items():
+        assert result[key] == pytest.approx(expected)
+    assert result["formula"] == "dose * 2"
+    assert source.data == before
+
+
+@pytest.mark.parametrize("mode", [0, 4])
+def test_triangular_invalid_mode_remains_an_error(mode):
+    record = dataset()
+    record["exchanges"][0].update({"uncertainty type": 5, "minimum": 1, "loc": mode, "maximum": 3})
+    with pytest.raises(ILCDError) as error:
+        render_ilcd_package(document(record), metadata_profile=profile(), dialect="openlca")
+    assert error.value.code == "ilcd.uncertainty_invalid"
+
+
+@pytest.mark.parametrize("dialect", ["core", "openlca"])
+def test_waste_log_normal_sign_conversion_retains_dispersion_guard(tmp_path, dialect):
+    record = dataset(amount=-100)
+    scale = math.log(1.5) / (2 if dialect == "core" else 1)
+    record["exchanges"][0].update({"uncertainty type": 2, "loc": math.log(100), "scale": scale, "negative": True})
+    source = document(record)
+    before = source.data
+    path = write_ilcd(source, tmp_path / "waste-log-normal.zip", metadata_profile=profile(), dialect=dialect)
+    result = load_ilcd(path, context=context()).data[0]["exchanges"][0]
+    assert result["amount"] == -100
+    assert result["loc"] == math.log(100)
+    assert result["scale"] == scale
+    assert result["negative"] is True
+    record["exchanges"][0]["scale"] = 0.2
+    with pytest.raises(ILCDError) as error:
+        render_ilcd_package(document(record), metadata_profile=profile(), dialect=dialect)
+    assert error.value.code == "ilcd.uncertainty_precision_unsupported"
+    assert source.data == before
+
+
+def test_reexport_does_not_restore_a_removed_waste_formula(tmp_path):
+    record = dataset(amount=-100)
+    record["parameters"] = [{"name": "dose", "amount": 100}]
+    record["exchanges"][0]["formula"] = "-dose"
+    path = write_ilcd(document(record), tmp_path / "original.zip", metadata_profile=profile(), dialect="openlca")
+    imported = load_ilcd(path, context=context())
+    data = imported.data
+    data[0]["exchanges"][0].pop("formula")
+    path = write_ilcd(imported.replace(data=data), tmp_path / "edited.zip")
+    result = load_ilcd(path, context=context()).data[0]["exchanges"][0]
+    assert result["amount"] == -100
+    assert "formula" not in result
+
+
+@pytest.mark.parametrize("dialect", ["core", "openlca"])
+@pytest.mark.parametrize("length", [500, 639, 746])
+def test_long_exchange_comments_survive_without_truncation(tmp_path, dialect, length):
+    record = dataset()
+    record["comment"] = "Process qualifications."
+    prefix, suffix = "\n Leading qualification — ", "\nFinal qualification. \n"
+    comment = prefix + "x" * (length - len(prefix) - len(suffix)) + suffix
+    record["exchanges"][0]["comment"] = comment
+    source = document(record)
+    before = source.data
+    path = write_ilcd(source, tmp_path / "comments.zip", metadata_profile=profile(), dialect=dialect)
+    assert not validate_ilcd_package(path)
+    with zipfile.ZipFile(path) as archive:
+        name = next(name for name in archive.namelist() if name.startswith("processes/"))
+        root = parse_xml(archive.read(name))
+        wire = root.findtext("p:exchanges/p:exchange/p:generalComment", namespaces=NS)
+        assert len(wire) <= 500
+        if len(comment) > 500:
+            assert "process general comment" in wire
+            assert "Final qualification" in root.findtext(
+                "p:processInformation/p:dataSetInformation/c:generalComment", namespaces=NS
+            )
+    restored = load_ilcd(path, context=context())
+    assert restored.data[0]["comment"] == record["comment"]
+    # Existing short-comment parsing strips outer whitespace; long-comment
+    # framing additionally preserves all original whitespace exactly.
+    assert restored.data[0]["exchanges"][0]["comment"] == (comment if len(comment) > 500 else comment.strip())
+    again = write_ilcd(restored, tmp_path / "again.zip")
+    assert (
+        load_ilcd(again, context=context()).data[0]["exchanges"][0]["comment"]
+        == restored.data[0]["exchanges"][0]["comment"]
+    )
+    assert source.data == before
+
+
+def test_long_comment_without_process_comment_and_tampered_pointer(tmp_path):
+    record = dataset()
+    record.pop("comment")
+    record["exchanges"][0]["comment"] = "Complete qualification. " * 40
+    rendered = render_ilcd_package(document(record), metadata_profile=profile())
+    path = archive(tmp_path, rendered)
+    restored = load_ilcd(path, context=context())
+    assert restored.data[0]["comment"] == ""
+    assert restored.data[0]["exchanges"][0]["comment"] == record["exchanges"][0]["comment"]
+    name = next(name for name in rendered if name.startswith("processes/"))
+    root = parse_xml(rendered[name])
+    # Native openLCA export can renumber IDs; the pointer stays attached to the
+    # same exchange and refers to the stable entry in the free-text block.
+    root.find("p:exchanges/p:exchange", NS).set("dataSetInternalID", "7")
+    root.find("p:processInformation/p:quantitativeReference/p:referenceToReferenceFlow", NS).text = "7"
+    rendered[name] = etree.tostring(root)
+    renamed = load_ilcd(archive(tmp_path, rendered, filename="renumbered.zip"), context=context())
+    assert renamed.data[0]["exchanges"][0]["comment"] == record["exchanges"][0]["comment"]
+    root.find("p:exchanges/p:exchange/p:generalComment", NS).text = "Different pointer."
+    rendered[name] = etree.tostring(root)
+    with pytest.raises(ILCDError) as error:
+        load_ilcd(archive(tmp_path, rendered, filename="tampered.zip"), context=context())
+    assert error.value.code == "ilcd.comment_manifest_invalid"
+
+
 def test_automatic_references_convert_quantities_formulas_uncertainty_and_roundtrip(tmp_path):
     source, provider = electricity_document()
     before = source.data

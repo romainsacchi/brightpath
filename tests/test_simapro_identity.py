@@ -113,7 +113,7 @@ def test_native_product_edits_conflict_with_metadata_in_actual_upload(snapshot):
 
 
 @pytest.mark.parametrize("mutation", ["reference product", "unicode name"])
-def test_export_refuses_colliding_foreground_link_names(snapshot, mutation):
+def test_foreground_collisions_disambiguate_only_distinct_reference_products(snapshot, mutation):
     other = deepcopy(snapshot)
     if mutation == "reference product":
         other["reference product"] = "Different product"
@@ -122,6 +122,10 @@ def test_export_refuses_colliding_foreground_link_names(snapshot, mutation):
         other["name"] = "Process β"
     for item in (snapshot, other):
         item["exchanges"][0].update({field: item[field] for field in IDENTITY_FIELDS})
+    if mutation == "reference product":
+        exported = export_snapshots([snapshot, other])
+        assert {identity(item) for item in import_artifact(exported, UVEK)} == {identity(snapshot), identity(other)}
+        return
     with pytest.raises(InventoryValidationError, match="Ambiguous foreground SimaPro product name"):
         export_snapshots([snapshot, other])
 
@@ -226,7 +230,10 @@ def test_plain_comments_are_not_interpreted_as_identity_metadata(snapshot, famil
 
 @pytest.mark.parametrize("family,version", [("ecoinvent", "3.12"), ("uvek", "2026")])
 @pytest.mark.parametrize("name", ["Sowing", "Production — α"])
-def test_foreground_case_and_unicode_identity_survive_background_profile_names(tmp_path, family, version, name):
+@pytest.mark.parametrize("reverse_order", [False, True])
+def test_foreground_case_and_unicode_identity_survive_background_profile_names(
+    tmp_path, family, version, name, reverse_order
+):
     from brightpath import BackgroundProfile, SimaProInventory
 
     supplier = {"name": name, "reference product": "Reference Product", "location": "CH", "unit": "kilogram"}
@@ -247,6 +254,8 @@ def test_foreground_case_and_unicode_identity_survive_background_profile_names(t
             ],
         },
     ]
+    if reverse_order:
+        data.reverse()
     before = deepcopy(data)
     profile = BackgroundProfile(family, version, "cutoff")
     inventory = SimaProInventory.from_data(data, background_profile=profile)
@@ -268,6 +277,27 @@ def test_foreground_case_and_unicode_identity_survive_background_profile_names(t
         assert inventory.data == snapshot
         inventory = loaded
     assert data == before
+
+
+def test_native_name_unit_conflict_without_annotated_foreground_is_still_refused(tmp_path):
+    from brightpath import BackgroundProfile, SimaProInventory
+
+    supplier = {"name": "Sowing", "reference product": "Reference Product", "location": "CH", "unit": "kilogram"}
+    data = [
+        {
+            **supplier,
+            "comment": "Synthetic local product with a native background name.",
+            "exchanges": [{**supplier, "type": "production", "amount": 1, "simapro category": "Materials/Test"}],
+        }
+    ]
+    profile = BackgroundProfile("uvek", "2026", "cutoff")
+    path = SimaProInventory.from_data(data, background_profile=profile).write_csv(tmp_path / "unannotated.csv")
+    literal = path.read_text(encoding="latin-1")
+    literal, count = re.subn(r"\[BrightPath activity v1:[A-Za-z0-9+/=]+\]", "", literal)
+    assert count == 1
+    path.write_text(literal, encoding="latin-1")
+    with pytest.raises(ValueError, match="No exact native UVEK SimaPro unit match"):
+        SimaProInventory.from_csv(path, background_profile=profile)
 
 
 def test_import_refuses_ambiguous_local_names(snapshot):

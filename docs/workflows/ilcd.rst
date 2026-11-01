@@ -9,9 +9,15 @@ directly at their root or under ``ILCD/``. Python also accepts directories and
 standalone process XML when a local reference directory supplies dependencies.
 ZIP is the intended CLIC upload and download artifact.
 
-Each process must have exactly one positive product reference output. Unit
-process and aggregated-inventory types are preserved without aggregation.
-Waste-treatment reference inputs, additional product outputs, allocations,
+Each process must have exactly one nonzero canonical production exchange.
+Positive production is a product reference output. Negative production denotes
+a waste-treatment reference input: the XML uses a waste flow with positive
+input magnitude, and reimport restores the negative canonical coefficient.
+Linked waste-treatment demands use waste outputs with the opposite signed
+magnitude. This coordinate change also transforms formulas, uncertainty centres
+and bounds; it never changes the caller's inventory or fabricates an output.
+Unit process and aggregated-inventory types are preserved without aggregation.
+Additional product outputs, non-reference waste inputs, allocations,
 reminder flows, metadata-only records, EPDs and eILCD lifecycle models are
 outside this adapter's conversion scope.
 
@@ -92,6 +98,18 @@ background context. Imported identifiers are preserved where applicable.
 Reference production quantities are retained, including quantities other than
 one. Directory exports require a new destination; ZIP publication is atomic.
 
+Exchange comments longer than ILCD's 500-character limit are retained in full
+in a labeled JSON block in the process general comment, whose free-text type
+has no length limit. The exchange contains a short pointer with the complete
+text's SHA-256, rather than a truncated qualification. Native openLCA preserves
+the complete block in its process description. BrightPath restores the exact
+exchange comment on reimport, including whitespace, and authenticates its
+pointer even if the native exporter renumbers exchange IDs. The original
+process comment is restored separately. No source comment is edited or lost.
+Non-string exchange comments use the XML writer's existing text conversion
+before length checking. This affects serialized metadata only: the source value,
+amounts, uncertainty, formulas and inventory identities remain unchanged.
+
 Supplier links and background mappings
 --------------------------------------
 
@@ -114,6 +132,37 @@ target openLCA 2.6.2; arbitrary ILCD database builds may use different identifie
 They do not establish EF reference-system equivalence.
 
 Reference quantity definitions are pinned to the openLCA 2.6.2 units template.
+Foreground mass-transport reference flows also use its ``Mass transport``
+property and ``t*km`` reference unit. Canonical ``ton kilometer`` (including
+``tkm`` and ``t*km`` aliases) retains its amount, formula and uncertainty
+without rescaling. The template's ``kg*km`` unit has factor 0.001 relative
+to ``t*km``; neither unit is ``kg*m``.
+Foreground person-transport reference flows use the same pinned template's
+``Person transport`` property, unit group and ``p*km`` reference unit at
+factor 1. The ILCD reader returns canonical ``person kilometer`` for native
+``p*km``; amounts, formulas, production identities and uncertainty retain
+their values. This alias is local to ILCD and does not change global unit
+normalization or create background provider identities.
+The public unit template has no distinct standard-cubic-metre quantity. A
+separate, integrity-checked resource now reproduces openLCA 2.6.2's native
+ecoSpold unit fallback for ``Sm3``: source unit UUID
+``225da0bd-ba54-48bc-9a0e-5fa27d722185``, native group
+``c2dba802-b9a4-345b-b4b3-847754301054`` and native property
+``c57e6ed2-5c28-3348-aaee-75d637b80c77``. Its reference factor is 1;
+canonical ``standard cubic meter`` coefficients, formulas and uncertainty are
+not rescaled. Source metadata defines gas volume at 15 degrees C and
+101.325 kPa (ISO 13443); exported quantity comments retain these conditions.
+
+Automatic Sm3 mapping is limited to metadata-confirmed ecoinvent profiles:
+3.9.1 cutoff, 3.10.1 cutoff and consequential, and 3.12 cutoff. This targets
+the openLCA 2.6.2 ecoSpold import using the public unit template; it does not
+establish compatibility with arbitrary custom background builds. The installed
+native importer was checked to reuse the same Sm3 unit/group/property and an
+existing provider, with ordinary volume already present. Background process
+and flow UUIDs still come from the exact catalog provider; no process inventory
+is created. An explicit ordinary-volume quantity cannot redefine Sm3.
+Normal cubic metres (Nm3), unsupported profiles and unrelated unknown units
+remain guarded. Neither Sm3 nor Nm3 is relabeled as ordinary cubic metres.
 Amounts, formulas and representable uncertainty are converted together to the
 flow's reference unit (for example, kWh to MJ). BrightPath link extensions retain
 the original canonical identity and explicit conversion for reimport. An unknown
@@ -185,10 +234,124 @@ exchange attributes provide inference evidence reported as
 override interpretation of an unmarked input. Conflicting explicit dialects
 and package declarations are errors.
 
-The schema's three-decimal field can prevent exact
-representation; such exports fail explicitly. Triangular distributions,
-negative log-normal distributions and incompatible uncertainty conventions
-require a separately reviewed conversion.
+Independent centres in the openLCA dialect
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Native openLCA 2.6.2 accepts a partial exchange extension containing only
+``olca:amount`` alongside the standard ILCD uncertainty fields. Its importer
+keeps the nominal exchange amount and expression from the core elements while
+reading the uncertainty parameter from this attribute. BrightPath uses this
+encoding for a normal distribution whose ``loc`` differs from its nominal amount.
+The attribute is expressed in the flow's reference unit after quantity and
+waste-sign conversion. It does not replace the nominal ``resultingAmount`` or
+its parameter expression. Core ILCD retains its matching-centre guard.
+
+The installed openLCA 2.6.2 log-normal sampler interprets its first parameter as
+an arithmetic mean: it samples with underlying normal mean
+``log(parameter1) - sigma**2 / 2``, despite documenting the parameter as a
+geometric mean. BrightPath therefore writes partial
+``olca:amount = sign * exp(loc + sigma_exported**2 / 2)`` for log-normal
+distributions, including ones whose nominal amount equals their median.
+``sigma_exported`` is derived from the actual, potentially rounded native
+geometric standard deviation. This preserves canonical ``loc`` under native
+sampling, including after permitted spread rounding and unit conversion.
+
+The openLCA reader performs the inverse using actual XML values:
+``loc = log(abs(native_amount)) - sigma_readback**2 / 2`` and restores the
+``negative`` flag from the native mean's sign. It uses the partial
+``olca:amount`` when present and otherwise the core amount, matching the native
+importer. Thus foreign or older openLCA packages without the partial attribute
+are interpreted according to their actual native sampling distribution.
+Audit comments never override these parameters. The core dialect does not
+apply this native sampler correction.
+
+Do not complete the exchange extension with ``olca:unitId`` and
+``olca:propertyId``: the full tuple activates a different importer branch that
+replaces the nominal amount and skips uncertainty conversion. Partial amount
+attributes cannot provide extra precision for the dispersion field.
+
+An isolated native importer, expression interpreter and sampler check verified
+centred and independent log-normal distributions, rounded spread, independent
+and signed normal centres, and kWh-to-MJ conversion. A further native check
+verified finite negative log-normal samples, their exact underlying normal
+centre, nominal parameter expressions, a selected foreground supplier, and the
+reversible waste-flow coordinate convention. Signed-native log-normal exports
+require a nonzero nominal amount whose sign agrees with the canonical
+``negative`` flag. Contradictory signs and zero nominal values remain guarded.
+When the flag is absent, its effective value follows Brightway and is inferred
+from whether the nominal amount is negative. The reader always returns the
+actual native distribution sign explicitly, including ``negative=False`` when
+needed to distinguish it from the nominal sign in a foreign native file.
+
+Dispersion precision
+~~~~~~~~~~~~~~~~~~~~
+
+The schema's three-decimal field can prevent exact representation; by default
+such exports fail explicitly in both dialects. openLCA 2.6.2 has no native extension for an
+exact normal or log-normal dispersion. ``baseUncertainty`` is a separate field,
+and complete amount/unit/property extensions bypass its uncertainty converter;
+neither provides a lossless substitute for rounded dispersion.
+
+An application can explicitly authorize bounded, export-only approximation for
+the ``openlca`` dialect:
+
+.. code-block:: python
+
+   changes = []
+   write_ilcd(
+       document, "inventory-ilcd.zip", dialect="openlca",
+       metadata_profile=profile,
+       uncertainty_relative_tolerance=0.02,
+       uncertainty_rounding_warnings=changes,
+   )
+
+``render_ilcd_package`` accepts the same two keywords. The tolerance defaults
+to ``0.0`` (strict), must be finite, and cannot exceed ``0.02`` (2%). A smaller
+explicit tolerance, including ``0.005`` (0.5%), remains supported. Rounding occurs
+after native unit and waste-sign conversion. Error is measured in uncertainty
+spread: log-standard-deviation ``scale`` for log-normal distributions, absolute
+standard deviation for normal distributions. It is not measured in geometric
+standard deviation or in the nominal exchange amount. Positive spread can never
+become zero, even when floating-point ``isclose`` would otherwise mask the loss.
+Core centre/sign guards, unsupported-distribution guards, and reference and
+schema validation still apply. Independent openLCA centres use the native
+encoding above.
+Core exports do not accept a positive tolerance.
+
+The optional list receives one record per rounded exchange only after successful
+rendering or file publication. Failed operations leave the collector unchanged.
+Rows contain ``dataset_code`` and the original canonical ``exchange_index``
+before reference-production sorting; ``original_uncertainty`` retains every
+present uncertainty type/loc/scale/shape/minimum/maximum/negative field.
+``original_amount``, ``original_unit``, ``original_scale`` and ``exported_scale``
+use canonical units; ``native_original_scale``, ``native_exported_scale``,
+``native_original_dispersion`` and ``native_rounded_dispersion`` describe the
+actual wire representation. ``native_amount``, ``native_unit``, ``relative_error``,
+``tolerance`` and ``dialect`` complete the audit record. The relative error is
+checked in canonical units after reversing native quantity scaling, including
+the inclusive boundary without a second ratio affected by unit-conversion drift.
+
+Full records are also preserved in a labeled JSON block in the native process
+general comment. Reimport retains this block as informative provenance and
+reports ``ilcd.uncertainty_rounded`` warnings. It reads uncertainty from the
+actual standard XML field: for example, source log-scale ``0.2`` exported as
+``1.221`` reimports as ``log(1.221)``, never as ``0.2``. The source inventory is
+not modified. Amounts, formulas and centres receive no additional adjustments.
+An unchanged reexport retains prior audit notes without rounding a second time.
+ILCD adapter preflight reports the approximation as a structured warning without
+appending to an export collector. Applications must present these warnings as an
+approved approximation, not an exact conversion.
+
+The ``openlca`` dialect additionally supports triangular uncertainty using
+standard minimum/maximum amounts and native ``olca:mostLikelyValue`` for the
+exact mode. The nominal exchange amount remains independent of that mode.
+Only this mode attribute is emitted, preserving the native uncertainty importer.
+Core triangular exports remain unsupported. The openLCA dialect supports
+negative log-normal uncertainty using the signed partial amount encoding above.
+Core negative log-normal uncertainty remains supported only through the
+reversible waste-flow sign convention when its positive XML representation
+satisfies the existing dispersion/centre guards. Dispersion precision and
+positive-spread-to-zero guards apply to both signs.
 
 CLI and validation
 ------------------

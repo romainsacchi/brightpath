@@ -37,7 +37,7 @@ from brightpath.exceptions import InventoryValidationError
 from brightpath.formats.ecospold1 import load_ecospold1
 from brightpath.formats.ecospold2 import load_ecospold2
 from brightpath.formats.ilcd import load_ilcd
-from brightpath.formats.openlca_jsonld import load_openlca_jsonld_package
+from brightpath.formats.openlca_jsonld import load_openlca_jsonld
 from brightpath.formats.simapro_csv import format_biosphere_exchange
 from brightpath.models import AnalysisResult, BackgroundProfile, CandidateSummary, Issue
 from brightpath.simapro import SimaProInventory
@@ -408,7 +408,7 @@ def _analyze_openlca_jsonld(
             conflict = _simapro_profile_conflict(legacy_source_profile, source_profile)
             if conflict:
                 raise ValueError(conflict)
-        package = load_openlca_jsonld_package(path, context=source_context)
+        package = load_openlca_jsonld(path, background_profile=source_profile, context=source_context)
         inventory_data = package.data
         result.database_parameters = deepcopy(package.database_parameters or [])
         result.project_parameters = deepcopy(package.project_parameters or [])

@@ -1,5 +1,34 @@
 # BrightPath release readiness
 
+## 1.0.0a13 preparation (2026-11-01)
+
+This alpha collects the export corrections validated with the CLIC local
+rehearsal, including native reference identities, quantity and waste directions,
+uncertainty and formula preservation, and optional SimaPro substance checking.
+It contains reference metadata and conversion code, not the curated CLIC
+inventories or local research files. Substance-list validation requires an
+explicit target software version and separately supplied catalogue.
+
+Local candidate validation on Python 3.12 completed before tagging:
+
+- Full suite: 4,272 passed, one skipped; 501 upstream/optional-dependency warnings.
+- Black, isort, Ruff, Bandit and strict Sphinx HTML: pass.
+- Wheel and source distribution build and strict Twine checks: pass.
+- All 174 packaged runtime files match the reviewed source byte-for-byte.
+- Installed-wheel import and native reference-catalog smoke checks: pass outside
+  the checkout, with a private Brightway directory.
+- The source archive includes the reverse-biosphere test fixture. Private
+  inventories, notebooks, credentials and local curation scripts are excluded.
+
+The release workflow must additionally pass its cross-platform tests and both
+installed-wheel migration audit baselines before publishing. CLIC integration
+and final rehearsal verification are recorded by CLIC, separately from these
+package checks. Earlier sections below are historical validation records.
+
+Native LCA desktop execution and universal background-provider coverage are not
+claimed. Unsupported targets and ambiguous scientific identities remain explicit
+failures. CLIC's inventory-specific modelling proxies remain application policy.
+
 ## 1.0.0a5 preparation (2026-10-08)
 
 Prepared from `main` at `8feafa6`, including the European primary-aluminium

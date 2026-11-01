@@ -66,7 +66,7 @@ BrightPath requires Python 3.12.
 Pin the alpha version for reproducible workflows:
 
 ```bash
-python -m pip install "brightpath==1.0.0a12"
+python -m pip install "brightpath==1.0.0a13"
 ```
 
 Installation includes mandatory `olca-schema` and `pyecospold` dependencies for
@@ -377,6 +377,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines and
 BrightPath source code is distributed under the [BSD-3-Clause license](LICENSE).
 Packaged migration resources retain the licenses declared in their files.
 
-ILCD process packages support one reference product output, offline XML validation,
+ILCD process packages support one reference product output or waste-treatment input, offline XML validation,
 and deterministic ZIP export. See [the ILCD workflow](docs/workflows/ilcd.rst) for
 metadata requirements, exact reference catalogs, supplier extensions, and limitations.

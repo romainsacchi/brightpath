@@ -18,6 +18,7 @@ BiosphereIdentity = tuple[str, tuple[str, ...], str]
 _REFERENCE_DIRECTORY = DATA_DIR / "export" / "openlca_references"
 _PACKAGED_CATALOGS = {
     ("uvek", "2025", "cutoff", "ecoinvent", "3.10"): "uvek__2025__cutoff__ecoinvent__3.10.json",
+    ("uvek", "2026", "cutoff", "uvek", "2026"): "uvek__2026__cutoff__uvek__2026.json",
 }
 
 
@@ -36,6 +37,24 @@ class OpenLCATechnosphereReference:
     location_id: str
     location: str
     category: str
+    native_flow_type: str = "PRODUCT_FLOW"
+    native_reference_is_input: bool | None = None
+
+    def __post_init__(self) -> None:
+        if self.native_reference_is_input is None and self.native_flow_type == "PRODUCT_FLOW":
+            # Old catalogs do not establish a native reference direction.
+            # Retain their legacy rendering without claiming verification.
+            return
+        if (
+            type(self.native_reference_is_input) is not bool
+            or not isinstance(self.native_flow_type, str)
+            or (
+                self.native_flow_type,
+                self.native_reference_is_input,
+            )
+            not in {("PRODUCT_FLOW", False), ("WASTE_FLOW", True)}
+        ):
+            raise ValueError("Native technosphere references require a product output or waste input contract.")
 
 
 @dataclass(frozen=True)
@@ -48,6 +67,8 @@ class OpenLCABiosphereReference:
     flow_property_name: str
     unit_id: str
     unit_name: str
+    amount_factor: float = 1.0
+    native_categories: tuple[str, ...] = ()
 
 
 @dataclass(frozen=True)
@@ -127,6 +148,8 @@ def _load_catalog(path: Path) -> OpenLCAReferenceCatalog:
             location_id=_uuid(row, "location_id", label),
             location=identity[2],
             category=_text(row, "category", label),
+            native_flow_type=row.get("native_flow_type", "PRODUCT_FLOW"),
+            native_reference_is_input=row.get("native_reference_is_input"),
         )
 
     biosphere: dict[BiosphereIdentity, OpenLCABiosphereReference] = {}
@@ -146,6 +169,9 @@ def _load_catalog(path: Path) -> OpenLCAReferenceCatalog:
         )
         if identity in biosphere:
             raise ValueError(f"Duplicate biosphere identity in {label}: {identity!r}.")
+        from .openlca_quantity_projection import catalog_projection_factor
+
+        amount_factor = catalog_projection_factor(row, payload["profile"])
         biosphere[identity] = OpenLCABiosphereReference(
             flow_id=_uuid(row, "flow_id", label),
             flow_name=_text(row, "flow_name", label),
@@ -153,6 +179,8 @@ def _load_catalog(path: Path) -> OpenLCAReferenceCatalog:
             flow_property_name=_text(row, "flow_property_name", label),
             unit_id=_uuid(row, "unit_id", label),
             unit_name=_text(row, "unit_name", label),
+            amount_factor=amount_factor,
+            native_categories=tuple(row.get("native_categories", ())),
         )
 
     if not technosphere or not biosphere:

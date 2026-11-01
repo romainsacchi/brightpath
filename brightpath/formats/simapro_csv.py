@@ -17,12 +17,26 @@ from numbers import Real
 from pathlib import Path
 
 import bw2io
+from bw2io.compatibility import SIMAPRO_BIOSPHERE
+from bw2io.extractors.simapro_csv import SimaProCSVExtractor, to_number
+from bw2io.strategies.simapro import normalize_simapro_formulae
 
-from brightpath.background.catalogs import CatalogNotFoundError, CatalogProvider
-from brightpath.core.context import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext
+from brightpath.background.catalogs import (
+    CatalogIntegrityError,
+    CatalogNotFoundError,
+    CatalogProvider,
+    PackageCatalogProvider,
+    catalog_provider_from_environment,
+)
+from brightpath.core.context import (
+    BackgroundContext,
+    BiosphereProfile,
+    FormatProfile,
+    InventoryContext,
+)
 from brightpath.exceptions import SimaProSerializationError
-from brightpath.formats.simapro_sodium_identity import SodiumIdentityGuard, remember_sodium_wire_labels
-from brightpath.formats.simapro_water_ions import WaterIonIdentityGuard, remember_water_ion_wire_labels
+from brightpath.formats.simapro_sodium_identity import SodiumIdentityGuard
+from brightpath.formats.simapro_water_ions import WaterIonIdentityGuard
 from brightpath.models import (
     BackgroundProfile,
     InventoryDocument,
@@ -30,7 +44,10 @@ from brightpath.models import (
     Issue,
     default_biosphere_profile,
 )
-from brightpath.profiles import format_simapro_technosphere_name, parse_simapro_technosphere_name
+from brightpath.profiles import (
+    format_simapro_technosphere_name,
+    parse_simapro_technosphere_name,
+)
 from brightpath.profiles.biosphere_categories import (
     is_native_uvek_biosphere,
     restore_native_categories,
@@ -58,13 +75,11 @@ from brightpath.utils import (
     escape_spreadsheet_formula,
     find_production_exchange,
     flag_exchanges,
-    get_biosphere_exchanges,
     get_simapro_biosphere,
     get_simapro_fields_list,
     get_simapro_headers,
     get_simapro_subcompartments,
     get_simapro_units,
-    get_technosphere_exchanges,
     inspect_brightway_inventory,
     is_a_waste_treatment,
     is_activity_waste_treatment,
@@ -72,6 +87,8 @@ from brightpath.utils import (
     load_biosphere_correspondence,
     load_simapro_brightway_biosphere_mapping,
 )
+
+from .simapro_biosphere_identity import SUPPORTED_VERSIONS, NativeBiosphereNames
 
 logger = logging.getLogger(__name__)
 _INVENTORY_PATH_PATTERN = re.compile(r"^(?P<path>activity\[\d+\](?:\.exchanges\[\d+\])?):")
@@ -137,6 +154,64 @@ class _Formula(str):
     pass
 
 
+def _retain_wire_expression(exchange, line, amount_index, settings, *, unit_index=None):
+    """Keep an explicit native arithmetic expression after numeric evaluation.
+
+    bw2io evaluates constant expressions while detecting numeric cells. That
+    evaluation is valid, but losing the expression is not necessary. Ordinary
+    numeric and percentage literals remain ordinary values.
+    """
+    if exchange.get("formula") or not isinstance(exchange.get("amount"), Real):
+        return exchange
+    if unit_index is not None and exchange.get("unit") == line[amount_index]:
+        amount_index = unit_index  # bw2io accepts swapped unit/value columns.
+    value = str(line[amount_index])
+    numeric = value.strip().removesuffix("%").replace(",", ".")
+    try:
+        float(numeric)
+    except ValueError:
+        exchange["formula"] = normalize_simapro_formulae(value, settings)
+    return exchange
+
+
+class _ExpressionPreservingSimaProExtractor(SimaProCSVExtractor):
+    """Read native doubled normal SD and preserve native value-cell expressions."""
+
+    @classmethod
+    def create_distribution(cls, amount, kind, field1, field2, field3):
+        result = super().create_distribution(amount, kind, field1, field2, field3)
+        if kind == "Normal":
+            # SimaPro CSV stores 2*SD, not variance. The upstream bw2io
+            # extractor takes sqrt(field1); correct only this local boundary.
+            result["scale"] = 0.5 * to_number(field1)
+        return result
+
+    @classmethod
+    def parse_biosphere_flow(cls, line, category, pm):
+        result = super().parse_biosphere_flow(line, category, pm)
+        return _retain_wire_expression(result, line, 3, pm, unit_index=2)
+
+    @classmethod
+    def parse_input_line(cls, line, category, pm):
+        result = super().parse_input_line(line, category, pm)
+        return _retain_wire_expression(result, line, 2, pm, unit_index=1)
+
+    @classmethod
+    def parse_final_waste_flow(cls, line, pm):
+        result = super().parse_final_waste_flow(line, pm)
+        return _retain_wire_expression(result, line, 3, pm, unit_index=2)
+
+    @classmethod
+    def parse_reference_product(cls, line, pm):
+        result = super().parse_reference_product(line, pm)
+        return _retain_wire_expression(result, line, 2, pm, unit_index=1)
+
+    @classmethod
+    def parse_waste_treatment(cls, line, pm):
+        result = super().parse_waste_treatment(line, pm)
+        return _retain_wire_expression(result, line, 2, pm)
+
+
 def _parameter_comment(parameter):
     payload = json.dumps(parameter, ensure_ascii=True, allow_nan=False, separators=(",", ":"))
     encoded = base64.b64encode(payload.encode("utf-8")).decode("ascii")
@@ -187,6 +262,28 @@ def _validate_activity_identity(identity):
         raise ValueError("Invalid BrightPath activity identity metadata.")
 
 
+def _uvek_foreground_link_name(identity):
+    """Bind an export-only label to all four original foreground identity fields."""
+
+    payload = json.dumps(identity, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+    digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+    return f"{identity['name']} [BrightPath fg {digest}]/{identity['location']} U"
+
+
+def _ecoinvent_case_foreground_link_name(identity, profile):
+    """Distinct native product label bound to the full exact foreground identity."""
+    _validate_activity_identity(identity)
+    payload = json.dumps(identity, ensure_ascii=True, sort_keys=True, separators=(",", ":"))
+    digest = hashlib.sha256(payload.encode("utf-8")).hexdigest()[:16]
+    return format_simapro_technosphere_name(
+        name=identity["name"],
+        reference_product=f"{identity['reference product']} [BrightPath fg {digest}]",
+        location=identity["location"],
+        unit=identity["unit"],
+        profile=profile,
+    )
+
+
 def _restore_activity_identity(dataset, profile):
     comment = dataset.get("comment") or ""
     if "[BrightPath activity " not in comment:
@@ -206,9 +303,14 @@ def _restore_activity_identity(dataset, profile):
         unit=identity["unit"],
         profile=profile,
     )
-    if _latin1_safe_cell(link_name).strip() != str(dataset["simapro name"]).strip() or normalize_unit(
-        identity["unit"]
-    ) != normalize_unit(dataset["unit"]):
+    allowed_names = {_latin1_safe_cell(link_name).strip()}
+    if profile.normalized().family == "uvek":
+        allowed_names.add(_latin1_safe_cell(_uvek_foreground_link_name(identity)).strip())
+    elif profile.normalized().family == "ecoinvent":
+        allowed_names.add(_latin1_safe_cell(_ecoinvent_case_foreground_link_name(identity, profile)).strip())
+    if str(dataset["simapro name"]).strip() not in allowed_names or normalize_unit(identity["unit"]) != normalize_unit(
+        dataset["unit"]
+    ):
         raise ValueError("BrightPath activity identity metadata conflicts with the native SimaPro product row.")
     dataset.update({key: identity[key] for key in ("name", "reference product", "location")})
     dataset["comment"] = comment[: match.start()].rstrip()
@@ -234,6 +336,37 @@ def _restore_local_activity_links(data, restored):
                 exchange["product"] = supplier["reference product"]
 
 
+def _dataset_link_name(dataset):
+    production = next(
+        (e for e in dataset.get("exchanges", []) if isinstance(e, dict) and e.get("type") == "production"), {}
+    )
+    return (
+        dataset.get("simapro name")
+        or production.get("simapro name")
+        or production.get("name")
+        or dataset.get("name")
+        or dataset.get("simapro metadata", {}).get("Process name", "")
+    )
+
+
+def _annotated_foreground_identities(data, profile):
+    """Resolve verified local products before consulting a native background index."""
+    local = {}
+    for dataset in data:
+        candidate = {
+            "simapro name": _dataset_link_name(dataset),
+            "unit": dataset.get("unit", ""),
+            "comment": dataset.get("simapro metadata", {}).get("Comment") or dataset.get("comment", ""),
+        }
+        if not _restore_activity_identity(candidate, profile):
+            continue
+        key = (candidate["simapro name"], normalize_unit(candidate["unit"]))
+        if key in local:
+            raise ValueError("Ambiguous foreground SimaPro product name and unit.")
+        local[key] = tuple(candidate[field] for field in ("name", "reference product", "location"))
+    return local
+
+
 @dataclass
 class SimaProRenderResult:
     """In-memory SimaPro rows and any format-specific rendering issues."""
@@ -249,6 +382,7 @@ class SimaProRenderResult:
 
 
 _WIRE_WATER_FORMULA = "_brightpath_wire_water_formula"
+_NATIVE_BIOSPHERE_WIRE = "_brightpath_native_biosphere_wire"
 
 
 def _mark_wire_water_formulas(data):
@@ -293,12 +427,17 @@ def load_simapro_csv(
     context: InventoryContext | None = None,
     database_name: str | None = None,
     catalog_provider: CatalogProvider | None = None,
+    decode_native_uncertainty: bool = True,
 ) -> InventoryDocument:
     """Load and normalize a SimaPro CSV export into canonical inventory data.
 
     ``catalog_provider`` must supply the exact declared biosphere profile. This
     keeps SimaPro name normalization tied to the inventory context instead of
-    applying a fixed ecoinvent release to every file.
+    applying a fixed ecoinvent release to every file. Available exact
+    technosphere identities also restore casing lost by display-name parsing.
+    Recognized native uncertainty parameter graphs are decoded after ordinary
+    identity, sign and unit normalization. Set ``decode_native_uncertainty`` to
+    false to inspect the literal imported parameter graph instead.
     """
 
     source = Path(path).expanduser()
@@ -334,10 +473,30 @@ def load_simapro_csv(
         global_parameter_scopes = _read_global_parameter_scopes(cleaned)
         if "default-units" not in bw2io.migrations:
             bw2io.create_core_migrations()
-        importer = bw2io.SimaProCSVImporter(filepath=cleaned, name=name)
+        importer = bw2io.SimaProCSVImporter(
+            filepath=cleaned, name=name, extractor=_ExpressionPreservingSimaProExtractor
+        )
+        if is_native_uvek_biosphere(context.background.biosphere):
+            # The generic migration converts SimaPro Water kg to the ecoinvent
+            # volume convention. Native UVEK 2026 declares Water in kg; its
+            # literal catalog identity must retain its original mass basis.
+            # Keep all other normalizers and the exact native unit/name guards.
+            importer.strategies = [
+                strategy
+                for strategy in importer.strategies
+                if not (
+                    getattr(strategy, "func", None) is bw2io.strategies.migrate_exchanges
+                    and (getattr(strategy, "keywords", None) or {}).get("migration") == "simapro-water"
+                )
+            ]
+        # Keep the wire label before bw2io applies version-independent aliases.
+        for dataset in importer.data:
+            for exchange in dataset.get("exchanges", []):
+                if exchange.get("type") == "biosphere":
+                    exchange.setdefault("simapro name", exchange["name"])
+                    if is_native_uvek_biosphere(context.background.biosphere):
+                        exchange[_NATIVE_BIOSPHERE_WIRE] = (tuple(exchange.get("categories") or ()), exchange["unit"])
         _mark_wire_water_formulas(importer.data)
-        remember_sodium_wire_labels(importer.data)
-        remember_water_ion_wire_labels(importer.data, context.background.biosphere)
         importer.apply_strategies()
         _restore_water_formula_units(importer.data)
         detected_system_models = detect_simapro_system_models(importer.data)
@@ -358,6 +517,10 @@ def load_simapro_csv(
                 catalog_provider=catalog_provider,
                 parameter_name_mapping=global_parameter_names,
             )
+            if decode_native_uncertainty:
+                from .simapro_native_uncertainty import decode
+
+                data = decode(data)
         except Exception as exc:
             if not hasattr(exc, "partial_data"):
                 _attach_partial_data(exc, importer.data)
@@ -398,18 +561,28 @@ def normalize_simapro_import_data(
     water_ions = WaterIonIdentityGuard(selected_biosphere, catalog_provider)
     reference_version = selected_biosphere.version
     technosphere_identities = None
-    if profile.family == "uvek" and catalog_provider is not None:
+    if catalog_provider is not None:
         try:
             technosphere_identities = catalog_provider.load_technosphere(profile.to_technosphere_profile()).identities
         except CatalogNotFoundError:
             technosphere_identities = frozenset()
+    technosphere_wire_index = {}
+    if profile.family == "ecoinvent" and technosphere_identities:
+        for name, product, location, unit in technosphere_identities:
+            label = format_simapro_technosphere_name(
+                name=name, reference_product=product, location=location, unit=unit, profile=profile
+            )
+            key = (_latin1_safe_cell(label).strip(), normalize_unit(unit))
+            technosphere_wire_index.setdefault(key, set()).add((name, product, location))
     native_catalog_identities = None
+    selected_catalog = None
     if biosphere_flows is None:
         if catalog_provider is None:
             raise TypeError(
                 "catalog_provider or biosphere_flows must be provided for exact SimaPro biosphere normalization."
             )
         catalog = catalog_provider.load_biosphere(selected_biosphere)
+        selected_catalog = catalog
         native_catalog_identities = catalog.identities
         identities = catalog.identities
         if is_native_uvek_biosphere(selected_biosphere):
@@ -421,6 +594,25 @@ def normalize_simapro_import_data(
         biosphere_flows = frozenset(
             (name, wire_categories((root,))[0], subcompartment) for name, root, subcompartment in biosphere_flows
         )
+    biosphere_unit_index = {}
+    biosphere_wire_index = {}
+    if selected_biosphere.family == "ecoinvent" and native_catalog_identities is not None:
+        wire_units = get_simapro_units()
+        wire_names = get_simapro_biosphere()
+        for name, categories, unit in native_catalog_identities:
+            value = {"name": name, "categories": categories, "unit": unit}
+            label = resolve_ecoinvent_flow_name(value, wire_names.get(name, name))
+            wire_key = (_latin1_safe_cell(label), tuple(categories), normalize_unit(wire_units.get(unit, unit)))
+            biosphere_wire_index.setdefault(wire_key, set()).add(name)
+            for candidate in {unit, normalize_unit(wire_units.get(unit, unit))}:
+                biosphere_unit_index.setdefault((name, tuple(categories), candidate), set()).add(unit)
+    native_biosphere_wire_index = {}
+    if is_native_uvek_biosphere(selected_biosphere) and native_catalog_identities is not None:
+        for identity in native_catalog_identities:
+            native_biosphere_wire_index.setdefault(_native_biosphere_wire_key(*identity), set()).add(identity)
+    if selected_catalog is not None and selected_catalog.profile != selected_biosphere:
+        raise ValueError("Native SimaPro names require the exact selected biosphere catalog.")
+    native_biosphere_names = NativeBiosphereNames(selected_catalog) if selected_catalog is not None else None
     if biosphere_correspondence is None:
         biosphere_correspondence = load_biosphere_correspondence()
     if version_mapping is None:
@@ -429,6 +621,7 @@ def normalize_simapro_import_data(
 
     restored_identities = set()
     try:
+        local_identities = _annotated_foreground_identities(normalized, profile)
         for dataset in normalized:
             dataset.pop("filename", None)
             simapro_metadata = dataset.setdefault("simapro metadata", {})
@@ -439,32 +632,24 @@ def normalize_simapro_import_data(
                 if key not in {"Process name", "Category type"}:
                     dataset.setdefault(key.lower(), value)
 
-            production = next(
-                (
-                    exchange
-                    for exchange in dataset.get("exchanges", [])
-                    if isinstance(exchange, dict) and exchange.get("type") == "production"
-                ),
-                {},
-            )
             # SimaPro's metadata ``Process name`` is a display label such as
             # ``market for electricity GLO``. The fully qualified link name
             # in the Products/Waste treatment row carries the canonical
             # product, activity, geography, and system-model identity.
-            raw_dataset_name = (
-                dataset.get("simapro name")
-                or production.get("simapro name")
-                or production.get("name")
-                or dataset.get("name")
-                or simapro_metadata.get("Process name", "")
-            )
+            raw_dataset_name = _dataset_link_name(dataset)
             dataset["simapro name"] = raw_dataset_name
-            dataset["name"], dataset["reference product"], dataset["location"] = parse_simapro_technosphere_name(
-                raw_dataset_name,
-                unit=str(dataset.get("unit") or ""),
-                profile=profile,
-                technosphere_identities=technosphere_identities,
-            )
+            local_identity = local_identities.get((raw_dataset_name, normalize_unit(dataset.get("unit", ""))))
+            if local_identity is None:
+                local_identity = parse_simapro_technosphere_name(
+                    raw_dataset_name,
+                    unit=str(dataset.get("unit") or ""),
+                    profile=profile,
+                    technosphere_identities=technosphere_identities,
+                )
+                dataset["name"], dataset["reference product"], dataset["location"] = local_identity
+                _restore_catalog_technosphere_identity(dataset, raw_dataset_name, technosphere_wire_index)
+            else:
+                dataset["name"], dataset["reference product"], dataset["location"] = local_identity
             dataset["database"] = database_name
             if _restore_activity_identity(dataset, profile):
                 restored_identities.add(id(dataset))
@@ -509,16 +694,20 @@ def normalize_simapro_import_data(
                         exchange = _reflect_simapro_exchange(exchange)
 
                 elif exchange_type in {"technosphere", "substitution"}:
-                    name, product, location = parse_simapro_technosphere_name(
-                        raw_exchange_name,
-                        unit=str(exchange.get("unit") or ""),
-                        profile=profile,
-                        technosphere_identities=technosphere_identities,
-                    )
+                    local_identity = local_identities.get((raw_exchange_name, normalize_unit(exchange.get("unit", ""))))
+                    if local_identity is None:
+                        local_identity = parse_simapro_technosphere_name(
+                            raw_exchange_name,
+                            unit=str(exchange.get("unit") or ""),
+                            profile=profile,
+                            technosphere_identities=technosphere_identities,
+                        )
+                    name, product, location = local_identity
                     exchange["name"] = name
                     exchange["product"] = product
                     exchange["reference product"] = product
                     exchange["location"] = location
+                    _restore_catalog_technosphere_identity(exchange, raw_exchange_name, technosphere_wire_index)
                     exchange.pop("input", None)
                     categories = exchange.get("categories") or ()
                     section = categories if isinstance(categories, str) else categories[0] if categories else ""
@@ -538,9 +727,58 @@ def normalize_simapro_import_data(
                         exchange.pop("input", None)
                         converted_exchanges.append(exchange)
                         continue
-                    if not sodium_identity.restore_wire_identity(
+                    if sodium_identity.restore_wire_identity(
                         exchange, raw_exchange_name, allowed_flows=biosphere_flows
                     ):
+                        exchange.pop("input", None)
+                        converted_exchanges.append(exchange)
+                        continue
+                    if native_biosphere_names is not None:
+                        native_identity = native_biosphere_names.identity_from_wire(exchange, raw_exchange_name)
+                        if native_identity is not None:
+                            exchange.update(
+                                name=native_identity[0], categories=native_identity[1], unit=native_identity[2]
+                            )
+                            exchange.pop("input", None)
+                            converted_exchanges.append(exchange)
+                            continue
+                    if is_native_uvek_biosphere(selected_biosphere):
+                        categories, unit = exchange.pop(
+                            _NATIVE_BIOSPHERE_WIRE, (exchange["categories"], exchange["unit"])
+                        )
+                        # Preserve an already valid parsed native identity. A
+                        # literal wire label can itself name a different native
+                        # flow; it is not evidence to overwrite valid parsing.
+                        key = _native_biosphere_wire_key(exchange["name"], exchange["categories"], exchange["unit"])
+                        matches = native_biosphere_wire_index.get(key, ())
+                        if not matches:
+                            key = _native_biosphere_wire_key(raw_exchange_name, categories, unit)
+                            matches = native_biosphere_wire_index.get(key, ())
+                        if len(matches) != 1:
+                            reason = "Ambiguous" if matches else "No exact"
+                            raise ValueError(f"{reason} native UVEK SimaPro biosphere identity for {key!r}.")
+                        native_name, native_categories, native_unit = next(iter(matches))
+                        if normalize_unit(exchange["unit"]) != normalize_unit(native_unit):
+                            raise ValueError(f"Native UVEK SimaPro biosphere unit changed during import for {key!r}.")
+                        exchange.update(name=native_name, categories=native_categories, unit=native_unit)
+                        exchange.pop("input", None)
+                        converted_exchanges.append(exchange)
+                        continue
+                    if tuple(exchange.get("categories") or ()) == ("water", "fossilwater"):
+                        if selected_catalog is None and catalog_provider is not None:
+                            selected_catalog = catalog_provider.load_biosphere(selected_biosphere)
+                        _restore_fossil_water_context(exchange, selected_biosphere, selected_catalog)
+                    wire_key = (
+                        raw_exchange_name,
+                        tuple(exchange["categories"]),
+                        normalize_unit(exchange["unit"]),
+                    )
+                    candidates = biosphere_wire_index.get(wire_key, ())
+                    # A shared label (e.g. Sodium/Sodium, ion before 3.9) is
+                    # insufficient evidence to override existing alias parsing.
+                    if len(candidates) == 1:
+                        exchange["name"] = next(iter(candidates))
+                    else:
                         exchange.update(
                             format_biosphere_exchange(
                                 exchange,
@@ -550,6 +788,7 @@ def normalize_simapro_import_data(
                                 version_mapping=version_mapping,
                             )
                         )
+                    _restore_catalog_biosphere_unit(exchange, biosphere_unit_index)
                     exchange.pop("input", None)
 
                 converted_exchanges.append(exchange)
@@ -562,6 +801,82 @@ def normalize_simapro_import_data(
     except Exception as exc:
         _attach_partial_data(exc, normalized)
         raise
+
+
+# Public SimaPro9.4 -> ecoinventEFv3.7 Water row is exact (=): native
+# E0F21491-61BA-44CF-B0A1-0A3670B63F8D, Emissions to water/fossilwater, kg;
+# target UUID below, water/fossil well, m3; factor0.001 (existing quantity rule).
+# brightway-lca/simapro_ecoinvent_elementary_flows commit
+# f81c05f0aa6724dd3db07a59cad155b8d2d0f7c1, Mapping/Output/Mapped_files/
+# SimaProv94-ecoinventEFv3.7.csv. This does not establish native3.12 vendor binding.
+_FOSSIL_WATER_IDENTITY = ("Water", ("water", "fossil well"), "cubic meter")
+_FOSSIL_WATER_UUID = "2256a142-8242-4b4f-b9aa-a167803989ca"
+
+
+def _require_fossil_water_reference(profile, catalog):
+    if profile.family != "ecoinvent" or catalog is None or catalog.profile != profile:
+        raise ValueError("Fossil-water context requires the exact declared ecoinvent biosphere catalog.")
+    matches = [
+        identity
+        for identity in catalog.identities
+        if identity[:2] == _FOSSIL_WATER_IDENTITY[:2] and normalize_unit(identity[2]) == "cubic meter"
+    ]
+    if len(matches) != 1 or catalog.references.get(matches[0]) != _FOSSIL_WATER_UUID:
+        raise ValueError("Missing, ambiguous or unverified exact fossil-water catalog reference.")
+    return matches[0]
+
+
+def _restore_fossil_water_context(exchange, profile, catalog):
+    exact = (exchange["name"], tuple(exchange.get("categories") or ()), exchange["unit"])
+    if catalog is not None and exact in catalog.identities:
+        return  # An already valid native identity takes precedence over an alias.
+    target = _require_fossil_water_reference(profile, catalog)
+    if exchange["name"] != target[0] or normalize_unit(exchange["unit"]) != normalize_unit(target[2]):
+        raise ValueError("No exact fossil-water context match for the parsed name and unit.")
+    recorded = exchange.get("flow_id") or exchange.get("code")
+    linked = exchange.get("input")
+    if not recorded and isinstance(linked, (tuple, list)) and len(linked) == 2:
+        recorded = linked[1]
+    if recorded and recorded != _FOSSIL_WATER_UUID:
+        raise ValueError("Recorded biosphere identity conflicts with the fossil-water context.")
+    exchange["categories"] = target[1]
+
+
+def _native_biosphere_wire_key(name, categories, unit):
+    """Normalize wire syntax only; retain native names and subcompartments."""
+
+    categories = tuple(categories or ())
+    if categories:
+        categories = wire_categories((SIMAPRO_BIOSPHERE.get(categories[0], categories[0]), *categories[1:]))
+    if len(categories) == 2 and categories[1] in {"", "unspecified"}:
+        categories = categories[:1]
+    return name, categories, normalize_unit(unit)
+
+
+def _restore_catalog_technosphere_identity(value, label, index):
+    """Restore only a unique exact forward-rendered catalog identity."""
+
+    candidates = index.get((str(label).strip(), normalize_unit(value.get("unit", ""))), ())
+    if len(candidates) > 1:
+        raise ValueError(f"Ambiguous exact-catalog SimaPro technosphere identity: {label!r}.")
+    if candidates:
+        name, product, location = next(iter(candidates))
+        value.update(name=name, location=location, **{"reference product": product})
+        if "product" in value:
+            value["product"] = product
+
+
+def _restore_catalog_biosphere_unit(exchange, index):
+    """Recover a unit label collapsed on the wire, without rescaling quantities."""
+
+    key = (exchange["name"], tuple(exchange.get("categories") or ()), normalize_unit(exchange.get("unit", "")))
+    candidates = index.get(key, ())
+    if len(candidates) > 1:
+        raise ValueError(f"Ambiguous exact-catalog SimaPro biosphere unit for {exchange['name']!r}.")
+    if not candidates:
+        return False
+    exchange["unit"] = next(iter(candidates))
+    return True
 
 
 def _simapro_biosphere_reference(identities) -> frozenset[tuple[str, str, str]]:
@@ -778,6 +1093,59 @@ def format_biosphere_exchange(
     return exchange
 
 
+def _has_simapro_input_value(exchange: dict) -> bool:
+    # A zero nominal value can still carry a formula or an active distribution.
+    # Only formula-free, inactive zero placeholders may be omitted.
+    return (
+        exchange["amount"] != 0
+        or bool(exchange.get("formula"))
+        or int(exchange.get("uncertainty type") or 0) not in {0, 1}
+    )
+
+
+def _simapro_input_exchanges(activity: dict, exchange_type: str, category: str | None = None):
+    for exchange in activity["exchanges"]:
+        if exchange["type"] != exchange_type or not _has_simapro_input_value(exchange):
+            continue
+        if exchange_type == "biosphere":
+            categories = exchange.get("categories")
+            if not categories:
+                raise ValueError(f"Biosphere exchange {exchange.get('name')} is missing categories.")
+            if categories[0] != category:
+                continue
+        yield exchange
+
+
+# Reviewed exact native elementary-flow contracts; active unsupported inputs must be refused.
+_REVIEWED_UVEK_BLACKLIST_BIOSPHERE = {
+    ("ecoinvent", "3.10"): {
+        (
+            "Occupation, traffic area, road network",
+            ("natural resource", "land"),
+            "square meter-year",
+        ): "26efe47c-92a5-4dea-b4d0-eac13e418a58",
+        ("Oxygen", ("air",), "kilogram"): "9ec076d9-6d9f-4a0b-9851-730626ed4319",
+        ("Oxygen", ("natural resource", "in air"), "kilogram"): "af01e564-f816-4906-bd4f-b7c932f926b9",
+        (
+            "Radon-220",
+            ("air", "non-urban air or from high stacks"),
+            "kilo Becquerel",
+        ): "e70d3563-78c4-42cf-8cf3-5ac42c499589",
+        ("Radon-222", ("air",), "kilo Becquerel"): "cb3265f8-49a0-4b09-9bd9-c374370c4cc4",
+        (
+            "Radon-222",
+            ("air", "non-urban air or from high stacks"),
+            "kilo Becquerel",
+        ): "1551f1cd-7cb7-4f68-a628-cb9301323c7b",
+        ("Radon-222", ("air", "urban air close to ground"), "kilo Becquerel"): "6fd55524-c309-4eb8-bff6-9c606e3a82d7",
+    },
+    ("uvek", "2026"): {
+        ("Occupation, traffic area, road network", ("natural resource", "land"), "square meter-year"): None,
+        ("Oxygen", ("air", "unspecified"), "kilogram"): None,
+    },
+}
+
+
 class _SimaProRenderer:
     def __init__(
         self,
@@ -786,8 +1154,9 @@ class _SimaProRenderer:
         category_mode: SimaProCategoryMode | str = SimaProCategoryMode.PRESERVE,
         catalog_provider: CatalogProvider | None = None,
     ) -> None:
-        self.document = document
         self.catalog_provider = catalog_provider
+        self._native_biosphere_names = None
+        self.document = document
         self.profile = document.background_profile.normalized()
         self.category_mode = coerce_simapro_category_mode(category_mode)
         self.generated_at = datetime.datetime.now()
@@ -796,13 +1165,14 @@ class _SimaProRenderer:
         self.headers = get_simapro_headers()
         self.biosphere = get_simapro_biosphere()
         self.sodium_identity = SodiumIdentityGuard(
-            document.context.background.biosphere, self.biosphere, getattr(self, "catalog_provider", None)
+            document.context.background.biosphere, self.biosphere, self.catalog_provider
         )
         self.water_ions = WaterIonIdentityGuard(
             document.context.background.biosphere, getattr(self, "catalog_provider", None)
         )
         self.subcompartments = get_simapro_subcompartments()
         self.inventories = self.document.data
+        self._foreground_link_names = {}
         native_biosphere_issues = []
         if is_native_uvek_biosphere(document.context.background.biosphere):
             for dataset_index, dataset in enumerate(self.inventories):
@@ -810,7 +1180,7 @@ class _SimaProRenderer:
                     if exchange.get("type") == "biosphere":
                         exchange["categories"] = wire_categories(exchange.get("categories"))
                         if (
-                            exchange.get("amount") != 0
+                            _has_simapro_input_value(exchange)
                             and exchange["categories"]
                             and exchange["categories"][0] not in ALLOWED_BIOSPHERE_CATEGORIES
                         ):
@@ -1357,7 +1727,7 @@ class _SimaProRenderer:
             parameter["name"],
             f"{amount:.17g}",
             uncertainty,
-            f"{convert_sd_to_sd2(parameter.get('scale', 1), uncertainty):.12g}",
+            f"{_simapro_dispersion(parameter.get('scale', 1), uncertainty):.12g}",
             f"{parameter.get('min', parameter.get('minimum', 0)):.12g}",
             f"{parameter.get('max', parameter.get('maximum', 0)):.12g}",
             "Yes" if parameter.get("hidden") else "No",
@@ -1412,6 +1782,9 @@ class _SimaProRenderer:
         return issues
 
     def _format_technosphere(self, value: dict) -> str:
+        alias = self._foreground_link_names.get(_supplier_identity(value))
+        if alias is not None:
+            return alias
         return format_simapro_technosphere_name(
             name=value["name"],
             reference_product=value["reference product"],
@@ -1420,24 +1793,94 @@ class _SimaProRenderer:
             profile=self.profile,
         )
 
+    def _bind_ecoinvent_case_foreground_labels(self):
+        """Disambiguate exact case variants in an export copy; never consolidate recipes."""
+        self._foreground_link_names = {}
+        groups, reserved = {}, set()
+        for activity in self.inventories:
+            identity = _supplier_identity(activity)
+            label = _latin1_safe_cell(self._format_technosphere(activity)).casefold()
+            groups.setdefault(label, []).append(identity)
+            reserved.add(label)
+        # Reserve used external labels too. Inputs not matching an exact included
+        # contract keep their native background label, even near a local collision.
+        for activity in self.inventories:
+            for exchange in activity.get("exchanges", []):
+                if exchange.get("type") in {"technosphere", "substitution"}:
+                    reserved.add(_latin1_safe_cell(self._format_technosphere(exchange)).casefold())
+        aliases = {}
+        for identities in groups.values():
+            if len(set(identities)) == 1:
+                # Exact duplicate identities retain the existing category and
+                # process-identifier checks; only distinct case variants need aliases.
+                continue
+            folded = {
+                (name.casefold(), product.casefold(), location, unit) for name, product, location, unit in identities
+            }
+            if len(set(identities)) != len(identities) or len(folded) != 1:
+                raise SimaProSerializationError(
+                    "Ambiguous ecoinvent foreground SimaPro label: only distinct exact case variants with matching geography/unit may receive export labels."
+                )
+            for identity in identities:
+                label = _ecoinvent_case_foreground_link_name(
+                    dict(zip(_ACTIVITY_IDENTITY_FIELDS, identity, strict=True)), self.profile
+                )
+                wire = _latin1_safe_cell(label).casefold()
+                if wire in reserved:
+                    raise SimaProSerializationError(
+                        "Generated ecoinvent foreground label collides with another supplier."
+                    )
+                reserved.add(wire)
+                aliases[identity] = label
+        self._foreground_link_names = aliases
+
     def _validate_local_link_names(self):
+        if self.profile.family == "ecoinvent":
+            self._bind_ecoinvent_case_foreground_labels()
+            return
         if self.profile.family != "uvek":
             return
+        self._foreground_link_names = {}
         local = {}
+        groups = {}
+        reserved = set()
         for activity in self.inventories:
             key = (_latin1_safe_cell(self._format_technosphere(activity)), normalize_unit(activity["unit"]))
-            if key in local:
-                raise SimaProSerializationError("Ambiguous foreground SimaPro product name and unit.")
-            local[key] = tuple(activity[field] for field in _ACTIVITY_IDENTITY_FIELDS)
+            identity = tuple(activity[field] for field in _ACTIVITY_IDENTITY_FIELDS)
+            local.setdefault(key, set()).add(identity)
+            groups.setdefault(key[0].casefold(), []).append(identity)
+            reserved.add(key[0].casefold())
         for activity in self.inventories:
             for exchange in activity.get("exchanges", []):
                 if exchange.get("type") not in {"technosphere", "substitution"}:
                     continue
                 key = (_latin1_safe_cell(self._format_technosphere(exchange)), normalize_unit(exchange["unit"]))
-                if key in local and tuple(exchange[field] for field in _ACTIVITY_IDENTITY_FIELDS) != local[key]:
+                reserved.add(key[0].casefold())
+                if key in local and tuple(exchange[field] for field in _ACTIVITY_IDENTITY_FIELDS) not in local[key]:
                     raise SimaProSerializationError(
                         "A supplier conflicts with a foreground SimaPro product name and unit."
                     )
+        aliases = {}
+        for identities in groups.values():
+            if len(identities) == 1:
+                continue
+            # Distinct reference products may carry different units. Keep names
+            # and locations exact; never infer a unit conversion or alias a
+            # different background supplier, duplicate identity or case collision.
+            if len({(name, location) for name, _product, location, _unit in identities}) != 1 or len(
+                {product for _name, product, _location, _unit in identities}
+            ) != len(identities):
+                raise SimaProSerializationError("Ambiguous foreground SimaPro product name and unit.")
+            for identity in identities:
+                label = _uvek_foreground_link_name(dict(zip(_ACTIVITY_IDENTITY_FIELDS, identity, strict=True)))
+                wire_label = _latin1_safe_cell(label).casefold()
+                if wire_label in reserved:
+                    raise SimaProSerializationError(
+                        "Generated foreground SimaPro alias collides with another supplier."
+                    )
+                reserved.add(wire_label)
+                aliases[identity] = label
+        self._foreground_link_names = aliases
 
     def _comment(self, activity: dict) -> str:
         parts = []
@@ -1469,6 +1912,9 @@ class _SimaProRenderer:
             return str(metadata["Process name"])
         if activity.get("simapro process name"):
             return str(activity["simapro process name"])
+        alias = self._foreground_link_names.get(_supplier_identity(activity))
+        if alias is not None:
+            return alias
         name = str(activity["name"])
         location = str(activity.get("location") or "GLO")
         if self.profile.family == "ecoinvent":
@@ -1542,13 +1988,56 @@ class _SimaProRenderer:
             [],
         ]
 
+    def _skip_blacklisted_exchange(self, exchange: dict) -> bool:
+        """Keep verified UVEK inputs, or refuse; never leave a silent row loss."""
+        if not is_blacklisted(exchange, self.profile.family):
+            return False
+        if self.profile.family != "uvek":
+            return True  # Preserve unrelated legacy ecoinvent exclusion behavior.
+        if exchange.get("type") == "technosphere" and _supplier_identity(exchange) in self._waste_suppliers:
+            # Only a complete included foreground contract wins over a name-only
+            # external-background blacklist. Label/category ambiguity was already checked.
+            return False
+        if exchange.get("type") == "biosphere":
+            profile = self.document.context.background.biosphere
+            profile_key = (profile.family, profile.version)
+            key = (exchange["name"], tuple(exchange.get("categories") or ()), exchange["unit"])
+            reviewed = _REVIEWED_UVEK_BLACKLIST_BIOSPHERE.get(profile_key, {})
+            if key in reviewed:
+                if getattr(self, "_blacklist_catalog_profile", None) != profile_key:
+                    try:
+                        catalog = PackageCatalogProvider().load_biosphere(profile)
+                    except (CatalogNotFoundError, CatalogIntegrityError) as error:
+                        raise SimaProSerializationError(
+                            f"UVEK SimaPro exact biosphere catalog unavailable for {profile_key!r}; input not omitted."
+                        ) from error
+                    index = {}
+                    for identity in catalog.identities:
+                        wire = (identity[0], wire_categories(identity[1]), identity[2])
+                        index.setdefault(wire, []).append(identity)
+                    self._blacklist_catalog_profile = profile_key
+                    self._blacklist_catalog = catalog
+                    self._blacklist_wire_index = index
+                matches = self._blacklist_wire_index.get(key, ())
+                expected_id = reviewed[key]
+                if len(matches) == 1 and (
+                    expected_id is None or self._blacklist_catalog.references.get(matches[0]) == expected_id
+                ):
+                    return False
+        raise SimaProSerializationError(
+            f"UVEK SimaPro has no verified representation for active blacklisted input "
+            f"{exchange.get('name')!r}, type={exchange.get('type')!r}, "
+            f"unit={exchange.get('unit')!r}, categories={exchange.get('categories')!r}. "
+            "Input was not omitted; keep an exact included foreground supplier or provide a verified native representation."
+        )
+
     def _technosphere_rows(self, field_name: str, activity: dict):
         rows = []
         want_energy = field_name == "Electricity/heat"
-        for exchange in get_technosphere_exchanges(activity):
+        for exchange in _simapro_input_exchanges(activity, "technosphere"):
             if (exchange["unit"] in {"megajoule", "kilowatt hour"}) != want_energy:
                 continue
-            if is_blacklisted(exchange, self.profile.family):
+            if self._skip_blacklisted_exchange(exchange):
                 continue
             if self._supplier_is_waste(exchange):
                 continue
@@ -1560,8 +2049,8 @@ class _SimaProRenderer:
 
     def _waste_rows(self, activity: dict):
         rows = []
-        for exchange in get_technosphere_exchanges(activity):
-            if is_blacklisted(exchange, self.profile.family):
+        for exchange in _simapro_input_exchanges(activity, "technosphere"):
+            if self._skip_blacklisted_exchange(exchange):
                 continue
             if not self._supplier_is_waste(exchange):
                 continue
@@ -1591,7 +2080,7 @@ class _SimaProRenderer:
             self.units[exchange["unit"]],
             _exchange_amount(exchange, amount),
             uncertainty,
-            _format_simapro_number(convert_sd_to_sd2(exchange.get("scale", 1), uncertainty)),
+            _format_simapro_number(_simapro_dispersion(exchange.get("scale", 1), uncertainty)),
             _format_simapro_number(exchange.get("min", exchange.get("minimum", 0))),
             _format_simapro_number(exchange.get("max", exchange.get("maximum", 0))),
             exchange.get("comment"),
@@ -1599,7 +2088,7 @@ class _SimaProRenderer:
 
     def _final_waste_rows(self, activity: dict):
         rows = []
-        for exchange in get_biosphere_exchanges(activity, "inventory indicator"):
+        for exchange in _simapro_input_exchanges(activity, "biosphere", "inventory indicator"):
             row = self._biosphere_exchange_row({**exchange, "categories": ("inventory indicator",)})
             row[1] = exchange.get("simapro subcompartment", "")
             rows.append(row)
@@ -1609,8 +2098,8 @@ class _SimaProRenderer:
 
     def _biosphere_rows(self, activity: dict, category: str):
         rows = []
-        for exchange in get_biosphere_exchanges(activity, category):
-            if is_blacklisted(exchange, self.profile.family):
+        for exchange in _simapro_input_exchanges(activity, "biosphere", category):
+            if self._skip_blacklisted_exchange(exchange):
                 continue
             rendered = exchange
             if category != "natural resource" and exchange["name"].lower() == "water":
@@ -1624,15 +2113,51 @@ class _SimaProRenderer:
         uncertainty = _simapro_uncertainty_type(exchange.get("uncertainty type"))
         categories = exchange["categories"]
         subcompartment = ""
-        if len(categories) > 1 and categories[1] not in ("", "unspecified"):
+        if exchange["name"] == "Water" and tuple(categories) == ("water", "fossil well"):
+            profile = self.document.context.background.biosphere
+            if getattr(self, "_fossil_water_catalog", None) is None:
+                self._fossil_water_catalog = PackageCatalogProvider().load_biosphere(profile)
+            _require_fossil_water_reference(profile, self._fossil_water_catalog)
+            subcompartment = "fossilwater"
+        elif len(categories) > 1 and categories[1] not in ("", "unspecified"):
             try:
                 subcompartment = self.subcompartments[categories[1]]
             except KeyError as exc:
-                raise SimaProSerializationError(
-                    f"No SimaPro subcompartment mapping for {categories[1]!r} on {exchange['name']!r}."
-                ) from exc
+                native = None
+                if (
+                    is_native_uvek_biosphere(self.document.context.background.biosphere)
+                    and categories[0] == "air"
+                    and categories[1] in {"high. pop.", "low. pop."}
+                ):
+                    # These are already wire tokens, not ecoinvent compartment
+                    # names. Accept only a unique exact native catalog identity.
+                    native = {**exchange, "categories": tuple(categories)}
+                    restore_native_categories([{"exchanges": [native]}], self.document.context.background.biosphere)
+                if native is not None and tuple(native["categories"]) == ("emissions to air", categories[1]):
+                    subcompartment = categories[1]
+                else:
+                    raise SimaProSerializationError(
+                        f"No SimaPro subcompartment mapping for {categories[1]!r} on {exchange['name']!r}."
+                    ) from exc
         name = self.biosphere.get(exchange["name"], exchange["name"])
-        name = self.sodium_identity.wire_name(exchange, resolve_ecoinvent_flow_name(exchange, name))
+        name = resolve_ecoinvent_flow_name(exchange, name)
+        biosphere = self.document.context.background.biosphere
+        if biosphere.family == "ecoinvent" and biosphere.version in SUPPORTED_VERSIONS:
+            if self._native_biosphere_names is None:
+                provider = self.catalog_provider
+                if provider is None:
+                    provider = catalog_provider_from_environment()
+                catalog = provider.load_biosphere(biosphere)
+                if catalog.profile != biosphere:
+                    raise SimaProSerializationError(
+                        "Native SimaPro names require the exact selected biosphere catalog."
+                    )
+                self._native_biosphere_names = NativeBiosphereNames(catalog)
+            try:
+                name = self._native_biosphere_names.label_for_identity(exchange, name)
+            except ValueError as exc:
+                raise SimaProSerializationError(str(exc)) from exc
+        name = self.sodium_identity.wire_name(exchange, name)
         name = self.water_ions.wire_name(exchange, name)
         return [
             name,
@@ -1640,7 +2165,7 @@ class _SimaProRenderer:
             self.units[exchange["unit"]],
             _exchange_amount(exchange, exchange["amount"]),
             uncertainty,
-            _format_simapro_number(convert_sd_to_sd2(exchange.get("scale", 1), uncertainty)),
+            _format_simapro_number(_simapro_dispersion(exchange.get("scale", 1), uncertainty)),
             _format_simapro_number(exchange.get("min", exchange.get("minimum", 0))),
             _format_simapro_number(exchange.get("max", exchange.get("maximum", 0))),
             exchange.get("comment"),
@@ -1831,6 +2356,11 @@ def _version_tuple(version: str) -> tuple[int, ...]:
         return tuple(int(part) for part in version.split("."))
     except ValueError:
         return tuple()
+
+
+def _simapro_dispersion(scale: float, uncertainty: str) -> float:
+    """Use native 2*SD for normal; retain squared geometric SD for lognormal."""
+    return 2 * scale if uncertainty == "Normal" else convert_sd_to_sd2(scale, uncertainty)
 
 
 def _simapro_uncertainty_type(value) -> str:

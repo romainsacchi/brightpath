@@ -124,6 +124,28 @@ This mode is intended for diagnosis and informed manual review. An operation
 that continues under permissive policy is not automatically scientifically
 valid.
 
+Allocation and uncertainty
+--------------------------
+
+Forward disaggregation scales each exchange's distribution and formula by the
+documented allocation, including any explicit unit-conversion factor. For a
+nonzero factor ``a``, a lognormal ``loc`` becomes ``loc + log(abs(a))`` while
+its ``scale`` is retained. This preserves an authored difference between the
+nominal amount and the distribution centre; it does not recenter the source.
+Normal standard deviations and finite uniform bounds scale consistently.
+Triangular modes and bounds scale linearly, with bounds reordered for a
+negative factor; inactive standard-deviation fields are retained.
+Formulas are multiplied by the same factor without evaluating or inventing
+parameter values. Zero factors and unsupported distribution types produce an
+error and transactional rollback rather than partially migrated children or
+guessed distribution metadata. These arithmetic errors remain errors when
+information-loss warnings are allowed.
+
+These operations preserve marginal scaling only. They do not add a correlation
+model between split exchanges. Reverse aggregation still has the independently
+reported information-loss limitations below; it is not an exact reconstruction
+of arbitrary uncertain inputs or their covariance.
+
 Reverse routes
 --------------
 

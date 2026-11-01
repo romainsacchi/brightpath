@@ -253,14 +253,3 @@ class WaterIonIdentityGuard:
             raise ValueError("The verified water-ion identity is excluded by the supplied biosphere flowset.")
         exchange.update(name=name, categories=categories, unit=unit)
         return True
-
-
-def remember_water_ion_wire_labels(data, profile):
-    """Retain only these stock wire labels before bw2io generic name strategies."""
-    if profile.family != "ecoinvent" or profile.version not in _VERSIONS:
-        return
-    labels = frozenset(_WIRE.values())
-    for dataset in data:
-        for exchange in dataset.get("exchanges", []):
-            if exchange.get("type") == "biosphere" and exchange.get("name") in labels:
-                exchange["simapro name"] = exchange["name"]

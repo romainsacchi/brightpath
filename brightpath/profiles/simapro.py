@@ -2,7 +2,9 @@ from __future__ import annotations
 
 import csv
 import re
+from collections import OrderedDict
 from functools import lru_cache
+from threading import RLock
 
 import yaml
 
@@ -47,6 +49,12 @@ _GENERIC_PROCESS_NAMES = {
     "treatment of",
     "purification",
 }
+
+# Keep exact catalogue lookups bounded and retain their inputs so object IDs
+# cannot be recycled while an index is cached. Public providers supply frozen
+# identity sets; mutable injected collections are copied before indexing.
+_UVEK_NATIVE_NAME_INDEXES = OrderedDict()
+_UVEK_NATIVE_NAME_INDEX_LOCK = RLock()
 
 
 def format_simapro_technosphere_name(
@@ -215,7 +223,7 @@ def _parse_uvek_name(
     if not isinstance(text, str) or not text.strip():
         raise ValueError("Cannot parse an empty SimaPro technosphere exchange name.")
 
-    _, reverse = _uvek_simapro_mappings()
+    forward, reverse = _uvek_simapro_mappings()
     mapped = reverse.get(text.strip(), ())
     match = re.fullmatch(r"(?P<name>.+)/(?P<location>[^/]+) U", text.strip())
     if technosphere_identities is None:
@@ -224,29 +232,49 @@ def _parse_uvek_name(
         except FileNotFoundError:
             pass
     if technosphere_identities is not None:
+        if not unit or not str(unit).strip():
+            raise ValueError(f"An explicit unit is required for native UVEK SimaPro name: {text!r}.")
+        identities = (
+            technosphere_identities
+            if isinstance(technosphere_identities, frozenset)
+            else frozenset(technosphere_identities)
+        )
+        by_wire, by_literal = _uvek_native_name_indexes(identities, forward)
+        canonical_unit = _canonical_unit(unit)
+        exact_units = by_wire.get(text.strip())
+        if exact_units is not None:
+            candidates = exact_units.get(canonical_unit, ())
+            if len(candidates) == 1:
+                name, product, location, _native_unit = next(iter(candidates))
+                return name, product, location
+            if len(candidates) > 1:
+                raise ValueError(f"Ambiguous UVEK reference product for SimaPro name: {text!r}.")
+            raise ValueError(f"No exact native UVEK SimaPro unit match for {text!r}: {unit!r}.")
         # Legacy display mappings can contain a geography suffix inside the
         # activity name. Such an identity is valid for some 2025 catalogs but
         # must not override the distinct, exact 2026 identity.
-        candidates = {
-            (name, reference_product, location)
+        native_aliases = {
+            (name, reference_product, location, mapped_unit)
             for name, location, mapped_unit, reference_product in mapped
-            if (name, reference_product, location, mapped_unit) in technosphere_identities
-            and (not unit or _units_equal(mapped_unit, unit))
+            if (name, reference_product, location, mapped_unit) in identities
         }
+        candidates = {identity for identity in native_aliases if _units_equal(identity[3], unit)}
         if match:
             name, location = match.group("name").strip(), match.group("location").strip()
-            candidates.update(
-                (candidate_name, reference_product, candidate_location)
-                for candidate_name, reference_product, candidate_location, candidate_unit in technosphere_identities
-                if candidate_name == name
-                and candidate_location == location
-                and (not unit or _units_equal(candidate_unit, unit))
-            )
+            literal_units = by_literal.get((name, location), {})
+            candidates.update(literal_units.get(canonical_unit, ()))
+            if literal_units and not candidates:
+                raise ValueError(f"No exact native UVEK SimaPro unit match for {text!r}: {unit!r}.")
         if len(candidates) == 1:
-            return next(iter(candidates))
+            name, product, location, _native_unit = next(iter(candidates))
+            return name, product, location
         if len(candidates) > 1:
             raise ValueError(f"Ambiguous UVEK reference product for SimaPro name: {text!r}.")
+        if native_aliases:
+            raise ValueError(f"No exact native UVEK SimaPro unit match for {text!r}: {unit!r}.")
     elif mapped:
+        if not unit or not str(unit).strip():
+            raise ValueError(f"An explicit unit is required for native UVEK SimaPro name: {text!r}.")
         unit_matches = [row for row in mapped if _units_equal(row[2], unit)]
         if len(unit_matches) == 1:
             name, location, _mapped_unit, reference_product = unit_matches[0]
@@ -262,6 +290,32 @@ def _parse_uvek_name(
     location = match.group("location").strip()
 
     return name, name, location
+
+
+def _uvek_native_name_indexes(identities, forward):
+    """Index exactly what the writer emits for the declared native catalogue."""
+    key = (id(identities), id(forward))
+    with _UVEK_NATIVE_NAME_INDEX_LOCK:
+        cached = _UVEK_NATIVE_NAME_INDEXES.get(key)
+        if cached is not None:
+            _UVEK_NATIVE_NAME_INDEXES.move_to_end(key)
+            return cached[2], cached[3]
+    by_wire, by_literal = {}, {}
+    for name, product, location, unit in identities:
+        canonical_unit = _canonical_unit(unit)
+        wire = forward.get((name, location, canonical_unit, product), f"{name}/{location} U")
+        identity = (name, product, location, unit)
+        by_wire.setdefault(wire, {}).setdefault(canonical_unit, set()).add(identity)
+        by_literal.setdefault((name, location), {}).setdefault(canonical_unit, set()).add(identity)
+    for index in (by_wire, by_literal):
+        for units in index.values():
+            for unit, values in units.items():
+                units[unit] = frozenset(values)
+    with _UVEK_NATIVE_NAME_INDEX_LOCK:
+        _UVEK_NATIVE_NAME_INDEXES[key] = (identities, forward, by_wire, by_literal)
+        if len(_UVEK_NATIVE_NAME_INDEXES) > 8:
+            _UVEK_NATIVE_NAME_INDEXES.popitem(last=False)
+    return by_wire, by_literal
 
 
 @lru_cache(maxsize=1)

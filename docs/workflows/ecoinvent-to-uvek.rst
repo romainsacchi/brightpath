@@ -22,14 +22,22 @@ acceptance is not evidence of scientific equivalence. Reviewed UVEK-to-ecoinvent
 exports use their independent directional resource and do not require this
 heuristic permission merely because they cross database families.
 
+Copper and steel sheet-rolling markets map to the corresponding RER rolling
+services for the same metal. The silica-sand market maps to ``Silica sand, at
+plant`` in Germany. These choices correct three legacy assignments to different
+commodities. They retain the geographic and market-versus-production limitations
+of the heuristic route; no global supply-mix or grade equivalence is implied.
+The same choices apply when composing the route to UVEK 2026. Quantities,
+uncertainty parameters and the original source context are preserved.
+
 Storage and loading
 -------------------
 
 Both UVEK directions use the named ``brightpath.migration`` schema, version 3.
 It follows ecoinvent's ``replace``, ``disaggregate`` and ``delete`` operations,
 with inline source and target identities, shared review records, and optional
-foreground recipes. All 31,488 forward rules, confidence scores, amount factors
-and mapping explanations are preserved. This file contains 104 shared reviews and uses
+foreground recipes. It contains 31,488 forward rules with confidence scores,
+amount factors and mapping explanations. This file contains 104 shared reviews and uses
 4,043 distinct UVEK suppliers; it contains no complete process inventories.
 
 ``load_uvek_technosphere_resource()`` verifies the packaged bytes and applies the

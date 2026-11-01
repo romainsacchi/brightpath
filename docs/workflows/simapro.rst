@@ -276,12 +276,59 @@ calculated parameter sections support formulas. Input inventories are unchanged.
 An empty or ``unspecified`` biosphere subcompartment is written as a blank field.
 Other unknown subcompartments still require an explicit mapping.
 
-Regression tests parse the emitted uncertainty fields with Brightway's
-`SimaPro CSV extractor <https://docs.brightway.dev/en/latest/_modules/bw2io/extractors/simapro_csv.html>`_,
-which interprets normal uncertainty as squared standard deviation and lognormal
-uncertainty as squared geometric standard deviation. This checks the numeric
-representation; it does not substitute for importing a complete scenario into
-SimaPro.
+With a declared native UVEK 2026 biosphere, Water emissions retain their native
+kilogram basis on import. The ecoinvent-specific water migration is not applied
+to that biosphere. UVEK 2025 with an ecoinvent biosphere retains the existing
+ecoinvent volume convention.
+
+The canonical unit ``normal cubic meter`` is written literally as ``Nm3``.
+This introduces no conversion to cubic metres or standard cubic metres. Native
+SimaPro Desktop background linking still requires validation against the
+installed library.
+
+For ecoinvent 3.6, 3.7, 3.8 and 3.9.1 biospheres, reviewed native hydrochloric
+acid and mineral-resource labels resolve through their exact catalogue UUID,
+compartment and unit. Distinct ore grades are not interchangeable. An identity
+without a verified distinct representation is refused rather than mapped to a
+different flow.
+
+UVEK inputs on legacy exclusion lists are retained when their complete native
+representation is verified, or when an exact included foreground supplier is
+available. Other active excluded inputs cause a clear error instead of being
+silently omitted. Quantities and uncertainty definitions are unchanged.
+
+Case-insensitive SimaPro names can collide when distinct included foreground
+recipes differ only in capitalization. Those recipes receive deterministic
+export labels bound to their exact identities. Their incoming links and
+uncertainty parameters remain separate. Readback checks the native label and
+unit against the identity marker; it does not merge the recipes or rename
+external background suppliers.
+
+Normal uncertainty uses the native doubled standard deviation, ``2 * scale``,
+in the CSV uncertainty parameter-1 field. For example, a canonical standard
+deviation of 0.3 is written as ``Normal;0.6;0;0``. This applies to biosphere and
+technosphere exchanges and to process, database and project input parameters.
+Water conversion scales the standard deviation before it is doubled. Lognormal
+uncertainty continues to use squared geometric standard deviation.
+
+SimaPro's `official help <https://support.simapro.com/en/articles/504671-5-features-every-simapro-user-should-know>`_
+distinguishes the SD-squared and doubled-SD fields. PRé's *Introduction to LCA
+with SimaPro*, version 5.2 (January 2016), section 9.1, specifies doubled SD for
+normal distributions. GreenDelta's `CSV conversion specification
+<https://github.com/GreenDelta/olca-modules/wiki/Conversion-of-uncertainty-information#simapro-csv>`_
+explicitly assigns normal CSV parameter 1 to doubled SD.
+
+BrightPath's injected reader corrects bw2io's variance interpretation locally:
+it divides a native normal field by two. It does not modify bw2io globally.
+The same hook handles exchange and parameter rows; other distribution types
+and independent-centre limitations are unchanged. Previously generated files
+whose normal field contained variance are read according to their actual native
+field, without guessing a legacy convention or restoring a scale from comments.
+
+Regression checks assert the raw doubled-SD field and preserve caller-owned
+objects. An installed openLCA 2.6.2 CSV parser/converter check independently
+verifies native normal parameters. This is not a claim of running the SimaPro
+desktop application or validating a full scenario's LCIA results.
 
 Waste signs and supplier categories
 ---------------------------------------------

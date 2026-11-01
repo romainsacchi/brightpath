@@ -27,6 +27,7 @@ from brightpath.core.context import BackgroundContext, FormatProfile, InventoryC
 from brightpath.core.reports import StageKind
 from brightpath.migrations.scaling import scale_exchange
 from brightpath.models import BackgroundProfile, InventoryDocument, default_biosphere_profile
+from brightpath.profiles.biosphere_categories import wire_categories
 from brightpath.units import normalize_unit
 
 from .ilcd_metadata import coerce_profile
@@ -47,8 +48,35 @@ from .ilcd_package import (
 )
 from .ilcd_parameters import evaluate, parameter_values
 from .ilcd_references import coerce_references, identity
+from .openlca_references import load_openlca_reference_catalog
 
 _UUID_NAMESPACE = UUID("19fc1187-3ceb-484d-88f8-8d1df71baad4")
+_COMMENT_BLOCK_START = "[ILCD full exchange comments]\n"
+_COMMENT_BLOCK_END = "\n[/ILCD full exchange comments]"
+_ROUNDING_BLOCK_START = "[ILCD uncertainty rounding warnings]\n"
+_ROUNDING_BLOCK_END = "\n[/ILCD uncertainty rounding warnings]"
+
+
+def _native_technosphere_reference(exchange, background, flow, provider):
+    """Check an external native direction against exact catalog IDs, never payload flags."""
+    if background is None or not provider:
+        return None
+    catalog = load_openlca_reference_catalog(InventoryContext(FormatProfile("ilcd"), background))
+    reference = catalog.technosphere.get(identity(exchange, "technosphere")) if catalog is not None else None
+    if reference is None or reference.native_reference_is_input is None:
+        return None
+    if (
+        reference.flow_id != flow["flow_id"]
+        or reference.process_id != provider
+        or reference.flow_property_id != flow["property_id"]
+        or flow["flow_type"] != ("Waste flow" if reference.native_flow_type == "WASTE_FLOW" else "Product flow")
+    ):
+        fail(
+            "reference_conflict", "ILCD native provider, flow, quantity or flow type conflicts with its exact catalog."
+        )
+    return reference
+
+
 _MAPPED_EXCHANGE = {
     "name",
     "reference product",
@@ -98,6 +126,61 @@ def _localized(parent, path: str) -> str:
         return ""
     chosen = next((e for e in elements if e.get(q("xml", "lang")) == "en"), elements[0])
     return "".join(chosen.itertext()).strip()
+
+
+def _comment_pointer(identifier: str, comment: str) -> str:
+    digest = hashlib.sha256(comment.encode()).hexdigest()
+    return (
+        f"Full exchange comment ({len(comment)} characters; SHA-256 {digest}) "
+        f"is preserved under entry {identifier} in the process general comment."
+    )
+
+
+def _process_comments(comment: str) -> tuple[str, dict[str, str]]:
+    """Restore bounded exchange comments from the unlimited native process text.
+
+    JSON framing survives native openLCA import/export without depending on a
+    BrightPath-only XML extension. Exchange pointers authenticate the exact text.
+    """
+    original, marker, suffix = comment.rpartition(_COMMENT_BLOCK_START)
+    if not marker or not suffix.endswith(_COMMENT_BLOCK_END):
+        return comment, {}
+    try:
+        comments = json.loads(suffix[: -len(_COMMENT_BLOCK_END)])
+    except ValueError:
+        fail("comment_manifest_invalid", "Invalid full exchange comment block.")
+    if not isinstance(comments, dict) or any(
+        not isinstance(key, str) or not isinstance(value, str) or len(value) <= 500 for key, value in comments.items()
+    ):
+        fail("comment_manifest_invalid", "Full exchange comments must map exchange IDs to complete long text.")
+    return original.removesuffix("\n\n"), comments
+
+
+def _rounding_notes(comment: str) -> tuple[str, list[dict]]:
+    """Read audit provenance only; native uncertainty fields remain authoritative."""
+    original, marker, suffix = comment.rpartition(_ROUNDING_BLOCK_START)
+    if not marker or not suffix.endswith(_ROUNDING_BLOCK_END):
+        return comment, []
+    try:
+        notes = json.loads(suffix[: -len(_ROUNDING_BLOCK_END)])
+    except ValueError:
+        fail("uncertainty_audit_invalid", "Invalid uncertainty rounding audit block.")
+    if not isinstance(notes, list) or any(not isinstance(note, dict) for note in notes):
+        fail("uncertainty_audit_invalid", "Uncertainty rounding audit must contain structured records.")
+    return original.removesuffix("\n\n"), notes
+
+
+def _rounding_options(tolerance, warnings) -> float:
+    if (
+        isinstance(tolerance, bool)
+        or not isinstance(tolerance, (int, float))
+        or not math.isfinite(tolerance)
+        or not 0 <= tolerance <= 0.02
+    ):
+        fail("uncertainty_tolerance_invalid", "Uncertainty relative tolerance must be finite and between 0 and 0.02.")
+    if warnings is not None and not isinstance(warnings, list):
+        fail("uncertainty_warnings_invalid", "Uncertainty rounding warnings must be a list or None.")
+    return float(tolerance)
 
 
 def _number(value: object, path: str = "amount") -> float:
@@ -168,9 +251,11 @@ def _flow_info(package: ILCDPackage, path: str, root) -> dict:
             NS,
         )
     ]
+    # Native person-transport spelling is normalized only at the ILCD boundary.
+    native_unit = _text(units[0], "u:name")
     return {
         "name": name,
-        "unit": normalize_unit(_text(units[0], "u:name")),
+        "unit": normalize_unit("person kilometer" if native_unit == "p*km" else native_unit),
         "flow_type": _text(root, "f:modellingAndValidation/f:LCIMethod/f:typeOfDataSet"),
         "flow_id": entity_key(root)[1],
         "flow_version": entity_key(root)[2],
@@ -204,8 +289,8 @@ def _reference_exchange(root):
         fail("multiple_reference_flows", "Exactly one reference flow is supported.")
     exchanges = root.findall("p:exchanges/p:exchange", NS)
     found = [e for e in exchanges if e.get("dataSetInternalID") == ids[0].text]
-    if len(found) != 1 or _text(found[0], "p:exchangeDirection") != "Output":
-        fail("reference_input_unsupported", "The reference exchange must be a product output.")
+    if len(found) != 1 or _text(found[0], "p:exchangeDirection") not in {"Input", "Output"}:
+        fail("reference_input_unsupported", "The reference exchange must have an input or output direction.")
     return found[0]
 
 
@@ -238,10 +323,7 @@ def _source_dialect(root, explicit: str | None) -> str:
         fail("dialect_unsupported", f"Unsupported ILCD dialect: {explicit}")
     if explicit and marked and explicit != marked:
         fail("dialect_conflict", "The explicit ILCD dialect conflicts with the package's declared dialect.")
-    native = any(
-        all(e.get(q("olca", key)) is not None for key in ("amount", "unitId", "propertyId"))
-        for e in root.findall("p:exchanges/p:exchange", NS)
-    )
+    native = any(e.get(q("olca", "amount")) is not None for e in root.findall("p:exchanges/p:exchange", NS))
     return explicit or marked or ("openlca" if native else "core")
 
 
@@ -267,7 +349,7 @@ def _load_ilcd_package(
     processes = [(path, root) for (kind, _, _), (path, root) in package.entities.items() if kind == "Process"]
     if not processes:
         fail("process_missing", "The ILCD package does not contain a process dataset.")
-    records, production_flows = {}, {}
+    records, production_flows, comment_blocks = {}, {}, {}
     snapshot_bytes = 0
     for path, root in processes:
         _unsupported(root)
@@ -277,9 +359,27 @@ def _load_ilcd_package(
             fail("reference_missing", "The production exchange is missing its flow reference.", path)
         flow_path, flow_root = package.resolve(flow_ref, path)
         flow = _flow_info(package, flow_path, flow_root)
-        if flow["flow_type"] != "Product flow":
-            fail("reference_flow_unsupported", "Only a product reference output is supported.", path)
+        if (flow["flow_type"], _text(ref, "p:exchangeDirection")) not in {
+            ("Product flow", "Output"),
+            ("Waste flow", "Input"),
+        }:
+            fail("reference_flow_unsupported", "A product reference output or waste reference input is required.", path)
         code = entity_key(root)[1]
+        original_comment, rounding_notes = _rounding_notes(
+            _localized(root, "p:processInformation/p:dataSetInformation/c:generalComment")
+        )
+        process_comment, comment_blocks[code] = _process_comments(original_comment)
+        # Native exporters may renumber exchange IDs. The authenticated pointer
+        # remains attached to its exchange and identifies the stable text entry.
+        complete_comments = {
+            _comment_pointer(identifier, comment): comment for identifier, comment in comment_blocks[code].items()
+        }
+        pointers = [_localized(e, "p:generalComment") for e in root.findall("p:exchanges/p:exchange", NS)]
+        if any(pointers.count(pointer) != 1 for pointer in complete_comments):
+            fail(
+                "comment_manifest_invalid", "Full comment block requires one matching exchange pointer per entry.", path
+            )
+        comment_blocks[code] = complete_comments
         if code in records:
             fail(
                 "process_version_ambiguous",
@@ -301,11 +401,20 @@ def _load_ilcd_package(
                     is not None
                     else ""
                 ),
-                "comment": _localized(root, "p:processInformation/p:dataSetInformation/c:generalComment"),
+                "comment": process_comment,
                 "exchanges": [],
             }
         )
-        findings = []
+        findings = [
+            {
+                "code": "ilcd.uncertainty_rounded",
+                "severity": "warning",
+                "message": "Export uncertainty was rounded under an explicit tolerance; native dispersion is authoritative.",
+                "path": path,
+                "details": deepcopy(note),
+            }
+            for note in rounding_notes
+        ]
         source_dialect = _source_dialect(root, dialect)
         if not dialect and not root.get(q("bp", "dialect")) and source_dialect == "openlca":
             findings.append(
@@ -327,6 +436,7 @@ def _load_ilcd_package(
             "process_id": code,
             "resources": closure,
             "issues": findings,
+            "uncertainty_rounding_warnings": rounding_notes,
             "metadata": {
                 "dataset_version": entity_key(root)[2],
                 "process_type": _text(root, "p:modellingAndValidation/p:LCIMethodAndAllocation/p:typeOfDataSet"),
@@ -411,15 +521,20 @@ def _load_ilcd_package(
                 if production
                 else ("biosphere" if flow["flow_type"] == "Elementary flow" else "technosphere")
             )
-            if flow["flow_type"] not in {"Product flow", "Elementary flow"}:
+            waste = flow["flow_type"] == "Waste flow"
+            if flow["flow_type"] not in {"Product flow", "Elementary flow", "Waste flow"} or (
+                waste and direction != ("Input" if production else "Output")
+            ):
                 fail(
-                    "waste_flow_unsupported", "Waste-flow conversion requires an explicit waste-treatment model.", path
+                    "waste_flow_unsupported",
+                    "Waste flows require a reference input or a linked non-reference output.",
+                    path,
                 )
             if production and amount <= 0:
                 fail("production_amount_invalid", "Reference production must have a positive amount.", path)
             exchange = _payload(element, "exchange")
             exchange.update({"name": flow["name"], "unit": flow["unit"], "type": kind, "amount": amount})
-            if kind == "technosphere" and direction == "Output":
+            if kind == "technosphere" and direction == "Output" and not waste:
                 fail(
                     "coproduct_unsupported",
                     "Non-reference product outputs require an explicit substitution/allocation model.",
@@ -495,8 +610,17 @@ def _load_ilcd_package(
                 )
                 unit_factor = _exchange_unit_factor(link, exchange["unit"], flow["unit"])
                 data["ilcd"]["issues"] = [i for i in data["ilcd"]["issues"] if i["path"] != f"exchanges[{index}]"]
+            native_reference = (
+                _native_technosphere_reference(exchange, background_context, flow, provider)
+                if kind == "technosphere" and supplier is None
+                else None
+            )
+            if native_reference is not None and direction != (
+                "Output" if native_reference.native_reference_is_input else "Input"
+            ):
+                fail("reference_conflict", "ILCD exchange direction conflicts with its native provider reference.")
             sign_flipped = kind == "biosphere" and direction != (
-                "Input" if tuple(exchange.get("categories", ()))[0:1] == ("natural resource",) else "Output"
+                "Input" if wire_categories(exchange.get("categories", ()))[:1] == ("natural resource",) else "Output"
             )
             if sign_flipped:
                 exchange["amount"] = -amount
@@ -519,12 +643,36 @@ def _load_ilcd_package(
             if sign_flipped and exchange.get("formula"):
                 exchange["formula"] = f"-({exchange['formula']})"
             _read_uncertainty(element, exchange, dialect=data["ilcd"]["dialect"])
-            if sign_flipped and exchange.get("uncertainty type") == 4:
+            if sign_flipped and data["ilcd"]["dialect"] == "openlca" and element.get(q("olca", "amount")) is not None:
+                # Partial native amounts are in XML direction coordinates,
+                # unlike exchange["amount"], already reflected above.
+                if exchange.get("uncertainty type") == 3:
+                    exchange["loc"] = -exchange["loc"]
+                elif exchange.get("uncertainty type") == 2:
+                    exchange["negative"] = not exchange.get("negative", False)
+            if sign_flipped and exchange.get("uncertainty type") in {4, 5}:
                 exchange["minimum"], exchange["maximum"] = -exchange["maximum"], -exchange["minimum"]
+                if exchange["uncertainty type"] == 5:
+                    exchange["loc"] = -exchange["loc"]
+            if waste and native_reference is None:
+                # Brightway's negative treatment reference and technosphere
+                # coefficients are encoded as native waste inputs/outputs.
+                # Reverse the coordinate change, including bounds and formulas.
+                _scale_ilcd_exchange(exchange, -1)
+                original_formula = element.get(q("bp", "wasteSourceFormula"))
+                if original_formula:
+                    if not math.isclose(
+                        evaluate(original_formula, values), exchange["amount"], rel_tol=1e-9, abs_tol=1e-12
+                    ):
+                        fail("formula_result_conflict", "Preserved waste formula disagrees with signed amount.", path)
+                    exchange["formula"] = original_formula
             if element.find("p:generalComment", NS) is not None:
                 exchange["comment"] = _localized(element, "p:generalComment")
+            full_comment = comment_blocks[data["code"]].get(exchange.get("comment", ""))
+            if full_comment is not None:
+                exchange["comment"] = full_comment
             if unit_factor != 1:
-                scale_exchange(exchange, 1 / unit_factor)
+                _scale_ilcd_exchange(exchange, 1 / unit_factor)
                 if link.get("source_formula") and link.get("context") == _context_dict(background_context):
                     original_formula = link["source_formula"]
                     if not math.isclose(
@@ -633,26 +781,75 @@ def _read_uncertainty(element, exchange: dict, *, dialect: str = "core") -> None
         )
         if exchange["minimum"] > exchange["maximum"]:
             fail("uncertainty_invalid", "Uniform uncertainty bounds are reversed.")
+    elif distribution == "triangular" and dialect == "openlca":
+        exchange.update(
+            {
+                "uncertainty type": 5,
+                "minimum": _number(_text(element, "p:minimumAmount")),
+                "loc": _number(element.get(q("olca", "mostLikelyValue"))),
+                "maximum": _number(_text(element, "p:maximumAmount")),
+            }
+        )
+        _triangular_parameters(exchange)
     elif distribution == "normal":
         scale = _number(_text(element, "p:relativeStandardDeviation95In")) / (1 if dialect == "openlca" else 2)
         if scale < 0:
             fail("uncertainty_invalid", "Normal uncertainty cannot have a negative scale.")
-        exchange.update({"uncertainty type": 3, "loc": exchange["amount"], "scale": scale})
+        centre = exchange["amount"]
+        if dialect == "openlca" and element.get(q("olca", "amount")) is not None:
+            centre = _number(element.get(q("olca", "amount")))
+        exchange.update({"uncertainty type": 3, "loc": centre, "scale": scale})
     elif distribution == "log-normal":
         geometric_squared = _number(_text(element, "p:relativeStandardDeviation95In"))
-        if exchange["amount"] <= 0 or geometric_squared < 1:
+        centre = exchange["amount"]
+        if dialect == "openlca" and element.get(q("olca", "amount")) is not None:
+            centre = _number(element.get(q("olca", "amount")))
+        if (centre == 0 if dialect == "openlca" else centre <= 0) or geometric_squared < 1:
             fail(
                 "uncertainty_invalid", "Log-normal uncertainty requires a positive central amount and SDg squared >= 1."
             )
         exchange.update(
             {
                 "uncertainty type": 2,
-                "loc": math.log(exchange["amount"]),
+                # openLCA 2.6.2 samples with log(parameter1) - sigma**2 / 2.
+                # Its model calls parameter1 a geometric mean, but the actual
+                # generator interprets it as an arithmetic mean. Read the
+                # actual native distribution, never an audit-sidecar value.
+                "loc": math.log(abs(centre)) - (0.5 * math.log(geometric_squared) ** 2 if dialect == "openlca" else 0),
                 "scale": math.log(geometric_squared) / (1 if dialect == "openlca" else 2),
             }
         )
+        if dialect == "openlca":
+            # Explicit False matters for a foreign native distribution whose
+            # positive mean accompanies a negative nominal amount: Brightway
+            # otherwise infers a negative distribution from that amount.
+            exchange["negative"] = centre < 0
     else:
         fail("uncertainty_unsupported", f"ILCD {distribution} uncertainty requires an explicit supported conversion.")
+
+
+def _triangular_parameters(exchange: Mapping) -> tuple[float, float, float]:
+    minimum, mode, maximum = (_number(exchange.get(key)) for key in ("minimum", "loc", "maximum"))
+    if not minimum <= mode <= maximum or minimum == maximum:
+        fail("uncertainty_invalid", "Triangular uncertainty requires minimum <= mode <= maximum and distinct bounds.")
+    return minimum, mode, maximum
+
+
+def _scale_ilcd_exchange(exchange: dict, factor: float) -> None:
+    """Scale the ILCD triangular subset as well as shared supported distributions."""
+    if exchange.get("uncertainty type") != 5:
+        scale_exchange(exchange, factor)
+        return
+    minimum, mode, maximum = _triangular_parameters(exchange)
+    exchange["amount"] = _number(exchange["amount"]) * factor
+    exchange["loc"] = mode * factor
+    exchange["minimum"], exchange["maximum"] = (
+        (minimum * factor, maximum * factor) if factor > 0 else (maximum * factor, minimum * factor)
+    )
+    if "negative" in exchange:
+        exchange["negative"] = exchange["amount"] < 0
+    if exchange.get("formula"):
+        exchange["formula"] = f"({exchange['formula']}) * ({factor!r})"
 
 
 def _add(parent, prefix: str, local_name: str, text: object | None = None, **attributes):
@@ -709,10 +906,16 @@ def _exchange_unit_factor(reference: Mapping, source_unit: str, reference_unit: 
     return factor
 
 
-def _quantity_resources(unit: str, *, quantity=None) -> tuple[dict[str, str], str]:
+def _quantity_resources(unit: str, *, quantity=None, profile=None) -> tuple[dict[str, str], str]:
     if quantity is not None:
         return _reference_quantity_resources(quantity)
     normalized = normalize_unit(unit)
+    if normalized in {"ton kilometer", "person kilometer", "standard cubic meter"}:
+        # Use the same verified native quantity as background links. These
+        # reference units have factor 1; no scientific coefficient is rescaled.
+        from .ilcd_background import quantity_definition
+
+        return _reference_quantity_resources(quantity_definition(normalized, profile=profile))
     known = {
         "kilogram": "Mass",
         "gram": "Mass",
@@ -767,13 +970,15 @@ def _quantity_resources(unit: str, *, quantity=None) -> tuple[dict[str, str], st
 
 
 def _reference_quantity_resources(quantity: Mapping) -> tuple[dict[str, str], str]:
-    """Render an exact reference-template quantity with its full unit group."""
+    """Render a verified native quantity with its full unit group."""
     prop_id, unit_id = quantity["property_id"], quantity["group_id"]
     unit_root = _root("u", "unitGroupDataSet")
     info = _add(unit_root, "u", "unitGroupInformation")
     data = _add(info, "u", "dataSetInformation")
     _add(data, "c", "UUID", unit_id)
     _local(data, "c", "name", quantity["group_name"])
+    if quantity.get("comment"):
+        _local(data, "c", "generalComment", quantity["comment"])
     units = sorted(quantity["units"], key=lambda unit: unit["id"])
     ref_index = next(index for index, unit in enumerate(units) if unit["id"] == quantity["reference_unit_id"])
     _add(_add(info, "u", "quantitativeReference"), "u", "referenceToReferenceUnit", str(ref_index))
@@ -789,6 +994,8 @@ def _reference_quantity_resources(quantity: Mapping) -> tuple[dict[str, str], st
     data = _add(info, "fp", "dataSetInformation")
     _add(data, "c", "UUID", prop_id)
     _local(data, "c", "name", quantity["property_name"])
+    if quantity.get("comment"):
+        _local(data, "c", "generalComment", quantity["comment"])
     _reference(
         _add(info, "fp", "quantitativeReference"),
         "fp",
@@ -805,8 +1012,10 @@ def _reference_quantity_resources(quantity: Mapping) -> tuple[dict[str, str], st
     }, prop_id
 
 
-def _new_flow(identifier: str, name: str, unit: str, version: str, *, categories=(), quantity=None) -> dict[str, str]:
-    resources, prop_id = _quantity_resources(unit, quantity=quantity)
+def _new_flow(
+    identifier: str, name: str, unit: str, version: str, *, categories=(), quantity=None, flow_type=None, profile=None
+) -> dict[str, str]:
+    resources, prop_id = _quantity_resources(unit, quantity=quantity, profile=profile)
     root = _root("f", "flowDataSet")
     info = _add(root, "f", "flowInformation")
     data = _add(info, "f", "dataSetInformation")
@@ -820,7 +1029,7 @@ def _new_flow(identifier: str, name: str, unit: str, version: str, *, categories
     quantitative = _add(info, "f", "quantitativeReference")
     _add(quantitative, "f", "referenceToReferenceFlowProperty", "0")
     method = _add(_add(root, "f", "modellingAndValidation"), "f", "LCIMethod")
-    _add(method, "f", "typeOfDataSet", "Elementary flow" if categories else "Product flow")
+    _add(method, "f", "typeOfDataSet", flow_type or ("Elementary flow" if categories else "Product flow"))
     _admin(root, "f", version)
     prop = _add(_add(root, "f", "flowProperties"), "f", "flowProperty", dataSetInternalID="0")
     _reference(
@@ -879,6 +1088,8 @@ def render_ilcd_package(
     dialect: str | None = None,
     package_mode: str | None = None,
     catalog_provider=None,
+    uncertainty_relative_tolerance: float = 0.0,
+    uncertainty_rounding_warnings: list | None = None,
 ) -> dict[str, bytes]:
     """Render and validate a deterministic ILCD process package without writing.
 
@@ -887,14 +1098,22 @@ def render_ilcd_package(
         implying that a flow reference identifies its producer.
     :param catalog_provider: Exact background catalogs for automatic openLCA
         references; defaults to the configured packaged catalog provider.
+    :param uncertainty_relative_tolerance: Explicit openLCA export-only spread
+        tolerance in [0, 0.02]; zero retains strict precision checks.
+    :param uncertainty_rounding_warnings: Optional list extended with structured
+        records only after successful rendering. Native fields remain authoritative.
     """
     if not isinstance(document, InventoryDocument):
         raise TypeError("document must be an InventoryDocument.")
+    tolerance = _rounding_options(uncertainty_relative_tolerance, uncertainty_rounding_warnings)
+    rounding_warnings = []
     dialect = (
         dialect or (document.context.format.dialect if document.context.format.format_id == "ilcd" else "") or "core"
     )
     if dialect not in {"core", "openlca"}:
         fail("dialect_unsupported", "ILCD dialect must be core or openlca.")
+    if tolerance and dialect != "openlca":
+        fail("uncertainty_tolerance_invalid", "Uncertainty rounding tolerance is supported only for dialect='openlca'.")
     if package_mode not in {None, "zip", "directory"}:
         fail("package_mode_invalid", "ILCD output must be a ZIP or directory package.")
     profile, references = coerce_profile(metadata_profile), coerce_references(reference_catalog)
@@ -958,9 +1177,12 @@ def render_ilcd_package(
         )
         process_id = uuid_text(process_id)
         production = [e for e in dataset.get("exchanges", []) if e.get("type") == "production"]
-        if len(production) != 1 or _number(production[0].get("amount")) <= 0:
-            fail("multiple_reference_flows", "ILCD export requires one positive reference production exchange.")
+        if len(production) != 1 or _number(production[0].get("amount")) == 0:
+            fail("multiple_reference_flows", "ILCD export requires one nonzero reference production exchange.")
         prod = production[0]
+        waste_reference = _number(prod["amount"]) < 0
+        flow_type = "Waste flow" if waste_reference else "Product flow"
+        flow_identity = "waste-flow" if waste_reference else "product-flow"
         if normalize_unit(prod.get("unit", "")) != normalize_unit(dataset.get("unit", "")):
             fail("production_identity_invalid", "Production unit differs from its process unit.")
         preserved_prod = prod.get("ilcd", {})
@@ -969,10 +1191,20 @@ def render_ilcd_package(
         flow_id = (
             uuid_text(flow_id)
             if flow_id
-            else _id("product-flow", dataset["code"], _context_dict(document.context.background))
+            else _id(flow_identity, dataset["code"], _context_dict(document.context.background))
         )
         if not preserve or not preserved_prod.get("flow_id"):
-            _merge(resources, _new_flow(flow_id, dataset["reference product"], dataset["unit"], flow_version))
+            _merge(
+                resources,
+                _new_flow(
+                    flow_id,
+                    dataset["reference product"],
+                    dataset["unit"],
+                    flow_version,
+                    flow_type=flow_type,
+                    profile=document.context.background.technosphere,
+                ),
+            )
         else:
             existing = ILCDPackage.from_resources(resources)
             matching = [
@@ -984,16 +1216,30 @@ def render_ilcd_package(
                 fail("reference_missing", "The preserved reference product flow is missing.")
             old_path, old_flow = matching[0]
             old_info = _flow_info(existing, old_path, old_flow)
-            if old_info["name"] != dataset["reference product"] or old_info["unit"] != normalize_unit(dataset["unit"]):
+            if (
+                old_info["name"] != dataset["reference product"]
+                or old_info["unit"] != normalize_unit(dataset["unit"])
+                or old_info["flow_type"] != flow_type
+            ):
                 flow_id = _id(
-                    "product-flow",
+                    flow_identity,
                     dataset["code"],
                     dataset["reference product"],
                     dataset["unit"],
                     _context_dict(document.context.background),
                 )
                 flow_version = metadata["dataset_version"]
-                _merge(resources, _new_flow(flow_id, dataset["reference product"], dataset["unit"], flow_version))
+                _merge(
+                    resources,
+                    _new_flow(
+                        flow_id,
+                        dataset["reference product"],
+                        dataset["unit"],
+                        flow_version,
+                        flow_type=flow_type,
+                        profile=document.context.background.technosphere,
+                    ),
+                )
         key = identity(dataset, "technosphere")
         if key in foreground:
             fail("supplier_ambiguous", f"Several foreground processes have identity {key}.")
@@ -1171,9 +1417,11 @@ def render_ilcd_package(
                     ),
                 )
         exchanges = _add(root, "p", "exchanges")
+        long_comments = {}
+        dataset_rounding = []
         # Reference exchange gets ID 0 irrespective of source ordering.
         ordered = sorted(enumerate(dataset["exchanges"]), key=lambda item: item[1].get("type") != "production")
-        for number, (_, exchange) in enumerate(ordered):
+        for number, (exchange_index, exchange) in enumerate(ordered):
             kind = exchange.get("type")
             if kind not in {"production", "technosphere", "biosphere"}:
                 fail("exchange_type_unsupported", f"Unsupported exchange type: {kind}")
@@ -1222,7 +1470,12 @@ def render_ilcd_package(
             }
             opaque = [deepcopy(child) for child in element if etree.QName(child).localname not in mapped_children]
             other = deepcopy(element.find(q("c", "other")))
-            attributes = {k: v for k, v in element.attrib.items() if etree.QName(k).namespace not in {None, NS["olca"]}}
+            attributes = {
+                k: v
+                for k, v in element.attrib.items()
+                if etree.QName(k).namespace not in {None, NS["olca"]}
+                and k not in {q("bp", "formula"), q("bp", "wasteSourceFormula")}
+            }
             element = etree.SubElement(exchanges, q("p", "exchange"), attributes, dataSetInternalID=str(number))
             # Resolve the actual flow path; exact versions may use versioned filenames.
             matching = [
@@ -1238,14 +1491,40 @@ def render_ilcd_package(
             factor = _exchange_unit_factor(reference, exchange["unit"], flow_info["unit"])
             if factor != 1:
                 exchange = deepcopy(exchange)
-                scale_exchange(exchange, factor)
+                _scale_ilcd_exchange(exchange, factor)
                 amount = _number(exchange["amount"])
+            waste = flow_info["flow_type"] == "Waste flow"
+            native_reference = (
+                _native_technosphere_reference(
+                    source_exchange, document.context.background, flow_info, reference.get("process_id", "")
+                )
+                if kind == "technosphere" and supplier is None
+                else None
+            )
+            if waste and native_reference is None:
+                exchange = deepcopy(exchange)
+                _scale_ilcd_exchange(exchange, -1)
+                amount = _number(exchange["amount"])
+                if source_exchange.get("formula"):
+                    # In flow-reference units, before the reversible sign change.
+                    element.set(
+                        q("bp", "wasteSourceFormula"),
+                        source_exchange["formula"] if factor == 1 else f"({source_exchange['formula']}) * ({factor!r})",
+                    )
             uri = posixpath.relpath(flow_path, "processes")
             _reference(
                 element, "p", "referenceToFlowDataSet", "Flow", reference["flow_id"], reference["flow_version"], uri
             )
-            natural = kind == "biosphere" and tuple(exchange.get("categories", ()))[0:1] == ("natural resource",)
-            direction = "Input" if kind == "technosphere" or natural else "Output"
+            natural = kind == "biosphere" and wire_categories(exchange.get("categories", ()))[:1] == (
+                "natural resource",
+            )
+            direction = (
+                "Input"
+                if (kind == "technosphere" and not waste) or (kind == "production" and waste) or natural
+                else "Output"
+            )
+            if native_reference is not None:
+                direction = "Output" if native_reference.native_reference_is_input else "Input"
             _add(element, "p", "exchangeDirection", direction)
             formula = exchange.get("formula")
             if formula:
@@ -1264,17 +1543,64 @@ def render_ilcd_package(
                 element.set(q("bp", "formula"), str(formula))
             _add(element, "p", "meanAmount", "1" if formula else repr(amount))
             _add(element, "p", "resultingAmount", repr(amount))
-            _write_uncertainty(element, exchange, dialect=dialect)
+            if (
+                source_exchange.get("uncertainty type") in {2, 3}
+                and _number(source_exchange.get("scale")) > 0
+                and _number(exchange.get("scale")) <= 0
+            ):
+                fail(
+                    "uncertainty_precision_unsupported",
+                    "Native quantity conversion cannot replace positive spread with zero.",
+                )
+            rounded = _write_uncertainty(element, exchange, dialect=dialect, uncertainty_relative_tolerance=tolerance)
+            if rounded is not None:
+                original_scale = _number(source_exchange["scale"])
+                exported_scale = rounded["native_exported_scale"]
+                if exchange["uncertainty type"] == 3 and factor != 1:
+                    exported_scale *= abs(1 / factor)
+                relative_error = abs(exported_scale - original_scale) / original_scale
+                if exported_scale <= 0 or relative_error > tolerance:
+                    fail(
+                        "uncertainty_precision_unsupported",
+                        "ILCD readback spread exceeds the canonical-unit tolerance.",
+                    )
+                row = {
+                    "code": "ilcd.uncertainty_rounded",
+                    "dataset_code": dataset["code"],
+                    "exchange_index": exchange_index,
+                    "original_uncertainty": {
+                        key: deepcopy(source_exchange[key])
+                        for key in ("uncertainty type", "loc", "scale", "shape", "minimum", "maximum", "negative")
+                        if key in source_exchange
+                    },
+                    "original_amount": source_exchange["amount"],
+                    "original_unit": source_exchange["unit"],
+                    "original_scale": original_scale,
+                    "exported_scale": exported_scale,
+                    **rounded,
+                    "native_amount": amount,
+                    "native_unit": flow_info["unit"],
+                    "relative_error": relative_error,
+                    "tolerance": tolerance,
+                    "dialect": dialect,
+                }
+                dataset_rounding.append(row)
+                rounding_warnings.append(row)
             if exchange.get("comment"):
-                _local(element, "p", "generalComment", exchange["comment"])
+                comment = str(exchange["comment"])
+                if len(comment) > 500:
+                    long_comments[str(number)] = comment
+                    comment = _comment_pointer(str(number), comment)
+                _local(element, "p", "generalComment", comment)
             if other is not None:
                 element.append(other)
             element.extend(opaque)
             if dialect == "openlca":
                 # A complete openLCA ExchangeExtension overrides the standard
-                # ILCD uncertainty conversion in openLCA 2.6. Emit only the
-                # provider; portable quantities, formulas and uncertainty stay
-                # in the standard ILCD elements.
+                # ILCD uncertainty conversion in openLCA 2.6. The partial amount
+                # written for an independent centre deliberately has no unitId
+                # or propertyId: the nominal amount and expression stay in core
+                # elements, and UncertaintyConverter reads the separate centre.
                 if provider:
                     element.set(q("olca", "defaultProvider"), uuid_text(provider))
             _set_payload(
@@ -1323,6 +1649,33 @@ def render_ilcd_package(
                     order.index(etree.QName(child).localname) if etree.QName(child).localname in order else len(order)
                 ),
             )
+        imported = dataset.get("ilcd", {})
+        retained_rounding = (
+            imported.get("uncertainty_rounding_warnings", [])
+            if record["same_context"] and imported.get("fingerprint") == _fingerprint(dataset)
+            else []
+        )
+        audit_rounding = [*retained_rounding, *dataset_rounding]
+        if long_comments or audit_rounding:
+            # The process-level FTMultiLang field is unlimited and becomes the
+            # native openLCA process description. Keep every qualification there,
+            # with authenticated exchange pointers, rather than truncate prose.
+            complete = dataset.get("comment", "")
+            if long_comments:
+                complete += (
+                    ("\n\n" if complete else "")
+                    + _COMMENT_BLOCK_START
+                    + json.dumps(long_comments, ensure_ascii=False, indent=2)
+                    + _COMMENT_BLOCK_END
+                )
+            if audit_rounding:
+                complete += (
+                    ("\n\n" if complete else "")
+                    + _ROUNDING_BLOCK_START
+                    + json.dumps(audit_rounding, ensure_ascii=False, indent=2, allow_nan=False)
+                    + _ROUNDING_BLOCK_END
+                )
+            _set_local(info.find("p:dataSetInformation", NS), "c", "generalComment", complete)
         root.set(q("bp", "dialect"), dialect)
         _set_payload(root, "dataset", {k: v for k, v in dataset.items() if k not in _MAPPED_DATASET})
         if relations is not None:
@@ -1393,10 +1746,48 @@ def render_ilcd_package(
     for (kind, _, _), (path, root) in package.entities.items():
         if kind == "Process":
             package.closure(path, root)
-    return {path: content.encode() for path, content in sorted(resources.items())}
+    rendered = {path: content.encode() for path, content in sorted(resources.items())}
+    if uncertainty_rounding_warnings is not None:
+        uncertainty_rounding_warnings.extend(deepcopy(rounding_warnings))
+    return rendered
 
 
-def _write_uncertainty(element, exchange: Mapping, *, dialect: str = "core") -> None:
+def _dispersion_field(scale: float, dispersion: float, *, logarithmic: bool, dialect: str, tolerance: float):
+    rounded = round(dispersion, 3)
+    divisor = 1 if dialect == "openlca" else 2
+    readback = (math.log(rounded) if logarithmic else rounded) / divisor
+    # Check this before isclose: exp(tiny positive sigma) can equal 1.0, and
+    # rounding a positive normal SD can produce zero. Neither is acceptable.
+    if scale > 0 and readback <= 0:
+        fail(
+            "uncertainty_precision_unsupported", "ILCD rounding cannot replace a positive uncertainty spread with zero."
+        )
+    exact = math.isclose(dispersion, rounded, rel_tol=1e-12, abs_tol=1e-12 if logarithmic else 0)
+    if exact:
+        return rounded, None
+    if tolerance <= 0:
+        fail(
+            "uncertainty_precision_unsupported",
+            (
+                "ILCD's three-decimal uncertainty field cannot represent this log-normal dispersion exactly."
+                if logarithmic
+                else "ILCD cannot represent this normal dispersion exactly."
+            ),
+        )
+    # The renderer checks the actual readback against the original canonical
+    # spread after undoing quantity conversion. Checking a second ratio here
+    # can incorrectly reject its exact boundary through floating-point drift.
+    return rounded, {
+        "native_original_scale": scale,
+        "native_exported_scale": readback,
+        "native_original_dispersion": dispersion,
+        "native_rounded_dispersion": rounded,
+    }
+
+
+def _write_uncertainty(
+    element, exchange: Mapping, *, dialect: str = "core", uncertainty_relative_tolerance: float = 0.0
+) -> dict | None:
     uncertainty = exchange.get("uncertainty type", 0)
     if uncertainty in {None, 0, 1}:
         return
@@ -1407,23 +1798,41 @@ def _write_uncertainty(element, exchange: Mapping, *, dialect: str = "core") -> 
         _add(element, "p", "minimumAmount", repr(lower))
         _add(element, "p", "maximumAmount", repr(upper))
         _add(element, "p", "uncertaintyDistributionType", "uniform")
+    elif uncertainty == 5 and dialect == "openlca":
+        minimum, mode, maximum = _triangular_parameters(exchange)
+        _add(element, "p", "minimumAmount", repr(minimum))
+        _add(element, "p", "maximumAmount", repr(maximum))
+        _add(element, "p", "uncertaintyDistributionType", "triangular")
+        # Native openLCA's uncertainty converter reads this independently of
+        # amount/unitId/propertyId. A full extension bypasses that converter.
+        element.set(q("olca", "mostLikelyValue"), repr(mode))
     elif uncertainty == 3:
         amount, scale = _number(exchange["amount"]), _number(exchange.get("scale"))
-        if scale < 0 or _number(exchange.get("loc", amount)) != amount:
+        centre = _number(exchange.get("loc", amount))
+        if scale < 0 or (dialect != "openlca" and centre != amount):
             fail("uncertainty_unsupported", "Normal uncertainty requires a nonnegative scale and a matching loc.")
+        if dialect == "openlca" and centre != amount:
+            element.set(q("olca", "amount"), repr(centre))
         _add(element, "p", "uncertaintyDistributionType", "normal")
         dispersion = scale if dialect == "openlca" else 2 * scale
-        rounded = round(dispersion, 3)
-        if not math.isclose(dispersion, rounded, rel_tol=1e-12, abs_tol=0):
-            fail("uncertainty_precision_unsupported", "ILCD cannot represent this normal dispersion exactly.")
+        rounded, warning = _dispersion_field(
+            scale, dispersion, logarithmic=False, dialect=dialect, tolerance=uncertainty_relative_tolerance
+        )
         _add(element, "p", "relativeStandardDeviation95In", str(rounded))
+        return warning
     elif uncertainty == 2:
         amount, scale = _number(exchange["amount"]), _number(exchange.get("scale"))
-        if (
-            amount <= 0
-            or scale < 0
-            or exchange.get("negative")
-            or not math.isclose(_number(exchange.get("loc")), math.log(amount), rel_tol=1e-9, abs_tol=1e-12)
+        loc = _number(exchange.get("loc"))
+        negative = bool(exchange.get("negative", amount < 0))
+        if dialect == "openlca":
+            if amount == 0 or scale < 0 or negative != (amount < 0):
+                fail(
+                    "uncertainty_unsupported",
+                    "Native log-normal uncertainty requires a nonzero nominal amount, a matching negative flag, "
+                    "and nonnegative scale.",
+                )
+        elif (
+            amount <= 0 or scale < 0 or negative or not math.isclose(loc, math.log(amount), rel_tol=1e-9, abs_tol=1e-12)
         ):
             fail(
                 "uncertainty_unsupported",
@@ -1432,26 +1841,51 @@ def _write_uncertainty(element, exchange: Mapping, *, dialect: str = "core") -> 
         _add(element, "p", "uncertaintyDistributionType", "log-normal")
         try:
             squared = math.exp(scale if dialect == "openlca" else 2 * scale)
-            rounded = round(squared, 3)
-            if not math.isclose(squared, rounded, rel_tol=1e-12, abs_tol=1e-12):
-                fail(
-                    "uncertainty_precision_unsupported",
-                    "ILCD's three-decimal uncertainty field cannot represent this log-normal dispersion exactly.",
-                )
+            rounded, warning = _dispersion_field(
+                scale, squared, logarithmic=True, dialect=dialect, tolerance=uncertainty_relative_tolerance
+            )
+            if dialect == "openlca":
+                # Match the installed native sampler, whose parameter1 is an
+                # arithmetic mean, using the ACTUAL exported sigma. Otherwise
+                # either its mean correction or permitted SD rounding changes
+                # canonical loc. This partial extension leaves nominal amount
+                # and its formula in core ILCD and keeps uncertainty conversion
+                # active; adding unitId/propertyId would bypass that converter.
+                exported_sigma = math.log(rounded)
+                centre = math.exp(loc + 0.5 * exported_sigma**2)
+                if not math.isfinite(centre) or centre <= 0:
+                    fail("uncertainty_invalid", "Log-normal centre must be finite and strictly positive.")
+                # Native sampling applies the sign after sampling log(abs(mean)).
+                element.set(q("olca", "amount"), repr(-centre if negative else centre))
             _add(element, "p", "relativeStandardDeviation95In", str(rounded))
+            return warning
         except OverflowError:
-            fail("uncertainty_invalid", "Log-normal dispersion is too large.")
+            fail("uncertainty_invalid", "Log-normal dispersion or native centre is too large.")
     else:
         fail("uncertainty_unsupported", f"Unsupported uncertainty type: {uncertainty}")
 
 
 def write_ilcd(
-    document: InventoryDocument, destination: str | Path, *, package_mode: str | None = None, **kwargs
+    document: InventoryDocument,
+    destination: str | Path,
+    *,
+    package_mode: str | None = None,
+    uncertainty_relative_tolerance: float = 0.0,
+    uncertainty_rounding_warnings: list | None = None,
+    **kwargs,
 ) -> Path:
     """Validate in memory, then atomically publish a ZIP or new package directory."""
     destination = Path(destination)
+    _rounding_options(uncertainty_relative_tolerance, uncertainty_rounding_warnings)
+    pending_warnings = []
     mode = package_mode or ("zip" if destination.suffix.lower() == ".zip" else "directory")
-    rendered = render_ilcd_package(document, package_mode=mode, **kwargs)
+    rendered = render_ilcd_package(
+        document,
+        package_mode=mode,
+        uncertainty_relative_tolerance=uncertainty_relative_tolerance,
+        uncertainty_rounding_warnings=pending_warnings,
+        **kwargs,
+    )
     if not destination.parent.is_dir():
         fail("destination_invalid", "The destination parent directory must exist.")
     with tempfile.TemporaryDirectory(prefix="brightpath-ilcd-", dir=destination.parent) as temporary:
@@ -1478,6 +1912,8 @@ def write_ilcd(
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_bytes(content)
             shutil.move(str(staged), str(destination))
+    if uncertainty_rounding_warnings is not None:
+        uncertainty_rounding_warnings.extend(deepcopy(pending_warnings))
     return destination
 
 

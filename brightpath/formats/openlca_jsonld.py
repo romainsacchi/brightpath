@@ -14,6 +14,7 @@ import math
 import tempfile
 import uuid
 import zipfile
+from collections import Counter
 from copy import deepcopy
 from dataclasses import dataclass
 from pathlib import Path
@@ -50,6 +51,7 @@ _BRIGHTPATH_OTHER_PROPERTIES_KEY = "brightpath"
 _GLOBAL_PARAMETER_TARGET_KEY = "brightpath parameter target"
 _BRIGHTPATH_FLOW_EXCHANGE_PROPERTIES_KEY = "brightpathExchangeProperties"
 _BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY = "brightpathExchangePropertiesByProcess"
+_BRIGHTPATH_EXTERNAL_EXCHANGE_PROPERTIES_KEY = "brightpathExternalExchangeProperties"
 
 _SUPPORTED_AUXILIARY_FOLDERS = frozenset(
     {
@@ -130,6 +132,7 @@ _DATASET_MAPPED_KEYS = frozenset(
 )
 _EXCHANGE_MAPPED_KEYS = frozenset(
     {
+        "_brightpath_native_quantity_factor",
         "name",
         "reference product",
         "product",
@@ -171,6 +174,9 @@ _PARAMETER_MAPPED_KEYS = frozenset(
     }
 )
 _BRIGHTWAY_TRIANGLE_UNCERTAINTY = 5
+_UNCERTAINTY_FIELDS = frozenset(
+    {"uncertainty type", "negative", "loc", "scale", "shape", "minimum", "maximum", "min", "max"}
+)
 _ALLOWED_BIOSPHERE_ROOTS = frozenset({"air", "water", "soil", "natural resource"})
 
 
@@ -228,6 +234,7 @@ def load_openlca_jsonld_package(
     *,
     database_name: str | None = None,
     context: InventoryContext | None = None,
+    decode_native_uncertainty: bool = True,
 ) -> OpenLCAJSONLDPackage:
     """Parse a zipped openLCA JSON-LD package into BrightPath dictionaries."""
 
@@ -268,6 +275,7 @@ def load_openlca_jsonld_package(
         flow_property_lookup,
         unit_group_lookup,
         location_lookup,
+        external_exchanges,
     )
 
     inventory_data: list[dict] = []
@@ -316,13 +324,16 @@ def load_openlca_jsonld_package(
             package_metadata[folder] = deepcopy(values)
 
     metadata = {_PACKAGE_METADATA_KEY: package_metadata}
-    return OpenLCAJSONLDPackage(
+    package = OpenLCAJSONLDPackage(
         data=inventory_data,
         database_name=database_name or source.stem,
         metadata=metadata,
         database_parameters=(database_parameters or None),
         project_parameters=(project_parameters or None),
     )
+    from .openlca_quantity_projection import restore_package_quantities
+
+    return restore_package_quantities(package, context, decode_native_uncertainty=decode_native_uncertainty)
 
 
 def load_openlca_jsonld(
@@ -332,6 +343,7 @@ def load_openlca_jsonld(
     biosphere_profile: BiosphereProfile | None = None,
     context: InventoryContext | None = None,
     database_name: str | None = None,
+    decode_native_uncertainty: bool = True,
 ) -> InventoryDocument:
     """Load a zipped openLCA JSON-LD package into an inventory document."""
 
@@ -359,8 +371,10 @@ def load_openlca_jsonld(
         if biosphere_profile is not None and biosphere_profile != context.background.biosphere:
             raise ValueError("biosphere_profile conflicts with context.biosphere.")
 
-    package = load_openlca_jsonld_package(path, database_name=database_name, context=context)
-    return InventoryDocument(
+    package = load_openlca_jsonld_package(
+        path, database_name=database_name, context=context, decode_native_uncertainty=decode_native_uncertainty
+    )
+    document = InventoryDocument(
         data=package.data,
         context=context,
         database_name=package.database_name,
@@ -368,6 +382,11 @@ def load_openlca_jsonld(
         database_parameters=package.database_parameters,
         project_parameters=package.project_parameters,
     )
+    if decode_native_uncertainty:
+        from brightpath.formats.openlca_native_uncertainty import decode
+
+        return decode(document)
+    return document
 
 
 def write_openlca_jsonld(
@@ -522,14 +541,21 @@ def _build_producer_indexes(
     flow_property_lookup: dict[str, Any],
     unit_group_lookup: dict[str, Any],
     location_lookup: dict[str, Any],
+    external_exchanges: dict | None = None,
 ) -> tuple[dict[str, _ProducerInfo], dict[str, list[_ProducerInfo]]]:
     by_process: dict[str, _ProducerInfo] = {}
     by_flow: dict[str, list[_ProducerInfo]] = {}
+    external_indices: dict[str, set[int]] = {}
+    for (process_id, index), identity in (external_exchanges or {}).items():
+        if identity.get("type") == "technosphere":
+            external_indices.setdefault(process_id, set()).add(index)
     for raw_process in raw_processes:
         process = _hydrate_entity(schema.Process, raw_process)
         if not process.id:
             raise ValueError("Process entities must define @id.")
-        production_exchange, production_flow = _select_quantitative_reference(process, flow_lookup)
+        production_exchange, production_flow = _select_quantitative_reference(
+            process, flow_lookup, external_indices.get(process.id, set())
+        )
         info = _ProducerInfo(
             process_id=process.id,
             process_name=str(process.name or ""),
@@ -544,16 +570,22 @@ def _build_producer_indexes(
     return by_process, by_flow
 
 
-def _select_quantitative_reference(process: Any, flow_lookup: dict[str, Any]) -> tuple[Any, Any]:
+def _select_quantitative_reference(
+    process: Any, flow_lookup: dict[str, Any], verified_external_indices=()
+) -> tuple[Any, Any]:
     process_label = str(process.name or process.id or "unnamed process")
     non_elementary_outputs: list[tuple[Any, Any]] = []
-    for exchange in process.exchanges or []:
+    for index, exchange in enumerate(process.exchanges or []):
         flow = _require_flow(exchange, flow_lookup, process_label)
         if exchange.is_avoided_product:
             raise ValueError(
                 f"Process {process_label!r} contains avoided-product exchanges, which BrightPath cannot map."
             )
         flow_type_name = str(getattr(getattr(flow, "flow_type", None), "name", "") or "")
+        if index in verified_external_indices:
+            # These links were checked for exact native IDs/type/direction above.
+            # A linked waste output consumes treatment; it is not a coproduct.
+            continue
         if not exchange.is_input and flow_type_name != "ELEMENTARY_FLOW":
             non_elementary_outputs.append((exchange, flow))
     if not non_elementary_outputs:
@@ -597,7 +629,10 @@ def _check_embedded_external(reference, identity, flow_type, entities):
             or not factors[0].get("isRefFlowProperty")
         ):
             raise ValueError("External openLCA flow definition has conflicting quantity factors.")
-        if flow_type == "ELEMENTARY_FLOW" and _decode_biosphere_categories(flow.get("category")) != identity[1]:
+        expected_categories = (
+            wire_categories(reference.native_categories) if getattr(reference, "native_categories", ()) else identity[1]
+        )
+        if flow_type == "ELEMENTARY_FLOW" and _decode_biosphere_categories(flow.get("category")) != expected_categories:
             raise ValueError("External openLCA flow definition has conflicting biosphere categories.")
     quantity = entities["flow_properties"].get(reference.flow_property_id)
     if quantity is not None:
@@ -618,6 +653,10 @@ def _check_embedded_external(reference, identity, flow_type, entities):
 
 def _resolve_external_references(schema, raw_entities, context, flow_lookup):
     catalog = load_openlca_reference_catalog(context) if context is not None else None
+    if catalog is None and context is not None:
+        from .openlca_ecospold2_references import references_for_package
+
+        catalog = references_for_package(raw_entities, context)
     if catalog is None:
         return {}
     entities = {}
@@ -663,6 +702,16 @@ def _resolve_external_references(schema, raw_entities, context, flow_lookup):
                 ):
                     continue
             candidates = technosphere.get((flow_id, provider_id), []) if provider_id else biosphere.get(flow_id, [])
+            if len(candidates) > 1:
+                # One native flow can have several supported physical units.
+                # Its exact unit and quantity UUIDs distinguish these references.
+                unit_id = (exchange.get("unit") or {}).get("@id")
+                property_id = (exchange.get("flowProperty") or {}).get("@id")
+                candidates = [
+                    (identity, reference)
+                    for identity, reference in candidates
+                    if reference.unit_id == unit_id and reference.flow_property_id == property_id
+                ]
             if len(candidates) != 1:
                 raise ValueError(
                     f"Unknown or ambiguous external openLCA flow/provider identifiers: {flow_id!r}, {provider_id!r}. "
@@ -670,7 +719,7 @@ def _resolve_external_references(schema, raw_entities, context, flow_lookup):
                 )
             identity, reference = candidates[0]
             is_technosphere = isinstance(reference, OpenLCATechnosphereReference)
-            flow_type = "PRODUCT_FLOW" if is_technosphere else "ELEMENTARY_FLOW"
+            flow_type = reference.native_flow_type if is_technosphere else "ELEMENTARY_FLOW"
             _check_external_ref(flow_ref, reference.flow_id, "flow", name=reference.flow_name, kind="Flow")
             if flow_ref.get("flowType", flow_type) != flow_type:
                 raise ValueError("External openLCA flow type conflicts with the exact reference catalog.")
@@ -686,7 +735,11 @@ def _resolve_external_references(schema, raw_entities, context, flow_lookup):
             _check_external_ref(
                 exchange.get("unit"), reference.unit_id, "unit", name=reference.unit_name, unit=True, kind="Unit"
             )
-            expected_input = is_technosphere or identity[1][:1] == ("natural resource",)
+            expected_input = (
+                not reference.native_reference_is_input
+                if is_technosphere
+                else wire_categories(identity[1])[:1] == ("natural resource",)
+            )
             if exchange.get("isInput", False) is not expected_input or exchange.get("isQuantitativeReference"):
                 raise ValueError("External openLCA exchange direction conflicts with its catalog identity.")
             if is_technosphere:
@@ -712,6 +765,10 @@ def _resolve_external_references(schema, raw_entities, context, flow_lookup):
                 if provider:
                     raise ValueError("External openLCA elementary flows cannot have a process provider.")
                 legacy = {"type": "biosphere", "name": identity[0], "categories": identity[1], "unit": identity[2]}
+                if reference.amount_factor != 1:
+                    from .openlca_quantity_projection import PENDING_FACTOR
+
+                    legacy[PENDING_FACTOR] = reference.amount_factor
             _check_embedded_external(reference, identity, flow_type, entities)
             if flow_id not in flow_lookup:
                 flow_lookup[flow_id] = schema.Flow(
@@ -763,10 +820,26 @@ def _process_to_legacy_dataset(
     if process.category:
         dataset["openlca category"] = str(process.category)
     dataset[_PROCESS_TEMPLATE_KEY] = deepcopy(raw_process)
+    # Rebuild this derived metadata from the current exchanges on re-export.
+    # Retaining an old map in the process template would revive deleted fields.
+    template_properties = dataset[_PROCESS_TEMPLATE_KEY].get("otherProperties")
+    if isinstance(template_properties, dict):
+        template_properties.pop(_BRIGHTPATH_EXTERNAL_EXCHANGE_PROPERTIES_KEY, None)
     if location_raw := _raw_ref_entity(process.location, raw_locations):
         dataset[_LOCATION_TEMPLATE_KEY] = location_raw
 
     raw_exchanges = raw_process.get("exchanges") or []
+    raw_properties = raw_process.get("otherProperties") or {}
+    if not isinstance(raw_properties, dict):
+        raise ValueError("Invalid openLCA process properties.")
+    external_properties = raw_properties.get(_BRIGHTPATH_EXTERNAL_EXCHANGE_PROPERTIES_KEY, {})
+    if not isinstance(external_properties, dict) or any(
+        not isinstance(value, dict) for value in external_properties.values()
+    ):
+        raise ValueError("Invalid external openLCA exchange metadata map.")
+    exchange_ids = Counter(str(row.get("internalId", "")) for row in raw_exchanges if isinstance(row, dict))
+    if any(exchange_ids[key] != 1 for key in external_properties):
+        raise ValueError("External openLCA exchange metadata references unknown or duplicate internal IDs.")
     for index, exchange in enumerate(process.exchanges or []):
         raw_exchange = (
             raw_exchanges[index] if index < len(raw_exchanges) and isinstance(raw_exchanges[index], dict) else {}
@@ -787,6 +860,13 @@ def _process_to_legacy_dataset(
             raw_locations=raw_locations,
             external_identity=external_exchanges.get((process.id, index)),
         )
+        extras = external_properties.get(str(raw_exchange.get("internalId", "")), {})
+        for key in extras:
+            allowed_classification = key == "categories" and legacy_exchange["type"] != "biosphere"
+            inactive_sign = key == "negative" and legacy_exchange.get("uncertainty type") != 2
+            if key in _EXCHANGE_MAPPED_KEYS | _EXCHANGE_TEMPLATE_KEYS and not (allowed_classification or inactive_sign):
+                raise ValueError("External openLCA exchange metadata cannot override identity or exchange values.")
+        legacy_exchange.update(deepcopy(extras))
         dataset["exchanges"].append(legacy_exchange)
 
     raw_parameters = raw_process.get("parameters") or []
@@ -1123,10 +1203,14 @@ def _dataset_extras(dataset: dict[str, Any]) -> dict[str, Any]:
 
 
 def _exchange_extras(exchange: dict[str, Any]) -> dict[str, Any]:
+    # Undefined/deterministic production has no openLCA distribution. Preserve
+    # its authored fields as metadata instead of inventing an active object.
+    inactive_production = exchange.get("type") == "production" and exchange.get("uncertainty type") in (None, "", 0, 1)
     return {
         key: deepcopy(value)
         for key, value in exchange.items()
         if key not in _EXCHANGE_MAPPED_KEYS | _EXCHANGE_TEMPLATE_KEYS
+        or (inactive_production and key in _UNCERTAINTY_FIELDS)
         or (key == "negative" and exchange.get("uncertainty type") != 2)
         # Only elementary-flow compartments are represented by the flow's
         # category. Product classifications remain per-exchange metadata.
@@ -1257,6 +1341,7 @@ class _OpenLCAPackageBuilder:
         self.processes: dict[str, Any] = {}
 
         self.local_processes: dict[tuple[str, str, str, str], tuple[Any, Any, Any, Any]] = {}
+        self.external_exchange_properties: dict[str, dict[str, dict]] = {}
 
     def build(self, document: InventoryDocument) -> _RenderedPackage:
         if not isinstance(document, InventoryDocument):
@@ -1424,6 +1509,12 @@ class _OpenLCAPackageBuilder:
             exchanges.append(entity)
         process.exchanges = exchanges
         process.last_internal_id = max((exchange.internal_id or 0 for exchange in exchanges), default=0)
+        extras = self.external_exchange_properties.get(str(process.id), {})
+        properties = dict(process.other_properties or {})
+        properties.pop(_BRIGHTPATH_EXTERNAL_EXCHANGE_PROPERTIES_KEY, None)
+        if extras:
+            properties[_BRIGHTPATH_EXTERNAL_EXCHANGE_PROPERTIES_KEY] = deepcopy(extras)
+        process.other_properties = properties or None
         return process
 
     def _build_exchange(
@@ -1456,6 +1547,7 @@ class _OpenLCAPackageBuilder:
             entity.is_quantitative_reference = True
             entity.is_avoided_product = False
         else:
+            background_reference = None
             local = self.local_processes.get(
                 (
                     str(exchange.get("name") or ""),
@@ -1477,6 +1569,10 @@ class _OpenLCAPackageBuilder:
             else:
                 background_reference = self._background_reference(exchange_type, exchange)
                 if background_reference is not None:
+                    if getattr(background_reference, "amount_factor", 1) != 1:
+                        from .openlca_quantity_projection import scale_detached
+
+                        exchange = scale_detached(exchange, background_reference.amount_factor)
                     flow_ref, flow_property_ref, unit_ref, location_ref, default_provider = (
                         self._linked_background_refs(background_reference)
                     )
@@ -1535,6 +1631,10 @@ class _OpenLCAPackageBuilder:
                 exchange_type == "biosphere"
                 and wire_categories(exchange.get("categories"))[:1] == ("natural resource",)
             )
+            if exchange_type == "technosphere" and background_reference is not None:
+                # The foreground exchange is opposite the native provider's
+                # reference direction. This changes no signed scalar coordinate.
+                entity.is_input = not background_reference.native_reference_is_input
             entity.is_quantitative_reference = False
             entity.is_avoided_product = False
 
@@ -1647,7 +1747,11 @@ class _OpenLCAPackageBuilder:
         flow_ref = self.schema.Ref(
             id=reference.flow_id,
             name=reference.flow_name,
-            flow_type=(self.schema.FlowType.PRODUCT_FLOW if is_technosphere else self.schema.FlowType.ELEMENTARY_FLOW),
+            flow_type=(
+                getattr(self.schema.FlowType, reference.native_flow_type)
+                if is_technosphere
+                else self.schema.FlowType.ELEMENTARY_FLOW
+            ),
             ref_unit=reference.unit_name,
             ref_type=self.schema.RefType.Flow,
         )
@@ -1680,20 +1784,44 @@ class _OpenLCAPackageBuilder:
 
     def _store_exchange_extras(self, entity: Any, exchange: dict[str, Any], process_id: str) -> None:
         extras = _exchange_extras(exchange)
-        if not extras:
+        is_production = exchange.get("type") == "production"
+        if not extras and not is_production:
             return
         flow_id = str(getattr(getattr(entity, "flow", None), "id", "") or "")
-        if not flow_id or flow_id not in self.flows:
+        if not flow_id:
+            return
+        if flow_id not in self.flows:
+            # External native flows must remain references to the installed
+            # background. Store authored extra fields on the foreground process
+            # instead of creating or modifying that background flow definition.
+            if extras:
+                scoped = self.external_exchange_properties.setdefault(str(process_id), {})
+                internal_id = str(entity.internal_id)
+                if internal_id in scoped and scoped[internal_id] != extras:
+                    raise SerializationError("Conflicting external exchange metadata for one internal ID.")
+                scoped[internal_id] = deepcopy(extras)
             return
         flow = self.flows[flow_id]
         # These schema entities belong to this builder, not to the caller.
         # Copy only the incoming metadata below: copying all previous consumers
         # here makes a widely used supplier take quadratic time to serialize.
         other_properties = flow.other_properties if isinstance(flow.other_properties, dict) else {}
+        internal_id = str(entity.internal_id or "")
+        if not extras:
+            existing = other_properties.get(_BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY, {})
+            if internal_id not in existing.get(str(process_id), {}):
+                return
         by_process = other_properties.setdefault(_BRIGHTPATH_FLOW_PROCESS_EXCHANGE_PROPERTIES_KEY, {})
         values = by_process.setdefault(str(process_id), {})
-        internal_id = str(entity.internal_id or "")
-        if internal_id in values and values[internal_id] != extras:
+        previous = values.get(internal_id)
+        if is_production and isinstance(previous, dict):
+            # Imported source parameters may have been edited or made active.
+            # Do not let stale inactive metadata override the standard object.
+            previous = {key: value for key, value in previous.items() if key not in _UNCERTAINTY_FIELDS}
+            comparable = {key: value for key, value in extras.items() if key not in _UNCERTAINTY_FIELDS}
+        else:
+            comparable = extras
+        if internal_id in values and previous != comparable:
             raise SerializationError(
                 f"Flow {flow_id!r} has conflicting exchange metadata for process {process_id!r}, "
                 f"exchange {internal_id!r}."

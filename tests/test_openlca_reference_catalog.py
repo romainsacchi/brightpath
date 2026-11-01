@@ -34,8 +34,8 @@ def test_packaged_openlca_reference_manifest_matches_resource_bytes_and_counts()
     assert resource["technosphere_references"] == len(payload["technosphere"]) == 11_747
     assert resource["process_category_references"] == payload["coverage"]["process_category_references"] == 11_747
     assert all(row["category"] for row in payload["technosphere"])
-    assert resource["biosphere_references"] == len(payload["biosphere"]) == 3_954
-    assert payload["coverage"]["missing_biosphere_references"] == 408
+    assert resource["biosphere_references"] == len(payload["biosphere"]) == 3_960
+    assert payload["coverage"]["missing_biosphere_references"] == 402
 
 
 def test_reference_generator_joins_brightway_identities_to_openlca_entity_refs(monkeypatch):

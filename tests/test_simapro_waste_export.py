@@ -1,13 +1,13 @@
-"""Check waste orientation with linked matrices and an independent CSV parser."""
+"""Check waste orientation with linked matrices and native CSV uncertainty fields."""
 
 import math
 from copy import deepcopy
 
 import numpy as np
 import pytest
-from bw2io.extractors.simapro_csv import SimaProCSVExtractor
 
 from brightpath import BackgroundProfile, SimaProInventory
+from brightpath.formats.simapro_csv import _ExpressionPreservingSimaProExtractor
 
 
 def process(name, category="material/Test", production=1):
@@ -88,8 +88,10 @@ def test_waste_signs_and_distributions_follow_category_not_name(tmp_path, model,
     original = deepcopy([consumer, waste])
     source, rows = render([consumer, waste], model)
     row = section_rows(rows, "Waste to treatment")[0]
-    parsed = SimaProCSVExtractor.create_distribution(*row[2:7])
+    parsed = _ExpressionPreservingSimaProExtractor.create_distribution(*row[2:7])
     assert parsed["amount"] == -amount
+    if kind == 3:
+        assert row[4] == "0.4"
     if kind in (2, 3):
         assert parsed["scale"] == pytest.approx(0.2)
     if kind == 2:
@@ -234,7 +236,7 @@ def test_waste_reference_is_positive_and_supplier_link_is_sign_flipped(profile, 
     assert not result.has_errors, result.issues
     assert float(section_rows(result.rows, "Waste treatment")[0][2]) == abs(amount)
     row = section_rows(result.rows, "Waste to treatment")[0]
-    parsed = SimaProCSVExtractor.create_distribution(*row[2:7])
+    parsed = _ExpressionPreservingSimaProExtractor.create_distribution(*row[2:7])
     assert parsed["amount"] == -amount
     assert parsed["minimum"] == -amount - 0.5
     assert parsed["maximum"] == -amount + 0.5

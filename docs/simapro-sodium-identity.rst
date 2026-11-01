@@ -1,5 +1,5 @@
 Aqueous sodium in SimaPro exports
-================================
+=================================
 
 Ecoinvent contains distinct aqueous elementary flows named ``Sodium``
 (UUID ``723f56f9-c68e-5692-a969-0fb2a70bce20``) and ``Sodium, ion``

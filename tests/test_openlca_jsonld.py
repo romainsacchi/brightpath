@@ -634,6 +634,115 @@ def test_lognormal_export_and_import_convert_geometric_parameters(tmp_path, amou
 
 
 @pytest.mark.parametrize(
+    "fields",
+    [
+        {"uncertainty type": 0, "loc": 1},
+        {"uncertainty type": 1, "loc": 1000},
+        {"loc": 7, "scale": 0, "shape": 2, "minimum": -1, "maximum": 9},
+    ],
+)
+def test_production_keeps_inactive_uncertainty_fields_without_creating_distribution(tmp_path, fields):
+    source = _document()
+    data = source.data
+    data[0]["exchanges"][0].update(fields)
+    document = InventoryDocument(data=data, context=source.context)
+    before = document.data
+
+    path = write_openlca_jsonld(document, tmp_path / "production.zip")
+    producer = next(p for p in _zip_entities(path, "processes").values() if p["name"] == "input process")
+    output = producer["exchanges"][0]
+    assert output["amount"] == 1
+    assert output["isQuantitativeReference"] is True
+    assert output.get("uncertainty") is None
+    flow = _zip_entities(path, "flows")[output["flow"]["@id"]]
+    metadata = flow["otherProperties"]["brightpathExchangePropertiesByProcess"][producer["@id"]][
+        str(output["internalId"])
+    ]
+    assert {key: metadata[key] for key in fields} == fields
+
+    loaded = load_openlca_jsonld(path, context=document.context)
+    row = next(p for p in loaded.data if p["name"] == "input process")
+    restored = row["exchanges"][0]
+    for key, value in fields.items():
+        assert restored[key] == value
+    assert ("uncertainty type" in restored) == ("uncertainty type" in fields)
+    assert restored["amount"] == 1
+    assert document.data == before
+
+    again = write_openlca_jsonld(loaded, tmp_path / "again.zip")
+    reread = load_openlca_jsonld(again, context=document.context)
+    output = next(p for p in reread.data if p["name"] == "input process")["exchanges"][0]
+    assert {key: output[key] for key in fields} == fields
+
+
+@pytest.mark.parametrize("activate", [False, True])
+def test_imported_production_uncertainty_metadata_does_not_override_edits(tmp_path, activate):
+    source = _document()
+    data = source.data
+    data[0]["exchanges"][0].update({"uncertainty type": 1, "loc": 1000})
+    document = InventoryDocument(data=data, context=source.context)
+    path = write_openlca_jsonld(document, tmp_path / "production.zip")
+    loaded = load_openlca_jsonld(path, context=document.context)
+    data = loaded.data
+    output = next(p for p in data if p["name"] == "input process")["exchanges"][0]
+    output["loc"] = 2
+    if activate:
+        output.update({"uncertainty type": 2, "scale": 0.2})
+    revised = InventoryDocument(data=data, context=loaded.context)
+
+    again = write_openlca_jsonld(revised, tmp_path / "again.zip")
+    reread = load_openlca_jsonld(again, context=document.context)
+    output = next(p for p in reread.data if p["name"] == "input process")["exchanges"][0]
+    assert output["loc"] == pytest.approx(2)
+    assert output["uncertainty type"] == (2 if activate else 1)
+    assert output["amount"] == 1
+    if activate:
+        assert output["scale"] == pytest.approx(0.2)
+
+
+@pytest.mark.parametrize(
+    "kind, fields, distribution",
+    [
+        (2, {"loc": 1, "scale": 0}, "LOG_NORMAL_DISTRIBUTION"),
+        (2, {"loc": 1, "scale": 0.2, "negative": True}, "LOG_NORMAL_DISTRIBUTION"),
+        (3, {"loc": 1000, "scale": 2, "minimum": 900, "maximum": 1100}, "NORMAL_DISTRIBUTION"),
+        (4, {"minimum": 900, "maximum": 1100}, "UNIFORM_DISTRIBUTION"),
+        (5, {"loc": 1000, "minimum": 900, "maximum": 1100}, "TRIANGLE_DISTRIBUTION"),
+    ],
+)
+def test_production_uncertainty_uses_standard_object_without_recentering(tmp_path, kind, fields, distribution):
+    source = _document()
+    data = source.data
+    data[0]["exchanges"][0].update({"uncertainty type": kind, **fields})
+    document = InventoryDocument(data=data, context=source.context)
+    before = document.data
+
+    path = write_openlca_jsonld(document, tmp_path / "production.zip")
+    producer = next(p for p in _zip_entities(path, "processes").values() if p["name"] == "input process")
+    output = producer["exchanges"][0]
+    assert output["uncertainty"]["distributionType"] == distribution
+    assert output["amount"] == 1
+    assert output["isQuantitativeReference"] is True
+    if kind == 2:
+        import math
+
+        assert output["uncertainty"]["geomMean"] == pytest.approx((-1 if fields.get("negative") else 1) * math.e)
+        assert output["uncertainty"]["geomSd"] == pytest.approx(math.exp(fields["scale"]))
+
+    loaded = load_openlca_jsonld(path, context=document.context)
+    restored = next(p for p in loaded.data if p["name"] == "input process")["exchanges"][0]
+    assert restored["amount"] == 1
+    assert restored["uncertainty type"] == kind
+    for key, value in fields.items():
+        assert restored[key] == pytest.approx(value)
+    assert document.data == before
+
+    again = write_openlca_jsonld(loaded, tmp_path / "again.zip")
+    repeated = next(p for p in _zip_entities(again, "processes").values() if p["name"] == "input process")
+    assert repeated["exchanges"][0]["uncertainty"] == output["uncertainty"]
+
+
+@pytest.mark.parametrize(
     "loc, scale",
     [(None, 0.2), (0, None), (float("nan"), 0.2), (0, float("inf")), (0, -0.1), (1000, 0.2), (-1000, 0.2), (0, 1000)],
 )

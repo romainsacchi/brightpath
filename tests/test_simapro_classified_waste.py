@@ -200,7 +200,7 @@ def test_qualified_markets_and_links_keep_distinct_labels(names):
     assert links == products
 
 
-def test_supplier_label_collision_blocks_export():
+def test_case_only_foreground_names_receive_distinct_export_labels():
     suppliers = [process("supplier"), process("Supplier")]
     for supplier in suppliers:
         supplier["reference product"] = "shared product"
@@ -208,9 +208,13 @@ def test_supplier_label_collision_blocks_export():
     inventory = SimaProInventory.from_data(
         suppliers, background_profile=BackgroundProfile("ecoinvent", "3.12", "cutoff")
     )
+    original = deepcopy(inventory.data)
     result = inventory.render()
-    assert result.has_errors and not result.rows
-    assert any("Ambiguous SimaPro supplier label" in i.message for i in result.issues)
+    assert not result.has_errors, result.issues
+    products = [row[0] for row in section_rows(result.rows, "Products")]
+    assert len(products) == 2 and len({name.casefold() for name in products}) == 2
+    assert all("[BrightPath fg " in name for name in products)
+    assert inventory.data == original
 
 
 @pytest.mark.parametrize("waste", [False, True])

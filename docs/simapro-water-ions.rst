@@ -1,5 +1,5 @@
 Reviewed aqueous-ion labels in SimaPro CSV
-----------------------------------------
+------------------------------------------
 
 The CSV codec retains exact publisher flow UUIDs, declared
 ecoinvent biosphere profiles, water contexts and kilograms. It uses charged stock names for Aluminium, Barium, Cadmium, Cobalt, Lead,
@@ -60,7 +60,7 @@ long-term is outside this verified naming scope. These naming rules preserve
 quantities and do not add formula or uncertainty serialization capabilities.
 
 Qualified modern Chromium display names
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Chromium III and Chromium VI use ``Chromium (III)`` and ``Chromium (VI)``
 for the exact selected water-context/kilogram UUIDs in biospheres3.9–3.12.

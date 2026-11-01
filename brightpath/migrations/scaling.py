@@ -17,7 +17,7 @@ def scale_exchange(exchange, factor):
     if factor == 1:
         return
     uncertainty = exchange.get("uncertainty type", 0)
-    if uncertainty not in (0, 1, 2, 3, 4):
+    if uncertainty not in (0, 1, 2, 3, 4, 5):
         raise ValueError(f"Cannot safely scale uncertainty type {uncertainty}.")
     amount = float(exchange["amount"])
     if not math.isfinite(amount):

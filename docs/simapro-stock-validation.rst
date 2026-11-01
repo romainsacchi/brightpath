@@ -1,5 +1,5 @@
 Validate a target SimaPro substance list
-======================================
+========================================
 
 SimaPro stock membership and background-database validity are separate checks.
 Substance-list validation is optional. To enable it, choose the exact target
@@ -51,7 +51,7 @@ subcompartments were not checked. It does not certify compatibility with SimaPro
 substance list; supply a separately verified external catalogue for that version.
 
 Select the receiving software version in the CLI
------------------------------------------------
+------------------------------------------------
 
 ``convert-format --target-format simapro_csv`` exports normally when
 ``--simapro-version`` is omitted. No substance-list check runs, and a supplied
@@ -87,7 +87,7 @@ migrated output before writing, including during a dry run. Other output formats
 do not accept these SimaPro-specific options.
 
 Check or guard an actual export
-------------------------------
+-------------------------------
 
 .. code-block:: python
 

@@ -60,7 +60,7 @@ Format boundaries
 * A process-only openLCA JSON-LD package can reference entities already present
   in a target database. For UVEK 2025 with the ecoinvent 3.10 biosphere,
   BrightPath packages exact references for all 11,747 UVEK technosphere
-  identities and 3,954 characterized elementary-flow identities found in the
+  identities and 3,959 elementary-flow identities found in the
   inspected UVEK openLCA database build. The remaining 408 packaged ecoinvent
   3.10 biosphere identities are not present under the same UUID in that build;
   exporting one of them fails instead of creating an uncharacterized duplicate.
@@ -188,6 +188,20 @@ does not compensate for that application-specific shift in the schema fields.
 Likewise, retained lognormal minimum/maximum metadata does not establish that
 openLCA applies Brightway's truncation semantics. Target-application stochastic
 parity requires separate validation.
+
+An explicit ``brightpath.formats.openlca_native_uncertainty`` helper supports
+unbounded exchange lognormals for the verified openLCA 2.6.2 runtime. It validates
+an independent Normal-parameter/exponential graph with a nominal gate, preserving
+separate deterministic amounts and sampled centres. Callers must validate their
+original document before using ``prepare(..., compatibility="openlca-2.6.2")``
+and apply its specifications after rendering. The generic writer does not enable
+this profile automatically. Bounds, active lognormal input parameters and
+unverified formula dependencies are refused.
+Power expressions are refused because native syntax and precedence differ.
+The document reader verifies and
+decodes recognized graphs; ``decode_native_uncertainty=False`` retains the raw
+graph for inspection. Native schema-version-5 re-export containers are not
+supported by this addition. No SimaPro sampling compatibility is implied.
 
 Migration boundaries
 --------------------

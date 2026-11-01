@@ -8,7 +8,14 @@ from pathlib import Path
 from lxml import etree
 
 from brightpath.core.reports import Issue, Severity, StageKind, StageReport
-from brightpath.formats.ilcd import _reference_exchange, _unsupported, load_ilcd, render_ilcd_package, write_ilcd
+from brightpath.formats.ilcd import (
+    _reference_exchange,
+    _rounding_options,
+    _unsupported,
+    load_ilcd,
+    render_ilcd_package,
+    write_ilcd,
+)
 from brightpath.formats.ilcd_package import NS, ILCDError, parse_xml, read_members, validate_xml
 
 from .base import AdapterCapabilities, ArtifactKind, DetectionCandidate, FormatDescriptor
@@ -93,7 +100,11 @@ class ILCDAdapter:
 
     def preflight_conversion(self, document, *, policy, **kwargs):
         try:
-            render_ilcd_package(document, **kwargs)
+            _rounding_options(
+                kwargs.get("uncertainty_relative_tolerance", 0.0), kwargs.get("uncertainty_rounding_warnings")
+            )
+            rounding = []
+            render_ilcd_package(document, **{**kwargs, "uncertainty_rounding_warnings": rounding})
             issues = tuple(
                 Issue(
                     Severity.WARNING,
@@ -105,6 +116,16 @@ class ILCDAdapter:
                 for index, dataset in enumerate(document.data)
                 for finding in dataset.get("ilcd", {}).get("issues", [])
                 if finding.get("severity") == "warning"
+            ) + tuple(
+                Issue(
+                    Severity.WARNING,
+                    "ilcd.uncertainty_rounded",
+                    "Export-only uncertainty rounding changes the native spread within the explicitly requested tolerance.",
+                    StageKind.CONVERSION_PREFLIGHT,
+                    path=f"{row['dataset_code']}.exchanges[{row['exchange_index']}]",
+                    details=row,
+                )
+                for row in rounding
             )
         except (ILCDError, ValueError, TypeError, etree.Error) as error:
             issues = (

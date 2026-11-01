@@ -172,13 +172,13 @@ def test_uvek_name_parser_uses_injected_catalog_and_does_not_guess_between_curre
     assert parse_simapro_technosphere_name(
         "Wire/GLO U", unit="kg", profile=profile, technosphere_identities=current
     ) == ("Wire", "Current product", "GLO")
-    with pytest.raises(ValueError, match="Ambiguous UVEK"):
-        parse_simapro_technosphere_name(
-            "Wire/GLO U",
-            unit="kg",
-            profile=profile,
-            technosphere_identities=current | {("Legacy name", "Legacy product", "GLO", "kilogram")},
-        )
+    # The legacy reverse alias is not a second forward-rendered native wire.
+    assert parse_simapro_technosphere_name(
+        "Wire/GLO U",
+        unit="kg",
+        profile=profile,
+        technosphere_identities=current | {("Legacy name", "Legacy product", "GLO", "kilogram")},
+    ) == ("Wire", "Current product", "GLO")
     # A known alias in another unit cannot override a current exact identity.
     assert parse_simapro_technosphere_name(
         "Wire/GLO U",

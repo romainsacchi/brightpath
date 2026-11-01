@@ -36,10 +36,36 @@ def _quantities() -> dict:
     return payload["units"]
 
 
-def quantity_definition(unit: str, reference=None) -> dict:
+@lru_cache(maxsize=1)
+def _sm3_metadata() -> dict:
+    """Load the separately verified native ecoSpold unit fallback, not a volume alias."""
+    directory = DATA_DIR / "export" / "ilcd_quantities"
+    manifest = json.loads((directory / "SM3_RESOURCE_MANIFEST.json").read_text())
+    raw = (directory / "ecospold_sm3_openlca_2_6_2.json").read_bytes()
+    if manifest.get("size") != len(raw) or manifest.get("sha256") != hashlib.sha256(raw).hexdigest():
+        fail("quantity_catalog_invalid", "Native Sm3 quantity metadata does not match its integrity manifest.")
+    payload = json.loads(raw)
+    if payload.get("schema_version") != 1 or payload.get("runtime") != "openLCA 2.6.2":
+        fail("quantity_catalog_invalid", "Unsupported native Sm3 quantity metadata schema or runtime.")
+    return payload
+
+
+def quantity_definition(unit: str, reference=None, *, profile=None) -> dict:
     """Resolve a supported unit and, when supplied, verify exact target UUIDs."""
     quantities = _quantities()
-    if reference is None:
+    if normalize_unit(unit) == "standard cubic meter":
+        metadata = _sm3_metadata()
+        target = tuple(getattr(profile, key, None) for key in ("family", "version", "system_model"))
+        verified = {tuple(row[key] for key in ("family", "version", "system_model")) for row in metadata["profiles"]}
+        result = metadata["quantity"] if target in verified else None
+        if (
+            result is not None
+            and reference is not None
+            and (reference.flow_property_id != result["property_id"] or reference.unit_id != result["unit_id"])
+        ):
+            # An explicit ordinary-volume reference cannot redefine Sm3.
+            result = None
+    elif reference is None:
         result = quantities.get(normalize_unit(unit))
     else:
         result = next(
@@ -104,7 +130,7 @@ def automatic_references(document, supplied: ILCDReferenceCatalog, *, dialect: s
             if target_row is not None:
                 flow_id = target_row.flow_id
                 process_id = target_row.process_id if kind == "technosphere" else ""
-                quantity = quantity_definition(exchange["unit"], target_row)
+                quantity = quantity_definition(exchange["unit"], target_row, profile=context.background.technosphere)
             else:
                 profile = getattr(context.background, kind)
                 if profile.family != "ecoinvent":
@@ -130,7 +156,7 @@ def automatic_references(document, supplied: ILCDReferenceCatalog, *, dialect: s
                     flow_id = product_id
                 else:
                     process_id, flow_id = "", pair
-                quantity = quantity_definition(exchange["unit"])
+                quantity = quantity_definition(exchange["unit"], profile=context.background.technosphere)
             row = {
                 "identity": {
                     k: deepcopy(exchange[k])
@@ -139,7 +165,7 @@ def automatic_references(document, supplied: ILCDReferenceCatalog, *, dialect: s
                 },
                 "flow_id": flow_id,
                 "flow_version": "01.00.000",
-                "amount_factor": quantity["factor"],
+                "amount_factor": quantity["factor"] * getattr(target_row, "amount_factor", 1.0),
                 "reference_unit": normalize_unit(quantity["reference_unit"]),
             }
             if process_id:
@@ -152,8 +178,17 @@ def automatic_references(document, supplied: ILCDReferenceCatalog, *, dialect: s
                     name,
                     row["reference_unit"],
                     row["flow_version"],
-                    categories=tuple(exchange.get("categories", ())) if kind == "biosphere" else (),
+                    categories=(
+                        tuple(getattr(target_row, "native_categories", ()) or exchange.get("categories", ()))
+                        if kind == "biosphere"
+                        else ()
+                    ),
                     quantity=quantity,
+                    flow_type=(
+                        "Waste flow"
+                        if kind == "technosphere" and getattr(target_row, "native_flow_type", None) == "WASTE_FLOW"
+                        else None
+                    ),
                 ),
             )
             rows[kind].append(row)

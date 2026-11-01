@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file.
 
+## 1.0.0a13 - 2026-11-01
+
+- Add optional validation of exported SimaPro substance names, compartments and
+  units against an explicitly supplied software-version catalogue. Omitting the
+  target SimaPro version skips this additional check. No substance list is bundled.
+- Preserve native SimaPro biosphere identities, foreground product references,
+  active zero exchanges, arithmetic expressions and supported uncertainty
+  distributions. Reject ambiguous sodium identities rather than substituting a
+  different species. Distinguish normal and standard cubic-metre units.
+- Preserve native openLCA provider and elementary-flow UUIDs, declared quantity
+  references, and product-versus-waste reference directions. Add UVEK 2026
+  reference metadata and resolve native unit choices without guessing.
+- Correct ILCD resource directions, signed lognormal handling, person-transport
+  units and uncertainty serialization. Report format limitations explicitly.
+- Preserve uncertainty and formula semantics through supplier disaggregation and
+  reverse biosphere migrations. Keep unsupported or ambiguous routes blocked.
+
 ## 1.0.0a12 - 2026-10-29
 
 - Replace openLCA ZIP exports atomically. Reusing an output path no longer

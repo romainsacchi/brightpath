@@ -4,12 +4,11 @@ from copy import deepcopy
 
 import bw2io
 import pytest
-from bw2io.extractors.simapro_csv import SimaProCSVExtractor
 from test_conversion_preflight import _document, _preflight
 from test_simapro_inventory import minimal_activity
 
 from brightpath import BackgroundProfile, SimaProInventory
-from brightpath.formats.simapro_csv import normalize_simapro_import_data
+from brightpath.formats.simapro_csv import _ExpressionPreservingSimaProExtractor, normalize_simapro_import_data
 
 FLOWS = [
     ("Oxygen", ("natural resource", "in air"), "kilogram", "kg"),
@@ -66,7 +65,8 @@ def test_reviewed_flows_survive_across_profiles(version, system_model, fixed_sim
         assert rows
         for row in rows:
             assert row[2] == target_unit
-            dist = SimaProCSVExtractor.create_distribution(*row[3:8])
+            assert row[4:6] == ["Normal", "0.02"]
+            dist = _ExpressionPreservingSimaProExtractor.create_distribution(*row[3:8])
             assert dist["amount"] == pytest.approx(-0.125)
             assert dist["scale"] == pytest.approx(0.01)
     assert data == source and inv.data == source
@@ -84,10 +84,15 @@ def test_final_waste_csv_round_trip(name, version, tmp_path):
     assert not result.has_errors, result.issues
     row = result.rows[result.rows.index(["Final waste flows"]) + 1]
     assert row[:4] == [name, "", "kg", "-0.125"]
+    assert row[4:6] == ["Normal", "0.02"]
     path = tmp_path / "final-waste.csv"
     # Test format representation independently of release-specific catalog membership.
     inv.write_csv(path, validate=False)
-    importer = bw2io.SimaProCSVImporter(path)
+    # This direct importer test must also work alone in an empty test project,
+    # rather than depending on an earlier facade test to install migrations.
+    if "default-units" not in bw2io.migrations:
+        bw2io.create_core_migrations()
+    importer = bw2io.SimaProCSVImporter(path, extractor=_ExpressionPreservingSimaProExtractor)
     importer.apply_strategies()
     raw = importer.data
     normalized = normalize_simapro_import_data(

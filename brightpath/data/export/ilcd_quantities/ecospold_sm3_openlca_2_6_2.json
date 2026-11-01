@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "source": "ecoinvent Units.xml metadata; openLCA 2.6.2 native ecoSpold2 RefDataImport.syncUnit fallback",
+  "runtime": "openLCA 2.6.2",
+  "quantity": {
+    "factor": 1.0,
+    "group_id": "c2dba802-b9a4-345b-b4b3-847754301054",
+    "group_name": "Unit group for Sm3",
+    "property_id": "c57e6ed2-5c28-3348-aaee-75d637b80c77",
+    "property_name": "Flow property for Sm3",
+    "reference_unit": "Sm3",
+    "reference_unit_id": "225da0bd-ba54-48bc-9a0e-5fa27d722185",
+    "unit_id": "225da0bd-ba54-48bc-9a0e-5fa27d722185",
+    "units": [
+      {
+        "id": "225da0bd-ba54-48bc-9a0e-5fa27d722185",
+        "name": "Sm3",
+        "factor": 1.0
+      }
+    ],
+    "comment": "Standard cubic metre of gas at 15 degrees C and 101.325 kPa (ISO 13443); distinct from ordinary m3 and Nm3. Source: ecoinvent Units.xml; identifiers follow openLCA 2.6.2 ecoSpold2 native unit fallback."
+  },
+  "profiles": [
+    {
+      "family": "ecoinvent",
+      "version": "3.9.1",
+      "system_model": "cutoff",
+      "unit_master_sha256": "03abe5fa2ad232653d598dd78c06baa866c77a3b5918c71b8180742871886a76"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.10.1",
+      "system_model": "cutoff",
+      "unit_master_sha256": "358ebb5e70de5e74a62a1eaf4d044e25418bece748ae1ee4a5e04834a67c02ab"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.10.1",
+      "system_model": "consequential",
+      "unit_master_sha256": "358ebb5e70de5e74a62a1eaf4d044e25418bece748ae1ee4a5e04834a67c02ab"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.11",
+      "system_model": "cutoff",
+      "unit_master_sha256": "e5a424fc15ad1f509743f166f9b4cb156f2d759896d11b9e4342e96189d4dc9b"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.12",
+      "system_model": "cutoff",
+      "unit_master_sha256": "d702ded521ef34f2717ff8b21fbc94fb350779e47ba1326464cfdd3f6f2519c1"
+    }
+  ],
+  "provenance": {
+    "unit_source_member": "MasterData/Units.xml",
+    "unit_source_attribution": "ecoinvent Association; unit identifier/definition metadata only, no process inventories or exchange vectors included. Underlying databases remain subject to their original ecoinvent licence.",
+    "native_code": "https://github.com/GreenDelta/olca-modules/blob/v2.6.2/olca-io/src/main/java/org/openlca/io/ecospold2/input/RefDataImport.java",
+    "native_code_licence": "MPL-2.0; no native source code copied",
+    "native_derivation": {
+      "group": "KeyGen.get(ModelType.UNIT_GROUP.name(), sourceUnitUUID)",
+      "property": "KeyGen.get(ModelType.FLOW_PROPERTY.name(), sourceUnitUUID)",
+      "unit": "exact source Units.xml UUID"
+    },
+    "verification": "Installed olca-io-2.6.2 / olca-core-2.6.2, fresh in-memory Derby, native syncUnit creates a separate factor-1 Sm3 group/property even with ordinary m3 seeded; repeat lookup reuses IDs.",
+    "ecoinvent_3_11_unit_witness": {
+      "archive_filename": "ecoinvent 3.11_cutoff_ecoSpold02.7z",
+      "member": "MasterData/Units.xml",
+      "units_xml_sha256": "e5a424fc15ad1f509743f166f9b4cb156f2d759896d11b9e4342e96189d4dc9b",
+      "units_xml_bytes": 22080,
+      "units_xml_crc32": "fe521d92",
+      "unit_uuid": "225da0bd-ba54-48bc-9a0e-5fa27d722185",
+      "unit_name": "Sm3",
+      "unit_comment": "standard cubic metre = cubic metre of gas at 15\u00b0C; 101.325 kPa (ISO 13443)",
+      "verification": "Exact ecoinvent 3.11 cutoff archive directory and Units.xml member CRC verified. Only unit-definition metadata retained; no process inventory vectors included. Existing openLCA 2.6.2 native identifier derivation and factor 1 are unchanged."
+    }
+  }
+}

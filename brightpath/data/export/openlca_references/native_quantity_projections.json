@@ -1,0 +1,60 @@
+{
+  "schema_version": 1,
+  "profile": {
+    "technosphere": {
+      "family": "uvek",
+      "version": "2025",
+      "system_model": "cutoff"
+    },
+    "biosphere": {
+      "family": "ecoinvent",
+      "version": "3.10"
+    }
+  },
+  "native_source": {
+    "database_build": "UVEK 2025 Version 2 openLCA, 2026-03-09",
+    "archive_sha256": "28294c2201a4ac9a336ca52a31cbd02fa028c49d04ecb8455a87965d3d7aa89d"
+  },
+  "mappings": [
+    {
+      "id": "uvek2025-fossilwater-volume-to-native-mass-v1",
+      "source": {
+        "flow_id": "2256a142-8242-4b4f-b9aa-a167803989ca",
+        "name": "Water",
+        "categories": [
+          "water",
+          "fossil well"
+        ],
+        "unit": "cubic meter"
+      },
+      "native": {
+        "flow_ref_id": "7c98e916-5edf-3cc3-984d-3278fa1015cf",
+        "flow_name": "Water",
+        "category_path": [
+          "emissions to water",
+          "fossilwater"
+        ],
+        "flow_type": "ELEMENTARY_FLOW",
+        "flow_property_ref_id": "93a60a56-a3c8-11da-a746-0800200b9a66",
+        "flow_property_name": "Mass",
+        "unit_ref_id": "20aadc24-a391-41cf-b340-3e4529f44bde",
+        "unit": "kg",
+        "unit_group_ref_id": "93a60a57-a4c8-11da-a746-0800200c9a66",
+        "reference_unit_factor": 1.0
+      },
+      "amount_factor": 1000.0,
+      "basis": {
+        "classification": "reviewed explicit format quantity projection",
+        "primary_exact_mapping": "https://raw.githubusercontent.com/brightway-lca/simapro_ecoinvent_elementary_flows/f81c05f0aa6724dd3db07a59cad155b8d2d0f7c1/Mapping/Output/Mapped_files/SimaProv94-ecoinventEFv3.7.csv",
+        "source_platform_uuid": "E0F21491-61BA-44CF-B0A1-0A3670B63F8D",
+        "source_context": "Emissions to water/fossilwater",
+        "kg_to_m3_factor": 0.001,
+        "match_condition": "=",
+        "native_secondary_volume_property": false,
+        "publisher_certified_native_uuid_crosswalk_claimed": false,
+        "native_metadata_query": "Only Mass factor1 and25 mass units for exact7c98 in the pinned primary archive; no Volume factor fabricated.",
+        "primary_mapping_csv_sha256": "0d2d8de540abbff640665e0952b492aaddbeca4a8b06e517231ef1be36b791bd"
+      }
+    }
+  ]
+}

@@ -151,3 +151,20 @@ BrightPath writes their full names for ``natural resource/land`` exchanges in
 square metres. Both return to their original identities through the supported
 SimaPro reader, without changing quantities. This check covers BrightPath
 export/reimport; native SimaPro import of these labels remains unverified.
+
+Further inspection of that same licensed reference on 2026-10-31 confirmed
+distinct, nonzero ``Resources / land`` rows for these five native labels:
+
+* ``Occupation, mineral extraction site`` in m2a;
+* ``Transformation, to mineral extraction site`` in m2;
+* ``Transformation, from annual crop`` in m2;
+* ``Occupation, annual crop, irrigated, intensive`` in m2a;
+* ``Occupation, annual crop, non-irrigated, intensive`` in m2a.
+
+The exporter retains these observed labels with their corresponding land units.
+The old aliases changed mining land into industrial land and collapsed annual
+and permanent crop classes. Exact catalog readback at ecoinvent 3.9.1 and 3.12
+preserves the original five UUIDs, quantities, signs, formulas and normal spreads.
+The native reference establishes format spelling; target-native SimaPro 3.12
+LCIA equivalence remains a separate check. This evidence supplies no new native
+spelling for ``Transformation, from unknown`` or water emitted to a fossil well.

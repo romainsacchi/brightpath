@@ -11,6 +11,7 @@ from brightpath.units import normalize_unit
 
 from .models import MigrationReport, MigrationStepReport
 from .resources import load_biosphere_resources, load_technosphere_resources
+from .scaling import scale_exchange
 
 _IGNORED_TARGET_FIELDS = {"allocation", "comment", "unit"}
 _TECHNOSPHERE_TYPES = {"production", "technosphere", "substitution"}
@@ -224,7 +225,7 @@ def _apply_disaggregation(
 
             try:
                 allocations = [float(target.get("allocation", 1.0)) for target in rule["targets"]]
-                original_amount = float(exchange["amount"])
+                float(exchange["amount"])
             except (KeyError, TypeError, ValueError) as exc:
                 report.issues.append(
                     Issue(
@@ -250,12 +251,26 @@ def _apply_disaggregation(
                     )
                 )
 
-            for target, allocation in zip(rule["targets"], allocations, strict=True):
-                new_exchange = deepcopy(exchange)
-                _record_unit_change(rule["source"], target, report, path=path)
-                _apply_technosphere_target(new_exchange, target)
-                new_exchange["amount"] = original_amount * allocation
-                converted.append(new_exchange)
+            children = []
+            try:
+                for target, allocation in zip(rule["targets"], allocations, strict=True):
+                    new_exchange = deepcopy(exchange)
+                    scale_exchange(new_exchange, allocation)
+                    _record_unit_change(rule["source"], target, report, path=path)
+                    _apply_technosphere_target(new_exchange, target)
+                    children.append(new_exchange)
+            except (TypeError, ValueError, OverflowError) as exc:
+                report.issues.append(
+                    Issue(
+                        severity="error",
+                        code="migration_disaggregation_scaling_invalid",
+                        message=f"Could not scale disaggregation uncertainty/formula at {path}: {exc}.",
+                        path=path,
+                    )
+                )
+                converted.append(exchange)
+                continue
+            converted.extend(children)
             report.technosphere_disaggregations += 1
         activity["exchanges"] = converted
 
@@ -351,6 +366,8 @@ def _apply_biosphere_rules(
     report: MigrationStepReport,
     *,
     target_biosphere_identities=frozenset(),
+    source_biosphere_references=None,
+    target_biosphere_references=None,
 ) -> None:
     if direction == "forward":
         _delete_biosphere_exchanges(data, resource.get("delete", []), report)
@@ -398,6 +415,29 @@ def _apply_biosphere_rules(
             ]
             if not matches:
                 continue
+            if direction == "backward" and len(matches) == 1:
+                preserved = _same_uuid_reverse_biosphere_target(
+                    exchange,
+                    matches[0],
+                    source_biosphere_references,
+                    target_biosphere_references,
+                )
+                if preserved is not None:
+                    _apply_biosphere_target(exchange, preserved)
+                    report.biosphere_replacements += 1
+                    report.issues.append(
+                        Issue(
+                            severity="info",
+                            code="migration_biosphere_source_uuid_preserved",
+                            message=(
+                                f"Preserved exact source biosphere UUID {preserved['uuid']} "
+                                f"using target catalog name {preserved['name']!r} instead of "
+                                "reversing a different flow identity."
+                            ),
+                            path=path,
+                        )
+                    )
+                    continue
             if len(matches) > 1:
                 # CLIC-style inventories identify elementary flows by name,
                 # emission category, and unit. When that exact identity is
@@ -436,6 +476,48 @@ def _apply_biosphere_rules(
             )
             _apply_biosphere_target(exchange, rule[replacement_side])
             report.biosphere_replacements += 1
+
+
+def _same_uuid_reverse_biosphere_target(exchange, rule, source_references, target_references):
+    """Prefer one exact same-UUID target of a pure identity rename, without rescaling."""
+    if not source_references or not target_references:
+        return None
+    factor_keys = {"conversion_factor", "conversion factor", "amount_factor", "amount factor"}
+    identity_fields = {"name", "categories", "unit", "uuid", "formula", "comment"}
+    if any(set(rule[side]) - identity_fields - factor_keys for side in ("source", "target")):
+        return None
+    if "allocation" in rule or "targets" in rule:
+        return None
+    for container in (rule, rule["source"], rule["target"]):
+        for field in factor_keys:
+            if field in container:
+                value = container[field]
+                if isinstance(value, bool) or not isinstance(value, (int, float)) or value != 1:
+                    return None
+    first, second = (_biosphere_match_specification(rule, side) for side in ("source", "target"))
+    if tuple(first.get("categories", ())) != tuple(second.get("categories", ())):
+        return None
+    if _canonical_unit(first.get("unit")) != _canonical_unit(second.get("unit")):
+        return None
+    identity = _biosphere_catalog_identity(exchange)
+    source_uuid = source_references.get(identity)
+    if not source_uuid or (_exchange_uuid(exchange) and _exchange_uuid(exchange) != source_uuid):
+        return None
+    previous = deepcopy(exchange)
+    _apply_biosphere_target(previous, rule["source"])
+    if target_references.get(_biosphere_catalog_identity(previous)) == source_uuid and (
+        not _exchange_uuid(previous) or _exchange_uuid(previous) == source_uuid
+    ):
+        return None  # Existing same-UUID rename is already correct.
+    candidates = [
+        target
+        for target, reference in target_references.items()
+        if reference == source_uuid and target[1:] == identity[1:]
+    ]
+    if len(candidates) != 1:
+        return None
+    target = candidates[0]
+    return {"name": target[0], "categories": list(target[1]), "unit": target[2], "uuid": source_uuid}
 
 
 def _biosphere_catalog_identity(exchange: dict) -> tuple[str, tuple[str, ...], str]:

@@ -1,6 +1,13 @@
 API reference
 =============
 
+File-system paths
+-----------------
+
+The facade signatures use the standard-library path type:
+
+.. autoclass:: pathlib.Path
+
 Migration resource schema
 -------------------------
 
@@ -21,6 +28,15 @@ Facade API
    :members:
 
 .. autoclass:: brightpath.SimaProInventory
+   :members:
+
+SimaPro substance-stock validation
+----------------------------------
+
+.. autoclass:: brightpath.formats.simapro_stock.SimaProStockCatalog
+   :members:
+
+.. autoclass:: brightpath.formats.simapro_stock.SimaProStockSubstance
    :members:
 
 SimaPro category inference

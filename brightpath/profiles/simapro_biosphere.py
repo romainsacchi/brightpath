@@ -14,6 +14,17 @@ SALT_WATER = "Water, salt, ocean"
 _ARABLE_TRANSFORMATIONS = frozenset(
     {"Transformation, to annual crop", "Transformation, to arable land, unspecified use"}
 )
+# Observed as distinct native Resources/land rows in the licensed SimaPro 9.5
+# reference; see docs/simapro-reference-evidence.rst. Legacy aliases collapse
+# mining into industrial land and annual into permanent crops.
+_NATIVE_LAND_FLOW_UNITS = {
+    "Occupation, mineral extraction site": "square meter-year",
+    "Transformation, to mineral extraction site": "square meter",
+    "Transformation, from annual crop": "square meter",
+    "Occupation, annual crop, irrigated, intensive": "square meter-year",
+    "Occupation, annual crop, non-irrigated, intensive": "square meter-year",
+    **{name: "square meter" for name in _ARABLE_TRANSFORMATIONS},
+}
 # Native SimaPro stores these radionuclides in kBq, not kg or Bq.
 _RADIONUCLIDES = frozenset(
     {
@@ -27,7 +38,7 @@ _RADIONUCLIDES = frozenset(
     }
 )
 REVIEWED_ECOINVENT_FLOW_UNITS = {
-    **{name: "square meter" for name in _ARABLE_TRANSFORMATIONS},
+    **_NATIVE_LAND_FLOW_UNITS,
     "Oxygen": "kilogram",
     "Occupation, traffic area, road network": "square meter-year",
     TURBINE_WATER: "cubic meter",
@@ -41,12 +52,13 @@ REVIEWED_ECOINVENT_FLOW_UNITS = {
 def resolve_ecoinvent_flow_name(exchange: Mapping, mapped_name: str) -> str:
     """Retain distinct water and land identities when legacy labels collapse them."""
     if (
-        exchange.get("name") in _ARABLE_TRANSFORMATIONS
+        exchange.get("name") in _NATIVE_LAND_FLOW_UNITS
         and tuple(exchange.get("categories") or ()) == ("natural resource", "land")
-        and normalize_unit(exchange.get("unit", "")) == "square meter"
+        and normalize_unit(exchange.get("unit", "")) == _NATIVE_LAND_FLOW_UNITS[exchange["name"]]
     ):
-        # The legacy label "Transformation, to arable" collapses two current
-        # catalog identities with different UUIDs. Full labels retain the class.
+        # Full native labels retain the land class where a legacy alias would
+        # collapse distinct catalog identities. This is a format rule, not an
+        # assumption that different land classes have equal impacts.
         return exchange["name"]
     if (
         exchange.get("name") == SALT_WATER
