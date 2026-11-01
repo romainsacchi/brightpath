@@ -66,7 +66,7 @@ BrightPath requires Python 3.12.
 Pin the alpha version for reproducible workflows:
 
 ```bash
-python -m pip install "brightpath==1.0.0a13"
+python -m pip install "brightpath==1.0.0a14"
 ```
 
 Installation includes mandatory `olca-schema` and `pyecospold` dependencies for

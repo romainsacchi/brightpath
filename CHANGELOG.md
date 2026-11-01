@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## 1.0.0a13 - 2026-11-01
+## 1.0.0a14 - 2026-11-01
 
 - Add optional validation of exported SimaPro substance names, compartments and
   units against an explicitly supplied software-version catalogue. Omitting the
@@ -18,6 +18,10 @@ All notable changes to this project will be documented in this file.
   units and uncertainty serialization. Report format limitations explicitly.
 - Preserve uncertainty and formula semantics through supplier disaggregation and
   reverse biosphere migrations. Keep unsupported or ambiguous routes blocked.
+- Preserve exact biosphere UUIDs instead of legacy reverse aliases. Older targets
+  now refuse 2,4-D dimethylamine-salt flows and soil Quizalofop-ethyl when the
+  preserved identities are unavailable. Quantities and uncertainty stay unchanged;
+  the reviewed scope and target versions are recorded in the migration-audit review.
 
 ## 1.0.0a12 - 2026-10-29
 

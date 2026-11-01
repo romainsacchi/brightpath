@@ -1,6 +1,42 @@
 # BrightPath release readiness
 
-## 1.0.0a13 preparation (2026-11-01)
+## 1.0.0a14 preparation (2026-11-01)
+
+Alpha14 succeeds the unpublished alpha13 candidate. Its migration and export
+runtime is unchanged apart from the public version string. Alpha13 passed all
+4,272 tests (one skipped) on Linux, macOS and Windows, plus all quality checks,
+but its installed-wheel migration gate correctly rejected stale regression
+baselines. No alpha13 package was uploaded to PyPI or Anaconda; its original tag
+is preserved and its GitHub release is retained as a draft.
+
+The historical migration baseline has been reviewed against the previous
+successful release and exact native catalogs. All 237 changed cases reproduce
+both release artifacts: 226 successful cases differ only in names and UUIDs;
+11 older-target cases now refuse unavailable source UUIDs. Of the successes,
+223 preserve the original final UUID and three retain an existing documented
+Naphthalene compartment fallback. Amounts, uncertainties, units, compartments
+and other dataset fields are unchanged. The public review is
+`docs/migration-audit-alpha14-review.md`.
+
+The separate native UVEK 2026 report is complete: 892,550 probes across
+90 routes. Coverage, refusal, warning and loss counts are unchanged. All 223
+changed case records have exact old/new artifact reconstruction: 48 are the
+three reviewed commodity-target corrections across 16 incoming profiles; 173
+successful biosphere cases differ only in name and UUID; two retain the same
+refusal with updated identity diagnostics. Amounts, uncertainty, units,
+compartments, formulas, production and unrelated batch companions are unchanged.
+No disaggregation rule matched these changed native probes. The public review
+is `docs/uvek-2026-alpha14-review.md`.
+
+These complete reports were produced with alpha13's installed wheel; alpha14
+changes only the runtime version string and the reviewed baseline/documentation
+files. Its version checks and all five release quality gates pass locally. The
+final wheel must match all 173 unchanged runtime files and the single reviewed
+version-line change. The release workflow reruns all cross-platform tests and
+both installed-wheel audits under alpha14 before publication. No audit policy
+or minimum coverage threshold is weakened.
+
+## 1.0.0a13 candidate validation (2026-11-01; not published)
 
 This alpha collects the export corrections validated with the CLIC local
 rehearsal, including native reference identities, quantity and waste directions,
