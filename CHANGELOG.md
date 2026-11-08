@@ -7,6 +7,11 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Distinguish the validated canonical ecoinvent 3.10 biosphere bridge from
+  heuristic supplier mappings during planning. Preserve exact source-release,
+  publisher-identity, unit and receiving-context checks and refusal of unresolved
+  physical flows; technosphere heuristic consent remains independent.
+
 - Correct the Premise electricity pilot's inspected quicklime, nylon 66,
   metallurgical-silicon and water-based alkyd-paint supplier identities.
   Preserve signed kg coordinates for the first three; convert dry paint to the

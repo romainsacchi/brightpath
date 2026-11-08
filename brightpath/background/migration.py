@@ -20,6 +20,11 @@ from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.core.reports import Issue, Loss, Severity, StageKind, StageReport
 from brightpath.exceptions import MigrationUnavailableError
 from brightpath.migrations.engine import resolve_migration_route
+from brightpath.migrations.canonical_biosphere import (
+    MARKER as CANONICAL_BIOSPHERE_MARKER,
+    select_canonical_biosphere_rules,
+    validate_canonical_biosphere_resource,
+)
 from brightpath.migrations.resources import (
     load_biosphere_resources,
     load_technosphere_resources,
@@ -644,7 +649,30 @@ def _plan_uvek_biosphere(
     resource = load_uvek_biosphere_resource()
     if source_resolution.migration_series not in {profile["version"] for profile in resource["source_profiles"]}:
         return None
-    _heuristic_mapping_finding(MigrationAxis.BIOSPHERE, resource, policy, issues, losses)
+    if CANONICAL_BIOSPHERE_MARKER in resource:
+        # The packaged bridge now proves exact publisher identity per source
+        # release, unit and receiving context. Its historical quality label
+        # must not turn these verified correspondences into heuristic consent.
+        # Unresolved physical flows remain explicit runtime errors.
+        validate_canonical_biosphere_resource(resource)
+        scoped = select_canonical_biosphere_rules(resource, source_resolution.migration_series)
+        issues.append(
+            Issue(
+                severity=Severity.INFO,
+                code="migration.canonical_biosphere_identity",
+                message="Use independently verified publisher biosphere identities; unresolved source flows remain errors.",
+                stage=StageKind.MIGRATION_PLANNING,
+                path="background.biosphere",
+                details={
+                    "resource": _resource_name(resource),
+                    "source_version": source_resolution.migration_series,
+                    "target_version": target_resolution.migration_series,
+                    "coverage": scoped["coverage"],
+                },
+            )
+        )
+    else:
+        _heuristic_mapping_finding(MigrationAxis.BIOSPHERE, resource, policy, issues, losses)
     return _materialize_steps(
         MigrationAxis.BIOSPHERE,
         ((source_resolution.migration_series, target_resolution.migration_series, "forward"),),

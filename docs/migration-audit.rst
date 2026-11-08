@@ -9,6 +9,14 @@ particular, reversing a many-to-one mapping may require a scientific decision
 that the original mapping does not contain. The audit detects coverage changes
 without adding proxies, weakening policies, or rewriting source inventories.
 
+The canonical ecoinvent 3.10 biosphere bridge is validated independently of
+heuristic supplier consent. Its publisher UUID or reviewed chemical-synonym
+evidence must preserve the source release, unit and receiving compartment.
+Planning records ``migration.canonical_biosphere_identity`` with the scoped
+coverage, including unresolved flows. Such unresolved physical exchanges still
+cause execution to fail; the informational finding does not authorize a
+technosphere correspondence or an inverse biosphere mapping.
+
 The Premise electricity pilot has a separate, exact-profile material review in
 ``brightpath/data/export/uvek_pilot_material_review.json``. It corrects quicklime,
 nylon 66, metallurgical silicon and water-based alkyd paint rather than using

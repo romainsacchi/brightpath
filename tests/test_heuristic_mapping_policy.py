@@ -126,6 +126,9 @@ def test_cli_requires_explicit_heuristic_acceptance_and_preserves_strict_other_c
     destination = tmp_path / "dry-run.xlsx"
     BrightwayInventory.from_data(original.data, context=original.context).write_excel(source)
     saved = source.read_bytes()
+    # Optional importer warnings emitted while creating the fixture are not
+    # part of the CLI's machine-readable response.
+    capsys.readouterr()
     source_context = original.context.background
     arguments = [
         "migrate-background",

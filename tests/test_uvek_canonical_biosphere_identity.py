@@ -9,6 +9,8 @@ import pytest
 from brightpath import DATA_DIR
 from brightpath.background import PackageCatalogProvider
 from brightpath.background.execution import execute_background_migration
+from brightpath.background import plan_background_migration
+from brightpath.background import migration as planning
 from brightpath.core import (
     BackgroundContext,
     BiosphereProfile,
@@ -19,6 +21,7 @@ from brightpath.core import (
 )
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.canonical_biosphere import (
+    MARKER,
     REVIEW,
     select_canonical_biosphere_rules,
     validate_canonical_biosphere_resource,
@@ -30,6 +33,42 @@ from brightpath.models import InventoryDocument
 from brightpath.units import normalize_unit
 
 VERSIONS = ("3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12")
+
+
+@pytest.mark.parametrize("version", ["3.6", "3.7", "3.8", "3.9", "3.11", "3.12"])
+def test_verified_biosphere_plan_is_distinct_from_heuristic_supplier_consent(version):
+    source = BackgroundContext(
+        TechnosphereProfile("ecoinvent", version, "cutoff"), BiosphereProfile("ecoinvent", version)
+    )
+    target = BackgroundContext(TechnosphereProfile("uvek", "2025", "cutoff"), BiosphereProfile("ecoinvent", "3.10"))
+    plan = plan_background_migration(source, target)
+    identities = [i for i in plan.report.issues if i.code == "migration.canonical_biosphere_identity"]
+    assert len(identities) == 1
+    assert identities[0].details["source_version"] == version
+    assert identities[0].details["coverage"]["unresolved_identities"] > 0
+    assert not any(
+        i.code == "migration.heuristic_mapping" and i.path == "background.biosphere" for i in plan.report.issues
+    )
+    assert any(
+        i.code == "migration.heuristic_mapping" and i.path == "background.technosphere" for i in plan.report.issues
+    )
+    assert not plan.executable  # Native supplier mappings still require independent consent.
+
+
+def test_unreviewed_biosphere_resource_still_requires_heuristic_consent(monkeypatch):
+    resource = {k: v for k, v in load_uvek_biosphere_resource().items() if k != MARKER}
+    monkeypatch.setattr(planning, "load_uvek_biosphere_resource", lambda: resource)
+    issues, losses = [], []
+    planning._plan_uvek_biosphere(
+        BiosphereProfile("ecoinvent", "3.6").resolve_migration_series(),
+        BiosphereProfile("ecoinvent", "3.10").resolve_migration_series(),
+        MigrationPolicy.strict(),
+        issues,
+        losses,
+    )
+    assert [i.code for i in issues] == ["migration.heuristic_mapping"]
+    assert issues[0].severity.value == "error"
+    assert [loss.code for loss in losses] == ["migration.heuristic_mapping"]
 
 
 @lru_cache
