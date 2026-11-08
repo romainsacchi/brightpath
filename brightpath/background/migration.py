@@ -691,6 +691,21 @@ def _heuristic_mapping_finding(
     losses: list[Loss],
 ) -> None:
     path = f"background.{axis.value}"
+    if axis is MigrationAxis.TECHNOSPHERE and policy.approved_compatibility_rules:
+        issues.append(
+            Issue(
+                severity="info",
+                code="migration.scoped_compatibility_review",
+                message="Compatibility execution requires exact approvals for every matching external rule; planning alone does not establish input-specific approval.",
+                stage=StageKind.MIGRATION_PLANNING,
+                path=path,
+                details={
+                    "resource": _resource_name(resource),
+                    "approved_rule_scopes": len(policy.approved_compatibility_rules),
+                },
+            )
+        )
+        return
     message = (
         f"{axis.value.capitalize()} migration uses heuristic compatibility resource "
         f"{_resource_name(resource)!r}; mapped targets are not scientific equivalence claims."

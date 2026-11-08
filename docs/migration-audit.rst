@@ -37,6 +37,30 @@ Uninspected versions and patches have no implicit approval. These decisions do
 not change the overall heuristic policy gate or independently authored reverse
 routes; their collector/replay tests do not certify a prospective scenario.
 
+Exact rule approvals
+--------------------
+
+``MigrationPolicy.approved_compatibility_rules`` optionally carries SHA256
+fingerprints for independently reviewed operations. Default strict behavior is
+unchanged. With a nonempty set, the planner defers the technosphere resource
+decision to execution, which checks every matching external replacement,
+deletion and disaggregation before materializing helpers or changing exchanges.
+An unapproved match rejects the complete migration transactionally, including
+when other matches are approved. Overlapping candidates each require approval.
+Owned foreground links are excluded from this background-rule check.
+
+``brightpath.background.rule_approvals.compatibility_rule_fingerprint`` binds
+an approval to the exact source and target technosphere profiles, resource,
+operation, complete rule, shared review and referenced helper-recipe closure.
+Changing a supplier, factor, review, helper inventory or dependency,
+or profile invalidates the fingerprint. Computing a fingerprint is not evidence
+of scientific approval. Native UVEK 2026 forward conversion uses the UVEK 2025
+compatibility edge followed by its release bridge; approval scopes refer to
+the actual edge. Successful matches retain their fingerprints in reports.
+Biosphere, reference-sign, ambiguity, information-loss, unit, system-model and
+source/target-link checks remain independent. Broad heuristic warning consent
+continues to be a separate policy; it cannot bypass a supplied approval set.
+
 ``scripts/audit_migration_coverage.py`` executes synthetic inventories against
 the installed package's exact catalogs and migration engine. It covers:
 

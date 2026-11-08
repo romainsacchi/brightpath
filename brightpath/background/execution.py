@@ -23,6 +23,7 @@ from brightpath.background.migration import (
 from brightpath.background.omissions import _apply_technosphere_deletions
 from brightpath.background.patches import compatibility_resource, patch_pair, patch_resource
 from brightpath.background.reference_signs import select_profile_sign_rules
+from brightpath.background.rule_approvals import compatibility_rule_fingerprint
 from brightpath.background.uvek_export import apply_uvek_export
 from brightpath.background.uvek_import import apply_reviewed_recipe_biosphere_bindings, apply_uvek_import_recipes
 from brightpath.background.validation import validate_background_links
@@ -176,6 +177,22 @@ def execute_background_migration(
             committed=not second.report.has_errors,
         )
 
+    if (
+        policy.approved_compatibility_rules
+        and source.technosphere.family == "ecoinvent"
+        and target.technosphere.family == "uvek"
+    ):
+        scoped = _audit_compatibility_rule_scope(
+            document.data,
+            load_uvek_technosphere_resource(),
+            source.technosphere,
+            target.technosphere,
+            foreground_targets,
+            policy,
+        )
+        stages.append(scoped)
+        if scoped.has_errors:
+            return _result(document, source, target, policy, stages, committed=False)
     working_data = document.data
     helpers = []
     helper_biosphere = BiosphereProfile("ecoinvent", "3.12")
@@ -315,6 +332,69 @@ def _helper_stage(stage, helpers):
             "scope": "generated_helpers",
             "helper_codes": [helper.get("code", "") for helper in helpers],
         },
+    )
+
+
+def _audit_compatibility_rule_scope(data, resource, source, target, foreground_targets, policy):
+    """Check all matching external candidates before helpers or migration mutate data.
+
+    Overlapping candidates each require approval; a broad or factored rule cannot
+    borrow consent from a reviewed exact match. Ordinary ambiguity, sign, unit,
+    deletion, information-loss and link-validation gates still apply afterwards.
+    """
+    fields = ("name", "reference product", "location", "unit")
+    foreground = set(foreground_targets) | {tuple(d.get(f, "") for f in fields) for d in data}
+    projected = [
+        {
+            "exchanges": [
+                (
+                    {**e, "type": "foreground-preserved"}
+                    if e.get("type") == "production" or tuple(e.get(f, "") for f in fields) in foreground
+                    else e
+                )
+                for e in d.get("exchanges", ())
+            ]
+        }
+        for d in data
+    ]
+    index = _technosphere_entity_index(projected)
+    approved = set(policy.approved_compatibility_rules)
+    issues = []
+    for operation in ("delete", "replace", "disaggregate"):
+        for rule in resource.get(operation, ()):
+            matches = (
+                _matching_disaggregation_entities(projected, rule, "forward")
+                if operation == "disaggregate"
+                else _matching_technosphere_entities(index, rule["source"])
+            )
+            if not matches:
+                continue
+            fingerprint = compatibility_rule_fingerprint(resource, operation, rule, source, target)
+            accepted = fingerprint in approved
+            issues.append(
+                Issue(
+                    severity="info" if accepted else "error",
+                    code="migration.approved_correspondence" if accepted else "migration.unapproved_correspondence",
+                    message=f"Compatibility rule {rule['id']} {'has an exact approval' if accepted else 'requires independent review'} for {source.label()} -> {target.label()}.",
+                    path=matches[0],
+                    stage=StageKind.BACKGROUND_MIGRATION,
+                    details={
+                        "resource": resource["name"],
+                        "operation": operation,
+                        "rule_id": rule["id"],
+                        "fingerprint": fingerprint,
+                        "source": rule["source"],
+                        "target": rule.get("target", rule.get("targets")),
+                        "matching_paths": matches,
+                        "mapping_method": rule.get("mapping_method", "authored_correspondence"),
+                    },
+                )
+            )
+    return StageReport(
+        stage=StageKind.BACKGROUND_MIGRATION,
+        label="scoped compatibility approval",
+        issues=tuple(issues),
+        metrics={"matched_rules": len(issues), "approved_rules": sum(i.severity is Severity.INFO for i in issues)},
     )
 
 

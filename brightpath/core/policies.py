@@ -28,7 +28,11 @@ class _SerializablePolicy:
         snapshot = {}
         for item in fields(self):
             value = getattr(self, item.name)
-            snapshot[item.name] = value.value if isinstance(value, Enum) else value
+            if isinstance(value, Enum):
+                value = value.value
+            elif isinstance(value, tuple):
+                value = list(value)
+            snapshot[item.name] = value
         return snapshot
 
     def to_json(self) -> str:
@@ -126,10 +130,18 @@ class MigrationPolicy(_SerializablePolicy):
     validate_target: bool = True
     minimum_coverage: float = 1.0
     on_heuristic_mapping: PolicyAction = PolicyAction.ERROR
+    approved_compatibility_rules: tuple[str, ...] = ()
 
     def __post_init__(self) -> None:
         _coerce_actions(self)
         _validate_flags(self)
+        approvals = self.approved_compatibility_rules
+        if not isinstance(approvals, (tuple, list)) or any(
+            not isinstance(value, str) or len(value) != 64 or any(c not in "0123456789abcdef" for c in value)
+            for value in approvals
+        ):
+            raise ValueError("approved_compatibility_rules must contain SHA256 rule-scope fingerprints.")
+        object.__setattr__(self, "approved_compatibility_rules", tuple(sorted(set(approvals))))
         if isinstance(self.minimum_coverage, bool) or not isinstance(self.minimum_coverage, (int, float)):
             raise TypeError("minimum_coverage must be a number between 0 and 1.")
         if not 0 <= self.minimum_coverage <= 1:
