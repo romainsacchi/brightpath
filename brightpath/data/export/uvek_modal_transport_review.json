@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "approval": "Standing matching-function/quantity and geographic service-proxy approvals, after independent inventory inspection: replace three incorrect lorry targets for barge and rail services with the matching whole-life RER barge/rail services. Same positive tkm references preserve quantities and incoming credits; regional fleets, infrastructure, fuels and supply mixes remain warned approximations.",
+  "source_count": 3,
+  "source_profile_count": 12,
+  "rules": [
+    {
+      "source": {
+        "location": "GLO",
+        "name": "market group for transport, freight, inland waterways, barge, diesel",
+        "reference product": "transport, freight, inland waterways, barge, diesel",
+        "unit": "ton kilometer"
+      },
+      "previous_target": {
+        "location": "CH",
+        "name": "Transport, freight, lorry, diesel, 18t gross weight, fleet average, long haul",
+        "reference product": "Transport, freight, lorry, diesel, 18t gross weight, fleet average, long haul",
+        "unit": "ton kilometer"
+      },
+      "target": {
+        "name": "Transport, barge",
+        "reference product": "Transport, barge",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "mode": "barge",
+      "profiles": [
+        {
+          "label": "ecoinvent-3.11-consequential",
+          "inventory_sha256": "453888d1740d1762dcb0474391e042dc13ebdb51083c4e07fd4419d0d827d79b"
+        },
+        {
+          "label": "ecoinvent-3.11-cutoff",
+          "inventory_sha256": "935d028489e212825c129dda255a87b21ca6cd6c97bbafb8db2c2506d2777d83"
+        },
+        {
+          "label": "ecoinvent-3.12-consequential",
+          "inventory_sha256": "b693d136652c903d7e7dc682fe3d73b07c5f12e42f999644f0cf3d3a809b061a"
+        },
+        {
+          "label": "ecoinvent-3.12-cutoff",
+          "inventory_sha256": "1a161de47d99704d300369a6396aee81361aaa159e3188ed5ab1e9bacda545db"
+        }
+      ]
+    },
+    {
+      "source": {
+        "location": "GLO",
+        "name": "market group for transport, freight, train, fleet average",
+        "reference product": "transport, freight, train, fleet average",
+        "unit": "ton kilometer"
+      },
+      "previous_target": {
+        "location": "CH",
+        "name": "Transport, freight, lorry, fleet average",
+        "reference product": "Transport, freight, lorry, fleet average",
+        "unit": "ton kilometer"
+      },
+      "target": {
+        "name": "Transport, freight, rail",
+        "reference product": "Transport, freight, rail",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "mode": "rail",
+      "profiles": [
+        {
+          "label": "ecoinvent-3.11-consequential",
+          "inventory_sha256": "dcd63d620bd61593af5dd829a03f2c843e82cee59504a4f8d9bef639c03199f5"
+        },
+        {
+          "label": "ecoinvent-3.11-cutoff",
+          "inventory_sha256": "aeb7ce933acf7ddc799a38eff46c7b7596d3314b76d2111f12fc4c65c8ad5624"
+        },
+        {
+          "label": "ecoinvent-3.12-consequential",
+          "inventory_sha256": "a562190f4d085dc2fc39678ebc468fde608e1590cb557567058bd40febc27d1f"
+        },
+        {
+          "label": "ecoinvent-3.12-cutoff",
+          "inventory_sha256": "d94b72a3792f4dc2298b93a17c64ee55c3e0269f9fd7a77fcbdfce04d9686bbb"
+        }
+      ]
+    },
+    {
+      "source": {
+        "location": "RER",
+        "name": "market group for transport, freight, train, fleet average",
+        "reference product": "transport, freight, train, fleet average",
+        "unit": "ton kilometer"
+      },
+      "previous_target": {
+        "location": "RER",
+        "name": "Transport, freight, lorry, fleet average",
+        "reference product": "Transport, freight, lorry, fleet average",
+        "unit": "ton kilometer"
+      },
+      "target": {
+        "name": "Transport, freight, rail",
+        "reference product": "Transport, freight, rail",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "mode": "rail",
+      "profiles": [
+        {
+          "label": "ecoinvent-3.11-consequential",
+          "inventory_sha256": "5d01261fd842c61329848b67f62a6987b6cce8e889117efa3147acc3d365b049"
+        },
+        {
+          "label": "ecoinvent-3.11-cutoff",
+          "inventory_sha256": "330c6d50a78f2bbeeebd74a4cc53d1c36f2c949867cc367136311d210add190a"
+        },
+        {
+          "label": "ecoinvent-3.12-consequential",
+          "inventory_sha256": "9088240be3b98eaecad0020e66d5f21e3e3ecfae0a6eccd1ee335d7c99ea6bc6"
+        },
+        {
+          "label": "ecoinvent-3.12-cutoff",
+          "inventory_sha256": "952b481ce6997d15ad12197f47d58ca3f54eff6fb07012e957af0b16a4af2004"
+        }
+      ]
+    }
+  ],
+  "targets": [
+    {
+      "target": {
+        "name": "Transport, barge",
+        "reference product": "Transport, barge",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "inventory_sha256": "8496871de053ce8a70b39531f4eda4f8532a235e4881aaf8a6f393b149c6efb0",
+      "native_flow_type": "PRODUCT_FLOW",
+      "native_reference_is_input": false
+    },
+    {
+      "target": {
+        "name": "Transport, freight, rail",
+        "reference product": "Transport, freight, rail",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "inventory_sha256": "4af095b1c680e50755cc7969de9c7b096ce871af491062204697dd4d3c617400",
+      "native_flow_type": "PRODUCT_FLOW",
+      "native_reference_is_input": false
+    }
+  ]
+}

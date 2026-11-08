@@ -310,7 +310,8 @@ def test_full_audit_discovers_all_targets_and_does_not_sample_suppliers_or_flows
         for profile in provider.technosphere_profiles()
         if profile.family == "ecoinvent" and profile.system_model == "cutoff"
     ]
-    rules = load_uvek_export_resource()["replace"]
+    resource = load_uvek_export_resource()
+    rules = [rule for operation in ("replace", "delete") for rule in resource[operation]]
     assert len(observed) == len(profiles) * 2 == len(report["routes"])
     for cases, source, target in observed:
         if target.technosphere.family == "ecoinvent":

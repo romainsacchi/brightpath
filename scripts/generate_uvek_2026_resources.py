@@ -27,6 +27,16 @@ DEFAULT_BIOSPHERE_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026
 DEFAULT_BIOSPHERE_FOLLOWUP = Path(__file__).resolve().parents[1] / "docs/uvek_2026_biosphere_followup.json"
 DEFAULT_RADIOACTIVITY_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_radioactivity_review.json"
 DEFAULT_LAND_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_land_review.json"
+DEFAULT_WATER_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_water_review.json"
+DEFAULT_ASH_WATER_REVIEW = (
+    Path(__file__).resolve().parents[1] / "brightpath/data/export/uvek_2026_ash_water_review.json"
+)
+DEFAULT_PARTICULATE_REVIEW = (
+    Path(__file__).resolve().parents[1] / "brightpath/data/export/uvek_2026_particulate_review.json"
+)
+DEFAULT_CHEMICAL_ALIAS_REVIEW = (
+    Path(__file__).resolve().parents[1] / "brightpath/data/export/uvek_2026_chemical_alias_review.json"
+)
 DEFAULT_PROCESS_REVIEW = Path(__file__).resolve().parents[1] / "docs/uvek_2026_process_review.json"
 UNIT_REVIEW_CHECKS = {
     "same_source_filename",
@@ -393,6 +403,10 @@ def build_resources(
     radioactivity_review: Path | None = DEFAULT_RADIOACTIVITY_REVIEW,
     land_review: Path | None = DEFAULT_LAND_REVIEW,
     process_review: Path | None = DEFAULT_PROCESS_REVIEW,
+    water_review: Path | None = DEFAULT_WATER_REVIEW,
+    ash_water_review: Path | None = DEFAULT_ASH_WATER_REVIEW,
+    particulate_review: Path | None = DEFAULT_PARTICULATE_REVIEW,
+    chemical_alias_review: Path | None = DEFAULT_CHEMICAL_ALIAS_REVIEW,
 ) -> tuple[dict, list[dict]]:
     """Generate a catalog and both explicit directions for each independent axis."""
     catalog = read_archive(archive)
@@ -449,6 +463,24 @@ def build_resources(
                 from scripts.review_uvek_2026_land import apply_land_review
 
                 resources = apply_land_review(resources, land_review, catalog_directory)
+                if water_review is not None:
+                    from scripts.review_uvek_2026_water import apply_water_review
+
+                    resources = apply_water_review(resources, water_review, catalog_directory)
+                    if ash_water_review is not None:
+                        from scripts.review_uvek_2026_ash_water import apply_ash_water_review
+
+                        resources = apply_ash_water_review(resources, ash_water_review, catalog_directory)
+                        if particulate_review is not None:
+                            from scripts.review_uvek_2026_particulates import apply_particulate_review
+
+                            resources = apply_particulate_review(resources, particulate_review, catalog_directory)
+                            if chemical_alias_review is not None:
+                                from scripts.review_uvek_2026_chemical_aliases import apply_chemical_alias_review
+
+                                resources = apply_chemical_alias_review(
+                                    resources, chemical_alias_review, catalog_directory
+                                )
     return catalog, resources
 
 
@@ -463,6 +495,10 @@ def main():
     parser.add_argument("--biosphere-followup", type=Path, default=DEFAULT_BIOSPHERE_FOLLOWUP)
     parser.add_argument("--radioactivity-review", type=Path, default=DEFAULT_RADIOACTIVITY_REVIEW)
     parser.add_argument("--land-review", type=Path, default=DEFAULT_LAND_REVIEW)
+    parser.add_argument("--water-review", type=Path, default=DEFAULT_WATER_REVIEW)
+    parser.add_argument("--ash-water-review", type=Path, default=DEFAULT_ASH_WATER_REVIEW)
+    parser.add_argument("--particulate-review", type=Path, default=DEFAULT_PARTICULATE_REVIEW)
+    parser.add_argument("--chemical-alias-review", type=Path, default=DEFAULT_CHEMICAL_ALIAS_REVIEW)
     parser.add_argument("--process-review", type=Path, default=DEFAULT_PROCESS_REVIEW)
     review_options.add_argument(
         "--unreviewed",
@@ -479,6 +515,10 @@ def main():
         radioactivity_review=None if args.unreviewed else args.radioactivity_review,
         land_review=None if args.unreviewed else args.land_review,
         process_review=None if args.unreviewed else args.process_review,
+        water_review=None if args.unreviewed else args.water_review,
+        ash_water_review=None if args.unreviewed else args.ash_water_review,
+        particulate_review=None if args.unreviewed else args.particulate_review,
+        chemical_alias_review=None if args.unreviewed else args.chemical_alias_review,
     )
     (args.catalog_directory / "uvek__2026__cutoff.json").write_text(
         json.dumps(catalog, indent=2, sort_keys=True, ensure_ascii=False) + "\n", encoding="utf-8"

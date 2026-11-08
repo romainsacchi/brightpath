@@ -4,9 +4,9 @@ from pathlib import Path
 
 import openpyxl
 import pytest
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import DATA_DIR
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.generate_uvek_migration_resources import apply_reviewed_overrides
 from scripts.review_uvek_followup import (
     CURATION_FILES,
@@ -215,19 +215,37 @@ def test_report_writes_literal_excel_strings_and_filters(tmp_path):
     workbook.close()
 
 
-def test_packaged_followup_ledger_and_resource_agree():
+def test_historical_packaged_followup_ledger_and_resource_agree():
     root = Path(__file__).resolve().parents[1]
     ledger = json.loads((root / "docs/uvek_followup_decisions.json").read_text())
     overrides = json.loads((DATA_DIR / "export/uvek_reviewed_overrides.json").read_text())
-    resource = load_uvek_technosphere_resource()
+    resource = historical_forward_resource()
     selected = [decision for decision in overrides["decisions"] if decision["mapping_method"] == "clic_followup_review"]
     expected = sum(group["entries"] for group in ledger["groups"] if group["outcome"].startswith("accept_"))
     assert len(selected) == expected == 164
-    assert len(resource["replace"]) == 31488
-    indexed = {identity(row["source"]): row for row in resource["replace"]}
+    assert len(resource["replace"]) + len(resource["delete"]) == 31488
+    indexed = {identity(row["source"]): row for row in [*resource["replace"], *resource["delete"]]}
+    sign_ledger = json.loads((DATA_DIR / "export/uvek_reference_flow_sign_review.json").read_text())
     for decision in selected:
-        assert indexed[identity(decision["source"])]["target"] == decision["target"]
-        assert indexed[identity(decision["source"])]["confidence"] == decision["confidence"]
+        current = indexed[identity(decision["source"])]
+        later = sign_ledger["resources"][resource["name"]].get(current["id"], {})
+        if later.get("operation") == "recipe":
+            # A later inspected composition supersedes one historical selection;
+            # preserve and check that exact earlier decision in its audit record.
+            assert current["target"] == later["target"]
+            current = later["original_rule"]
+        elif later.get("operation") == "delete":
+            assert current["approved_omission"] is True
+            current = later["original_rule"]
+        elif "original_target" in later:
+            # Retain the exact historical selection while binding its later reviewed supplier correction.
+            from scripts.review_uvek_reference_signs import rule_binding
+
+            assert rule_binding(current) == later["binding"]
+            assert later["review"]["evidence"]
+            current = {**current, "target": later["original_target"]}
+        assert current["target"] == decision["target"]
+        assert current["confidence"] == decision["confidence"]
     outcomes = {group["id"]: group["outcome"] for group in ledger["groups"]}
     assert outcomes["d0c5a104ee3c"] == "needs_quantity_basis"
     assert outcomes["077d136cfc22"] == "retain_explicit_specification"

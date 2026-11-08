@@ -3,6 +3,7 @@ from copy import deepcopy
 from pathlib import Path
 
 import pytest
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import DATA_DIR
 from brightpath.migrations.resources import load_uvek_technosphere_resource
@@ -13,7 +14,14 @@ from brightpath.migrations.schema import (
     rule_review,
     validate_migration_resource,
 )
+from scripts.generate_uvek_export import legacy_export_projection as legacy_projection
 from scripts.generate_uvek_migration_resources import _write_resource
+from scripts.review_uvek_dedicated_disposals import DISPOSALS
+from scripts.review_uvek_eaf_landfills import LANDFILLS
+from scripts.review_uvek_lcd_treatments import LCD_TREATMENTS
+from scripts.review_uvek_modal_transport import TRANSPORTS
+from scripts.review_uvek_natural_gas_flares import FLARES as NATURAL_GAS_FLARES
+from scripts.review_uvek_refinery_flare import FLARES
 
 
 def test_shared_reviews_and_inline_identities_round_trip_without_mutation(migration_resource):
@@ -52,13 +60,13 @@ def test_generator_uses_the_same_shared_writer(migration_resource, tmp_path):
 
 
 def test_both_packaged_uvek_resources_use_one_schema():
-    for filename, count in (("ecoinvent-to-uvek-2025.json", 31488), ("uvek-2025-to-ecoinvent-3.12-cutoff.json", 1424)):
+    for filename, count in (("ecoinvent-to-uvek-2025.json", 30732), ("uvek-2025-to-ecoinvent-3.12-cutoff.json", 1518)):
         path = DATA_DIR / "migrations/uvek" / filename
         result = json.loads(path.read_text(encoding="utf-8"))
         validate_migration_resource(result)
         assert result["schema"] == "brightpath.migration"
         assert result["schema_version"] == 3
-        assert len(result["replace"]) == result["coverage"]["mapped_identities"] == count
+        assert len(result["replace"]) + len(result["delete"]) == result["coverage"]["mapped_identities"] == count
         assert result["reverse_policy"] == "explicit_only"
         assert {
             "replace",
@@ -71,17 +79,34 @@ def test_both_packaged_uvek_resources_use_one_schema():
         } <= result.keys()
         assert not {"rules", "targets", "source_profile"} & result.keys()
         assert all(isinstance(rule["target"], dict) for rule in result["replace"])
-        assert {rule["review_ref"] for rule in result["replace"] if "review_ref" in rule} == result["reviews"].keys()
+        assert {
+            rule["review_ref"]
+            for operation in ("replace", "disaggregate", "delete")
+            for rule in result[operation]
+            if "review_ref" in rule
+        } | {
+            entry["review_ref"]
+            for rule in result["replace"]
+            for entry in rule.get("reference_flow_sign_review", {}).get("profiles", [])
+            if "review_ref" in entry
+        } == result[
+            "reviews"
+        ].keys()
     forward = load_uvek_technosphere_resource()
-    assert len(forward["reviews"]) == 104
+    assert len(forward["reviews"]) == 668
+    assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
+    reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
+    assert len(reverse["replace"]) == 1517
+    assert len(reverse["delete"]) == reverse["coverage"]["omitted_identities"] == 1
     assert (
         len(
             {
                 tuple(rule["target"][field] for field in ("name", "reference product", "location", "unit"))
                 for rule in forward["replace"]
+                if "recipe_ref" not in rule["target"]
             }
         )
-        == 4043
+        == 3988
     )
 
 
@@ -101,23 +126,151 @@ def test_all_mapping_values_and_runtime_evidence_match_the_baseline(filename, ex
     import hashlib
 
     migration_resource = json.loads((DATA_DIR / "migrations/uvek" / filename).read_text(encoding="utf-8"))
+    if filename == "ecoinvent-to-uvek-2025.json":
+        # The frozen hash covers historical authoring inputs, including retired
+        # model rows. Runtime cut-off preservation is checked independently.
+        migration_resource = historical_forward_resource()
+    if filename.startswith("uvek-"):
+        # Independently fingerprinted gas additions have their own exact guard;
+        # retain the frozen publisher/legacy mapping hash below.
+        migration_resource = legacy_projection(migration_resource)
+    sign_audit = json.loads((DATA_DIR / "export/uvek_reference_flow_sign_review.json").read_text(encoding="utf-8"))
+    sign_decisions = sign_audit["resources"][migration_resource["name"]]
     fields = ("source", "target", "conversion_factor", "classification", "confidence", "mapping_method")
     rows = []
-    for rule in migration_resource["replace"]:
+    rules = list(migration_resource["replace"])
+    rules.extend(
+        decision["original_rule"] for decision in sign_decisions.values() if decision.get("operation") == "delete"
+    )
+    if migration_resource["delete"]:
+        rules.sort(
+            key=lambda rule: tuple(rule["source"][field] for field in ("name", "reference product", "location", "unit"))
+        )
+    for rule in rules:
+        recipe_decision = sign_decisions.get(rule["id"], {})
+        if recipe_decision.get("operation") == "recipe":
+            assert rule["target"] == recipe_decision["target"]
+            rule = recipe_decision["original_rule"]
         # Preserve the exact historical 354-rule contract while testing the
         # publisher-backed additions independently in test_uvek_export_lineage.
         if rule.get("mapping_method") == "publisher_product_correspondence":
             continue
         row = {key: rule[key] for key in fields if key in rule}
+        # These reconstructed services had implicit default factors in the
+        # frozen publisher projection. Waste services formerly used flat sign corrections;
+        # retain that historical representation while testing runtime factors separately.
+        if recipe_decision.get("mapping_method") in {
+            "reviewed_cable_wire_plastic_market",
+            "reviewed_cable_treatment_composition",
+            "reviewed_copper_ash_source_reconstruction",
+            "reviewed_waste_concrete_inert_reconstruction",
+            "reviewed_older_swiss_rail",
+        }:
+            assert recipe_decision["original_factor"] == row["conversion_factor"] == 1
+            expected_factor = 1 if recipe_decision["mapping_method"] == "reviewed_older_swiss_rail" else -1
+            assert recipe_decision["factor"] == expected_factor
+            row.pop("conversion_factor")
+        decision = sign_decisions.get(rule["id"])
+        if decision and decision.get("operation") == "recipe":
+            decision = None
+        if decision and "original_target" in decision:
+            assert row["target"]["name"] in {
+                "Disposal, Li-ions batteries, hydrometallurgical",
+                "Disposal, Li-ions batteries, pyrometallurgical",
+                "Disposal, Li-ions batteries, mixed technology",
+                "Disposal, NiMH batteries",
+                "Disposal, polyethylene terephtalate, 0.2% water, to municipal incineration",
+                "Disposal, polyethylene, 0.4% water, to municipal incineration",
+                "Disposal, coatings in CRT screens,  to municipal waste incineration",
+                "Disposal, residues, mechanical treatment, CRT screen, in MSWI",
+                "Disposal, treatment of CRT glass",
+                "Dismantling, CRT screen, manually, at plant",
+                "Dismantling, CRT screen, mechanically, at plant",
+                "xx Disposal, CRT screen, 17 inches, to WEEE treatment",
+                "Disposal, glass, 0% water, to construction waste landfill",
+                "Disposal, frit for CRT tube production, to residual material landfill",
+                "Treatment hard fibreboard production effluent, to wastewater treatment, class 1",
+                "Treatment, medium density fibreboard production effluent, to wastewater treatment, class 1",
+                "Treatment, particle board production effluent, to wastewater treatment, class 1",
+                "Treatment, sewage, to wastewater treatment, class 1",
+                "Zinc concentrate, at beneficiation",
+                "Zinc, primary, at regional storage",
+                "Bronze, at plant",
+                "Chromium steel 18/8, at plant",
+                "Copper, at regional storage",
+                "Concrete for building construction, CEM III, A, NPK B, primary, at plant",
+                "Pesticide unspecified, at regional storehouse",
+                "Discharge, produced water, onshore",
+                "Discharge, produced water, offshore",
+                "Refinery gas, burned in flare",
+                "Natural gas, sweet, burned in production flare",
+                "xx DDGS, from corn, at distillery",
+                "xx DDGS, from potatoes, at distillery",
+                "xx DDGS, from rye, at distillery",
+                "xx Grass fibres, at digestion",
+                "xx Grass fibres, at fermentation",
+                "Sweet sorghum grains, at farm",
+                "Pulps, from sugar beet, at sugar refinery",
+                "Yeast paste, from whey, at fermentation",
+                "Disposal, dust, alloyed EAF steel, 15.4% water, to residual material landfill",
+                "Disposal, dust, unalloyed EAF steel, 15.4% water, to residual material landfill",
+                "Disposal, slag, unalloyed electr. steel, 0% water, to residual material landfill",
+                "Dismantling, LCD screen, manually, at plant",
+                "Dismantling, LCD screen, mechanically, at plant",
+                "Disposal, residues, mechanical treatment, LCD screen, in MSWI",
+                "Transport, freight, rail",
+                "Transport, freight, lorry, fleet average",
+                "Transport, freight, lorry, 3.5t gross weight, fleet average",
+                "Transport, barge",
+                "Disposal, catalyst base CH2O production, 0% water, to residual material landfill",
+                "xx Disposal, polyethylene terephtalate, 0.2% water, to sanitary landfill",
+                "Disposal, glider, for electric scooter",
+                "Disposal, powertrain, for electric scooter",
+                "Disposal, internal combustion engine, for passenger car",
+                "Sewer grid, class 1",
+                "Sewer grid, class 2",
+                "Sewer grid, class 3",
+                "Sewer grid, class 4",
+                "Sewer grid, class 5",
+                "Slag compartment",
+                "Process-specific burdens, slag compartment",
+            }
+            row["target"] = decision["original_target"]
+        if decision and decision["factor"] != decision["original_factor"]:
+            assert row["conversion_factor"] == decision["factor"]
+            if decision["original_factor"] == 1:
+                row.pop("conversion_factor")
+            else:
+                row["conversion_factor"] = decision["original_factor"]
         # Compare software-neutral method labels with their historical names.
         if row.get("mapping_method") in {"pairwise_review", "product_checked", "followup_review"}:
             row["mapping_method"] = "clic_" + row["mapping_method"]
         if "review_ref" in rule:
-            row["review"] = rule_review(migration_resource, rule)
+            if recipe_decision.get("operation") == "recipe":
+                # Runtime pruning can remove the restored rule's old review;
+                # its exact original content remains bound in the audit ledger.
+                if recipe_decision["original_review"] is not None:
+                    row["review"] = recipe_decision["original_review"]
+            elif decision and "original_review" in decision:
+                if decision.get("operation") != "delete":
+                    assert rule_review(migration_resource, rule) == decision["supplier_proxy_review"]
+                if decision["original_review"] is not None:
+                    row["review"] = decision["original_review"]
+            else:
+                row["review"] = rule_review(migration_resource, rule)
         if filename.startswith("uvek-"):
             row["id"] = rule["id"]
         rows.append(row)
-    values = {"replace": rows, "recipes": migration_resource["recipes"]}
+    recipe_additions = {
+        key
+        for decision in sign_decisions.values()
+        if decision.get("operation") == "recipe"
+        for key in decision["recipes"]
+    }
+    values = {
+        "replace": rows,
+        "recipes": {k: v for k, v in migration_resource["recipes"].items() if k not in recipe_additions},
+    }
     encoded = json.dumps(values, sort_keys=True, ensure_ascii=False, separators=(",", ":"), allow_nan=False)
     assert hashlib.sha256(encoded.encode()).hexdigest() == expected
 
@@ -131,7 +284,267 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
         assert not any(rule.get("mapping_method", "").startswith("clic_") for rule in resource["replace"])
         assert not any(key.startswith("clic_") for key in resource["coverage"].get("mapping_methods", {}))
     forward = load_uvek_technosphere_resource()
-    assert all(review.keys() == {"rationale", "limitations"} for review in forward["reviews"].values())
+    coal_tar = next(rule for rule in forward["replace"] if rule["source"]["name"] == "market for coal tar")
+    assert forward["reviews"][coal_tar["review_ref"]].keys() == {"rationale", "limitations", "evidence"}
+    battery = next(
+        rule
+        for rule in forward["replace"]
+        if rule["source"]["name"] == "treatment of used Li-ion battery, hydrometallurgical treatment"
+        and rule["source"]["reference product"] == "used Li-ion battery"
+    )
+    assert forward["reviews"][battery["review_ref"]].keys() == {"rationale", "limitations", "evidence"}
+    pyro_battery = next(
+        rule
+        for rule in forward["replace"]
+        if rule["source"]["name"] == "treatment of used Li-ion battery, pyrometallurgical treatment"
+        and rule["source"]["reference product"] == "used Li-ion battery"
+    )
+    assert forward["reviews"][pyro_battery["review_ref"]].keys() == {"rationale", "limitations", "evidence"}
+    approved_sources = {
+        "market for used Li-ion battery",
+        "market for used Ni-metal hydride battery",
+        "treatment of used Ni-metal hydride battery, pyrometallurgical treatment",
+    }
+    auto_references = {
+        rule["review_ref"]
+        for rule in forward["replace"]
+        if rule["source"]["name"] in approved_sources
+        and rule["source"]["reference product"] in {"used Li-ion battery", "used Ni-metal hydride battery"}
+    }
+    assert len(auto_references) == 3
+    geographic_references = {
+        rule["review_ref"]
+        for rule in forward["replace"]
+        if rule["source"]["name"] == "treatment of waste polyethylene terephthalate, municipal incineration"
+        and rule["source"]["reference product"] == "waste polyethylene terephthalate"
+        and rule["source"]["location"] in {"RoW", "GLO"}
+    }
+    assert len(geographic_references) == 2
+    from scripts.review_uvek_reference_signs import (
+        APPROVED_CRT_GLASS_TREATMENTS,
+        APPROVED_CRT_INCINERATION_TREATMENTS,
+        APPROVED_CRT_LANDFILL_TREATMENTS,
+        APPROVED_CRT_MANUAL_TREATMENTS,
+        APPROVED_CRT_MECHANICAL_TREATMENTS,
+        APPROVED_CRT_RESIDUE_MARKETS,
+        APPROVED_DISCHARGE_TREATMENTS,
+        APPROVED_GENERIC_WASTEWATER,
+        APPROVED_INCINERATION_COMPOSITION_PROXIES,
+        APPROVED_PROFILED_TREATMENTS,
+        APPROVED_WASTEWATER_TREATMENTS,
+        identity,
+    )
+
+    wastewater_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in APPROVED_WASTEWATER_TREATMENTS
+    }
+    assert len(wastewater_references) == 18
+    generic_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in APPROVED_GENERIC_WASTEWATER
+    }
+    assert len(generic_references) == 10
+    discharge_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in APPROVED_DISCHARGE_TREATMENTS
+    }
+    assert len(discharge_references) == 4
+    flare_references = {rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in FLARES}
+    assert len(flare_references) == 2
+    natural_gas_flare_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in NATURAL_GAS_FLARES
+    }
+    from scripts.review_uvek_remaining_gas_flares import REVIEW_PATH as SOURCE_GAS_REVIEW
+    from scripts.review_uvek_remaining_gas_flares import SOURCES as SOURCE_GAS_FLARES
+
+    source_gas_references = {r["review_ref"] for r in forward["replace"] if identity(r["source"]) in SOURCE_GAS_FLARES}
+    assert natural_gas_flare_references == source_gas_references
+    assert len(source_gas_references) == 1
+    assert all(forward["reviews"][ref]["evidence"] == [SOURCE_GAS_REVIEW] for ref in source_gas_references)
+    from scripts.review_uvek_cutoff_feed_products import PRODUCTS
+
+    cutoff_feed_product_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in PRODUCTS
+    }
+    assert len(cutoff_feed_product_references) == 16
+
+    eaf_references = {rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in LANDFILLS}
+    assert len(eaf_references) == 3
+    lcd_references = {rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in LCD_TREATMENTS}
+    assert len(lcd_references) == 5
+    modal_references = {rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in TRANSPORTS}
+    assert len(modal_references) == 3
+    dedicated_references = {rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in DISPOSALS}
+    assert len(dedicated_references) == 8
+    omission_references = {rule["review_ref"] for rule in forward["delete"]}
+    scoped_omission_references = {
+        entry["review_ref"]
+        for rule in forward["replace"]
+        for entry in rule.get("reference_flow_sign_review", {}).get("profiles", [])
+        if "review_ref" in entry
+    }
+    assert len(omission_references) == 257
+    profile_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in APPROVED_PROFILED_TREATMENTS
+    }
+    assert len(profile_references) == 3
+    composition_references = {
+        rule["review_ref"]
+        for rule in forward["replace"]
+        if identity(rule["source"]) in APPROVED_INCINERATION_COMPOSITION_PROXIES
+    }
+    assert len(composition_references) == 2
+    crt_references = {
+        rule["review_ref"]
+        for rule in forward["replace"]
+        if identity(rule["source"]) in APPROVED_CRT_INCINERATION_TREATMENTS
+    }
+    assert len(crt_references) == 12
+    crt_glass_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in APPROVED_CRT_GLASS_TREATMENTS
+    }
+    assert len(crt_glass_references) == 2
+    crt_manual_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in APPROVED_CRT_MANUAL_TREATMENTS
+    }
+    assert len(crt_manual_references) == 2
+    crt_mechanical_references = {
+        rule["review_ref"]
+        for rule in forward["replace"]
+        if identity(rule["source"]) in APPROVED_CRT_MECHANICAL_TREATMENTS
+    }
+    crt_residue_market_references = {
+        rule["review_ref"] for rule in forward["replace"] if identity(rule["source"]) in APPROVED_CRT_RESIDUE_MARKETS
+    }
+    assert len(crt_mechanical_references) == len(crt_residue_market_references) == 2
+    crt_landfill_references = {
+        rule["review_ref"]
+        for rule in forward["replace"]
+        if identity(rule["source"]) in APPROVED_CRT_LANDFILL_TREATMENTS
+    }
+    assert len(crt_landfill_references) == 10
+    assert all(
+        forward["reviews"][reference].keys() == {"rationale", "limitations", "evidence"}
+        for reference in auto_references
+        | geographic_references
+        | wastewater_references
+        | generic_references
+        | discharge_references
+        | flare_references
+        | natural_gas_flare_references
+        | cutoff_feed_product_references
+        | eaf_references
+        | lcd_references
+        | modal_references
+        | dedicated_references
+        | omission_references
+        | scoped_omission_references
+        | profile_references
+        | composition_references
+        | crt_references
+        | crt_glass_references
+        | crt_manual_references
+        | crt_mechanical_references
+        | crt_residue_market_references
+        | crt_landfill_references
+    )
+    recipe_references = {r["review_ref"] for r in forward["replace"] if "recipe_ref" in r["target"]}
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in recipe_references)
+    from scripts.review_uvek_copper_cathode import SOURCE as COPPER_CATHODE_SOURCE
+    from scripts.review_uvek_older_regional_road import SOURCES as OLDER_REGIONAL_ROAD_SOURCES
+    from scripts.review_uvek_regional_freight import SOURCES as REGIONAL_FREIGHT_SOURCES
+    from scripts.review_uvek_sewage_digestion import SOURCES as SEWAGE_DIGESTION_SOURCES
+    from scripts.review_uvek_sewer_grids import SOURCES as SEWER_GRIDS
+    from scripts.review_uvek_slag_landfill_components import SOURCES as SLAG_LANDFILL_COMPONENTS
+    from scripts.review_uvek_stainless_stock import SOURCES as STAINLESS_STOCKS
+    from scripts.review_uvek_whole_freight import SOURCES as WHOLE_FREIGHT_SOURCES
+
+    freight_references = {r["review_ref"] for r in forward["replace"] if identity(r["source"]) in WHOLE_FREIGHT_SOURCES}
+    assert len(freight_references) == 1
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in freight_references)
+    regional_freight_references = {
+        r["review_ref"] for r in forward["replace"] if identity(r["source"]) in REGIONAL_FREIGHT_SOURCES
+    }
+    assert len(regional_freight_references) == 1
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"}
+        for ref in regional_freight_references
+    )
+    older_road_references = {
+        r["review_ref"] for r in forward["replace"] if identity(r["source"]) in OLDER_REGIONAL_ROAD_SOURCES
+    }
+    assert len(older_road_references) == 1
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in older_road_references
+    )
+    from scripts.review_uvek_concrete_grade import SOURCE as CONCRETE_GRADE_SOURCE
+
+    concrete_references = {
+        r["review_ref"] for r in forward["replace"] if identity(r["source"]) == CONCRETE_GRADE_SOURCE
+    }
+    assert len(concrete_references) == 1
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in concrete_references
+    )
+    copper_references = {r["review_ref"] for r in forward["replace"] if identity(r["source"]) == COPPER_CATHODE_SOURCE}
+    assert len(copper_references) == 1
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in copper_references)
+    slag_references = {r["review_ref"] for r in forward["replace"] if identity(r["source"]) in SLAG_LANDFILL_COMPONENTS}
+    assert len(slag_references) == 1
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in slag_references)
+    sewer_references = {r["review_ref"] for r in forward["replace"] if identity(r["source"]) in SEWER_GRIDS}
+    assert len(sewer_references) == 1
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in sewer_references)
+    stock_references = {r["review_ref"] for r in forward["replace"] if identity(r["source"]) in STAINLESS_STOCKS}
+    assert len(stock_references) == 1
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in stock_references)
+    digestion_references = {
+        r["review_ref"] for r in forward["replace"] if identity(r["source"]) in SEWAGE_DIGESTION_SOURCES
+    }
+    assert len(digestion_references) == 2
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in digestion_references
+    )
+    assert all(
+        review.keys() == {"rationale", "limitations"}
+        for reference, review in forward["reviews"].items()
+        if reference
+        not in {
+            coal_tar["review_ref"],
+            battery["review_ref"],
+            pyro_battery["review_ref"],
+            *copper_references,
+            *concrete_references,
+            *freight_references,
+            *regional_freight_references,
+            *older_road_references,
+            *sewer_references,
+            *stock_references,
+            *slag_references,
+            *digestion_references,
+            *auto_references,
+            *geographic_references,
+            *wastewater_references,
+            *generic_references,
+            *discharge_references,
+            *flare_references,
+            *natural_gas_flare_references,
+            *cutoff_feed_product_references,
+            *eaf_references,
+            *lcd_references,
+            *modal_references,
+            *dedicated_references,
+            *omission_references,
+            *scoped_omission_references,
+            *profile_references,
+            *composition_references,
+            *crt_references,
+            *crt_glass_references,
+            *crt_manual_references,
+            *crt_mechanical_references,
+            *crt_residue_market_references,
+            *crt_landfill_references,
+            *recipe_references,
+        }
+    )
 
 
 @pytest.mark.parametrize("default_encoding", ["utf-8", "cp1252"])
@@ -159,7 +572,7 @@ def test_all_generated_helpers_match_the_pre_upgrade_output_baseline():
     from brightpath.background.uvek_export import apply_uvek_export, load_uvek_export_resource
     from brightpath.core.policies import MigrationPolicy, PolicyAction
 
-    migration_resource = load_uvek_export_resource()
+    migration_resource = legacy_projection(load_uvek_export_resource())
     values = {}
     for rule in migration_resource["replace"]:
         if "recipe_ref" not in rule["target"]:

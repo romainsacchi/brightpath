@@ -1,0 +1,1390 @@
+{
+  "schema_version": 1,
+  "approval": "User explicitly approved the two RER-to-DE reverse combustion reconstructions with warnings. Matching positive-reference coke-gas production and HFO-heat correspondences use standing same-product/quantity and geographic proxy approvals. This is an independent directional review, not inversion of forward migration rules. An additional 37 independently inspected matching-region high-voltage electricity supply proxies use standing product/quantity and electricity-proxy approvals. Production references are positive one kWh in both databases; supply mixes and infrastructure differ and warn. Independently inspected GLO/MJ refinery flaring is a physical combustion service despite its positive native product output. Standing matching-function/unit service-proxy approval supports factor -1 into the negative ecoinvent 3.12 cut-off treatment reference, with explicit emission-coverage warnings. Neither process includes upstream fuel, flare infrastructure or energy recovery; no inverse was inferred from a forward mapping.",
+  "rules": [
+    {
+      "source": {
+        "name": "Blast furnace gas, burned in power plant",
+        "reference product": "Blast furnace gas, burned in power plant",
+        "location": "RER",
+        "unit": "megajoule"
+      },
+      "kind": "reconstruction",
+      "source_inventory_sha256": "22597745899d818823d004697835639ff04f31cc5b9e10ee305408bcadae6fb7",
+      "inputs": [
+        {
+          "name": "treatment of blast furnace gas, in power plant",
+          "reference product": "electricity, high voltage",
+          "location": "DE",
+          "unit": "kilowatt hour",
+          "amount": 0.101388888888889,
+          "type": "technosphere"
+        },
+        {
+          "name": "treatment of blast furnace gas, in power plant",
+          "reference product": "heat, district or industrial, other than natural gas",
+          "location": "DE",
+          "unit": "megajoule",
+          "amount": 0.145,
+          "type": "technosphere"
+        },
+        {
+          "name": "market for blast furnace gas",
+          "reference product": "blast furnace gas",
+          "location": "GLO",
+          "unit": "megajoule",
+          "amount": -1,
+          "type": "technosphere"
+        }
+      ],
+      "electricity_kwh": 0.101388888888889,
+      "heat_mj": 0.145,
+      "weighted_fuel_mj": 1.0000000000000002,
+      "fuel_boundary": "exclude upstream fuel"
+    },
+    {
+      "source": {
+        "name": "Coke oven gas, burned in power plant",
+        "reference product": "Coke oven gas, burned in power plant",
+        "location": "RER",
+        "unit": "megajoule"
+      },
+      "kind": "reconstruction",
+      "source_inventory_sha256": "d43216d19182a455480bf8900cf314e33934ecdd0edd5582ac28ca47ecd61ea2",
+      "inputs": [
+        {
+          "name": "treatment of coal gas, in power plant",
+          "reference product": "electricity, high voltage",
+          "location": "DE",
+          "unit": "kilowatt hour",
+          "amount": 0.11,
+          "type": "technosphere"
+        },
+        {
+          "name": "treatment of coal gas, in power plant",
+          "reference product": "heat, district or industrial, other than natural gas",
+          "location": "DE",
+          "unit": "megajoule",
+          "amount": 0.145,
+          "type": "technosphere"
+        }
+      ],
+      "electricity_kwh": 0.11,
+      "heat_mj": 0.145,
+      "weighted_fuel_mj": 1.0,
+      "fuel_boundary": "retain upstream fuel"
+    },
+    {
+      "source": {
+        "name": "Coke oven gas, at plant",
+        "reference product": "Coke oven gas, at plant",
+        "location": "GLO",
+        "unit": "megajoule"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for coal gas",
+        "reference product": "coal gas",
+        "location": "GLO",
+        "unit": "megajoule"
+      },
+      "source_inventory_sha256": "b0081d2fc023f12e9528538c6b7bf7a3446833151e718b5c4316312ac3dc28a6"
+    },
+    {
+      "source": {
+        "name": "Heat, heavy fuel oil, at industrial furnace 1MW",
+        "reference product": "Heat, heavy fuel oil, at industrial furnace 1MW",
+        "location": "RER",
+        "unit": "megajoule"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "heat production, heavy fuel oil, at industrial furnace 1MW",
+        "reference product": "heat, district or industrial, other than natural gas",
+        "location": "Europe without Switzerland",
+        "unit": "megajoule"
+      },
+      "source_inventory_sha256": "2fd0f6a1736c9b40d913213d61a289f13a878db7fc4a55a44ec72fa12084859e"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "AE",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "AE",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "1a0666eb6739e8a15da1fad8c6db119d8f777c0b1be3a2ad8c86aa9b7dbe1484"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "AR",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "AR",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "4afbe4a2e90012e0e71e902d0536f40aac29ec965c3dec79dddee5e2432fe2e4"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "AU",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "AU",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "157c46f6dbb2bc71d8f4cc38d773bb5c470d398a161899d07b8505e7d6d2c077"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "BD",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "BD",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "3092f8d03fe383cfa3e737c656d3faccfecd5be64fd4b774f3564ea61aabe923"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "BR",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "BR",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "6e69894f89290ef3e81b422edf82362dfd9f39777e2f45e0594ec16bda533005"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "CL",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "CL",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "86a2371d3f99c9f64521bd1f72e075f69f8db5d6478e95bb7ff7c5096c2792f8"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "CN",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "CN",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "a143c8f5e1b2944abdd06efe9fedb31bece18af3babd2c614c28e65e9f3fc458"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "CO",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "CO",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "be23df2e530f5f427a0e1e50e86f1b5c838d03d676b787043486b1c85b9281b0"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "EE",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "EE",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "72043e8a045f7a19daf6908950088f9dbc69205cdd9e61f3cc6ff32ebf65727d"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "ID",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "ID",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "29fb26445b7609f4b019e59680f2fe8f143ed03bd0e3d405a3776c6564efdb06"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IL",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IL",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "d645966c874ac270ebc74a546cc1b3355dbe6abd4b342e9ebacad777af42019b"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IN",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IN",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "f3f363d5fa23c0240539e14010287157fa5d416b637ff97731eebdd21a701b70"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IQ",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IQ",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "411a68b6b93f65184ca48e976763261694684a4e563a4bd4b8b6e4006d3823c6"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IR",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IR",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "37492dcd20088554b0eb55b63715d38641a9e42b7d4f8be11780b95099948fd8"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IS",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IS",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "e72d2e17991899d8dd022abd677cd682ad1a57a160822ab911c6da8aca529bc8"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "KR",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "KR",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "32b5b12a850dd59350f5a11d1646bc8069d1cc7e357c1357421baba832bf33d6"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "KZ",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "KZ",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "a7f8e5b3082ba61fe46950ae64e39242f36fd8dee3a0fa583a0b51a264431b6b"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "LT",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "LT",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "50413673b819fc857bc99418947166dbc567d526d06faef383767407f4f0f47c"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "LV",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "LV",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "2bc02cb0980cf37ac629c33116f4bccd47fa735fd51ef1f918cf5740ab130ca5"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "MX",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "MX",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "70e5eb1cc9fcf9f04b89fde0c7282300222a1a9600456655934f012fc6f9f671"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "MY",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "MY",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "19e4f89aa9dc2905294c26a7e3d727a49149b93b69a7028f4c22591e299553f3"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "NZ",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "NZ",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "c0cbe818145aae2ce0de31938f73c18099128f07708e0f185e36e002da599ceb"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "PE",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "PE",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "37d52256eaa6b63919b9388556e27d125f0f2afedbb6629d093249c436fdf1d8"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "PH",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "PH",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "cdd024f56b4691e64cbeca062e84d1d94260700fa98395bb9cda2d73baf7fbb7"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "PK",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "PK",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "12baa33c197053952e1288ed77012a66a25ea2d2d31d0199ed793f413a9645bb"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "QA",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "QA",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "01376360dc80f345841b266cb424391376cbb5b957f3010e3a8910ded60293c7"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "RAF",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "RAF",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "52a01a54086ca8dc7837be938195e46281163ae914da79356ad1dd2e65e9dedb"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "RS",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "RS",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "c2b77084ee924ba30f3ff302bd81a36692f5571ce7cb3a81cbf0b089bee869a9"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "RU",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "RU",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "3854021c7c86a7aa741a8e6ca0b6a8635b57300b763502cb210777a9b819f7bf"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "SA",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "SA",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "f33a17573658a0925fa1173f242980ffe85260f095e9b22daf7f838cf8fa92cc"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "SG",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "SG",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "cd91f4059704b0f062560cee7a6b99c9632a1a450fde2cdce8789a587b38a604"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "TH",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "TH",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "210243f4c848782e3bc7c99e6025d2c9c432177998595245b5bf7bfb7e15804f"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "TR",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "TR",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "30e956f93ac9cabbcbc608e22376de5494d81caaef8bf7e0fd56bbdd9ceb594d"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "TW",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "TW",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "18fc87dae29b444828cf6b815de4cd31f24d1e577614d6500c7becdbce801fdd"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "UA",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "UA",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "28cbfd362010b1596cec5ac399edc4d2de474f8fb48cb852e227efc064b95fd1"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "US",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "US",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "606afa4f2622d4a80404c9ef474c417b1931b62228af386d560f0baae1ea1904"
+    },
+    {
+      "source": {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "VN",
+        "unit": "kilowatt hour"
+      },
+      "kind": "matching_product_proxy",
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "VN",
+        "unit": "kilowatt hour"
+      },
+      "source_inventory_sha256": "608b21b1b0aa0de358f26967b8e44d760e43634fcf31ef4d890ad5c5d602d7d8"
+    },
+    {
+      "source": {
+        "name": "Refinery gas, burned in flare",
+        "reference product": "Refinery gas, burned in flare",
+        "location": "GLO",
+        "unit": "megajoule"
+      },
+      "kind": "matching_service_proxy",
+      "target": {
+        "name": "treatment of waste refinery gas, burned in flare",
+        "reference product": "waste refinery gas",
+        "location": "GLO",
+        "unit": "megajoule"
+      },
+      "source_inventory_sha256": "f4f872498959fbfbfb160daedeeeeea4504afd8d975d8507cca49defc5c907d0",
+      "source_reference_sign": 1,
+      "target_reference_sign": -1,
+      "conversion_factor": -1,
+      "source_native_flow_type": "PRODUCT_FLOW",
+      "source_native_reference_is_input": false
+    }
+  ],
+  "target_inventories": [
+    {
+      "target": {
+        "name": "treatment of blast furnace gas, in power plant",
+        "reference product": "electricity, high voltage",
+        "location": "DE",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "43d15da1af60b30a64d8dfb65627b80caeca327cecb5a22e1fe2be23b5e2a8c0"
+    },
+    {
+      "target": {
+        "name": "treatment of blast furnace gas, in power plant",
+        "reference product": "heat, district or industrial, other than natural gas",
+        "location": "DE",
+        "unit": "megajoule"
+      },
+      "inventory_sha256": "e3ae9a7911ce96e9dd3f727e90d7ead914976f5210fd8e9775ad0553d29ffb18"
+    },
+    {
+      "target": {
+        "name": "market for blast furnace gas",
+        "reference product": "blast furnace gas",
+        "location": "GLO",
+        "unit": "megajoule"
+      },
+      "inventory_sha256": "bc935638936048ec245e144ee587219ac2146dc800fca92edd588e931ba3af49"
+    },
+    {
+      "target": {
+        "name": "treatment of coal gas, in power plant",
+        "reference product": "electricity, high voltage",
+        "location": "DE",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "5d003a8e9b669e4e82cef9a9c76c71d330eab8b55b59bccf6a2f21082f92976a"
+    },
+    {
+      "target": {
+        "name": "treatment of coal gas, in power plant",
+        "reference product": "heat, district or industrial, other than natural gas",
+        "location": "DE",
+        "unit": "megajoule"
+      },
+      "inventory_sha256": "d9a0c70a500df11382e469abe1bbb8464f46ff97270e61b1ddc957f4949c6a56"
+    },
+    {
+      "target": {
+        "name": "market for coal gas",
+        "reference product": "coal gas",
+        "location": "GLO",
+        "unit": "megajoule"
+      },
+      "inventory_sha256": "18f768cc2da2cd71a7869b4f713c75e11335bdc8df736fd574fcd8a7cd2088d4"
+    },
+    {
+      "target": {
+        "name": "heat production, heavy fuel oil, at industrial furnace 1MW",
+        "reference product": "heat, district or industrial, other than natural gas",
+        "location": "Europe without Switzerland",
+        "unit": "megajoule"
+      },
+      "inventory_sha256": "d14f119e4875ae3772eef18af99115cfcb2ac5eb3c6b5a6505fc98157f60ab0f"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "AE",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "e9203c9d0778bd8fb2f157639aa6c9e9e6792426c035d674712d4f80a2700aae"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "AR",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "43d1256c022c253bf7830ad0d62a1f7ce0831bf233233f922b17d7b7d808b84d"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "AU",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "b7a921d865526c8a0952ee2ad15f9517ad1906bd17f0f82f9e48ced8600fab38"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "BD",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "c0d55ffd44d5ae20799ee9f8b88e4b9ca62c2a04eac75ec9a288682d9e18d9ab"
+    },
+    {
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "BR",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "012489c75f68d7439ca24d645800975af5f46471561d0daeed051e93e1e55e60"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "CL",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "6db07486fc840e74066f197fa12b74414318a1db5577e9514dfd875a1d382871"
+    },
+    {
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "CN",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "d5c62f363b68e0b4e9e1deb8c4747ffa3372b27ac92be830674081ba1fdc3bd0"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "CO",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "26ed7570600519cde61b6d0b8b6f7e53a2d487d2d42113294281430a1c8bb418"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "EE",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "b90f9288ff7744ed6828c8df8ed2c5136e171ca7cc7cb51fc0f3f825d75cce12"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "ID",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "0c67adaf314101a667af054a535b7f5fcb2d23c694032463936efc070d202e49"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IL",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "7ff08c6de35e52702f830b28cc8c83b131fda6901781ddcc681784308e15c7b3"
+    },
+    {
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IN",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "c32321e24343da357e29af715f0f54f502f669604fdc20be8f1e7eb6020bcc66"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IQ",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "eb9604edb1f074f73e23f5493511280cc2c290f4e0c07828840206687c22aae3"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IR",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "2a49b2c724ed2e9c5b3e459aaf9f45adf43e37855e4d665de77faf87ed4da1a1"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "IS",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "14125f420a26c3c3ded1ac0e3309733ef0611d75cee3ce19bfeb0bb5871371f3"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "KR",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "886553f439a78bb3cec564d1fe2d005b5acd922f79c0149a83907ecff22eef99"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "KZ",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "4d4f1848e0b1ba5e4d9f64559a8b9cbc854a000227c675522679ccd37a890f7b"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "LT",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "11e1612f96649a467e2f959efa44f79c7a5c7ddfe4aaf5e3a3d2e15ade062f28"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "LV",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "63247b94c9227f442ed18820ade0cefcf419849f596602571ccb3b85d0f96869"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "MX",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "d97cfa5933057fcafaa4d01d71d239e100b404ee1aad04da2a5a1c9b97f5700d"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "MY",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "3e457b6bc5482b9c76a94665b23ee811bf8e62078c2eb16f83c7df2c42387b6c"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "NZ",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "0c67e0d76bd8bb54c47f0c0bbe29d53a0167c2f4b7667bfc1c477846cb917ee5"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "PE",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "f1202fb1456b7f8f234c5247a67bed4bc9888a1f8ade8a22e860cd89e97570d6"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "PH",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "387b1ad4c17332af8436e035fd3d9c24af596f52ab22aaae63d5d5c98340124d"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "PK",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "6b77427abdaf8ed0910d1cb48b7b9f9778c5337d5e134ee44071b49c313ca186"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "QA",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "7d90a067f18ef7d53a2cd949bc9ce36245ee6eab03367d6b9ebd5d44f915571b"
+    },
+    {
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "RAF",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "07aa7dcd5018ad34edbee80269a0fec82529301a35db213e47d20bc634291c4a"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "RS",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "6c723b2b08c113d855bdb85e3a16979b075bc578b215087cdd7f93b3415f6059"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "RU",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "d37ea37e7716e34f66a123e878b2673996ab3e2dff94512833e73f8f2939f97c"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "SA",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "4d9ddc7d4c540144b5ba4f3fd8a93e48e7b1a48434effbe64d2f341759875265"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "SG",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "42d03cbe62e13228f9a631796750c75eeb3bed228036c433f857d98f661907ec"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "TH",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "42adad67e1621f0710e8d87eaa116ba9708afc6ba0c9fdf9271a006f06a2285b"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "TR",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "ea7dca696923b350f645d4f49aea84b69adc9b88a03b4fa353b5e9d27e25dc11"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "TW",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "a0cca237663c3f23ff52d2079b5332d5644f529f3c3d835284242a1260121f0c"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "UA",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "892a1cf82fab5e130211f1055f6cca449b8e3afd0446e4aa7df1317b9df50322"
+    },
+    {
+      "target": {
+        "name": "market group for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "US",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "4d0fe16f56a6724c5caf4bcedf3f69e1f6a010a180c631454be4cb77cfd23b3f"
+    },
+    {
+      "target": {
+        "name": "market for electricity, high voltage",
+        "reference product": "electricity, high voltage",
+        "location": "VN",
+        "unit": "kilowatt hour"
+      },
+      "inventory_sha256": "787e14ddf726c4f4e52ba78f0cdc4523020c2a4e76a12a0bc830adf9ebaccd23"
+    },
+    {
+      "target": {
+        "name": "treatment of waste refinery gas, burned in flare",
+        "reference product": "waste refinery gas",
+        "location": "GLO",
+        "unit": "megajoule"
+      },
+      "inventory_sha256": "b09c8f1d4afa9d3c279589883d9ada0c682c36e1e916e2163ccdc44a8f52be5c"
+    }
+  ],
+  "extension_batches": [
+    [
+      {
+        "name": "Blast furnace gas, burned in power plant",
+        "reference product": "Blast furnace gas, burned in power plant",
+        "location": "RER",
+        "unit": "megajoule"
+      },
+      {
+        "name": "Coke oven gas, burned in power plant",
+        "reference product": "Coke oven gas, burned in power plant",
+        "location": "RER",
+        "unit": "megajoule"
+      },
+      {
+        "name": "Coke oven gas, at plant",
+        "reference product": "Coke oven gas, at plant",
+        "location": "GLO",
+        "unit": "megajoule"
+      },
+      {
+        "name": "Heat, heavy fuel oil, at industrial furnace 1MW",
+        "reference product": "Heat, heavy fuel oil, at industrial furnace 1MW",
+        "location": "RER",
+        "unit": "megajoule"
+      }
+    ],
+    [
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "AE",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "AR",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "AU",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "BD",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "BR",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "CL",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "CN",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "CO",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "EE",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "ID",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IL",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IN",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IQ",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IR",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "IS",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "KR",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "KZ",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "LT",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "LV",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "MX",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "MY",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "NZ",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "PE",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "PH",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "PK",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "QA",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "RAF",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "RS",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "RU",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "SA",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "SG",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "TH",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "TR",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "TW",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "UA",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "US",
+        "unit": "kilowatt hour"
+      },
+      {
+        "name": "Electricity, high voltage, at grid",
+        "reference product": "Electricity, high voltage, at grid",
+        "location": "VN",
+        "unit": "kilowatt hour"
+      }
+    ],
+    [
+      {
+        "name": "Refinery gas, burned in flare",
+        "reference product": "Refinery gas, burned in flare",
+        "location": "GLO",
+        "unit": "megajoule"
+      }
+    ]
+  ]
+}

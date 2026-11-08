@@ -98,7 +98,7 @@ def test_previous_incoming_wind_blockers_resolve_only_with_recorded_geography_co
     provider = PackageCatalogProvider()
     tested = 0
     for profile in provider.technosphere_profiles():
-        if profile.family != "ecoinvent":
+        if profile.family != "ecoinvent" or profile.system_model != "cutoff":
             continue
         valid = provider.load_technosphere(profile).identities
         for rule in rules:

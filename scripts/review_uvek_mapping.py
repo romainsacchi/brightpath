@@ -140,12 +140,18 @@ def review(workbook_path, resource_path, output_directory, revision):
         rows = iter(workbook[sheet].values)
         headers = next(rows)
         for values in rows:
-            row = dict(zip(headers, values))
-            source = dict(zip(FIELDS, (row["source_" + field] for field in ("name", "refprod", "location", "unit"))))
+            row = dict(zip(headers, values, strict=False))
+            source = dict(
+                zip(FIELDS, (row["source_" + field] for field in ("name", "refprod", "location", "unit")), strict=False)
+            )
             if identity(source) in candidates:
                 raise ValueError(f"Duplicate source: {source}")
             row["target"] = dict(
-                zip(FIELDS, (row.get("target_" + field) for field in ("name", "refprod", "location", "unit")))
+                zip(
+                    FIELDS,
+                    (row.get("target_" + field) for field in ("name", "refprod", "location", "unit")),
+                    strict=False,
+                )
             )
             candidates[identity(source)] = row
     workbook.close()

@@ -19,11 +19,35 @@ def discovery():
 def test_all_supported_routes_have_strict_and_warning_tasks_with_independent_axes(discovery):
     tasks, scope = discovery
     assert scope["native_process_identities"] == 11947
-    assert scope["approved_export_cohort"] == 1424
-    assert scope["outside_export_cohort"] == 10523
-    assert len(scope["unavailable_process_routes"]) == 7
-    assert all(route["target"]["system_model"] == "consequential" for route in scope["unavailable_process_routes"])
-    assert len(tasks) == 90
+    # The cohort includes 1,517 replacements and the separately reviewed omission.
+    assert scope["approved_export_cohort"] == 1518
+    assert scope["outside_export_cohort"] == 10429
+    # The exact 3.10.1 consequential catalog is visible, with both cross-model directions refused.
+    consequential = [
+        p
+        for p in PackageCatalogProvider().technosphere_profiles()
+        if p.family == "ecoinvent" and p.system_model == "consequential"
+    ]
+    native = ("uvek", "2026", "cutoff")
+    expected_refusals = {
+        pair
+        for p in consequential
+        for pair in ((native, (p.family, p.version, p.system_model)), ((p.family, p.version, p.system_model), native))
+    }
+    observed_refusals = {
+        tuple(
+            tuple(route[role][field] for field in ("family", "version", "system_model"))
+            for role in ("source", "target")
+        )
+        for route in scope["unavailable_process_routes"]
+    }
+    assert len(scope["unavailable_process_routes"]) == len(expected_refusals) == 16
+    assert observed_refusals == expected_refusals
+    assert all(
+        route["source"]["system_model"] != route["target"]["system_model"]
+        for route in scope["unavailable_process_routes"]
+    )
+    assert len(tasks) == 76
     provider = PackageCatalogProvider()
     for name, (cases, source, target, policy) in tasks.items():
         axis = name.split("/")[0]
@@ -33,26 +57,29 @@ def test_all_supported_routes_have_strict_and_warning_tasks_with_independent_axe
         assert cases and len({row["id"] for row in cases}) == len(cases)
         if source.technosphere.family == "uvek" and target.technosphere.family == "ecoinvent":
             assert target.technosphere.system_model == "cutoff"
-            assert len(cases) == 1424
+            assert len(cases) == 1518
         else:
             profile = source.technosphere if axis == "technosphere" else source.biosphere
             expected = uvek_audit.catalog_cases(provider, profile, axis)
             assert cases == expected
 
 
-def test_incoming_consequential_and_exact_patch_profiles_remain_visible(discovery):
-    tasks, _scope = discovery
+def test_consequential_profiles_are_unavailable_and_exact_cutoff_patch_routes_remain_visible(discovery):
+    tasks, scope = discovery
     sources = {
         source.technosphere
         for name, (_cases, source, _target, _policy) in tasks.items()
         if name.startswith("technosphere/") and source.technosphere.family == "ecoinvent"
     }
     available = {
-        profile for profile in PackageCatalogProvider().technosphere_profiles() if profile.family == "ecoinvent"
+        profile
+        for profile in PackageCatalogProvider().technosphere_profiles()
+        if profile.family == "ecoinvent" and profile.system_model == "cutoff"
     }
     assert sources == available
     assert {profile.version for profile in sources} >= {"3.9.1", "3.10.1"}
-    assert any(profile.system_model == "consequential" for profile in sources)
+    assert all(profile.system_model == "cutoff" for profile in sources)
+    assert any(route["source"]["system_model"] == "consequential" for route in scope["unavailable_process_routes"])
 
 
 def test_report_determinism_and_partial_scope_are_explicit(monkeypatch, discovery):
@@ -108,6 +135,21 @@ def test_runtime_task_honors_the_selected_information_loss_policy(discovery):
         assert result["policy"] == policy.to_dict()
         assert result["plan"]["biosphere_steps"]
         assert result["plan"]["technosphere_steps"] == []
+
+
+def test_native_route_audit_includes_and_accepts_the_reviewed_biowaste_omission(discovery):
+    tasks, _scope = discovery
+    for name, (cases, source, target, policy) in tasks.items():
+        if (
+            not name.startswith("technosphere/")
+            or target.technosphere.family != "ecoinvent"
+            or target.technosphere.version != "3.12"
+        ):
+            continue
+        case = next(case for case in cases if case["exchange"]["name"] == "Biowaste, at collection point")
+        result = uvek_audit._run_task(([case], source, target, policy))
+        assert result["summary"]["statuses"] == {"omitted_with_warning": 1}
+        assert result["cases"][0]["status"] == "omitted_with_warning"
 
 
 def test_partial_audit_cannot_be_accepted_even_against_a_matching_baseline(tmp_path, monkeypatch):

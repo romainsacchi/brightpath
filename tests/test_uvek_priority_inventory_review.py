@@ -4,10 +4,10 @@ import json
 from pathlib import Path
 
 import pytest
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import DATA_DIR, BackgroundProfile, BrightwayInventory
 from brightpath.core import MigrationPolicy
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from brightpath.migrations.schema import rule_review
 from scripts.review_uvek_mapping import identity
 from scripts.review_uvek_priority_inventory import DIESEL_SOURCE, WOOD_SOURCE, assess, target_for
@@ -151,12 +151,42 @@ def test_all_packaged_inventory_decisions_are_reproducible_from_sparse_evidence(
     assert sum(row["confidence"] < 0.5 for row in decisions) == 52
 
 
-def test_packaged_resource_preserves_decisions_without_inventory_audit_details():
+def test_historical_packaged_resource_preserves_decisions_without_inventory_audit_details():
     _, _, decisions = packaged()
-    resource = load_uvek_technosphere_resource()
+    resource = historical_forward_resource()
     indexed = {identity(row["source"]): row for row in resource["replace"]}
-    assert len(resource["replace"]) == 31488
-    assert sum(row["confidence"] < 0.5 for row in resource["replace"]) == 21618
+    assert len(resource["replace"]) + len(resource["delete"]) == 31488
+    # Historical model rows remain; independently reviewed helper batches replace
+    # their earlier low-confidence candidates without changing these 62 decisions.
+    # The complete open-dump source inventory replaces one further low-confidence incinerator candidate.
+    # The two independently reviewed copper-ash reconstructions supersede two
+    # more low-confidence matches; the 62 original priority decisions stay exact.
+    from scripts.review_uvek_copper_ash import SOURCES as COPPER_ASH_SOURCES
+
+    assert len(COPPER_ASH_SOURCES) == 2
+    for approval in COPPER_ASH_SOURCES.values():
+        copper_ash = indexed[identity(approval["source"])]
+        assert copper_ash["mapping_method"] == "reviewed_copper_ash_source_reconstruction"
+        assert copper_ash["confidence"] == 1
+    from scripts.review_uvek_waste_concrete_inert import SOURCES as WASTE_CONCRETE_INERT_SOURCES
+
+    assert len(WASTE_CONCRETE_INERT_SOURCES) == 2
+    for approval in WASTE_CONCRETE_INERT_SOURCES.values():
+        concrete = indexed[identity(approval["source"])]
+        assert concrete["mapping_method"] == "reviewed_waste_concrete_inert_reconstruction"
+        assert concrete["confidence"] == 1
+    # The positive polyester transfer now retains its treatment mix instead of
+    # inheriting the unrelated low-confidence fleece-production candidate.
+    polyester = indexed[
+        (
+            "fibre and fabric waste, polyester to generic market for waste polyethylene terephthalate",
+            "fibre and fabric waste, polyester",
+            "GLO",
+            "kilogram",
+        )
+    ]
+    assert polyester["mapping_method"] == "reviewed_polyester_pet_transfer" and polyester["confidence"] == 1
+    assert sum(row["confidence"] < 0.5 for row in resource["replace"]) == 20524
     for decision in decisions:
         current = indexed[identity(decision["source"])]
         assert current["target"] == decision["target"]

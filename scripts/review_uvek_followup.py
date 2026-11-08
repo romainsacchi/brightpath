@@ -79,6 +79,7 @@ class BranchLineage:
                                 zip(
                                     FIELDS,
                                     (row[f"{side}_{field}"] for field in ("name", "refprod", "location", "unit")),
+                                    strict=False,
                                 )
                             )
                             for side in ("source", "target")

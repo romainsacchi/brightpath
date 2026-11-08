@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import math
 import re
@@ -31,8 +32,18 @@ from brightpath.migrations.schema import (
     validate_migration_resource,
 )
 
+if __package__ is None:
+    from review_uvek_reference_signs import apply_packaged_sign_review
+    from scope_uvek_system_models import cutoff_uvek_resource
+else:
+    from scripts.review_uvek_reference_signs import apply_packaged_sign_review
+    from scripts.scope_uvek_system_models import cutoff_uvek_resource
+
 ECOINVENT_VERSIONS = ("3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12")
-ECOINVENT_SYSTEM_MODELS = ("cutoff", "consequential")
+ECOINVENT_SYSTEM_MODELS = ("cutoff",)
+# Frozen scientific fingerprints still include the retired model. These inputs
+# are replayed only for historical authoring, before the publication projection.
+_HISTORICAL_REVIEW_SYSTEM_MODELS = ("cutoff", "consequential")
 UVEK_VERSION = "2025"
 UVEK_SYSTEM_MODEL = "cutoff"
 
@@ -216,7 +227,9 @@ class _TechnosphereMatcher:
 
     def _candidates(self, source: TechnosphereIdentity, target_unit: str) -> tuple[int, ...]:
         terms = _tokens(source.name, source.reference_product)
-        indexed = [self.by_token[(target_unit, token)] for token in terms if self.by_token[(target_unit, token)]]
+        indexed = [
+            self.by_token[(target_unit, token)] for token in sorted(terms) if self.by_token[(target_unit, token)]
+        ]
         indexed.sort(key=len)
         candidates: set[int] = set()
         for values in indexed[:5]:
@@ -233,7 +246,7 @@ class _TechnosphereMatcher:
 
         def cheap_rank(index: int) -> tuple[float, int]:
             shared = terms & self.terms[index]
-            token_weight = sum(1.0 / math.log2(2 + self.term_frequency[token]) for token in shared)
+            token_weight = sum(1.0 / math.log2(2 + self.term_frequency[token]) for token in sorted(shared))
             substring_bonus = (
                 1.0 if source_product in self.products[index] or self.products[index] in source_product else 0.0
             )
@@ -295,7 +308,7 @@ class _BiosphereMatcher:
 
     def _candidates(self, source: BiosphereIdentity, unit: str) -> tuple[int, ...]:
         terms = _tokens(source.name, *source.categories)
-        indexed = [self.by_token[(unit, token)] for token in terms if self.by_token[(unit, token)]]
+        indexed = [self.by_token[(unit, token)] for token in sorted(terms) if self.by_token[(unit, token)]]
         indexed.sort(key=len)
         candidates: set[int] = set()
         for values in indexed[:5]:
@@ -312,7 +325,7 @@ class _BiosphereMatcher:
 
         def cheap_rank(index: int) -> tuple[float, int]:
             shared = terms & self.terms[index]
-            token_weight = sum(1.0 / math.log2(2 + self.term_frequency[token]) for token in shared)
+            token_weight = sum(1.0 / math.log2(2 + self.term_frequency[token]) for token in sorted(shared))
             name_bonus = 1.0 if source_name == self.names[index] else 0.0
             category_bonus = 0.5 if source_categories == self.categories[index] else 0.0
             return token_weight + name_bonus + category_bonus, -index
@@ -373,6 +386,62 @@ def _resource_metadata(*, name: str, description: str, axis: str, source: dict, 
     }
 
 
+def apply_heuristic_candidate_baselines(resource: dict, payload: dict, targets: set[tuple]) -> None:
+    """Restore frozen authoring inputs without granting any runtime review or approval.
+
+    These inputs precede the unchanged reviewed overrides and bound sign audit.
+    They retain historical candidate identities after deterministic shortlist fixes.
+    """
+    fields = ("name", "reference product", "location", "unit")
+    required = {"id", "source", "target", "mapping_method", "confidence"}
+    if (
+        payload.get("schema_version") != 1
+        or payload.get("status") != "authoring_baseline_only"
+        or payload.get("resource") != resource["name"]
+        or not isinstance(payload.get("candidates"), list)
+    ):
+        raise ValueError("Invalid heuristic authoring baseline scope.")
+    indexed = {rule["id"]: rule for rule in resource["replace"]}
+    seen, pending = set(), []
+    for row in payload["candidates"]:
+        candidate = row["candidate"]
+        if set(candidate) != required or any(
+            set(candidate[role]) != set(fields)
+            or any(not isinstance(candidate[role][f], str) or not candidate[role][f] for f in fields)
+            for role in ("source", "target")
+        ):
+            raise ValueError("A heuristic authoring baseline contains only an exact candidate and score.")
+        digest = hashlib.sha256(json.dumps(candidate, sort_keys=True, ensure_ascii=False).encode()).hexdigest()
+        binding = hashlib.sha256(
+            json.dumps([candidate["source"], candidate["target"]], sort_keys=True, ensure_ascii=False).encode()
+        ).hexdigest()
+        current = indexed.get(candidate["id"])
+        confidence = candidate["confidence"]
+        if (
+            candidate["id"] in seen
+            or candidate["id"] != rule_identifier(resource["name"], candidate["source"])
+            or digest != row.get("candidate_sha256")
+            or binding != row.get("reference_binding_sha256")
+            or current is None
+            or current["source"] != candidate["source"]
+            or current.get("mapping_method") != "heuristic_similarity"
+            or candidate["mapping_method"] != "heuristic_similarity"
+            or set(current) - required - {"conversion_factor"}
+            or current.get("conversion_factor", 1) != 1
+            or normalize_unit(candidate["source"]["unit"]) != normalize_unit(candidate["target"]["unit"])
+            or tuple(candidate["target"][f] for f in fields) not in targets
+            or isinstance(confidence, bool)
+            or not isinstance(confidence, (int, float))
+            or not math.isfinite(confidence)
+            or not 0 <= confidence <= 1
+        ):
+            raise ValueError("Stale, reviewed, incompatible or duplicate heuristic authoring baseline.")
+        seen.add(candidate["id"])
+        pending.append((current, candidate))
+    for current, candidate in pending:
+        current.update(target=dict(candidate["target"]), confidence=candidate["confidence"])
+
+
 def apply_reviewed_overrides(resource: dict, overrides: dict, targets: set[tuple]) -> None:
     """Apply audited exact-identity decisions, rejecting stale or invalid inputs."""
 
@@ -421,7 +490,7 @@ def apply_reviewed_overrides(resource: dict, overrides: dict, targets: set[tuple
         current.pop("review_provenance", None)
         if passenger_distance_alias:
             current["conversion_factor"] = 1.0
-        else:
+        elif "reference_flow_sign_review" not in current:
             current.pop("conversion_factor", None)
     resource["coverage"]["mapping_methods"] = dict(
         sorted(Counter(rule["mapping_method"] for rule in resource["replace"]).items())
@@ -429,17 +498,31 @@ def apply_reviewed_overrides(resource: dict, overrides: dict, targets: set[tuple
     resource["coverage"]["mean_confidence"] = round(
         sum(rule["confidence"] for rule in resource["replace"]) / len(resource["replace"]), 6
     )
-    referenced = {rule["review_ref"] for rule in resource["replace"] if "review_ref" in rule}
+    referenced = {
+        rule["review_ref"]
+        for operation in ("replace", "disaggregate", "delete")
+        for rule in resource.get(operation, [])
+        if "review_ref" in rule
+    }
+    referenced.update(
+        entry["review_ref"]
+        for rule in resource["replace"]
+        for entry in rule.get("reference_flow_sign_review", {}).get("profiles", [])
+        if "review_ref" in entry
+    )
     resource["reviews"] = {key: value for key, value in resource.get("reviews", {}).items() if key in referenced}
 
 
-def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
+def _build_historical_review_resources(
+    catalog_directory: Path, curated_path: Path, conversion_factors_path: Path
+) -> tuple[dict, dict]:
+    """Replay frozen historical evidence; this output is not an executable route resource."""
     uvek_payload = _load_catalog(catalog_directory / "uvek__2025__cutoff.json")
     uvek_targets = {TechnosphereIdentity.from_row(row) for row in uvek_payload["technosphere"]}
     technosphere_sources: set[TechnosphereIdentity] = set()
     biosphere_sources: set[BiosphereIdentity] = set()
     for version in ECOINVENT_VERSIONS:
-        for system_model in ECOINVENT_SYSTEM_MODELS:
+        for system_model in _HISTORICAL_REVIEW_SYSTEM_MODELS:
             filename = f"ecoinvent__{version}__{system_model}.json"
             payload = _load_catalog(catalog_directory / filename)
             technosphere_sources.update(TechnosphereIdentity.from_row(row) for row in payload["technosphere"])
@@ -464,7 +547,7 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         source={
             "family": "ecoinvent",
             "versions": list(ECOINVENT_VERSIONS),
-            "system_models": list(ECOINVENT_SYSTEM_MODELS),
+            "system_models": list(_HISTORICAL_REVIEW_SYSTEM_MODELS),
         },
         target={"family": "uvek", "version": UVEK_VERSION, "system_model": UVEK_SYSTEM_MODEL},
     )
@@ -492,6 +575,14 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         "mapping_methods": dict(sorted(method_counts.items())),
         "mean_confidence": round(confidence_total / len(technosphere_sources), 6),
     }
+    baseline_path = (
+        Path(__file__).resolve().parents[1] / "brightpath/data/export/uvek_heuristic_candidate_baselines.json"
+    )
+    apply_heuristic_candidate_baselines(
+        technosphere,
+        json.loads(baseline_path.read_text(encoding="utf-8")),
+        {_technosphere_key(target) for target in uvek_targets},
+    )
     overrides_path = Path(__file__).resolve().parents[1] / "brightpath/data/export/uvek_reviewed_overrides.json"
     apply_reviewed_overrides(
         technosphere,
@@ -532,9 +623,23 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         "mapping_methods": dict(sorted(method_counts.items())),
         "mean_confidence": round(confidence_total / len(biosphere_sources), 6),
     }
+    apply_packaged_sign_review(technosphere, Path(__file__).resolve().parents[1])
     validate_migration_resource(technosphere)
     validate_migration_resource(biosphere)
     return technosphere, biosphere
+
+
+def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
+    """Generate executable mappings only between compatible system models."""
+    historical, _ = _build_historical_review_resources(catalog_directory, curated_path, conversion_factors_path)
+    if __package__:
+        from scripts.generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
+    else:
+        from generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
+
+    technosphere = cutoff_uvek_resource(historical, catalog_directory)
+    validate_migration_resource(technosphere)
+    return technosphere, build_canonical_biosphere_resource(catalog_directory)
 
 
 def _technosphere_key(identity: TechnosphereIdentity) -> tuple[str, str, str, str]:

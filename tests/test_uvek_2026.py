@@ -93,7 +93,9 @@ def test_every_rule_and_unresolved_disposition_belongs_to_exact_catalog(axis):
         for group in grouped.values():
             if len(group) > 1:
                 assert axis == "biosphere"
-                assert any(rule.get("report_correspondence") for rule in group)
+                assert any(
+                    rule.get("report_correspondence") or rule.get("biosphere_information_loss") for rule in group
+                )
                 assert all(rule.get("review_ref") for rule in group)
 
 

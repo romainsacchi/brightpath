@@ -209,8 +209,8 @@ def test_resource_retains_explicit_heuristic_boundaries(candidate_resource):
     assert candidate_resource["source_profiles"] == [
         {"family": "ecoinvent", "version": version, "system_model": system}
         for version in ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
-        for system in ["cutoff", "consequential"]
-    ]
+        for system in ["cutoff"]
+    ] + [{"family": "ecoinvent", "version": version, "system_model": "cutoff"} for version in ["3.9.1", "3.10.1"]]
 
 
 def test_real_current_native_product_ambiguity_remains_refused():

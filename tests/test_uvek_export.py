@@ -68,13 +68,14 @@ def test_entire_catalog_has_a_disposition_and_approved_endpoints_exist():
     source, target = contexts()
     provider = PackageCatalogProvider()
     catalog = provider.load_technosphere(source.background.technosphere).identities
-    approved = {identity(rule["source"]) for rule in resource["replace"]}
+    approved = {identity(rule["source"]) for operation in ("replace", "delete") for rule in resource[operation]}
     assert "unresolved" not in resource
     assert "evidence_sha256" not in resource
     assert approved <= catalog
     assert resource["coverage"]["source_identities"] == len(catalog) == 11747
-    assert resource["coverage"]["mapped_identities"] == len(approved) == 1424
-    assert resource["coverage"]["unresolved_identities"] == len(catalog - approved) == 10323
+    assert resource["coverage"]["mapped_identities"] == len(approved) == 1518
+    assert resource["coverage"]["unresolved_identities"] == len(catalog - approved) == 10229
+    assert resource["coverage"]["omitted_identities"] == len(resource["delete"]) == 1
     target_identities = provider.load_technosphere(target.technosphere).identities
     biosphere = provider.load_biosphere(target.biosphere).identities
     for rule in resource["replace"]:
@@ -142,7 +143,7 @@ def test_unresolved_supplier_fails_and_rolls_back(catalog_entry):
     resource = load_uvek_export_resource()
     source, target = contexts()
     catalog = PackageCatalogProvider().load_technosphere(source.background.technosphere).identities
-    approved = {identity(rule["source"]) for rule in resource["replace"]}
+    approved = {identity(rule["source"]) for operation in ("replace", "delete") for rule in resource[operation]}
     unresolved = min(catalog - approved) if catalog_entry else ("Unknown supplier", "unknown", "CH", "kilogram")
     data = data_for({"source": dict(zip(IDENTITY_FIELDS, unresolved, strict=True))})
     inventory = BrightwayInventory.from_data(data, context=source)
@@ -217,8 +218,17 @@ def test_resource_rejects_inconsistent_coverage(field, value):
 
 
 @pytest.mark.parametrize("include_unresolved", [True, False])
-def test_generator_keeps_unresolved_identities_in_review_only(tmp_path, include_unresolved):
+def test_generator_keeps_unresolved_identities_in_review_only(tmp_path, include_unresolved, monkeypatch):
     generator = runpy.run_path(str(Path(__file__).resolve().parents[1] / "scripts/generate_uvek_export.py"))
+    # Isolate the synthetic one-source catalog from the independently checked
+    # real catalog additions (covered by their independent review tests).
+    monkeypatch.setitem(generator["build"].__globals__, "apply_reverse_gas", lambda *args: None)
+    monkeypatch.setitem(generator["build"].__globals__, "apply_reverse_ash", lambda *args: None)
+    monkeypatch.setitem(generator["build"].__globals__, "apply_reverse_flare", lambda *args: None)
+    monkeypatch.setitem(generator["build"].__globals__, "apply_reverse_feed_products", lambda *args: None)
+    monkeypatch.setitem(generator["build"].__globals__, "apply_reverse_slag_product", lambda *args: None)
+    monkeypatch.setitem(generator["build"].__globals__, "apply_reverse_light_freight", lambda *args: None)
+    monkeypatch.setitem(generator["build"].__globals__, "apply_reverse_packed_wool", lambda *args: None)
     source = {"name": "Reviewed source", "reference product": "product", "location": "CH", "unit": "kilogram"}
     unresolved = {**source, "name": "Unreviewed source"}
     target = {**source, "name": "Reviewed target"}
@@ -255,7 +265,7 @@ def test_generator_keeps_unresolved_identities_in_review_only(tmp_path, include_
     }
     evidence = {"candidates": [], "aliases": [], "recipes": [{"source": source, "recipe": recipe}]}
     original = deepcopy(evidence)
-    resource, review = generator["build"](tmp_path, evidence)
+    resource, review = generator["build"](tmp_path, evidence, sign_review={"resources": {}})
 
     assert evidence == original
     assert resource["schema_version"] == 3
@@ -296,6 +306,13 @@ def catalogs():
 def test_every_approved_rule_executes_with_complete_target_coverage(rule, catalogs):
     source, target = contexts()
     inventory = BrightwayInventory.from_data(data_for(rule), context=source)
+    if rule.get("reference_flow_sign_review", {}).get("status") == "unresolved":
+        before = inventory.data
+        with pytest.raises(MigrationError) as caught:
+            inventory.migrate_background(target, catalog_provider=catalogs, policy=MigrationPolicy.permissive())
+        assert "migration.reference_flow_sign_unresolved" in {issue.code for issue in caught.value.report.issues}
+        assert inventory.data == before
+        return
     result = inventory.migrate_background(
         target, catalog_provider=catalogs, policy=MigrationPolicy(on_information_loss=PolicyAction.WARN)
     )

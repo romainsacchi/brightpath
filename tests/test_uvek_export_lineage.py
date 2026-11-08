@@ -195,7 +195,10 @@ def test_evidence_replays_the_packaged_rules_without_changing_earlier_decisions(
         (ROOT / "brightpath/data/migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text(encoding="utf-8")
     )
     assert resource == packaged
-    assert len([rule for rule in resource["replace"] if rule.get("mapping_method") == LINEAGE_METHOD]) == 1070
+    assert len([rule for rule in resource["replace"] if rule.get("mapping_method") == LINEAGE_METHOD]) == 1069
+    assert len(resource["delete"]) == 1
+    omitted = next(entry for entry in review["review"] if entry["disposition"] == "omitted")
+    assert omitted["source"]["name"] == "Biowaste, at collection point"
     assert review["coverage"] == resource["coverage"]
     assert evidence == before
 
@@ -227,8 +230,11 @@ def test_stale_or_inconsistent_evidence_is_rejected(evidence, change):
 
 
 @pytest.mark.parametrize("version", ["2025", "2026"])
-def test_every_added_rule_executes_from_both_uvek_releases_under_strict_policy(version):
+def test_every_added_executable_rule_runs_from_both_uvek_releases_under_strict_policy(version):
     rules = [rule for rule in load_uvek_export_resource()["replace"] if rule.get("mapping_method") == LINEAGE_METHOD]
+    blocked = [rule for rule in rules if rule.get("reference_flow_sign_review", {}).get("status") == "unresolved"]
+    assert not blocked
+    rules = [rule for rule in rules if rule not in blocked]
     native = next(
         r for r in load_uvek_release_resources("technosphere") if r["source_profiles"][0]["version"] == "2026"
     )
@@ -260,7 +266,8 @@ def test_every_added_rule_executes_from_both_uvek_releases_under_strict_policy(v
     migrated = inventory.migrate_background(target)
     assert inventory.data == original == data
     assert migrated.data[0]["unknown metadata"] == {"keep": True}
-    assert len(migrated.data[0]["exchanges"]) == 1071
+    assert len(rules) == 1069
+    assert len(migrated.data[0]["exchanges"]) == len(rules) + 1
     for exchange, rule in zip(migrated.data[0]["exchanges"][1:], rules, strict=True):
         assert identity(exchange) == identity(rule["target"])
         assert (exchange["amount"], exchange["loc"], exchange["scale"]) == (2, 2, 0.1)

@@ -47,9 +47,9 @@ def test_migration_capabilities_advertise_only_active_routes():
         if value.target_family == "uvek" and value.family == "ecoinvent" and value.axis == "technosphere"
     ]
     assert {(value.source_series, value.target_series) for value in uvek} == {
-        (version, "2025") for version in ("3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12")
+        (version, "2025") for version in ("3.6", "3.7", "3.8", "3.9", "3.9.1", "3.10", "3.10.1", "3.11", "3.12")
     }
-    assert {value.system_model for value in uvek} == {"cutoff", "consequential"}
+    assert {value.system_model for value in uvek} == {"cutoff"}
     assert {value.reverse for value in uvek} == {"unavailable"}
     release_edges = [value for value in capabilities if value.source_series == "2026" or value.target_series == "2026"]
     assert {

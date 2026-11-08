@@ -19,9 +19,61 @@ from brightpath.migrations.schema import (
     dumps_migration_resource,
     intern_review,
     normalize_migration_resource,
+    rule_review,
     validate_migration_resource,
 )
 from brightpath.units import normalize_unit
+
+if __package__ is None:
+    from review_uvek_ash_markets import apply_reverse as apply_reverse_ash_market_rail
+    from review_uvek_ash_markets import legacy_reverse_projection as ash_market_rail_legacy_projection
+    from review_uvek_cutoff_feed_products import apply_reverse_products as apply_reverse_feed_products
+    from review_uvek_cutoff_feed_products import legacy_reverse_projection as cutoff_feed_legacy_projection
+    from review_uvek_cutoff_slag_products import apply_reverse_product as apply_reverse_slag_product
+    from review_uvek_cutoff_slag_products import legacy_reverse_projection as cutoff_slag_legacy_projection
+    from review_uvek_natural_gas_flares import (
+        apply_reverse_flare,
+    )
+    from review_uvek_natural_gas_flares import (
+        legacy_projection as natural_gas_flare_legacy_projection,
+    )
+    from review_uvek_packed_wool import apply_reverse as apply_reverse_packed_wool
+    from review_uvek_packed_wool import legacy_reverse_projection as packed_wool_legacy_projection
+    from review_uvek_reference_signs import apply_packaged_sign_review, apply_sign_review
+    from review_uvek_residual_landfills import apply_component_reverse as apply_reverse_residual_components
+    from review_uvek_residual_landfills import legacy_component_projection as residual_component_legacy_projection
+    from review_uvek_reverse_ash import apply_reverse_ash, legacy_ash_projection
+    from review_uvek_reverse_gas import apply_reverse_gas, legacy_projection
+    from review_uvek_sewage_digestion import apply_reverse as apply_reverse_sewage_digestion
+    from review_uvek_sewage_digestion import legacy_reverse_projection as sewage_digestion_legacy_projection
+    from review_uvek_whole_freight import apply_reverse as apply_reverse_light_freight
+    from review_uvek_whole_freight import legacy_reverse_projection as light_freight_legacy_projection
+else:
+    from scripts.review_uvek_ash_markets import apply_reverse as apply_reverse_ash_market_rail
+    from scripts.review_uvek_ash_markets import legacy_reverse_projection as ash_market_rail_legacy_projection
+    from scripts.review_uvek_cutoff_feed_products import apply_reverse_products as apply_reverse_feed_products
+    from scripts.review_uvek_cutoff_feed_products import legacy_reverse_projection as cutoff_feed_legacy_projection
+    from scripts.review_uvek_cutoff_slag_products import apply_reverse_product as apply_reverse_slag_product
+    from scripts.review_uvek_cutoff_slag_products import legacy_reverse_projection as cutoff_slag_legacy_projection
+    from scripts.review_uvek_natural_gas_flares import (
+        apply_reverse_flare,
+    )
+    from scripts.review_uvek_natural_gas_flares import (
+        legacy_projection as natural_gas_flare_legacy_projection,
+    )
+    from scripts.review_uvek_packed_wool import apply_reverse as apply_reverse_packed_wool
+    from scripts.review_uvek_packed_wool import legacy_reverse_projection as packed_wool_legacy_projection
+    from scripts.review_uvek_reference_signs import apply_packaged_sign_review, apply_sign_review
+    from scripts.review_uvek_residual_landfills import apply_component_reverse as apply_reverse_residual_components
+    from scripts.review_uvek_residual_landfills import (
+        legacy_component_projection as residual_component_legacy_projection,
+    )
+    from scripts.review_uvek_reverse_ash import apply_reverse_ash, legacy_ash_projection
+    from scripts.review_uvek_reverse_gas import apply_reverse_gas, legacy_projection
+    from scripts.review_uvek_sewage_digestion import apply_reverse as apply_reverse_sewage_digestion
+    from scripts.review_uvek_sewage_digestion import legacy_reverse_projection as sewage_digestion_legacy_projection
+    from scripts.review_uvek_whole_freight import apply_reverse as apply_reverse_light_freight
+    from scripts.review_uvek_whole_freight import legacy_reverse_projection as light_freight_legacy_projection
 
 LINEAGE_METHOD = "publisher_product_correspondence"
 LINEAGE_PATH = "docs/uvek_export_lineage_evidence.json"
@@ -63,9 +115,28 @@ def label(value):
     return " ".join(str(value or "").casefold().split())
 
 
+def legacy_export_projection(resource):
+    """Validate later independent batches before comparing the frozen publisher baseline."""
+    resource = light_freight_legacy_projection(resource)
+    resource = packed_wool_legacy_projection(resource)
+    resource = residual_component_legacy_projection(resource)
+    resource = ash_market_rail_legacy_projection(resource)
+    resource = sewage_digestion_legacy_projection(resource)
+    return legacy_projection(
+        legacy_ash_projection(
+            natural_gas_flare_legacy_projection(cutoff_feed_legacy_projection(cutoff_slag_legacy_projection(resource)))
+        )
+    )
+
+
 def legacy_export_fingerprint(resource):
     """Bind additions to the pre-existing rules, reviews and supporting recipes."""
-    rules = [rule for rule in resource["replace"] if rule.get("mapping_method") != LINEAGE_METHOD]
+    resource = legacy_export_projection(resource)
+    rules = [
+        {key: value for key, value in rule.items() if key != "reference_flow_sign_review"}
+        for rule in resource["replace"]
+        if rule.get("mapping_method") != LINEAGE_METHOD
+    ]
     reviews = {rule["review_ref"]: resource["reviews"][rule["review_ref"]] for rule in rules}
     value = {"replace": rules, "reviews": reviews, "recipes": resource["recipes"]}
     return hashlib.sha256(json.dumps(value, sort_keys=True, ensure_ascii=False, allow_nan=False).encode()).hexdigest()
@@ -406,7 +477,7 @@ def extract_evidence(args):
     }
 
 
-def build(root, evidence, lineage=None):
+def build(root, evidence, lineage=None, *, sign_review=None):
     directory = root / "brightpath/data"
     source_catalog = load(directory / "export/reference_catalogs/uvek__2025__cutoff.json")
     target_catalog = load(directory / "export/reference_catalogs/ecoinvent__3.12__cutoff.json")
@@ -538,6 +609,24 @@ def build(root, evidence, lineage=None):
         "recipes": recipes,
         "coverage": coverage,
     }
+    apply_reverse_gas(resource, review, sources, targets)
+    apply_reverse_ash(resource, review, sources, targets)
+    apply_reverse_flare(resource, review, sources, targets)
+    apply_reverse_feed_products(resource, review, sources, targets)
+    apply_reverse_slag_product(resource, review, sources, targets)
+    apply_reverse_sewage_digestion(resource, review, sources, targets)
+    apply_reverse_ash_market_rail(resource, review, sources, targets)
+    apply_reverse_residual_components(resource, review, sources, targets)
+    apply_reverse_light_freight(resource, review, sources, targets)
+    apply_reverse_packed_wool(resource, review, sources, targets)
+    if sign_review is None:
+        apply_packaged_sign_review(resource, root)
+    else:
+        apply_sign_review(resource, sign_review)
+    omissions = {rule["id"]: rule_review(resource, rule) for rule in resource["delete"]}
+    for entry in review:
+        if entry.get("rule_id") in omissions:
+            entry.update(disposition="omitted", reason=omissions[entry["rule_id"]]["rationale"])
     validate_migration_resource(resource)
     return resource, {"coverage": coverage, "review": review, "scientific_equivalence": False}
 

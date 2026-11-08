@@ -5,6 +5,7 @@ import pytest
 
 from brightpath import DATA_DIR
 from brightpath.migrations.resources import load_uvek_technosphere_resource
+from brightpath.migrations.schema import rule_review
 from scripts.generate_uvek_migration_resources import apply_reviewed_overrides
 from scripts.review_uvek_mapping import identity, select
 
@@ -84,11 +85,35 @@ def test_packaged_overrides_are_idempotent_valid_and_preserve_unselected_rules()
     catalog = json.loads((DATA_DIR / "export/reference_catalogs/uvek__2025__cutoff.json").read_text())
     targets = {(row["name"], row["reference_product"], row["location"], row["unit"]) for row in catalog["technosphere"]}
     original = copy.deepcopy(resource)
-    apply_reviewed_overrides(resource, overrides, targets)
+    sign_ledger = json.loads((DATA_DIR / "export/uvek_reference_flow_sign_review.json").read_text())
+    indexed = {identity(row["source"]): row for row in [*resource["replace"], *resource["delete"]]}
+    retained = []
+    for decision in overrides["decisions"]:
+        current = indexed[identity(decision["source"])]
+        later = sign_ledger["resources"][resource["name"]].get(current["id"], {})
+        if later.get("operation") in {"recipe", "delete"}:
+            historical = later["original_rule"]
+            assert historical["target"] == decision["target"]
+            assert historical["confidence"] == decision["confidence"]
+            if later["operation"] == "recipe":
+                assert current["target"] == later["target"]
+            else:
+                assert current["approved_omission"] is True
+        elif "supplier_proxy_review" in later:
+            assert rule_review(resource, current) == later["supplier_proxy_review"]
+            assert later["original_review"] == {
+                "rationale": decision["reason"],
+                "limitations": decision.get("limitations", []),
+            }
+        else:
+            retained.append(decision)
+    # Replay historical selections that have not been superseded by an
+    # independently inspected helper or omission; preserve every later decision.
+    apply_reviewed_overrides(resource, {**overrides, "decisions": retained}, targets)
     assert resource == original
     assert overrides["decisions"]
     indexed = {identity(row["source"]): row for row in resource["replace"]}
-    for decision in overrides["decisions"]:
+    for decision in retained:
         current = indexed[identity(decision["source"])]
         assert current["target"] == decision["target"]
         assert current["mapping_method"] == decision["mapping_method"].removeprefix("clic_")

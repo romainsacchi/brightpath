@@ -17,14 +17,14 @@ from scripts.review_uvek_2026_biosphere import identity
 from scripts.review_uvek_2026_land import METHOD, REPORT, apply_land_review, resource_hash, validate_decision
 from tests.test_uvek_2026_biosphere_review import CATALOGS, context, document
 from tests.test_uvek_export import data_for
-from tests.uvek_biosphere_history import before_land_review
+from tests.uvek_biosphere_history import before_land_review, before_water_review
 
 
 def test_both_directions_preserve_prior_rules_and_reproduce_packaged_resources():
     report = json.loads(REPORT.read_text())
     assert report["summary"] == {"forward_additions": 5, "reverse_additions": 7}
     prior = before_land_review()
-    current = list(load_uvek_release_resources("biosphere"))
+    current = before_water_review()
     assert apply_land_review(prior, REPORT, CATALOGS) == current
     for direction, family, total in (("forward", "uvek", 1935), ("reverse", "ecoinvent", 1297)):
         previous = next(row for row in prior if row["source_profiles"][0]["family"] == family)
