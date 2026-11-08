@@ -59,6 +59,16 @@ collection freight or dismantling. Native long-term leachate and composition
 differences remain explicit screening warnings. The correction is gated to the
 inspected ecoinvent 3.6 cut-off reference; other versions stay unresolved.
 
+The pilot's delivered tap-water review is recorded separately in
+``brightpath/data/export/uvek_pilot_tap_water_review.json``. Three markets across
+four inspected source profiles use the complete native Swiss tap-water supply
+as an explicitly geographic screening proxy. Both references are kg delivered
+at the user, so signed quantities retain factor ``+1``. Source distribution
+losses are not multiplied into the target demand: the native inventory already
+includes its own abstraction, treatment, pumping, storage and network. Different
+treatment mixes, water sources, network losses and regional water-stress results
+remain limitations. This metadata review changes no raw migration rule.
+
 Exact rule approvals
 --------------------
 
