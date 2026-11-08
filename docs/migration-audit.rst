@@ -130,6 +130,17 @@ and manufactured-module units retain factor ``+1`` without capacity or lifetime
 scaling. Converter steel with extra hot rolling and lubricating-oil additive
 formulation differences are excluded. Raw mapping rules remain unchanged.
 
+``brightpath/data/export/uvek_pilot_grid_converter_review.json`` subsequently
+corrects the inspected 3.6 converter low-alloyed steel target to the existing
+native converter/casting process without rolling, and the 3.8 European
+medium-voltage target to the complete ENTSO-E grid. Standing inspected
+same-function and geographic proxy approval applies. Signed kg/kWh keep factor
+``+1``; native grid losses, infrastructure and SF6 exchanges remain internal.
+Country coverage, trade, market delivery, vintage and imported biosphere
+differences remain warnings. No new helper, manufacturing stage, reverse rule
+or cross-system-model route is introduced. Authoring replay retains unresolved
+defaults outside the two exact cut-off profiles.
+
 Exact rule approvals
 --------------------
 
