@@ -48,6 +48,17 @@ Shorter UVEK 2025 composition documentation and native inventory differences
 remain warnings. Only the inspected 3.6 source profiles are reviewed; other
 releases remain unresolved, without an inferred reverse correspondence.
 
+The inspected bare mineral-wool landfill link also removes an erroneous
+collection wrapper, as recorded in
+``brightpath/data/export/uvek_pilot_bare_landfill_review.json``. Its source and
+native terminal processes are the same ones traced inside the previously
+reviewed collection service. The other inspected bare inert-waste landfill
+already has the correct target. Preserve signed kg with factor ``-1``, retain
+the bare landfill's own operations and internal logistics once, and add no
+collection freight or dismantling. Native long-term leachate and composition
+differences remain explicit screening warnings. The correction is gated to the
+inspected ecoinvent 3.6 cut-off reference; other versions stay unresolved.
+
 Exact rule approvals
 --------------------
 
