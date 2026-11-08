@@ -81,6 +81,17 @@ caller freight is preserved. Delivery, auxiliary-energy and background
 differences remain warnings. Mixed-fate plastic/oil markets and Swiss copper
 with fly-ash extraction are excluded. No raw mapping rule is changed.
 
+Six further exact-profile pilot correspondences are recorded in
+``brightpath/data/export/uvek_pilot_matching_supply_service_review.json``:
+charcoal, platinum, raw softwood board dried to u=10%, hydraulic excavation,
+whole rail freight and petroleum-tanker freight. Positive references preserve
+signed kg, m3 or net cargo tonne-km with factor ``+1``. Complete native material
+and infrastructure/service boundaries were inspected; no extra drying,
+combustion, excavation material, vehicle or recovery credit is added. Native
+tanker size, fleet, machinery year, supply allocation and sparse wood
+documentation remain warnings. Internal capacity, lifetime, density and heating
+values are not demand conversion factors. Raw migration rules are unchanged.
+
 Exact rule approvals
 --------------------
 
