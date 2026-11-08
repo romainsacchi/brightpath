@@ -5,6 +5,7 @@ from tempfile import TemporaryDirectory
 
 from brightpath.background import PackageCatalogProvider
 from brightpath.background.execution import execute_background_migration
+from brightpath.background.migration import plan_background_migration
 from brightpath.background.uvek_export import load_uvek_export_resource
 from brightpath.core import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
 from brightpath.formats.openlca_jsonld import load_openlca_jsonld, write_openlca_jsonld
@@ -15,6 +16,18 @@ for resource in (load_uvek_technosphere_resource(), load_uvek_export_resource())
     assert resource["schema"] == "brightpath.migration"
     assert resource["schema_version"] == 3
     assert resource["replace"]
+    assert all(
+        profile["system_model"] == resource["target_profile"]["system_model"] for profile in resource["source_profiles"]
+    )
+
+for release in ("2025", "2026"):
+    consequential = BackgroundContext(
+        TechnosphereProfile("ecoinvent", "3.12", "consequential"), BiosphereProfile("ecoinvent", "3.10")
+    )
+    cutoff = BackgroundContext(TechnosphereProfile("uvek", release, "cutoff"), consequential.biosphere)
+    for source, target in ((consequential, cutoff), (cutoff, consequential)):
+        plan = plan_background_migration(source, target)
+        assert not plan.executable and not plan.technosphere_steps
 
 release_resources = {axis: load_uvek_release_resources(axis) for axis in ("technosphere", "biosphere")}
 for resources in release_resources.values():
@@ -114,8 +127,8 @@ export_resource = load_uvek_export_resource()
 publisher_rules = [
     rule for rule in export_resource["replace"] if rule.get("mapping_method") == "publisher_product_correspondence"
 ]
-assert len(export_resource["replace"]) == 1424
-assert len(publisher_rules) == 1070
+assert len(export_resource["replace"]) == 1498
+assert len(publisher_rules) == 1069
 export_rule = next(
     rule
     for rule in publisher_rules

@@ -41,6 +41,26 @@ with ``infer_with_policy``: existing ambiguity, deletion, aggregation and loss
 policies still govern any inferred reverse execution. A shared schema never
 turns directional proxy decisions into reversible equivalences.
 
+Canonical biosphere identity decisions
+--------------------------------------
+
+The UVEK bridge to the canonical ecoinvent 3.10 biosphere declares
+``canonical_biosphere_identity_version: 1``. Its replacement rules include
+``biosphere_identity_review.profiles`` entries with an exact source biosphere
+profile, publisher ``source_flow_ids``, status and verified target identity.
+Same-UUID decisions require unchanged units and complete receiving contexts.
+The two reviewed publisher synonyms additionally require matching chemical
+identity evidence. Targets include the publisher ``flow_id``.
+
+The semantic resource validator checks these decisions in addition to the
+shared JSON schema. Execution selects the declared source release before
+matching any exchanges. A serialized default target cannot authorize another
+release's decision. Unsupported entries carry explicit reasons in
+``unresolved`` and never carry executable targets; used unsupported physical
+flows cause full rollback even under permissive policy. This bridge permits
+no quantity rescaling, deletion or inferred inverse. Native UVEK biosphere
+correspondences retain their independent resource and approval scope.
+
 Rules and assessments
 ---------------------
 
@@ -59,6 +79,42 @@ A rule can additionally contain:
 * ``confidence``: an optional finite number between 0 and 1, inclusive.
 * ``classification``: optional ``correspondence`` or ``proxy``.
 * ``review_ref``: an identifier referencing an entry in ``reviews``.
+* ``reference_flow_sign_review``: optional independent reference-coordinate
+  review on a technosphere replacement. ``status`` is ``verified`` or
+  ``unresolved``; ``reason`` and nonempty ``evidence`` record the basis.
+  Verified reviews require integer ``source_sign`` and ``target_sign`` values
+  of -1 or +1. The executable ``conversion_factor`` must have their product's
+  sign for an unchanged reference role. Its magnitude retains any independently documented unit/quantity
+  conversion. Unresolved reviews block the used correspondence under every
+  policy; unused catalog rules do not prevent conversion.
+
+  Optional ``profiles`` entries scope an independent decision to an exact
+  ``source_profile`` (family, version, system model). Each entry has a ``review``
+  with the same status/reason/evidence and reference-sign contract. Verified
+  replacement entries require an explicit finite nonzero ``conversion_factor`` consistent
+  with those signs; unresolved entries must not supply an executable factor.
+  Profiles must be unique and declared by the resource. The containing review
+  remains globally unresolved so that consumers without profile-selection support
+  fail closed. There is no fallback between versions, patch versions, or models.
+
+  A profile may instead explicitly declare ``operation: delete`` and
+  ``approved_omission: true``, with a ``review_ref`` pointing to a shared review
+  containing rationale and nonempty evidence. This requires a verified profile
+  review and forbids a conversion factor. Execution removes that replacement
+  from an operation-local resource and applies an approved warning-only deletion
+  for the exact profile. Other profiles retain their independent decisions;
+  neither a missing profile nor a reverse route inherits an omission. Cached
+  resources and caller-owned inventory data remain unchanged.
+
+  A separately approved waste-to-recovered-product credit may declare
+  ``role_conversion: recovery_credit`` inside its verified review. It requires
+  source sign -1, target sign +1, an explicit positive quantity factor and a
+  ``review_ref`` with shared scientific rationale/evidence. It cannot be combined
+  with an omission or recipe target. This role conversion preserves an incoming
+  negative product-equivalent credit, so its factor sign is the negative of the
+  ordinary reference-sign product. Both profile decisions and selected scalar
+  reviews enforce this contract. An unmarked or pending role mismatch stays
+  blocked, and a missing exact profile cannot inherit an approval.
 
 Missing confidence means no score was provided. It stays absent through
 normalization and serialization. An explicit zero stays zero. Existing scores
@@ -78,8 +134,19 @@ an identifier, classification and supported rationale for every replacement.
 Disaggregation rules contain ``source`` and ``targets``. Targets retain the
 upstream ``allocation`` convention, including optional explicit conversion
 factors. Allocations must be finite and nonnegative with a positive total.
-Deletion rules contain ``source``. Their execution remains policy-controlled;
-merely loading a deletion rule does not delete an exchange.
+Deletion rules contain ``source``. Ordinary deletion execution remains
+policy-controlled; merely loading a deletion rule does not delete an exchange.
+
+An explicitly reviewed technosphere deletion can declare
+``approved_omission: true``. It requires an identifier and a shared review with
+rationale and evidence, and cannot also replace/disaggregate the same source.
+False markers, markers on other operations/axes and unaudited omissions are
+rejected. A matched approved omission removes only the external exchange and
+always reports a warning and a detailed loss, independently of generic deletion
+and information-loss policies. The loss preserves the original exchange and
+its path; the step counts ``technosphere_deletions``. Production, foreground
+links and dataset identities are preserved. Unrelated execution errors still
+roll back the operation. Omission does not create a reverse reconstruction rule.
 
 Foreground recipes
 ------------------
@@ -95,12 +162,55 @@ and unknown metadata. Supporting recipe dependencies use the existing
 Recipe quantities are inventory coefficients and need not sum to one; recipes
 remain distinct from disaggregation shares.
 
-The seven current recipes are unchanged, preserving generated helper names,
+An empty ``inputs`` list is accepted only with ``zero_burden: true`` and a
+nonempty ``zero_burden_reason``, rationale and evidence. Every use requires an
+exact verified ecoinvent cut-off source-profile decision with positive source
+and target references and factor +1, plus shared scientific review evidence.
+An unreferenced zero-burden recipe is rejected. A dependency on an approved
+zero-burden stock requires ``zero_burden_supplier`` with its direct ``rule_id``,
+exact ``source_profile`` and SHA-256 ``profile_review_sha256``. The digest covers
+the sorted JSON profile entry. The direct approval must target that exact recipe.
+Every containing helper, including indirect parents, requires an unresolved
+default and verified entries matching the bound stock's exact source profile.
+Unannotated, stale, cross-model and cross-version dependencies are rejected.
+The annotation is removed when rendering exchanges; allocation warnings and
+production-only helper metadata remain in the migration output.
+All other recipes still require at least one input. These production-only
+suppliers preserve observed allocation boundaries and material flows; unresolved
+background links cannot become empty suppliers. Execution records a dedicated
+``migration.zero_burden_supplier`` warning and retains the original exchange.
+
+The nine reverse recipes are unchanged, preserving generated helper names,
 codes, quantities, consumer uncertainty and provenance. The complete returned
 foreground inventory, including generated helpers, must still be exported.
-The registered reviewed UVEK exporter executes replacement and helper targets;
-the heuristic forward route executes background replacements. Route bindings
-reject unsupported recipe targets or operation types before transformation.
+The registered reviewed UVEK exporter executes replacement/helper targets and
+explicitly approved omissions; ordinary deletions and disaggregation remain
+unsupported there. The heuristic forward route also executes individually reviewed
+foreground recipes with verified exact source profiles. A verified profile entry
+may contain ``target: {recipe_ref: ...}`` to select a unit-compatible recipe
+variant. Pending decisions, deletions and recovery credits cannot override recipe
+targets. Forward refrigerant helpers use the ecoinvent 3.10 biosphere independently
+of the input inventory's biosphere version.
+
+Forward recipe proxies declare ``technosphere_information_loss`` and shared
+review evidence. Strict information-loss policy blocks their use. An accepted
+proxy records a warning and a loss containing the full original consumer exchange,
+including when the caller otherwise allows information loss. Target-native
+technosphere inputs in these helpers are included in subsequent release migration
+and final target-link validation.
+
+Recipe biosphere inputs may declare ``biosphere_targets`` with unique exact
+biosphere profiles, explicit name/category/unit targets and a reason. Quantities
+and units are preserved, declared target flows must exist, and an authored
+``information_loss`` warning is retained in loss reports. This is an explicit
+recipe-local approval rather than runtime fuzzy matching. Only biosphere
+inventory indicators may carry ``approved_omission_if_unavailable: true`` with
+an ``omission_rationale``; unsupported indicators then warn and remain audited.
+An unavailable catalog must not trigger optional omission.
+
+Both directions share external-exchange protection,
+warning and loss-audit behavior for approved omissions. Route bindings reject
+unsupported recipe targets or operation types before transformation.
 
 Coverage and validation
 -----------------------
@@ -108,7 +218,8 @@ Coverage and validation
 For a nonempty ``coverage`` object, the common fields are:
 
 * ``source_identities``: distinct source identities in the declared coverage set;
-* ``mapped_identities``: distinct source identities handled by the rules;
+* ``mapped_identities``: distinct source identities handled by the rules,
+  including explicit deletion dispositions;
 * ``unresolved_identities``: the remainder, whose absence from the rule lists
   never authorizes conversion.
 
@@ -117,6 +228,11 @@ target catalog, ``mapping_methods`` counts selection procedures, and
 ``dispositions`` distinguishes correspondences, proxies, recipe mappings and
 unresolved entries. ``mean_confidence`` averages only provided scores and is
 absent when no scores were supplied.
+Optional ``omitted_identities`` counts approved technosphere omission rules and
+is validated against ``delete``. Mapping methods and confidence summaries concern
+replacement rules; an omission does not advertise a target supplier.
+Profile-specific omissions remain decisions inside their replacement rule and
+do not increment ``omitted_identities`` or add a second source disposition.
 
 JSON Schema validates field types and target alternatives. Semantic validation
 additionally checks finite values, duplicate rule identifiers and sources,
@@ -177,3 +293,30 @@ The upgrade preserves mapping choices, factors, scores, classifications,
 evidence and recipe contents. It never derives the reverse direction by
 inverting another mapping. See :doc:`workflows/ecoinvent-to-uvek` and
 :doc:`workflows/uvek-export` for directional scope and limitations.
+
+A verified exact-profile decision may override a literal default supplier with
+a service recipe whose unit matches the source unit. The profile must declare
+its own conversion factor and verified signs. Other inspected profiles may
+continue to inherit the literal supplier and its independently reviewed factor.
+Selection happens before recipe materialization; an uninspected profile remains
+unresolved and receives no default approval. This supports retaining an existing
+native supplier for some versions while reconstructing a different source
+operating boundary for others, without adding unused helpers.
+
+
+Recipe-local parameters
+~~~~~~~~~~~~~~~~~~~~~~~
+
+An authored recipe may include a ``parameters`` list. Each entry requires a
+unique nonempty ``name`` and finite numeric ``amount``; formulas, supported
+uncertainty fields and additional parameter metadata are preserved. Invalid
+parameter types, duplicate local names and reversed uncertainty bounds fail
+resource validation. Negative parameter values remain valid.
+
+Both directional helper materializers copy the complete parameter list into
+the generated dataset. The helper's exchanges retain their formulas. Each
+helper keeps its own parameter scope, including dependencies that use the same
+parameter names. A parameter change changes the helper's deterministic identity.
+Caller parameters remain caller-owned. Formula evaluation and translation into
+a particular output syntax remain the responsibility of the registered format
+adapters; helper materialization does not recompute inventory quantities.

@@ -66,7 +66,7 @@ the explicit information-loss, inferred-reverse and heuristic warning policy::
      --output /tmp/uvek-2026-audit.json
 
 Discovery without a reviewed ``--baseline`` deliberately exits nonzero. The
-reviewed native baseline contains all 90 tasks and 892,550 probes: 443,401
+historical native baseline contains 90 tasks and 892,550 probes: 443,401
 supported, 449,099 blocked and 50 explicitly omitted under the warning policy.
 There are no audit errors. Counts repeat source identities across policies,
 directions and exact profiles; they are not a global mapping-coverage score.
@@ -80,8 +80,15 @@ every biosphere task does the same. Outgoing process tasks probe all 1,424
 approved native supplier identities. The other 10,523 native identities are
 reported separately with their count and a stable identity digest. They are
 outside the approved export cohort, not successful conversions or skipped
-runtime checks. Unavailable outgoing consequential routes are recorded as
-explicit planning findings.
+runtime checks. Current discovery excludes incoming and outgoing consequential
+routes from executable probes and records both directions as explicit planning
+findings. It contains 76 compatible-model tasks. Historical native counts above
+predate the system-model restriction and must not be treated as current route
+coverage.
+
+Current native audit discovery includes approved omission rules in this cohort.
+The biowaste-collection case is reported as ``omitted_with_warning`` and retains
+its explicit loss audit; the historical result counts below predate that decision.
 
 Selected native-route results are:
 
@@ -189,9 +196,10 @@ accepts only the migration-manifest change and the added schema-definition
 digest. Existing unsupported cases remain blocked; neither mapping confidence
 nor numerical recipes are adjusted to make the audit pass.
 
-The forward crosswalk is additionally tested exhaustively: all 31,488 supplier
-rules execute against real supported source catalogs with complete target-link
-coverage. This test exposed an existing amount-factor bug: uncertainty locations,
+The forward crosswalk accounts for all 30,732 cut-off supplier identities in the
+packaged source catalogs, including explicitly pending scientific decisions.
+Executable rules are tested against those exact catalogs with complete target-link
+coverage. Historical testing exposed an existing amount-factor bug: uncertainty locations,
 spreads, bounds and formulas previously remained unscaled. Unit-factor execution
 now shares the reverse exporter's scaling routine. Unsupported distributions
 roll back with structured errors, including under permissive policy. All

@@ -1,6 +1,571 @@
 # Changelog
 
+
+- Extend existing allocation-stock and recovery-handoff approvals to 61 independently inspected ecoinvent 3.9.1/3.10.1 cut-off profiles, retaining warnings and original-exchange audit records.
+
 All notable changes to this project will be documented in this file.
+
+## Unreleased
+
+- Resolve five older RoW PET-waste market profiles through complete freight-mode
+  screening proxies, retaining their treatment shares and transport quantities.
+  Reconstruct the positive ecoinvent 3.9 polyester-waste transfer from its eight
+  PET treatment demands. Preserve physical emissions and native-biosphere refusals.
+
+- Preserve the Swiss waste-concrete inert-landfill route and original collection
+  across nine exact cut-off versions, replacing mismatched whole-waste proxies
+  with reviewed operating/facility helpers and explicit screening limitations.
+
+- Preserve the exact native UVEK 2026 long-term groundwater label in SimaPro
+  exports, guarded by the native catalog identity and unit. Preserve the exact
+  verified native name instead of applying legacy ecoinvent aliases. Copper-ash
+  helpers now round-trip through SimaPro without dropping or moving physical releases.
+
+- Reconstruct Swiss copper bottom-ash disposal and collection for ecoinvent 3.11/3.12 cut-off,
+  retaining copper-specific releases, slag infrastructure and signed quantities. Replace the
+  unrelated ash-landfarming and operation-only proxies with reviewed helpers and explicit losses.
+
+- Retain Swiss CEM II/A and CEM II/B cement production and original road/rail
+  delivery in twelve exact cut-off market profiles. Keep the positive cement
+  products separate from the same-named allocated ash-treatment functions.
+- Reproduce the applied digester-stock correction during normal authoring by
+  validating seven retired parent helpers against their retained audit bodies
+  and keeping them out of executable definitions.
+
+- Add four exact native UVEK 2026 air-emission chemical synonyms with matching
+  CAS numbers, signed kilograms and urban-air context. Preserve caller fields
+  and the independently reviewed reverse correspondences.
+
+- Preserve the allocated digester-sludge material stock in nine exact cut-off
+  profiles and correct thirteen stock-market profiles to retain their freight
+  without importing municipal-incineration burdens or credits. Keep actual sludge
+  treatment separate and report the production-only allocation boundary.
+
+- Retain complete polypropylene open-burning and wet-open-dump emissions in
+  eighteen exact cut-off profiles instead of substituting municipal incineration;
+  preserve all 1,719 exchanges and their uncertainty, with explicit native gaps.
+
+- Preserve the production-only metalliferous hydroxide sludge cut-off stock in
+  nine inspected versions instead of importing fresh lithium hydroxide burdens
+  or credits; propagate the correction through all nine inspected stock-market
+  profiles while retaining their freight, signed caller quantities and warnings.
+
+- Replace the incoming-scrap proxy for precious-metals-in-anode-slime markets
+  with complete refinery-product helpers in eleven inspected cut-off profiles,
+  retaining supplier shares, signed product credits and explicit proxy warnings.
+
+- Retain complete older sweet-gas and sour-gas flaring inventories and exact
+  market handoffs across nine cut-off versions, preserving physical releases
+  and uncertainty while keeping the eight modern native-proxy profiles intact.
+  Unsupported native biosphere links remain explicit; no physical flows are omitted.
+
+- Correct the CEM III/A 25 MPa concrete proxy from NPK A to NPK B for six
+  inspected cut-off profiles, retaining volume and explicit recipe/geography
+  warnings without inferring reverse or market mappings.
+
+- Reconstruct all nine cut-off RoW textile unsanitary-landfill profiles from
+  their physical releases and complete operating services. Resolve the five
+  older global textile markets, inspect the exact 3.10.1 RoW market, and retain
+  all regional landfill shares and freight quantities without controlled-landfill
+  substitution. Native physical-coverage gaps remain explicit errors or warnings.
+
+- Reconstruct cut-off cable treatment from its electricity, manual facility and
+  wire-plastic treatment inputs instead of an empty recovered-copper stock.
+  Preserve wire-market freight and use an explicitly approved warning-bearing
+  proxy for Swiss fly-ash extraction. Restore complete older Swiss rail services
+  and propagate only source-witnessed corrections through affected parent helpers.
+
+- Extend previously reviewed allocation boundaries to fifteen exact patch
+  profiles in the original ecoinvent 3.9.1/3.10.1 cut-off databases. Four stock
+  profiles reuse the existing production-only suppliers; eleven recovery
+  handoffs receive scoped omissions with warnings and full original-exchange
+  audit records. Preserve earlier profile decisions and all helper bodies.
+
+- Correct four older regional all-size road markets across 26 exact cut-off
+  profiles to complete heavy-lorry freight services. Propagate 674 signed
+  freight quantities through 553 parent profiles while preserving 500 already
+  correct profiles and independently scoped custom freight choices. Retain
+  explicit geography, fleet-class, EURO, loading and vintage limitations.
+
+- Correct eight average wet-sludge treatment and market identities across 48
+  exact cut-off profiles, replacing incineration with complete landfarming
+  helpers. Preserve physical releases, legacy soil carbon, original mechanical
+  spreading volumes and 42 delivery-freight quantities. Retain strict refusal
+  for unavailable native physical flows and independent reverse boundaries.
+
+- Package the exact ecoinvent 3.10.1 consequential reference catalog with native
+  activity and flow UUIDs. Preserve exact patch identity and shared biosphere
+  definitions, invalidate catalog-dependent cache fingerprints, and retain clear
+  refusal of cut-off/consequential conversions.
+
+- Correct four regional unspecified diesel-road markets to complete heavy-lorry
+  fleet services and replace a Swiss rail-to-road mismatch with the original
+  electric/diesel rail mix. Propagate 605 signed freight quantities through 424
+  exact cut-off parent profiles without changing other inputs or custom freight
+  choices. Retain explicit regional, vintage and energy-intensity limitations.
+
+- Preserve eighteen exact aluminium/iron cut-off stock profiles through
+  allocation-only suppliers, without adding unrelated native preparation burdens
+  or changing preparation coefficients and reverse correspondences.
+
+- Preserve chemical-process heat in MJ and retain its source make-up-water supply
+  and physical water releases in scoped helpers for nine cut-off versions;
+  report energy-mix and water-supply proxy limitations and keep reverse heat
+  boundary decisions explicit.
+
+- Preserve complete freight services and vehicle classes through reviewed parent
+  inventories; retain packed stone-wool producer shares and delivery freight
+  using rock-wool manufacture, with independent light-duty and packed-wool
+  reverse proxies and explicit regional, fleet, vintage and material caveats.
+
+- Correct bulk cathode-copper supply to the complete UVEK copper-storage process
+  instead of an NMC battery electrode; preserve signed mass and caller metadata
+  and disclose the regional supply, vintage and recycling-allocation proxy limits.
+
+- Preserve the production-only copper Recycled Content cut-off stock across
+  nine exact profiles. Remove invented PV-recycling burdens and credits from
+  its 42 uses in five ship-disposal services and a copper-scrap market, then
+  propagate the correction through three vessel markets. Preserve all signed
+  copper quantities, other recovery credits and separate freight.
+
+- Replace two European PET market-group fleece-production heuristics across
+  eighteen exact cut-off profiles with complete nested reviewed child graphs.
+  Retain all 333 original supply weights without normalization or added
+  transport, treatment, recovery or allocation. Resolve two original identities;
+  221 remain pending. Preserve independently checked reverse limitations.
+
+- Repair 22 landfill-leachate wet-sludge landfarming matches across 82 exact
+  cut-off profiles, replacing dry-waste heuristics with complete wet-sludge
+  helpers. Retain 2,368 biosphere entries and original whole spreading-service
+  volumes, with independent reverse checks and explicit native physical gaps.
+  These are prerequisites; the original pending queue remains 223 identities.
+
+- Apply the explicitly approved PET incinerator screening proxy to nine Swiss
+  FLUWA market profiles, with ash/recovery/emission/allocation warnings and no
+  added credit. Retain complete open-dump/open-burning helpers and original
+  road and diesel/electric rail quantities. Resolve one original identity.
+
+- Reconstruct sixteen exact profiles of five further waste markets using their
+  reviewed complete disposal inventories and original road tonne-km. Resolve
+  five original identities, including independently inspected 3.10.1 cases,
+  with no omission, new biosphere proxy or inferred reverse correspondence.
+
+- Reconstruct 373 exact profiles of 42 regional PET-waste markets, retaining
+  original treatment fractions, complete uncontrolled-disposal inventories and
+  road freight. Scope two inspected landfill patch links
+  to these helpers; retain five steam-dependent RoW profiles as unresolved; Swiss
+  fly-ash-extraction profiles have a separate explicit approval. Resolve 41 original identities
+  and partially approve one without changing independent reverse mappings.
+
+- Reconstruct 36 uncontrolled-disposal identities across 217 exact cut-off
+  profiles, retaining all 21,844 biosphere entries and 270 complete operating
+  service inputs in 124 helpers. Preserve eleven positive original 3.9 references
+  and 206 negative references, verify both reverse operating suppliers, and keep
+  native physical gaps explicit with default rollback or caller-selected
+  permissive warnings for manual mapping. Add no controlled-disposal proxy or
+  physical omission. The pending queue falls from 306 to 270 identities.
+
+- Replace guessed canonical biosphere correspondences on the ecoinvent-to-UVEK
+  bridge with source-release publisher identities, matching units and complete
+  receiving contexts, plus two reviewed same-CAS groundwater synonyms. Resolve
+  reused manganese labels per release, preserve caller quantities and emission
+  metadata, and roll back unsupported physical flows even under permissive policy.
+
+- Reconstruct 76 exact profiles of fourteen further cut-off waste markets,
+  retaining waste-specific treatment fractions, complete freight and 72 warned
+  recovery-handoff omissions, including 18 inspected patch cases. Keep 24 older
+  steam-dependent profiles pending. Resolve eight identities and partially
+  approve six; preserve existing helpers and independent reverse mappings.
+
+- Reconstruct fourteen industrial-waste markets across 84 exact cut-off profiles
+  using reviewed waste-specific treatment children and complete road freight.
+  Preserve original treatment and freight coefficients without new omissions or
+  normalization. Disclose fleet and geographic differences, independently check
+  the reverse freight supplier, and retain inherited native-biosphere gaps.
+
+- Reconstruct seven industrial wet-sludge landfarming identities across 42 exact
+  cut-off profiles. Retain fossil/biogenic carbon, local water fate, metals,
+  nitrogen/phosphorus, heat and the original complete spreading-service volume.
+  Preserve reported soil carbon only in older profiles that list it. Disclose
+  whole-service regional/technology differences and independent reverse checks;
+  keep physical native-biosphere gaps explicit without new emission proxies.
+
+- Reconstruct 32 steel-waste landfill profiles and 36 market profiles, preserving
+  waste-specific releases, cement stabilization, unrenormalized landfill shares
+  and complete freight services. Reuse 18 explicitly warned recovery-handoff
+  omissions, including four scoped patch cases; retain 20 clinker/steam profiles
+  as pending. Update three dependent market compositions and independently check
+  reverse suppliers. Keep native land-class gaps separate from technosphere
+  approval, without extending the earlier scoped biosphere refinement.
+
+- Resolve packaging-paper sludge landfarming across four exact cut-off profiles.
+  Preserve all 39 releases, the wet-sludge basis and the original tanker-service
+  volume with the corrected waste-reference factor. Keep native soil chemistry
+  and groundwater biosphere gaps explicit and separate from canonical exports.
+
+- Add thirteen missing ecoinvent-to-native particulate correspondences with exact
+  size bins, receiving-air contexts and signed kilograms preserved. Keep the
+  independently authored native-to-ecoinvent rules unchanged, and preserve the
+  historical native-resource review guards.
+
+- Replace incorrect sewer-throughput matches to vented gas, uranium tailings and
+  concrete volume with complete rural/urban sewer helpers. Preserve all reported
+  construction, operation, disposal and water releases per cubic metre in 24
+  exact cut-off profiles, including original 3.9.1 and 3.10.1 waste submixes.
+  Retain explicit supplier-proxy warnings and independent reverse checks.
+
+- Reconstruct 46 exact profiles of eleven waste markets using reviewed landfill
+  children and complete road/rail/barge services at original quantities and
+  traction shares. Resolve nine identities and partially resolve two; retain
+  eight older clinker-dependent profiles as blocked, without omissions or
+  renormalization. Preserve optional-indicator review metadata on helpers that
+  have no contextual land binding so later native migration can warn correctly.
+
+- Resolve 25 residual-material-landfill identities across 142 inspected cut-off
+  profiles. Preserve waste-specific releases, stabilization and construction,
+  including two active positive-reference 3.9 slag treatments. Apply the approved
+  native residual-landfill land class only inside 36 exact helper profiles, at
+  unchanged signed area and with warnings. Retain packaged recipe verification
+  for contextual biosphere bindings and approved indicators during later helper
+  migration; reject stale helpers and preserve transactional strict-policy failure.
+  Add seven independently inspected reverse construction/material suppliers with
+  signed kg or volume preserved and individual boundary warnings.
+
+- Correct the CH and RoW sewage-sludge markets across nine inspected cut-off
+  versions. Reuse the matching full digestion helper with the correct negative
+  reference factor, preserving operating burdens and emissions without adding
+  duplicate helpers or equating sludge volume to gas volume. Add eight
+  independently inspected reverse plant and regional electricity suppliers,
+  preserving unit demands and warning about background-system differences.
+
+- Reconstruct 42 bottom-ash markets across 176 inspected cut-off profiles,
+  preserving child treatment, road quantities and the source diesel/electric
+  rail shares. Scope complete freight-service proxies to these helpers, with
+  explicit fleet and geography warnings. Add an independently inspected reverse
+  correspondence for complete Swiss electric rail freight with shunting.
+
+- Reconstruct 49 bottom-ash landfill services across 200 inspected cut-off
+  profiles, including 3.9.1/3.10.1. Preserve waste-specific releases and source
+  facility/operating demand, correct the negative treatment reference, and warn
+  when optional inventory indicators cannot be represented. Extend nine
+  supporting slag-supplier reviews to the independently inspected patches.
+
+- Add 56 explicitly approved water-emission screening proxies to native UVEK
+  2026. Preserve signed kg and named-anion mass, warn about generic element and
+  unspecified-water approximations, and retain source CAS/UUID details in losses.
+  Keep the independently authored reverse resource unchanged.
+
+- Correct nine slag-landfill construction and operation suppliers across 63
+  cut-off profiles to the dedicated UVEK slag compartment. Preserve facility
+  units and signed operating kg, disclose water, heat and freight differences,
+  and retain independently checked reverse correspondences.
+
+- Preserve the separate cut-off sludge-treatment and allocated biogas boundaries
+  for sewage digestion across nine inspected versions, including 3.9.1/3.10.1.
+  Retain operating inputs and version-specific emissions without equating sludge
+  and gas volumes. Add one independently inspected reverse gas-operating helper;
+  optional unsupported waste indicators warn without dropping emissions.
+
+- Correct the hot-rolled stainless global market and RoW producer to use full
+  UVEK material supply instead of a cold-rolling service. Preserve signed kg
+  without adding hot rolling twice, bind 23 inspected inventories, and disclose
+  supply-mix differences. Keep the independently verified reverse rule unchanged.
+
+- Add the independently reviewed unspecified water discharge from ecoinvent to
+  native UVEK 2026, using 1,000 kg/m3. Preserve helper emissions, signed quantities,
+  uncertainty and formulas; retain the existing independently reviewed reverse rule.
+
+- Correct fifteen sewer-infrastructure mappings across 105 cut-off profiles to
+  match UVEK's documented capacity class and network design. Preserve kilometre
+  quantities and signs without throughput or total-length scaling, and report
+  Swiss supply and technology approximations. Existing reverse rules remain unchanged.
+
+- Remove consequential-to-UVEK mappings, profile overrides and unused helpers.
+  Require compatible system models before selecting any direct or composed
+  technosphere route, in either direction and across database families.
+  Preserve the existing cut-off mappings and historical scientific audit evidence.
+
+- Correct 28 physical cut-off ground-granulated-slag product profiles to retain
+  processing and raw-supply freight without adding economic pig-iron allocation.
+  Bind 47 product, raw-market, stock and UVEK-variant inventories and metadata.
+- Add one independently inspected reverse no-burdens slag-product helper,
+  preserving kg and subtracting the exact upstream raw-slag supply. Keep the
+  with-burdens inverse and negative-reference treatment/credit cases unsupported.
+
+- Replace agricultural slurry-spreading proxies for four ecoinvent 3.6
+  sawing-slurry treatment profiles with complete per-litre helpers, preserving
+  waste-treatment demands and consequential carbide/glycol recovery credits.
+  Compose both global market profiles without rounding their regional shares.
+  Keep 36 newer counterparts explicitly pending; reverse mappings are unchanged.
+
+- Resolve the remaining beet-pulp and whey-yeast cut-off markets, preserving
+  supplier shares, freight and all earlier nutritional omissions. Verify seven
+  suppliers across 35 profiles, including the sugar-production name transition.
+  Bind formal product information in addition to inventories and comments.
+- Add two independently inspected Swiss product reverse correspondences with
+  kg, allocation and moisture warnings. Preserve the earlier six-rule batch
+  exactly; reverse coverage reaches 1,498 suppliers.
+
+- Resolve three physical cut-off feed-product markets across 21 profiles through
+  nine independently inspected coproduct suppliers. Replace five DDGS-to-ethanol
+  mappings with feedstock-specific DDGS and distinguish grass-fibre fermentation
+  from digestion. Preserve kg, supplier shares, freight and all 21 existing
+  consequential nutritional omissions. Bind 111 inventories and comments;
+  keep unresolved moisture/nutritional equivalence and reverse routes explicit.
+- Add six independently reviewed reverse physical coproduct correspondences to
+  ecoinvent 3.12 cut-off, preserving signed kg and warning about allocation,
+  moisture and potato-DDGS geography. Reverse coverage reaches 1,496 suppliers;
+  original market mixes and omitted nutrient credits are not reconstructed.
+- Restore conditional omission evidence when regenerating a rule that combines
+  physical-product helper profiles with approved omission profiles.
+
+- Preserve the feedstock-specific esterquat supply mix and original freight in
+  28 exact market profiles. Consequential credits now use coconut/palm-kernel
+  esterquat; cut-off supply retains its 88.4%/11.6% coconut/tallow mix. Bind 44
+  independently inspected provider inventories and keep tallow-treatment
+  reconstruction and unsupported reverse routes pending.
+
+- Replace gas-turbine suggestions for sweet-natural-gas flaring with its dedicated
+  UVEK service across 16 modern exact profiles. Preserve the independently
+  established 36 MJ/m3 reference basis with factor -1/36 and an independently
+  reviewed reverse factor -36. Warn about emission-coverage differences and
+  retain the flared gas resource withdrawal; older sweet-gas and all sour-gas
+  profiles remain pending. Reverse coverage now reaches 1,490 suppliers.
+
+- Make heuristic candidate shortlists and token-score sums independent of Python
+  hash iteration order. Preserve nine historical authoring inputs before existing
+  reviews, reproducing the forward resource without changing runtime decisions.
+
+- Preserve 34 independently inspected positive cut-off stock allocation boundaries
+  across 168 exact profiles, with signed material flows and allocation warnings.
+  Bind nested stock supplies to their exact reviewed source profiles and refresh
+  52 existing parent identities without changing source quantities or credits.
+- Add 630 exact-profile assemblies across 118 partially approved identities;
+  retain all 672 unresolved counterpart profiles in the blocked review queue.
+
+- Use the dedicated Formox carrier landfill for the RER treatment and its market
+  across six exact source profiles each, replacing steam-production proxies.
+  Preserve wet kg, the market's unrounded treatment share and 0.077 tkm freight;
+  disclose moisture, geography and emission-coverage differences. Keep earlier
+  supplier bindings and helpers unchanged; the reverse endpoint remains unsupported.
+
+- Replace seven regional landfill and legacy vehicle-manufacture proxies with
+  dedicated matching-material waste services across 32 inspected source profiles.
+  Preserve signed wet kg and disclose moisture, geography, recovery-credit and
+  release-model differences. Compose five newly complete markets across 16
+  profiles without changing treatment shares or freight; reverse routes remain
+  independently unsupported.
+
+- Use dedicated LCD dismantling and shredder-residue services across 50 inspected
+  profiles, correcting two related manual-dismantling suppliers. Disclose the
+  newer mechanical process's broader manual-treatment boundary. Preserve the
+  LCD market's 23%/77% route shares and four freight quantities, resolving four
+  original queue identities.
+- Correct three lorry substitutions for barge/rail freight with independently
+  inspected same-mode RER services. Re-review 71 dependent composed inventories
+  across 256 source profiles, preserving raw quantities and recovery credits,
+  recording new bindings and removing superseded unused helper definitions.
+- Independently add the reverse refinery-gas flare service with factor -1 and
+  emission-coverage warnings. Preserve signed MJ quantities, uncertainty and
+  formulas through both directions; reverse coverage reaches 1,489 suppliers.
+- Replace three legacy EAF-waste production proxies with dedicated Swiss landfill
+  services across six exact ecoinvent 3.6 profiles. Preserve wet mass with factor
+  -1 and disclose moisture, cement, freight and metal-fate differences; later
+  versions and reverse routes require independent review.
+- Resolve the direct refinery-gas flaring service and its market across 28 exact
+  source profiles using the matching UVEK per-MJ flare, factor -1 and explicit
+  emission-inventory warnings. Preserve caller quantities, uncertainty, formulas
+  and separate emissions; reject uninspected profiles and do not infer an inverse.
+- Independently reconstruct two UVEK gas-combustion services from allocated
+  German ecoinvent electricity and heat, with explicit fuel boundaries and
+  proxy warnings. Add matching coke-gas supply and industrial HFO-heat proxies,
+  adding 37 independently
+  inspected matching-region electricity proxies, while preserving the frozen
+  publisher baseline. Forward waste-gas helpers can now convert back without
+  applying the coke-gas fuel correction twice.
+- Add 23 independently reviewed same-region ash-treatment reverse proxies,
+  preserving quantity and scaling uncertainty/formulas by the waste-reference
+  factor -1. Disclose unverified moisture equivalence and fate-model differences;
+  reverse coverage now reaches 1,488 suppliers.
+- Represent two gas markets with separate cut-off supply and consequential
+  treatment boundaries. Compose 255 additional inspected markets from existing
+  resolved component mappings, retaining supply and freight coefficients with
+  inherited proxy warnings and exact-profile inventory/binding guards.
+- Compose 100 complete processing inventories across 795 inspected profiles from
+  existing resolved component mappings. Preserve processing inputs and recovery
+  credits separately, caller uncertainty/formulas, foreground suppliers and
+  separate emissions; warn about inherited component approximations.
+
+- Apply the existing unsupported-industrial-residue omission approval to 226
+  independently inspected nonbiogenic industrial WWT residue mappings
+  across 1,704 source/profile pairs. All direct treatment inventories document
+  zero biogenic carbon. Omit unmatched sludge, ash and residue treatment with
+  warnings and full original-exchange loss records, including associated credits
+  and market freight. Replace rollback fixtures that depended on real pending
+  mappings with a synthetic unreviewed correspondence.
+- Preserve consequential energy recovery for 103 industrial-gas power-plant
+  services across 721 inspected source/profile pairs. Generate reviewed
+  blast-furnace/coke-oven-gas combustion helpers with the original electricity
+  and heat credit quantities through existing UVEK energy mappings. Cancel the
+  coke-oven burner's deterministic 1 MJ fuel-production input to isolate waste
+  combustion. Disclose regional, emissions, infrastructure and marginal-energy
+  approximations; preserve caller uncertainty, formulas and legitimate negative
+  net scores. Gas markets and cut-off product references remain separate.
+- Omit five unsupported antifouling-paint emission exchanges, covering 70
+  inspected source/profile pairs, with warnings and complete original-exchange
+  loss records. Remove the uranium-milling market proxy and four tyre-wear
+  assignments whose sign checks did not establish scientific equivalence.
+  Disclose excluded marine metal/organotin releases and possible ecotoxicity
+  understatement; preserve paint manufacturing and foreground emissions.
+  Bind audit replay to inventory fingerprints; keep reverse resources independent.
+- Approve four produced-water discharge mappings across 56 exact ecoinvent
+  source/profile pairs. Map onshore and offshore treatment services and their
+  single-supplier markets directly to UVEK with factor -1. Warn about pollutant
+  concentrations, chromium speciation and omitted older air/water-balance flows.
+  Bind approvals to source and target inventory fingerprints; preserve mass,
+  signed avoided-discharge inputs, uncertainty, formulas and foreground suppliers.
+  Missing exact profiles remain blocked; no new helpers or reverse rules are added.
+- Preserve R134a reclamation allocation across three identities and 21 inspected
+  profiles. Generate separate service helpers with electricity, rejected-material
+  incineration and direct leakage, retaining the recovered-product credit only
+  under consequential accounting. Preserve seven inspected empty cut-off product
+  suppliers as explicitly reviewed production-only helpers with material quantities
+  and warnings. Guard empty recipes against missing review evidence, unapproved
+  profiles, altered inventories and credited-market changes; retain original
+  exchanges, uncertainty, formulas and transactional rollback.
+- Replace five refrigerant final-disposal proxies across 42 exact source/profile
+  pairs with reviewed services containing 0.999 kg Swiss average hazardous-waste
+  incineration and 0.001 kg direct refrigerant air release per kilogram accepted.
+  Preserve disposal/avoided-disposal signs, uncertainty and original provenance.
+  Disclose the incineration proxy through policy-controlled warnings and loss
+  records; retain the existing native-biosphere and 3.12 indicator handling.
+  Keep reclamation, treatment markets, venting and reverse resources independent.
+- Replace five refrigerant-manufacturing proxies for venting with approved,
+  mass-conserving foreground service recipes across 42 exact source/profile
+  pairs. Preserve chemical identity, air releases, avoided-venting signs,
+  uncertainty and original exchange provenance. Retain 3.12 waste indicators
+  where supported; warn about their exclusion and the native UVEK 2026
+  isobutane compartment approximation. Bind recipes to inspected inventories,
+  reject missing profiles/targets and collisions, and preserve transactional
+  rollback. Keep reverse routes and other refrigerant treatment choices independent.
+- Apply the same approved omission rule to 95 exact normalized nutrient references
+  across 692 inspected positive-reference source/profile pairs. Replace unsupported
+  feed-energy-to-industrial-heat and crude-protein-to-crop/oil substitutions with
+  warnings about excluded nutritional supply contributions and credits. Keep full
+  original exchanges, exact profile boundaries and foreground suppliers intact.
+- Omit five approved nutritional feed-credit links and five independently inspected
+  consequential markets across 70 source/profile pairs in ecoinvent 3.6--3.12.
+  Warn about excluded energy/protein substitution and market freight where present;
+  retain complete source exchanges and foreground inputs/emissions. Keep the
+  markets' 35 cut-off product-supply decisions pending. Distinguish partial
+  approvals in the remaining review queue: 1,281 identities in nine families.
+- Auto-approve the documented dichloropropene-to-generic-pesticide credit only
+  in consequential ecoinvent 3.6--3.9. Replace the unrelated diode producer with
+  the RER UVEK generic pesticide provider and factor +1. Preserve credit signs,
+  uncertainty, formulas and separate emissions; disclose mixture, geography,
+  toxicity-inventory and market-boundary differences, and block unreviewed profiles.
+- Preserve three independently reviewed consequential metal-recovery credits
+  across 21 source/profile pairs: sludge-to-zinc-concentrate (factor
+  0.0622641509433962), zinc scrap (1) and bronze scrap (1). Replace unrelated
+  product proxies, explicitly validate the change from waste reference to product
+  credit, and preserve incoming signs, uncertainty and formulas. Disclose grade,
+  geography, allocation, market-transport and source processing limitations.
+  Bind reinspection to exact credit quantities and suppliers. Add a hash-bound
+  screening queue for the remaining 1,287 identities in ten review families;
+  family counts do not predict additional approval requests.
+- Omit sixteen exact steelmaking waste-to-recyclable handoffs only in inspected
+  ecoinvent 3.7--3.12 cut-off/consequential profiles, covering 192 pairs. Replace
+  inappropriate allocated-slag production proxies with warnings about excluded
+  consequential recovery credits; distinguish the empty cut-off boundary.
+  Preserve full source snapshots and foreground links, retain prior mapping
+  evidence, and keep unreviewed profiles and unrelated treatments blocked.
+- Omit coal-tar furnace treatment and its market only in consequential ecoinvent
+  3.6--3.9, warning about excluded combustion burdens, heat credits and freight.
+  Add exact-profile omission decisions with validated shared evidence and complete
+  loss reports. Preserve the market's ten approved production mappings, foreground
+  suppliers, production and separate emissions; missing profiles remain blocked.
+- Omit 18 exact unsupported CRT-production wastewater sludge/ash/residue
+  treatment and market inputs after inspecting 144 source/profile pairs.
+  Continue conversion with warnings about excluded treatment burdens, credits
+  and market freight; score effects remain unquantified. Preserve complete
+  source exchanges in loss reports, foreground suppliers and separate emissions.
+  Retain former proxies and sign evidence for replay; reverse rules stay independent.
+- Approve ten exact CRT-cullet/frit landfill treatment and market proxies after
+  inspecting 120 source/profile inventories. Replace seven manufacturing
+  substitutions and align three existing frit services. Preserve mass with
+  factor -1; disclose generic-glass metal releases, excluded source leachate,
+  landfill-model differences and omitted market freight. Keep production sludge
+  and ash outside this approval and retain all original mapping evidence.
+- Approve the broader mechanical CRT treatment boundary and auto-review the
+  whole-screen and residue markets. Preserve the screen market's 23%/77% route
+  shares and mass with factor -1/19.9 for the exact UVEK unit-based mix; disclose
+  added/manual-stage double counting, omitted freight and model differences.
+  Retain original mappings and reject invalid reference-mass conversions.
+- Approve sixteen exact CRT-coating/residue incineration, coating-market,
+  glass-processing and manual-dismantling proxies after inspecting 148 source/profile inventories. Open ten blocked
+  manufacturing substitutions, correct a zinc-only residue supplier, and align
+  warnings on five existing matching services. Preserve mass with factor -1;
+  disclose metal fate, ash/leaching controls, legacy LCD wording and omitted
+  market freight. Keep glass-cullet landfill, mechanical CRT treatment and mixed
+  whole-screen markets outside this scope.
+- Replace the PET-recycling-dust and post-industrial LDPE milk-carton-fraction
+  manufacturing proxies with CH municipal-incineration services and factor -1.
+  Preserve wet waste mass without moisture/heating-value scaling; disclose
+  composition, geography and missing consequential energy credits. Keep
+  unreviewed CRT, sludge, composite-carton and ash references outside this scope.
+- Approve three Swiss paper-disposal proxies with exact source-profile factors:
+  +1 for ecoinvent 3.9 cut-off and -1 for inspected consequential releases.
+  Disclose treatment-model differences and missing newer landfill energy credits;
+  preserve blockers for uninspected profiles and other pending supplier reviews.
+- Omit the CH/RoW industrial-biowaste-composting inputs during ecoinvent-to-UVEK
+  conversion, warning about excluded treatment burdens. Preserve original
+  exchanges in loss reports; avoid collected-material proxies and the empty UVEK
+  composting cut-off placeholder. Keep other biowaste functions blocked.
+- Omit the UVEK biowaste-at-collection-point input during reverse conversion,
+  warning that its collection transport and CO2 uptake are also omitted. Share
+  audited omission handling across both directions, preserve original exchanges
+  in reports, and keep the independent forward biowaste mapping unchanged.
+- Omit six fully untreated textile-disposal exchanges during ecoinvent-to-UVEK
+  conversion with an unconditional reviewed-omission warning. Keep the full source
+  exchange in the loss report, preserve caller data and foreground links, and
+  retain ordinary deletion policies and rollback on unrelated errors.
+- Approve ten exact PET-pelletising/PET-recycling/PP-recycling and modern textile
+  wastewater proxies using generic CH class-1 sewage treatment and factor -1. Preserve volume without
+  COD scaling; disclose composition, sewer boundaries and market discharge loss.
+  Retain earlier factor history when approved supplier corrections are replayed.
+- Approve five matching-effluent wastewater-market proxies for the full source
+  volume, with factor -1. Explicitly disclose replacement of partially untreated
+  markets by 100% treatment, omitted untreated-discharge emissions and possible
+  impact bias; preserve separately represented foreground pollutants.
+- Approve 11 inspected hard-fibreboard, medium-density-board and particle-board
+  wastewater treatment proxies and two older 100%-treated markets with factor -1.
+  Keep newer partially untreated markets blocked. Recognize their native UVEK
+  product references as treatment-service outputs only within the exact approved
+  scope; disclose version-specific sewer boundaries and plant-model differences.
+- Replace the RoW/GLO PET-incineration fleece proxies with the inspected CH
+  disposal service and factor -1. Disclose geographic and inventory limitations;
+  keep PET dust, landfill and recovered-energy references outside the approval.
+- Approve the Li-ion 50/50 treatment-market proxy and auto-review matching GLO/kg
+  NiMH pyrometallurgical treatment and market proxies. Disclose omitted market
+  freight and retain all unreviewed material, technology and geography differences.
+- Approve the separate pyrometallurgical Li-ion waste-treatment correction,
+  replacing the anode-manufacturing proxy with GLO, kilogram disposal and factor
+  -1. Keep other reference products outside the approval.
+- Replace the graphite-anode manufacturing proxy for the used-Li-ion-battery
+  hydrometallurgical waste reference with the matching UVEK treatment supplier
+  and factor -1. Preserve recovered cobalt/lithium mappings and disclose recovery
+  and allocation limitations.
+- Approve the coal-tar production proxy for ten inspected positive-reference
+  source profiles, with factor +1 and explicit allocation/market limitations.
+  Keep consequential 3.6--3.9 and unreviewed profiles blocked.
+- Record exact source-version and system-model sign decisions for 195
+  model-dependent mappings. Keep supplier substitutions pending independent
+  scientific approval and reject missing profile decisions without fallback.
+- Correct 4,352 ecoinvent-to-UVEK waste-treatment reference signs and retain
+  44 independently verified reverse-direction sign factors. Apply explicit
+  technosphere factors even when units do not change, including uncertainty,
+  bounds and formulas. Block 1,369 forward and one reverse mapping with
+  conflicting reference signs or waste/product roles instead of guessing.
 
 ## 1.0.0a14 - 2026-11-01
 
@@ -567,3 +1132,9 @@ All notable changes to this project will be documented in this file.
 - Normalized common ecoinvent 3.10 SimaPro biosphere names and final waste indicators to reduce false unlinked exchanges.
 - Added CSV formula escaping for text values that spreadsheet software could interpret as formulas.
 - Added collision-safe default CSV export filenames.
+
+- Reconstruct nine exact cut-off Ghanaian uncontrolled refrigerator-dismantling profiles, retaining all five refrigerant/blowing-agent emissions, seven material-treatment/recovery inputs, marginal uncertainty and constant arithmetic formulas. Existing disposal proxies retain explicit limitations; no controlled-treatment proxy or inverse is inferred.
+
+- Preserve authored local parameters, formulas and uncertainty in generated helpers in both ecoinvent/UVEK directions; validate parameter definitions and keep dependency scopes independent.
+
+- Extend 16 reviewed refrigerant services/markets to their inspected cut-off patch profiles and reconstruct nine controlled Ghanaian dismantling plus nine global used-appliance markets, preserving source parameters and signed regional formulas.

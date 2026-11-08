@@ -264,6 +264,10 @@ The same migration workflow can relink a foreground inventory from ecoinvent to
 UVEK. This example starts with ecoinvent 3.11 cut-off and keeps the Brightway Excel
 format:
 
+UVEK conversions require **ecoinvent cut-off**. BrightPath rejects changes between
+cut-off and consequential models, including routes through another database or
+release. Warning policies cannot enable a cross-model route.
+
 ```python
 from brightpath import (
     BackgroundContext,
@@ -329,7 +333,7 @@ OpenLCA Excel is not currently supported.
 - Packaged ecoinvent cut-off migrations connect releases from 3.5 through 3.12.
 - Reverse migrations are inferred and require permissive review.
 - A heuristic ecoinvent-to-UVEK 2025 route is available and must be reviewed.
-- Reviewed UVEK 2025/2026 → ecoinvent 3.12 cut-off exports cover 1,424 supplier identities, including supporting recipes and policy-controlled proxies; coverage remains partial.
+- Reviewed UVEK 2025/2026 → ecoinvent 3.12 cut-off exports cover 1,516 supplier identities, including supporting recipes and policy-controlled proxies; coverage remains partial.
 - UVEK 2025 ↔ 2026 cut-off migrations have explicit directional resources, with reported unmatched identities and missing unit factors. The original 2026 biosphere remains independent of ecoinvent 3.10.
 - Consequential version-to-version and cross-system-model migrations are not available.
 

@@ -173,11 +173,74 @@ explicit mass/volume factors. The native catalog is not renamed.
 The first forward review below adds 427 mappings, the follow-up adds another
 55, the radioactivity review adds 158 and the land review adds five. There are
 now **1,935 native identities mapped to ecoinvent 3.10**, with **744 unresolved
-native identities**. The reverse resource contains 1,297 rules and 3,065 unresolved
+native identities**. The reverse resource contains 1,367 rules and 2,995 unresolved
 ecoinvent 3.10 identities; it does not infer a river/lake allocation from a
-surface-water exchange. No flows are deleted
-or assigned arbitrary substitutes. Reports expose incomplete coverage before
+surface-water exchange. No flows are deleted. Explicitly approved screening proxies
+are limited to the water-emission cases below; other unresolved flows are retained
+as unresolved. Reports expose incomplete coverage before
 execution, and used links are checked against the exact target catalog.
+
+Exact particulate labels and size bins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Thirteen ecoinvent-to-native correspondences match ``Particulate Matter`` to
+``Particulates`` while retaining each explicit size bin and air compartment.
+The <2.5 micrometre, >2.5-and-<10 micrometre and >10 micrometre quantities remain
+separate. All signed kilograms, uncertainty and caller formulas are preserved;
+no PM10 total or particle-size fractions are inferred. Urban, nonurban,
+unspecified, long-term and stratosphere/troposphere contexts retain their meaning.
+
+Original ecoinvent 3.10/3.12 flow definitions and the original native XML archive
+were checked independently. The thirteen publisher-UUID correspondences in the
+native-to-ecoinvent direction remain unchanged. The review is packaged as
+``uvek_2026_particulate_review.json``. These exact physical definitions do not
+assert equal characterization factors in different LCIA method tables. Ionic
+metal air-label proxies remain a separate scientific decision.
+
+Exact chemical synonyms in urban air
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Four additional ecoinvent-to-native correspondences retain the same reported
+CAS number, kilogram quantity and urban/high-population air context:
+hydrochloric acid to hydrogen chloride, pentachlorobenzene to
+``Benzene, pentachloro-``, hexachlorobenzene to ``Benzene, hexachloro-``, and
+pentachlorophenol to ``Phenol, pentachloro-``. HCl represents emitted substance
+mass; no purchased-solution dilution factor is applied. Original native XML
+definitions and source flow metadata were inspected. The independently reviewed
+publisher-UUID reverse rules remain unchanged. The evidence is packaged as
+``uvek_2026_chemical_alias_review.json``.
+
+All signed amounts, uncertainty and caller formulas are preserved. These
+correspondences do not authorize ionic-metal speciation, dioxin-equivalent
+mixtures, water mass/volume or receiving-water proxies, and do not assert equal
+LCIA characterization factors.
+
+Water-emission screening proxies
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The user-reviewed set of 56 ecoinvent-to-native correspondences covers 32
+chemical labels used by bottom-ash treatment. These are screening proxies,
+not chemical or LCIA equivalence claims. Ionic metal labels map to the named
+generic element where approved; warnings retain the source CAS and UUID and
+identify the lost oxidation-state or speciation detail. Native CAS metadata
+can differ or be absent. All signed quantities remain in kilograms.
+
+Surface-water releases use native unspecified water rather than an invented
+river/lake split; warnings identify this receiving-water approximation.
+Groundwater releases retain the exact long-term groundwater compartment.
+Nitrate, phosphate, chloride, fluoride and sulfate retain their own reported
+mass without conversion to elemental N, P, Cl, F or S. Dissolved organic carbon
+is preserved as DOC, separately from chemical or biological oxygen demand.
+No emissions are omitted. Strict policy rejects these information losses;
+``on_information_loss="warn"`` accepts them with per-exchange reports.
+The native-to-ecoinvent resource remains unchanged: these proxies do not
+justify inferring ionic composition from generic native element labels.
+
+The packaged ``uvek_2026_ash_water_review.json`` records the 56 exact pairs,
+reference metadata, user approval and directional baseline hashes. Replaying
+the original full native generator requires its recorded bw2io version,
+``0.9.14``; newer versions can have identical name-migration data while changing
+the provenance digest. The review guard is retained.
 
 The :download:`land review CSV <../uvek_2026_land_review.csv>` and
 :download:`JSON evidence <../uvek_2026_land_review.json>` independently approve
@@ -186,6 +249,25 @@ publisher labels in native ``resources/land`` and ecoinvent
 ``natural resource/land`` are eligible. Units, qualifiers and publisher UUIDs
 must match; unspecified compartments and inferred land-class merges remain
 blocked. These additions preserve quantities without a conversion factor.
+
+The separately authored :download:`water review <../uvek_2026_water_review.json>`
+adds the exact ecoinvent ``Water / water / cubic meter`` discharge to native
+``Water / emissions to water, unspecified / kilogram`` with factor 1,000.
+Both flows identify pure water (CAS 7732-18-5); the unspecified receiving
+compartment is preserved. This uses the same documented LCA water convention
+as the existing air-water and independently reviewed native-to-ecoinvent rules.
+It does not convert a wastewater-treatment service or infer a regional flow,
+resource withdrawal or river/lake split. The existing reverse rule remains
+unchanged with factor 0.001. Generated helpers use the ordinary biosphere
+scaling path, including quantity, uncertainty and formula conversion.
+
+Reproduce the water review with::
+
+    python -m scripts.review_uvek_2026_water /path/to/original-uvek-2026.zip
+
+The pinned historical authoring environment uses bw2io 0.9.14. A different
+version changes the recorded dependency provenance and is rejected by the
+existing baseline digest checks.
 
 Reproduce the land review with::
 
@@ -254,6 +336,8 @@ that route's limits, heuristic findings, proxy policies, and foreground recipes.
 The ``1.0.0a11`` publisher-correspondence expansion supports 1,424 native UVEK
 2026 supplier identities for export to ecoinvent 3.12 cut-off, including 1,070
 new reference-function correspondences. The published ``1.0.0a10`` contains 354.
+The current cohort includes one approved biowaste-collection omission, reported
+with its lost transport and CO2 uptake contributions; it is not a treatment substitute.
 The other 10,523 native process identities still lack an approved ecoinvent
 export correspondence.
 Process and biosphere correspondence coverage are assessed independently.
