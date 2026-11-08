@@ -101,6 +101,16 @@ ash-wetting boundary, with unquantified score effects. Separate caller stack
 emissions remain unchanged; no recovery or avoided-SOx credit is added. This
 changes no raw mapping or independently authored reverse route.
 
+``brightpath/data/export/uvek_pilot_fuel_heat_service_review.json`` records six
+further exact-profile fuel and heat correspondences. Building-machine diesel
+services preserve MJ of fuel combusted, while the three furnace-heat services
+preserve MJ of useful heat. The source heavy-fuel-oil reference already applies
+its inverse-efficiency scaling, and native heat wrappers contain their burner
+factors internally; caller heat demand remains at factor ``+1``. Hard-coal stock
+retains signed kg without an LHV factor. Complete native infrastructure, fuel
+and residue handling remain included once, with technology/background warnings.
+Generator reference ambiguity and direct gas-volume conventions are excluded.
+
 Exact rule approvals
 --------------------
 
