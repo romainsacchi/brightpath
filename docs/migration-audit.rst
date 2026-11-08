@@ -9,6 +9,19 @@ particular, reversing a many-to-one mapping may require a scientific decision
 that the original mapping does not contain. The audit detects coverage changes
 without adding proxies, weakening policies, or rewriting source inventories.
 
+The Premise electricity pilot has a separate, exact-profile material review in
+``brightpath/data/export/uvek_pilot_material_review.json``. It corrects quicklime,
+nylon 66, metallurgical silicon and water-based alkyd paint rather than using
+limestone, nylon 6, electronic-grade silicon or solvent-based paint. Positive
+source and native references were inspected independently. The paint source
+uses a dry-paint coordinate; the native target is a 60% mixture, so its approved
+factor is ``1/0.60``, applied to quantities, uncertainty and formulas together.
+Other reviewed material factors are ``+1``. Supplier geography, producer/market
+boundaries and inventory-vintage differences remain screening limitations.
+Uninspected versions and patches have no implicit approval. These decisions do
+not change the overall heuristic policy gate or independently authored reverse
+routes; their collector/replay tests do not certify a prospective scenario.
+
 ``scripts/audit_migration_coverage.py`` executes synthetic inventories against
 the installed package's exact catalogs and migration engine. It covers:
 

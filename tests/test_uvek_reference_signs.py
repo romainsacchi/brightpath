@@ -458,6 +458,8 @@ def test_all_approved_model_dependent_rules_have_exact_profile_decisions():
 
     resource = load_uvek_technosphere_resource()
     ledger = json.loads((ROOT / REVIEW_PATH).read_text(encoding="utf-8"))
+    pilot = json.loads((DATA_DIR / "export/uvek_pilot_material_review.json").read_text())
+    pilot_rules = {row["rule_id"]: row for row in pilot["rules"]}
     scoped = [
         rule
         for rule in resource["replace"]
@@ -465,8 +467,16 @@ def test_all_approved_model_dependent_rules_have_exact_profile_decisions():
         and rule["source"]["reference product"] != "coal tar"
     ]
     # Preserve exact profiles, including partial markets and mixed-sign slag services.
-    assert len(scoped) == 990
+    assert len(scoped) == 990 + len(pilot_rules)
     for rule in scoped:
+        if rule["id"] in pilot_rules:
+            decision = pilot_rules[rule["id"]]
+            entries = rule["reference_flow_sign_review"]["profiles"]
+            assert [e["source_profile"] for e in entries] == [e["source_profile"] for e in decision["profiles"]]
+            assert all(e["review"]["status"] == "verified" for e in entries)
+            assert all(e["conversion_factor"] == decision["conversion_factor"] for e in entries)
+            assert rule["target"] == decision["target"]
+            continue
         observations = ledger["resources"][resource["name"]][rule["id"]]["source_observations"]
         entries = rule["reference_flow_sign_review"]["profiles"]
         assert {

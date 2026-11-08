@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Correct the Premise electricity pilot's inspected quicklime, nylon 66,
+  metallurgical-silicon and water-based alkyd-paint supplier identities.
+  Preserve signed kg coordinates for the first three; convert dry paint to the
+  native 60% water-based mixture with factor 1/0.60, including uncertainty and
+  formulas. Exact cut-off profile guards and screening limitations remain
+  explicit; the overall heuristic route and independent reverse rules retain
+  their existing policy gates.
+
 - Resolve five older RoW PET-waste market profiles through complete freight-mode
   screening proxies, retaining their treatment shares and transport quantities.
   Reconstruct the positive ecoinvent 3.9 polyester-waste transfer from its eight
