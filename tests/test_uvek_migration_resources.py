@@ -167,7 +167,10 @@ def test_uvek_plan_and_execution_migrate_both_axes_transactionally():
         ("technosphere", "forward"),
         ("biosphere", "forward"),
     ]
-    assert {issue.code for issue in plan.report.issues} == {"migration.heuristic_mapping"}
+    assert {issue.code for issue in plan.report.issues} == {
+        "migration.heuristic_mapping",
+        "migration.canonical_biosphere_identity",
+    }
     assert result.succeeded
     assert result.lossy
     assert result.value.context.background == target
@@ -303,7 +306,12 @@ def _factored_document(uncertainty):
     rule = next(
         rule
         for rule in load_uvek_technosphere_resource()["replace"]
-        if rule.get("conversion_factor", 1) != 1 and _technosphere_rule_identity(rule["source"]) in catalog
+        if rule.get("conversion_factor", 1) != 1
+        # Exercise a unit change, independently of same-unit material/basis
+        # proxies such as the separately approved dry-paint correction.
+        and "unit" in rule["target"]
+        and _canonical_unit(rule["source"]["unit"]) != _canonical_unit(rule["target"].get("unit"))
+        and _technosphere_rule_identity(rule["source"]) in catalog
     )
     data = [
         {
