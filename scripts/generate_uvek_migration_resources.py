@@ -635,12 +635,15 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
     if __package__:
         from scripts.generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
         from scripts.review_uvek_pilot_materials import apply_pilot_material_review
+        from scripts.review_uvek_pilot_incinerators import apply_pilot_incinerator_review
     else:
         from generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
         from review_uvek_pilot_materials import apply_pilot_material_review
+        from review_uvek_pilot_incinerators import apply_pilot_incinerator_review
 
     technosphere = cutoff_uvek_resource(historical, catalog_directory)
     apply_pilot_material_review(technosphere)
+    apply_pilot_incinerator_review(technosphere)
     validate_migration_resource(technosphere)
     return technosphere, build_canonical_biosphere_resource(catalog_directory)
 

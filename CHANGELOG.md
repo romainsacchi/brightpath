@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Correct four inspected ecoinvent 3.6 cut-off municipal-incineration links to
+  dedicated native glass, polyethylene, polypropylene and polystyrene services.
+  Remove construction-waste transport wrappers, retain separately listed
+  transport, and preserve signed wet kg with factor −1. Full native 2026 waste
+  compositions and heating values match; shorter 2025 documentation and other
+  native inventory differences remain explicit. Other source releases retain
+  unresolved profile gates; no reverse mapping is inferred.
+
 - Distinguish the validated canonical ecoinvent 3.10 biosphere bridge from
   heuristic supplier mappings during planning. Preserve exact source-release,
   publisher-identity, unit and receiving-context checks and refusal of unresolved

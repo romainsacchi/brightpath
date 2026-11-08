@@ -37,6 +37,17 @@ Uninspected versions and patches have no implicit approval. These decisions do
 not change the overall heuristic policy gate or independently authored reverse
 routes; their collector/replay tests do not certify a prospective scenario.
 
+Four further ecoinvent 3.6 cut-off municipal-incineration links use dedicated
+glass, polyethylene, polypropylene and polystyrene suppliers, documented in
+``brightpath/data/export/uvek_pilot_incinerator_endpoint_review.json``. Their
+42 wet-composition entries and both heating values match native UVEK 2026.
+The former construction-waste wrappers added transport, and the polypropylene
+wrapper supplied polyethylene incineration. The corrected endpoints retain
+signed wet kg with factor ``-1`` and preserve separately listed caller freight.
+Shorter UVEK 2025 composition documentation and native inventory differences
+remain warnings. Only the inspected 3.6 source profiles are reviewed; other
+releases remain unresolved, without an inferred reverse correspondence.
+
 Exact rule approvals
 --------------------
 
