@@ -11,6 +11,8 @@ from brightpath.migrations.schema import intern_review
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = "brightpath/data/export/uvek_pilot_material_review.json"
 APPROVAL_SHA256 = "3dab2783feae4db513e39c9ec0cc6f65da73785619c2fda3270a244b47b13245"
+PAINT_MARKET_PATH = "brightpath/data/export/uvek_pilot_paint_market_review.json"
+PAINT_MARKET_SHA256 = "330d61db91b138f75ef8a7fd2af3ab459df2fffc0c602c248cc16fe9bd31893d"
 
 
 def apply_pilot_material_review(resource, root=ROOT):
@@ -19,8 +21,19 @@ def apply_pilot_material_review(resource, root=ROOT):
     The resource remains heuristic overall. These corrections neither approve
     unrelated rules nor define an inverse route or a cross-system-model route.
     """
-    raw = (root / REVIEW_PATH).read_bytes()
-    if hashlib.sha256(raw).hexdigest() != APPROVAL_SHA256:
+    _apply_material_review(resource, root, REVIEW_PATH, APPROVAL_SHA256)
+
+
+def apply_pilot_paint_market_review(resource, root=ROOT):
+    """Replay the same approved water-based producer behind its inspected market."""
+    if hashlib.sha256((root / REVIEW_PATH).read_bytes()).hexdigest() != APPROVAL_SHA256:
+        raise ValueError("Original paint approval changed; repeat its scientific review.")
+    _apply_material_review(resource, root, PAINT_MARKET_PATH, PAINT_MARKET_SHA256)
+
+
+def _apply_material_review(resource, root, review_path, approval_sha256):
+    raw = (root / review_path).read_bytes()
+    if hashlib.sha256(raw).hexdigest() != approval_sha256:
         raise ValueError("Pilot material approval changed; repeat its scientific review.")
     review = json.loads(raw)
     indexed = {rule["id"]: rule for rule in resource["replace"]}
@@ -50,7 +63,7 @@ def apply_pilot_material_review(resource, root=ROOT):
             reference_flow_sign_review={
                 "status": "unresolved",
                 "reason": "Only the exact inspected cut-off source profiles are approved.",
-                "evidence": [REVIEW_PATH],
+                "evidence": [review_path],
                 "profiles": [
                     {
                         "source_profile": row["source_profile"],
@@ -60,7 +73,7 @@ def apply_pilot_material_review(resource, root=ROOT):
                             "source_sign": 1,
                             "target_sign": 1,
                             "reason": limitation,
-                            "evidence": [REVIEW_PATH],
+                            "evidence": [review_path],
                         },
                     }
                     for row in decision["profiles"]
@@ -69,7 +82,7 @@ def apply_pilot_material_review(resource, root=ROOT):
         )
         rule["review_ref"] = intern_review(
             resource,
-            {"rationale": review["authorization"], "limitations": [limitation], "evidence": [REVIEW_PATH]},
+            {"rationale": review["authorization"], "limitations": [limitation], "evidence": [review_path]},
         )
     resource["coverage"]["mapping_methods"] = dict(
         sorted(Counter(rule["mapping_method"] for rule in resource["replace"]).items())
