@@ -92,6 +92,15 @@ tanker size, fleet, machinery year, supply allocation and sparse wood
 documentation remain warnings. Internal capacity, lifetime, density and heating
 values are not demand conversion factors. Raw migration rules are unchanged.
 
+The explicit lignite-scrubber approval is recorded in
+``brightpath/data/export/uvek_pilot_lignite_scrubber_review.json`` for ecoinvent
+3.6 only. The complete native wet scrubber supplies kg SOx retained at factor
+``+1`` and 90% removal. Its warnings identify source disposal of 4.1 kg gypsum
+and treatment of 0.0024 m3 wastewater absent from the native coproduct and
+ash-wetting boundary, with unquantified score effects. Separate caller stack
+emissions remain unchanged; no recovery or avoided-SOx credit is added. This
+changes no raw mapping or independently authored reverse route.
+
 Exact rule approvals
 --------------------
 
