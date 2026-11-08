@@ -26,6 +26,13 @@ uses a dry-paint coordinate; the native target is a 60% mixture, so its approved
 factor is ``1/0.60``, applied to quantities, uncertainty and formulas together.
 Other reviewed material factors are ``+1``. Supplier geography, producer/market
 boundaries and inventory-vintage differences remain screening limitations.
+The same review also corrects the desktop-PC power-supply fan from a printed
+circuit board to the documented native fan, and corrugated boxes from testliner
+base paper to complete European mixed-fibre single-wall packaging. Signed kg
+are retained. The fan inventory excludes assembly, and the box configuration
+is an explicit proxy; its complete converting inventory is used without adding
+another board or converting burden. These two decisions are limited to the six
+inspected cut-off source releases, without implicit 3.11 or patch approval.
 Uninspected versions and patches have no implicit approval. These decisions do
 not change the overall heuristic policy gate or independently authored reverse
 routes; their collector/replay tests do not certify a prospective scenario.

@@ -45,9 +45,10 @@ def test_material_correction_preserves_reference_sign_uncertainty_and_formula(
     assert any(i.code == "migration.technosphere_information_loss" for i in result.last_migration_report.issues)
 
 
-def test_uninspected_patch_has_no_implicit_material_approval():
-    decision = next(d for d in REVIEW["rules"] if d["label"] == "nylon")
-    inventory = BrightwayInventory.from_data(consumer(decision["source"], -2), context=contexts("ecoinvent", "3.10.1"))
+@pytest.mark.parametrize("label,version", [("nylon", "3.10.1"), ("fan", "3.11"), ("box", "3.11")])
+def test_uninspected_version_has_no_implicit_material_approval(label, version):
+    decision = next(d for d in REVIEW["rules"] if d["label"] == label)
+    inventory = BrightwayInventory.from_data(consumer(decision["source"], -2), context=contexts("ecoinvent", version))
     before = inventory.data
     with pytest.raises(MigrationError):
         inventory.migrate_background(contexts("uvek", "2026").background, policy=POLICY)

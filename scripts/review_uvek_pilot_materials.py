@@ -10,7 +10,7 @@ from brightpath.migrations.schema import intern_review
 
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = "brightpath/data/export/uvek_pilot_material_review.json"
-APPROVAL_SHA256 = "0ba5ae42d54592359de26f3bb4552d5aeb747efad11588091ebf2d56ec3d1a84"
+APPROVAL_SHA256 = "3dab2783feae4db513e39c9ec0cc6f65da73785619c2fda3270a244b47b13245"
 
 
 def apply_pilot_material_review(resource, root=ROOT):

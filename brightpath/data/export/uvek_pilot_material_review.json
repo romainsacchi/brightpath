@@ -1,5 +1,5 @@
 {
-  "authorization": "User approved four pilot material corrections with warnings and separately approved +1/0.60 wet/dry-basis scaling for water-based paint. Independently inspected source and target references are positive. Only exact inspected ecoinvent cut-off profiles are authorized; no consequential or uninspected patch fallback.",
+  "authorization": "User approved four pilot material corrections with warnings and separately approved +1/0.60 wet/dry-basis scaling for water-based paint. Independently inspected source and target references are positive. Only exact inspected ecoinvent cut-off profiles are authorized; no consequential or uninspected patch fallback. User additionally approved correcting the desktop-PC PSU fan from a printed circuit board to the documented native fan and the corrugated box from base paper to complete mixed-fibre single-wall packaging, with their assembly, configuration, market-boundary and vintage warnings. Positive native references were verified for both UVEK releases used by the forward route.",
   "rules": [
     {
       "conversion_factor": 1,
@@ -412,6 +412,218 @@
         "location": "RER",
         "name": "Alkyd paint, white, 60% in H2O, at plant",
         "reference product": "Alkyd paint, white, 60% in H2O, at plant",
+        "unit": "kilogram"
+      }
+    },
+    {
+      "conversion_factor": 1,
+      "label": "fan",
+      "limitations": "Correct the material identity at the inspected positive 1 kg reference, preserving all signed quantities, uncertainty and formulas. Native documentation identifies this as the material composition of a fan used in a desktop-PC power supply. Its assembly energy, emissions and wastes are excluded by that native inventory. Source market delivery and supplier mix are not reconstructed; database vintage and inventory boundaries differ.",
+      "native_references": [
+        {
+          "activity_comment_sha256": "d248c8a2e98189ebc7d5d7676da43e5765598f04a92f9323f1ae66691eb966d0",
+          "family": "uvek",
+          "production_metadata_sha256": "d19dfafa122c172cf39095bd99caaf7e7ef4e61432cf95f90edab99a8e4cb506",
+          "reference_amount": 1,
+          "system_model": "cutoff",
+          "unit": "kilogram",
+          "version": "2025"
+        },
+        {
+          "activity_comment_sha256": "d241bb865472db4d46f06ad3081b5c0c00928e3df014e0a6e8aeed0766ec6198",
+          "family": "uvek",
+          "production_metadata_sha256": "d2715ef55fca6ede95cbc2a4cfdcc8ad38d574f4336622ed77eb003e8aa31360",
+          "reference_amount": 1,
+          "system_model": "cutoff",
+          "unit": "kilogram",
+          "version": "2026"
+        }
+      ],
+      "previous_target": {
+        "location": "GLO",
+        "name": "Printed wiring board, power supply unit desktop PC, Pb containing, at plant",
+        "reference product": "Printed wiring board, power supply unit desktop PC, Pb containing, at plant",
+        "unit": "kilogram"
+      },
+      "profiles": [
+        {
+          "activity_comment_sha256": "46fce8999527aff6e961198cb3e46e833c739f8e763b600a59db3dcc7e72134a",
+          "production_metadata_sha256": "5b923903522180c280d52c17fcff4a307796a409d4e377d04ce4fe5d1107f414",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.10"
+          }
+        },
+        {
+          "activity_comment_sha256": "92dc9ab00e17f08e07b599240db6414b9e07f81d4bdea8a74a477f17272335c9",
+          "production_metadata_sha256": "e3aacca152db248234f16f20f72921e630f17079296220e2752d8e72f937bb4d",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.12"
+          }
+        },
+        {
+          "activity_comment_sha256": "94e701237b5edc076c875c6350ca660eb68069371356fc03215d8168bfb8c0b8",
+          "production_metadata_sha256": "bf0c01c25836a90c6aeb9973afed1b1c16b7595ea19848575aae656170868f30",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.6"
+          }
+        },
+        {
+          "activity_comment_sha256": "94e701237b5edc076c875c6350ca660eb68069371356fc03215d8168bfb8c0b8",
+          "production_metadata_sha256": "17af2202cb9899e0c96b32a7208dc6bf97ce9b059f429fb41769ef4cc8edb02a",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.7"
+          }
+        },
+        {
+          "activity_comment_sha256": "fea14cf8d7436227ee26c7b46f97b508ba392cc417b999c994be962276f05b7e",
+          "production_metadata_sha256": "a9f2f5f5006c8cc722048df0c812528a10de7894fcafeec0866fd46fa8193138",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          }
+        },
+        {
+          "activity_comment_sha256": "46fce8999527aff6e961198cb3e46e833c739f8e763b600a59db3dcc7e72134a",
+          "production_metadata_sha256": "8950a66110cd344b06f0156bc8553f7e1df325fdbd310a857781de2c6032504f",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          }
+        }
+      ],
+      "rule_id": "bp-6616982eceb98971",
+      "source": {
+        "location": "GLO",
+        "name": "market for fan, for power supply unit, desktop computer",
+        "reference product": "fan, for power supply unit, desktop computer",
+        "unit": "kilogram"
+      },
+      "target": {
+        "location": "GLO",
+        "name": "Fan, at plant",
+        "reference product": "Fan, at plant",
+        "unit": "kilogram"
+      }
+    },
+    {
+      "conversion_factor": 1,
+      "label": "box",
+      "limitations": "Correct the material identity at the inspected positive 1 kg reference, preserving all signed quantities, uncertainty and formulas. Use the complete native corrugated-box manufacturing inventory, including cutting, folding, printing, inks, glues and board. Its mixed-fibre single-wall configuration, allocation and vintage can differ from the source box market. Source market delivery and supplier mix are not reconstructed; add no separate board or converting burden.",
+      "native_references": [
+        {
+          "activity_comment_sha256": "e46e8b4fdac6af6e3e698fc15bf410a8395379289342c084b47ed86e82ef8e61",
+          "family": "uvek",
+          "production_metadata_sha256": "f7a9bc184b1de657f7462e51553ee2f86834886a8b3040f4f83e72a7b34b1865",
+          "reference_amount": 1,
+          "system_model": "cutoff",
+          "unit": "kilogram",
+          "version": "2025"
+        },
+        {
+          "activity_comment_sha256": "55d374fd1b3df5cdf9b324626e59cf0fed944df2be8a29b6c60287785d4f1161",
+          "family": "uvek",
+          "production_metadata_sha256": "1c9937509643dc0f327e92cc2931a31ec0307e0eb5a254148d580313c156ace4",
+          "reference_amount": 1,
+          "system_model": "cutoff",
+          "unit": "kilogram",
+          "version": "2026"
+        }
+      ],
+      "previous_target": {
+        "location": "RER",
+        "name": "Corrugated board base paper, testliner, at plant",
+        "reference product": "Corrugated board base paper, testliner, at plant",
+        "unit": "kilogram"
+      },
+      "profiles": [
+        {
+          "activity_comment_sha256": "a5dabaf1bf75160f170fb5f6e9134dc839c15e5d62d4ea9ab6afc4efd7dac4b4",
+          "production_metadata_sha256": "bd1a248f093c08e0cf4d259470e288dea4514505cf17777219285147c3c76b7c",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.10"
+          }
+        },
+        {
+          "activity_comment_sha256": "9ad71ec692a22c855a3fccf56c4240e2114f2cf608acc36633bfd56493a3b6f9",
+          "production_metadata_sha256": "0164169454395c3e0501d5c5e8860674b4a69cf23d3b5b4ea4aa4e0a99f98c30",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.12"
+          }
+        },
+        {
+          "activity_comment_sha256": "16ea969d0b41e81a759f07806a247a956dac92454010061bff2e99c474228177",
+          "production_metadata_sha256": "686872c7fbd6b98dc9625429bd1e2c4cb7c010f5cb91b25e8be5c3770ad954a6",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.6"
+          }
+        },
+        {
+          "activity_comment_sha256": "16ea969d0b41e81a759f07806a247a956dac92454010061bff2e99c474228177",
+          "production_metadata_sha256": "5d4683154267e7c79fdcee9afbcc1986d9227bd601405d00c4aaf13eac9f90a9",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.7"
+          }
+        },
+        {
+          "activity_comment_sha256": "9beebf7d52b01cffdde143ac3b707754538fca60d0f99b7b2b3125d6ac2eeef0",
+          "production_metadata_sha256": "fd271e0c5fa4fed967e39558ee03372f2260c214d143247bcdc7ee293ef4829e",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          }
+        },
+        {
+          "activity_comment_sha256": "ba28280c9e8f14f338470a3477dca24b584d1716f2969f8518ba7594d47f073d",
+          "production_metadata_sha256": "bdf820a4ddc5ca849bf8319f4a17a3d3b7c9a5cb00e0f1fa8eeacf6de290b674",
+          "reference_amount": 1,
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          }
+        }
+      ],
+      "rule_id": "bp-1386bf062baff22f",
+      "source": {
+        "location": "RER",
+        "name": "market for corrugated board box",
+        "reference product": "corrugated board box",
+        "unit": "kilogram"
+      },
+      "target": {
+        "location": "RER",
+        "name": "Packaging, corrugated board, mixed fibre, single wall, at plant",
+        "reference product": "Packaging, corrugated board, mixed fibre, single wall, at plant",
         "unit": "kilogram"
       }
     }
