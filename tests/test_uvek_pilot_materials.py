@@ -11,14 +11,19 @@ from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource
-from scripts.review_uvek_pilot_materials import apply_pilot_material_review, apply_pilot_paint_market_review
+from scripts.review_uvek_pilot_materials import (
+    apply_pilot_material_review,
+    apply_pilot_paint_market_review,
+    apply_pilot_silver_market_review,
+)
 from test_uvek_reference_signs import consumer, contexts
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_material_review.json").read_text())
 PAINT_MARKET = json.loads((DATA_DIR / "export/uvek_pilot_paint_market_review.json").read_text())
+SILVER_MARKET = json.loads((DATA_DIR / "export/uvek_pilot_silver_market_review.json").read_text())
 CASES = [
     (d, p["source_profile"]["version"])
-    for review in (REVIEW, PAINT_MARKET)
+    for review in (REVIEW, PAINT_MARKET, SILVER_MARKET)
     for d in review["rules"]
     for p in d["profiles"]
 ]
@@ -88,23 +93,28 @@ def test_corrections_do_not_approve_the_heuristic_resource_globally():
         inventory.migrate_background(contexts("uvek", "2026").background)
 
 
-def test_paint_market_replay_is_idempotent_and_refuses_supplier_drift():
+@pytest.mark.parametrize(
+    "review,apply_review",
+    [(PAINT_MARKET, apply_pilot_paint_market_review), (SILVER_MARKET, apply_pilot_silver_market_review)],
+)
+def test_market_replay_is_idempotent_and_refuses_supplier_drift(review, apply_review):
     resource = deepcopy(load_uvek_technosphere_resource())
-    apply_pilot_paint_market_review(resource)
+    apply_review(resource)
     before = deepcopy(resource)
-    apply_pilot_paint_market_review(resource)
+    apply_review(resource)
     assert resource == before
-    rule = next(r for r in resource["replace"] if r["id"] == PAINT_MARKET["rules"][0]["rule_id"])
+    rule = next(r for r in resource["replace"] if r["id"] == review["rules"][0]["rule_id"])
     rule["target"]["name"] = "Unreviewed solvent paint"
     before = deepcopy(resource)
     with pytest.raises(ValueError, match="source, supplier or unit changed"):
-        apply_pilot_paint_market_review(resource)
+        apply_review(resource)
     assert resource == before
 
 
-def test_paint_market_correction_does_not_approve_other_source_releases():
+@pytest.mark.parametrize("review", [PAINT_MARKET, SILVER_MARKET])
+def test_market_correction_does_not_approve_other_source_releases(review):
     inventory = BrightwayInventory.from_data(
-        consumer(PAINT_MARKET["rules"][0]["source"], -2), context=contexts("ecoinvent", "3.11")
+        consumer(review["rules"][0]["source"], -2), context=contexts("ecoinvent", "3.11")
     )
     before = deepcopy(inventory.data)
     with pytest.raises(MigrationError):

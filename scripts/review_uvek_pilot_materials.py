@@ -13,6 +13,8 @@ REVIEW_PATH = "brightpath/data/export/uvek_pilot_material_review.json"
 APPROVAL_SHA256 = "3dab2783feae4db513e39c9ec0cc6f65da73785619c2fda3270a244b47b13245"
 PAINT_MARKET_PATH = "brightpath/data/export/uvek_pilot_paint_market_review.json"
 PAINT_MARKET_SHA256 = "330d61db91b138f75ef8a7fd2af3ab459df2fffc0c602c248cc16fe9bd31893d"
+SILVER_MARKET_PATH = "brightpath/data/export/uvek_pilot_silver_market_review.json"
+SILVER_MARKET_SHA256 = "55cb4c66b7ebd0ec8d62cd41e697f653cfe259ccc61eba414979e44d66a74a07"
 
 
 def apply_pilot_material_review(resource, root=ROOT):
@@ -29,6 +31,11 @@ def apply_pilot_paint_market_review(resource, root=ROOT):
     if hashlib.sha256((root / REVIEW_PATH).read_bytes()).hexdigest() != APPROVAL_SHA256:
         raise ValueError("Original paint approval changed; repeat its scientific review.")
     _apply_material_review(resource, root, PAINT_MARKET_PATH, PAINT_MARKET_SHA256)
+
+
+def apply_pilot_silver_market_review(resource, root=ROOT):
+    """Use the inspected complete silver supply mix for the exact pilot market."""
+    _apply_material_review(resource, root, SILVER_MARKET_PATH, SILVER_MARKET_SHA256)
 
 
 def _apply_material_review(resource, root, review_path, approval_sha256):

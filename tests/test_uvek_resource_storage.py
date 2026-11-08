@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 675
+    assert len(forward["reviews"]) == 676
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -107,7 +107,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 3989
+        == 3990
     )
 
 
@@ -523,6 +523,13 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     assert all(
         forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in paint_market_references
     )
+    silver_market = json.loads((DATA_DIR / "export/uvek_pilot_silver_market_review.json").read_text())
+    silver_market_ids = {row["rule_id"] for row in silver_market["rules"]}
+    silver_market_references = {r["review_ref"] for r in forward["replace"] if r["id"] in silver_market_ids}
+    assert len(silver_market_ids) == len(silver_market_references) == 1
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in silver_market_references
+    )
     assert all(
         review.keys() == {"rationale", "limitations"}
         for reference, review in forward["reviews"].items()
@@ -543,6 +550,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *pilot_references,
             *incinerator_references,
             *paint_market_references,
+            *silver_market_references,
             *auto_references,
             *geographic_references,
             *wastewater_references,
