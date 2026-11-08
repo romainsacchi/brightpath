@@ -393,8 +393,21 @@ def test_decoder_reports_changed_real_latent_instead_of_restoring_source():
     assert got["loc"] == math.log(200) and got["scale"] == 0.7
 
 
-def test_ordinary_documents_and_centered_inputs_unchanged():
+def test_ordinary_documents_and_centered_inputs_unchanged(monkeypatch):
+    from datetime import datetime
+    from types import SimpleNamespace
+
+    from brightpath.formats import simapro_csv
     from brightpath.formats.simapro_csv import render_simapro_rows
+
+    class FixedClock:
+        @staticmethod
+        def now():
+            return datetime(2026, 1, 2, 3, 4, 5)
+
+    # Both renders include the generation time; crossing a second must not
+    # turn an unchanged inventory comparison into an intermittent failure.
+    monkeypatch.setattr(simapro_csv, "datetime", SimpleNamespace(datetime=FixedClock))
 
     doc = document([dict(amount=100, loc=math.log(100), scale=0.3)])
     prepared, specs = prepare(doc)

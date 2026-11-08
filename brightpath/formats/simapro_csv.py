@@ -2113,6 +2113,7 @@ class _SimaProRenderer:
         uncertainty = _simapro_uncertainty_type(exchange.get("uncertainty type"))
         categories = exchange["categories"]
         subcompartment = ""
+        native_wire_name = None
         if exchange["name"] == "Water" and tuple(categories) == ("water", "fossil well"):
             profile = self.document.context.background.biosphere
             if getattr(self, "_fossil_water_catalog", None) is None:
@@ -2124,22 +2125,26 @@ class _SimaProRenderer:
                 subcompartment = self.subcompartments[categories[1]]
             except KeyError as exc:
                 native = None
-                if (
-                    is_native_uvek_biosphere(self.document.context.background.biosphere)
-                    and categories[0] == "air"
-                    and categories[1] in {"high. pop.", "low. pop."}
+                if is_native_uvek_biosphere(self.document.context.background.biosphere) and (
+                    (categories[0] == "air" and categories[1] in {"high. pop.", "low. pop."})
+                    or (categories[0] == "water" and categories[1] == "groundwater, long-term")
                 ):
                     # These are already wire tokens, not ecoinvent compartment
                     # names. Accept only a unique exact native catalog identity.
                     native = {**exchange, "categories": tuple(categories)}
                     restore_native_categories([{"exchanges": [native]}], self.document.context.background.biosphere)
-                if native is not None and tuple(native["categories"]) == ("emissions to air", categories[1]):
+                expected_root = {"air": "emissions to air", "water": "emissions to water"}.get(categories[0])
+                if native is not None and tuple(native["categories"]) == (expected_root, categories[1]):
                     subcompartment = categories[1]
+                    native_wire_name = exchange["name"]
                 else:
                     raise SimaProSerializationError(
                         f"No SimaPro subcompartment mapping for {categories[1]!r} on {exchange['name']!r}."
                     ) from exc
-        name = self.biosphere.get(exchange["name"], exchange["name"])
+        # An exact native identity must not inherit a legacy ecoinvent name alias.
+        name = (
+            native_wire_name if native_wire_name is not None else self.biosphere.get(exchange["name"], exchange["name"])
+        )
         name = resolve_ecoinvent_flow_name(exchange, name)
         biosphere = self.document.context.background.biosphere
         if biosphere.family == "ecoinvent" and biosphere.version in SUPPORTED_VERSIONS:

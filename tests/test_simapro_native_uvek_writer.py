@@ -1,4 +1,4 @@
-"""Native air wire tokens are syntax, never a change to flow identity."""
+"""Native air and long-term groundwater wire tokens preserve exact flow identities."""
 
 import csv
 from copy import deepcopy
@@ -81,23 +81,30 @@ def test_unknown_native_key_or_token_is_not_accepted(name, compartment, unit):
     assert result.has_errors and not result.rows
 
 
-def test_ambiguous_native_wire_key_is_rejected(monkeypatch):
+@pytest.mark.parametrize(
+    "root,name,token",
+    [
+        ("air", "Carbon dioxide, fossil", "low. pop."),
+        ("water", "Copper", "groundwater, long-term"),
+    ],
+)
+def test_ambiguous_native_wire_key_is_rejected(monkeypatch, root, name, token):
     from brightpath.profiles import biosphere_categories
 
-    name = "Carbon dioxide, fossil"
+    native_root = "emissions to " + root
     monkeypatch.setattr(
         biosphere_categories,
         "_native_identities",
         lambda: frozenset(
             {
-                (name, ("emissions to air", "low. pop."), "kilogram"),
-                (name, ("air", "low. pop."), "kilogram"),
+                (name, (native_root, token), "kilogram"),
+                (name, (root, token), "kilogram"),
             }
         ),
     )
     source = document()
     data = source.data
-    data[0]["exchanges"][1].update(name=name, categories=("emissions to air", "low. pop."))
+    data[0]["exchanges"][1].update(name=name, categories=(native_root, token))
     result = render_simapro_rows(source.replace(data=data))
     assert result.has_errors and not result.rows
 
@@ -108,3 +115,111 @@ def test_native_unspecified_air_uses_existing_blank_token_without_new_merging():
     assert not result.has_errors
     row = next(r for r in result.rows if r and r[0] == "Carbon dioxide, biogenic")
     assert row[1] == ""
+
+
+@pytest.mark.parametrize("amount", [-0.75, 0, 0.75])
+@pytest.mark.parametrize("formula", [False, True])
+def test_native_long_term_groundwater_roundtrip_keeps_exact_identity_and_signed_values(tmp_path, amount, formula):
+    source = document()
+    data = source.data
+    data[0]["parameters"] = [{"name": "dose", "amount": amount}]
+    flow = data[0]["exchanges"][1]
+    flow.update(name="Copper", categories=("emissions to water", "groundwater, long-term"), amount=amount, loc=amount)
+    if formula:
+        for field in ("uncertainty type", "loc", "scale"):
+            flow.pop(field)
+    else:
+        flow.pop("formula")
+    source = source.replace(data=data)
+    before = deepcopy(data)
+    provider = PackageCatalogProvider()
+    identity = ("Copper", ("emissions to water", "groundwater, long-term"), "kilogram")
+    assert identity in provider.load_biosphere(NATIVE).identities
+    path, report = write_simapro_csv(source, tmp_path / "native-groundwater.csv")
+    assert not report.has_errors
+    rows = list(csv.reader(path.open(encoding="latin-1", newline=""), delimiter=";"))
+    row = next(r for r in rows if r and r[0] == "Copper")
+    assert row[1:3] == ["groundwater, long-term", "kg"]
+    restored = load_simapro_csv(path, background_profile=PROFILE, biosphere_profile=NATIVE, catalog_provider=provider)
+    actual = next(e for e in restored.data[0]["exchanges"] if e["type"] == "biosphere")
+    assert (actual["name"], tuple(actual["categories"]), actual["unit"]) == identity
+    for field in ("amount", "formula", "uncertainty type", "loc", "scale", "comment"):
+        if field in before[0]["exchanges"][1]:
+            assert actual[field] == before[0]["exchanges"][1][field]
+    assert source.data == before
+
+
+@pytest.mark.parametrize(
+    "name,compartment,unit",
+    [
+        ("Unknown copper identity", "groundwater, long-term", "kilogram"),
+        ("Copper", "invented long-term water", "kilogram"),
+        ("Copper", "groundwater, long-term", "cubic meter"),
+    ],
+)
+def test_native_water_passthrough_requires_exact_flow_unit_and_compartment(name, compartment, unit):
+    source = document()
+    data = source.data
+    data[0]["exchanges"][1].update(name=name, categories=("emissions to water", compartment), unit=unit)
+    result = render_simapro_rows(source.replace(data=data))
+    assert result.has_errors and not result.rows
+
+
+@pytest.mark.parametrize("version", ["3.10", "3.12"])
+def test_native_water_token_is_not_accepted_in_a_canonical_biosphere(version):
+    source = document()
+    data = source.data
+    data[0]["exchanges"][1].update(name="Copper", categories=("water", "groundwater, long-term"))
+    result = render_simapro_rows(source.replace(data=data, biosphere_profile=BiosphereProfile("ecoinvent", version)))
+    assert result.has_errors and not result.rows
+
+
+def test_every_native_long_term_groundwater_identity_keeps_its_name_dimension_and_signed_amount(tmp_path):
+    provider = PackageCatalogProvider()
+    identities = sorted(
+        identity
+        for identity in provider.load_biosphere(NATIVE).identities
+        if tuple(identity[1]) == ("emissions to water", "groundwater, long-term")
+    )
+    assert len(identities) == 47
+    assert {identity[2] for identity in identities} == {"kilogram", "megajoule"}
+    source = document()
+    data = source.data
+    data[0].pop("parameters")
+    data[0]["exchanges"] = data[0]["exchanges"][:1]
+    for index, (name, categories, unit) in enumerate(identities):
+        amount = -0.125 if index % 2 else 0.125
+        data[0]["exchanges"].append(
+            {
+                "name": name,
+                "categories": categories,
+                "unit": unit,
+                "type": "biosphere",
+                "amount": amount,
+                "uncertainty type": 3,
+                "loc": amount,
+                "scale": 0.03125,
+            }
+        )
+    source = source.replace(data=data)
+    before = deepcopy(data)
+    path, report = write_simapro_csv(source, tmp_path / "all-native-long-term.csv")
+    assert not report.has_errors
+    restored = load_simapro_csv(path, background_profile=PROFILE, biosphere_profile=NATIVE, catalog_provider=provider)
+
+    def values(exchange):
+        return (
+            exchange["name"],
+            tuple(exchange["categories"]),
+            exchange["unit"],
+            exchange["amount"],
+            exchange["uncertainty type"],
+            exchange["loc"],
+            exchange["scale"],
+        )
+
+    assert sorted(values(e) for e in restored.data[0]["exchanges"] if e["type"] == "biosphere") == sorted(
+        values(e) for e in before[0]["exchanges"] if e["type"] == "biosphere"
+    )
+    assert restored.context.background == source.context.background
+    assert source.data == before
