@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "native_source_pin": "794d90f2c2dbb90f0c56ba8cc527fa1494aa8ef6",
-  "status": "Inspected same-coordinate electricity grids and exact local unit-share SOx service",
-  "limit": "No equipment-market geographic proxy is approved. NOx SCR remains excluded because its stated source/native removal rates differ (85% versus about80%). Different declared electricity territories, voltage levels and uninspected source releases remain gated.",
+  "status": "Inspected same-coordinate grids, exact local SOx service and explicitly approved retained-mass SCR proxy",
+  "limit": "No equipment-market geographic proxy is approved. The explicitly approved NOx SCR performance proxy covers only its enumerated ecoinvent3.6cutoff source. Different declared electricity territories, voltage levels, uninspected source releases and other control technologies remain gated.",
   "records": [
     {
       "rule_id": "bp-8ec82825a525039d",
@@ -409,6 +409,63 @@
       "conversion_factor": 1,
       "authorization": "Reuse the explicitly approved native UVEK electricity topology for matching declared territory, voltage and positive delivered-kWh coordinates. No different-geography fallback or new supplier-share rule is approved.",
       "boundary": "Use the complete native UVEK grid at the same declared country/region and voltage, per delivered kWh. This reuses the user-approved native voltage topology and upstream IAM-generation approach. Preserve native losses, infrastructure, trade/import inventories and direct emissions; add no second grid, loss compensation, busbar-only substitution or quantity rescaling. Historical generation/trade weights, region membership, grid assumptions and vintage differ across background families; no source/native inventory or LCIA equivalence is established."
+    },
+    {
+      "rule_id": "bp-deb7a57e4b2bc6e7",
+      "source": {
+        "location": "GLO",
+        "name": "market for NOx retained, by selective catalytic reduction",
+        "reference product": "NOx retained, by selective catalytic reduction",
+        "unit": "kilogram"
+      },
+      "target": {
+        "location": "GLO",
+        "name": "NOx retained, in SCR",
+        "reference product": "NOx retained, in SCR",
+        "unit": "kilogram"
+      },
+      "source_profiles": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.6",
+            "system_model": "cutoff"
+          },
+          "reference_amount": 1,
+          "metadata_sha256": "273bc385225a2e2981041c2a526c4f83c304534f53e5a39beeafe2ac43186724",
+          "inventory_sha256": "93439b5201f91fd5e5ea3c701e6f015ea297d25965945d9d25ffc8eca91c958a",
+          "sole_producer": {
+            "name": "selective catalytic reduction of nitrogen oxides",
+            "reference product": "NOx retained, by selective catalytic reduction",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "sole_producer_inventory_sha256": "e2bd51a2a4a7d77251e70f425f86a9117f75e01920a90326e2f59d3f83ac77d2",
+          "market_has_only_one_fixed_unit_supplier": true
+        }
+      ],
+      "target_references": {
+        "2025": {
+          "reference_amount": 1,
+          "unit": "kilogram",
+          "metadata_sha256": "93106308eaab4084a885821f851c3b80d17e1dda65b7e75d38cf012a225c5101"
+        },
+        "2026": {
+          "reference_amount": 1,
+          "unit": "kilogram",
+          "metadata_sha256": "c1006a438b08ffa20e3aacc3f168d6921a877eb64caf8a383a8eaea0337b9035"
+        }
+      },
+      "conversion_factor": 1,
+      "source_retention_efficiency": 0.85,
+      "native_retention_efficiency": 0.8,
+      "native_efficiency_qualifier": "about",
+      "authorization": "User explicitly approved the complete native SCR retained-mass proxy with warnings for the three inspected pilot exchanges. Approval is limited to the exact ecoinvent 3.6 cut-off source and UVEK 2026/ecoinvent3.10-biosphere target; no other profiles or control technologies are inferred.",
+      "boundary": "The source SCR service states 85% NOx removal; native UVEK states about 80%. Both reference one kg of NOx retained. Use the complete native reagent, catalyst, transport and disposal inventory per retained kg, preserving signed caller quantities, uncertainty/formulas and separately listed plant emissions. Apply no efficiency-ratio rescaling and add no avoided-NOx credit. Performance, reagent/catalyst, vintage and allocation differences remain screening limitations; the score effect is unquantified.",
+      "user_approval": {
+        "decision": "Approve with warnings",
+        "affected_pilot_exchange_matches": 3
+      }
     }
   ]
 }
