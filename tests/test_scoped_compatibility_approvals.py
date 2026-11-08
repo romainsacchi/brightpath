@@ -152,3 +152,54 @@ def test_helper_approval_binds_the_recipe_and_transitive_dependencies():
     before = compatibility_rule_fingerprint(resource, "replace", rule, SOURCE, BRIDGE)
     resource["recipes"]["inner"]["inputs"][0]["amount"] = 3
     assert compatibility_rule_fingerprint(resource, "replace", rule, SOURCE, BRIDGE) != before
+
+
+def test_profile_recipe_override_and_nested_review_contents_are_bound():
+    rule = {
+        "id": "helper",
+        "source": {"name": "source"},
+        "target": {"recipe_ref": "base"},
+        "reference_flow_sign_review": {
+            "profiles": [
+                {
+                    "source_profile": {"version": "3.9"},
+                    "target": {"recipe_ref": "override"},
+                    "review_ref": "profile-review",
+                }
+            ]
+        },
+    }
+    resource = {
+        "name": "synthetic",
+        "axis": "technosphere",
+        "reviews": {"profile-review": {"status": "verified"}},
+        "recipes": {name: {"inputs": [{"name": "material", "amount": 2}]} for name in ("base", "override", "unused")},
+    }
+    before = compatibility_rule_fingerprint(resource, "replace", rule, SOURCE, BRIDGE)
+    resource["recipes"]["unused"]["inputs"][0]["amount"] = 3
+    assert compatibility_rule_fingerprint(resource, "replace", rule, SOURCE, BRIDGE) == before
+    resource["recipes"]["override"]["inputs"][0]["amount"] = 3
+    changed = compatibility_rule_fingerprint(resource, "replace", rule, SOURCE, BRIDGE)
+    assert changed != before
+    resource["reviews"]["profile-review"]["status"] = "unresolved"
+    assert compatibility_rule_fingerprint(resource, "replace", rule, SOURCE, BRIDGE) != changed
+
+
+def test_technosphere_approval_does_not_authorize_unreviewed_biosphere_or_system_models():
+    from brightpath import BackgroundContext, BiosphereProfile
+    from brightpath.background import plan_background_migration
+    from brightpath.background.migration import MigrationAxis, _heuristic_mapping_finding
+
+    _, _, policy = scope(REVIEW["rules"][0])
+    issues, losses = [], []
+    _heuristic_mapping_finding(MigrationAxis.BIOSPHERE, {"name": "unreviewed-bio"}, policy, issues, losses)
+    assert issues[0].severity.value == "error"
+    assert losses[0].code == "migration.heuristic_mapping"
+    plan = plan_background_migration(
+        BackgroundContext(
+            TechnosphereProfile("ecoinvent", "3.9", "consequential"), BiosphereProfile("ecoinvent", "3.9")
+        ),
+        BackgroundContext(BRIDGE, BiosphereProfile("ecoinvent", "3.10")),
+        policy,
+    )
+    assert not plan.executable

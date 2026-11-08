@@ -51,9 +51,9 @@ Owned foreground links are excluded from this background-rule check.
 
 ``brightpath.background.rule_approvals.compatibility_rule_fingerprint`` binds
 an approval to the exact source and target technosphere profiles, resource,
-operation, complete rule, shared review and referenced helper-recipe closure.
-Changing a supplier, factor, review, helper inventory or dependency,
-or profile invalidates the fingerprint. Computing a fingerprint is not evidence
+operation, complete rule, shared reviews and referenced helper-recipe closure,
+including profile-specific target recipes. Changing a supplier, factor, review,
+helper inventory, dependency or profile invalidates the fingerprint. Computing a fingerprint is not evidence
 of scientific approval. Native UVEK 2026 forward conversion uses the UVEK 2025
 compatibility edge followed by its release bridge; approval scopes refer to
 the actual edge. Successful matches retain their fingerprints in reports.
