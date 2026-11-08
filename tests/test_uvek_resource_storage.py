@@ -93,7 +93,8 @@ def test_both_packaged_uvek_resources_use_one_schema():
             "reviews"
         ].keys()
     forward = load_uvek_technosphere_resource()
-    assert len(forward["reviews"]) == 668
+    # Includes the later independently reviewed pilot material corrections.
+    assert len(forward["reviews"]) == 673
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -106,7 +107,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 3988
+        == 3989
     )
 
 
@@ -503,6 +504,11 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     assert all(
         forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in digestion_references
     )
+    pilot = json.loads((DATA_DIR / "export/uvek_pilot_material_review.json").read_text())
+    pilot_ids = {row["rule_id"] for row in pilot["rules"]}
+    pilot_references = {r["review_ref"] for r in forward["replace"] if r["id"] in pilot_ids}
+    assert len(pilot_ids) == 6 and len(pilot_references) == 5
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in pilot_references)
     assert all(
         review.keys() == {"rationale", "limitations"}
         for reference, review in forward["reviews"].items()
@@ -520,6 +526,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *stock_references,
             *slag_references,
             *digestion_references,
+            *pilot_references,
             *auto_references,
             *geographic_references,
             *wastewater_references,
