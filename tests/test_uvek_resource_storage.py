@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 677
+    assert len(forward["reviews"]) == 678
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -537,6 +537,13 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     assert all(
         forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in landfill_references
     )
+    generator = json.loads((DATA_DIR / "export/uvek_pilot_generator_fuel_review.json").read_text())
+    generator_ids = {row["rule_id"] for row in generator["rules"]}
+    generator_references = {r["review_ref"] for r in forward["replace"] if r["id"] in generator_ids}
+    assert generator_ids == {"bp-07968f74bde91ad7"} and len(generator_references) == 1
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in generator_references
+    )
     assert all(
         review.keys() == {"rationale", "limitations"}
         for reference, review in forward["reviews"].items()
@@ -559,6 +566,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *paint_market_references,
             *silver_market_references,
             *landfill_references,
+            *generator_references,
             *auto_references,
             *geographic_references,
             *wastewater_references,

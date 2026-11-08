@@ -111,6 +111,15 @@ retains signed kg without an LHV factor. Complete native infrastructure, fuel
 and residue handling remain included once, with technology/background warnings.
 Generator reference ambiguity and direct gas-volume conventions are excluded.
 
+The explicitly approved small-generator normalization is replayed from
+``brightpath/data/export/uvek_pilot_generator_fuel_review.json`` for ecoinvent
+3.6 only. Factor ``+2.853881278538814`` preserves the audited direct diesel draw:
+0.0666667 kg per source labelled MJ versus 0.02336 kg per native fuel MJ.
+Source-reference ambiguity, native 10 MW versus source 18.5 kW infrastructure
+and unquantified inventory/score differences remain warnings. No electrical
+efficiency, extra generator, heat credit or independent inverse is inferred.
+The unresolved default prevents uninspected versions from inheriting the factor.
+
 Exact rule approvals
 --------------------
 
