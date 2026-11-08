@@ -120,6 +120,16 @@ and unquantified inventory/score differences remain warnings. No electrical
 efficiency, extra generator, heat credit or independent inverse is inferred.
 The unresolved default prevents uninspected versions from inheriting the factor.
 
+Five further whole-function matches are documented in
+``brightpath/data/export/uvek_pilot_matching_legacy_supplier_review.json``:
+natural barite, 35% scrap/65% pig-iron castings, one 10 MWe turbine-construction
+unit, the four-tank/16000 m3 storage module and the same 40 W solar-circulation
+pump. Actual specifications and production/disposal boundaries were inspected
+before reusing the standing matching-material/function/unit approval. Signed kg
+and manufactured-module units retain factor ``+1`` without capacity or lifetime
+scaling. Converter steel with extra hot rolling and lubricating-oil additive
+formulation differences are excluded. Raw mapping rules remain unchanged.
+
 Exact rule approvals
 --------------------
 
