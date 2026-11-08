@@ -131,11 +131,22 @@ def test_review_queue_distinguishes_partial_feed_market_approvals():
         | ADDITIONAL_MARKETS
         | PET_MARKETS
     )
+
+    def still_pending(rule, label):
+        family, version, system_model = label.split("-")
+        profile = {"family": family, "version": version, "system_model": system_model}
+        inspected = [
+            p for p in rule.get("reference_flow_sign_review", {}).get("profiles", []) if p["source_profile"] == profile
+        ]
+        # Later exact-profile reviews can resolve an earlier assembly frontier.
+        # Missing or unverified evidence must still count as pending.
+        return len(inspected) != 1 or inspected[0]["review"]["status"] != "verified"
+
     partial_assemblies = {
         r["id"]
         for r in resource["replace"]
         if any(
-            p["label"].endswith("-cutoff")
+            p["label"].endswith("-cutoff") and still_pending(r, p["label"])
             for p in assemblies.get(tuple(r["source"][f] for f in FIELDS), {}).get("pending_profiles", [])
         )
     }
@@ -149,7 +160,7 @@ def test_review_queue_distinguishes_partial_feed_market_approvals():
             if p["source_profile"]["system_model"] == "cutoff"
         )
     }
-    assert len(market_ids) == 0 and len(partial_assemblies) == 22 and len(partial_flares) == 0
+    assert len(market_ids) == 0 and len(partial_assemblies) == 21 and len(partial_flares) == 0
     assert {
         r["id"] for r in queue["rules"] if r["review_state"] == "partially_approved"
     } == market_ids | partial_assemblies | partial_flares
