@@ -69,6 +69,18 @@ includes its own abstraction, treatment, pumping, storage and network. Different
 treatment mixes, water sources, network losses and regional water-stress results
 remain limitations. This metadata review changes no raw migration rule.
 
+Four inspected ecoinvent 3.9 waste markets have exactly one ordinary
+municipal-incineration provider: European scrap copper, industrial-electronics
+plastic, and European/rest-of-world unspecified rubber. Their separate review,
+``brightpath/data/export/uvek_pilot_single_fate_incineration_market_review.json``,
+matches wet composition, carbon-origin parameters, technology, ash/cement
+quantities and recovery statements. Signed waste kg retain factor ``-1``.
+The complete native service keeps its own allocation and internal logistics;
+source-market collection freight is not reconstructed, and separately listed
+caller freight is preserved. Delivery, auxiliary-energy and background
+differences remain warnings. Mixed-fate plastic/oil markets and Swiss copper
+with fly-ash extraction are excluded. No raw mapping rule is changed.
+
 Exact rule approvals
 --------------------
 
