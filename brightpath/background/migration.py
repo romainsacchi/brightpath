@@ -254,6 +254,15 @@ def _plan_technosphere(
         return ()
     if source_profile == target_profile:
         return ()
+    if source_profile.system_model != target_profile.system_model:
+        _unavailable_issue(
+            issues,
+            axis,
+            "cross_system_model",
+            "Technosphere migration between different system models is not supported, "
+            "including cross-database and multi-step routes.",
+        )
+        return ()
     direct = _plan_uvek_release(axis, source_profile, target_profile, policy, issues, losses)
     if direct is not None:
         return direct
@@ -314,14 +323,6 @@ def _plan_technosphere(
             axis,
             "cross_family",
             f"Technosphere migration from {source_profile.family} to {target_profile.family} is not available.",
-        )
-        return ()
-    if source_profile.system_model != target_profile.system_model:
-        _unavailable_issue(
-            issues,
-            axis,
-            "cross_system_model",
-            "Migration between ecoinvent system models is not supported.",
         )
         return ()
     if source_profile.family == "uvek":

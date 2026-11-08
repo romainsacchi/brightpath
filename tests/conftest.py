@@ -5,6 +5,26 @@ import pytest
 
 
 @pytest.fixture
+def unreviewed_uvek_correspondence(monkeypatch):
+    """Keep rollback tests independent of real mapping approvals in the review queue."""
+    from brightpath.migrations.resources import load_uvek_technosphere_resource
+
+    resource = deepcopy(load_uvek_technosphere_resource())
+    rule = next(
+        r
+        for r in resource["replace"]
+        if r["source"]["name"] == "market for electricity, low voltage" and r["source"]["location"] == "CH"
+    )
+    rule["reference_flow_sign_review"] = {
+        "status": "unresolved",
+        "reason": "Synthetic unreviewed correspondence for transactional rollback verification.",
+        "evidence": ["Synthetic test fixture; the packaged electricity mapping remains unchanged."],
+    }
+    monkeypatch.setattr("brightpath.background.execution.load_uvek_technosphere_resource", lambda: resource)
+    return deepcopy(rule["source"])
+
+
+@pytest.fixture
 def fixed_simapro_clock(monkeypatch):
     """Keep export timestamps constant when comparing repeated renders."""
 

@@ -8,9 +8,11 @@ from copy import deepcopy
 from functools import lru_cache
 
 from brightpath import DATA_DIR, __version__
+from brightpath.background.omissions import _apply_technosphere_deletions
 from brightpath.core.policies import PolicyAction
 from brightpath.core.reports import Change, Issue, Loss, Severity, StageKind, StageReport
 from brightpath.exceptions import MigrationError
+from brightpath.migrations.models import MigrationStepReport
 from brightpath.migrations.resources import load_migration_resource
 from brightpath.migrations.scaling import scale_exchange
 from brightpath.migrations.schema import SCHEMA_PATH, normalize_migration_resource, rule_review
@@ -36,6 +38,10 @@ def migration_resource_fingerprint() -> str:
         + b"simapro-normal-two-sigma-v1"
         + b"simapro-native-land-classes-v1"
         + b"reverse-biosphere-native-uuid-preference-v1"
+        + b"reference-flow-sign-review-v1"
+        + b"exact-profile-sign-decisions-v1"
+        + b"approved-technosphere-omissions-v2"
+        + b"exact-profile-forward-recipes-v1"
         + manifest
         + catalogs
         + openlca_references
@@ -60,8 +66,8 @@ def _validate_export_binding(resource):
         or resource["target_profile"] != {"family": "ecoinvent", "version": "3.12", "system_model": "cutoff"}
     ):
         raise MigrationError("The reviewed UVEK export requires its registered source and target profiles.")
-    if resource["disaggregate"] or resource["delete"]:
-        raise MigrationError("The UVEK recipe exporter supports replacement operations only.")
+    if resource["disaggregate"] or any(not rule.get("approved_omission") for rule in resource["delete"]):
+        raise MigrationError("The UVEK recipe exporter supports replacements and approved omissions only.")
 
 
 def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, database_name="brightpath-inventory"):
@@ -74,10 +80,34 @@ def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, dat
     rules = {identity(rule["source"]): rule for rule in resource["replace"]}
     foreground = {identity(dataset) for dataset in data} | set(foreground_targets)
     codes = {dataset.get("code") for dataset in data if dataset.get("code")}
-    issues, changes, losses = [], [], []
+    omission_report = MigrationStepReport("2025", "3.12", "forward", resource["name"])
+    losses = _apply_technosphere_deletions(data, resource, policy, omission_report, 0, foreground_targets=foreground)
+    issues = [
+        Issue(
+            Severity(issue.severity),
+            issue.code.replace("migration_", "migration.", 1),
+            issue.message,
+            STAGE,
+            path=issue.path,
+            details={"resource": resource["name"], "axis": "technosphere", "step_index": 0},
+        )
+        for issue in omission_report.issues
+    ]
+    changes = [
+        Change(
+            loss.code,
+            loss.message,
+            STAGE,
+            path=loss.path,
+            before=loss.details["source_exchange"],
+            after=None,
+            details=loss.details,
+        )
+        for loss in losses
+    ]
     helpers = {}
     recipe_signatures = {}
-    matched = 0
+    matched = omission_report.technosphere_deletions
 
     def recipe_signature(recipe_id):
         if recipe_id not in recipe_signatures:
@@ -122,6 +152,8 @@ def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, dat
             },
             "exchanges": [],
         }
+        if "parameters" in recipe:
+            dataset["parameters"] = deepcopy(recipe["parameters"])
         if code in codes or identity(dataset) in foreground:
             raise ValueError("Generated helper collides with a supplied foreground dataset.")
         codes.add(code)
@@ -132,6 +164,7 @@ def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, dat
         )
         for original in recipe["inputs"]:
             exchange = deepcopy(original)
+            exchange.pop("zero_burden_supplier", None)
             exchange.pop("input", None)
             exchange.pop("database", None)
             if "recipe" in exchange:
@@ -169,6 +202,19 @@ def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, dat
                 "evidence": review["evidence"],
                 "resource": resource["name"],
             }
+            sign_review = rule.get("reference_flow_sign_review", {})
+            if sign_review.get("status") == "unresolved":
+                issues.append(
+                    Issue(
+                        Severity.ERROR,
+                        "migration.reference_flow_sign_unresolved",
+                        sign_review["reason"],
+                        STAGE,
+                        path=path,
+                        details={**details, "sign_review": sign_review},
+                    )
+                )
+                continue
             if rule["classification"] == "proxy":
                 severity = Severity.ERROR if policy.on_information_loss == PolicyAction.ERROR else Severity.WARNING
                 issues.append(
@@ -227,6 +273,7 @@ def apply_uvek_export(data, policy, foreground_targets=(), *, resource=None, dat
         losses=tuple(losses),
         metrics={
             "matched_external_exchanges": matched,
+            "omitted_external_exchanges": omission_report.technosphere_deletions,
             "generated_dataset_codes": [dataset["code"] for dataset in generated],
             "resource": resource["name"],
             "fingerprint": migration_resource_fingerprint(),

@@ -94,6 +94,10 @@ def load_migration_resource(path: Path) -> dict:
         raise MigrationError(f"Migration resource {path} must contain an object.")
     _verify_manifest_entry(path, raw, payload, _load_resource_manifest())
     resource = normalize_migration_resource(payload)
+    if resource.get("axis") == "technosphere" and any(
+        profile["system_model"] != resource["target_profile"]["system_model"] for profile in resource["source_profiles"]
+    ):
+        raise MigrationError("Technosphere migration resources cannot cross system models.")
     resource["_path"] = str(path)
     return resource
 
@@ -127,8 +131,16 @@ def _load_uvek_resource(filename: str, *, expected_axis: str) -> dict:
         raise MigrationError(f"Migration resource {path} does not describe the {expected_axis} axis.")
     if payload.get("quality") != "heuristic":
         raise MigrationError(f"Migration resource {path} must declare its heuristic quality.")
-    if any("recipe_ref" in rule["target"] for rule in payload["replace"]):
-        raise MigrationError("The heuristic UVEK route does not execute foreground recipes.")
+    for rule in payload["replace"]:
+        if "recipe_ref" in rule["target"] and (
+            expected_axis != "technosphere"
+            or not rule.get("review_ref")
+            or not rule.get("reference_flow_sign_review", {}).get("profiles")
+            or not any(
+                entry["review"]["status"] == "verified" for entry in rule["reference_flow_sign_review"]["profiles"]
+            )
+        ):
+            raise MigrationError("Forward UVEK recipes require shared evidence and verified exact-profile decisions.")
     for profile in payload["source_profiles"]:
         _validate_profile(profile, path, role="source")
     _validate_profile(payload.get("target_profile"), path, role="target")

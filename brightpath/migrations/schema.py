@@ -182,6 +182,12 @@ def _identity(record: dict, axis: str):
     return record["name"], tuple(record["categories"]), record["unit"]
 
 
+def _reference_factor_sign(review: dict) -> int:
+    """Account for an explicitly reviewed change from waste service to product credit."""
+    sign = review["source_sign"] * review["target_sign"]
+    return -sign if review.get("role_conversion") == "recovery_credit" else sign
+
+
 def validate_migration_resource(resource: dict) -> None:
     """Validate the named JSON schema, factors, references, recipes and coverage.
 
@@ -226,8 +232,80 @@ def validate_migration_resource(resource: dict) -> None:
                 if rule["id"] in seen_ids:
                     raise MigrationError("Duplicate migration rule identifier.")
                 seen_ids.add(rule["id"])
+            sign_review = rule.get("reference_flow_sign_review", {})
+            if sign_review and axis != "technosphere":
+                raise MigrationError("Reference-flow sign reviews apply only to technosphere replacements.")
+            reviewed_profiles = set()
+            for entry in sign_review.get("profiles", []):
+                profile = entry["source_profile"]
+                profile_key = (profile.get("family"), profile.get("version"), profile.get("system_model"))
+                if profile not in resource["source_profiles"] or profile_key in reviewed_profiles:
+                    raise MigrationError("Reference-flow decisions require unique, declared source profiles.")
+                reviewed_profiles.add(profile_key)
+                decision = entry["review"]
+                omission = entry.get("operation") == "delete"
+                credit = decision.get("role_conversion") == "recovery_credit"
+                if "target" in entry:
+                    recipe = resource["recipes"].get(entry["target"]["recipe_ref"])
+                    if (
+                        operation != "replace"
+                        or decision["status"] != "verified"
+                        or omission
+                        or credit
+                        or recipe is None
+                        or recipe["unit"] != rule["source"]["unit"]
+                    ):
+                        raise MigrationError(
+                            "Profile recipe targets require a verified replacement and a unit-compatible recipe."
+                        )
+                if omission or credit:
+                    review = resource["reviews"].get(entry["review_ref"], {})
+                    if (
+                        operation != "replace"
+                        or not rule.get("id")
+                        or not review.get("rationale")
+                        or not review.get("evidence")
+                    ):
+                        raise MigrationError(
+                            "Profile omissions and recovery credits require a replacement identifier and shared review evidence."
+                        )
+                    if credit and "recipe_ref" in rule["target"]:
+                        raise MigrationError("A recovery credit requires an explicit background product target.")
+                if not omission and decision["status"] == "verified":
+                    factor = entry["conversion_factor"]
+                    expected_sign = _reference_factor_sign(decision)
+                    if not math.isfinite(factor) or (1 if factor > 0 else -1) != expected_sign:
+                        raise MigrationError("Profile conversion factor contradicts the verified reference-flow signs.")
+            if sign_review.get("status") == "verified":
+                factor = rule.get("conversion_factor", 1)
+                expected_sign = _reference_factor_sign(sign_review)
+                if (1 if factor > 0 else -1) != expected_sign:
+                    raise MigrationError("Conversion factor contradicts the verified reference-flow signs.")
+                if sign_review.get("role_conversion") == "recovery_credit":
+                    review = resource["reviews"].get(rule.get("review_ref"), {})
+                    if (
+                        operation != "replace"
+                        or not rule.get("id")
+                        or not review.get("rationale")
+                        or not review.get("evidence")
+                        or "recipe_ref" in rule["target"]
+                    ):
+                        raise MigrationError(
+                            "Recovery credits require an explicit product target and shared scientific review."
+                        )
             if "review_ref" in rule and rule["review_ref"] not in resource["reviews"]:
                 raise MigrationError("Unknown migration review reference.")
+            if "approved_omission" in rule:
+                review = rule_review(resource, rule)
+                if operation != "delete" or axis != "technosphere" or rule["approved_omission"] is not True:
+                    raise MigrationError("Approved omissions apply only to explicit technosphere deletion rules.")
+                if not rule.get("id") or not review.get("rationale") or not review.get("evidence"):
+                    raise MigrationError("Approved omissions require an identifier, rationale and review evidence.")
+                if any(
+                    _identity(entry["source"], axis) == source
+                    for entry in resource["replace"] + resource["disaggregate"]
+                ):
+                    raise MigrationError("An approved omission cannot also replace or disaggregate the same source.")
             if (
                 rule.get("report_correspondence")
                 or rule.get("biosphere_information_loss")
@@ -273,32 +351,133 @@ def validate_migration_resource(resource: dict) -> None:
                 or not review.get("evidence")
             ):
                 raise MigrationError("Reviewed rules need an identifier, classification, rationale and evidence.")
+    zero_recipes = {key for key, recipe in resource["recipes"].items() if recipe.get("zero_burden")}
+    approved_zero_recipes = set()
+    zero_approvals = {}
+    for rule in resource["replace"]:
+        profiles = rule.get("reference_flow_sign_review", {}).get("profiles", [])
+        if rule["target"].get("recipe_ref") in zero_recipes and not profiles:
+            raise MigrationError("Zero-burden recipes require exact positive-reference cut-off profile approvals.")
+        for entry in profiles:
+            recipe_id = entry.get("target", rule["target"]).get("recipe_ref")
+            if recipe_id not in zero_recipes:
+                continue
+            review = entry["review"]
+            shared_review = rule_review(resource, rule)
+            if (
+                axis != "technosphere"
+                or resource["target_profile"]["family"] != "uvek"
+                or entry["source_profile"].get("family") != "ecoinvent"
+                or entry["source_profile"].get("system_model") != "cutoff"
+                or review.get("status") != "verified"
+                or review.get("source_sign") != 1
+                or review.get("target_sign") != 1
+                or entry.get("conversion_factor") != 1
+                or entry.get("operation")
+                or not shared_review.get("rationale")
+                or not shared_review.get("evidence")
+            ):
+                raise MigrationError("Zero-burden recipes require exact positive-reference cut-off profile approvals.")
+            approved_zero_recipes.add(recipe_id)
+            profile_key = tuple(entry["source_profile"].get(k) for k in ("family", "version", "system_model"))
+            zero_approvals[rule["id"], profile_key] = entry
+    if approved_zero_recipes != zero_recipes:
+        raise MigrationError("Every zero-burden recipe needs an approved direct source correspondence.")
     visiting, visited = set(), set()
+    zero_scopes = {}
 
     def visit(recipe_id):
         if recipe_id in visiting:
             raise MigrationError("Cyclic recipe dependency.")
         if recipe_id in visited:
-            return
+            return zero_scopes[recipe_id]
         visiting.add(recipe_id)
+        scopes = set()
         recipe = resource["recipes"][recipe_id]
         _identity(recipe, "technosphere")
+        names = [p["name"] for p in recipe.get("parameters", [])]
+        if len(names) != len(set(names)):
+            raise MigrationError("Recipe parameters require unique local names.")
+        for parameter in recipe.get("parameters", []):
+            if parameter.get("minimum", -float("inf")) > parameter.get("maximum", float("inf")):
+                raise MigrationError("Recipe parameter uncertainty minimum exceeds maximum.")
         for exchange in recipe["inputs"]:
+            bindings = exchange.get("biosphere_targets", [])
+            profiles = set()
+            for binding in bindings:
+                profile = binding["profile"]
+                key = (profile["family"], profile["version"])
+                if exchange.get("type") != "biosphere" or "system_model" in profile or key in profiles:
+                    raise MigrationError("Recipe biosphere targets require unique exact biosphere profiles.")
+                profiles.add(key)
+                _identity(binding["target"], "biosphere")
+                if binding["target"]["unit"] != exchange["unit"]:
+                    raise MigrationError("Recipe biosphere target bindings must preserve the reference unit.")
+            if "approved_omission_if_unavailable" in exchange or "omission_rationale" in exchange:
+                if (
+                    exchange.get("type") != "biosphere"
+                    or exchange.get("approved_omission_if_unavailable") is not True
+                    or not exchange.get("omission_rationale")
+                    or exchange.get("categories", [])[:1] != ["inventory indicator"]
+                ):
+                    raise MigrationError(
+                        "Optional recipe omissions require a biosphere inventory indicator and explicit rationale."
+                    )
             if "recipe" in exchange:
+                if exchange["recipe"] in zero_recipes:
+                    binding = exchange.get("zero_burden_supplier")
+                    if not binding:
+                        raise MigrationError("Zero-burden suppliers cannot be inferred as recipe dependencies.")
+                    profile_key = tuple(binding["source_profile"].get(k) for k in ("family", "version", "system_model"))
+                    approval = zero_approvals.get((binding["rule_id"], profile_key))
+                    stock_rule = next((r for r in resource["replace"] if r.get("id") == binding["rule_id"]), None)
+                    if (
+                        approval is None
+                        or approval.get("target", stock_rule["target"]).get("recipe_ref") != exchange["recipe"]
+                        or hashlib.sha256(json.dumps(approval, sort_keys=True).encode()).hexdigest()
+                        != binding["profile_review_sha256"]
+                    ):
+                        raise MigrationError("Zero-burden dependency needs its exact approved direct supplier binding.")
+                    scopes.add(profile_key)
+                elif "zero_burden_supplier" in exchange:
+                    raise MigrationError("A zero-burden supplier binding applies only to a zero-burden dependency.")
                 if exchange["recipe"] not in resource["recipes"]:
                     raise MigrationError("Unknown dependent recipe.")
-                visit(exchange["recipe"])
+                scopes.update(visit(exchange["recipe"]))
             else:
+                if "zero_burden_supplier" in exchange:
+                    raise MigrationError("A zero-burden supplier binding requires an explicit recipe dependency.")
                 _identity(exchange, exchange["type"])
             if "minimum" in exchange and "maximum" in exchange and exchange["minimum"] > exchange["maximum"]:
                 raise MigrationError("Recipe uncertainty minimum exceeds maximum.")
         visiting.remove(recipe_id)
         visited.add(recipe_id)
+        zero_scopes[recipe_id] = scopes
+        return scopes
 
     for recipe_id in resource["recipes"]:
         visit(recipe_id)
+    for rule in resource["replace"]:
+        review = rule.get("reference_flow_sign_review", {})
+        profiles = review.get("profiles", [])
+        targets = [rule["target"], *(entry.get("target", rule["target"]) for entry in profiles)]
+        if any(zero_scopes.get(target.get("recipe_ref")) for target in targets) and (
+            not profiles or review.get("status") != "unresolved"
+        ):
+            raise MigrationError("Nested zero-stock use requires exact profiles and an unresolved default.")
+        for entry in profiles:
+            if entry["review"].get("status") != "verified" or entry.get("operation"):
+                continue
+            scopes = zero_scopes.get(entry.get("target", rule["target"]).get("recipe_ref"), set())
+            profile_key = tuple(entry["source_profile"].get(k) for k in ("family", "version", "system_model"))
+            if any(scope != profile_key for scope in scopes):
+                raise MigrationError("Nested zero-stock approval does not match the exact root source profile.")
     coverage = resource["coverage"]
     if coverage:
+        if "omitted_identities" in coverage and coverage["omitted_identities"] != sum(
+            rule.get("approved_omission", False) for rule in resource["delete"]
+        ):
+            raise MigrationError("Approved omission count does not match coverage.")
         count = len(seen_sources)
         if (
             coverage["mapped_identities"] != count
@@ -314,6 +493,9 @@ def validate_migration_resource(resource: dict) -> None:
                 "recipe" if "recipe_ref" in rule["target"] else rule.get("classification", "unclassified")
                 for rule in rules
             )
+            omitted = sum(rule.get("approved_omission", False) for rule in resource["delete"])
+            if omitted:
+                dispositions["omitted"] = omitted
             if coverage["unresolved_identities"]:
                 dispositions["unresolved"] = coverage["unresolved_identities"]
             if coverage["dispositions"] != dict(dispositions):
@@ -323,6 +505,11 @@ def validate_migration_resource(resource: dict) -> None:
             not scores or coverage["mean_confidence"] != round(sum(scores) / len(scores), 6)
         ):
             raise MigrationError("Mean confidence does not match existing scores.")
+
+    if "canonical_biosphere_identity_version" in resource:
+        from brightpath.migrations.canonical_biosphere import validate_canonical_biosphere_resource
+
+        validate_canonical_biosphere_resource(resource)
 
 
 def dumps_migration_resource(resource: dict) -> str:

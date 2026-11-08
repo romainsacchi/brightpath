@@ -55,7 +55,8 @@ def uvek_2026_tasks(provider):
         for resource in load_uvek_release_resources("technosphere")
         if resource["source_profiles"][0]["version"] == "2026"
     )
-    approved_legacy = {identity(rule["source"]) for rule in load_uvek_export_resource()["replace"]}
+    export = load_uvek_export_resource()
+    approved_legacy = {identity(rule["source"]) for operation in ("replace", "delete") for rule in export[operation]}
     approved_native = {
         identity(rule["source"]) for rule in bridge["replace"] if identity(rule["target"]) in approved_legacy
     }
@@ -83,9 +84,20 @@ def uvek_2026_tasks(provider):
     for profile in provider.technosphere_profiles():
         if profile.family != "ecoinvent":
             continue
-        add("technosphere", profile, native_tech)
-        # Discover outgoing support from the planner; unavailable consequential
-        # exports remain explicit route-plan findings below, not supported claims.
+        incoming = plan_background_migration(
+            BackgroundContext(profile, native_bio), BackgroundContext(native_tech, native_bio), NATIVE_WARNING_POLICY
+        )
+        if incoming.executable:
+            add("technosphere", profile, native_tech)
+        else:
+            unavailable.append(
+                {
+                    "source": asdict(profile),
+                    "target": asdict(native_tech),
+                    "issues": [issue.to_dict() for issue in incoming.report.issues],
+                }
+            )
+        # Unsupported models remain route-plan findings in both directions.
         target = BackgroundContext(profile, native_bio)
         plan = plan_background_migration(BackgroundContext(native_tech, native_bio), target, AUDIT_POLICY)
         if plan.executable:
@@ -115,7 +127,7 @@ def uvek_2026_tasks(provider):
         "outside_export_cohort": len(excluded),
         "outside_export_cohort_sha256": digest(excluded),
         "unavailable_process_routes": unavailable,
-        "process_export_scope": "Approved directional mappings only; other native suppliers remain unapproved.",
+        "process_export_scope": "Approved directional replacements and omissions only; other native suppliers remain unapproved.",
         "other_scope": "Complete exact source catalogs for release bridges, incoming process routes and biosphere routes.",
     }
     return tasks, scope

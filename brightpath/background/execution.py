@@ -20,8 +20,11 @@ from brightpath.background.migration import (
     MigrationRouteStep,
     plan_background_migration,
 )
+from brightpath.background.omissions import _apply_technosphere_deletions
 from brightpath.background.patches import compatibility_resource, patch_pair, patch_resource
+from brightpath.background.reference_signs import select_profile_sign_rules
 from brightpath.background.uvek_export import apply_uvek_export
+from brightpath.background.uvek_import import apply_reviewed_recipe_biosphere_bindings, apply_uvek_import_recipes
 from brightpath.background.validation import validate_background_links
 from brightpath.core.context import BackgroundContext, BiosphereProfile, InventoryContext, TechnosphereProfile
 from brightpath.core.policies import MigrationPolicy, PolicyAction
@@ -35,6 +38,11 @@ from brightpath.core.reports import (
     Severity,
     StageKind,
     StageReport,
+)
+from brightpath.migrations.canonical_biosphere import MARKER as CANONICAL_BIOSPHERE_MARKER
+from brightpath.migrations.canonical_biosphere import (
+    select_canonical_biosphere_rules,
+    unresolved_canonical_biosphere_issues,
 )
 from brightpath.migrations.engine import (
     _apply_aggregation,
@@ -96,6 +104,12 @@ def execute_background_migration(
     foreground_targets = _foreground_targets(foreground_technosphere_targets)
     source = document.context.background
     stages: list[StageReport] = []
+
+    # A model mismatch is a route constraint, independent of link validation.
+    # Refuse it before loading catalogs or materializing foreground helpers.
+    if source.technosphere.system_model != target.technosphere.system_model:
+        stages.append(plan_background_migration(source, target, policy).report)
+        return _result(document, source, target, policy, stages, committed=False)
 
     if policy.validate_source:
         source_validation = _validation_with_policy(
@@ -164,6 +178,7 @@ def execute_background_migration(
 
     working_data = document.data
     helpers = []
+    helper_biosphere = BiosphereProfile("ecoinvent", "3.12")
     if source.technosphere.family == "uvek" and target.technosphere.family == "ecoinvent":
         directional_stage, helpers = apply_uvek_export(
             working_data,
@@ -178,36 +193,58 @@ def execute_background_migration(
         execution_plan = replace(plan, technosphere_steps=())
     else:
         execution_plan = plan
-    migration_stage = _execute_external_links(working_data, execution_plan, policy, provider, foreground_targets)
+        if source.technosphere.family == "ecoinvent" and target.technosphere.family == "uvek":
+            recipe_stage, helpers = apply_uvek_import_recipes(
+                working_data,
+                source.technosphere,
+                target.biosphere,
+                provider,
+                foreground_targets,
+                database_name=document.database_name,
+                policy=policy,
+            )
+            if recipe_stage.issues or helpers:
+                stages.append(recipe_stage)
+            if recipe_stage.has_errors:
+                stages[-1] = _rolled_back_stage(recipe_stage, "UVEK import recipe failed")
+                return _result(document, source, target, policy, stages, committed=False)
+            helper_biosphere = BiosphereProfile("ecoinvent", "3.10")
+    generated_targets = tuple(
+        tuple(helper.get(field, "") for field in ("name", "reference product", "location", "unit"))
+        for helper in helpers
+    )
+    migration_stage = _execute_external_links(
+        working_data, execution_plan, policy, provider, (*foreground_targets, *generated_targets)
+    )
     migration_stage_index = len(stages)
     stages.append(migration_stage)
     if migration_stage.has_errors:
         stages[-1] = _rolled_back_stage(migration_stage, "migration application failed")
         return _result(document, source, target, policy, stages, committed=False)
 
-    if helpers and not _helper_biosphere_matches(helpers, target.biosphere, provider):
-        helper_source = BackgroundContext(
-            TechnosphereProfile("ecoinvent", "3.12", "cutoff"), BiosphereProfile("ecoinvent", "3.12")
-        )
+    migrating_helpers = [h for h in helpers if not _helper_biosphere_matches([h], target.biosphere, provider)]
+    if migrating_helpers:
+        helper_source = BackgroundContext(target.technosphere, helper_biosphere)
         helper_target = BackgroundContext(helper_source.technosphere, target.biosphere)
         helper_document = document.replace(
-            data=helpers,
+            data=migrating_helpers,
             context=InventoryContext(format=document.context.format, background=helper_source),
         )
         helper_foreground = (
             *foreground_targets,
             *(
                 tuple(dataset.get(field, "") for field in ("name", "reference product", "location", "unit"))
-                for dataset in working_data
+                for dataset in (*working_data, *helpers)
             ),
         )
         helper_result = execute_background_migration(
             helper_document, helper_target, provider, policy, helper_foreground
         )
-        stages.extend(_helper_stage(stage, helpers) for stage in helper_result.report.stages)
+        stages.extend(_helper_stage(stage, migrating_helpers) for stage in helper_result.report.stages)
         if helper_result.report.has_errors:
             return _result(document, source, target, policy, stages, committed=False)
-        helpers = helper_result.value.data
+        migrated = {h["code"]: h for h in helper_result.value.data}
+        helpers = [migrated.get(h["code"], h) for h in helpers]
     working_data.extend(helpers)
     candidate = document
     if source != target or working_data != document.data:
@@ -296,7 +333,7 @@ def _execute_external_links(data, plan, policy, provider, foreground_targets):
                 exchange["type"] = "foreground-preserved"
     try:
         projected = [{"exchanges": dataset.get("exchanges", [])} for dataset in data]
-        report = _execute_plan(projected, plan, policy, provider)
+        report = _execute_plan(projected, plan, policy, provider, recipe_owners=data)
         for dataset, converted in zip(data, projected, strict=True):
             if "exchanges" in dataset:
                 dataset["exchanges"] = converted["exchanges"]
@@ -397,6 +434,8 @@ def _execute_plan(
     plan: MigrationPlan,
     policy: MigrationPolicy,
     provider: CatalogProvider,
+    *,
+    recipe_owners=(),
 ) -> StageReport:
     issues: list[Issue] = []
     changes: list[Change] = []
@@ -429,6 +468,10 @@ def _execute_plan(
                 resources.update(_execution_resources(steps, {}, resource))
     for step_index, step in enumerate(plan.technosphere_steps):
         resource = _resource_for_step(step, technosphere_resources)
+        resource = select_profile_sign_rules(resource, plan.source.technosphere)
+        # Reviewed forward recipes were materialized before ordinary supplier
+        # migration. Recipe references are never background supplier identities.
+        resource = {**resource, "replace": [r for r in resource.get("replace", []) if "recipe_ref" not in r["target"]]}
         try:
             step_report, step_losses = _apply_technosphere_step(data, resource, step, policy, step_index)
         except (ValueError, TypeError, OverflowError) as error:
@@ -453,6 +496,19 @@ def _execute_plan(
             else resource.get("source_profiles", [{"family": plan.target.biosphere.family}])[0]
         )
         target_biosphere_identities = _step_target_biosphere_identities(provider, step_profile["family"], step)
+        if step.direction == "forward" and step_profile["family"] == "uvek":
+            binding_report = apply_reviewed_recipe_biosphere_bindings(
+                data,
+                recipe_owners,
+                {"family": "uvek", "version": step.target_version},
+                target_biosphere_identities,
+                policy,
+            )
+            issues.extend(binding_report.issues)
+            changes.extend(binding_report.changes)
+            losses.extend(binding_report.losses)
+            if binding_report.has_errors:
+                return _migration_stage(issues, (), losses, step_metrics, rolled_back=True)
         source_biosphere_references, target_biosphere_references = {}, {}
         if step.direction == "backward":
             source_family = resource.get("target_profile", {"family": plan.source.biosphere.family})["family"]
@@ -575,6 +631,9 @@ def _apply_technosphere_step(
     losses: list[Loss] = []
 
     if step.direction == "forward":
+        losses.extend(_apply_technosphere_deletions(data, resource, policy, report, step_index))
+        if any(issue.severity == "error" for issue in report.issues):
+            return report, losses
         replacements, factored_replacements, findings = _prepare_technosphere_replacements(
             data, resource.get("replace", []), step, policy, report, step_index
         )
@@ -655,6 +714,11 @@ def _apply_biosphere_step(
     target_biosphere_references=None,
 ) -> tuple[MigrationStepReport, list[Loss]]:
     report = _legacy_step_report(step)
+    if CANONICAL_BIOSPHERE_MARKER in resource:
+        resource = select_canonical_biosphere_rules(resource, step.source_version)
+        report.issues.extend(unresolved_canonical_biosphere_issues(data, resource))
+        if report.issues:
+            return report, []
     if step.direction == "forward":
         _delete_biosphere_exchanges(data, resource.get("delete", []), report)
         if report.biosphere_deletions:
@@ -695,7 +759,8 @@ def _apply_biosphere_step(
         target_biosphere_references=target_biosphere_references,
     )
     _apply_factored_biosphere_replacements(data, factored_replacements, step.direction, report)
-    _apply_unambiguous_biosphere_compartment_fallback(data, target_biosphere_identities, report)
+    if CANONICAL_BIOSPHERE_MARKER not in resource:
+        _apply_unambiguous_biosphere_compartment_fallback(data, target_biosphere_identities, report)
     return report, losses
 
 
@@ -718,13 +783,15 @@ def _prepare_technosphere_replacements(
         matches = _matching_technosphere_entities(entity_index, rule[match_side])
         if _reviewed_correspondence_findings(rule, matches, step, policy, report, losses, step_index):
             continue
-        unit_change = _unit_changes(rule[match_side], rule[replacement_side])
-        if not matches or not unit_change:
+        if not matches:
             safe_replacements.append(rule)
             continue
         factor = _conversion_factor(rule, rule[replacement_side], reverse=step.direction == "backward")
         if factor is not None:
             factored_replacements.append(rule)
+            continue
+        if not _unit_changes(rule[match_side], rule[replacement_side]):
+            safe_replacements.append(rule)
             continue
         _unsafe_unit_findings(matches, rule, step, policy, report, losses, step_index)
     return safe_replacements, factored_replacements, losses
@@ -799,6 +866,18 @@ def _reviewed_correspondence_findings(rule, matches, step, policy, report, losse
     """Record an authored correspondence and enforce its axis-specific losses."""
 
     axis = step.axis.value
+    sign_review = rule.get("reference_flow_sign_review", {})
+    if matches and sign_review.get("status") == "unresolved":
+        for path in matches:
+            report.issues.append(
+                _legacy_issue(
+                    "error",
+                    "migration_reference_flow_sign_unresolved",
+                    f"Rule {rule['id']}: {sign_review['reason']}",
+                    path,
+                )
+            )
+        return True
     information_loss = rule.get(f"{axis}_information_loss")
     match_side, replacement_side = ("source", "target") if step.direction == "forward" else ("target", "source")
     if matches and information_loss:
@@ -1363,6 +1442,7 @@ def _step_counts(report: MigrationStepReport) -> dict[str, int]:
         "technosphere_replacements": report.technosphere_replacements,
         "technosphere_disaggregations": report.technosphere_disaggregations,
         "technosphere_aggregations": report.technosphere_aggregations,
+        "technosphere_deletions": report.technosphere_deletions,
         "biosphere_replacements": report.biosphere_replacements,
         "biosphere_deletions": report.biosphere_deletions,
     }

@@ -152,7 +152,7 @@ def _check_success(document, result, target, provider, policy=AUDIT_POLICY):
         if dataset["exchanges"][0] != original["exchanges"][0]:
             raise ValueError("Migration changed the synthetic production exchange.")
         documented_omission = any(
-            loss.code == "migration.biosphere_exchange_removed_unsafe_unit"
+            loss.code in {"migration.biosphere_exchange_removed_unsafe_unit", "migration.technosphere_omission"}
             and loss.path == f"datasets[{dataset_index}].exchanges[1]"
             for loss in result.report.losses
         )
@@ -289,7 +289,9 @@ def run_migration_audit(*, progress=None, workers=1):
         TechnosphereProfile(**resource["source_profiles"][0]), BiosphereProfile("ecoinvent", "3.10")
     )
     supplier_cases = [
-        {"id": rule["id"], "exchange": {**rule["source"], "type": "technosphere"}} for rule in resource["replace"]
+        {"id": rule["id"], "exchange": {**rule["source"], "type": "technosphere"}}
+        for operation in ("replace", "delete")
+        for rule in resource[operation]
     ]
     biosphere_cases = [
         {

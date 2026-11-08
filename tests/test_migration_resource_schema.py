@@ -356,3 +356,101 @@ def test_legacy_alias_normalization_preserves_input_and_optional_scores(migratio
 def test_malformed_legacy_resources_produce_domain_errors(payload):
     with pytest.raises(MigrationError):
         normalize_migration_resource(payload)
+
+
+def hybrid_profile_resource(resource):
+    """A native default and a same-source-unit helper are independently reviewed."""
+    rule = resource["replace"][0]
+    other_profile = {"family": "ecoinvent", "version": "3.11", "system_model": "cutoff"}
+    resource["source_profiles"].append(other_profile)
+    resource["recipes"]["profile-service"] = {
+        "name": "Profile-specific source service",
+        "reference product": "source service",
+        "location": "GLO",
+        "unit": rule["source"]["unit"],
+        "inputs": [
+            {
+                "name": "Carbon dioxide, fossil",
+                "categories": ["air"],
+                "unit": "kilogram",
+                "type": "biosphere",
+                "amount": 1,
+            }
+        ],
+        "rationale": "Synthetic complete source boundary.",
+        "evidence": ["Synthetic independent boundary inspection"],
+    }
+    rule["reference_flow_sign_review"] = {
+        "status": "unresolved",
+        "reason": "Select an independently reviewed exact source profile.",
+        "evidence": ["Synthetic evidence"],
+        "profiles": [
+            {
+                "source_profile": deepcopy(resource["source_profiles"][0]),
+                "target": {"recipe_ref": "profile-service"},
+                "conversion_factor": 1,
+                "review": {
+                    "status": "verified",
+                    "source_sign": 1,
+                    "target_sign": 1,
+                    "reason": "Same-source-unit generated service.",
+                    "evidence": ["Synthetic evidence"],
+                },
+            },
+            {
+                "source_profile": other_profile,
+                "conversion_factor": 0.1,
+                "review": {
+                    "status": "verified",
+                    "source_sign": 1,
+                    "target_sign": 1,
+                    "reason": "Retain the reviewed literal supplier.",
+                    "evidence": ["Synthetic evidence"],
+                },
+            },
+        ],
+    }
+    return resource
+
+
+def test_exact_profile_service_can_override_a_literal_default_without_mutation(migration_resource):
+    from brightpath import TechnosphereProfile
+    from brightpath.background.reference_signs import select_profile_sign_rules
+
+    resource = hybrid_profile_resource(migration_resource)
+    before = deepcopy(resource)
+    validate_migration_resource(resource)
+    generated = select_profile_sign_rules(resource, TechnosphereProfile("ecoinvent", "3.12", "cutoff"))["replace"][0]
+    native = select_profile_sign_rules(resource, TechnosphereProfile("ecoinvent", "3.11", "cutoff"))["replace"][0]
+    missing = select_profile_sign_rules(resource, TechnosphereProfile("ecoinvent", "3.10", "cutoff"))["replace"][0]
+    assert generated["target"] == {"recipe_ref": "profile-service"} and generated["conversion_factor"] == 1
+    assert native["target"] == before["replace"][0]["target"] and native["conversion_factor"] == 0.1
+    assert missing["reference_flow_sign_review"]["status"] == "unresolved"
+    assert resource == before
+
+
+@pytest.mark.parametrize(
+    "problem", ["unit", "unverified", "undeclared", "factor", "missing_recipe", "credit", "omission", "duplicate"]
+)
+def test_literal_default_does_not_bypass_profile_helper_safety(migration_resource, problem):
+    resource = hybrid_profile_resource(migration_resource)
+    rule = resource["replace"][0]
+    entry = rule["reference_flow_sign_review"]["profiles"][0]
+    if problem == "unit":
+        resource["recipes"]["profile-service"]["unit"] = "megajoule"
+    if problem == "unverified":
+        entry["review"]["status"] = "unresolved"
+    if problem == "undeclared":
+        entry["source_profile"]["version"] = "3.8"
+    if problem == "factor":
+        entry["conversion_factor"] = -1
+    if problem == "missing_recipe":
+        resource["recipes"].clear()
+    if problem == "credit":
+        entry["review"]["role_conversion"] = "recovery_credit"
+    if problem == "omission":
+        entry["operation"] = "delete"
+    if problem == "duplicate":
+        rule["reference_flow_sign_review"]["profiles"].append(deepcopy(entry))
+    with pytest.raises(MigrationError):
+        validate_migration_resource(resource)

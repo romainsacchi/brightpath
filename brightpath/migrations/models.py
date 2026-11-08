@@ -17,6 +17,7 @@ class MigrationStepReport:
     technosphere_replacements: int = 0
     technosphere_disaggregations: int = 0
     technosphere_aggregations: int = 0
+    technosphere_deletions: int = 0
     biosphere_replacements: int = 0
     biosphere_deletions: int = 0
     issues: list[Issue] = field(default_factory=list)
@@ -31,6 +32,7 @@ class MigrationStepReport:
                 self.technosphere_replacements,
                 self.technosphere_disaggregations,
                 self.technosphere_aggregations,
+                self.technosphere_deletions,
                 self.biosphere_replacements,
                 self.biosphere_deletions,
             )
