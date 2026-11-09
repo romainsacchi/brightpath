@@ -11,6 +11,7 @@ from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_inert_compositions import apply_pilot_inert_composition_review
+from scripts.review_uvek_pilot_nitrate_inert39 import apply_pilot_nitrate_inert39_review
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
 
@@ -66,7 +67,7 @@ def test_inert_composition_preserves_signed_uncertainty_and_all_components(row, 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["rule_id"])
 def test_inert_composition_does_not_approve_other_source_versions(row):
-    version = "3.12" if row["source_profile"]["version"] == "3.9" else "3.9"
+    version = "3.12" if row["source_profile"]["version"] == "3.9" else "3.6"
     inventory = BrightwayInventory.from_data(consumer(row["source"], -1), context=contexts("ecoinvent", version))
     before = deepcopy(inventory.data)
     with pytest.raises(MigrationError):
@@ -106,14 +107,23 @@ def test_only_unavailable_nonphysical_indicator_is_omitted_with_an_audit():
 def test_inert_composition_replay_changes_only_two_parents_and_is_idempotent():
     resource = deepcopy(load_uvek_technosphere_resource())
     expected = deepcopy(resource)
+    extension = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_inert39_review.json").read_text())
+    retained = next(r for r in resource["replace"] if r["id"] == extension["records"][0]["rule_id"])
+    retained.clear()
+    retained.update(deepcopy(extension["records"][0]["previous_rule"]))
+    historical_expected = deepcopy(resource)
     by_id = {r["id"]: r for r in resource["replace"]}
     for row in REVIEW["records"]:
         parent = by_id[row["rule_id"]]
         parent.clear()
         parent.update(deepcopy(row["previous_rule"]))
     apply_pilot_inert_composition_review(resource)
-    assert resource == expected
+    assert resource == historical_expected
     apply_pilot_inert_composition_review(resource)
+    assert resource == historical_expected
+    apply_pilot_nitrate_inert39_review(resource)
+    assert resource == expected
+    apply_pilot_nitrate_inert39_review(resource)
     assert resource == expected
 
 
@@ -122,6 +132,9 @@ def test_inert_composition_binding_drift_refuses_atomically(change):
     resource = deepcopy(load_uvek_technosphere_resource())
     row = REVIEW["records"][-1]
     parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+    extension = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_inert39_review.json").read_text())
+    parent.clear()
+    parent.update(deepcopy(extension["records"][0]["previous_rule"]))
     if change == "component":
         next(r for r in resource["replace"] if r["id"] == "bp-f1b06903c98b44af")["confidence"] = 0.123
     elif change == "parent":
