@@ -94,6 +94,13 @@ def test_country_authoring_replay_is_atomic_and_rejects_changed_evidence(change)
 def test_country_reviews_pin_exact_treatments_and_original_authoring_authorities():
     assert {r["source"]["location"] for r in REVIEW["records"]} == {"PE", "IN", "BR", "CO", "CY", "ZA"}
     assert len(REVIEW["recipe_dependencies"]) == 5
+    (br,) = [r for r in REVIEW["records"] if r["source"]["location"] == "BR"]
+    (controlled,) = [r for r in br["source_fates"] if r.get("whole_controlled_service")]
+    assert controlled["target"]["name"] == "Disposal, polyethylene, 0.4% water, to municipal incineration"
+    assert controlled["target_selected_from_prior_full_waste_composition_review"]
+    assert controlled["declared_wet_composition_coordinates_matching_prior_review"] == 44
+    assert REVIEW["controlled_boundary_correction"]["removed_wrapper_collection_tkm_per_kg_treatment"] == 0.031
+    assert REVIEW["controlled_boundary_correction"]["original_source_market_collection_preserved"]
     for row in REVIEW["authorization_evidence"] + REVIEW["historical_binding_authorities"]:
         assert hashlib.sha256((DATA_DIR / row["path"]).read_bytes()).hexdigest() == row["sha256"]
     assert sum(row["affected_binding_records"] for row in REVIEW["historical_binding_authorities"]) == 324

@@ -17,7 +17,7 @@ else:
 
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = "brightpath/data/export/uvek_pilot_nitrate_pe_country_review.json"
-REVIEW_SHA256 = "d9c0b1c3f2bb765114bf8ddfa529ca635ec165fa8eca35acbaac4f382ba2798b"
+REVIEW_SHA256 = "62ffd78c666ad8b7d00883d89dbce8960fcb53e0cf5c9cc4c3ac936f076fc6cf"
 
 
 def apply_pilot_nitrate_pe_country_review(resource, root=ROOT):
