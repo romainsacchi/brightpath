@@ -155,6 +155,18 @@ Only the copper rule is rewritten in the raw resource. Other exact admissions
 are controlled by Premise's approval ledger. No new helper, recovery credit,
 empty stock or inverse route is inferred.
 
+``brightpath/data/export/uvek_pilot_wastewater_endpoint_review.json`` corrects
+only the inspected 3.6 Swiss class-2 wastewater treatment to its existing native
+counterpart without the additional residential sewer network in the old target.
+The treatment class, 71,100 population-capacity equivalents and declared COD
+match. Keep the native treatment plant and internal sewer grid; the old and new
+targets' direct biosphere coordinates agree within each native release.
+The -1 m3 waste / +1 m3 service references require factor ``-1`` without volume
+or capacity scaling. Complete-process energy, chemical, residue/ash-recovery,
+biosphere and vintage differences remain warnings. No new helper, internal
+inventory reconstruction, credit, inverse or cross-system-model route is added.
+Uninspected profiles retain an unresolved reference-review default.
+
 Exact rule approvals
 --------------------
 
