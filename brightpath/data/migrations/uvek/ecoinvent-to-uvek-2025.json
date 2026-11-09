@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 915,
-      "unclassified": 29558
+      "recipe": 918,
+      "unclassified": 29555
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 292,
       "followup_review": 163,
-      "heuristic_similarity": 26734,
+      "heuristic_similarity": 26731,
       "pairwise_review": 2243,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -27,6 +27,7 @@
       "reviewed_cutoff_feed_market_recipe": 5,
       "reviewed_cutoff_slag_product": 4,
       "reviewed_cutoff_stock_recipe": 40,
+      "reviewed_deferred_concrete": 3,
       "reviewed_deferred_delivered_gas": 2,
       "reviewed_deferred_materials": 8,
       "reviewed_deferred_naocl": 1,
@@ -104,7 +105,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.437964,
+    "mean_confidence": 0.438029,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -86422,6 +86423,1319 @@
       "unit": "kilogram",
       "zero_burden": true,
       "zero_burden_reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers."
+    },
+    "deferred-concrete-c77751f8b28a41973e3f": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.0112,
+          "loc": -4.491841500681089,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01932,
+          "loc": -3.946614450197765,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.291281424314205,
+          "loc": 0.291281424314205,
+          "recipe": "deferred-concrete-route-72a0f4a19aaeb842f15c",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.506227554061282,
+          "loc": 0.506227554061282,
+          "recipe": "deferred-concrete-route-7a38c5e18c4d0498ac6d",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.202491021624513,
+          "loc": 0.202491021624513,
+          "recipe": "deferred-concrete-route-003f7d853a8632e601b4",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "market for waste concrete, not reinforced, composed from resolved suppliers, Europe without Switzerland",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "waste concrete, not reinforced",
+      "unit": "kilogram"
+    },
+    "deferred-concrete-ccc89e73133fcd6a3b64": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.4351742655843124,
+          "loc": 0.4351742655843124,
+          "location": "CH",
+          "name": "Disposal, inert material, 0% water, to sanitary landfill",
+          "reference product": "Disposal, inert material, 0% water, to sanitary landfill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0112,
+          "loc": -4.491841500681089,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01932,
+          "loc": -3.946614450197765,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "market for inert waste, composed from resolved suppliers, Europe without Switzerland",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "inert waste",
+      "source_input_omissions": [
+        {
+          "original_index": 2,
+          "rationale": "Independently verified production-only allocated clinker terminal: zero nonproduction exchanges, source LCI contribution exactly zero. Retain signed source quantity in this audit. No invented landfill, fuel burden, recovery credit or renormalization; no claim that physical kiln treatment is burden-free.",
+          "source_activity": {
+            "location": "Europe without Switzerland",
+            "name": "market for inert waste",
+            "reference product": "inert waste",
+            "unit": "kilogram"
+          },
+          "source_exchange": {
+            "amount": -0.5648257344156875,
+            "loc": -0.5648257344156875,
+            "location": "Europe without Switzerland",
+            "name": "clinker production",
+            "reference product": "inert waste",
+            "type": "technosphere",
+            "uncertainty type": 0,
+            "unit": "kilogram"
+          },
+          "source_inventory_sha256": "ff5e2fc0bee26cda7715686a10e4ed5dcce2d051a415e7cf51f0c4c41adb4d0c",
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          }
+        }
+      ],
+      "unit": "kilogram"
+    },
+    "deferred-concrete-ddbb9dd0b4247c98a69e": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.00356,
+          "loc": -5.637994734118198,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "recipe": "older-swiss-rail-061b7121127c9a779bfc",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.02577,
+          "loc": -3.6585442543178632,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.28,
+          "loc": 0.28,
+          "recipe": "deferred-concrete-route-05f40d8fab5ad2ace171",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.62,
+          "loc": 0.62,
+          "recipe": "deferred-concrete-route-86e45047ace81af81357",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.1,
+          "loc": 0.1,
+          "recipe": "deferred-concrete-route-af97b8d1417b0d7e3a69",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "CH",
+      "name": "market for waste concrete, not reinforced, composed from resolved suppliers, CH",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "waste concrete, not reinforced",
+      "unit": "kilogram"
+    },
+    "deferred-concrete-route-003f7d853a8632e601b4": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json#1d1ccdea0584b849891b485e5b4e2889cc100b24c1a56fecd755012cefa23924"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0437,
+          "loc": -3.1304071768805923,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Diesel, burned in building machine, average",
+          "scale": 0.2683281572999748,
+          "scale without pedigree": 0.33763886032268264,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5702630971753301,
+          "scale without pedigree": 0.6069596362197407,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2349468024894146,
+          "scale without pedigree": 0.31368774282716244,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.381051177665153,
+          "scale without pedigree": 0.4340506882842141,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "Reconstructed concrete-route service, treatment of waste concrete, not reinforced, recycling, Europe without Switzerland",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "waste concrete, not reinforced",
+      "unit": "kilogram"
+    },
+    "deferred-concrete-route-05f40d8fab5ad2ace171": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json#83d8e65a61a44be3a4aefbb9e18d4c35f5a36afa7c0d507806b5ff7edb793afb"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0437,
+          "loc": -3.1304071768805923,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Diesel, burned in building machine, average",
+          "scale": 0.2645751311064591,
+          "scale without pedigree": 0.33166247903554,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0037,
+          "loc": -5.599422459331958,
+          "location": "CH",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.1,
+          "scale without pedigree": 0.22360679774997896,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.000505,
+          "loc": -7.590952128688914,
+          "location": "RER",
+          "name": "Excavation, hydraulic digger (proj. 500)",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Excavation, hydraulic digger (proj. 500)",
+          "scale": 0.1,
+          "scale without pedigree": 0.22360679774997896,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.4,
+          "loc": -0.916290731874155,
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "deferred-waste-market-bad1b3a323f58dd0d12d",
+          "scale": 0.2,
+          "scale without pedigree": 0.2,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1e-10,
+          "loc": 1e-10,
+          "location": "CH",
+          "name": "Sorting plant for construction waste",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Sorting plant for construction waste",
+          "scale without pedigree": 0.2,
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        },
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5685947590331799,
+          "scale without pedigree": 0.603821165578021,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2308679276123039,
+          "scale without pedigree": 0.307571129984594,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.378549864614954,
+          "scale without pedigree": 0.42965102117881665,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "CH",
+      "name": "Reconstructed concrete-route service, treatment of waste concrete, not reinforced, sorting plant, CH",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "waste concrete, not reinforced",
+      "unit": "kilogram"
+    },
+    "deferred-concrete-route-19def3291721e6b391e4": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json#3aecf84acf2e7b754d38ec061662945ec2e96b64c85ed23283d191939e748648"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "CH",
+          "name": "Disposal, inert waste, 5% water, to construction waste landfill",
+          "reference product": "Disposal, inert waste, 5% water, to construction waste landfill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0036,
+          "loc": -5.626821433520073,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "recipe": "older-swiss-rail-061b7121127c9a779bfc",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0258,
+          "loc": -3.6573807870545654,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "CH",
+      "name": "Reconstructed concrete-route service, market for inert waste, for final disposal, CH",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "inert waste, for final disposal",
+      "unit": "kilogram"
+    },
+    "deferred-concrete-route-72a0f4a19aaeb842f15c": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json#2f49c1f26d37ea67b138203535d2776c4ec578cc749b8450f0ab4f1e389c4855"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0437,
+          "loc": -3.1304071768805923,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Diesel, burned in building machine, average",
+          "scale": 0.2683281572999748,
+          "scale without pedigree": 0.33763886032268264,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 1.0,
+          "loc": 0.0,
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-nitrate-inert39-d57b978a0c8dd5e40b8c",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.044721359549995794,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5702630971753301,
+          "scale without pedigree": 0.6069596362197407,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2349468024894146,
+          "scale without pedigree": 0.31368774282716244,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.381051177665153,
+          "scale without pedigree": 0.4340506882842141,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "Reconstructed concrete-route service, treatment of waste concrete, not reinforced, collection for final disposal, Europe without Switzerland",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "waste concrete, not reinforced",
+      "unit": "kilogram"
+    },
+    "deferred-concrete-route-7a38c5e18c4d0498ac6d": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json#8eccccf653d64b8615cd44bfd4f041aff98796b2e4c96307128985c3bf429a9a"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0437,
+          "loc": -3.1304071768805923,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Diesel, burned in building machine, average",
+          "scale": 0.2683281572999748,
+          "scale without pedigree": 0.33763886032268264,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0037,
+          "loc": -5.599422459331958,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.000505,
+          "loc": -7.590952128688914,
+          "location": "RER",
+          "name": "Excavation, hydraulic digger (proj. 500)",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Excavation, hydraulic digger (proj. 500)",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.4,
+          "loc": -0.916290731874155,
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "deferred-concrete-ccc89e73133fcd6a3b64",
+          "scale": 0.20493901531919198,
+          "scale without pedigree": 0.20493901531919198,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1e-10,
+          "loc": -23.025850929940457,
+          "location": "CH",
+          "name": "Sorting plant for construction waste",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Sorting plant for construction waste",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5702630971753301,
+          "scale without pedigree": 0.6069596362197407,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2349468024894146,
+          "scale without pedigree": 0.31368774282716244,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.381051177665153,
+          "scale without pedigree": 0.4340506882842141,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "Reconstructed concrete-route service, treatment of waste concrete, not reinforced, sorting plant, Europe without Switzerland",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "waste concrete, not reinforced",
+      "unit": "kilogram"
+    },
+    "deferred-concrete-route-86e45047ace81af81357": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json#9ae3e5e8133266b9b6077960a935fdbd55fce369bb9589dd6cfe3c491c32700e"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0437,
+          "loc": -3.1304071768805923,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Diesel, burned in building machine, average",
+          "scale": 0.2645751311064591,
+          "scale without pedigree": 0.33166247903554,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5685947590331799,
+          "scale without pedigree": 0.603821165578021,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2308679276123039,
+          "scale without pedigree": 0.307571129984594,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.378549864614954,
+          "scale without pedigree": 0.42965102117881665,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "CH",
+      "name": "Reconstructed concrete-route service, treatment of waste concrete, not reinforced, recycling, CH",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "waste concrete, not reinforced",
+      "unit": "kilogram"
+    },
+    "deferred-concrete-route-af97b8d1417b0d7e3a69": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json#bb55419aa9e700f472934bbd476bf3485d8368377a7bd9bf90e4bae64d0ff195"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0437,
+          "loc": -3.1304071768805923,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Diesel, burned in building machine, average",
+          "scale": 0.2645751311064591,
+          "scale without pedigree": 0.33166247903554,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "deferred-concrete-route-19def3291721e6b391e4",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5685947590331799,
+          "scale without pedigree": 0.603821165578021,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2308679276123039,
+          "scale without pedigree": 0.307571129984594,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, compartment, unit and role agree in inspected source3.9 and canonical3.10 biospheres; retain signed source PM quantities.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.378549864614954,
+          "scale without pedigree": 0.42965102117881665,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "CH",
+      "name": "Reconstructed concrete-route service, treatment of waste concrete, not reinforced, collection for final disposal, CH",
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.",
+      "reference product": "waste concrete, not reinforced",
+      "unit": "kilogram"
     },
     "deferred-delivered-gas-52beaa2b0f89f7430e73": {
       "evidence": [
@@ -696862,7 +698176,7 @@
     {"confidence": 0.229894, "id": "bp-c23106f5381392b3", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-c23106f5381392b3"], "reason": "Both imported reference production amounts are positive; preserve their quantity direction despite differing native flow classifications. This does not establish scientific equivalence.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source": {"location": "GLO", "name": "market for inert gas for discharge lamps", "reference product": "inert gas for discharge lamps", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Disposal, fluorescent lamps", "reference product": "Disposal, fluorescent lamps", "unit": "kilogram"}},
     {"confidence": 0.528509, "id": "bp-11a6e890925a23b1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for inert material landfill", "reference product": "inert material landfill", "unit": "unit"}, "target": {"location": "CH", "name": "xx Inert material landfill facility", "reference product": "xx Inert material landfill facility", "unit": "unit"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-87f7d6834d9147fa", "mapping_method": "reviewed_deferred_waste_markets", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_waste_markets_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_waste_markets_review.json#ecoinvent-3.9-cutoff/932df6be65bcc9d6d6ddb17214d77e19298759e7c261b8aa74ce9bcfe0f0671b"], "reason": "User auto-approved coming modelling decisions and requested further progress on the deferred work. Reconstruct only the inspected ecoinvent3.9cut-off waste market with its original treatment fractions and every freight exchange, without renormalization. Source negative1kg waste reference becomes a positive1kg treatment service: parent factor-1, with component references handled independently. Preserve caller signed amounts, formulas, uncertainty and bounds after this one reference-sign change. The documented clinker-treatment terminals have exactly zero nonproduction exchanges in the inspected allocated cut-off source inventory; collapse only those empty terminals, preserving the exact original exchange and source/profile/inventory witnesses in explicit source-omission audits. This is not evidence that real kiln treatment is burden-free and does not establish a new avoided-production credit or landfill. The source allocated terminal contributes exactly zero to its source LCI, whereas the complete migrated market still inherits nonzero freight and applicable incineration burdens. The helper represents treatment of the full original kilogram, including the audited allocated-handover fractions; do not renormalize incineration to one kilogram. Retained freight uses only existing reviewed exact-profile correspondences, with their vehicle/fleet/geography approximations. Native1990s/2000vintage, geography, allocation, internal uncertainty and2991upstreambiosphere exclusions remain explicit; total score effects are unquantified. No other source release, reverse or cross-system-model route is qualified. Inert waste retains its100%empty allocated clinker-treatment route and original0.0036rail/0.0258roadtkm perkg. No construction-waste landfill counterpart is used.  IN/CN/ZA/US rail legs use the complete RER rail service per original tonne-kilometre as a geographic/fleet/propulsion/loading/vintage proxy; every original entry remains separate, with no distance/capacity/lifetime multiplier or coal-specific supplier. ", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "deferred-waste-market-bad1b3a323f58dd0d12d"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-ddf8b3085b8b26f7", "source": {"location": "CH", "name": "market for inert waste", "reference product": "inert waste", "unit": "kilogram"}, "target": {"recipe_ref": "deferred-waste-market-bad1b3a323f58dd0d12d"}, "technosphere_information_loss": "User auto-approved coming modelling decisions and requested further progress on the deferred work. Reconstruct only the inspected ecoinvent3.9cut-off waste market with its original treatment fractions and every freight exchange, without renormalization. Source negative1kg waste reference becomes a positive1kg treatment service: parent factor-1, with component references handled independently. Preserve caller signed amounts, formulas, uncertainty and bounds after this one reference-sign change. The documented clinker-treatment terminals have exactly zero nonproduction exchanges in the inspected allocated cut-off source inventory; collapse only those empty terminals, preserving the exact original exchange and source/profile/inventory witnesses in explicit source-omission audits. This is not evidence that real kiln treatment is burden-free and does not establish a new avoided-production credit or landfill. The source allocated terminal contributes exactly zero to its source LCI, whereas the complete migrated market still inherits nonzero freight and applicable incineration burdens. The helper represents treatment of the full original kilogram, including the audited allocated-handover fractions; do not renormalize incineration to one kilogram. Retained freight uses only existing reviewed exact-profile correspondences, with their vehicle/fleet/geography approximations. Native1990s/2000vintage, geography, allocation, internal uncertainty and2991upstreambiosphere exclusions remain explicit; total score effects are unquantified. No other source release, reverse or cross-system-model route is qualified. Inert waste retains its100%empty allocated clinker-treatment route and original0.0036rail/0.0258roadtkm perkg. No construction-waste landfill counterpart is used.  IN/CN/ZA/US rail legs use the complete RER rail service per original tonne-kilometre as a geographic/fleet/propulsion/loading/vintage proxy; every original entry remains separate, with no distance/capacity/lifetime multiplier or coal-specific supplier. "},
-    {"confidence": 0.216249, "conversion_factor": -1, "id": "bp-f9049261a31e0da4", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-f9049261a31e0da4"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "market for inert waste", "reference product": "inert waste", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, inert waste, 5% water, to construction waste landfill", "reference product": "Disposal, inert waste, 5% water, to construction waste landfill", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-f9049261a31e0da4", "mapping_method": "reviewed_deferred_concrete", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_concrete_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_concrete_review.json#ecoinvent-3.9-cutoff/ff5e2fc0bee26cda7715686a10e4ed5dcce2d051a415e7cf51f0c4c41adb4d0c"], "reason": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "deferred-concrete-ccc89e73133fcd6a3b64"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-d01e92adee634542", "source": {"location": "Europe without Switzerland", "name": "market for inert waste", "reference product": "inert waste", "unit": "kilogram"}, "target": {"recipe_ref": "deferred-concrete-ccc89e73133fcd6a3b64"}, "technosphere_information_loss": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification."},
     {"confidence": 0.262273, "conversion_factor": -1, "id": "bp-9b61f70d244c42eb", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-9b61f70d244c42eb"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RER", "name": "market for inert waste", "reference product": "inert waste", "unit": "kilogram"}, "target": {"location": "RER", "name": "Composting organic waste", "reference product": "Composting organic waste", "unit": "kilogram"}},
     {"confidence": 0.216249, "conversion_factor": -1, "id": "bp-375988c6d6244191", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-375988c6d6244191"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for inert waste", "reference product": "inert waste", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, inert waste, 5% water, to construction waste landfill", "reference product": "Disposal, inert waste, 5% water, to construction waste landfill", "unit": "kilogram"}},
     {"confidence": 0.412163, "conversion_factor": -1, "id": "bp-8be1ae15c0ed8dc7", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-8be1ae15c0ed8dc7"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for inert waste, for final disposal", "reference product": "inert waste, for final disposal", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, construction waste, to final disposal type B", "reference product": "Disposal, construction waste, to final disposal type B", "unit": "kilogram"}},
@@ -701427,8 +702741,8 @@
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-04610171c203b281", "mapping_method": "reviewed_pilot_nitrate_cleanfill", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_cleanfill_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_cleanfill_review.json#ecoinvent-3.9-cutoff/0e4b4da3cf32477df294a34a3db0576d07f4fae4b31497633af99aa7e2311e2b"], "reason": "The regional concrete market retains its sole landfill fate and all original road/rail collection terms. Do not use the native building-waste crushing/recycling mix. Keep the complete source final-disposal boundary per as-received signed kg. Each original treatment uses1kg of generic inert-landfill operation and1.48e-9facility units. Preserve both coefficients, source uncertainty and the original waste-market-to-treatment exchange through a positive helper; negative waste reference-1 requires caller factor-1. Retain complete native operation and facility inventories once under the earlier generic-cleanfill whole-function/unit approval. Generic land occupation/transformation quantities match the full source operation(9) and facility(3) coordinates. The native operation has its own0.00143MJ oil-boiler input and4.8e-5MJ waste-heat release; the source uses mixed non-natural-gas heat. Complete facility material grades, source pitch and HDPE supplies, operating machines, electricity, fuel, freight, geography, vintage, internal uncertainty and allocation differ; retain them as screened whole-service differences, not new independent material/heat approvals. Both source and native facilities document450000m3; no capacity, density, moisture, water-content, dry-mass, distance, payload or lifetime scaling is introduced. Native2026 documentation states five years of recultivation/monitoring; no undocumented lifetime equality is assumed. Source market/treatment records have no direct elementary exchanges and explicitly omit negligible leachate; this is a source-data limitation, not evidence of physical zero or an authorization to omit any present emission. No handling dust, building demolition, crushing, recycling, collection freight absent from the source, recovery credit or material-specific leachate is added. Keep native facility access-road and operating logistics separate from original market collection. Preserve every original market freight term at its signed tkm and uncertainty, without aggregation or renormalization. Use the previously inspected whole RER generic mixed-traction rail and heavy-lorry fleet, retaining vehicle, network, fuel, maintenance and infrastructure once; do not substitute coal-only or diesel-only rail or infer payload/traction factors. Geographic fleet/traction, loading, fuel, infrastructure and vintage differences remain warnings. Preserve caller quantities, formulas, uncertainty, ownership, separate emissions and other purchases. Installed native biosphere exclusions and all score differences remain limitations with unquantified effects; no LCIA equivalence is asserted. Only enumerated source3.9cutoff closures qualify for UVEK2026cutoff and ecoinvent3.10biosphere; raw component bindings are drift guards and do not independently approve their use, other source versions, reverse or cross-system-model routes.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-nitrate-cleanfill-7c8a682d1d684fc16793"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-aca7d2915bc7e84e", "source": {"location": "RoW", "name": "market for waste concrete", "reference product": "waste concrete", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-nitrate-cleanfill-7c8a682d1d684fc16793"}, "technosphere_information_loss": "The regional concrete market retains its sole landfill fate and all original road/rail collection terms. Do not use the native building-waste crushing/recycling mix. Keep the complete source final-disposal boundary per as-received signed kg. Each original treatment uses1kg of generic inert-landfill operation and1.48e-9facility units. Preserve both coefficients, source uncertainty and the original waste-market-to-treatment exchange through a positive helper; negative waste reference-1 requires caller factor-1. Retain complete native operation and facility inventories once under the earlier generic-cleanfill whole-function/unit approval. Generic land occupation/transformation quantities match the full source operation(9) and facility(3) coordinates. The native operation has its own0.00143MJ oil-boiler input and4.8e-5MJ waste-heat release; the source uses mixed non-natural-gas heat. Complete facility material grades, source pitch and HDPE supplies, operating machines, electricity, fuel, freight, geography, vintage, internal uncertainty and allocation differ; retain them as screened whole-service differences, not new independent material/heat approvals. Both source and native facilities document450000m3; no capacity, density, moisture, water-content, dry-mass, distance, payload or lifetime scaling is introduced. Native2026 documentation states five years of recultivation/monitoring; no undocumented lifetime equality is assumed. Source market/treatment records have no direct elementary exchanges and explicitly omit negligible leachate; this is a source-data limitation, not evidence of physical zero or an authorization to omit any present emission. No handling dust, building demolition, crushing, recycling, collection freight absent from the source, recovery credit or material-specific leachate is added. Keep native facility access-road and operating logistics separate from original market collection. Preserve every original market freight term at its signed tkm and uncertainty, without aggregation or renormalization. Use the previously inspected whole RER generic mixed-traction rail and heavy-lorry fleet, retaining vehicle, network, fuel, maintenance and infrastructure once; do not substitute coal-only or diesel-only rail or infer payload/traction factors. Geographic fleet/traction, loading, fuel, infrastructure and vintage differences remain warnings. Preserve caller quantities, formulas, uncertainty, ownership, separate emissions and other purchases. Installed native biosphere exclusions and all score differences remain limitations with unquantified effects; no LCIA equivalence is asserted. Only enumerated source3.9cutoff closures qualify for UVEK2026cutoff and ecoinvent3.10biosphere; raw component bindings are drift guards and do not independently approve their use, other source versions, reverse or cross-system-model routes."},
     {"confidence": 0.6, "conversion_factor": -1, "id": "bp-c35a5e0ef4a54ea5", "mapping_method": "pairwise_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-c35a5e0ef4a54ea5"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-79ab4583a027a05e", "source": {"location": "CH", "name": "market for waste concrete gravel", "reference product": "waste concrete gravel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, concrete gravel, to final disposal", "reference product": "Disposal, building, concrete gravel, to final disposal", "unit": "kilogram"}},
     {"confidence": 0.6, "conversion_factor": -1, "id": "bp-950828daefc5c67b", "mapping_method": "pairwise_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-950828daefc5c67b"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-c722d5b67b2c4523", "source": {"location": "RoW", "name": "market for waste concrete gravel", "reference product": "waste concrete gravel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, concrete gravel, to final disposal", "reference product": "Disposal, building, concrete gravel, to final disposal", "unit": "kilogram"}},
-    {"confidence": 0.449443, "conversion_factor": -1, "id": "bp-4335e9c5e2d93a7f", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-4335e9c5e2d93a7f"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for waste concrete, not reinforced", "reference product": "waste concrete, not reinforced", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, concrete, not reinforced, to final disposal", "reference product": "Disposal, building, concrete, not reinforced, to final disposal", "unit": "kilogram"}},
-    {"confidence": 0.369443, "conversion_factor": -1, "id": "bp-b47c8547ff19ec86", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-b47c8547ff19ec86"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "market for waste concrete, not reinforced", "reference product": "waste concrete, not reinforced", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, concrete, not reinforced, to final disposal", "reference product": "Disposal, building, concrete, not reinforced, to final disposal", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-4335e9c5e2d93a7f", "mapping_method": "reviewed_deferred_concrete", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_concrete_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_concrete_review.json#ecoinvent-3.9-cutoff/a1d955dc65e090207a56faff572a85f73f8eb8e8ddb9c7024fb3ea93fcca5a96"], "reason": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "deferred-concrete-ddbb9dd0b4247c98a69e"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-d01e92adee634542", "source": {"location": "CH", "name": "market for waste concrete, not reinforced", "reference product": "waste concrete, not reinforced", "unit": "kilogram"}, "target": {"recipe_ref": "deferred-concrete-ddbb9dd0b4247c98a69e"}, "technosphere_information_loss": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-b47c8547ff19ec86", "mapping_method": "reviewed_deferred_concrete", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_concrete_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_concrete_review.json#ecoinvent-3.9-cutoff/05e936b10346d62d17ebeaefdc0d25bfcca2b24ddf4826377a7d406764e7065b"], "reason": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "deferred-concrete-c77751f8b28a41973e3f"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-d01e92adee634542", "source": {"location": "Europe without Switzerland", "name": "market for waste concrete, not reinforced", "reference product": "waste concrete, not reinforced", "unit": "kilogram"}, "target": {"recipe_ref": "deferred-concrete-c77751f8b28a41973e3f"}, "technosphere_information_loss": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification."},
     {"confidence": 0.369443, "conversion_factor": -1, "id": "bp-c1e93d63febc317e", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-c1e93d63febc317e"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for waste concrete, not reinforced", "reference product": "waste concrete, not reinforced", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, concrete, not reinforced, to final disposal", "reference product": "Disposal, building, concrete, not reinforced, to final disposal", "unit": "kilogram"}},
     {"confidence": 0.23, "conversion_factor": -1, "id": "bp-bbe2018871b46ec4", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-bbe2018871b46ec4"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for waste copper", "reference product": "waste copper", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, concrete, as building waste", "reference product": "Disposal, concrete, as building waste", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1.0, "id": "bp-2ffd6d9d96e8af3c", "mapping_method": "reviewed_market_composition", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json"], "profiles": [{"conversion_factor": -1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/54ebbad2567d3347a85553be0e3dd7da81e55995b1965c3cf6da03eec541f1d3"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": -1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.11"}, "target": {"recipe_ref": "regional-freight-market-composition-4b096bb2024dcf25cc7f"}}, {"conversion_factor": -1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/841c9afa3c6985c1c44eca42f04de0de21c2c23f5486e9ca8bafa41693257f13"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": -1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "regional-freight-market-composition-4b096bb2024dcf25cc7f"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7a90c836ca379739", "source": {"location": "Europe without Switzerland", "name": "market for waste copper", "reference product": "waste copper", "unit": "kilogram"}, "target": {"recipe_ref": "regional-freight-market-composition-4b096bb2024dcf25cc7f"}, "technosphere_information_loss": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred."},
@@ -719461,6 +720775,15 @@
         "This excludes the complete background-residue contribution and associated credits; it is not a zero-impact service or scientific equivalence claim. Preserve water/waste quantities in the original-exchange loss record, including sign, uncertainty, formula and caller metadata. Foreground suppliers, production and separately listed emissions remain intact. No moisture-based scaling, generic keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the user's unsupported CRT industrial wastewater-residue omission policy and similar-case authorization: omit the exact treatment of sewage sludge, 97% water, WWT, WW from LCD backlight production, landfarming / RoW / kg external exchange with a warning. Independent inspection confirms the same nonbiogenic industrial-wastewater-residue boundary, with 0% biogenic carbon, for LCD backlight production. No dedicated complete UVEK counterpart was established. Manufacturing, mechanical screen-recycling residues, pulp/paper or municipal sludge, refinery sludge and isolated landfill-operation components do not establish matching residue treatment. This is a direct industrial residue treatment with active process inputs and releases; separately listed foreground treatment and emissions remain intact. Omitted contributions include treatment operation, metal/leachate emissions, downstream residue handling and any recovered-energy or fertilizer credits; effects on LCIA scores are method-dependent and unquantified."
+    },
+    "r-d01e92adee634542": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_concrete_review.json"
+      ],
+      "limitations": [
+        "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification."
+      ],
+      "rationale": "Autonomously reviewed exact3.9cut-off concrete-waste route reconstruction. Preserve original market treatment shares and all freight, with no renormalization. Reconstruct the nonempty source collection, sorting and recycling operations using complete native diesel burning, electricity, excavation and sorting infrastructure at original coefficients, plus exact canonical3.10 particulate emissions. Negative source treatment inputs become positive demand for generated positive-reference treatment services; parent caller factor -1 preserves signed waste demand. Recycling is not an empty allocated stock. Sorting retains its actual0.4kg generic inert-waste route, not an invented0.4kg landfill. Generic CH inert waste uses its reviewed zero-inventory allocated clinker handover and retained freight. Generic European inert waste retains its sanitary-landfill fraction, an independently verified production-only clinker handover and freight. Collection retains the source final-disposal market; source treatment and market freight are not conflated. Complete native sanitary/inert landfill services are screening proxies, retaining infrastructure/operation/emissions but differing in allocation, geography, technology and vintage. Source utility/factory/vehicle technologies, capacity/lifetime, internal uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. No added recovery credit, fuel credit or landfill for a verified empty kiln handover. Preserve caller signs/quantities/formulas/uncertainty; inspect only3.9cut-off with no inverse or cross-model qualification."
     },
     "r-d03cb570c4e3278f": {
       "evidence": [
