@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 920,
-      "unclassified": 29553
+      "recipe": 921,
+      "unclassified": 29552
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 292,
       "followup_review": 163,
-      "heuristic_similarity": 26730,
+      "heuristic_similarity": 26729,
       "pairwise_review": 2242,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -27,6 +27,7 @@
       "reviewed_cutoff_feed_market_recipe": 5,
       "reviewed_cutoff_slag_product": 4,
       "reviewed_cutoff_stock_recipe": 40,
+      "reviewed_deferred_acrylic": 1,
       "reviewed_deferred_concrete": 3,
       "reviewed_deferred_delivered_gas": 2,
       "reviewed_deferred_materials": 8,
@@ -107,7 +108,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.43806,
+    "mean_confidence": 0.438081,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -86425,6 +86426,1043 @@
       "unit": "kilogram",
       "zero_burden": true,
       "zero_burden_reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers."
+    },
+    "deferred-acrylic-33bc3beac2f47e17737c": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_acrylic_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "deferred-acrylic-stage-fcf9acf40eb47dc1caf7",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for acrylic dispersion, with water, in 58% solution, composed from resolved suppliers, RER",
+      "rationale": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified.",
+      "reference product": "acrylic dispersion, with water, in 58% solution state",
+      "unit": "kilogram"
+    },
+    "deferred-acrylic-stage-0f320a1b33e4ead151cc": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_acrylic_review.json#2332bf544d5220fff7a9568099256d658b8d8e80499cf10145f0ae4774fae4cb"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0112,
+          "loc": -4.491841500681089,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01932,
+          "loc": -3.946614450197765,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0914017341040462,
+          "loc": 0.0914017341040462,
+          "location": "CH",
+          "name": "Disposal, emulsion paint remains, 0% water, to hazardous waste incineration",
+          "reference product": "Disposal, emulsion paint remains, 0% water, to hazardous waste incineration",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.324060693641618,
+          "loc": 0.324060693641618,
+          "location": "CH",
+          "name": "Disposal, emulsion paint, 0% water, to municipal incineration",
+          "reference product": "Disposal, emulsion paint, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0986271676300578,
+          "loc": 0.0986271676300578,
+          "location": "CH",
+          "name": "Disposal, emulsion paint, 0% water, to construction waste landfill",
+          "reference product": "Disposal, emulsion paint, 0% water, to construction waste landfill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.394508670520231,
+          "loc": 0.394508670520231,
+          "location": "CH",
+          "name": "Disposal, emulsion paint, 0% water, to sanitary landfill",
+          "reference product": "Disposal, emulsion paint, 0% water, to sanitary landfill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0914017341040462,
+          "loc": 0.0914017341040462,
+          "location": "CH",
+          "name": "Disposal, emulsion paint remains, 0% water, to hazardous waste incineration",
+          "reference product": "Disposal, emulsion paint remains, 0% water, to hazardous waste incineration",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "Reconstructed acrylic source-recipe stage, market for waste emulsion paint",
+      "rationale": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified.",
+      "reference product": "waste emulsion paint",
+      "unit": "kilogram"
+    },
+    "deferred-acrylic-stage-59847f83afc4da46eb36": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_acrylic_review.json#9a4702ad8121462e94e425e529954b8dfd9691fa6fac121ef3e0729bedfd536f"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0901,
+          "loc": -2.406835114367845,
+          "location": "RER",
+          "name": "Butyl acrylate, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Butyl acrylate, at plant",
+          "scale": 0.3163858403911275,
+          "scale without pedigree": 0.3163858403911275,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5560800302114796,
+          "scale without pedigree": 0.5987069399965228,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.1,
+          "loc": -2.3025850929940455,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.3163858403911275,
+          "scale without pedigree": 0.3163858403911275,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.152,
+          "loc": -1.8838747581358606,
+          "location": "RER",
+          "name": "Esters of versatic acid, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Esters of versatic acid, at plant",
+          "scale": 0.3163858403911275,
+          "scale without pedigree": 0.3163858403911275,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.5225,
+          "loc": -0.649130295143171,
+          "location": "CH",
+          "name": "District heat, at consumer, natural gas in industrial furnace 1MW",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "District heat, at consumer, natural gas in industrial furnace 1MW",
+          "scale": 0.3163858403911275,
+          "scale without pedigree": 0.3163858403911275,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.566,
+          "loc": -0.5691612007789542,
+          "location": "RER",
+          "name": "Heat, heavy fuel oil, at industrial furnace 1MW",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Heat, heavy fuel oil, at industrial furnace 1MW",
+          "scale": 0.3163858403911275,
+          "scale without pedigree": 0.3163858403911275,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.329,
+          "loc": -1.1116975282167652,
+          "location": "RER",
+          "name": "Vinyl acetate, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Vinyl acetate, at plant",
+          "scale": 0.3163858403911275,
+          "scale without pedigree": 0.3163858403911275,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.975544873779746e-05,
+          "loc": -9.318421822268228,
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "recipe": "pilot-hazardous-paint-cdc8e5a706034c8d3834",
+          "scale": 0.4583666654546336,
+          "scale without pedigree": 0.4583666654546336,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.029910244551262198,
+          "loc": -3.5095542301362532,
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "recipe": "pilot-hazardous-paint-239f75078d35986a9f38",
+          "scale": 0.4583666654546336,
+          "scale without pedigree": 0.4583666654546336,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 7e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Hydrocarbons, aliphatic, alkanes, unspecified",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.567015315914915,
+          "name": "Hydrocarbons, aliphatic, alkanes, unspecified",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.4243819034784589,
+          "scale without pedigree": 0.4243819034784589,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.8e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "BOD5, Biological Oxygen Demand",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -10.92513880006811,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.374299345444258,
+          "scale without pedigree": 0.374299345444258,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00017,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "COD, Chemical Oxygen Demand",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -8.679712120914012,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.374299345444258,
+          "scale without pedigree": 0.374299345444258,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.1e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "DOC, Dissolved Organic Carbon",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -11.417615285165903,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.374299345444258,
+          "scale without pedigree": 0.374299345444258,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00036,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Dissolved solids",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -7.929406526514119,
+          "name": "Dissolved solids",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.374299345444258,
+          "scale without pedigree": 0.374299345444258,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.1e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Suspended solids, unspecified",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -10.770988120240851,
+          "name": "Suspended solids, unspecified",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.374299345444258,
+          "scale without pedigree": 0.374299345444258,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "TOC, Total Organic Carbon",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -10.126631103850338,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.374299345444258,
+          "scale without pedigree": 0.374299345444258,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00046,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "in water"
+                ],
+                "name": "Water, unspecified natural origin",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.6842840684811335,
+          "name": "Water, unspecified natural origin",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.3163858403911275,
+          "scale without pedigree": 0.3163858403911275,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "Reconstructed acrylic source-recipe stage, acrylic binder production, with water, in 54% solution state",
+      "rationale": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified.",
+      "reference product": "acrylic binder, with water, in 54% solution state",
+      "unit": "kilogram"
+    },
+    "deferred-acrylic-stage-5ad1ac16ec4f1301ded4": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_acrylic_review.json#9e44d9893ae3e625926bceedb1a6579233e696073e0f1ec76a325e46adb55dce"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "deferred-acrylic-stage-59847f83afc4da46eb36",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "Reconstructed acrylic source-recipe stage, market for acrylic binder, with water, in 54% solution state",
+      "rationale": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified.",
+      "reference product": "acrylic binder, with water, in 54% solution state",
+      "unit": "kilogram"
+    },
+    "deferred-acrylic-stage-f202cef029c1c33fd9eb": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_acrylic_review.json#f5a6520f271d47a48dc106cccaca66fb27fb3947d133c33d623fc0cad1e496a5"
+      ],
+      "inputs": [
+        {
+          "amount": 0.00356,
+          "loc": -5.637994734118198,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "recipe": "older-swiss-rail-061b7121127c9a779bfc",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.02577,
+          "loc": -3.6585442543178632,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0183722212015433,
+          "loc": 0.0183722212015433,
+          "location": "CH",
+          "name": "Disposal, emulsion paint remains, 0% water, to hazardous waste incineration",
+          "reference product": "Disposal, emulsion paint remains, 0% water, to hazardous waste incineration",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0183722212015433,
+          "loc": 0.0183722212015433,
+          "location": "CH",
+          "name": "Disposal, emulsion paint remains, 0% water, to hazardous waste incineration",
+          "reference product": "Disposal, emulsion paint remains, 0% water, to hazardous waste incineration",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.963255557596914,
+          "loc": 0.963255557596914,
+          "location": "CH",
+          "name": "Disposal, emulsion paint, 0% water, to municipal incineration",
+          "reference product": "Disposal, emulsion paint, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "CH",
+      "name": "Reconstructed acrylic source-recipe stage, market for waste emulsion paint",
+      "rationale": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified.",
+      "reference product": "waste emulsion paint",
+      "unit": "kilogram"
+    },
+    "deferred-acrylic-stage-fcf9acf40eb47dc1caf7": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_acrylic_review.json#5be4e4d4e2439da1a8b540e3ced3ad09b146a9a77989e9f2e01aa476cbb5fcc3"
+      ],
+      "inputs": [
+        {
+          "amount": 0.005161702,
+          "loc": -5.266488908914315,
+          "location": "RER",
+          "name": "1-butanol, propylene hydroformylation, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "1-butanol, propylene hydroformylation, at plant",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.28670542373662905,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.504142971,
+          "loc": -0.6848953785191907,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "recipe": "deferred-acrylic-stage-5ad1ac16ec4f1301ded4",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.28670542373662905,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.010022723,
+          "loc": -4.602900463757498,
+          "location": "RER",
+          "name": "Butyl acrylate, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Butyl acrylate, at plant",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.28670542373662905,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5560800302114796,
+          "scale without pedigree": 0.5987069399965228,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.005011362,
+          "loc": -5.296047544544163,
+          "location": "GLO",
+          "name": "Chemicals organic, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemicals organic, at plant",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.28670542373662905,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3,
+          "loc": -1.2039728043259361,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.28670542373662905,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.040090892,
+          "loc": -3.2166061026376074,
+          "location": "RER",
+          "name": "Ethylene glycol, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Ethylene glycol, at plant",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.28670542373662905,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.251570349,
+          "loc": -1.3800326108622065,
+          "location": "RER",
+          "name": "Titanium dioxide, production mix, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Titanium dioxide, production mix, at plant",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.28670542373662905,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.001629488550820106,
+          "loc": -6.41948908590336,
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "deferred-acrylic-stage-0f320a1b33e4ead151cc",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.17916472867168917,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 5.1144917989391e-07,
+          "loc": -14.486017611536889,
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "deferred-acrylic-stage-f202cef029c1c33fd9eb",
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.17916472867168917,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.000184,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact publisher UUID, role, unit and compartment agree in source3.9 and canonical3.10. Preserve separate dissolved/suspended solids, carbon/oxygen-demand indicators, hydrocarbon emission and water withdrawals; no invented netting or treatment credit.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "in water"
+                ],
+                "name": "Water, unspecified natural origin",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -8.600574800355288,
+          "name": "Water, unspecified natural origin",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "scale": 0.17916472867168917,
+          "scale without pedigree": 0.28670542373662905,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "Reconstructed acrylic source-recipe stage, acrylic dispersion production, with water, in 58% solution",
+      "rationale": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified.",
+      "reference product": "acrylic dispersion, with water, in 58% solution state",
+      "unit": "kilogram"
     },
     "deferred-concrete-c77751f8b28a41973e3f": {
       "evidence": [
@@ -696728,7 +697766,7 @@
     {"confidence": 0.234165, "id": "bp-e3dad2ce7aea8112", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for acrylic binder, with water, in 54% solution state", "reference product": "acrylic binder, with water, in 54% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acrylic binder, 34% in H2O, at plant", "reference product": "Acrylic binder, 34% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.354566, "id": "bp-b4af76e34900ed57", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for acrylic binder, without water, in 34% solution state", "reference product": "acrylic binder, without water, in 34% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acrylic binder, 34% in H2O, at plant", "reference product": "Acrylic binder, 34% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.274566, "id": "bp-dbcad0870ab04b34", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for acrylic binder, without water, in 34% solution state", "reference product": "acrylic binder, without water, in 34% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acrylic binder, 34% in H2O, at plant", "reference product": "Acrylic binder, 34% in H2O, at plant", "unit": "kilogram"}},
-    {"confidence": 0.352167, "id": "bp-0ad47155a89ab7bb", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for acrylic dispersion, with water, in 58% solution", "reference product": "acrylic dispersion, with water, in 58% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acrylic dispersion, 65% in H2O, at plant", "reference product": "Acrylic dispersion, 65% in H2O, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-0ad47155a89ab7bb", "mapping_method": "reviewed_deferred_acrylic", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_acrylic_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_acrylic_review.json#ecoinvent-3.9-cutoff/9c8e63e8b82b7ba94eb4ab8bd28ff03026ae29fcaa5f86a8ecc8c6d3883ddf67"], "reason": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "deferred-acrylic-33bc3beac2f47e17737c"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-fba169bae5ef86f7", "source": {"location": "RER", "name": "market for acrylic dispersion, with water, in 58% solution", "reference product": "acrylic dispersion, with water, in 58% solution state", "unit": "kilogram"}, "target": {"recipe_ref": "deferred-acrylic-33bc3beac2f47e17737c"}, "technosphere_information_loss": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified."},
     {"confidence": 0.272167, "id": "bp-234053ffa8fb2ce5", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for acrylic dispersion, with water, in 58% solution", "reference product": "acrylic dispersion, with water, in 58% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acrylic dispersion, 65% in H2O, at plant", "reference product": "Acrylic dispersion, 65% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.347036, "id": "bp-450a89c8e7098bef", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for acrylic dispersion, with water, in 58% solution state", "reference product": "acrylic dispersion, with water, in 58% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acrylic dispersion, 65% in H2O, at plant", "reference product": "Acrylic dispersion, 65% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.267036, "id": "bp-3783cdde9932cf66", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for acrylic dispersion, with water, in 58% solution state", "reference product": "acrylic dispersion, with water, in 58% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acrylic dispersion, 65% in H2O, at plant", "reference product": "Acrylic dispersion, 65% in H2O, at plant", "unit": "kilogram"}},
@@ -723749,6 +724787,15 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of sewage sludge, 97% water, WWT, WW from black chrome coating, landfarming / RoW / kg external exchange with a warning. All inspected direct service comments for black chrome coating document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-fba169bae5ef86f7": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_acrylic_review.json"
+      ],
+      "limitations": [
+        "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified."
+      ],
+      "rationale": "Reviewed reconstruction for the exact ecoinvent 3.9 cut-off wet acrylic-dispersion recipe. Both source production exchanges explicitly reference 1 kg of wet mixture: 54% dry binder and 58% dry dispersion. The dispersion market reports 59% dry content but supplies 1 kg of that same wet producer. Preserve the actual wet transactions and all original coefficients; do not normalize the inconsistent 58/59 metadata or stale 65/34 market comments. Native legacy binder/dispersion concentration labels, 100%-base comments and incomplete material balances do not establish a safe conversion factor, so neither complete legacy formulation is used directly. Reconstruct the wet binder from butyl acrylate, versatic-acid esters and vinyl acetate, together with source utilities, factory, waste treatment and direct flows. Reconstruct dispersion using that wet binder and the actual source pigment, chemicals, utilities, waste treatment and water withdrawal. Correct 1-butanol to native 1-butanol rather than 2-butanol. Use the complete native titanium-dioxide production mix, not titanium metal or an arbitrarily single-route pigment. Preserve both source market-delivery layers; rail remains rail. Reconstruct both emulsion-paint waste markets from their original hazardous/municipal/sanitary/inert shares and freight, rather than substituting one construction landfill. Complete native 0%-water treatments supply the same dry-waste basis. Municipal fly-ash extraction, metal recovery, ash treatment and hazardous-branch energy recovery/allocation differ from native proxies; no extra recovery or avoided-energy credit is added. All nine direct source flows retain exact canonical ecoinvent 3.10 publisher UUIDs, units, roles and compartments. Keep dissolved solids, suspended solids, hydrocarbons and BOD/COD/DOC/TOC indicators separately; these overlapping indicators are not independent additive masses. Caller signed wet kg, formulas and supported uncertainty remain at factor +1. No guessed concentration multiplier, added carrier water, negative dewatering, drying, yield correction or new source-exchange omission is introduced. Two inherited, reviewed production-only paint-to-clinker handovers remain literal audits; no physical zero-burden claim or renormalization is made. Native chemical technologies, allocation, heat mix/delivery, generic-factory capacity/lifetime, waste composition, freight fleets, market versus at-plant supply, geography, vintage, native internal uncertainty and the 2,991 upstream biosphere exclusions remain limitations. The older confidential source recipes do not establish modern industry equivalence, and score effects remain unquantified. Other source releases, inverse routes and cross-system-model conversions are not qualified."
     },
     "r-fbd198eeaaf815c0": {
       "evidence": [
