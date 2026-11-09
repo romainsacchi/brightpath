@@ -5,6 +5,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BackgroundContext, BiosphereProfile, BrightwayInventory, InventoryContext, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -249,7 +250,9 @@ def test_inventory_boundary_or_native_role_drift_requires_review(mutation):
 
 
 def test_nested_recipe_and_patch_share_drift_cannot_inherit_approval(monkeypatch):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    # Bind the original authoring stage; later country-PE corrections preserve
+    # these compiled sewer inventories without rewriting their historical proof.
+    resource = historical_forward_resource()
     validate_bindings(resource)
     rid = next(iter(APPROVAL["recipe_dependencies"]))
     resource["recipes"][rid]["inputs"][0]["amount"] *= 2
@@ -260,4 +263,4 @@ def test_nested_recipe_and_patch_share_drift_cannot_inherit_approval(monkeypatch
     recipe["inputs"][0]["amount"] *= 2
     monkeypatch.setitem(APPROVAL["local_recipes"], rid, recipe)
     with pytest.raises(ValueError, match="patch submix changed"):
-        validate_bindings(load_uvek_technosphere_resource())
+        validate_bindings(historical_forward_resource())
