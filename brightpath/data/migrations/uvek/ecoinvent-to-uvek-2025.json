@@ -4,15 +4,15 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 918,
-      "unclassified": 29555
+      "recipe": 919,
+      "unclassified": 29554
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 292,
       "followup_review": 163,
       "heuristic_similarity": 26731,
-      "pairwise_review": 2243,
+      "pairwise_review": 2242,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
       "reviewed_allocated_sewage_gas": 2,
@@ -33,6 +33,7 @@
       "reviewed_deferred_naocl": 1,
       "reviewed_deferred_sorting": 1,
       "reviewed_deferred_waste_markets": 3,
+      "reviewed_deferred_xanthate": 1,
       "reviewed_five_simple_waste_market_service": 5,
       "reviewed_gas_market_recipe": 2,
       "reviewed_ghana_uncontrolled_inventory": 1,
@@ -105,7 +106,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.438029,
+    "mean_confidence": 0.438048,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -88703,6 +88704,1648 @@
           }
         }
       ],
+      "unit": "kilogram"
+    },
+    "deferred-xanthate-d1a861c5dea350e89267": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_xanthate_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.00409999999999999,
+          "loc": 0.00409999999999999,
+          "recipe": "deferred-xanthate-producer-f3c78cd4e1f5f86cd8bb",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.9958999999999999,
+          "loc": 0.9958999999999999,
+          "recipe": "deferred-xanthate-producer-134f787acdccbeb702ff",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge tanker",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, barge tanker",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for sodium ethyl xanthate, composed from resolved suppliers, GLO",
+      "rationale": "Autonomously reviewed exact3.12cut-off sodium ethyl xanthate synthesis reconstruction, positive1kgpure/active product. Retain both source producer entries (.00409999999999999ZA and.9958999999999999RoW), every original market freight leg, source precursor and utility coefficients, supported uncertainty and four direct biosphere flows per producer. Use complete native CS2, fossil ethylene-hydration ethanol, active-reference NaOH, liquid nitrogen, deionised water, chemical plant, MV electricity, hazardous-waste incineration and unpolluted wastewater treatment. Do not use generic organic chemicals or biomass ethanol. Public Kunene thesis Table14 independently supports the CS2/ethanol/caustic chemistry and nominal reactant masses; source supplied dry-active reference and published liquid-plant study are not a proven phase/drying equivalence. Do not invent drying, phase or purity factors. Native ethanol stands in for the source coal/FT contribution as an explicit fossil-feedstock technology proxy; active-substance quantities remain1:1 without a guessed99.7%/50%multiplier. Missing-country MV grids use complete nativeGLO grids, retaining separate source coefficients, quantities, loss/network boundaries and uncertainty; other native countries/regions are retained. Preserve native chemical/waste/utility inventories in full. Signed waste inputs become positive demand using independently inspected negative source references. Native hazardous waste25%moisture, municipal-treatment size/boundary, mixed source supply/delivery versus at-plant suppliers, reactant technologies/allocation, factory capacity/lifetime, geography, vintage and internal uncertainty differ. Retain nitrogen emission and all three separate water-resource/return flows in exact canonical3.10 compartments by verified publisher UUID; no collapse into one net-water exchange. The source inventory includes generic waste treatment and water assumptions beyond the public liquid-plant description; retain them without asserting plant-measured equivalence. No new recovery credit, omitted source exchange, renormalization or arbitrary unit multiplier. Caller signs, active kg, formulas and supported uncertainty remain at factor+1.2991upstreambiosphere exclusions and unquantified score effects remain explicit. Other releases, inverse and cross-system-model conversions are not qualified.",
+      "reference product": "sodium ethyl xanthate",
+      "unit": "kilogram"
+    },
+    "deferred-xanthate-producer-134f787acdccbeb702ff": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_xanthate_review.json#66f0e98dd5f37442b0a7e923d2a7565dacea8d01d7f9ae3e7ecd9e8f2b51558c"
+      ],
+      "inputs": [
+        {
+          "amount": 0.53,
+          "loc": -0.6348782724359695,
+          "location": "GLO",
+          "name": "Carbon disulfide, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Carbon disulfide, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 9.955684441445647e-06,
+          "loc": -11.517366869276056,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 9.889854294780248e-05,
+          "loc": -9.221416052024493,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00023989121070044195,
+          "loc": -8.335325026136843,
+          "location": "MA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.006288152810070372,
+          "loc": -5.069087922294542,
+          "location": "RU",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 4.533488636874223e-06,
+          "loc": -12.304018796343154,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.01871377419760237,
+          "loc": -3.978495438162396,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 8.60333508811368e-06,
+          "loc": -11.663360628936712,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 2.030844974126491e-06,
+          "loc": -13.10705860810377,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 5.512285904812738e-05,
+          "loc": -9.805946063080693,
+          "location": "TZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0012374211514310023,
+          "loc": -6.694725781566732,
+          "location": "AU",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.029345244055736634,
+          "loc": -3.5286247882323005,
+          "location": "RNA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00020001951506940207,
+          "loc": -8.51709562082939,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 3.619429880146777e-05,
+          "loc": -10.226608943207825,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00047864267179803456,
+          "loc": -7.644556226836331,
+          "location": "DZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00012528241019524707,
+          "loc": -8.98494008743903,
+          "location": "TN",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 6.217159905001849e-05,
+          "loc": -9.685612269408706,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 9.063741729487371e-05,
+          "loc": -9.30864343574941,
+          "location": "ET",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00016400942977898335,
+          "loc": -8.715586633140722,
+          "location": "NG",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 2.70682443182162e-05,
+          "loc": -10.517149313544584,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.09515524942480694,
+          "loc": -2.3522455167690706,
+          "location": "RAS",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 6.81023997784416e-05,
+          "loc": -9.594498106392367,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 9.37196695305956e-05,
+          "loc": -9.27520247046624,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.2822255697149633e-05,
+          "loc": -11.264328170533657,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00010335322336484872,
+          "loc": -9.17735808349994,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 5.4968671830147595e-06,
+          "loc": -12.111332231099542,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 8.711347960654326e-05,
+          "loc": -9.348298925958881,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 3.1667548458218666e-06,
+          "loc": -12.662803202364572,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.001160723320663069,
+          "loc": -6.758711915896069,
+          "location": "EG",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0002648928278509923,
+          "loc": -8.236185236982974,
+          "location": "NZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 6.51982237716533e-05,
+          "loc": -9.638078332168812,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.5915915609517498e-05,
+          "loc": -11.048190967655575,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 8.463661645594069e-05,
+          "loc": -9.37714356636292,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.009511320639515078,
+          "loc": -4.655272543557756,
+          "location": "RLA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00012539071819004863,
+          "loc": -8.98407595012811,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 3.3090214931780086e-05,
+          "loc": -10.316272940682248,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 2.2153681214994644e-05,
+          "loc": -10.717506880474073,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.2208271839300369,
+          "loc": -1.5103748565321364,
+          "location": "RER",
+          "name": "Ethanol from ethylene, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "reference product": "Ethanol from ethylene, at plant",
+          "scale": 0.10908712114635714,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09917281606996312,
+          "loc": -2.3108913337976076,
+          "location": "RER",
+          "name": "Ethanol from ethylene, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "reference product": "Ethanol from ethylene, at plant",
+          "scale": 0.10908712114635714,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.08704580487724226,
+          "loc": -2.4413208060344167,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "pilot-hazardous-paint-7781a4a3e2537f64b1d3",
+          "scale": 0.21400934559032697,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.00109419512275775,
+          "loc": -6.817736233703512,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "pilot-hazardous-paint-f9bfd9eb316a7ac63450",
+          "scale": 0.21400934559032697,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.04186,
+          "loc": -3.1734245619642834,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "pilot-hazardous-paint-746492ada2404a1fffc6",
+          "scale": 0.21400934559032697,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0013385106382978774,
+          "loc": -6.616197747110253,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.005676276595744682,
+          "loc": -5.171459790120292,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00820457446808509,
+          "loc": -4.803063418297471,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.005825000000000008,
+          "loc": -5.145596279530372,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00458563829787234,
+          "loc": -5.384825968596207,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.024909221310531963,
+          "loc": -3.6925172103117916,
+          "location": "RER",
+          "name": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.2278630895943314,
+          "loc": -1.4790103146259503,
+          "location": "RER",
+          "name": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.027227689095136627,
+          "loc": -3.6035208420330718,
+          "location": "RER",
+          "name": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.16950852428762e-07,
+          "loc": -15.343594995561293,
+          "location": "CH",
+          "name": "Treatment, sewage, unpolluted, to wastewater treatment, class 3",
+          "negative": false,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "reference product": "Treatment, sewage, unpolluted, to wastewater treatment, class 3",
+          "scale": 0.2092844953645635,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 1.0491475712379783e-09,
+          "loc": -20.675287839411244,
+          "location": "CH",
+          "name": "Treatment, sewage, unpolluted, to wastewater treatment, class 3",
+          "negative": false,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "reference product": "Treatment, sewage, unpolluted, to wastewater treatment, class 3",
+          "scale": 0.2092844953645635,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.2413779314162208,
+          "loc": -1.4213913936517064,
+          "location": "CH",
+          "name": "Water, deionised, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Water, deionised, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.07435441102822953,
+          "loc": -2.598912279951074,
+          "location": "CH",
+          "name": "Water, deionised, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Water, deionised, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0002676575555496982,
+          "loc": -8.225802172307187,
+          "location": "CH",
+          "name": "Water, deionised, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Water, deionised, at plant",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02563,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in exact source3.12 and canonical3.10. Retain nitrogen release, evaporated/discharged water and cooling-water resource separately; no invented water-balance credit.",
+              "target": {
+                "categories": [
+                  "air"
+                ],
+                "name": "Nitrogen",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air"
+          ],
+          "loc": -3.6639917386061573,
+          "name": "Nitrogen",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 2,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "scale": 0.07071067811865475,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000140659,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in exact source3.12 and canonical3.10. Retain nitrogen release, evaporated/discharged water and cooling-water resource separately; no invented water-balance credit.",
+              "target": {
+                "categories": [
+                  "air"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "air"
+          ],
+          "loc": -8.869172036451348,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "scale": 0.22649503305812252,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.001439123,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in exact source3.12 and canonical3.10. Retain nitrogen release, evaporated/discharged water and cooling-water resource separately; no invented water-balance credit.",
+              "target": {
+                "categories": [
+                  "water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water"
+          ],
+          "loc": -6.543721378704756,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "scale": 0.22649503305812252,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.001264,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in exact source3.12 and canonical3.10. Retain nitrogen release, evaporated/discharged water and cooling-water resource separately; no invented water-balance credit.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "in water"
+                ],
+                "name": "Water, cooling, unspecified natural origin",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -6.673473983257471,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "scale": 0.10908712114635714,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RoW",
+      "name": "Reconstructed sodium ethyl xanthate, active basis, RoW",
+      "rationale": "Autonomously reviewed exact3.12cut-off sodium ethyl xanthate synthesis reconstruction, positive1kgpure/active product. Retain both source producer entries (.00409999999999999ZA and.9958999999999999RoW), every original market freight leg, source precursor and utility coefficients, supported uncertainty and four direct biosphere flows per producer. Use complete native CS2, fossil ethylene-hydration ethanol, active-reference NaOH, liquid nitrogen, deionised water, chemical plant, MV electricity, hazardous-waste incineration and unpolluted wastewater treatment. Do not use generic organic chemicals or biomass ethanol. Public Kunene thesis Table14 independently supports the CS2/ethanol/caustic chemistry and nominal reactant masses; source supplied dry-active reference and published liquid-plant study are not a proven phase/drying equivalence. Do not invent drying, phase or purity factors. Native ethanol stands in for the source coal/FT contribution as an explicit fossil-feedstock technology proxy; active-substance quantities remain1:1 without a guessed99.7%/50%multiplier. Missing-country MV grids use complete nativeGLO grids, retaining separate source coefficients, quantities, loss/network boundaries and uncertainty; other native countries/regions are retained. Preserve native chemical/waste/utility inventories in full. Signed waste inputs become positive demand using independently inspected negative source references. Native hazardous waste25%moisture, municipal-treatment size/boundary, mixed source supply/delivery versus at-plant suppliers, reactant technologies/allocation, factory capacity/lifetime, geography, vintage and internal uncertainty differ. Retain nitrogen emission and all three separate water-resource/return flows in exact canonical3.10 compartments by verified publisher UUID; no collapse into one net-water exchange. The source inventory includes generic waste treatment and water assumptions beyond the public liquid-plant description; retain them without asserting plant-measured equivalence. No new recovery credit, omitted source exchange, renormalization or arbitrary unit multiplier. Caller signs, active kg, formulas and supported uncertainty remain at factor+1.2991upstreambiosphere exclusions and unquantified score effects remain explicit. Other releases, inverse and cross-system-model conversions are not qualified.",
+      "reference product": "sodium ethyl xanthate",
+      "unit": "kilogram"
+    },
+    "deferred-xanthate-producer-f3c78cd4e1f5f86cd8bb": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_xanthate_review.json#e9f4b8f003e2f6717a264a5031eb8837a57e6811dff7457e3fb8238eed60fc1b"
+      ],
+      "inputs": [
+        {
+          "amount": 0.53,
+          "loc": -0.6348782724359695,
+          "location": "GLO",
+          "name": "Carbon disulfide, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "reference product": "Carbon disulfide, at plant",
+          "scale": 0.10874281585465773,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.164,
+          "loc": -1.8078888511579385,
+          "location": "ZA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10874281585465773,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.32,
+          "loc": -1.1394342831883648,
+          "location": "RER",
+          "name": "Ethanol from ethylene, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "reference product": "Ethanol from ethylene, at plant",
+          "scale": 0.10874281585465773,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.13,
+          "loc": -2.0402208285265546,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "pilot-hazardous-paint-7781a4a3e2537f64b1d3",
+          "scale": 0.21400934559032697,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.02563,
+          "loc": -3.6639917386061573,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.10874281585465773,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.28,
+          "loc": -1.2729656758128873,
+          "location": "RER",
+          "name": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "scale": 0.10874281585465773,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.18e-07,
+          "loc": -15.338770774157322,
+          "location": "CH",
+          "name": "Treatment, sewage, unpolluted, to wastewater treatment, class 3",
+          "negative": false,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "reference product": "Treatment, sewage, unpolluted, to wastewater treatment, class 3",
+          "scale": 0.2092844953645635,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.316,
+          "loc": -1.152013065395225,
+          "location": "CH",
+          "name": "Water, deionised, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "reference product": "Water, deionised, at plant",
+          "scale": 0.10874281585465773,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02563,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in exact source3.12 and canonical3.10. Retain nitrogen release, evaporated/discharged water and cooling-water resource separately; no invented water-balance credit.",
+              "target": {
+                "categories": [
+                  "air"
+                ],
+                "name": "Nitrogen",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air"
+          ],
+          "loc": -3.6639917386061573,
+          "name": "Nitrogen",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 2,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "scale": 0.06652067347825036,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000140659,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in exact source3.12 and canonical3.10. Retain nitrogen release, evaporated/discharged water and cooling-water resource separately; no invented water-balance credit.",
+              "target": {
+                "categories": [
+                  "air"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "air"
+          ],
+          "loc": -8.869172036451348,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "scale": 0.22649503305812252,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.001439123,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in exact source3.12 and canonical3.10. Retain nitrogen release, evaporated/discharged water and cooling-water resource separately; no invented water-balance credit.",
+              "target": {
+                "categories": [
+                  "water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water"
+          ],
+          "loc": -6.543721378704756,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "scale": 0.22649503305812252,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.001264,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in exact source3.12 and canonical3.10. Retain nitrogen release, evaporated/discharged water and cooling-water resource separately; no invented water-balance credit.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "in water"
+                ],
+                "name": "Water, cooling, unspecified natural origin",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -6.673473983257471,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 3
+          },
+          "scale": 0.10874281585465773,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "ZA",
+      "name": "Reconstructed sodium ethyl xanthate, active basis, ZA",
+      "rationale": "Autonomously reviewed exact3.12cut-off sodium ethyl xanthate synthesis reconstruction, positive1kgpure/active product. Retain both source producer entries (.00409999999999999ZA and.9958999999999999RoW), every original market freight leg, source precursor and utility coefficients, supported uncertainty and four direct biosphere flows per producer. Use complete native CS2, fossil ethylene-hydration ethanol, active-reference NaOH, liquid nitrogen, deionised water, chemical plant, MV electricity, hazardous-waste incineration and unpolluted wastewater treatment. Do not use generic organic chemicals or biomass ethanol. Public Kunene thesis Table14 independently supports the CS2/ethanol/caustic chemistry and nominal reactant masses; source supplied dry-active reference and published liquid-plant study are not a proven phase/drying equivalence. Do not invent drying, phase or purity factors. Native ethanol stands in for the source coal/FT contribution as an explicit fossil-feedstock technology proxy; active-substance quantities remain1:1 without a guessed99.7%/50%multiplier. Missing-country MV grids use complete nativeGLO grids, retaining separate source coefficients, quantities, loss/network boundaries and uncertainty; other native countries/regions are retained. Preserve native chemical/waste/utility inventories in full. Signed waste inputs become positive demand using independently inspected negative source references. Native hazardous waste25%moisture, municipal-treatment size/boundary, mixed source supply/delivery versus at-plant suppliers, reactant technologies/allocation, factory capacity/lifetime, geography, vintage and internal uncertainty differ. Retain nitrogen emission and all three separate water-resource/return flows in exact canonical3.10 compartments by verified publisher UUID; no collapse into one net-water exchange. The source inventory includes generic waste treatment and water assumptions beyond the public liquid-plant description; retain them without asserting plant-measured equivalence. No new recovery credit, omitted source exchange, renormalization or arbitrary unit multiplier. Caller signs, active kg, formulas and supported uncertainty remain at factor+1.2991upstreambiosphere exclusions and unquantified score effects remain explicit. Other releases, inverse and cross-system-model conversions are not qualified.",
+      "reference product": "sodium ethyl xanthate",
       "unit": "kilogram"
     },
     "digester-sludge-market-0b5dabb53ed85b922a3d": {
@@ -701516,7 +703159,7 @@
     {"confidence": 0.705362, "id": "bp-f6c3ad5174e60767", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium dithionite, anhydrous", "reference product": "sodium dithionite, anhydrous", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium dithionite, anhydrous, at plant", "reference product": "Sodium dithionite, anhydrous, at plant", "unit": "kilogram"}},
     {"confidence": 0.625362, "id": "bp-12544901fdfe5a03", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium dithionite, anhydrous", "reference product": "sodium dithionite, anhydrous", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium dithionite, anhydrous, at plant", "reference product": "Sodium dithionite, anhydrous, at plant", "unit": "kilogram"}},
     {"confidence": 0.428857, "id": "bp-991ffb79b003d12d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium ethoxide", "reference product": "sodium ethoxide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium methoxide, at plant", "reference product": "Sodium methoxide, at plant", "unit": "kilogram"}},
-    {"confidence": 0.4, "id": "bp-6046387e041ea5c2", "mapping_method": "pairwise_review", "review_ref": "r-36a16cb01d5e258d", "source": {"location": "GLO", "name": "market for sodium ethyl xanthate", "reference product": "sodium ethyl xanthate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-6046387e041ea5c2", "mapping_method": "reviewed_deferred_xanthate", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_xanthate_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_xanthate_review.json#ecoinvent-3.12-cutoff/3902a0eb6b90f4cf4ae89ddd5c7ed669f44460ecd7f5b35ccdcc90cf9cd3079c"], "reason": "Autonomously reviewed exact3.12cut-off sodium ethyl xanthate synthesis reconstruction, positive1kgpure/active product. Retain both source producer entries (.00409999999999999ZA and.9958999999999999RoW), every original market freight leg, source precursor and utility coefficients, supported uncertainty and four direct biosphere flows per producer. Use complete native CS2, fossil ethylene-hydration ethanol, active-reference NaOH, liquid nitrogen, deionised water, chemical plant, MV electricity, hazardous-waste incineration and unpolluted wastewater treatment. Do not use generic organic chemicals or biomass ethanol. Public Kunene thesis Table14 independently supports the CS2/ethanol/caustic chemistry and nominal reactant masses; source supplied dry-active reference and published liquid-plant study are not a proven phase/drying equivalence. Do not invent drying, phase or purity factors. Native ethanol stands in for the source coal/FT contribution as an explicit fossil-feedstock technology proxy; active-substance quantities remain1:1 without a guessed99.7%/50%multiplier. Missing-country MV grids use complete nativeGLO grids, retaining separate source coefficients, quantities, loss/network boundaries and uncertainty; other native countries/regions are retained. Preserve native chemical/waste/utility inventories in full. Signed waste inputs become positive demand using independently inspected negative source references. Native hazardous waste25%moisture, municipal-treatment size/boundary, mixed source supply/delivery versus at-plant suppliers, reactant technologies/allocation, factory capacity/lifetime, geography, vintage and internal uncertainty differ. Retain nitrogen emission and all three separate water-resource/return flows in exact canonical3.10 compartments by verified publisher UUID; no collapse into one net-water exchange. The source inventory includes generic waste treatment and water assumptions beyond the public liquid-plant description; retain them without asserting plant-measured equivalence. No new recovery credit, omitted source exchange, renormalization or arbitrary unit multiplier. Caller signs, active kg, formulas and supported uncertainty remain at factor+1.2991upstreambiosphere exclusions and unquantified score effects remain explicit. Other releases, inverse and cross-system-model conversions are not qualified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "deferred-xanthate-d1a861c5dea350e89267"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-169847e0e252c605", "source": {"location": "GLO", "name": "market for sodium ethyl xanthate", "reference product": "sodium ethyl xanthate", "unit": "kilogram"}, "target": {"recipe_ref": "deferred-xanthate-d1a861c5dea350e89267"}, "technosphere_information_loss": "Autonomously reviewed exact3.12cut-off sodium ethyl xanthate synthesis reconstruction, positive1kgpure/active product. Retain both source producer entries (.00409999999999999ZA and.9958999999999999RoW), every original market freight leg, source precursor and utility coefficients, supported uncertainty and four direct biosphere flows per producer. Use complete native CS2, fossil ethylene-hydration ethanol, active-reference NaOH, liquid nitrogen, deionised water, chemical plant, MV electricity, hazardous-waste incineration and unpolluted wastewater treatment. Do not use generic organic chemicals or biomass ethanol. Public Kunene thesis Table14 independently supports the CS2/ethanol/caustic chemistry and nominal reactant masses; source supplied dry-active reference and published liquid-plant study are not a proven phase/drying equivalence. Do not invent drying, phase or purity factors. Native ethanol stands in for the source coal/FT contribution as an explicit fossil-feedstock technology proxy; active-substance quantities remain1:1 without a guessed99.7%/50%multiplier. Missing-country MV grids use complete nativeGLO grids, retaining separate source coefficients, quantities, loss/network boundaries and uncertainty; other native countries/regions are retained. Preserve native chemical/waste/utility inventories in full. Signed waste inputs become positive demand using independently inspected negative source references. Native hazardous waste25%moisture, municipal-treatment size/boundary, mixed source supply/delivery versus at-plant suppliers, reactant technologies/allocation, factory capacity/lifetime, geography, vintage and internal uncertainty differ. Retain nitrogen emission and all three separate water-resource/return flows in exact canonical3.10 compartments by verified publisher UUID; no collapse into one net-water exchange. The source inventory includes generic waste treatment and water assumptions beyond the public liquid-plant description; retain them without asserting plant-measured equivalence. No new recovery credit, omitted source exchange, renormalization or arbitrary unit multiplier. Caller signs, active kg, formulas and supported uncertainty remain at factor+1.2991upstreambiosphere exclusions and unquantified score effects remain explicit. Other releases, inverse and cross-system-model conversions are not qualified."},
     {"confidence": 0.310455, "id": "bp-d9cde74abc247113", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium ferrocyanide", "reference product": "sodium ferrocyanide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium cyanide, at plant", "reference product": "Sodium cyanide, at plant", "unit": "kilogram"}},
     {"confidence": 0.30335, "id": "bp-34ea0996de218042", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium fluoride", "reference product": "sodium fluoride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium arsenide, at plant", "reference product": "Sodium arsenide, at plant", "unit": "kilogram"}},
     {"confidence": 0.332052, "id": "bp-da84316c5feab494", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium formate", "reference product": "sodium formate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium formate, reaction of formaldehyde with acetaldehyde, at plant", "reference product": "Sodium formate, reaction of formaldehyde with acetaldehyde, at plant", "unit": "kilogram"}},
@@ -715373,6 +717016,15 @@
         "This excludes the complete background-residue contribution and associated credits; it is not a zero-impact service or scientific equivalence claim. Preserve water/waste quantities in the original-exchange loss record, including sign, uncertainty, formula and caller metadata. Foreground suppliers, production and separately listed emissions remain intact. No moisture-based scaling, generic keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the user's unsupported CRT industrial wastewater-residue omission policy and similar-case authorization: omit the exact treatment of sewage sludge, 97% water, WWT, WW from tube collector production, landfarming / CH / kg external exchange with a warning. Independent inspection confirms the same nonbiogenic industrial-wastewater-residue boundary, with 0% biogenic carbon, for tube collector production. No dedicated complete UVEK counterpart was established. Manufacturing, mechanical screen-recycling residues, pulp/paper or municipal sludge, refinery sludge and isolated landfill-operation components do not establish matching residue treatment. This is a direct industrial residue treatment with active process inputs and releases; separately listed foreground treatment and emissions remain intact. Omitted contributions include treatment operation, metal/leachate emissions, downstream residue handling and any recovered-energy or fertilizer credits; effects on LCIA scores are method-dependent and unquantified."
+    },
+    "r-169847e0e252c605": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_xanthate_review.json"
+      ],
+      "limitations": [
+        "Autonomously reviewed exact3.12cut-off sodium ethyl xanthate synthesis reconstruction, positive1kgpure/active product. Retain both source producer entries (.00409999999999999ZA and.9958999999999999RoW), every original market freight leg, source precursor and utility coefficients, supported uncertainty and four direct biosphere flows per producer. Use complete native CS2, fossil ethylene-hydration ethanol, active-reference NaOH, liquid nitrogen, deionised water, chemical plant, MV electricity, hazardous-waste incineration and unpolluted wastewater treatment. Do not use generic organic chemicals or biomass ethanol. Public Kunene thesis Table14 independently supports the CS2/ethanol/caustic chemistry and nominal reactant masses; source supplied dry-active reference and published liquid-plant study are not a proven phase/drying equivalence. Do not invent drying, phase or purity factors. Native ethanol stands in for the source coal/FT contribution as an explicit fossil-feedstock technology proxy; active-substance quantities remain1:1 without a guessed99.7%/50%multiplier. Missing-country MV grids use complete nativeGLO grids, retaining separate source coefficients, quantities, loss/network boundaries and uncertainty; other native countries/regions are retained. Preserve native chemical/waste/utility inventories in full. Signed waste inputs become positive demand using independently inspected negative source references. Native hazardous waste25%moisture, municipal-treatment size/boundary, mixed source supply/delivery versus at-plant suppliers, reactant technologies/allocation, factory capacity/lifetime, geography, vintage and internal uncertainty differ. Retain nitrogen emission and all three separate water-resource/return flows in exact canonical3.10 compartments by verified publisher UUID; no collapse into one net-water exchange. The source inventory includes generic waste treatment and water assumptions beyond the public liquid-plant description; retain them without asserting plant-measured equivalence. No new recovery credit, omitted source exchange, renormalization or arbitrary unit multiplier. Caller signs, active kg, formulas and supported uncertainty remain at factor+1.2991upstreambiosphere exclusions and unquantified score effects remain explicit. Other releases, inverse and cross-system-model conversions are not qualified."
+      ],
+      "rationale": "Autonomously reviewed exact3.12cut-off sodium ethyl xanthate synthesis reconstruction, positive1kgpure/active product. Retain both source producer entries (.00409999999999999ZA and.9958999999999999RoW), every original market freight leg, source precursor and utility coefficients, supported uncertainty and four direct biosphere flows per producer. Use complete native CS2, fossil ethylene-hydration ethanol, active-reference NaOH, liquid nitrogen, deionised water, chemical plant, MV electricity, hazardous-waste incineration and unpolluted wastewater treatment. Do not use generic organic chemicals or biomass ethanol. Public Kunene thesis Table14 independently supports the CS2/ethanol/caustic chemistry and nominal reactant masses; source supplied dry-active reference and published liquid-plant study are not a proven phase/drying equivalence. Do not invent drying, phase or purity factors. Native ethanol stands in for the source coal/FT contribution as an explicit fossil-feedstock technology proxy; active-substance quantities remain1:1 without a guessed99.7%/50%multiplier. Missing-country MV grids use complete nativeGLO grids, retaining separate source coefficients, quantities, loss/network boundaries and uncertainty; other native countries/regions are retained. Preserve native chemical/waste/utility inventories in full. Signed waste inputs become positive demand using independently inspected negative source references. Native hazardous waste25%moisture, municipal-treatment size/boundary, mixed source supply/delivery versus at-plant suppliers, reactant technologies/allocation, factory capacity/lifetime, geography, vintage and internal uncertainty differ. Retain nitrogen emission and all three separate water-resource/return flows in exact canonical3.10 compartments by verified publisher UUID; no collapse into one net-water exchange. The source inventory includes generic waste treatment and water assumptions beyond the public liquid-plant description; retain them without asserting plant-measured equivalence. No new recovery credit, omitted source exchange, renormalization or arbitrary unit multiplier. Caller signs, active kg, formulas and supported uncertainty remain at factor+1.2991upstreambiosphere exclusions and unquantified score effects remain explicit. Other releases, inverse and cross-system-model conversions are not qualified."
     },
     "r-1735ec26f91fed28": {
       "evidence": [
