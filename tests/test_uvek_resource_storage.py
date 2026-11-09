@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 710
+    assert len(forward["reviews"]) == 712
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -620,6 +620,11 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     assert all(
         forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in cleanfill_references
     )
+    wool = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_wool_review.json").read_text())
+    wool_ids = {row["rule_id"] for row in wool["records"]}
+    wool_references = {r["review_ref"] for r in forward["replace"] if r["id"] in wool_ids}
+    assert len(wool_ids) == len(wool_references) == 2
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in wool_references)
     kcl = json.loads((DATA_DIR / "export/uvek_pilot_kcl_site_review.json").read_text())
     kcl_ids = {row["rule_id"] for row in kcl["records"]}
     kcl_references = {r["review_ref"] for r in forward["replace"] if r["id"] in kcl_ids}
@@ -667,6 +672,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *country_pe_references,
             *row_pe_references,
             *cleanfill_references,
+            *wool_references,
             *grid_converter_references,
             *copper_supply_references,
             *wastewater_endpoint_references,
