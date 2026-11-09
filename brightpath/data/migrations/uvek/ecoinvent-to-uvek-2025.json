@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 903,
-      "unclassified": 29570
+      "recipe": 905,
+      "unclassified": 29568
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 297,
       "followup_review": 163,
-      "heuristic_similarity": 26750,
+      "heuristic_similarity": 26748,
       "pairwise_review": 2245,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -66,6 +66,7 @@
       "reviewed_pilot_polymer_routes": 3,
       "reviewed_pilot_purge_handover": 1,
       "reviewed_pilot_sanitary_inert": 2,
+      "reviewed_pilot_steel_row_routes": 2,
       "reviewed_pilot_teg_stock": 1,
       "reviewed_pilot_teg_supply": 1,
       "reviewed_pilot_uncontrolled_market": 3,
@@ -94,7 +95,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.437591,
+    "mean_confidence": 0.437633,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -253974,6 +253975,940 @@
       "name": "market for purge gas, rich in sodium nitrate, composed from resolved suppliers, CL",
       "rationale": "Preserve the exact inspected ecoinvent 3.9 cut-off Chilean market for the sodium-nitrate-rich purge stream. Its complete inventory is positive one-kg self-production and a one-kg input from the explicit production-only Recycled Content cut-off supplier. The market has no freight, losses, processing, direct biosphere, parameters or formulas. Represent both the market handover and that source stock through positive foreground references, retaining the original signed input and supported uncertainty. The observed cut-off allocation does not mean physical nitrate production, refining or recycling is impact-free; those burdens remain in their separately modelled source activities. Do not replace this stream with potassium nitrate measured as N, virgin nitrate production, leaching residues containing indium, a combustion or treatment service, or an avoided-production credit. The chemical label does not establish fuel energy, pure NaNO3 content, nutrient content, gas volume or a density; no chemical, purity, concentration, nutrient, energy or unit multiplier is introduced. Preserve caller signed kilograms, uncertainty, formulas, foreground ownership, separate emissions and all other purchases. No physical processing inventory is missing from this explicitly allocated positive reference and none is inferred or omitted. Report the production-only stock boundary and its limited scope through the normal warning and audit paths. This does not approve the whole CSP nitrate-salt market, its nonempty allocated reused-salt construction suppliers, KCl production, PVF film/disposal, other releases, negative-reference empty treatment, inverse or cross-system-model routes.",
       "reference product": "purge gas, rich in sodium nitrate",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-16138f22a3cb2b6fdc97": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.626,
+          "loc": -0.46840490788203853,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Diesel, burned in building machine, average",
+          "scale": 0.2683281572999748,
+          "scale without pedigree": 0.33763886032268264,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00014544695230009794,
+          "loc": -8.83569912683422,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0007125627422714747,
+          "loc": -7.246642590370078,
+          "location": "RNA",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00010473069954458458,
+          "loc": -9.16411826869628,
+          "location": "RAF",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 3.5565622225222514e-05,
+          "loc": -10.244131054494682,
+          "location": "AU",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00020755189412865257,
+          "loc": -8.480129157375082,
+          "location": "RLA",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0004939190302136065,
+          "loc": -7.613138960660671,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.001993755303306703,
+          "loc": -6.217735331468913,
+          "location": "RAS",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 6.46775600965996e-06,
+          "loc": -11.948681339648013,
+          "location": "NZ",
+          "name": "Electricity, low voltage, at grid",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.000141,
+          "loc": -8.866750667586105,
+          "location": "CH",
+          "name": "Excavation, hydraulic digger, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Excavation, hydraulic digger, average",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 1e-10,
+          "loc": -23.025850929940457,
+          "location": "CH",
+          "name": "Sorting plant for construction waste",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Sorting plant for construction waste",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        }
+      ],
+      "location": "RoW",
+      "name": "treatment of waste reinforcement steel, sorting plant, composed from resolved suppliers, RoW",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "waste reinforcement steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-1a22154b5e18aa7fe8d9": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.993783409994508,
+          "loc": 0.993783409994508,
+          "recipe": "pilot-steel-row-routes-2736685890334c42ef3a",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.00621659000549189,
+          "loc": 0.00621659000549189,
+          "recipe": "pilot-steel-row-routes-843ffe4811b8110c8b0f",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0112,
+          "loc": -4.491841500681089,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01932,
+          "loc": -3.946614450197765,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "market for scrap steel, composed from resolved suppliers, Europe without Switzerland",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "scrap steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-1c3ff5c4b12425825a63": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.993783409994508,
+          "loc": 0.993783409994508,
+          "recipe": "pilot-steel-row-routes-a6971d7ed29f88099f56",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.00621659000549189,
+          "loc": 0.00621659000549189,
+          "recipe": "pilot-steel-row-routes-58b82f64108837ce5f18",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0008124854420980722,
+          "loc": -7.115412561338657,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0029325763106612677,
+          "loc": -5.831873955384336,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00020573828760997995,
+          "loc": -8.488905645373796,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0040458296676008434,
+          "loc": -5.510068640084499,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.003203370292029836,
+          "loc": -5.7435518071602525,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0003461605163611663,
+          "loc": -7.96860797036524,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.016762842782120813,
+          "loc": -4.0885905812399015,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.002210996701518021,
+          "loc": -6.114311868958677,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for scrap steel, composed from resolved suppliers, RoW",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "scrap steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-2736685890334c42ef3a": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.48e-09,
+          "loc": -20.331223749170388,
+          "location": "CH",
+          "name": "xx Inert material landfill facility",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "xx Inert material landfill facility",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 1.0,
+          "loc": 0.0,
+          "location": "CH",
+          "name": "Process-specific burdens, inert material landfill",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Process-specific burdens, inert material landfill",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "treatment of scrap steel, inert material landfill, composed from resolved suppliers, Europe without Switzerland",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "scrap steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-58b82f64108837ce5f18": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1,
+          "location": "CH",
+          "name": "Disposal, steel, 0% water, to municipal incineration",
+          "reference product": "Disposal, steel, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": -0.47289,
+          "loc": -0.7488924756755764,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "cutoff-stock-e2251f7d5846a932a06e",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2,
+          "zero_burden_supplier": {
+            "profile_review_sha256": "2861523a4d3e4a079b62beb92f100742796247cf0939a13d288f187b017d7bd8",
+            "rule_id": "bp-554dd7ad22ac1275",
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.9"
+            }
+          }
+        }
+      ],
+      "location": "RoW",
+      "name": "treatment of scrap steel, municipal incineration, composed from resolved suppliers, RoW",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "scrap steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-72c38ad16d7590baa6bb": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1,
+          "location": "CH",
+          "name": "Disposal, building, reinforcement steel, to recycling",
+          "reference product": "Disposal, building, reinforcement steel, to recycling",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RoW",
+      "name": "treatment of waste reinforcement steel, recycling, composed from resolved suppliers, RoW",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "waste reinforcement steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-843ffe4811b8110c8b0f": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1,
+          "location": "CH",
+          "name": "Disposal, steel, 0% water, to municipal incineration",
+          "reference product": "Disposal, steel, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": -0.47289,
+          "loc": -0.7488924756755764,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "cutoff-stock-e2251f7d5846a932a06e",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2,
+          "zero_burden_supplier": {
+            "profile_review_sha256": "2861523a4d3e4a079b62beb92f100742796247cf0939a13d288f187b017d7bd8",
+            "rule_id": "bp-554dd7ad22ac1275",
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.9"
+            }
+          }
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "treatment of scrap steel, municipal incineration, composed from resolved suppliers, Europe without Switzerland",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "scrap steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-a6971d7ed29f88099f56": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.48e-09,
+          "loc": -20.331223749170388,
+          "location": "CH",
+          "name": "xx Inert material landfill facility",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "xx Inert material landfill facility",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 1.0,
+          "loc": 0.0,
+          "location": "CH",
+          "name": "Process-specific burdens, inert material landfill",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Process-specific burdens, inert material landfill",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RoW",
+      "name": "treatment of scrap steel, inert material landfill, composed from resolved suppliers, RoW",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "scrap steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-c4c6d5d5e1bcf9b3a913": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.626,
+          "loc": -0.46840490788203853,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Diesel, burned in building machine, average",
+          "scale": 0.2683281572999748,
+          "scale without pedigree": 0.33763886032268264,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.75642965204236,
+          "loc": -0.2791457414294946,
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-steel-row-routes-1c3ff5c4b12425825a63",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.044721359549995794,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.24357034795763993,
+          "loc": -1.4123494748672234,
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-steel-row-routes-1a22154b5e18aa7fe8d9",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.044721359549995794,
+          "uncertainty type": 2
+        }
+      ],
+      "location": "RoW",
+      "name": "treatment of waste reinforcement steel, collection for final disposal, composed from resolved suppliers, RoW",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "waste reinforcement steel",
+      "unit": "kilogram"
+    },
+    "pilot-steel-row-routes-dd1cabdc48a3a1514a43": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.0007675684181920615,
+          "loc": -7.172282938251848,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0027704532824479535,
+          "loc": -5.888744332297526,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00019436435879336528,
+          "loc": -8.545776022286985,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0038221621180260434,
+          "loc": -5.566939016997688,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0030262768297576337,
+          "loc": -5.800422184073443,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.000619174992782942,
+          "loc": -7.387122622836765,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0003461605163611663,
+          "loc": -7.96860797036524,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.016762842782120813,
+          "loc": -4.0885905812399015,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.002210996701518021,
+          "loc": -6.114311868958677,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.410028139373259,
+          "loc": 0.410028139373259,
+          "recipe": "pilot-steel-row-routes-c4c6d5d5e1bcf9b3a913",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.180070897546673,
+          "loc": 0.180070897546673,
+          "recipe": "pilot-steel-row-routes-16138f22a3cb2b6fdc97",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.409900963080068,
+          "loc": 0.409900963080068,
+          "recipe": "pilot-steel-row-routes-72c38ad16d7590baa6bb",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "RoW",
+      "name": "market for waste reinforcement steel, composed from resolved suppliers, RoW",
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.",
+      "reference product": "waste reinforcement steel",
       "unit": "kilogram"
     },
     "pilot-teg-stock-f61d1c2c435e9ff854f4": {
@@ -690221,7 +691156,7 @@
     {"confidence": 0.6, "conversion_factor": -1, "id": "bp-6464c3d11092748b", "mapping_method": "pairwise_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-6464c3d11092748b"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-c722d5b67b2c4523", "source": {"location": "RoW", "name": "market for waste reinforced concrete", "reference product": "waste reinforced concrete", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, reinforced concrete, to final disposal", "reference product": "Disposal, building, reinforced concrete, to final disposal", "unit": "kilogram"}},
     {"confidence": 0.26517, "conversion_factor": -1, "id": "bp-6187d2f45a016cab", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-6187d2f45a016cab"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "GLO", "name": "market for waste reinforced plasterboard", "reference product": "waste reinforced plasterboard", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Disposal, building, reinforced plaster board, to final disposal", "reference product": "xx Disposal, building, reinforced plaster board, to final disposal", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-6ac3c055dea65676", "mapping_method": "reviewed_pilot_fae_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_fae_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_fae_routes_review.json#ecoinvent-3.9-cutoff/c2ec668ba438353789fa932993c5233ba9010d4c5033ca6d302638e3ae13015e"], "reason": "User instruction: auto-approve coming decisions in the existing UVEK2026cutoff/ecoinvent3.10biosphere electricity pilot. Only five exact sourceprofiles in this review qualify. Use complete native ordinary material-specific steel,copper,glass incinerators peroriginalkg for enumerated Swiss incineration-with-fly-ash-extraction portions. All42declared wet-composition/heating-value coordinates forsteel/copper and44forglass match inspected native2026; unknown entries remainunknown and compositionagreement is not technology/LCIAequivalence. Source FAE documents46.22%FLUWA in its technology mix; ordinary native ash/extraction/residuehandling,short/longtermemissions,auxiliary andinternalreuseenergy,recovery,allocation,geography andvintage differ, with all scoreeffects unquantified. Native glassname0%water does not override its documentedwetcomposition; no moisture/heating-value multiplier. Preserve original recovered iron -.47289kg and copper -.31kg exchanges perincineratedkg through exact verified positive1kg production-only RecycledContent cutoff stock helpers. Negative handover is intentional, not virginmetal credit, omitted treatment or an invented zinc/electricity/heat credit. Source stocks have only selflinkedproduction, no technosphere or biosphere; source FAE has no separaterecoveredzinc and selected nativeincinerators have no negative technosphereinputs duplicating handovers. Keep all other original source route shares, sign-adjusted supplier demand, marginaluncertainty, operations, facility,disposal and freight quantities separately without normalization. Source recycling/sorting retains original diesel, electricity, hydraulicexcavation andsorting facility count; source/nativefacility both200000t/year and50years, no newthroughput/lifetimefactor or whole-native-sorting extra haulage/wasteheat. Inertlandfill retains original genericoperation/facility andobservedabsence of direct wastespecificleachate; this is not zero physicalleaching. Glassopen dump/openburn preserves34original elementary exchanges andsigneduncertainty at matching publisherUUID/unit/fullcompartment/role in canonical3.10; label/CAS differences remainwarnings, no mass/speciationfactor. Source3.6scrapmarket has twofreightformulas containing WM_RP, explicitlydefined on its productionreference as wetmass1kg. Bind onlythatdeclaredsymbol to(1.0), preserveevaluatedquantity anduncertainty, and retainoriginalformula/property/binding audit; do not exportunboundparameters or altercallerformulas exceptrequiredreference-signscaling. Complete whole-service operating/freight proxies retain existinggeography,fleet,energy,infrastructure,allocation,uncertainty andvintage limitations; no duplicatefuel/machinery/transportburden. Callernegativeinput tosourcewaste reference-1 becomespositive demand for positive1kg treatmenthelper throughfactor-1. Negative input topositive recoveredstock remainsnegative, with zeroburdenonlywhere independentlyverified. Preserve callerownership,signedquantity,formulas,uncertainty,foregroundsuppliers and separateemissions/purchases. Native upstreambiosphereexclusions and all scoreeffects remainexplicit/unquantified. No standalone stage/stock/material,otherFAEprofile, otherrelease,reverse orcross-system-modelapproval or fullpilot scenario/certification/exportcompletion is established.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-fae-routes-20a9fb48e5f6cc884602"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-70a63a676eaa3c93", "source": {"location": "CH", "name": "market for waste reinforcement steel", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-fae-routes-20a9fb48e5f6cc884602"}, "technosphere_information_loss": "User instruction: auto-approve coming decisions in the existing UVEK2026cutoff/ecoinvent3.10biosphere electricity pilot. Only five exact sourceprofiles in this review qualify. Use complete native ordinary material-specific steel,copper,glass incinerators peroriginalkg for enumerated Swiss incineration-with-fly-ash-extraction portions. All42declared wet-composition/heating-value coordinates forsteel/copper and44forglass match inspected native2026; unknown entries remainunknown and compositionagreement is not technology/LCIAequivalence. Source FAE documents46.22%FLUWA in its technology mix; ordinary native ash/extraction/residuehandling,short/longtermemissions,auxiliary andinternalreuseenergy,recovery,allocation,geography andvintage differ, with all scoreeffects unquantified. Native glassname0%water does not override its documentedwetcomposition; no moisture/heating-value multiplier. Preserve original recovered iron -.47289kg and copper -.31kg exchanges perincineratedkg through exact verified positive1kg production-only RecycledContent cutoff stock helpers. Negative handover is intentional, not virginmetal credit, omitted treatment or an invented zinc/electricity/heat credit. Source stocks have only selflinkedproduction, no technosphere or biosphere; source FAE has no separaterecoveredzinc and selected nativeincinerators have no negative technosphereinputs duplicating handovers. Keep all other original source route shares, sign-adjusted supplier demand, marginaluncertainty, operations, facility,disposal and freight quantities separately without normalization. Source recycling/sorting retains original diesel, electricity, hydraulicexcavation andsorting facility count; source/nativefacility both200000t/year and50years, no newthroughput/lifetimefactor or whole-native-sorting extra haulage/wasteheat. Inertlandfill retains original genericoperation/facility andobservedabsence of direct wastespecificleachate; this is not zero physicalleaching. Glassopen dump/openburn preserves34original elementary exchanges andsigneduncertainty at matching publisherUUID/unit/fullcompartment/role in canonical3.10; label/CAS differences remainwarnings, no mass/speciationfactor. Source3.6scrapmarket has twofreightformulas containing WM_RP, explicitlydefined on its productionreference as wetmass1kg. Bind onlythatdeclaredsymbol to(1.0), preserveevaluatedquantity anduncertainty, and retainoriginalformula/property/binding audit; do not exportunboundparameters or altercallerformulas exceptrequiredreference-signscaling. Complete whole-service operating/freight proxies retain existinggeography,fleet,energy,infrastructure,allocation,uncertainty andvintage limitations; no duplicatefuel/machinery/transportburden. Callernegativeinput tosourcewaste reference-1 becomespositive demand for positive1kg treatmenthelper throughfactor-1. Negative input topositive recoveredstock remainsnegative, with zeroburdenonlywhere independentlyverified. Preserve callerownership,signedquantity,formulas,uncertainty,foregroundsuppliers and separateemissions/purchases. Native upstreambiosphereexclusions and all scoreeffects remainexplicit/unquantified. No standalone stage/stock/material,otherFAEprofile, otherrelease,reverse orcross-system-modelapproval or fullpilot scenario/certification/exportcompletion is established."},
-    {"confidence": 0.31553, "conversion_factor": -1, "id": "bp-32fc216e24665d6f", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-32fc216e24665d6f"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for waste reinforcement steel", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, reinforcement steel, to recycling", "reference product": "Disposal, building, reinforcement steel, to recycling", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-32fc216e24665d6f", "mapping_method": "reviewed_pilot_steel_row_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_steel_row_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_steel_row_routes_review.json#ecoinvent-3.9-cutoff/3e90b28a20c6ca3ea294d20d063d29a2a7b8f28aa7955d73fb20be2c6c3e7508"], "reason": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-steel-row-routes-dd1cabdc48a3a1514a43"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7b071d0f3a422eaf", "source": {"location": "RoW", "name": "market for waste reinforcement steel", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-steel-row-routes-dd1cabdc48a3a1514a43"}, "technosphere_information_loss": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval."},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-6e0d9f6bffa6184f", "mapping_method": "reviewed_pilot_polymer_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_polymer_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_polymer_routes_review.json#ecoinvent-3.9-cutoff/16b4f87c6e7a79fd646e11c935d0f92d98f8e2bdbb2276e0aa3c6e5a9585f7c8"], "reason": "User automaticapproval for coming modellingdecisions within exact UVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Only the enumerated3.9cutoff European polyethylene/polystyrene groups andSwissrubbermarket qualify. Preserve alloriginal CH/nonCH andcountry-routing shares, individualcollection quantities, signedmarginaluncertainty anddistinctsource stages. Reuse the exactpreviouslyreviewed nonCHpolyethylenegroup: its35deterministiccountryweights wereflattened into each originalmarketexchange withsupporteduncertainty scaling; do notflatten anyuncertainlink orflatten again. Reuse frozen completeuncontrolled helpers at exact infiltrationclasses; do notsubstitute controlledlandfills, wetterclasses or emptyrecycling. Complete native ordinary PE0.4%water/PS0.2%water incineration andsanitarylandfill services replace only corresponding controlledsourceinternals peroriginalsignedkg. All44documented wetcomposition/heatingvaluecoordinates match for each newcontrolled correspondence; reservedpurepolymer properties do not justify a carbon,water,drymass,energy,density orlifetime factor. Complete native ordinary material-specific PE/PS/rubberincinerators are explicit screeningproxies forSwissfly-ash-extraction portions. The sourceFAE documents46.22%FLUWA; the ordinarynative process does notestablish identical ash/extraction,metalrecovery,short/longtermemissions,energy/auxiliaryuse,residueallocation orperformance. Preserve each originalnegative metalliferoushydroxidesludgehandover through the exactverified positive1kg production-only RecycledContentcutoffstock helper, with exact3.9profilebinding. This is not a virginzinc/metal credit. Native ordinaryincinerators contain no negativetechnosphere exchange duplicating thathandover. Other originalFAE internal purchases,spentactivatedcarbon andhydratedcementresiduetreatment are replaced by the complete native service; do not add them again or claim the ashroute is reconstructed. Sourcevsnative controlledlandfill geometry,operation/aftercare,climate,leachatecollection/treatment,releasehorizon/emission/speciation,land,infrastructure,allocation,internaluncertainty,geography andvintage remainexplicitdifferences. Do notadd sourceemissions/operations tocompletecontrolled services. CompletegenericRERroadfleet andgenericRERrail replace originalcollection pertkm withoutdistance/loadmultipliers,aggregation orduplicateburden; fleet/geography/fuel/vintage/internaluncertainty remainproxywarnings. No sourcemarketbranch is omitted orrenormalized, no addedrecovery/electricity/heatcredit andno inventedcarbonfactor. Preserve callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchases. Native2991upstreambiosphereexclusions andallscoreeffects remainwarned/unquantified; compositionagreement is not LCIAequivalence. No standalonecountry/treatment/stock,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval isestablished.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-polymer-routes-e4a1b095f8df87a99f4d"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-ea3fce983341ad23", "source": {"location": "CH", "name": "market for waste rubber, unspecified", "reference product": "waste rubber, unspecified", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-polymer-routes-e4a1b095f8df87a99f4d"}, "technosphere_information_loss": "User automaticapproval for coming modellingdecisions within exact UVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Only the enumerated3.9cutoff European polyethylene/polystyrene groups andSwissrubbermarket qualify. Preserve alloriginal CH/nonCH andcountry-routing shares, individualcollection quantities, signedmarginaluncertainty anddistinctsource stages. Reuse the exactpreviouslyreviewed nonCHpolyethylenegroup: its35deterministiccountryweights wereflattened into each originalmarketexchange withsupporteduncertainty scaling; do notflatten anyuncertainlink orflatten again. Reuse frozen completeuncontrolled helpers at exact infiltrationclasses; do notsubstitute controlledlandfills, wetterclasses or emptyrecycling. Complete native ordinary PE0.4%water/PS0.2%water incineration andsanitarylandfill services replace only corresponding controlledsourceinternals peroriginalsignedkg. All44documented wetcomposition/heatingvaluecoordinates match for each newcontrolled correspondence; reservedpurepolymer properties do not justify a carbon,water,drymass,energy,density orlifetime factor. Complete native ordinary material-specific PE/PS/rubberincinerators are explicit screeningproxies forSwissfly-ash-extraction portions. The sourceFAE documents46.22%FLUWA; the ordinarynative process does notestablish identical ash/extraction,metalrecovery,short/longtermemissions,energy/auxiliaryuse,residueallocation orperformance. Preserve each originalnegative metalliferoushydroxidesludgehandover through the exactverified positive1kg production-only RecycledContentcutoffstock helper, with exact3.9profilebinding. This is not a virginzinc/metal credit. Native ordinaryincinerators contain no negativetechnosphere exchange duplicating thathandover. Other originalFAE internal purchases,spentactivatedcarbon andhydratedcementresiduetreatment are replaced by the complete native service; do not add them again or claim the ashroute is reconstructed. Sourcevsnative controlledlandfill geometry,operation/aftercare,climate,leachatecollection/treatment,releasehorizon/emission/speciation,land,infrastructure,allocation,internaluncertainty,geography andvintage remainexplicitdifferences. Do notadd sourceemissions/operations tocompletecontrolled services. CompletegenericRERroadfleet andgenericRERrail replace originalcollection pertkm withoutdistance/loadmultipliers,aggregation orduplicateburden; fleet/geography/fuel/vintage/internaluncertainty remainproxywarnings. No sourcemarketbranch is omitted orrenormalized, no addedrecovery/electricity/heatcredit andno inventedcarbonfactor. Preserve callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchases. Native2991upstreambiosphereexclusions andallscoreeffects remainwarned/unquantified; compositionagreement is not LCIAequivalence. No standalonecountry/treatment/stock,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval isestablished."},
     {"confidence": 0.266648, "conversion_factor": -1, "id": "bp-cccd7819bb6cea4b", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-cccd7819bb6cea4b"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "market for waste rubber, unspecified", "reference product": "waste rubber, unspecified", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, rubber, unspecified, 0% water, to municipal incineration", "reference product": "Disposal, rubber, unspecified, 0% water, to municipal incineration", "unit": "kilogram"}},
     {"confidence": 0.266648, "conversion_factor": -1, "id": "bp-4a8d844635b7637e", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-4a8d844635b7637e"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for waste rubber, unspecified", "reference product": "waste rubber, unspecified", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, rubber, unspecified, 0% water, to municipal incineration", "reference product": "Disposal, rubber, unspecified, 0% water, to municipal incineration", "unit": "kilogram"}},
@@ -700332,7 +701267,7 @@
     {"confidence": 0.430943, "conversion_factor": -1, "id": "bp-321f114a704f4567", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-321f114a704f4567"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "treatment of waste reinforced plasterboard, sorting plant", "reference product": "waste reinforced plasterboard", "unit": "kilogram"}, "target": {"location": "CH", "name": "Concrete, reinforced, in sorting plant", "reference product": "Concrete, reinforced, in sorting plant", "unit": "kilogram"}},
     {"confidence": 0.350943, "conversion_factor": -1, "id": "bp-47d69aaf65ee152e", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-47d69aaf65ee152e"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "treatment of waste reinforced plasterboard, sorting plant", "reference product": "waste reinforced plasterboard", "unit": "kilogram"}, "target": {"location": "CH", "name": "Concrete, reinforced, in sorting plant", "reference product": "Concrete, reinforced, in sorting plant", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-180ae2ddfbb9b03a", "mapping_method": "reviewed_pilot_fae_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_fae_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_fae_routes_review.json#ecoinvent-3.6-cutoff/b2c8498d999fc18528b054f20932848788b48c78d2ed2c0f466381a6385b8223"], "reason": "User instruction: auto-approve coming decisions in the existing UVEK2026cutoff/ecoinvent3.10biosphere electricity pilot. Only five exact sourceprofiles in this review qualify. Use complete native ordinary material-specific steel,copper,glass incinerators peroriginalkg for enumerated Swiss incineration-with-fly-ash-extraction portions. All42declared wet-composition/heating-value coordinates forsteel/copper and44forglass match inspected native2026; unknown entries remainunknown and compositionagreement is not technology/LCIAequivalence. Source FAE documents46.22%FLUWA in its technology mix; ordinary native ash/extraction/residuehandling,short/longtermemissions,auxiliary andinternalreuseenergy,recovery,allocation,geography andvintage differ, with all scoreeffects unquantified. Native glassname0%water does not override its documentedwetcomposition; no moisture/heating-value multiplier. Preserve original recovered iron -.47289kg and copper -.31kg exchanges perincineratedkg through exact verified positive1kg production-only RecycledContent cutoff stock helpers. Negative handover is intentional, not virginmetal credit, omitted treatment or an invented zinc/electricity/heat credit. Source stocks have only selflinkedproduction, no technosphere or biosphere; source FAE has no separaterecoveredzinc and selected nativeincinerators have no negative technosphereinputs duplicating handovers. Keep all other original source route shares, sign-adjusted supplier demand, marginaluncertainty, operations, facility,disposal and freight quantities separately without normalization. Source recycling/sorting retains original diesel, electricity, hydraulicexcavation andsorting facility count; source/nativefacility both200000t/year and50years, no newthroughput/lifetimefactor or whole-native-sorting extra haulage/wasteheat. Inertlandfill retains original genericoperation/facility andobservedabsence of direct wastespecificleachate; this is not zero physicalleaching. Glassopen dump/openburn preserves34original elementary exchanges andsigneduncertainty at matching publisherUUID/unit/fullcompartment/role in canonical3.10; label/CAS differences remainwarnings, no mass/speciationfactor. Source3.6scrapmarket has twofreightformulas containing WM_RP, explicitlydefined on its productionreference as wetmass1kg. Bind onlythatdeclaredsymbol to(1.0), preserveevaluatedquantity anduncertainty, and retainoriginalformula/property/binding audit; do not exportunboundparameters or altercallerformulas exceptrequiredreference-signscaling. Complete whole-service operating/freight proxies retain existinggeography,fleet,energy,infrastructure,allocation,uncertainty andvintage limitations; no duplicatefuel/machinery/transportburden. Callernegativeinput tosourcewaste reference-1 becomespositive demand for positive1kg treatmenthelper throughfactor-1. Negative input topositive recoveredstock remainsnegative, with zeroburdenonlywhere independentlyverified. Preserve callerownership,signedquantity,formulas,uncertainty,foregroundsuppliers and separateemissions/purchases. Native upstreambiosphereexclusions and all scoreeffects remainexplicit/unquantified. No standalone stage/stock/material,otherFAEprofile, otherrelease,reverse orcross-system-modelapproval or fullpilot scenario/certification/exportcompletion is established.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "pilot-fae-routes-465c442d14fc8710f7c3"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-70a63a676eaa3c93", "source": {"location": "CH", "name": "treatment of waste reinforcement steel, collection for final disposal", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-fae-routes-465c442d14fc8710f7c3"}, "technosphere_information_loss": "User instruction: auto-approve coming decisions in the existing UVEK2026cutoff/ecoinvent3.10biosphere electricity pilot. Only five exact sourceprofiles in this review qualify. Use complete native ordinary material-specific steel,copper,glass incinerators peroriginalkg for enumerated Swiss incineration-with-fly-ash-extraction portions. All42declared wet-composition/heating-value coordinates forsteel/copper and44forglass match inspected native2026; unknown entries remainunknown and compositionagreement is not technology/LCIAequivalence. Source FAE documents46.22%FLUWA in its technology mix; ordinary native ash/extraction/residuehandling,short/longtermemissions,auxiliary andinternalreuseenergy,recovery,allocation,geography andvintage differ, with all scoreeffects unquantified. Native glassname0%water does not override its documentedwetcomposition; no moisture/heating-value multiplier. Preserve original recovered iron -.47289kg and copper -.31kg exchanges perincineratedkg through exact verified positive1kg production-only RecycledContent cutoff stock helpers. Negative handover is intentional, not virginmetal credit, omitted treatment or an invented zinc/electricity/heat credit. Source stocks have only selflinkedproduction, no technosphere or biosphere; source FAE has no separaterecoveredzinc and selected nativeincinerators have no negative technosphereinputs duplicating handovers. Keep all other original source route shares, sign-adjusted supplier demand, marginaluncertainty, operations, facility,disposal and freight quantities separately without normalization. Source recycling/sorting retains original diesel, electricity, hydraulicexcavation andsorting facility count; source/nativefacility both200000t/year and50years, no newthroughput/lifetimefactor or whole-native-sorting extra haulage/wasteheat. Inertlandfill retains original genericoperation/facility andobservedabsence of direct wastespecificleachate; this is not zero physicalleaching. Glassopen dump/openburn preserves34original elementary exchanges andsigneduncertainty at matching publisherUUID/unit/fullcompartment/role in canonical3.10; label/CAS differences remainwarnings, no mass/speciationfactor. Source3.6scrapmarket has twofreightformulas containing WM_RP, explicitlydefined on its productionreference as wetmass1kg. Bind onlythatdeclaredsymbol to(1.0), preserveevaluatedquantity anduncertainty, and retainoriginalformula/property/binding audit; do not exportunboundparameters or altercallerformulas exceptrequiredreference-signscaling. Complete whole-service operating/freight proxies retain existinggeography,fleet,energy,infrastructure,allocation,uncertainty andvintage limitations; no duplicatefuel/machinery/transportburden. Callernegativeinput tosourcewaste reference-1 becomespositive demand for positive1kg treatmenthelper throughfactor-1. Negative input topositive recoveredstock remainsnegative, with zeroburdenonlywhere independentlyverified. Preserve callerownership,signedquantity,formulas,uncertainty,foregroundsuppliers and separateemissions/purchases. Native upstreambiosphereexclusions and all scoreeffects remainexplicit/unquantified. No standalone stage/stock/material,otherFAEprofile, otherrelease,reverse orcross-system-modelapproval or fullpilot scenario/certification/exportcompletion is established."},
-    {"confidence": 0.3881, "conversion_factor": -1, "id": "bp-c276cc8b782b2c02", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-c276cc8b782b2c02"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "treatment of waste reinforcement steel, collection for final disposal", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Disposal, building, reinforcement steel, to final disposal", "reference product": "xx Disposal, building, reinforcement steel, to final disposal", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-c276cc8b782b2c02", "mapping_method": "reviewed_pilot_steel_row_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_steel_row_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_steel_row_routes_review.json#ecoinvent-3.9-cutoff/ff582a20992ce85dda03da6893f6f407ba56e140f03094504e7a7bdf519f0b1b"], "reason": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-steel-row-routes-c4c6d5d5e1bcf9b3a913"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7b071d0f3a422eaf", "source": {"location": "RoW", "name": "treatment of waste reinforcement steel, collection for final disposal", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-steel-row-routes-c4c6d5d5e1bcf9b3a913"}, "technosphere_information_loss": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval."},
     {"confidence": 0.469773, "conversion_factor": -1, "id": "bp-f16b1aa32024d3a7", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-f16b1aa32024d3a7"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "treatment of waste reinforcement steel, recycling", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, reinforcement steel, to recycling", "reference product": "Disposal, building, reinforcement steel, to recycling", "unit": "kilogram"}},
     {"confidence": 0.389773, "conversion_factor": -1, "id": "bp-ec00b5ae0b9755ee", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-ec00b5ae0b9755ee"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "treatment of waste reinforcement steel, recycling", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, reinforcement steel, to recycling", "reference product": "Disposal, building, reinforcement steel, to recycling", "unit": "kilogram"}},
     {"confidence": 0.484429, "conversion_factor": -1, "id": "bp-1824e49db175bc6e", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-1824e49db175bc6e"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "treatment of waste reinforcement steel, sorting plant", "reference product": "waste reinforcement steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, reinforcement steel, to sorting plant", "reference product": "Disposal, building, reinforcement steel, to sorting plant", "unit": "kilogram"}},
@@ -705202,6 +706137,15 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external market for protein feed, 100% crude / protein feed, 100% crude / GLO / kilogram reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents 100%-crude-protein feed in kg, not an unscaled kilogram of crop, oil or unspecified protein concentrate. No validated nutritional conversion establishes equivalence with the former Protein peas IP, at feed mill / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-7b071d0f3a422eaf": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_steel_row_routes_review.json"
+      ],
+      "limitations": [
+        "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval."
+      ],
+      "rationale": "User instructionauto-approvecomingdecisions withinexactUVEK2026cutoff/ecoinvent3.10biosphereelectricitypilot. Onlytwoenumerated3.9cutoffRoW reinforcementsteelmarket/finalcollectionrootsqualify. Preserveoriginalseparate recycling/sorting/finaldisposalshares andallnestedgeographic/treatmentshares,freightandoperatingcoefficients,signedmarginaluncertainty,zeros andsource stages withoutaggregation/renormalization. Marketroutesabout40.99%recycling,18.01%sorting,41.00%finalcollection; source recyclingisonlydismantling,notremelting. Reusecomplete nativeSwissreinforcement-steeldismantling peroriginalkg underexactpreviousreview:bothsource/nativehaveonly0.626MJbuildingmachinediesel; do notaddsourcefuelagain,scrap purchase orvirginsteelcredit. Othercollection/sortingstages preserveoriginal0.626MJdiesel,all8distinctLVgridquantities,hydraulicexcavation and1e-10sortingfacilitycount withcomplete nativecorrespondingservices. Sourceandnativesortingfacility200000t/year,50yearlife; noadditionalthroughput/lifetimefactor,whole-sorter haulage orwasteheat. RU/AU/NZ/RNA/RAF/RLA/RASsourcegridsuseexistingnativeLVgrids atsamegeography,EuropewithoutSwitzerlandusesRERwithexplicitCH-inclusionproxywarning. Nativevoltage/loss/import/infrastructuremodels,geography,fleet,fuel/energy,machine,internaluncertainty,allocation andvintage differ; keepnative signedinternalsanddonotaddextragridlosses/fuel/machinery. Finalcollectionretains0.75642965204236RoW/.24357034795763993nonCH-Europe scrapmarketweights;bothretain.993783409994508inert/.00621659000549189ordinaryincinerationshares andalloriginalfreight separately. Inertlandfillpreservesonlysourcegenericoperations/facility at original1kg/1.48e-9unit,usinginspectednativeequivalents; observednodirectwastespecificBIOisnotproofzeroactualleaching. Ordinaryincinerationusescomplete material-specificnativeSwisssteel0%water municipalincinerator peroriginalkg. All42documentedwetcompositioncoordinatesmatchnative2026; unknownsremainunknown,notwater/carbon/energyfactors orLCIAequivalence. Preserveeachoriginal-.47289kgpositive-referenceproduction-onlyRecycledContentcutoffironhandover withexact3.9profilebinding. No avoidedvirginsteelcredit,remelting,omittedtreatment,newzinc/electricity/heatcreditorzero-burdenunknownprovider. Nativeincineratorhasnonegativetechnosphereinputduplicatinghandover. Sourceincinerationinternalpurchases,51elementarytermsperprocess,reusedenergy,slag/residuemanagement andinternalfreight arereplacedbycomplete nativeincineration; do notaddthemagain. Emissions/energy/ash/recovery/allocation,technology/geography/vintage/internaluncertainty andnative2991biosphereexclusionsremaindifferences withunquantifiedscoreeffects. Sourceallmarket-leveloriginalrail/roadentriesretainedperoriginaltkm throughcompletegenericRERservices; sourcegeography/traction/fleet/fuel/load/vintage/internaluncertainty differ,nonativeCNcoal-only/USdiesel-only rail,noextra distance/load/vehiclefactor. Negativewaste-reference-1mapspositive1kgservicebyfactor-1; independentlynegatesourcewastesupplierdemandonce,retainnegativeinputtopositiverecoveredstock. Samefinalcollectionrecipeissharedbetweendirectrootandmarketdependency;nocopyofitsinternaluncertainty. Preservecallerownership,formulas,signeduncertainty,foregroundlinks andseparatepurchases/emissions. No physicalomission,reverse,cross-system-model,otherrelease,standalonecomponent orfullscenario/certification/exportapproval."
     },
     "r-7b26312e166c5995": {
       "evidence": [
