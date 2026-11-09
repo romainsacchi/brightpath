@@ -187,6 +187,21 @@ uncertainty and caller formulas remain; native allocation, precursor/energy,
 emission coverage, geography and vintage differences remain warnings. Only the
 two inspected positive ecoinvent 3.6 cut-off references are admitted.
 
+``brightpath/data/export/uvek_pilot_pe_collection_review.json`` preserves the
+exact 3.9 Europe-without-Switzerland PE/PP final-collection route. The source
+already represents this waste with a polyethylene market group; that original
+proxy remains explicit. Its 35 deterministic country weights retain all five
+treatment fates and their original collection freight. The uncertain
+parent-to-group link remains separate, with its original lognormal parameters
+and pedigree. Complete native incineration and sanitary-landfill services match
+all 44 declared polyethylene composition and heating-value coordinates. Nine
+source helpers retain all 943 uncontrolled-treatment elementary exchanges,
+their uncertainty, full receiving compartments and reviewed operating services.
+Exact publisher UUIDs identify the ecoinvent 3.10 flows; metadata changes remain
+warnings. The former building-disposal wrapper's extra 0.01 tkm is not added.
+No physical release is omitted, no treatment share is renormalized, and other
+source releases and fly-ash-extraction routes remain outside this review.
+
 Five further whole-function matches are documented in
 ``brightpath/data/export/uvek_pilot_matching_legacy_supplier_review.json``:
 natural barite, 35% scrap/65% pig-iron castings, one 10 MWe turbine-construction
