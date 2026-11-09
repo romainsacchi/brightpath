@@ -155,6 +155,22 @@ approval hashes checked. No avoided-primary-steel credit is added. Source
 uncertainty is retained and scaled with the deterministic treatment shares;
 the Swiss fly-ash-extraction route is outside this decision.
 
+``brightpath/data/export/uvek_pilot_uncontrolled_market_review.json`` preserves
+all treatment shares in the inspected 3.9 DE/RoW mixed-plastic and 3.12 RoW
+untreated-wood markets. Twenty-two source helpers retain every signed physical
+biosphere exchange, full receiving compartment and marginal uncertainty from
+open burning, open dumping and unsanitary landfilling. They reuse exact
+publisher UUID/unit/context identities in ecoinvent 3.10; label/CAS metadata
+differences are warned without a molecular factor or compartment inference.
+The unsanitary branches retain the two previously reviewed complete operating
+services. Controlled fractions use complete native processes with 44 matched
+composition/heating-value coordinates, preserving native limitations and the
+source wood thermal-output report's 3.5 versus native 3.49 MJ difference.
+Collection remains separate and unnormalized, including individual country rail
+amounts through the reviewed whole-fleet proxies. The wood process's nonphysical
+waste indicator is retained once outside the native controlled fraction.
+Paperboard, fly-ash-extraction and other source profiles remain outside this scope.
+
 Five further whole-function matches are documented in
 ``brightpath/data/export/uvek_pilot_matching_legacy_supplier_review.json``:
 natural barite, 35% scrap/65% pig-iron castings, one 10 MWe turbine-construction
