@@ -171,6 +171,22 @@ amounts through the reviewed whole-fleet proxies. The wood process's nonphysical
 waste indicator is retained once outside the native controlled fraction.
 Paperboard, fly-ash-extraction and other source profiles remain outside this scope.
 
+``brightpath/data/export/uvek_pilot_teg_supply_review.json`` preserves the exact
+3.6 RER triethylene-glycol market's virgin and recovered quantities, with its
+original road, rail and barge delivery. The virgin share uses the complete
+native ethylene-oxide-derived TEG product. The recovered share retains the
+source's positive production-only cut-off reference; its same activity UUID
+also has a negative-litre waste-treatment reference with active electricity,
+infrastructure and residue-treatment burdens. This evidence distinguishes the
+allocated product handover from a missing treatment inventory. No recycling
+burden, avoided virgin-product credit or native mass-allocation model is added.
+The source rail service is represented by native rail, rather than the erroneous
+aircraft endpoint in its raw child heuristic. All three collection suppliers
+match previously reviewed source hashes. Quantities, signs, marginal
+uncertainty and caller formulas remain; native allocation, precursor/energy,
+emission coverage, geography and vintage differences remain warnings. Only the
+two inspected positive ecoinvent 3.6 cut-off references are admitted.
+
 Five further whole-function matches are documented in
 ``brightpath/data/export/uvek_pilot_matching_legacy_supplier_review.json``:
 natural barite, 35% scrap/65% pig-iron castings, one 10 MWe turbine-construction
