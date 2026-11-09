@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 720
+    assert len(forward["reviews"]) == 722
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -107,7 +107,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 3995
+        == 3994
     )
 
 
@@ -667,6 +667,11 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     glass_references = {r["review_ref"] for r in forward["replace"] if r["id"] in glass_ids}
     assert len(glass_ids) == 7 and len(glass_references) == 1
     assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in glass_references)
+    water = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_water_review.json").read_text())
+    water_ids = {row["rule_id"] for row in water["records"]}
+    water_references = {r["review_ref"] for r in forward["replace"] if r["id"] in water_ids and "review_ref" in r}
+    assert len(water_ids) == 7 and len(water_references) == 2
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in water_references)
     kcl = json.loads((DATA_DIR / "export/uvek_pilot_kcl_site_review.json").read_text())
     kcl_ids = {row["rule_id"] for row in kcl["records"]}
     kcl_references = {r["review_ref"] for r in forward["replace"] if r["id"] in kcl_ids}
@@ -723,6 +728,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *foam_references,
             *sand_references,
             *glass_references,
+            *water_references,
             *grid_converter_references,
             *copper_supply_references,
             *wastewater_endpoint_references,
