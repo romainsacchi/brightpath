@@ -969,3 +969,35 @@ The packaged review retains source/native witnesses, individual allocation
 proofs, exact scope and limitations. The native bundle's 2,991 upstream
 biosphere exclusions persist. Other versions, standalone producers, reverse
 routes and system-model changes do not inherit this review.
+
+Pilot nitrate-salt market assembly
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The exact ecoinvent 3.9 cut-off nitrate-salt market retains fourteen original
+salt/storage/construction stages, nineteen internal links and all 280 original
+nonproduction terms. Allocated recovered-salt producers buy virgin production
+directly; they do not buy the final market or introduce a recovery cycle. The
+source-stage solve retains 0.40502984071540454 kg of virgin production per kg of
+market output. There is no new free-salt assumption, credit or normalization.
+
+Reuse 125 exact-scoped external correspondences and 384 existing helper bodies.
+Signed conversion factors apply to supported uncertainty and bounds along with
+quantities. The positive nitrate reference leaves caller demand and credits
+unchanged through factor +1. Foreground ownership, caller formulas and separate
+exchanges remain intact.
+
+The packaged parent review retains inherited proxy limitations with their
+actual source scopes and review-file hashes. Four dependency recipes' nine
+previously reviewed source-input omissions remain exact audits, not a general
+allowed-loss exception. No new source omission is authorized. Dependency bodies,
+component bindings and full inherited scope fingerprints are checked before
+authoring mutates the resource; changes to shared review text also require
+renewed review. Existing cut-off-stock guards remain in force.
+
+Nine new direct biosphere exchanges bind through verified publisher UUID,
+complete compartment, unit and actual source/destination flow role to the
+installed canonical ecoinvent 3.10 biosphere. The complete graph contains 399
+foreground records and 2,723 direct biosphere exchanges. Native exclusions and
+all inherited unquantified proxy score effects remain explicit. Only this
+market/profile is qualified; standalone producers, other versions, reverse
+routes and system-model changes do not inherit the composition.
