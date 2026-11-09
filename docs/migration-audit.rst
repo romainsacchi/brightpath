@@ -120,6 +120,17 @@ and unquantified inventory/score differences remain warnings. No electrical
 efficiency, extra generator, heat credit or independent inverse is inferred.
 The unresolved default prevents uninspected versions from inheriting the factor.
 
+``brightpath/data/export/uvek_pilot_sanitary_inert_review.json`` corrects two
+inspected sanitary-landfill endpoints (Swiss 3.6 and European 3.9). All 42
+declared wet-composition entries match the complete native inert-material
+sanitary service. Factor ``-1`` converts the source negative waste reference
+to positive treatment demand without moisture, density or capacity scaling.
+Sanitary sealing, leachate treatment and long-term releases remain included.
+Twenty-one nominal releases match exact publisher coordinates; the inherited
+native manganese definition differs and remains an explicit limitation.
+Auxiliary treatment, energy, geography, vintage and unquantified score
+differences are warnings. No new helper, recovery credit or inverse is added.
+
 Five further whole-function matches are documented in
 ``brightpath/data/export/uvek_pilot_matching_legacy_supplier_review.json``:
 natural barite, 35% scrap/65% pig-iron castings, one 10 MWe turbine-construction

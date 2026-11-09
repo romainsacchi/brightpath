@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 688
+    assert len(forward["reviews"]) == 689
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -107,7 +107,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 3994
+        == 3995
     )
 
 
@@ -584,6 +584,13 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
         forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"}
         for ref in secondary_aluminium_references
     )
+    sanitary_inert = json.loads((DATA_DIR / "export/uvek_pilot_sanitary_inert_review.json").read_text())
+    sanitary_ids = {row["rule_id"] for row in sanitary_inert["rules"]}
+    sanitary_references = {r["review_ref"] for r in forward["replace"] if r["id"] in sanitary_ids}
+    assert len(sanitary_ids) == 2 and len(sanitary_references) == 1
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in sanitary_references
+    )
     assert all(
         review.keys() == {"rationale", "limitations"}
         for reference, review in forward["reviews"].items()
@@ -607,6 +614,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *silver_market_references,
             *landfill_references,
             *generator_references,
+            *sanitary_references,
             *grid_converter_references,
             *copper_supply_references,
             *wastewater_endpoint_references,

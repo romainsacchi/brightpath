@@ -38,7 +38,7 @@ def apply_pilot_silver_market_review(resource, root=ROOT):
     _apply_material_review(resource, root, SILVER_MARKET_PATH, SILVER_MARKET_SHA256)
 
 
-def _apply_material_review(resource, root, review_path, approval_sha256):
+def _apply_material_review(resource, root, review_path, approval_sha256, *, mapping_method="reviewed_pilot_material"):
     raw = (root / review_path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != approval_sha256:
         raise ValueError("Pilot material approval changed; repeat its scientific review.")
@@ -46,23 +46,26 @@ def _apply_material_review(resource, root, review_path, approval_sha256):
     indexed = {rule["id"]: rule for rule in resource["replace"]}
     pending = []
     for decision in review["rules"]:
+        source_sign = decision.get("source_reference_amount", 1)
         rule = indexed.get(decision["rule_id"])
         if (
-            rule is None
+            source_sign not in (-1, 1)
+            or rule is None
             or rule["source"] != decision["source"]
             or rule["target"] not in (decision["previous_target"], decision["target"])
             or rule["source"]["unit"] != decision["target"]["unit"]
         ):
             raise ValueError("Pilot material source, supplier or unit changed.")
         for row in decision["profiles"]:
-            if row["source_profile"] not in resource["source_profiles"] or row["reference_amount"] != 1:
+            if row["source_profile"] not in resource["source_profiles"] or row["reference_amount"] != source_sign:
                 raise ValueError("Pilot material reference profile changed.")
         pending.append((rule, decision))
     for rule, decision in pending:
+        source_sign = decision.get("source_reference_amount", 1)
         limitation = decision["limitations"]
         rule.update(
             target=deepcopy(decision["target"]),
-            mapping_method="reviewed_pilot_material",
+            mapping_method=mapping_method,
             confidence=1.0,
             conversion_factor=decision["conversion_factor"],
             report_correspondence=True,
@@ -77,7 +80,7 @@ def _apply_material_review(resource, root, review_path, approval_sha256):
                         "conversion_factor": decision["conversion_factor"],
                         "review": {
                             "status": "verified",
-                            "source_sign": 1,
+                            "source_sign": source_sign,
                             "target_sign": 1,
                             "reason": limitation,
                             "evidence": [review_path],
