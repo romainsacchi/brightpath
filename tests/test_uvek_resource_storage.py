@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 722
+    assert len(forward["reviews"]) == 723
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -672,6 +672,11 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     water_references = {r["review_ref"] for r in forward["replace"] if r["id"] in water_ids and "review_ref" in r}
     assert len(water_ids) == 7 and len(water_references) == 2
     assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in water_references)
+    paint = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_paint_review.json").read_text())
+    paint_ids = {row["rule_id"] for row in paint["records"]}
+    paint_references = {r["review_ref"] for r in forward["replace"] if r["id"] in paint_ids}
+    assert len(paint_ids) == 2 and len(paint_references) == 1
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in paint_references)
     kcl = json.loads((DATA_DIR / "export/uvek_pilot_kcl_site_review.json").read_text())
     kcl_ids = {row["rule_id"] for row in kcl["records"]}
     kcl_references = {r["review_ref"] for r in forward["replace"] if r["id"] in kcl_ids}
@@ -729,6 +734,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *sand_references,
             *glass_references,
             *water_references,
+            *paint_references,
             *grid_converter_references,
             *copper_supply_references,
             *wastewater_endpoint_references,
