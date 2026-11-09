@@ -202,6 +202,24 @@ established. Co-product allocation, supply mix, delivery and vintage
 differences remain warnings. Exact-profile admissions remain in Premise's
 ledger; no raw rule, helper, inverse or broader profile approval is added.
 
+``brightpath/data/export/uvek_pilot_inert_landfill_review.json`` reconstructs
+only the inspected 3.6 Swiss bare steel/glass landfill services from the
+complete generic operation and facility already reviewed for concrete.
+The native components retain their inventories, including heat and freight
+differences; the facility has the same documented 450,000 m3 capacity.
+Signed waste demands use factor ``-1`` against positive service helpers.
+The source's missing leachate modelling remains a warned data gap, without
+substituting the old native endpoints' different waste compositions. No
+collection wrapper, moisture/density/lifetime factor or recovery credit is
+added. Two rules gain two helper recipes and one shared review; all earlier
+recipes and reviews remain unchanged. Exact source-profile gates, caller
+ownership, formulas, uncertainty and separately listed emissions are retained.
+Premise pins the two exact admissions; other source versions remain unresolved.
+The maintainer generator and historical system-model comparison share
+``apply_pilot_reviews`` so both compare the same independently reviewed
+corrections. This retains exact executable-rule and helper-coefficient
+preservation checks while accounting for later approved supplier/factor changes.
+
 Exact rule approvals
 --------------------
 

@@ -629,11 +629,9 @@ def _build_historical_review_resources(
     return technosphere, biosphere
 
 
-def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
-    """Generate executable mappings only between compatible system models."""
-    historical, _ = _build_historical_review_resources(catalog_directory, curated_path, conversion_factors_path)
+def apply_pilot_reviews(technosphere: dict) -> None:
+    """Replay inspected pilot corrections independently of system-model projection."""
     if __package__:
-        from scripts.generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
         from scripts.review_uvek_pilot_materials import (
             apply_pilot_material_review,
             apply_pilot_paint_market_review,
@@ -647,8 +645,8 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         from scripts.review_uvek_pilot_wastewater import apply_pilot_wastewater_review
         from scripts.review_uvek_pilot_wood_steel_freight import apply_pilot_wood_steel_freight_review
         from scripts.review_uvek_pilot_secondary_aluminium import apply_pilot_secondary_aluminium_review
+        from scripts.review_uvek_pilot_inert_landfills import apply_pilot_inert_landfill_review
     else:
-        from generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
         from review_uvek_pilot_materials import (
             apply_pilot_material_review,
             apply_pilot_paint_market_review,
@@ -662,8 +660,8 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         from review_uvek_pilot_wastewater import apply_pilot_wastewater_review
         from review_uvek_pilot_wood_steel_freight import apply_pilot_wood_steel_freight_review
         from review_uvek_pilot_secondary_aluminium import apply_pilot_secondary_aluminium_review
+        from review_uvek_pilot_inert_landfills import apply_pilot_inert_landfill_review
 
-    technosphere = cutoff_uvek_resource(historical, catalog_directory)
     apply_pilot_material_review(technosphere)
     apply_pilot_incinerator_review(technosphere)
     apply_pilot_paint_market_review(technosphere)
@@ -675,6 +673,19 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
     apply_pilot_wastewater_review(technosphere)
     apply_pilot_wood_steel_freight_review(technosphere)
     apply_pilot_secondary_aluminium_review(technosphere)
+    apply_pilot_inert_landfill_review(technosphere)
+
+
+def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
+    """Generate executable mappings only between compatible system models."""
+    if __package__:
+        from scripts.generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
+    else:
+        from generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
+
+    historical, _ = _build_historical_review_resources(catalog_directory, curated_path, conversion_factors_path)
+    technosphere = cutoff_uvek_resource(historical, catalog_directory)
+    apply_pilot_reviews(technosphere)
     validate_migration_resource(technosphere)
     return technosphere, build_canonical_biosphere_resource(catalog_directory)
 

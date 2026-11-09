@@ -224,15 +224,15 @@ def test_retired_consequential_exchange_families_reject_conversion_without_omitt
 
 def test_all_compatible_catalog_profiles_preserve_historical_executable_rules_and_helper_coefficients():
     from uvek_review_helpers import historical_forward_resource
-    from scripts.review_uvek_pilot_materials import apply_pilot_material_review
+    from scripts.generate_uvek_migration_resources import apply_pilot_reviews
 
     from brightpath import DATA_DIR
 
     historical = historical_forward_resource()
-    # The later approved material overlay is independent of the system-model
-    # restriction. Compare both sides with that overlay, keeping exact equality
+    # Later approved pilot corrections are independent of the system-model
+    # restriction. Compare both sides with those corrections, keeping exact equality
     # for every executable rule and every helper coefficient below.
-    apply_pilot_material_review(historical)
+    apply_pilot_reviews(historical)
     active = load_uvek_technosphere_resource()
     fields = ("name", "reference product", "location", "unit")
     profiles = [

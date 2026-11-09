@@ -1,12 +1,18 @@
 {
   "axis": "technosphere",
   "coverage": {
+    "dispositions": {
+      "omitted": 257,
+      "proxy": 2,
+      "recipe": 811,
+      "unclassified": 29662
+    },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 300,
       "followup_review": 163,
-      "heuristic_similarity": 26831,
-      "pairwise_review": 2257,
+      "heuristic_similarity": 26830,
+      "pairwise_review": 2256,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
       "reviewed_allocated_sewage_gas": 2,
@@ -32,6 +38,7 @@
       "reviewed_packaging_paper_landfarming_service": 1,
       "reviewed_pet_market_group_service": 2,
       "reviewed_pet_waste_market_service": 41,
+      "reviewed_pilot_inert_landfill": 2,
       "reviewed_pilot_material": 16,
       "reviewed_polyester_pet_transfer": 1,
       "reviewed_pp_uncontrolled_source_inventory": 2,
@@ -57,7 +64,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.435792,
+    "mean_confidence": 0.435827,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -143829,6 +143836,106 @@
       "name": "market for waste polyethylene terephthalate, composed from resolved suppliers, IE",
       "rationale": "Reviewed regional cut-off PET-waste market composition: preserve the exact original waste-treatment and freight quantities without renormalizing them. A -1kg waste-market reference becomes a +1kg treatment service with caller factor -1; each negative input to a negative-reference waste treatment uses its own independently checked factor -1. Reuse the complete reviewed open-dump, unsanitary-landfill and open-burning inventories, including all source releases and operating inputs. Dedicated whole PET municipal-incineration and sanitary-landfill services treat the same 0.2%-water PET per wet kg; CH treatment approximates source GLO/RoW geography, climate, gas capture, leachate, emission controls, residue handling, energy recovery and allocation. The legacy xx PET-landfill name is an actual dedicated service. No recovered-energy credit is reconstructed, no moisture/dry-mass/heating-value scaling, omission or physical-flow proxy is authorized. Preserve all original road, electric/diesel rail, barge and container-ship tonne-km using complete native services including energy, vehicle/vessel, maintenance and infrastructure. Retain the inspected rail country and traction weights without normalization. The RER average road fleet represents differing source size/EURO/geographic fleet shares; CH rail services differ in filters, gauge, energy, vintage and shunting; RER barge and OCE container services differ in vessel, fuel, ports, load and vintage. These are independently inspected complete-function screening proxies, with no fuel/capacity/lifetime rescaling or scientific/LCIA equivalence claim. Positive steam rail remains unresolved with its coal/ash boundary intact. Swiss fly-ash-extraction incineration is outside this review and remains unresolved. Only exact enumerated patch profiles are approved; the two PET-landfill patch correspondences are scoped inside these market helpers and do not alter the global landfill rule. Existing child accounting-indicator and unresolved native physical-biosphere policies remain independent. Preserve caller signed quantities, supported uncertainty, formulas, metadata, foreground suppliers, production, separate transport, recovery credits and emissions; internal source parameter formulas/uncertainty are not reconstructed. Export/score every returned helper. No consequential rule, inverse correspondence, new chemical/compartment or land-class proxy is inferred.",
       "reference product": "waste polyethylene terephthalate",
+      "unit": "kilogram"
+    },
+    "pilot-inert-landfill-3307dd456baebfa20870": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_inert_landfill_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 0.0,
+          "location": "CH",
+          "name": "Process-specific burdens, inert material landfill",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Process-specific burdens, inert material landfill",
+          "scale": 0.2,
+          "scale without pedigree": 0.0,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.48e-09,
+          "loc": -20.331223749170388,
+          "location": "CH",
+          "name": "xx Inert material landfill facility",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "xx Inert material landfill facility",
+          "scale": 0.2,
+          "scale without pedigree": 0.0,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        }
+      ],
+      "location": "CH",
+      "name": "treatment of waste glass, inert material landfill, composed from resolved suppliers, CH",
+      "rationale": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved.",
+      "reference product": "waste glass",
+      "unit": "kilogram"
+    },
+    "pilot-inert-landfill-78241f976093c0e32796": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_inert_landfill_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 0.0,
+          "location": "CH",
+          "name": "Process-specific burdens, inert material landfill",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Process-specific burdens, inert material landfill",
+          "scale": 0.2,
+          "scale without pedigree": 0.0,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.48e-09,
+          "loc": -20.331223749170388,
+          "location": "CH",
+          "name": "xx Inert material landfill facility",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "xx Inert material landfill facility",
+          "scale": 0.2,
+          "scale without pedigree": 0.0,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        }
+      ],
+      "location": "CH",
+      "name": "treatment of scrap steel, inert material landfill, composed from resolved suppliers, CH",
+      "rationale": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved.",
+      "reference product": "scrap steel",
       "unit": "kilogram"
     },
     "polyester-pet-transfer-4b73ca161d7c988825e9": {
@@ -497760,7 +497867,7 @@
     {"confidence": 0.273854, "id": "bp-750b0912c38c961c", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "treatment of scrap lead acid battery, remelting", "reference product": "lead", "unit": "kilogram"}, "target": {"location": "RER", "name": "Lead acid battery, for lorry", "reference product": "Lead acid battery, for lorry", "unit": "kilogram"}},
     {"confidence": 0.391316, "conversion_factor": -1, "id": "bp-b864db3b15e0e08c", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-b864db3b15e0e08c"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CA-QC", "name": "treatment of scrap printed wiring boards, shredding and separation", "reference product": "used printed wiring boards", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Disposal, treatment of printed wiring boards", "reference product": "Disposal, treatment of printed wiring boards", "unit": "kilogram"}},
     {"confidence": 0.391316, "conversion_factor": -1, "id": "bp-9f820f97f9f3c080", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-9f820f97f9f3c080"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "treatment of scrap printed wiring boards, shredding and separation", "reference product": "used printed wiring boards", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Disposal, treatment of printed wiring boards", "reference product": "Disposal, treatment of printed wiring boards", "unit": "kilogram"}},
-    {"confidence": 0.6, "conversion_factor": -1, "id": "bp-1b20be09e53aaa84", "mapping_method": "pairwise_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-1b20be09e53aaa84"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-79ab4583a027a05e", "source": {"location": "CH", "name": "treatment of scrap steel, inert material landfill", "reference product": "scrap steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, steel, 0% water, to construction waste landfill", "reference product": "Disposal, steel, 0% water, to construction waste landfill", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-1b20be09e53aaa84", "mapping_method": "reviewed_pilot_inert_landfill", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_inert_landfill_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_inert_landfill_review.json#ecoinvent-3.6-cutoff/4fa4d6232e38e8cb3a4724241a1ace1e7fafd85504b7ae74297fa56feb0c11fc"], "reason": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "pilot-inert-landfill-78241f976093c0e32796"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-cb05d63be5b21bb2", "source": {"location": "CH", "name": "treatment of scrap steel, inert material landfill", "reference product": "scrap steel", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-inert-landfill-78241f976093c0e32796"}, "technosphere_information_loss": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved."},
     {"confidence": 0.6, "conversion_factor": -1, "id": "bp-ca38afe2d1b7feae", "mapping_method": "pairwise_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-ca38afe2d1b7feae"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-c722d5b67b2c4523", "source": {"location": "Europe without Switzerland", "name": "treatment of scrap steel, inert material landfill", "reference product": "scrap steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, steel, 0% water, to construction waste landfill", "reference product": "Disposal, steel, 0% water, to construction waste landfill", "unit": "kilogram"}},
     {"confidence": 0.6, "conversion_factor": -1, "id": "bp-a7e955c9d22c01fa", "mapping_method": "pairwise_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-a7e955c9d22c01fa"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-c722d5b67b2c4523", "source": {"location": "RoW", "name": "treatment of scrap steel, inert material landfill", "reference product": "scrap steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, steel, 0% water, to construction waste landfill", "reference product": "Disposal, steel, 0% water, to construction waste landfill", "unit": "kilogram"}},
     {"confidence": 0.356842, "conversion_factor": -1, "id": "bp-fe93d0da88bd0cd1", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-fe93d0da88bd0cd1"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "treatment of scrap steel, municipal incineration", "reference product": "scrap steel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, steel, 0% water, to municipal incineration", "reference product": "Disposal, steel, 0% water, to municipal incineration", "unit": "kilogram"}},
@@ -499224,7 +499331,7 @@
     {"confidence": 0.423016, "conversion_factor": -1, "id": "bp-109a0e7c45f831ae", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-109a0e7c45f831ae"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "treatment of waste glass sheet, sorting plant", "reference product": "waste glass sheet", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, glass sheet, to sorting plant", "reference product": "Disposal, building, glass sheet, to sorting plant", "unit": "kilogram"}},
     {"confidence": 0.343016, "conversion_factor": -1, "id": "bp-da89a2a235cb0d36", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-da89a2a235cb0d36"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "treatment of waste glass sheet, sorting plant", "reference product": "waste glass sheet", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, glass sheet, to sorting plant", "reference product": "Disposal, building, glass sheet, to sorting plant", "unit": "kilogram"}},
     {"confidence": 0.343016, "conversion_factor": -1, "id": "bp-03ad9b9e7c0f5db4", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-03ad9b9e7c0f5db4"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "treatment of waste glass sheet, sorting plant", "reference product": "waste glass sheet", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, glass sheet, to sorting plant", "reference product": "Disposal, building, glass sheet, to sorting plant", "unit": "kilogram"}},
-    {"confidence": 0.329172, "conversion_factor": -1, "id": "bp-bcbf9e1008a58e4b", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-bcbf9e1008a58e4b"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "treatment of waste glass, inert material landfill", "reference product": "waste glass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, glass, 0% water, to construction waste landfill", "reference product": "Disposal, glass, 0% water, to construction waste landfill", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-bcbf9e1008a58e4b", "mapping_method": "reviewed_pilot_inert_landfill", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_inert_landfill_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_inert_landfill_review.json#ecoinvent-3.6-cutoff/10bc071811dfe1473e625c1f8868a2f00673cbca1fb866e72b4afa68c18f5e99"], "reason": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "pilot-inert-landfill-3307dd456baebfa20870"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-cb05d63be5b21bb2", "source": {"location": "CH", "name": "treatment of waste glass, inert material landfill", "reference product": "waste glass", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-inert-landfill-3307dd456baebfa20870"}, "technosphere_information_loss": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved."},
     {"confidence": 0.453983, "id": "bp-ae2e9fe2c8fb54bd", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "treatment of waste glass, municipal incineration", "reference product": "electricity, for reuse in municipal waste incineration only", "unit": "kilowatt hour"}, "target": {"location": "CH", "name": "Electricity from waste, at municipal waste incineration plant", "reference product": "Electricity from waste, at municipal waste incineration plant", "unit": "kilowatt hour"}},
     {"confidence": 0.456364, "id": "bp-fc53926982f6b02c", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "treatment of waste glass, municipal incineration", "reference product": "heat, for reuse in municipal waste incineration only", "unit": "megajoule"}, "target": {"location": "CH", "name": "Heat from waste, at municipal waste incineration plant", "reference product": "Heat from waste, at municipal waste incineration plant", "unit": "megajoule"}},
     {"confidence": 0.456364, "id": "bp-4d4b3f30ce4be264", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "treatment of waste glass, municipal incineration", "reference product": "heat, for reuse in municipal waste incineration only", "unit": "megajoule"}, "target": {"location": "CH", "name": "Heat from waste, at municipal waste incineration plant", "reference product": "Heat from waste, at municipal waste incineration plant", "unit": "megajoule"}},
@@ -506597,6 +506704,15 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external maize grain, feed to generic market for energy feed / energy feed, gross / RoW / megajoule reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents gross nutritional feed energy in MJ, not industrial heat or fuel energy. No validated nutritional conversion establishes equivalence with the former Heat, at heat pump 30kW, allocation energy / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-cb05d63be5b21bb2": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_inert_landfill_review.json"
+      ],
+      "limitations": [
+        "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved."
+      ],
+      "rationale": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved."
     },
     "r-cb197fda1f8ebc5b": {
       "evidence": [
