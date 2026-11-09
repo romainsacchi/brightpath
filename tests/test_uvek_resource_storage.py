@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 695
+    assert len(forward["reviews"]) == 697
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -596,6 +596,11 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     pe_references = {r["review_ref"] for r in forward["replace"] if r["id"] in pe_ids}
     assert len(pe_ids) == len(pe_references) == 1
     assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in pe_references)
+    purge = json.loads((DATA_DIR / "export/uvek_pilot_purge_handover_review.json").read_text())
+    purge_ids = {purge["stock"]["rule_id"], *(row["rule_id"] for row in purge["records"])}
+    purge_references = {r["review_ref"] for r in forward["replace"] if r["id"] in purge_ids}
+    assert len(purge_ids) == len(purge_references) == 2
+    assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in purge_references)
     teg = json.loads((DATA_DIR / "export/uvek_pilot_teg_supply_review.json").read_text())
     teg_ids = {teg["stock"]["rule_id"], *(row["rule_id"] for row in teg["records"])}
     teg_references = {r["review_ref"] for r in forward["replace"] if r["id"] in teg_ids}
@@ -627,6 +632,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *sanitary_references,
             *teg_references,
             *pe_references,
+            *purge_references,
             *grid_converter_references,
             *copper_supply_references,
             *wastewater_endpoint_references,

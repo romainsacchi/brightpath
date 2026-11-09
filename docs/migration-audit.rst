@@ -202,6 +202,20 @@ warnings. The former building-disposal wrapper's extra 0.01 tkm is not added.
 No physical release is omitted, no treatment share is renormalized, and other
 source releases and fly-ash-extraction routes remain outside this review.
 
+``brightpath/data/export/uvek_pilot_purge_handover_review.json`` corrects the
+inspected ecoinvent 3.9 Chilean sodium-nitrate-rich purge-stream market and its
+explicit ``Recycled Content cut-off`` provider. The positive stock reference
+contains only self-linked production, with no processing or biosphere exchanges;
+the market adds only its original stock handover. Positive foreground helpers
+retain that observed allocation and signed kilograms, supported uncertainty and
+caller formulas. They replace the unrelated potassium-nitrate nutrient and
+indium-residue endpoints. No fuel-energy, nutrient, purity, gas-volume or
+concentration factor is inferred from the stream's name. Standard stock warnings
+retain the distinction between the allocated handover and physical nitrate
+production or recycling. The nonempty reused-salt construction suppliers in the
+separate CSP salt market remain outside this decision; no treatment or physical
+release is omitted, and other source profiles remain refused.
+
 Five further whole-function matches are documented in
 ``brightpath/data/export/uvek_pilot_matching_legacy_supplier_review.json``:
 natural barite, 35% scrap/65% pig-iron castings, one 10 MWe turbine-construction
