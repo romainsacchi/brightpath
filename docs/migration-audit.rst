@@ -191,6 +191,17 @@ production-only cut-off stock. No downstream metallurgy, recovery credit,
 helper or empty treatment is introduced. Only the aluminium rule is rewritten;
 exact scientific admissions remain in Premise's ledger.
 
+``brightpath/data/export/uvek_pilot_generic_alumina_review.json`` inspects
+the unchanged 3.6 positive oxide co-product and 3.12 oxide-market rules.
+Both provide generic Al2O3 stock in kg; the original EAA report confirms
+calcined oxide as the native output basis. Signed demands retain factor
+``+1`` using the complete native extraction/calcination inventory once,
+without a hydroxide-feed multiplier or additional calcination. Specialized
+purity, phase, particle size and application-grade equivalence are not
+established. Co-product allocation, supply mix, delivery and vintage
+differences remain warnings. Exact-profile admissions remain in Premise's
+ledger; no raw rule, helper, inverse or broader profile approval is added.
+
 Exact rule approvals
 --------------------
 
