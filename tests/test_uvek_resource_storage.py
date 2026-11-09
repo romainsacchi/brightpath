@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 724
+    assert len(forward["reviews"]) == 725
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -685,6 +685,13 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
         forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"}
         for ref in concrete_delivery_references
     )
+    fae_routes = json.loads((DATA_DIR / "export/uvek_pilot_fae_routes_review.json").read_text())
+    fae_routes_ids = {row["rule_id"] for row in fae_routes["records"]}
+    fae_routes_references = {r["review_ref"] for r in forward["replace"] if r["id"] in fae_routes_ids}
+    assert len(fae_routes_ids) == 5 and len(fae_routes_references) == 1
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in fae_routes_references
+    )
     kcl = json.loads((DATA_DIR / "export/uvek_pilot_kcl_site_review.json").read_text())
     kcl_ids = {row["rule_id"] for row in kcl["records"]}
     kcl_references = {r["review_ref"] for r in forward["replace"] if r["id"] in kcl_ids}
@@ -744,6 +751,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *water_references,
             *paint_references,
             *concrete_delivery_references,
+            *fae_routes_references,
             *grid_converter_references,
             *copper_supply_references,
             *wastewater_endpoint_references,
