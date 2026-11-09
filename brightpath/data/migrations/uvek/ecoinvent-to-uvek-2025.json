@@ -11,7 +11,7 @@
     "mapping_methods": {
       "curated_legacy": 292,
       "followup_review": 163,
-      "heuristic_similarity": 26726,
+      "heuristic_similarity": 26725,
       "pairwise_review": 2242,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -40,6 +40,7 @@
       "reviewed_five_simple_waste_market_service": 5,
       "reviewed_gas_market_recipe": 2,
       "reviewed_ghana_uncontrolled_inventory": 1,
+      "reviewed_heat_fossil_hydrogen_proxy": 1,
       "reviewed_industrial_landfarming_service": 7,
       "reviewed_industrial_waste_market_service": 14,
       "reviewed_market_composition": 368,
@@ -110,7 +111,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.43816,
+    "mean_confidence": 0.438181,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -708288,7 +708289,7 @@
     {"confidence": 0.293357, "id": "bp-5df95a4dc7805fe3", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for hydrogen peroxide, without water, in 50% solution state", "reference product": "hydrogen peroxide, without water, in 50% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Hydrogen peroxide, 50% in H2O, at plant", "reference product": "Hydrogen peroxide, 50% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.379583, "id": "bp-0258632fdcd150ed", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for hydrogen sulfide", "reference product": "hydrogen sulfide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Hydrogen sulphide, H2S, at plant", "reference product": "Hydrogen sulphide, H2S, at plant", "unit": "kilogram"}},
     {"confidence": 0.299583, "id": "bp-42413d0c0ab90f1f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for hydrogen sulfide", "reference product": "hydrogen sulfide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Hydrogen sulphide, H2S, at plant", "reference product": "Hydrogen sulphide, H2S, at plant", "unit": "kilogram"}},
-    {"confidence": 0.368541, "id": "bp-abce5674d268a95a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for hydrogen, gaseous", "reference product": "hydrogen, gaseous", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen, gaseous, 25 bar, from electrolysis", "reference product": "Hydrogen, gaseous, 25 bar, from electrolysis", "unit": "kilogram"}},
+    {"confidence": 1.0, "conversion_factor": 1, "id": "bp-abce5674d268a95a", "mapping_method": "reviewed_heat_fossil_hydrogen_proxy", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_heat_hydrogen_market_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_heat_hydrogen_market_review.json"], "reason": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact inspected3.9cutoff hydrogen-market profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7f53bc1c25ec306c", "source": {"location": "GLO", "name": "market for hydrogen, gaseous", "reference product": "hydrogen, gaseous", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}, "technosphere_information_loss": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported."},
     {"confidence": 0.5, "id": "bp-2932a5080192215e", "mapping_method": "pairwise_review", "review_ref": "r-5139ddc24507e89d", "source": {"location": "CN", "name": "market for hydrogen, gaseous, low pressure", "reference product": "hydrogen, gaseous, low pressure", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}},
     {"confidence": 0.5, "id": "bp-cf83bb724223e5b7", "mapping_method": "pairwise_review", "review_ref": "r-5139ddc24507e89d", "source": {"location": "RER", "name": "market for hydrogen, gaseous, low pressure", "reference product": "hydrogen, gaseous, low pressure", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}},
     {"confidence": 0.5, "id": "bp-6850bc6a799c3090", "mapping_method": "pairwise_review", "review_ref": "r-5139ddc24507e89d", "source": {"location": "RoW", "name": "market for hydrogen, gaseous, low pressure", "reference product": "hydrogen, gaseous, low pressure", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}},
@@ -728775,6 +728776,18 @@
         "Approved wastewater-service screening proxy: Both inspected source and proxy include sewer infrastructure. The RER source is represented by the RER class-1 service using Swiss infrastructure. Plant capacity, treatment-stage mix, wastewater composition, pollutant removal, sludge fate, energy recovery, allocation and background supplies may differ; LCIA equivalence is not established or quantified."
       ],
       "rationale": "Approved on 2026-11-04, including independently inspected similar cases: retain the medium density board effluent treatment service for the exact source treatment of wastewater from medium density fibreboard production, capacity 5E9l/year / RER / cubic meter, with factor -1. The native UVEK PRODUCT_FLOW output is a volume of wastewater treatment, not a recovered material. Wastewater type and quantity basis agree; process-boundary, treatment-model and geographic approximations are explicitly accepted. Wastewater markets and different effluent types are excluded."
+    },
+    "r-7f53bc1c25ec306c": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_hydrogen_market_review.json"
+      ],
+      "limitations": [
+        "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix.",
+        "Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed.",
+        "Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies.",
+        "Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported."
+      ],
+      "rationale": "Standing user autonomous modelling approval. Review the actual fossil-hydrogen boundary; use the closest complete native fossil-H2 supply proxy with warnings, and reject the inherited electrolysis heuristic."
     },
     "r-7f73483b4b6bbe14": {
       "evidence": [
