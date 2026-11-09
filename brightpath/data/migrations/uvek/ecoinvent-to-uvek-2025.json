@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 908,
-      "unclassified": 29565
+      "recipe": 909,
+      "unclassified": 29564
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 297,
       "followup_review": 163,
-      "heuristic_similarity": 26746,
+      "heuristic_similarity": 26743,
       "pairwise_review": 2244,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -45,6 +45,7 @@
       "reviewed_pilot_inert_composition": 2,
       "reviewed_pilot_inert_landfill": 2,
       "reviewed_pilot_kcl_site": 1,
+      "reviewed_pilot_legacy_components": 3,
       "reviewed_pilot_low_alloyed_cast_stock": 1,
       "reviewed_pilot_material": 16,
       "reviewed_pilot_mixed_heat_market": 1,
@@ -98,7 +99,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.437691,
+    "mean_confidence": 0.437754,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -159384,6 +159385,892 @@
       "rationale": "Preserve the exact inspected ecoinvent3.9 cut-off industrial potassium-chloride production from Chilean salar brine as a positive one-kg source helper. The source specifies minimum95%KCl and contains four operating/material/waste inputs and five direct elementary exchanges. Preserve those original signed coefficients and supported uncertainty. Do not substitute kgK2O nutrient fertilizer, infer chemical purity/yield or introduce a nutrient, density, water or molecular multiplier. Diesel uses the complete reviewed building-machine combustion service per fuelMJ, including machine/fuel/emissions once; no electrical-output normalization. Electricity uses the complete native Chilean medium-voltage consumption-grid service per deliveredkWh, retaining its native grid topology, losses, infrastructure and SF6. It is not the domestic-production-only mix; portfolio, import, network, allocation, geography and vintage differences remain warnings. Film supply retains the two original producer shares separately through complete native PVF film at plant, not PVC/PTFE. Both source producers and native film use the same nominal dispersion/pigment quantities; the native process retains its own complete cumulative production, internal transport, infrastructure, energy and emissions once. Its historical US design replaces global producer technology/geographies; source useful-heat versus native fuel-energy conventions, incomplete documented emissions and uncertain cumulative transport boundaries remain explicit screening limitations, not LCIA equivalence. Original final-market delivery remains separate, with every road/light-road/rail/sea entry preserved. Waste retains its sole ordinary-incineration fate and all eleven collection entries. All44 wet-composition/heating-value coordinates match native2026 PVF disposal; unknown values stay unknown. Preserve the original source generic-PVF waste model without inventing a pigment/recovery adjustment. Negative-reference source waste demand becomes positive complete native treatment using factor-1 on each original signed exchange and its uncertainty. Add no source incineration inventory or emissions, extra recovery/heat/metal credit, FAE branch or uncontrolled fate on top of that complete service. Complete same-mode freight uses the previously reviewed rail, heavy-road,3.5t-light-road,barge and container-ship endpoints per originaltkm; country, fleet, fuel, loading, emission, infrastructure and vintage differences remain warnings. The generic rail proxy is not coal-only transport; the light-commercial entry is not a heavy lorry. Keep native whole-vehicle/vessel/port infrastructure once. Source parent/markets have no parameters/formulas. Five signed site biosphere exchanges use exact publisherUUID/unit/fullreceiving-compartment ecoinvent3.10 definitions with no chemical or compartment factor. Preserve caller quantities, uncertainty, formulas, ownership, separate emissions and purchases; score/export all three returned helpers. Native biosphere exclusions and allocation/emission differences remain warnings with unquantified score effects. Only this exact3.9cutoff parent qualifies, not standalone PVF/freight/electricity approvals, the complete nitrate-salt supply chain, other releases, inverse or cross-system-model routes. Raw child fingerprints freeze drift without admitting their heuristic endpoints.",
       "reference product": "potassium chloride, industrial grade",
       "unit": "kilogram"
+    },
+    "pilot-legacy-hour-bddff022fdd02aaa1ff6": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_legacy_components_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 2.2033e-06,
+          "loc": -13.025554321476267,
+          "location": "RER",
+          "name": "Aircraft, medium haul",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Aircraft, medium haul",
+          "scale": 0.7231535155130309,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 182.6,
+          "loc": 5.2072979681608675,
+          "location": "RER",
+          "name": "Kerosene, at regional storage",
+          "negative": false,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 5,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "reference product": "Kerosene, at regional storage",
+          "scale": 0.10896499213066123,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.826e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Cadmium II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -13.213382775791496,
+          "name": "Cadmium II",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.8653762413264326,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8326.6,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Heat, waste",
+                "unit": "megajoule"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": 9.027210488574283,
+          "name": "Heat, waste",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.3192398896088186,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0446,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -3.1100214199561185,
+          "name": "Particulate Matter, < 2.5 um",
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 5,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.5654751982900271,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.652e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Lead II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -12.520235595231552,
+          "name": "Lead II",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.8653762413264326,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.826e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Selenium IV",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -13.213382775791496,
+          "name": "Selenium IV",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.8653762413264326,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.18337,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "NMVOC, non-methane volatile organic compounds",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -1.6962493094210638,
+          "name": "NMVOC, non-methane volatile organic compounds",
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 5,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.24315374797613262,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.2782e-08,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Mercury II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -18.17522790571832,
+          "name": "Mercury II",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.8653762413264326,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.1826,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Sulfur dioxide",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -1.7004573108212688,
+          "name": "Sulfur dioxide",
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 5,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1364618507381177,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0054522,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Benzene",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -5.211736082034918,
+          "name": "Benzene",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.6348662272908852,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.2782e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Nickel II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -11.267472626736184,
+          "name": "Nickel II",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.8653762413264326,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.57,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Nitrogen oxides",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": 0.4510756193602167,
+          "name": "Nitrogen oxides",
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 5,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.24315374797613262,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 9.13e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Chromium III",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -11.603944863357396,
+          "name": "Chromium III",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.8653762413264326,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.049931,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Ethylene",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -2.9971132266309226,
+          "name": "Ethylene",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.37737977484373386,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0001826,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Zinc II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -8.608212589803406,
+          "name": "Zinc II",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.8653762413264326,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 575.19,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Carbon dioxide, fossil",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": 6.35470042099841,
+          "name": "Carbon dioxide, fossil",
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 5,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1364618507381177,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01826,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Dinitrogen monoxide",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -4.003042403815314,
+          "name": "Dinitrogen monoxide",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.37737977484373386,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.75,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Carbon monoxide, fossil",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -0.2876820724517809,
+          "name": "Carbon monoxide, fossil",
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 5,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.8158442606844601,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.32304,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Methane, fossil",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -1.1299791244176096,
+          "name": "Methane, fossil",
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 5,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.24315374797613262,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00031042,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Copper ion",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -8.077584338741236,
+          "name": "Copper ion",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.8653762413264326,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.043044,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Formaldehyde",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -3.1455324306439914,
+          "name": "Formaldehyde",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.37737977484373386,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00022642000000000002,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -8.393118876314311,
+          "name": "Water",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.37737977484373386,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0051652,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact actual native2026 per-hour biosphere coordinate, canonical publisher UUID/unit/compartment/role, copied without scaling.",
+              "target": {
+                "categories": [
+                  "air",
+                  "non-urban air or from high stacks"
+                ],
+                "name": "Butadiene",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "non-urban air or from high stacks"
+          ],
+          "loc": -5.265811454991777,
+          "name": "Butadiene",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 2
+          },
+          "scale": 0.37737977484373386,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "GLO",
+      "name": "transport, helicopter, composed from resolved suppliers, GLO",
+      "rationale": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. ",
+      "reference product": "transport, helicopter",
+      "unit": "hour"
     },
     "pilot-low-alloyed-cast-stock-902a30530898c4f57d9f": {
       "evidence": [
@@ -690031,7 +690918,7 @@
     {"confidence": 0.8425, "id": "bp-32daf85cc7b2a93e", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "heat pump production, brine-water, 10kW", "reference product": "heat pump, brine-water, 10kW", "unit": "unit"}, "target": {"location": "CH", "name": "Heat pump, brine-water, 10kW", "reference product": "Heat pump, brine-water, 10kW", "unit": "unit"}},
     {"confidence": 0.881958, "id": "bp-f9a30a379851fb0f", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "heat pump production, diffusion absorption, 4kW, future", "reference product": "heat pump, diffusion absorption, 4kW, future", "unit": "unit"}, "target": {"location": "CH", "name": "Diffusion absorption heat pump 4kW, future", "reference product": "Diffusion absorption heat pump 4kW, future", "unit": "unit"}},
     {"confidence": 0.801958, "id": "bp-7dd9b850225ce858", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "heat pump production, diffusion absorption, 4kW, future", "reference product": "heat pump, diffusion absorption, 4kW, future", "unit": "unit"}, "target": {"location": "CH", "name": "Diffusion absorption heat pump 4kW, future", "reference product": "Diffusion absorption heat pump 4kW, future", "unit": "unit"}},
-    {"confidence": 0.344502, "id": "bp-17d12aa909c440e8", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "heat pump production, for heat and power co-generation unit, 160kW electrical", "reference product": "heat pump, for heat and power co-generation unit, 160kW electrical", "unit": "unit"}, "target": {"location": "RER", "name": "Cogen unit 160kWe, common components for heat+electricity", "reference product": "Cogen unit 160kWe, common components for heat+electricity", "unit": "unit"}},
+    {"confidence": 1.0, "conversion_factor": 1, "id": "bp-17d12aa909c440e8", "mapping_method": "reviewed_pilot_legacy_components", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_legacy_components_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_legacy_components_review.json"], "reason": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. The source name says heat pump, but its actual documentation describes infrastructure at the historic Jakobsberg Basel natural-gas lambda1 CHP plant,160kWe,operation start1987,lifetime80000h. The native Heat exchanger of cogen unit160kWe describes the same plant/capacity/lifetime, and has the same590kg reinforcingsteel +590kg low-alloyedsteel +1.42m3 pigiron-effluent treatment demand and1.77m3 water uptake. Correct the previous whole-common-components match, which contains motor, catalysts,controls,maintenance and other shared plant equipment. Neither common- nor all-heat-components assembly represents this exchanger reference. Retain one native exchanger per source component, without the1.25 exchanger count belonging to the native parent heat-components assembly. Source steel is explicitly hotrolled whereas native stock is labelled lowalloyed; upstream processing, source global market routing and native59road/708railtkm logistics differ. Source water emissions total0.35m3 in two receiving contexts; native has1.6815m3 in its water model. Water/effluent fate and balance are not asserted equal and no corrective credit or water factor is invented. Source negative effluent purchases point to negative-reference treatment suppliers; the positive native exchanger already contains positive1.42m3 treatment, not a disposal credit. Complete native component replaces those source internals once; do not add original steel,water,effluent or another parent assembly. ", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}}], "reason": "Only the exact inspected cut-off source profiles are approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-e68b4cca4d70786a", "source": {"location": "RER", "name": "heat pump production, for heat and power co-generation unit, 160kW electrical", "reference product": "heat pump, for heat and power co-generation unit, 160kW electrical", "unit": "unit"}, "target": {"location": "RER", "name": "Heat exchanger of cogen unit 160kWe", "reference product": "Heat exchanger of cogen unit 160kWe", "unit": "unit"}, "technosphere_information_loss": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. The source name says heat pump, but its actual documentation describes infrastructure at the historic Jakobsberg Basel natural-gas lambda1 CHP plant,160kWe,operation start1987,lifetime80000h. The native Heat exchanger of cogen unit160kWe describes the same plant/capacity/lifetime, and has the same590kg reinforcingsteel +590kg low-alloyedsteel +1.42m3 pigiron-effluent treatment demand and1.77m3 water uptake. Correct the previous whole-common-components match, which contains motor, catalysts,controls,maintenance and other shared plant equipment. Neither common- nor all-heat-components assembly represents this exchanger reference. Retain one native exchanger per source component, without the1.25 exchanger count belonging to the native parent heat-components assembly. Source steel is explicitly hotrolled whereas native stock is labelled lowalloyed; upstream processing, source global market routing and native59road/708railtkm logistics differ. Source water emissions total0.35m3 in two receiving contexts; native has1.6815m3 in its water model. Water/effluent fate and balance are not asserted equal and no corrective credit or water factor is invented. Source negative effluent purchases point to negative-reference treatment suppliers; the positive native exchanger already contains positive1.42m3 treatment, not a disposal credit. Complete native component replaces those source internals once; do not add original steel,water,effluent or another parent assembly. "},
     {"confidence": 0.264502, "id": "bp-0fdf9fd29e902ba8", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "heat pump production, for heat and power co-generation unit, 160kW electrical", "reference product": "heat pump, for heat and power co-generation unit, 160kW electrical", "unit": "unit"}, "target": {"location": "RER", "name": "Cogen unit 160kWe, common components for heat+electricity", "reference product": "Cogen unit 160kWe, common components for heat+electricity", "unit": "unit"}},
     {"confidence": 0.535354, "id": "bp-0a7912bf614eeb24", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "heat pump production, for mini CHP plant", "reference product": "heat pump, for mini CHP plant", "unit": "unit"}, "target": {"location": "CH", "name": "Heat exchanger of Mini CHP plant", "reference product": "Heat exchanger of Mini CHP plant", "unit": "unit"}},
     {"confidence": 0.455354, "id": "bp-fbabf8bb481ec38e", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "heat pump production, for mini CHP plant", "reference product": "heat pump, for mini CHP plant", "unit": "unit"}, "target": {"location": "CH", "name": "Heat exchanger of Mini CHP plant", "reference product": "Heat exchanger of Mini CHP plant", "unit": "unit"}},
@@ -706100,8 +706987,8 @@
     {"confidence": 0.67697, "id": "bp-94783f0657d8a6c9", "mapping_method": "heuristic_similarity", "source": {"location": "IT", "name": "transport, freight, train, fleet average", "reference product": "transport, freight, train, fleet average", "unit": "ton kilometer"}, "target": {"location": "CH", "name": "Transport, freight, lorry, fleet average", "reference product": "Transport, freight, lorry, fleet average", "unit": "ton kilometer"}},
     {"confidence": 0.54774, "id": "bp-2f14847a091580ae", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "transport, freight, train, steam", "reference product": "transport, freight, train, fleet average", "unit": "ton kilometer"}, "target": {"location": "CH", "name": "Transport, freight, lorry, fleet average", "reference product": "Transport, freight, lorry, fleet average", "unit": "ton kilometer"}},
     {"confidence": 0.54774, "id": "bp-cc682d63b9aee051", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "transport, freight, train, steam", "reference product": "transport, freight, train, fleet average", "unit": "ton kilometer"}, "target": {"location": "CH", "name": "Transport, freight, lorry, fleet average", "reference product": "Transport, freight, lorry, fleet average", "unit": "ton kilometer"}},
-    {"confidence": 0.089677, "id": "bp-ab9eb6c9ccfd6290", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "transport, helicopter", "reference product": "transport, helicopter", "unit": "hour"}, "target": {"location": "CH", "name": "Use of CPE, for transmission network per hour", "reference product": "Use of CPE, for transmission network per hour", "unit": "hour"}},
-    {"confidence": 0.649333, "id": "bp-b62924eca33d09c2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "transport, helicopter, LTO cycle", "reference product": "transport, helicopter, LTO cycle", "unit": "unit"}, "target": {"location": "CH", "name": "Transport, helicopter, twin-engine, LTO cycle", "reference product": "Transport, helicopter, twin-engine, LTO cycle", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-ab9eb6c9ccfd6290", "mapping_method": "reviewed_pilot_legacy_components", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_legacy_components_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_legacy_components_review.json#ecoinvent-3.6-cutoff/afe7c86665b9a2dd59da4798845fd96da4743f68d9f246e01ab6a74d5f8744ee"], "reason": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. ", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "pilot-legacy-hour-bddff022fdd02aaa1ff6"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-c3304b805c678a31", "source": {"location": "GLO", "name": "transport, helicopter", "reference product": "transport, helicopter", "unit": "hour"}, "target": {"recipe_ref": "pilot-legacy-hour-bddff022fdd02aaa1ff6"}, "technosphere_information_loss": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. "},
+    {"confidence": 1.0, "conversion_factor": 1, "id": "bp-b62924eca33d09c2", "mapping_method": "reviewed_pilot_legacy_components", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_legacy_components_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_legacy_components_review.json"], "reason": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Qualify one complete native twin-engine helicopter landing/take-off cycle per source generic Swiss civil LTO cycle. Source reference and native reference are each one cycle, not an hour or an aircraft. Source fuel totals45.2kg/cycle; native41.2kg/cycle. Native model documents EC135VIP while another description states freight helicopter6500kg; preserve that model/mass inconsistency as a limitation rather than silently choosing a new aircraft or scaling by mass. Fleet,mission,altitude/time envelope,emission factors and vintage differ. Source generic civil cycle lacks a verified engine/payload distinction, so this is an explicit cycle-service screening proxy. Do not append cruise/manufacture or infer cycles per hour. Separate caller flight-hour exchanges remain unchanged. ", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}}], "reason": "Only the exact inspected cut-off source profiles are approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-4712806767609264", "source": {"location": "GLO", "name": "transport, helicopter, LTO cycle", "reference product": "transport, helicopter, LTO cycle", "unit": "unit"}, "target": {"location": "CH", "name": "Transport, helicopter, twin-engine, LTO cycle", "reference product": "Transport, helicopter, twin-engine, LTO cycle", "unit": "unit"}, "technosphere_information_loss": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Qualify one complete native twin-engine helicopter landing/take-off cycle per source generic Swiss civil LTO cycle. Source reference and native reference are each one cycle, not an hour or an aircraft. Source fuel totals45.2kg/cycle; native41.2kg/cycle. Native model documents EC135VIP while another description states freight helicopter6500kg; preserve that model/mass inconsistency as a limitation rather than silently choosing a new aircraft or scaling by mass. Fleet,mission,altitude/time envelope,emission factors and vintage differ. Source generic civil cycle lacks a verified engine/payload distinction, so this is an explicit cycle-service screening proxy. Do not append cruise/manufacture or infer cycles per hour. Separate caller flight-hour exchanges remain unchanged. "},
     {"confidence": 0.07, "id": "bp-3cecf2e64b5b1f44", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "transport, helicopter, kerosene", "reference product": "transport, helicopter, kerosene", "unit": "hour"}, "target": {"location": "CH", "name": "Use of CPE, for transmission network per hour", "reference product": "Use of CPE, for transmission network per hour", "unit": "hour"}},
     {"confidence": 0.591209, "id": "bp-d954f07e666d8132", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "transport, helicopter, kerosene, LTO cycle", "reference product": "transport, helicopter, kerosene, LTO cycle", "unit": "unit"}, "target": {"location": "CH", "name": "Transport, helicopter, twin-engine, LTO cycle", "reference product": "Transport, helicopter, twin-engine, LTO cycle", "unit": "unit"}},
     {"confidence": 0.484329, "conversion_factor": 1.0, "id": "bp-a27fa3bd6fec632f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "transport, passenger aircraft, all distances to generic market for transport, passenger aircraft, unspecified", "reference product": "transport, passenger aircraft, unspecified", "unit": "person kilometer"}, "target": {"location": "RER", "name": "Transport, aircraft, passenger", "reference product": "Transport, aircraft, passenger", "unit": "person-kilometer"}},
@@ -713577,6 +714464,15 @@
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external molasses, from sugar beet, to generic market for energy feed / protein feed, 100% crude / GLO / kilogram reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents 100%-crude-protein feed in kg, not an unscaled kilogram of crop, oil or unspecified protein concentrate. No validated nutritional conversion establishes equivalence with the former Protein peas IP, at feed mill / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
     },
+    "r-4712806767609264": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+      ],
+      "limitations": [
+        "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Qualify one complete native twin-engine helicopter landing/take-off cycle per source generic Swiss civil LTO cycle. Source reference and native reference are each one cycle, not an hour or an aircraft. Source fuel totals45.2kg/cycle; native41.2kg/cycle. Native model documents EC135VIP while another description states freight helicopter6500kg; preserve that model/mass inconsistency as a limitation rather than silently choosing a new aircraft or scaling by mass. Fleet,mission,altitude/time envelope,emission factors and vintage differ. Source generic civil cycle lacks a verified engine/payload distinction, so this is an explicit cycle-service screening proxy. Do not append cruise/manufacture or infer cycles per hour. Separate caller flight-hour exchanges remain unchanged. "
+      ],
+      "rationale": "User instruction auto-approve coming decisions: exact3.6cut-off pilot correction/qualification of a historic CHP heat exchanger, declared helicopter hour without LTO, and civil LTO cycle, with explicit source/native model differences and no reference-unit rescaling."
+    },
     "r-4804550bc641839b": {
       "evidence": [
         "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-2b1226497d3de746",
@@ -717158,6 +718054,15 @@
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for bottom ash, MSWI[F]-WWT, WW from liquid crystal production / CH / kg external exchange with a warning. All inspected direct service comments for liquid crystal production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
     },
+    "r-c3304b805c678a31": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+      ],
+      "limitations": [
+        "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. "
+      ],
+      "rationale": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. "
+    },
     "r-c36c05baccdf70b1": {
       "limitations": [
         "Identity-level comparison only; inventory composition and LCIA equivalence are not verified.",
@@ -718155,6 +719060,15 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for sewage sludge, 97% water, WWT, WW from liquid crystal production / RoW / kg external exchange with a warning. All inspected direct service comments for liquid crystal production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-e68b4cca4d70786a": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+      ],
+      "limitations": [
+        "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. The source name says heat pump, but its actual documentation describes infrastructure at the historic Jakobsberg Basel natural-gas lambda1 CHP plant,160kWe,operation start1987,lifetime80000h. The native Heat exchanger of cogen unit160kWe describes the same plant/capacity/lifetime, and has the same590kg reinforcingsteel +590kg low-alloyedsteel +1.42m3 pigiron-effluent treatment demand and1.77m3 water uptake. Correct the previous whole-common-components match, which contains motor, catalysts,controls,maintenance and other shared plant equipment. Neither common- nor all-heat-components assembly represents this exchanger reference. Retain one native exchanger per source component, without the1.25 exchanger count belonging to the native parent heat-components assembly. Source steel is explicitly hotrolled whereas native stock is labelled lowalloyed; upstream processing, source global market routing and native59road/708railtkm logistics differ. Source water emissions total0.35m3 in two receiving contexts; native has1.6815m3 in its water model. Water/effluent fate and balance are not asserted equal and no corrective credit or water factor is invented. Source negative effluent purchases point to negative-reference treatment suppliers; the positive native exchanger already contains positive1.42m3 treatment, not a disposal credit. Complete native component replaces those source internals once; do not add original steel,water,effluent or another parent assembly. "
+      ],
+      "rationale": "User instruction auto-approve coming decisions: exact3.6cut-off pilot correction/qualification of a historic CHP heat exchanger, declared helicopter hour without LTO, and civil LTO cycle, with explicit source/native model differences and no reference-unit rescaling."
     },
     "r-e6a164a07351dcfa": {
       "evidence": [

@@ -680,6 +680,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from scripts.review_uvek_pilot_ng_heat_market import apply_pilot_ng_heat_market_review
         from scripts.review_uvek_pilot_mixed_heat_market import apply_pilot_mixed_heat_market_review
         from scripts.review_uvek_pilot_nitrate_market import apply_pilot_nitrate_market_review
+        from scripts.review_uvek_pilot_legacy_components import apply_pilot_legacy_components_review
     else:
         from review_uvek_pilot_materials import (
             apply_pilot_material_review,
@@ -729,6 +730,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_pilot_ng_heat_market import apply_pilot_ng_heat_market_review
         from review_uvek_pilot_mixed_heat_market import apply_pilot_mixed_heat_market_review
         from review_uvek_pilot_nitrate_market import apply_pilot_nitrate_market_review
+        from review_uvek_pilot_legacy_components import apply_pilot_legacy_components_review
 
     apply_pilot_material_review(technosphere)
     apply_pilot_incinerator_review(technosphere)
@@ -776,6 +778,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_pilot_ng_heat_market_review(technosphere)
     apply_pilot_mixed_heat_market_review(technosphere)
     apply_pilot_nitrate_market_review(technosphere)
+    apply_pilot_legacy_components_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
