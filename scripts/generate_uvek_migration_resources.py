@@ -645,6 +645,7 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         from scripts.review_uvek_pilot_grid_converter import apply_pilot_grid_converter_review
         from scripts.review_uvek_pilot_copper_supply import apply_pilot_copper_supply_review
         from scripts.review_uvek_pilot_wastewater import apply_pilot_wastewater_review
+        from scripts.review_uvek_pilot_wood_steel_freight import apply_pilot_wood_steel_freight_review
     else:
         from generate_uvek_canonical_biosphere import build_canonical_biosphere_resource
         from review_uvek_pilot_materials import (
@@ -658,6 +659,7 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
         from review_uvek_pilot_grid_converter import apply_pilot_grid_converter_review
         from review_uvek_pilot_copper_supply import apply_pilot_copper_supply_review
         from review_uvek_pilot_wastewater import apply_pilot_wastewater_review
+        from review_uvek_pilot_wood_steel_freight import apply_pilot_wood_steel_freight_review
 
     technosphere = cutoff_uvek_resource(historical, catalog_directory)
     apply_pilot_material_review(technosphere)
@@ -669,6 +671,7 @@ def build_resources(catalog_directory: Path, curated_path: Path, conversion_fact
     apply_pilot_grid_converter_review(technosphere)
     apply_pilot_copper_supply_review(technosphere)
     apply_pilot_wastewater_review(technosphere)
+    apply_pilot_wood_steel_freight_review(technosphere)
     validate_migration_resource(technosphere)
     return technosphere, build_canonical_biosphere_resource(catalog_directory)
 

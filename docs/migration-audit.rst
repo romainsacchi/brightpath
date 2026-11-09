@@ -167,6 +167,19 @@ biosphere and vintage differences remain warnings. No new helper, internal
 inventory reconstruction, credit, inverse or cross-system-model route is added.
 Uninspected profiles retain an unresolved reference-review default.
 
+``brightpath/data/export/uvek_pilot_wood_steel_freight_review.json`` corrects
+three suppliers for four inspected cut-off profiles. The 3.6/3.9 wet-chip market
+uses complete native RER forest/sawmill and hardwood/softwood supply, retaining
+kg dry matter without moisture or yield scaling. The 3.12 EAF/AOD stainless
+market uses native EAF 18/8 without the previous target's converter share and
+hot rolling. The 3.6 >32 t EURO4 lorry uses the complete native 32–40 t diesel
+freight fleet. Its long-haul/regional/urban and EURO-standard suppliers retain
+fuel, vehicle lifecycle, roads, maintenance and emissions. Signed kg/tkm keep
+factor ``+1``; exact source supply shares, steel details, freight class/standard,
+payload, geography, delivery and vintage differ and remain warnings. No helper,
+quantity multiplier, extra processing stage or inverse is introduced. Other
+profiles retain unresolved reference-review defaults.
+
 Exact rule approvals
 --------------------
 
