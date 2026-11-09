@@ -4,12 +4,12 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 811,
-      "unclassified": 29662
+      "recipe": 812,
+      "unclassified": 29661
     },
     "mapped_identities": 30732,
     "mapping_methods": {
-      "curated_legacy": 300,
+      "curated_legacy": 299,
       "followup_review": 163,
       "heuristic_similarity": 26830,
       "pairwise_review": 2256,
@@ -39,6 +39,7 @@
       "reviewed_pet_market_group_service": 2,
       "reviewed_pet_waste_market_service": 41,
       "reviewed_pilot_inert_landfill": 2,
+      "reviewed_pilot_low_alloyed_cast_stock": 1,
       "reviewed_pilot_material": 16,
       "reviewed_polyester_pet_transfer": 1,
       "reviewed_pp_uncontrolled_source_inventory": 2,
@@ -143936,6 +143937,330 @@
       "name": "treatment of scrap steel, inert material landfill, composed from resolved suppliers, CH",
       "rationale": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved.",
       "reference product": "scrap steel",
+      "unit": "kilogram"
+    },
+    "pilot-low-alloyed-cast-stock-902a30530898c4f57d9f": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.5671427281822161,
+          "loc": 0.5671427281822161,
+          "location": "RER",
+          "name": "Steel, converter, low-alloyed, at plant",
+          "reference product": "Steel, converter, low-alloyed, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.4328572718177839,
+          "loc": 0.4328572718177839,
+          "location": "CH",
+          "name": "Steel, electric, low-alloyed, at plant",
+          "reference product": "Steel, electric, low-alloyed, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0201,
+          "loc": -3.907035463917107,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2065,
+          "loc": -1.5774548665810497,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.4409,
+          "loc": -0.8189371866182451,
+          "location": "OCE",
+          "name": "Transport, transoceanic freight ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic freight ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1903,
+          "loc": -1.6591535046800332,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for steel, low-alloyed, composed from resolved suppliers, GLO",
+      "rationale": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty.",
+      "reference product": "steel, low-alloyed",
+      "unit": "kilogram"
+    },
+    "pilot-low-alloyed-cast-stock-9154f96aeb98b12c52f9": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.7421076548969346,
+          "loc": 0.7421076548969346,
+          "location": "RER",
+          "name": "Steel, converter, low-alloyed, at plant",
+          "reference product": "Steel, converter, low-alloyed, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.2578923451030648,
+          "loc": 0.2578923451030648,
+          "location": "CH",
+          "name": "Steel, electric, low-alloyed, at plant",
+          "reference product": "Steel, electric, low-alloyed, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.1903,
+          "loc": -1.6591535046800332,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0201,
+          "loc": -3.907035463917107,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2065,
+          "loc": -1.5774548665810497,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.4409,
+          "loc": -0.8189371866182451,
+          "location": "OCE",
+          "name": "Transport, transoceanic freight ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic freight ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for steel, low-alloyed, composed from resolved suppliers, GLO",
+      "rationale": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty.",
+      "reference product": "steel, low-alloyed",
+      "unit": "kilogram"
+    },
+    "pilot-low-alloyed-cast-stock-cdb9c0d6155163d5d313": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.7421076548969346,
+          "loc": 0.7421076548969346,
+          "location": "RER",
+          "name": "Steel, converter, low-alloyed, at plant",
+          "reference product": "Steel, converter, low-alloyed, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.2578923451030648,
+          "loc": 0.2578923451030648,
+          "location": "CH",
+          "name": "Steel, electric, low-alloyed, at plant",
+          "reference product": "Steel, electric, low-alloyed, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0201,
+          "loc": -3.907035463917107,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2065,
+          "loc": -1.5774548665810497,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.4409,
+          "loc": -0.8189371866182451,
+          "location": "OCE",
+          "name": "Transport, transoceanic freight ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic freight ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1903,
+          "loc": -1.6591535046800332,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for steel, low-alloyed, composed from resolved suppliers, GLO",
+      "rationale": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty.",
+      "reference product": "steel, low-alloyed",
       "unit": "kilogram"
     },
     "polyester-pet-transfer-4b73ca161d7c988825e9": {
@@ -488187,7 +488512,7 @@
     {"confidence": 1.0, "conversion_factor": 1, "id": "bp-4529f104ab14ba19", "mapping_method": "reviewed_pilot_material", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_wood_steel_freight_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_wood_steel_freight_review.json"], "reason": "Replace the rolled 37% electric/63% converter steel mix with the existing complete native electric-furnace chromium-steel-18/8 process at plant. The actual 3.12 source market has two positive-reference Type304/18-8 EAF and AOD producers, whose endpoint is continuously cast stainless slabs, not hot-rolled steel. Both source/native EAF supplies use scrap as the iron-bearing input together with alloying feedstock; the native definition includes steelmaking and casting and has no rolling input. Preserve signed kg at factor +1 and the complete native feedstock, alloying, energy, internal freight, infrastructure, residues and emissions once. Do not add hot rolling, a converter share, metal-yield/alloy-content scaling, extra scrap or a recovery credit, and retain separately listed caller fabrication/transport. Native historical European EAF/alloy averages approximate the global source producers; detailed alloy composition, furnace/secondary-metallurgy efficiency, allocation, internal recycling and residue routes, delivery, geography, biosphere definitions and vintage differ. These are screening limitations with unquantified score effects, not exact alloy or LCIA equivalence. Only the enumerated cut-off profile is admitted.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the exact inspected cut-off source profiles are approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-20ff324b59dfd257", "source": {"location": "GLO", "name": "market for steel, chromium steel 18/8", "reference product": "steel, chromium steel 18/8", "unit": "kilogram"}, "target": {"location": "RER", "name": "Steel, electric, chromium steel 18/8, at plant", "reference product": "Steel, electric, chromium steel 18/8, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Replace the rolled 37% electric/63% converter steel mix with the existing complete native electric-furnace chromium-steel-18/8 process at plant. The actual 3.12 source market has two positive-reference Type304/18-8 EAF and AOD producers, whose endpoint is continuously cast stainless slabs, not hot-rolled steel. Both source/native EAF supplies use scrap as the iron-bearing input together with alloying feedstock; the native definition includes steelmaking and casting and has no rolling input. Preserve signed kg at factor +1 and the complete native feedstock, alloying, energy, internal freight, infrastructure, residues and emissions once. Do not add hot rolling, a converter share, metal-yield/alloy-content scaling, extra scrap or a recovery credit, and retain separately listed caller fabrication/transport. Native historical European EAF/alloy averages approximate the global source producers; detailed alloy composition, furnace/secondary-metallurgy efficiency, allocation, internal recycling and residue routes, delivery, geography, biosphere definitions and vintage differ. These are screening limitations with unquantified score effects, not exact alloy or LCIA equivalence. Only the enumerated cut-off profile is admitted."},
     {"confidence": 1.0, "id": "bp-263c185cdbca7a8c", "mapping_method": "curated_legacy", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_stainless_stock_review.json"], "reason": "Reviewed cut-off hot-rolled 18/8 stainless material proxy. Source markets supply the inspected hot-rolled RER/RoW producers; each producer uses one kg of 18/8 stock and one kg of hot-rolling service. UVEK's RER material includes 0.63 kg converter stock, 0.37 kg electric stock and one kg of Hot rolling, steel per kg product. This is the full hot-rolled material, not the former Sheet rolling, chromium steel cold-rolling service, whose 0.0516 kg stock input covers rolling losses. Preserve incoming signed kg with factor +1; no separate rolling input is added. The RER average stock replaces source GLO/RoW supply, freight, production and technology mixes; geographic, vintage and background differences remain, and equal LCIA scores are not established. Preserve caller uncertainty, formulas, foreground suppliers and separate emissions. No treatment, recovery credit, omission, allocation reconstruction or inverse is inferred. Cross-system-model conversion remains unsupported; the existing reverse material rule is checked independently.", "source_sign": 1, "status": "verified", "target_sign": 1}, "review_ref": "r-a8e9afa70a450560", "source": {"location": "GLO", "name": "market for steel, chromium steel 18/8, hot rolled", "reference product": "steel, chromium steel 18/8, hot rolled", "unit": "kilogram"}, "target": {"location": "RER", "name": "Chromium steel 18/8, at plant", "reference product": "Chromium steel 18/8, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Reviewed cut-off hot-rolled 18/8 stainless material proxy. Source markets supply the inspected hot-rolled RER/RoW producers; each producer uses one kg of 18/8 stock and one kg of hot-rolling service. UVEK's RER material includes 0.63 kg converter stock, 0.37 kg electric stock and one kg of Hot rolling, steel per kg product. This is the full hot-rolled material, not the former Sheet rolling, chromium steel cold-rolling service, whose 0.0516 kg stock input covers rolling losses. Preserve incoming signed kg with factor +1; no separate rolling input is added. The RER average stock replaces source GLO/RoW supply, freight, production and technology mixes; geographic, vintage and background differences remain, and equal LCIA scores are not established. Preserve caller uncertainty, formulas, foreground suppliers and separate emissions. No treatment, recovery credit, omission, allocation reconstruction or inverse is inferred. Cross-system-model conversion remains unsupported; the existing reverse material rule is checked independently."},
     {"confidence": 0.238395, "id": "bp-8e8a307278912dc0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for steel, high strength low alloy, 100% scrap", "reference product": "steel, high strength low alloy, 100% scrap", "unit": "kilogram"}, "target": {"location": "CH", "name": "Steel, low alloyed, secondary production (100% Rec.)", "reference product": "Steel, low alloyed, secondary production (100% Rec.)", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-9caeb1b3bd66b612", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for steel, low-alloyed", "reference product": "steel, low-alloyed", "unit": "kilogram"}, "target": {"location": "RER", "name": "Steel, low-alloyed, at plant", "reference product": "Steel, low-alloyed, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-9caeb1b3bd66b612", "mapping_method": "reviewed_pilot_low_alloyed_cast_stock", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json#ecoinvent-3.12-cutoff/92d029d1477c9fc67b75d1ae8da5cd9ff461364757b311df65fa71230ec21d95"], "reason": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "pilot-low-alloyed-cast-stock-cdb9c0d6155163d5d313"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json#ecoinvent-3.6-cutoff/bb5487fe245b6f477e9eee48727a9697538b1c686f7eca192223e8bbef1c3375"], "reason": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "pilot-low-alloyed-cast-stock-902a30530898c4f57d9f"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json#ecoinvent-3.9-cutoff/e5b92b12131f2baebd8e3d9ff29a947042b4d05e7043debe1ec232ee46c5a815"], "reason": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-low-alloyed-cast-stock-9154f96aeb98b12c52f9"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-356b670db50e29c2", "source": {"location": "GLO", "name": "market for steel, low-alloyed", "reference product": "steel, low-alloyed", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-low-alloyed-cast-stock-cdb9c0d6155163d5d313"}, "technosphere_information_loss": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty."},
     {"confidence": 1.0, "id": "bp-d21d0bac2a023032", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for steel, low-alloyed, hot rolled", "reference product": "steel, low-alloyed, hot rolled", "unit": "kilogram"}, "target": {"location": "RER", "name": "Steel, low-alloyed, at plant", "reference product": "Steel, low-alloyed, at plant", "unit": "kilogram"}},
     {"confidence": 0.181263, "id": "bp-e1dc898ddadceab5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for steel, structural, 100% scrap", "reference product": "steel, structural, 100% scrap", "unit": "kilogram"}, "target": {"location": "CH", "name": "Steel sheet, uncoated, secondary production (100% Rec.)", "reference product": "Steel sheet, uncoated, secondary production (100% Rec.)", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-f0abe48d8c3176d4", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for steel, unalloyed", "reference product": "steel, unalloyed", "unit": "kilogram"}, "target": {"location": "RER", "name": "Steel, converter, unalloyed, at plant", "reference product": "Steel, converter, unalloyed, at plant", "unit": "kilogram"}},
@@ -502641,6 +502966,15 @@
         "The complete background contribution and its credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separately listed emissions remain intact. No broad keyword omission, moisture scaling or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of bottom ash, MSWI[F]-WWT, condensate from light oil boiler, slag compartment / CH / kg external exchange with a warning. The inspected direct treatment comments explicitly document 0% biogenic carbon in these boiler-condensate, mineral-oil-storage, heat-carrier and wastewater/landfill-treatment residue chains. No dedicated complete UVEK counterpart for this residue and fate route was established. Manufacturing, fertilizer production, other-industry sludge, generic material supply and standalone landfill components do not establish the same treatment boundary. The direct residue service has active treatment inputs and emissions; separately listed foreground treatment and emissions remain intact. Exclude treatment burdens, metal/leachate releases, downstream handling and associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-356b670db50e29c2": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json"
+      ],
+      "limitations": [
+        "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty."
+      ],
+      "rationale": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty."
     },
     "r-358f18c860385094": {
       "evidence": [

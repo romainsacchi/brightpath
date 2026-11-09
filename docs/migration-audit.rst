@@ -229,6 +229,26 @@ differences remain warnings. No extra rolling, steelmaking or recovery credit
 is added. Exact-profile scientific admission remains in Premise's ledger;
 other profiles, specialized grades and inverse routes are not inferred.
 
+``brightpath/data/export/uvek_pilot_low_alloyed_cast_stock_review.json``
+reconstructs only the inspected 3.6/3.9/3.12 low-alloyed-steel market profiles
+from complete native casting and whole-freight components. All 25 source
+producer references are positive; their declared endpoints end at casting,
+including the Austrian record whose narrative discusses later rolling.
+The helpers preserve source BOF/electric shares and all four original market
+delivery quantities. They use the existing native low-alloyed converter and
+Swiss electric processes as scoped whole-manufacturing geographic proxies,
+retaining native plant, alloy, scrap, gas, allocation and vintage differences.
+The old native whole-market target's hot rolling and fixed furnace split
+are not added. Whole freight retains its fleet, vehicle, infrastructure,
+fuel and emissions boundaries at the original net transport quantities.
+No yield, allocation, grade, payload, distance or capacity factor is inferred.
+Raw child bindings are drift witnesses; the independently reviewed furnace
+choices are explicit inside this parent and do not rewrite global child rules.
+Only deterministic repeated furnace suppliers are combined; each helper has
+two furnace totals and four freight exchanges with their original uncertainty.
+One parent gains three profile-specific recipes and one shared review; older
+rules, recipes and reviews remain unchanged. Other versions remain unresolved.
+
 Exact rule approvals
 --------------------
 
