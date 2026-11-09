@@ -180,6 +180,17 @@ payload, geography, delivery and vintage differ and remain warnings. No helper,
 quantity multiplier, extra processing stage or inverse is introduced. Other
 profiles retain unresolved reference-review defaults.
 
+``brightpath/data/export/uvek_pilot_secondary_aluminium_pcb_review.json``
+corrects the inspected positive 3.6 secondary cast-billet supplier to native
+old-scrap refining/alloying/casting, preserving signed kg at factor ``+1``.
+It also inspects the unchanged 3.9 PCB preparation service with opposite
+waste/service references and factor ``-1``. Allocation, electricity and
+facility quantities match; native freight and waste heat remain warned
+differences. The source prepared-electronics co-product is a verified positive
+production-only cut-off stock. No downstream metallurgy, recovery credit,
+helper or empty treatment is introduced. Only the aluminium rule is rewritten;
+exact scientific admissions remain in Premise's ledger.
+
 Exact rule approvals
 --------------------
 
