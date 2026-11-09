@@ -924,3 +924,48 @@ differences remain unquantified. The 2,991 upstream native biosphere exclusions
 remain explicit. Only these two market profiles qualify; other source releases,
 standalone components, reverse routes and system-model changes remain outside
 this decision.
+
+Pilot mixed-fuel heat market
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Only the encountered ecoinvent 3.9 cut-off RoW other-than-natural-gas heat
+market receives this scope. Preserve all 188 supplier entries separately,
+including their original coefficients, order and marginal uncertainty. The
+positive heat reference gives factor +1; negative caller heat credits remain
+negative. Add no district network, efficiency factor, normalized shares or
+co-output credits.
+
+Complete native heat services cover the reviewed furnace and CHP branches.
+Explicit screening differences include wood CHP capacity and vintage,
+industrial propane versus a smaller LPG boiler, coal tar versus heavy fuel oil,
+straw versus industrial wood chips, and pulp-mill/black-liquor recovered heat
+versus wood-chip CHP heat. These replace source production and allocation
+models; neither matching MJ units nor a similar name establishes equivalence.
+Feedstock, performance, emissions, allocation, geography and uncertainty
+differences have unquantified score effects.
+
+Seventy-five allocated-burden helpers keep a one-MJ heat reference. Gas and coke
+combustion use audited source fuel demand; refinery gas uses a documented mass
+normalization. Bagasse/oil CHP and EAF heat use individually verified source
+heat-to-companion inventory ratios to weight complete native donors. Those
+ratios are allocation proxies, not energy-unit conversions or physical steel
+purchases. Native donor upstream boundaries and allocation differ, including
+agricultural/refinery/distillery burdens in bagasse electricity and absent
+upstream blast-furnace-gas production. Missing oil geographies use the actual
+historical UCTE fleet. No invented supplier, thermal efficiency or recovery
+credit repairs these differences.
+
+Twelve source heat outputs contain only positive production. Their market shares
+use the actual native positive recovered-heat output, also production only and
+documented as zero allocation to energy and full allocation to waste disposal.
+This preserves the source allocated-heat boundary with waste/feedstock and
+geographic warnings. It does not imply zero physical combustion, qualify an
+empty waste-treatment process or introduce a generic empty-provider fallback.
+All 188 market entries remain; there are no source omissions or empty helpers.
+Six municipal recovered-heat wrappers also use the native plant-gate heat
+output, with source routing and allocation differences explicit.
+
+The packaged review retains source/native witnesses, individual allocation
+proofs, exact scope and limitations. The native bundle's 2,991 upstream
+biosphere exclusions persist. Other versions, standalone producers, reverse
+routes and system-model changes do not inherit this review.
