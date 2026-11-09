@@ -131,6 +131,18 @@ native manganese definition differs and remains an explicit limitation.
 Auxiliary treatment, energy, geography, vintage and unquantified score
 differences are warnings. No new helper, recovery credit or inverse is added.
 
+``brightpath/data/export/uvek_pilot_inert_composition_review.json`` adds two
+exact RoW helpers: 3.9 zeolite treatment and the 3.12 inert-waste final-disposal
+market. Complete reviewed generic operation and facility services retain the
+source quantities, uncertainty and documented leachate inventory gap. No
+composition-specific oil-catalyst or inert-disposal emissions are inserted.
+The market retains all three original freight quantities separately through
+the exact previously reviewed regional heavy-lorry proxies. Its nonphysical
+waste indicator is retained in ecoinvent 3.10 biosphere; only when unavailable
+may that indicator be omitted, with a warning and audit. Source negative waste
+references require factor ``-1``. Geography, native background and data gaps
+remain explicit; no moisture, capacity, recovery or inverse model is inferred.
+
 Five further whole-function matches are documented in
 ``brightpath/data/export/uvek_pilot_matching_legacy_supplier_review.json``:
 natural barite, 35% scrap/65% pig-iron castings, one 10 MWe turbine-construction
