@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 914,
-      "unclassified": 29559
+      "recipe": 915,
+      "unclassified": 29558
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 292,
       "followup_review": 163,
-      "heuristic_similarity": 26735,
+      "heuristic_similarity": 26734,
       "pairwise_review": 2243,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -29,6 +29,7 @@
       "reviewed_cutoff_stock_recipe": 40,
       "reviewed_deferred_delivered_gas": 2,
       "reviewed_deferred_materials": 8,
+      "reviewed_deferred_naocl": 1,
       "reviewed_deferred_sorting": 1,
       "reviewed_deferred_waste_markets": 3,
       "reviewed_five_simple_waste_market_service": 5,
@@ -103,7 +104,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.437944,
+    "mean_confidence": 0.437964,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -86465,6 +86466,594 @@
       "rationale": "Autonomous user-approved source-energy-based delivered-fuel screening proxy, only for ecoinvent3.9cut-off Swiss high-pressure gas. Actual source output is positive1cubicmetre and explicitly declares36MJ net fuel energy perSm3 at15degC/1013mbar. Actual native CH high-pressure consumer supply is positive1MJ of fuel and includes upstream production/trade, transport, compression, network infrastructure, own fuel demand and leakage. A positive1-source-m3 product helper therefore purchases36MJ of that complete native supply. Caller signed volume, formulas and supported uncertainty retain factor+1; no equal-volume Sm3/Nm3 equivalence, ideal-gas state correction, invented calorific factor, extra pipeline/distribution burden or end-use combustion is introduced. This preserves the source declared net fuel energy rather than exact gas composition/volume/carbon mass: source/native density, carbon content, origins and trade mix differ, and separately listed caller stack emissions remain unchanged. Native trade2023 versus source2019statistics, allocation, technology, internal uncertainty and2991upstreambiosphere exclusions remain explicit, with unquantified score effects and no LCIA-equivalence claim. The3.6European market group lacks a verified net calorific property and must not inherit36. No other release, reverse or cross-system-model conversion is qualified.",
       "reference product": "natural gas, high pressure",
       "unit": "cubic meter"
+    },
+    "deferred-naocl-16a9dd5cd0f7029e47c5": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_naocl_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "deferred-naocl-producer-bdef801f61f09a072b6a",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0514,
+          "loc": -2.9681171065210177,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 2
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41255302689472534,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0131,
+          "loc": -4.3351430487750315,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 2
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41255302689472534,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for sodium hypochlorite, without water, in 15% solution state, composed from resolved suppliers, RER",
+      "rationale": "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified. Source generic RER rail freight uses complete native RER rail freight, with operation, rolling stock and infrastructure, at the original signed tonne-kilometre quantity and uncertainty. Reject the heuristic aircraft candidate: transport mode differs. Native fleet, traction, loading, allocation and vintage differ; effects remain unquantified. This correction is local to the inspected NaOCl profiles.",
+      "reference product": "sodium hypochlorite, without water, in 15% solution state",
+      "unit": "kilogram"
+    },
+    "deferred-naocl-3469cb71877754d72661": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_naocl_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "deferred-naocl-producer-b731cb199cef80e64e82",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0131,
+          "loc": -4.3351430487750315,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0514,
+          "loc": -2.9681171065210177,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for sodium hypochlorite, without water, in 15% solution state, composed from resolved suppliers, RER",
+      "rationale": "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified. Source generic RER rail freight uses complete native RER rail freight, with operation, rolling stock and infrastructure, at the original signed tonne-kilometre quantity and uncertainty. Reject the heuristic aircraft candidate: transport mode differs. Native fleet, traction, loading, allocation and vintage differ; effects remain unquantified. This correction is local to the inspected NaOCl profiles.",
+      "reference product": "sodium hypochlorite, without water, in 15% solution state",
+      "unit": "kilogram"
+    },
+    "deferred-naocl-producer-b731cb199cef80e64e82": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_naocl_review.json#producer-3.9"
+      ],
+      "inputs": [
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5560800302114796,
+          "scale without pedigree": 0.5987069399965228,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.952447874110337,
+          "loc": -0.048719898822245436,
+          "location": "RER",
+          "name": "Chlorine, liquid, production mix, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chlorine, liquid, production mix, at plant",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0281504,
+          "loc": -3.5701937149059186,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.09273618495495704,
+          "scale without pedigree": 0.23916521486202796,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.0488,
+          "loc": 0.047646653467352994,
+          "location": "CH",
+          "name": "District heat, at consumer, natural gas in industrial furnace 1MW",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "District heat, at consumer, natural gas in industrial furnace 1MW",
+          "scale": 0.13638181696985854,
+          "scale without pedigree": 0.25922962793631443,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.585396,
+          "loc": -0.5354667376824416,
+          "location": "RER",
+          "name": "Heat, heavy fuel oil, at industrial furnace 1MW",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Heat, heavy fuel oil, at industrial furnace 1MW",
+          "scale": 0.13638181696985854,
+          "scale without pedigree": 0.25922962793631443,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 1.07441948482084,
+          "loc": 0.07178050159933885,
+          "location": "RER",
+          "name": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.476223937055169,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in the exact source and installed canonical3.10 biosphere; name-only modernization does not change the signed emission quantity.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Chloride",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -0.7418670793821897,
+          "name": "Chloride",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.30883719149539,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in the exact source and installed canonical3.10 biosphere; name-only modernization does not change the signed emission quantity.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Sodium I",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -1.1749410293032754,
+          "name": "Sodium I",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000241806230380622,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in the exact source and installed canonical3.10 biosphere; name-only modernization does not change the signed emission quantity.",
+              "target": {
+                "categories": [
+                  "water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water"
+          ],
+          "loc": -8.327373853446298,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "Reconstructed NaOCl, dry-active basis, virgin chlorine, 3.9",
+      "rationale": "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified.",
+      "reference product": "sodium hypochlorite, without water, in 15% solution state",
+      "unit": "kilogram"
+    },
+    "deferred-naocl-producer-bdef801f61f09a072b6a": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_naocl_review.json#producer-3.6"
+      ],
+      "inputs": [
+        {
+          "amount": 0.585396,
+          "loc": -0.5354667376824416,
+          "location": "RER",
+          "name": "Heat, heavy fuel oil, at industrial furnace 1MW",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Heat, heavy fuel oil, at industrial furnace 1MW",
+          "scale": 0.2420743687382041,
+          "scale without pedigree": 0.1,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5909526207742885,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 1.0488,
+          "loc": 0.047646653467352994,
+          "location": "CH",
+          "name": "District heat, at consumer, natural gas in industrial furnace 1MW",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "District heat, at consumer, natural gas in industrial furnace 1MW",
+          "scale": 0.2420743687382041,
+          "scale without pedigree": 0.1,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0281504,
+          "loc": -3.5701937149059186,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.0,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.07441948482084,
+          "loc": 0.07178050159933885,
+          "location": "RER",
+          "name": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.952447874110337,
+          "loc": -0.048719898822245436,
+          "location": "RER",
+          "name": "Chlorine, liquid, production mix, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chlorine, liquid, production mix, at plant",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.476223937055169,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in the exact source and installed canonical3.10 biosphere; name-only modernization does not change the signed emission quantity.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Chloride",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -0.7418670793821897,
+          "name": "Chloride",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.30883719149539,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in the exact source and installed canonical3.10 biosphere; name-only modernization does not change the signed emission quantity.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Sodium I",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -1.1749410293032754,
+          "name": "Sodium I",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000241806230380622,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Unchanged publisher UUID, unit, compartment and role verified in the exact source and installed canonical3.10 biosphere; name-only modernization does not change the signed emission quantity.",
+              "target": {
+                "categories": [
+                  "water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water"
+          ],
+          "loc": -8.327373853446298,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "Reconstructed NaOCl, dry-active basis, virgin chlorine, 3.6",
+      "rationale": "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified.",
+      "reference product": "sodium hypochlorite, without water, in 15% solution state",
+      "unit": "kilogram"
     },
     "deferred-waste-market-50f4925138b4cb960750": {
       "evidence": [
@@ -699627,7 +700216,7 @@
     {"confidence": 0.358419, "id": "bp-298d4a1db293e750", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium hydroxide, without water, in 50% solution state", "reference product": "sodium hydroxide, without water, in 50% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hydroxide, 50% in H2O, production mix, at plant", "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant", "unit": "kilogram"}},
     {"confidence": 0.278419, "id": "bp-d7d358d48a007a28", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium hydroxide, without water, in 50% solution state", "reference product": "sodium hydroxide, without water, in 50% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hydroxide, 50% in H2O, production mix, at plant", "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant", "unit": "kilogram"}},
     {"confidence": 0.278419, "id": "bp-c7663e128351eb8f", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "market for sodium hydroxide, without water, in 50% solution state", "reference product": "sodium hydroxide, without water, in 50% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hydroxide, 50% in H2O, production mix, at plant", "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant", "unit": "kilogram"}},
-    {"confidence": 0.392939, "id": "bp-c7c88174c5f11ce8", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium hypochlorite, without water, in 15% solution state", "reference product": "sodium hypochlorite, without water, in 15% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hypochlorite, 15% in H2O, at plant", "reference product": "Sodium hypochlorite, 15% in H2O, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-c7c88174c5f11ce8", "mapping_method": "reviewed_deferred_naocl", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_naocl_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_naocl_review.json#ecoinvent-3.6-cutoff/2f7b547fe8dc97d16f8515bcac88d472c1a4eec9aec9ac3fe5cf223592b4a1eb"], "reason": "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified. Source generic RER rail freight uses complete native RER rail freight, with operation, rolling stock and infrastructure, at the original signed tonne-kilometre quantity and uncertainty. Reject the heuristic aircraft candidate: transport mode differs. Native fleet, traction, loading, allocation and vintage differ; effects remain unquantified. This correction is local to the inspected NaOCl profiles.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "deferred-naocl-16a9dd5cd0f7029e47c5"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_naocl_review.json#ecoinvent-3.9-cutoff/34dddd8b4b70237de12ea3ee2bc681d185d2d0ba38a2e34975829f64e2d1ebb5"], "reason": "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified. Source generic RER rail freight uses complete native RER rail freight, with operation, rolling stock and infrastructure, at the original signed tonne-kilometre quantity and uncertainty. Reject the heuristic aircraft candidate: transport mode differs. Native fleet, traction, loading, allocation and vintage differ; effects remain unquantified. This correction is local to the inspected NaOCl profiles.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "deferred-naocl-3469cb71877754d72661"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-79634cacd77c3b3f", "source": {"location": "RER", "name": "market for sodium hypochlorite, without water, in 15% solution state", "reference product": "sodium hypochlorite, without water, in 15% solution state", "unit": "kilogram"}, "target": {"recipe_ref": "deferred-naocl-16a9dd5cd0f7029e47c5"}, "technosphere_information_loss": "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified. Source generic RER rail freight uses complete native RER rail freight, with operation, rolling stock and infrastructure, at the original signed tonne-kilometre quantity and uncertainty. Reject the heuristic aircraft candidate: transport mode differs. Native fleet, traction, loading, allocation and vintage differ; effects remain unquantified. This correction is local to the inspected NaOCl profiles."},
     {"confidence": 0.312939, "id": "bp-172446e59949fefa", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium hypochlorite, without water, in 15% solution state", "reference product": "sodium hypochlorite, without water, in 15% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hypochlorite, 15% in H2O, at plant", "reference product": "Sodium hypochlorite, 15% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.607923, "id": "bp-bc15874db11d1177", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium metasilicate pentahydrate, 58% active substance, powder", "reference product": "sodium metasilicate pentahydrate, 58% active substance, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium metasilicate pentahydrate, 58%, powder, at plant", "reference product": "Sodium metasilicate pentahydrate, 58%, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.527923, "id": "bp-ad78e742db0946aa", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium metasilicate pentahydrate, 58% active substance, powder", "reference product": "sodium metasilicate pentahydrate, 58% active substance, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium metasilicate pentahydrate, 58%, powder, at plant", "reference product": "Sodium metasilicate pentahydrate, 58%, powder, at plant", "unit": "kilogram"}},
@@ -716422,6 +717011,15 @@
         "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Native expressly documents Class I nickel production, nominal99.5%, with coupled copper and a1994global production mix; source modern Class1 market includes primary/co-product/recycled routes. Native itself warns against this generic model where ClassI nickel impact is important. Retain that limitation and require later sensitivity/detail review for nickel-dominated results. Grade/purity, ore/refining mix, recycling, copper allocation, delivery, geography, substituted emission data, vintage and uncertainty differ. No purity multiplier, refining add-on, copper/recovery credit or source-market-mix reconstruction is invented."
       ],
       "rationale": "User instruction: commit and proceed with deferred work; standing auto-approval of coming decisions with explicit screening limitations. Restore only exact inspected identities/profiles and their pinned CLIC exchanges."
+    },
+    "r-79634cacd77c3b3f": {
+      "evidence": [
+        "brightpath/data/export/uvek_deferred_naocl_review.json"
+      ],
+      "limitations": [
+        "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified. Source generic RER rail freight uses complete native RER rail freight, with operation, rolling stock and infrastructure, at the original signed tonne-kilometre quantity and uncertainty. Reject the heuristic aircraft candidate: transport mode differs. Native fleet, traction, loading, allocation and vintage differ; effects remain unquantified. This correction is local to the inspected NaOCl profiles."
+      ],
+      "rationale": "Autonomous user-approved source-faithful dry-active NaOCl reconstruction, only for the inspected3.6/3.9cut-off profiles. Source market and producer both reference positive1kg dry NaOCl (without water, in15%solution state). Reconstruct the actual source virgin-chlorine/caustic production inputs, reaction-salt/water emissions and original market freight rather than use UVEKs differently bounded off-gas-capture NaOCl process. Ecoinvent v2 methodology section4.5.8 and v3 guideline section4.2.3 explicitly define dissolved-chemical references by active substance: the legacy50%-in-H2O NaOH name does not imply a half-kilogram active output. Thus the inspected native NaOH and Cl2 references supply the source active kilograms at factor1; no guessed6.6667 NaOCl dilution or factor2 NaOH multiplier is introduced. Preserve caller signed active kg, formulas and uncertainty at factor1. Producer inputs include .952447874110337kg virginCl2 and1.07441948482084kg activeNaOH plus source utilities/capital; preserve their supported coefficient uncertainty. Keep .476223937055169kgchloride,.30883719149539kgsodium and.000241806230380622m3reactionwater in their exact canonical3.10 compartments/roles/units via unchanged publisher UUIDs. No new chemical, avoided off-gas-emission credit, unreported dilution water, extra reactor or omission is added. Common native chemical-plant/utility technologies, allocation, capacity/lifetime, heat-market composition versus complete HFO/NG heat proxies, delivered heat boundary, geography/vintage, internal supplier uncertainty and2991upstreambiosphere exclusions differ; score effects remain unquantified. All original transport legs remain separate at their original signed coefficient; water transported under the source product definition is not rescaled from the15%label. Other releases, inverse and cross-system-model routes are not qualified. Source generic RER rail freight uses complete native RER rail freight, with operation, rolling stock and infrastructure, at the original signed tonne-kilometre quantity and uncertainty. Reject the heuristic aircraft candidate: transport mode differs. Native fleet, traction, loading, allocation and vintage differ; effects remain unquantified. This correction is local to the inspected NaOCl profiles."
     },
     "r-7975a41b8c09905d": {
       "limitations": [
