@@ -512,6 +512,23 @@
         },
         "zero_burden": {"const": true},
         "zero_burden_reason": {"type": "string", "minLength": 1},
+        "source_input_omissions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["source_profile", "source_activity", "source_inventory_sha256", "original_index", "source_exchange", "rationale"],
+            "properties": {
+              "source_profile": {"$ref": "#/$defs/profile"},
+              "source_activity": {"$ref": "#/$defs/identity"},
+              "source_inventory_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+              "original_index": {"type": "integer", "minimum": 0},
+              "source_exchange": {"$ref": "#/$defs/exchange"},
+              "rationale": {"type": "string", "minLength": 1}
+            },
+            "additionalProperties": false
+          }
+        },
         "rationale": {
           "type": "string",
           "minLength": 1

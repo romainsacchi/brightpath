@@ -304,6 +304,51 @@ def apply_uvek_import_recipes(
         dataset["exchanges"].append(
             {**dict(zip(FIELDS, identity(dataset), strict=True)), "type": "production", "amount": 1}
         )
+        if recipe.get("source_input_omissions"):
+            dataset["brightpath_conversion"]["source_input_omissions"] = deepcopy(recipe["source_input_omissions"])
+            for index, omission in enumerate(recipe["source_input_omissions"]):
+                if omission["source_profile"] != asdict(source_profile):
+                    raise ValueError("Recipe source omission belongs to a different source profile.")
+                path = f"helpers[{recipe_id}].source_input_omissions[{index}]"
+                details = {
+                    "resource": resource["name"],
+                    "recipe_id": recipe_id,
+                    "omission_index": index,
+                    "omission": omission,
+                    "source_profile": asdict(source_profile),
+                    "basis": {"amount": 1, "unit": recipe["unit"]},
+                }
+                severity = Severity.ERROR if policy.on_information_loss is PolicyAction.ERROR else Severity.WARNING
+                issues.append(
+                    Issue(
+                        severity,
+                        "migration.recipe_source_input_omission",
+                        omission["rationale"],
+                        STAGE,
+                        path=path,
+                        details=details,
+                    )
+                )
+                losses.append(
+                    Loss(
+                        "migration.recipe_source_input_omission",
+                        omission["rationale"],
+                        STAGE,
+                        path=path,
+                        details=details,
+                    )
+                )
+                changes.append(
+                    Change(
+                        "migration.recipe_source_input_omission",
+                        omission["rationale"],
+                        STAGE,
+                        path=path,
+                        before=omission["source_exchange"],
+                        after=None,
+                        details=details,
+                    )
+                )
 
         # Apply contextual targets immediately only if the whole helper already
         # belongs to the target biosphere. Otherwise keep it canonical until its

@@ -865,3 +865,34 @@ the eighteen exact profiles are reviewed. Missing profiles, consequential supply
 negative empty treatment stages and recovered-energy allocation cannot inherit
 this decision. Native preparation suppliers do not acquire an inferred reverse
 mapping to an empty stock.
+
+Exact source-input omissions in a reviewed recipe
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+A nonempty recipe can declare ``source_input_omissions`` for individually
+reviewed source exchanges that are absent from its derived inventory. Each
+entry records the exact source technosphere profile and activity, source
+inventory SHA-256, original exchange position, complete supported exchange
+identity/quantity/uncertainty, and rationale. The schema requires an explicit
+verified direct cut-off correspondence to that source activity/profile, and
+rejects repeated original positions, zero-valued entries and a shared direct
+recipe owner. This is not a general small-exchange threshold or an unavailable
+supplier fallback.
+
+Materialization emits a separate ``migration.recipe_source_input_omission``
+issue and loss for every declared exchange. Its quantity is stated per one
+recipe reference unit, independently of caller demand. The immutable report
+and the generated helper's ``brightpath_conversion`` metadata retain the audit.
+Strict information-loss policy reports an error; warning policy retains the
+loss. The complete omission metadata participates in recipe and generated-helper
+identities. Caller-provided metadata cannot grant such an omission.
+
+The exact 3.9 cut-off global HDPE market now uses this mechanism for four
+explicitly user-approved positive recyclate entries totalling
+1.173141240030732e-13 kg/kg. Two original virgin producer entries and three
+original freight entries remain separate, with quantities and uncertainty
+unchanged and no share normalization. The omitted recycling production is
+nonempty; neither an empty native recycling handover nor a virgin-product
+replacement represents it. Its impact difference is unquantified. All other
+supplier, geography, cumulative-inventory and native biosphere limitations
+remain warnings. Other source versions and other omissions are not approved.

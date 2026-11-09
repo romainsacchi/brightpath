@@ -188,6 +188,57 @@ def _reference_factor_sign(review: dict) -> int:
     return -sign if review.get("role_conversion") == "recovery_credit" else sign
 
 
+def _validate_recipe_source_omissions(resource, recipe_id, recipe):
+    """Bind declared source losses to one verified direct cut-off correspondence."""
+    seen = set()
+    for omission in recipe.get("source_input_omissions", []):
+        profile = omission["source_profile"]
+        source = omission["source_activity"]
+        exchange = omission["source_exchange"]
+        _identity(source, "technosphere")
+        _identity(exchange, "technosphere")
+        if (
+            recipe.get("zero_burden")
+            or resource["axis"] != "technosphere"
+            or resource["target_profile"].get("family") != "uvek"
+            or resource["target_profile"].get("system_model") != "cutoff"
+            or profile not in resource["source_profiles"]
+            or profile.get("family") != "ecoinvent"
+            or profile.get("system_model") != "cutoff"
+            or exchange.get("type") not in {"technosphere", "substitution"}
+            or exchange["amount"] == 0
+        ):
+            raise MigrationError("Recipe source omissions require a nonempty exact cut-off correspondence.")
+        matched = [
+            rule
+            for rule in resource["replace"]
+            if all(rule["source"].get(f) == source.get(f) for f in ("name", "reference product", "location", "unit"))
+            and any(
+                entry["source_profile"] == profile
+                and entry.get("target", rule["target"]) == {"recipe_ref": recipe_id}
+                and entry["review"]["status"] == "verified"
+                for entry in rule.get("reference_flow_sign_review", {}).get("profiles", [])
+            )
+        ]
+        if len(matched) != 1:
+            raise MigrationError("Recipe source omission is not bound to its verified source activity/profile.")
+        owners = [
+            rule
+            for rule in resource["replace"]
+            if rule["target"] == {"recipe_ref": recipe_id}
+            or any(
+                entry.get("target") == {"recipe_ref": recipe_id}
+                for entry in rule.get("reference_flow_sign_review", {}).get("profiles", [])
+            )
+        ]
+        if owners != matched:
+            raise MigrationError("Recipe source omissions cannot be shared by different direct correspondences.")
+        marker = (json.dumps(profile, sort_keys=True), json.dumps(source, sort_keys=True), omission["original_index"])
+        if marker in seen:
+            raise MigrationError("Recipe source omissions repeat an original source exchange.")
+        seen.add(marker)
+
+
 def validate_migration_resource(resource: dict) -> None:
     """Validate the named JSON schema, factors, references, recipes and coverage.
 
@@ -395,6 +446,7 @@ def validate_migration_resource(resource: dict) -> None:
         scopes = set()
         recipe = resource["recipes"][recipe_id]
         _identity(recipe, "technosphere")
+        _validate_recipe_source_omissions(resource, recipe_id, recipe)
         names = [p["name"] for p in recipe.get("parameters", [])]
         if len(names) != len(set(names)):
             raise MigrationError("Recipe parameters require unique local names.")

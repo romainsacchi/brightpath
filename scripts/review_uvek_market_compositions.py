@@ -55,8 +55,11 @@ def composition_recipe(
     inputs = deepcopy(profile["inputs"])
     if not inputs:
         raise ValueError("An unreviewed empty market cannot inherit composition approval.")
-    digest = hashlib.sha256(json.dumps([source, inputs], sort_keys=True).encode()).hexdigest()[:20]
-    return f"{namespace}-{digest}", {
+    identity = [source, inputs]
+    if "source_input_omissions" in profile:
+        identity.append(profile["source_input_omissions"])
+    digest = hashlib.sha256(json.dumps(identity, sort_keys=True).encode()).hexdigest()[:20]
+    recipe = {
         "name": f"{source[0]}, composed from resolved suppliers, {source[2]}",
         "reference product": source[1],
         "location": source[2],
@@ -68,6 +71,9 @@ def composition_recipe(
             *profile.get("additional_evidence", []),
         ],
     }
+    if "source_input_omissions" in profile:
+        recipe["source_input_omissions"] = deepcopy(profile["source_input_omissions"])
+    return f"{namespace}-{digest}", recipe
 
 
 def validate_composition_bindings(resource, *, approval=APPROVAL, label="Market-composition"):
