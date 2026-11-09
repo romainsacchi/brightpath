@@ -143,6 +143,18 @@ may that indicator be omitted, with a warning and audit. Source negative waste
 references require factor ``-1``. Geography, native background and data gaps
 remain explicit; no moisture, capacity, recovery or inverse model is inferred.
 
+``brightpath/data/export/uvek_pilot_european_scrap_steel_review.json`` preserves
+the inspected 3.9 European market's landfill/incineration shares and both original
+freight quantities. The complete ordinary steel incinerator matches all 42
+declared composition entries and the inspected electricity, slag, facility and
+internal freight amounts. Native water/oxygen coverage, manganese definitions,
+geography and vintage remain explicit screening differences. The original
+negative recovered-iron quantity points to the existing exact-profile,
+production-only allocated stock helper, with its dependency and source-profile
+approval hashes checked. No avoided-primary-steel credit is added. Source
+uncertainty is retained and scaled with the deterministic treatment shares;
+the Swiss fly-ash-extraction route is outside this decision.
+
 Five further whole-function matches are documented in
 ``brightpath/data/export/uvek_pilot_matching_legacy_supplier_review.json``:
 natural barite, 35% scrap/65% pig-iron castings, one 10 MWe turbine-construction

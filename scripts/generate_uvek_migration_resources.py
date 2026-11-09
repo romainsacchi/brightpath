@@ -649,6 +649,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from scripts.review_uvek_pilot_low_alloyed_cast_stock import apply_pilot_low_alloyed_cast_stock_review
         from scripts.review_uvek_pilot_sanitary_inert import apply_pilot_sanitary_inert_review
         from scripts.review_uvek_pilot_inert_compositions import apply_pilot_inert_composition_review
+        from scripts.review_uvek_pilot_european_scrap_steel import apply_pilot_european_scrap_steel_review
     else:
         from review_uvek_pilot_materials import (
             apply_pilot_material_review,
@@ -667,6 +668,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_pilot_low_alloyed_cast_stock import apply_pilot_low_alloyed_cast_stock_review
         from review_uvek_pilot_sanitary_inert import apply_pilot_sanitary_inert_review
         from review_uvek_pilot_inert_compositions import apply_pilot_inert_composition_review
+        from review_uvek_pilot_european_scrap_steel import apply_pilot_european_scrap_steel_review
 
     apply_pilot_material_review(technosphere)
     apply_pilot_incinerator_review(technosphere)
@@ -683,6 +685,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_pilot_low_alloyed_cast_stock_review(technosphere)
     apply_pilot_sanitary_inert_review(technosphere)
     apply_pilot_inert_composition_review(technosphere)
+    apply_pilot_european_scrap_steel_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
