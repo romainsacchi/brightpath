@@ -220,6 +220,15 @@ The maintainer generator and historical system-model comparison share
 corrections. This retains exact executable-rule and helper-coefficient
 preservation checks while accounting for later approved supplier/factor changes.
 
+``brightpath/data/export/uvek_pilot_unalloyed_cast_steel_review.json`` inspects
+the unchanged 3.9 global unalloyed-steel market rule. Its two actual source
+producers and the complete native converter process end at steelmaking and
+casting, without rolling. Signed stock kg retain factor ``+1``. Pig-iron/scrap
+mix, gas handling, energy, residues, allocation, delivery, geography and vintage
+differences remain warnings. No extra rolling, steelmaking or recovery credit
+is added. Exact-profile scientific admission remains in Premise's ledger;
+other profiles, specialized grades and inverse routes are not inferred.
+
 Exact rule approvals
 --------------------
 
