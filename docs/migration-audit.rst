@@ -141,6 +141,20 @@ differences remain warnings. No new helper, manufacturing stage, reverse rule
 or cross-system-model route is introduced. Authoring replay retains unresolved
 defaults outside the two exact cut-off profiles.
 
+``brightpath/data/export/uvek_pilot_metal_chemical_supply_review.json`` corrects
+the inspected 3.6 generic copper market to the existing complete regional
+primary/secondary supply. The packaged 3.6-to-3.7 rename establishes the cathode
+product identity, while fresh inspection covers the current inventory and all
+23 positive-reference suppliers. Its source hash differs from the historical
+cathode-review row; no equality with that older inventory is asserted.
+The same evidence inspects unchanged complete methanol supply and an allocated
+indium-rich residue from zinc production. The latter is a residue product,
+not zinc metal or waste-treatment demand. Signed kg keep factor ``+1``;
+production shares, allocation, delivery, geography and vintage remain warnings.
+Only the copper rule is rewritten in the raw resource. Other exact admissions
+are controlled by Premise's approval ledger. No new helper, recovery credit,
+empty stock or inverse route is inferred.
+
 Exact rule approvals
 --------------------
 
