@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 723
+    assert len(forward["reviews"]) == 724
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -677,6 +677,14 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     paint_references = {r["review_ref"] for r in forward["replace"] if r["id"] in paint_ids}
     assert len(paint_ids) == 2 and len(paint_references) == 1
     assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in paint_references)
+    concrete_delivery = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_concrete_delivery_review.json").read_text())
+    concrete_delivery_ids = {row["rule_id"] for row in concrete_delivery["records"]}
+    concrete_delivery_references = {r["review_ref"] for r in forward["replace"] if r["id"] in concrete_delivery_ids}
+    assert len(concrete_delivery_ids) == 9 and len(concrete_delivery_references) == 1
+    assert all(
+        forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"}
+        for ref in concrete_delivery_references
+    )
     kcl = json.loads((DATA_DIR / "export/uvek_pilot_kcl_site_review.json").read_text())
     kcl_ids = {row["rule_id"] for row in kcl["records"]}
     kcl_references = {r["review_ref"] for r in forward["replace"] if r["id"] in kcl_ids}
@@ -735,6 +743,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
             *glass_references,
             *water_references,
             *paint_references,
+            *concrete_delivery_references,
             *grid_converter_references,
             *copper_supply_references,
             *wastewater_endpoint_references,
