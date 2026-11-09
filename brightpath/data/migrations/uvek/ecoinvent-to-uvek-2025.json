@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 857,
-      "unclassified": 29616
+      "recipe": 858,
+      "unclassified": 29615
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 297,
       "followup_review": 163,
-      "heuristic_similarity": 26794,
+      "heuristic_similarity": 26793,
       "pairwise_review": 2247,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -45,6 +45,7 @@
       "reviewed_pilot_low_alloyed_cast_stock": 1,
       "reviewed_pilot_material": 16,
       "reviewed_pilot_nitrate_cleanfill": 5,
+      "reviewed_pilot_nitrate_foam": 1,
       "reviewed_pilot_nitrate_goods": 9,
       "reviewed_pilot_nitrate_hdpe": 1,
       "reviewed_pilot_nitrate_pe_country": 6,
@@ -83,7 +84,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.436649,
+    "mean_confidence": 0.436667,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -145774,6 +145775,114 @@
       "name": "market for waste mineral wool, for final disposal, composed from resolved suppliers, CH",
       "rationale": "The mineral-wool final-disposal market contains only the landfill service, with no collection freight or direct handling dust. Do not use the broader native demolition/final-disposal wrapper, which adds particulate releases, collection and a different landfill process. Keep the complete source final-disposal boundary per as-received signed kg. Each original treatment uses1kg of generic inert-landfill operation and1.48e-9facility units. Preserve both coefficients, source uncertainty and the original waste-market-to-treatment exchange through a positive helper; negative waste reference-1 requires caller factor-1. Retain complete native operation and facility inventories once under the earlier generic-cleanfill whole-function/unit approval. Generic land occupation/transformation quantities match the full source operation(9) and facility(3) coordinates. The native operation has its own0.00143MJ oil-boiler input and4.8e-5MJ waste-heat release; the source uses mixed non-natural-gas heat. Complete facility material grades, source pitch and HDPE supplies, operating machines, electricity, fuel, freight, geography, vintage, internal uncertainty and allocation differ; retain them as screened whole-service differences, not new independent material/heat approvals. Both source and native facilities document450000m3; no capacity, density, moisture, water-content, dry-mass, distance, payload or lifetime scaling is introduced. Native2026 documentation states five years of recultivation/monitoring; no undocumented lifetime equality is assumed. Source market/treatment records have no direct elementary exchanges and explicitly omit negligible leachate; this is a source-data limitation, not evidence of physical zero or an authorization to omit any present emission. No handling dust, building demolition, crushing, recycling, collection freight absent from the source, recovery credit or material-specific leachate is added. Keep native facility access-road and operating logistics separate from original market collection. Preserve every original market freight term at its signed tkm and uncertainty, without aggregation or renormalization. Use the previously inspected whole RER generic mixed-traction rail and heavy-lorry fleet, retaining vehicle, network, fuel, maintenance and infrastructure once; do not substitute coal-only or diesel-only rail or infer payload/traction factors. Geographic fleet/traction, loading, fuel, infrastructure and vintage differences remain warnings. Preserve caller quantities, formulas, uncertainty, ownership, separate emissions and other purchases. Installed native biosphere exclusions and all score differences remain limitations with unquantified effects; no LCIA equivalence is asserted. Only enumerated source3.9cutoff closures qualify for UVEK2026cutoff and ecoinvent3.10biosphere; raw component bindings are drift guards and do not independently approve their use, other source versions, reverse or cross-system-model routes.",
       "reference product": "waste mineral wool, for final disposal",
+      "unit": "kilogram"
+    },
+    "pilot-nitrate-foam-b8d70327c87fcf145af6": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_nitrate_foam_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.99009900990099,
+          "loc": 0.99009900990099,
+          "location": "RER",
+          "name": "Foam glass, at plant",
+          "reference product": "Foam glass, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0099009900990099,
+          "loc": 0.0099009900990099,
+          "location": "RER",
+          "name": "Foam glass, at plant",
+          "reference product": "Foam glass, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0136,
+          "loc": -4.29768548624013,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.001,
+          "loc": -6.907755278982137,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0018,
+          "loc": -6.319968614080018,
+          "location": "CH",
+          "name": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0583,
+          "loc": -2.8421531856256905,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for foam glass, composed from resolved suppliers, GLO",
+      "rationale": "User explicitly approved the complete native cullet-based Foamglass atplant process per originalkg as a screening proxy for only the0.0099009900990099(0.9901%)cullet-free production branch inside the exact3.9cutoff global foamglass market. Preserve both original supplier entries separately(.99009900990099cullet-based and.0099009900990099withoutcullet), their quantities and uncertainty, and all four original delivery entries; do not normalize or aggregate. Both native and source products have positivekg references, density110kg/m3 and conductivity.040W/mK. The ordinary cullet-based source and native process also match nominalcullet(.81385kg,withinonebinaryULP)and meltingelectricity(1.4969kWh). The approved minor-branch proxy deliberately does not preserve its no-cullet feedstock, extra lime/silica/soda, meltingelectricity1.80349397590361kWh or directfossilCO2.161385114957395kg comparedwithsourcebase.029385kg. Source known differences at original market share are recorded separately; no full native/sourceLCIA difference or negligible-score claim follows from the small share. Retain the complete native material, packaging, processing, rawmaterial logistics, infrastructure, energy and disposal inventory once, including native internal uncertainty, allocation, water and chemical-supply assumptions. Source cullet-free9parameterdefinitions versus2inbase, and changed feldspar/potassium-nitrate pedigree/uncertainty, are retained in review/provenance but not reproduced as an active source production model. Geography, energy, allocation, chemical/waste handling, background vintage and native upstream biosphere exclusions remain explicit warnings with unquantified score effects. Source finalmarket rail/barge/lightroad/heavyroad quantities and supporteduncertainty remain separate from native internal transport and use independently inspected complete same-mode services, not coal-only traction, vehicle-operation-only service or a heavy-lorry replacement for the3.5tlight-commercial proxy. Add no regional-storage wrapper, renewablecertificate adjustment, extra rawmaterial/energy credit, density/yield/moisture/cullet multiplier or new omitted exchange. Preserve caller signed quantities, formulas, uncertainty, ownership, separate emissions and purchases. No standalone cullet-freeproduction, other releases, productgrade, source chemical/utility supplier, reverse or cross-system-model correspondence is approved. Only this exact inspected3.9cutoff parent qualifies; internal source inventory or LCIA equivalence is not claimed.",
+      "reference product": "foam glass",
       "unit": "kilogram"
     },
     "pilot-nitrate-goods-0f5af935c03318fb0e6c": {
@@ -657420,7 +657529,7 @@
     {"confidence": 0.18631, "id": "bp-171cde586f44ccf1", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for fly ash brick", "reference product": "fly ash brick", "unit": "kilogram"}, "target": {"location": "RER", "name": "Brick, at plant", "reference product": "Brick, at plant", "unit": "kilogram"}},
     {"confidence": 0.207333, "id": "bp-88fae51763c4d8ba", "mapping_method": "heuristic_similarity", "source": {"location": "IN", "name": "market for flyash brick", "reference product": "flyash brick", "unit": "kilogram"}, "target": {"location": "RER", "name": "Brick, at plant", "reference product": "Brick, at plant", "unit": "kilogram"}},
     {"confidence": 0.207333, "id": "bp-110289617e8ccee5", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for flyash brick", "reference product": "flyash brick", "unit": "kilogram"}, "target": {"location": "RER", "name": "Brick, at plant", "reference product": "Brick, at plant", "unit": "kilogram"}},
-    {"confidence": 0.449242, "id": "bp-9186a15d39b6f600", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for foam glass", "reference product": "foam glass", "unit": "kilogram"}, "target": {"location": "RER", "name": "Foam glass, at plant", "reference product": "Foam glass, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-9186a15d39b6f600", "mapping_method": "reviewed_pilot_nitrate_foam", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_foam_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_foam_review.json#ecoinvent-3.9-cutoff/1368b280ab4672b14889334d2b6035387717b0ec7c572b7055a2bb9c8eb7cdce"], "reason": "User explicitly approved the complete native cullet-based Foamglass atplant process per originalkg as a screening proxy for only the0.0099009900990099(0.9901%)cullet-free production branch inside the exact3.9cutoff global foamglass market. Preserve both original supplier entries separately(.99009900990099cullet-based and.0099009900990099withoutcullet), their quantities and uncertainty, and all four original delivery entries; do not normalize or aggregate. Both native and source products have positivekg references, density110kg/m3 and conductivity.040W/mK. The ordinary cullet-based source and native process also match nominalcullet(.81385kg,withinonebinaryULP)and meltingelectricity(1.4969kWh). The approved minor-branch proxy deliberately does not preserve its no-cullet feedstock, extra lime/silica/soda, meltingelectricity1.80349397590361kWh or directfossilCO2.161385114957395kg comparedwithsourcebase.029385kg. Source known differences at original market share are recorded separately; no full native/sourceLCIA difference or negligible-score claim follows from the small share. Retain the complete native material, packaging, processing, rawmaterial logistics, infrastructure, energy and disposal inventory once, including native internal uncertainty, allocation, water and chemical-supply assumptions. Source cullet-free9parameterdefinitions versus2inbase, and changed feldspar/potassium-nitrate pedigree/uncertainty, are retained in review/provenance but not reproduced as an active source production model. Geography, energy, allocation, chemical/waste handling, background vintage and native upstream biosphere exclusions remain explicit warnings with unquantified score effects. Source finalmarket rail/barge/lightroad/heavyroad quantities and supporteduncertainty remain separate from native internal transport and use independently inspected complete same-mode services, not coal-only traction, vehicle-operation-only service or a heavy-lorry replacement for the3.5tlight-commercial proxy. Add no regional-storage wrapper, renewablecertificate adjustment, extra rawmaterial/energy credit, density/yield/moisture/cullet multiplier or new omitted exchange. Preserve caller signed quantities, formulas, uncertainty, ownership, separate emissions and purchases. No standalone cullet-freeproduction, other releases, productgrade, source chemical/utility supplier, reverse or cross-system-model correspondence is approved. Only this exact inspected3.9cutoff parent qualifies; internal source inventory or LCIA equivalence is not claimed.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-nitrate-foam-b8d70327c87fcf145af6"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-c090fa77f059e815", "source": {"location": "GLO", "name": "market for foam glass", "reference product": "foam glass", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-nitrate-foam-b8d70327c87fcf145af6"}, "technosphere_information_loss": "User explicitly approved the complete native cullet-based Foamglass atplant process per originalkg as a screening proxy for only the0.0099009900990099(0.9901%)cullet-free production branch inside the exact3.9cutoff global foamglass market. Preserve both original supplier entries separately(.99009900990099cullet-based and.0099009900990099withoutcullet), their quantities and uncertainty, and all four original delivery entries; do not normalize or aggregate. Both native and source products have positivekg references, density110kg/m3 and conductivity.040W/mK. The ordinary cullet-based source and native process also match nominalcullet(.81385kg,withinonebinaryULP)and meltingelectricity(1.4969kWh). The approved minor-branch proxy deliberately does not preserve its no-cullet feedstock, extra lime/silica/soda, meltingelectricity1.80349397590361kWh or directfossilCO2.161385114957395kg comparedwithsourcebase.029385kg. Source known differences at original market share are recorded separately; no full native/sourceLCIA difference or negligible-score claim follows from the small share. Retain the complete native material, packaging, processing, rawmaterial logistics, infrastructure, energy and disposal inventory once, including native internal uncertainty, allocation, water and chemical-supply assumptions. Source cullet-free9parameterdefinitions versus2inbase, and changed feldspar/potassium-nitrate pedigree/uncertainty, are retained in review/provenance but not reproduced as an active source production model. Geography, energy, allocation, chemical/waste handling, background vintage and native upstream biosphere exclusions remain explicit warnings with unquantified score effects. Source finalmarket rail/barge/lightroad/heavyroad quantities and supporteduncertainty remain separate from native internal transport and use independently inspected complete same-mode services, not coal-only traction, vehicle-operation-only service or a heavy-lorry replacement for the3.5tlight-commercial proxy. Add no regional-storage wrapper, renewablecertificate adjustment, extra rawmaterial/energy credit, density/yield/moisture/cullet multiplier or new omitted exchange. Preserve caller signed quantities, formulas, uncertainty, ownership, separate emissions and purchases. No standalone cullet-freeproduction, other releases, productgrade, source chemical/utility supplier, reverse or cross-system-model correspondence is approved. Only this exact inspected3.9cutoff parent qualifies; internal source inventory or LCIA equivalence is not claimed."},
     {"confidence": 0.350058, "id": "bp-5213c344e0deaa10", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for foam glass factory", "reference product": "foam glass factory", "unit": "unit"}, "target": {"location": "BE", "name": "Foam glass plant", "reference product": "Foam glass plant", "unit": "unit"}},
     {"confidence": 0.6, "id": "bp-ef0bff376b42b101", "mapping_method": "pairwise_review", "review_ref": "r-b5cc6b8efccb91dc", "source": {"location": "GLO", "name": "market for foam glass, electricity from renewable energy products", "reference product": "foam glass, electricity from renewable energy products", "unit": "kilogram"}, "target": {"location": "RER", "name": "Foam glass, at plant", "reference product": "Foam glass, at plant", "unit": "kilogram"}},
     {"confidence": 0.304815, "id": "bp-3599597c1a2f8889", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for foam glass, electricity, label-certified", "reference product": "foam glass, electricity, label-certified", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen, gaseous, 25 bar, from electrolysis, from label-certified electricity", "reference product": "Hydrogen, gaseous, 25 bar, from electrolysis, from label-certified electricity", "unit": "kilogram"}},
@@ -679895,6 +680004,15 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of residues, MSWI-WWT, WW from glass production, residual material landfill / GLO / kg external exchange with a warning. All inspected direct service comments for glass production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-c090fa77f059e815": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_nitrate_foam_review.json"
+      ],
+      "limitations": [
+        "User explicitly approved the complete native cullet-based Foamglass atplant process per originalkg as a screening proxy for only the0.0099009900990099(0.9901%)cullet-free production branch inside the exact3.9cutoff global foamglass market. Preserve both original supplier entries separately(.99009900990099cullet-based and.0099009900990099withoutcullet), their quantities and uncertainty, and all four original delivery entries; do not normalize or aggregate. Both native and source products have positivekg references, density110kg/m3 and conductivity.040W/mK. The ordinary cullet-based source and native process also match nominalcullet(.81385kg,withinonebinaryULP)and meltingelectricity(1.4969kWh). The approved minor-branch proxy deliberately does not preserve its no-cullet feedstock, extra lime/silica/soda, meltingelectricity1.80349397590361kWh or directfossilCO2.161385114957395kg comparedwithsourcebase.029385kg. Source known differences at original market share are recorded separately; no full native/sourceLCIA difference or negligible-score claim follows from the small share. Retain the complete native material, packaging, processing, rawmaterial logistics, infrastructure, energy and disposal inventory once, including native internal uncertainty, allocation, water and chemical-supply assumptions. Source cullet-free9parameterdefinitions versus2inbase, and changed feldspar/potassium-nitrate pedigree/uncertainty, are retained in review/provenance but not reproduced as an active source production model. Geography, energy, allocation, chemical/waste handling, background vintage and native upstream biosphere exclusions remain explicit warnings with unquantified score effects. Source finalmarket rail/barge/lightroad/heavyroad quantities and supporteduncertainty remain separate from native internal transport and use independently inspected complete same-mode services, not coal-only traction, vehicle-operation-only service or a heavy-lorry replacement for the3.5tlight-commercial proxy. Add no regional-storage wrapper, renewablecertificate adjustment, extra rawmaterial/energy credit, density/yield/moisture/cullet multiplier or new omitted exchange. Preserve caller signed quantities, formulas, uncertainty, ownership, separate emissions and purchases. No standalone cullet-freeproduction, other releases, productgrade, source chemical/utility supplier, reverse or cross-system-model correspondence is approved. Only this exact inspected3.9cutoff parent qualifies; internal source inventory or LCIA equivalence is not claimed."
+      ],
+      "rationale": "User explicitly approved the complete native cullet-based Foamglass atplant process per originalkg as a screening proxy for only the0.0099009900990099(0.9901%)cullet-free production branch inside the exact3.9cutoff global foamglass market. Preserve both original supplier entries separately(.99009900990099cullet-based and.0099009900990099withoutcullet), their quantities and uncertainty, and all four original delivery entries; do not normalize or aggregate. Both native and source products have positivekg references, density110kg/m3 and conductivity.040W/mK. The ordinary cullet-based source and native process also match nominalcullet(.81385kg,withinonebinaryULP)and meltingelectricity(1.4969kWh). The approved minor-branch proxy deliberately does not preserve its no-cullet feedstock, extra lime/silica/soda, meltingelectricity1.80349397590361kWh or directfossilCO2.161385114957395kg comparedwithsourcebase.029385kg. Source known differences at original market share are recorded separately; no full native/sourceLCIA difference or negligible-score claim follows from the small share. Retain the complete native material, packaging, processing, rawmaterial logistics, infrastructure, energy and disposal inventory once, including native internal uncertainty, allocation, water and chemical-supply assumptions. Source cullet-free9parameterdefinitions versus2inbase, and changed feldspar/potassium-nitrate pedigree/uncertainty, are retained in review/provenance but not reproduced as an active source production model. Geography, energy, allocation, chemical/waste handling, background vintage and native upstream biosphere exclusions remain explicit warnings with unquantified score effects. Source finalmarket rail/barge/lightroad/heavyroad quantities and supporteduncertainty remain separate from native internal transport and use independently inspected complete same-mode services, not coal-only traction, vehicle-operation-only service or a heavy-lorry replacement for the3.5tlight-commercial proxy. Add no regional-storage wrapper, renewablecertificate adjustment, extra rawmaterial/energy credit, density/yield/moisture/cullet multiplier or new omitted exchange. Preserve caller signed quantities, formulas, uncertainty, ownership, separate emissions and purchases. No standalone cullet-freeproduction, other releases, productgrade, source chemical/utility supplier, reverse or cross-system-model correspondence is approved. Only this exact inspected3.9cutoff parent qualifies; internal source inventory or LCIA equivalence is not claimed."
     },
     "r-c0e70b77b82313b3": {
       "evidence": [

@@ -665,6 +665,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from scripts.review_uvek_pilot_nitrate_ps import apply_pilot_nitrate_ps_review
         from scripts.review_uvek_pilot_nitrate_scrap import apply_pilot_nitrate_scrap_review
         from scripts.review_uvek_pilot_nitrate_hdpe import apply_pilot_nitrate_hdpe_review
+        from scripts.review_uvek_pilot_nitrate_foam import apply_pilot_nitrate_foam_review
     else:
         from review_uvek_pilot_materials import (
             apply_pilot_material_review,
@@ -699,6 +700,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_pilot_nitrate_ps import apply_pilot_nitrate_ps_review
         from review_uvek_pilot_nitrate_scrap import apply_pilot_nitrate_scrap_review
         from review_uvek_pilot_nitrate_hdpe import apply_pilot_nitrate_hdpe_review
+        from review_uvek_pilot_nitrate_foam import apply_pilot_nitrate_foam_review
 
     apply_pilot_material_review(technosphere)
     apply_pilot_incinerator_review(technosphere)
@@ -731,6 +733,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_pilot_nitrate_ps_review(technosphere)
     apply_pilot_nitrate_scrap_review(technosphere)
     apply_pilot_nitrate_hdpe_review(technosphere)
+    apply_pilot_nitrate_foam_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
