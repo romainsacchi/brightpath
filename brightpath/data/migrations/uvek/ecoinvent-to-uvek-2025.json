@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 2,
-      "recipe": 847,
-      "unclassified": 29626
+      "recipe": 848,
+      "unclassified": 29625
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 298,
       "followup_review": 163,
-      "heuristic_similarity": 26802,
+      "heuristic_similarity": 26801,
       "pairwise_review": 2248,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -49,6 +49,7 @@
       "reviewed_pilot_nitrate_pe_country": 6,
       "reviewed_pilot_nitrate_pe_row": 1,
       "reviewed_pilot_nitrate_wool": 2,
+      "reviewed_pilot_nitrate_wool_europe": 1,
       "reviewed_pilot_pe_collection": 1,
       "reviewed_pilot_purge_handover": 1,
       "reviewed_pilot_sanitary_inert": 2,
@@ -79,7 +80,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.436462,
+    "mean_confidence": 0.436485,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -147445,6 +147446,74 @@
       "reference product": "waste mineral wool",
       "unit": "kilogram"
     },
+    "pilot-nitrate-wool-europe-38def07cbe27d7e5cac9": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_nitrate_wool_europe_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.0112,
+          "loc": -4.491841500681089,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01932,
+          "loc": -3.946614450197765,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.298387096774194,
+          "loc": 0.298387096774194,
+          "recipe": "pilot-wool-europe-treatment-7dd5bb2aaf2bfd1b9e0c",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.403225806451613,
+          "loc": 0.403225806451613,
+          "recipe": "pilot-wool-europe-treatment-e017a1ef83f0e7fceb51",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.298387096774194,
+          "loc": 0.298387096774194,
+          "recipe": "pilot-wool-europe-treatment-e9134f289b2804fb2db2",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "market for waste mineral wool, composed from resolved suppliers, Europe without Switzerland",
+      "rationale": "The European mineral-wool market retains all three source treatment shares, two collection entries and its39-country sorting-electricity group. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence.",
+      "reference product": "waste mineral wool",
+      "unit": "kilogram"
+    },
     "pilot-pe-collection-4173ec8c376a56371347": {
       "evidence": [
         "brightpath/data/export/uvek_pilot_pe_collection_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
@@ -272914,6 +272983,871 @@
       "name": "treatment of waste plastic, mixture, open dump, wet infiltration class (500mm), complete source treatment",
       "rationale": "Retain the complete independently inspected source open-burning, open-dump or unsanitary-landfill inventory as a positive kg treatment helper, preserving every signed biosphere coefficient and marginal uncertainty. Source reference-1 requires factor-1 for caller treatment demand. No controlled-disposal substitute, physical omission, moisture conversion, inferred recovery credit, allocation change or new land class is introduced. Exact publisher UUID, unit and full receiving compartment identify the canonical ecoinvent3.10 flow; label/CAS metadata changes are reported, not a molecular/speciation transformation or factor. Retain source fossil/biogenic carbon, water, resource and land flows including zero entries. Source contains no parameters or formulas. The unsanitary service retains its two reviewed complete operating inputs, native diesel combustion perMJ and skid-steer excavation perm3; source/native exact earlier operating inventory hashes match, while native fleet, filter, fuel, technology/geography/vintage and allocation differences remain warnings. No extra diesel, machine, excavated waste or collection is added. Caller signs, uncertainty, formulas, ownership, production and separate emissions remain unchanged. This review verifies ecoinvent3.10 biosphere; unsupported other target definitions must refuse under strict policy, not omit physical releases. Only enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred.",
       "reference product": "waste plastic, mixture",
+      "unit": "kilogram"
+    },
+    "pilot-wool-europe-country-grid-1636f2496d5e44335462": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_nitrate_wool_europe_review.json: complete source, installed canonical definitions and native function/reference witnesses."
+      ],
+      "inputs": [
+        {
+          "amount": 0.1437280224211039,
+          "loc": 0.1437280224211039,
+          "location": "FR",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.04017772446520499,
+          "loc": 0.04017772446520499,
+          "location": "SE",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.021812763905670586,
+          "loc": 0.021812763905670586,
+          "location": "AT",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.001381674907324414,
+          "loc": 0.001381674907324414,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.01029362507390232,
+          "loc": 0.01029362507390232,
+          "location": "DK",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0948327562932495,
+          "loc": 0.0948327562932495,
+          "location": "IT",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0017922695436035892,
+          "loc": 0.0017922695436035892,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.002756788773111723,
+          "loc": 0.002756788773111723,
+          "location": "EE",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.002458766910550823,
+          "loc": 0.002458766910550823,
+          "location": "LU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.04669508386656895,
+          "loc": 0.04669508386656895,
+          "location": "PL",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.006123484928182031,
+          "loc": 0.006123484928182031,
+          "location": "IS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.025172362855734196,
+          "loc": 0.025172362855734196,
+          "location": "BE",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.003876472528613839,
+          "loc": 0.003876472528613839,
+          "location": "LT",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.00371010469498724,
+          "loc": 0.00371010469498724,
+          "location": "BA",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0008313608242306277,
+          "loc": 0.0008313608242306277,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.013526767065100549,
+          "loc": 0.013526767065100549,
+          "location": "HU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.04098228704823246,
+          "loc": 0.04098228704823246,
+          "location": "UA",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.07116431031901065,
+          "loc": 0.07116431031901065,
+          "location": "ES",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.010434637048126078,
+          "loc": 0.010434637048126078,
+          "location": "BG",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.024512673336795715,
+          "loc": 0.024512673336795715,
+          "location": "FI",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.004552111168435321,
+          "loc": 0.004552111168435321,
+          "location": "SI",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.030293236072389314,
+          "loc": 0.030293236072389314,
+          "location": "NL",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 6.630335920858938e-05,
+          "loc": 6.630335920858938e-05,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.015372972696430894,
+          "loc": 0.015372972696430894,
+          "location": "RO",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.08700966824241198,
+          "loc": 0.08700966824241198,
+          "location": "GB",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.04123457346788336,
+          "loc": 0.04123457346788336,
+          "location": "NO",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.002182610776083295,
+          "loc": 0.002182610776083295,
+          "location": "LV",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.015713211899128894,
+          "loc": 0.015713211899128894,
+          "location": "GR",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0013015738444319934,
+          "loc": 0.0013015738444319934,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.01010283852168124,
+          "loc": 0.01010283852168124,
+          "location": "RS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0021437949709468157,
+          "loc": 0.0021437949709468157,
+          "location": "MK",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.01849040175866971,
+          "loc": 0.01849040175866971,
+          "location": "CZ",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.008163562537087974,
+          "loc": 0.008163562537087974,
+          "location": "SK",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.014519235760873269,
+          "loc": 0.014519235760873269,
+          "location": "PT",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.008918954206272728,
+          "loc": 0.008918954206272728,
+          "location": "IE",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.1573634858582264,
+          "loc": 0.1573634858582264,
+          "location": "DE",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.005518066908540487,
+          "loc": 0.005518066908540487,
+          "location": "HR",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0010295102726124155,
+          "loc": 0.0010295102726124155,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.009759950869381017,
+          "loc": 0.009759950869381017,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilowatt hour"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "market group for electricity, low voltage, complete source-preserving service",
+      "rationale": "Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence.",
+      "reference product": "electricity, low voltage",
+      "unit": "kilowatt hour"
+    },
+    "pilot-wool-europe-treatment-7dd5bb2aaf2bfd1b9e0c": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_nitrate_wool_europe_review.json: complete source, installed canonical definitions and native function/reference witnesses."
+      ],
+      "inputs": [
+        {
+          "amount": 0.0022,
+          "loc": -6.119297918617867,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "recipe": "pilot-wool-europe-country-grid-1636f2496d5e44335462",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0222,
+          "loc": -3.8076629901039034,
+          "location": "RER",
+          "name": "Excavation, hydraulic digger (proj. 500)",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Excavation, hydraulic digger (proj. 500)",
+          "scale": 0.10954451150103323,
+          "scale without pedigree": 0.23237900077244503,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 1e-10,
+          "loc": -23.025850929940457,
+          "location": "CH",
+          "name": "Sorting plant for construction waste",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Sorting plant for construction waste",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 1.0,
+          "loc": 0.0,
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-nitrate-cleanfill-40a995ddeeec620d3fbc",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.044721359549995794,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID 230d8a0a-517c-43fe-8357-1818dd12997a, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5702630971753301,
+          "scale without pedigree": 0.6069596362197407,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID 1eb1b94c-e9d8-47ab-969b-9cca920157d8, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2349468024894146,
+          "scale without pedigree": 0.31368774282716244,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID ccb169c3-8aae-4727-89bb-a7dd122946f3, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.381051177665153,
+          "scale without pedigree": 0.4340506882842141,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "treatment of waste mineral wool, sorting plant, complete source-preserving service",
+      "rationale": "Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence.",
+      "reference product": "waste mineral wool",
+      "unit": "kilogram"
+    },
+    "pilot-wool-europe-treatment-e017a1ef83f0e7fceb51": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_nitrate_wool_europe_review.json: complete source, installed canonical definitions and native function/reference witnesses."
+      ],
+      "inputs": [
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID 230d8a0a-517c-43fe-8357-1818dd12997a, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5702630971753301,
+          "scale without pedigree": 0.6069596362197407,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID 1eb1b94c-e9d8-47ab-969b-9cca920157d8, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2349468024894146,
+          "scale without pedigree": 0.31368774282716244,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID ccb169c3-8aae-4727-89bb-a7dd122946f3, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.381051177665153,
+          "scale without pedigree": 0.4340506882842141,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "treatment of waste mineral wool, recycling, complete source-preserving service",
+      "rationale": "Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence.",
+      "reference product": "waste mineral wool",
+      "unit": "kilogram"
+    },
+    "pilot-wool-europe-treatment-e9134f289b2804fb2db2": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_nitrate_wool_europe_review.json: complete source, installed canonical definitions and native function/reference witnesses."
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 0.0,
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-nitrate-cleanfill-40a995ddeeec620d3fbc",
+          "scale": 0.044721359549995794,
+          "scale without pedigree": 0.044721359549995794,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.66e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID 230d8a0a-517c-43fe-8357-1818dd12997a, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, < 2.5 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -11.006107862601777,
+          "name": "Particulate Matter, < 2.5 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.5702630971753301,
+          "scale without pedigree": 0.6069596362197407,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.35e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID 1eb1b94c-e9d8-47ab-969b-9cca920157d8, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 10 um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.390663926107464,
+          "name": "Particulate Matter, > 10 um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.2349468024894146,
+          "scale without pedigree": 0.31368774282716244,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.34e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Fresh complete definitions retain publisher UUID ccb169c3-8aae-4727-89bb-a7dd122946f3, kg unit, receiving compartment and emission role; no size-class, mass or compartment proxy.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Particulate Matter, > 2.5 um and < 10um",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.666046696521095,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 5
+          },
+          "scale": 0.381051177665153,
+          "scale without pedigree": 0.4340506882842141,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "treatment of waste mineral wool, collection for final disposal, complete source-preserving service",
+      "rationale": "Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence.",
+      "reference product": "waste mineral wool",
       "unit": "kilogram"
     },
     "pilot-wool-machinery-market-d40b446b739c8f7e32e9": {
@@ -619046,7 +619980,7 @@
     {"confidence": 0.6, "conversion_factor": -1, "id": "bp-d095bd0673e55a42", "mapping_method": "pairwise_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-d095bd0673e55a42"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-79ab4583a027a05e", "source": {"location": "CH", "name": "market for waste mineral plaster", "reference product": "waste mineral plaster", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, mineral plaster, to final disposal", "reference product": "Disposal, building, mineral plaster, to final disposal", "unit": "kilogram"}},
     {"confidence": 0.6, "conversion_factor": -1, "id": "bp-f599106520a12193", "mapping_method": "pairwise_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-f599106520a12193"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-c722d5b67b2c4523", "source": {"location": "RoW", "name": "market for waste mineral plaster", "reference product": "waste mineral plaster", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, mineral plaster, to final disposal", "reference product": "Disposal, building, mineral plaster, to final disposal", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-d79c1bee6a4fab03", "mapping_method": "reviewed_pilot_nitrate_wool", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_wool_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_wool_review.json#ecoinvent-3.9-cutoff/8feb6ca3a252eaefdb9a75bfd7c79a0bc2cfd689b1cc49e5330c16f57c9325f5"], "reason": "The Swiss market retains its sole recycling/handling fate and both original collection entries. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its six country/region delivered-electricity purchases,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids only for the same declared source territory, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; no different-geography utility fallback is authorized. Retain both original global digger producer weights as separate inputs to the complete native RER legacy hydraulic-digger service. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches both source producers; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only enumerated Swiss/RoW3.9cutoff closures qualify for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The European wool group remains pending its separate missing-country decision.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-nitrate-wool-71481af8bd1480e8fb25"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-61de9b89b63ce67d", "source": {"location": "CH", "name": "market for waste mineral wool", "reference product": "waste mineral wool", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-nitrate-wool-71481af8bd1480e8fb25"}, "technosphere_information_loss": "The Swiss market retains its sole recycling/handling fate and both original collection entries. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its six country/region delivered-electricity purchases,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids only for the same declared source territory, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; no different-geography utility fallback is authorized. Retain both original global digger producer weights as separate inputs to the complete native RER legacy hydraulic-digger service. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches both source producers; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only enumerated Swiss/RoW3.9cutoff closures qualify for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The European wool group remains pending its separate missing-country decision."},
-    {"confidence": 0.301622, "conversion_factor": -1, "id": "bp-c9b874c8b5ebebe0", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-c9b874c8b5ebebe0"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "market for waste mineral wool", "reference product": "waste mineral wool", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, mineral wool, 0% water, to construction waste landfill", "reference product": "Disposal, mineral wool, 0% water, to construction waste landfill", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-c9b874c8b5ebebe0", "mapping_method": "reviewed_pilot_nitrate_wool_europe", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_wool_europe_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_wool_europe_review.json#ecoinvent-3.9-cutoff/dd56bfb2348e87c7cd06797836783bb55679bce1a7890e0abbf86abd41f46c79"], "reason": "The European mineral-wool market retains all three source treatment shares, two collection entries and its39-country sorting-electricity group. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-nitrate-wool-europe-38def07cbe27d7e5cac9"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-ba9716557cbd97ed", "source": {"location": "Europe without Switzerland", "name": "market for waste mineral wool", "reference product": "waste mineral wool", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-nitrate-wool-europe-38def07cbe27d7e5cac9"}, "technosphere_information_loss": "The European mineral-wool market retains all three source treatment shares, two collection entries and its39-country sorting-electricity group. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence."},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-6707e1ae398f54df", "mapping_method": "reviewed_pilot_nitrate_wool", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_wool_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_wool_review.json#ecoinvent-3.9-cutoff/c8a5ba20938b82e4af28da7556bdccf435c9b4123e97f39c3ad3d8f6e804075e"], "reason": "The RoW market retains all three recycling, sorting and collection/final-disposal shares and eight collection entries. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its six country/region delivered-electricity purchases,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids only for the same declared source territory, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; no different-geography utility fallback is authorized. Retain both original global digger producer weights as separate inputs to the complete native RER legacy hydraulic-digger service. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches both source producers; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only enumerated Swiss/RoW3.9cutoff closures qualify for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The European wool group remains pending its separate missing-country decision.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-nitrate-wool-4206fc95ed264b3628a9"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-fb33c5270133ff71", "source": {"location": "RoW", "name": "market for waste mineral wool", "reference product": "waste mineral wool", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-nitrate-wool-4206fc95ed264b3628a9"}, "technosphere_information_loss": "The RoW market retains all three recycling, sorting and collection/final-disposal shares and eight collection entries. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its six country/region delivered-electricity purchases,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids only for the same declared source territory, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; no different-geography utility fallback is authorized. Retain both original global digger producer weights as separate inputs to the complete native RER legacy hydraulic-digger service. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches both source producers; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only enumerated Swiss/RoW3.9cutoff closures qualify for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The European wool group remains pending its separate missing-country decision."},
     {"confidence": 0.562375, "conversion_factor": -1, "id": "bp-5f825d4d77602dc5", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-5f825d4d77602dc5"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for waste mineral wool, final disposal", "reference product": "waste mineral wool, for final disposal", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, mineral wool, to final disposal", "reference product": "Disposal, building, mineral wool, to final disposal", "unit": "kilogram"}},
     {"confidence": 0.482375, "conversion_factor": -1, "id": "bp-44a25a3a4e5cc156", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-44a25a3a4e5cc156"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "market for waste mineral wool, final disposal", "reference product": "waste mineral wool, for final disposal", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, building, mineral wool, to final disposal", "reference product": "Disposal, building, mineral wool, to final disposal", "unit": "kilogram"}},
@@ -636141,6 +637075,15 @@
         "Approved generic wastewater composition screening proxy: textile wastewater with COD 0.93446 kg/m3 is represented by generic CH municipal sewage treatment with COD 0.1556 kg/m3. The full wastewater volume is preserved without COD-based scaling. Pollutant concentrations, fossil/biogenic carbon fate, sludge treatment, treatment performance, energy recovery, allocation and background supplies may differ; LCIA equivalence is not established or quantified. The RoW source geography and regional treatment mix are approximated by CH class-1 service. The UVEK service adds sewer infrastructure which the source treatment places in its upstream market; sewer burdens may be double-counted where separately represented."
       ],
       "rationale": "Auto-approved on 2026-11-04 under the generic wastewater composition-proxy authorization: replace the exact RoW, cubic meter treatment of wastewater from textile production, wastewater treatment correspondence with generic CH class-1 sewage treatment and factor -1. The inspected modern source uses municipal wastewater treatment. Source COD 0.93446 kg/m3 is about six times the proxy's 0.1556 kg/m3; this is an explicitly disclosed composition approximation, not impact equivalence. Fully untreated direct-disposal activities and markets remain outside this approval."
+    },
+    "r-ba9716557cbd97ed": {
+      "evidence": [
+        "brightpath/data/export/uvek_pilot_nitrate_wool_europe_review.json"
+      ],
+      "limitations": [
+        "The European mineral-wool market retains all three source treatment shares, two collection entries and its39-country sorting-electricity group. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence."
+      ],
+      "rationale": "The European mineral-wool market retains all three source treatment shares, two collection entries and its39-country sorting-electricity group. Retain every inspected ecoinvent3.9cutoff mineral-wool market/treatment exchange at its original signed quantity and supported uncertainty. Source waste reference-1kg maps to positive source-preserving treatment helpers with caller factor-1. Recycling contains three explicit particle-size dust emissions, not an empty handover; collection adds its original final-disposal link; sorting retains its original39-country delivered-electricity group,0.0222m3 hydraulic-digger service,1e-10sorting-plant units, final-disposal link and three dust emissions. Preserve all three particle-size fractions against freshly inspected canonical3.10 publisher UUID/unit/full compartment/emission role; no particle-size, mass, speciation or receiving-context factor. Use complete native delivered low-voltage grids for32matching source countries and the complete RER grid only for the seven user-approved absent countries, retaining voltage topology, losses, infrastructure, imports, generation and direct emissions once. Historical source/native grid membership, generation/trade, internal uncertainty and vintage differ; only the seven enumerated country-to-RER proxies are authorized inside this exact parent closure. Retain the original RER hydraulic-digger purchase through the complete native legacy RER service per original cubic metre. Its0.131kg diesel,0.0025kg lubricant and1e-6machine-unit basis matches the inspected source RER producer; the updated Swiss average instead has a different fuel demand and is not used here. The native proj.500 label implies no500-fold or efficiency multiplier. Retain complete machine manufacture, operation, maintenance, emissions and oil disposal once; source fuel geography/oil-treatment and native emission/uncertainty differences remain screened. Use the complete inspected native sorting facility per original unit: both source and native document200000t/year,50-year service and matching three land quantities. The facility land quantities match, but only two of the three publisher flow identities are equal: the native facility uses generic Transformation, from unknown (12264257-7f8b-4afe-b3cb-3ac28ca1661a) where source construction uses Transformation, from unspecified (29630a65-f38c-48a5-9744-c0121f586640), each15000m2 per plant in the same natural-resource/land compartment. This remains a complete-facility inventory difference with unquantified score effects, not an independent biosphere correspondence or a claim of equal land characterization.  Retain native infrastructure/replacement parts, administrative heat, oils, plastics, freight and end of life once; its material/heat/disposal mixes, uncertainty, geography, allocation and vintage differ from the whole source facility. This complete-facility proxy does not approve its isolated heat/material/waste inputs for other callers. Do not add a plant-capacity/lifetime factor, crusher operation or second maintenance/disposal inventory. Use only the newly reviewed generic final-disposal helper closure, not the broader demolition/collection wrapper or material-specific landfill proxy. Preserve every original market collection-freight term, without aggregation or normalization, through the reviewed complete Swiss rail mix or generic RER mixed-traction rail/heavy-road services. Native fleet/traction, fuel, loading, infrastructure, geography and vintage differences remain explicit limitations. Preserve the source as-received kg; no density, moisture, dry-mass, remelting, recovered-material credit, new treatment fate, physical omission or normalization. Preserve caller formulas/uncertainty/ownership and separately listed emissions and purchases. Source-data gaps, native upstream biosphere exclusions and unquantified score effects remain warnings, without inventory or LCIA equivalence. Only the enumerated European3.9cutoff closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; raw component hashes do not admit standalone services, other versions, inverse or cross-model conversions. The user explicitly approved the seven missing-country RER proxies with warnings on2026-11-09; preserve all other country entries and every original coefficient without normalization. The country fallback applies only to AL,MD,MT,GI,XK,ME,BY, whose original shares sum to1.6162643620792647percent of this sorting electricity group. Retain every one of the39entries separately, even where seven target suppliers coincide. Country representation, region membership, generation/import mix, network, losses and score differences remain explicit geographic-proxy warnings. This does not establish a standalone source-country-to-RER correspondence."
     },
     "r-bb4ee8647785ad0d": {
       "limitations": [
