@@ -896,3 +896,31 @@ nonempty; neither an empty native recycling handover nor a virgin-product
 replacement represents it. Its impact difference is unquantified. All other
 supplier, geography, cumulative-inventory and native biosphere limitations
 remain warnings. Other source versions and other omissions are not approved.
+
+Pilot natural-gas heat markets
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The exact RoW natural-gas heat markets from ecoinvent 3.9 and 3.12 cut-off
+retain their 43 original supplier entries individually, including coefficients,
+order and marginal uncertainty. Native complete heat-output services replace
+the source production models per positive MJ of heat. Conversion factor +1
+preserves signed caller heat demand and credits. No extra fuel-efficiency,
+distribution-loss or network factor is applied: the native services already
+contain their production inventories and allocation.
+
+Separate furnace, low-NOx, modulating and condensing technologies remain
+separate. Engine heat uses the inspected exergy-allocated native capacity
+proxies, including the closer 1 MWe lean-burn endpoint. Utility CHP uses native
+country suppliers where available, US for US subregions and ENTSO-E otherwise,
+with explicit technology, capacity and geographic warnings. The native RU
+identity and upstream burner specify RU but descriptive text says RO; retain
+the links and expose the contradiction rather than silently relabelling it.
+
+The packaged review records source/native inventory and metadata witnesses,
+heat-output and upstream-burner bases, the native bundle pin and geographic
+conflicts. Native internal inventories and uncertainty replace source internal
+models; allocation, performance, heat quality, geography, vintage and score
+differences remain unquantified. The 2,991 upstream native biosphere exclusions
+remain explicit. Only these two market profiles qualify; other source releases,
+standalone components, reverse routes and system-model changes remain outside
+this decision.
