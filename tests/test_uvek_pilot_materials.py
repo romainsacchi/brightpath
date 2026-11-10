@@ -1,11 +1,12 @@
 """Inspected material identities retain signed coordinates and exact profile gates."""
 
-from copy import deepcopy
-from dataclasses import replace
 import json
 import math
+from copy import deepcopy
+from dataclasses import replace
 
 import pytest
+from test_uvek_reference_signs import consumer, contexts
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy, PolicyAction
@@ -16,10 +17,14 @@ from scripts.review_uvek_pilot_materials import (
     apply_pilot_paint_market_review,
     apply_pilot_silver_market_review,
 )
-from test_uvek_reference_signs import consumer, contexts
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_material_review.json").read_text())
 PAINT_MARKET = json.loads((DATA_DIR / "export/uvek_pilot_paint_market_review.json").read_text())
+LIME_CORRECTION = next(
+    r
+    for r in json.loads((DATA_DIR / "export/uvek_heat_38_corrections_review.json").read_text())["records"]
+    if r["rule_id"] == "bp-56229a990a6a39be"
+)
 SILVER_MARKET = json.loads((DATA_DIR / "export/uvek_pilot_silver_market_review.json").read_text())
 CASES = [
     (d, p["source_profile"]["version"])
@@ -44,7 +49,8 @@ def test_material_correction_preserves_reference_sign_uncertainty_and_formula(
     result = inventory.migrate_background(contexts("uvek", target_version).background, policy=POLICY)
     assert inventory.data == data == before
     edge = result.data[0]["exchanges"][1]
-    assert all(edge[f] == value for f, value in decision["target"].items())
+    target = LIME_CORRECTION["target"] if decision["rule_id"] == LIME_CORRECTION["rule_id"] else decision["target"]
+    assert all(edge[f] == value for f, value in target.items())
     factor = decision["conversion_factor"]
     assert edge["amount"] == pytest.approx(amount * factor)
     assert edge["loc"] == pytest.approx(before[0]["exchanges"][1]["loc"] + math.log(factor))

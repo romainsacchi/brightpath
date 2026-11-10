@@ -697,6 +697,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from scripts.review_uvek_heat_310_routes import apply_heat_310_routes_review
         from scripts.review_uvek_heat_310_closure import apply_heat_310_closure_review
         from scripts.review_uvek_heat_38_profiles import apply_heat_38_profiles_review
+        from scripts.review_uvek_heat_38_corrections import apply_heat_38_corrections_review
         from scripts.review_uvek_deferred_delivered_gas import apply_deferred_delivered_gas_review
         from scripts.review_uvek_deferred_waste_markets import apply_deferred_waste_markets_review
         from scripts.review_uvek_deferred_sorting import apply_deferred_sorting_review
@@ -768,6 +769,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_heat_310_routes import apply_heat_310_routes_review
         from review_uvek_heat_310_closure import apply_heat_310_closure_review
         from review_uvek_heat_38_profiles import apply_heat_38_profiles_review
+        from review_uvek_heat_38_corrections import apply_heat_38_corrections_review
         from review_uvek_deferred_delivered_gas import apply_deferred_delivered_gas_review
         from review_uvek_deferred_waste_markets import apply_deferred_waste_markets_review
         from review_uvek_deferred_sorting import apply_deferred_sorting_review
@@ -842,6 +844,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_heat_310_routes_review(technosphere)
     apply_heat_310_closure_review(technosphere)
     apply_heat_38_profiles_review(technosphere)
+    apply_heat_38_corrections_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:

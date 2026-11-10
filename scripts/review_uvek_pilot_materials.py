@@ -1,9 +1,9 @@
 """Replay the inspected material corrections encountered by the Premise pilot."""
 
-from collections import Counter
-from copy import deepcopy
 import hashlib
 import json
+from collections import Counter
+from copy import deepcopy
 from pathlib import Path
 
 from brightpath.migrations.schema import intern_review
@@ -56,11 +56,25 @@ def _apply_material_review(resource, root, review_path, approval_sha256, *, mapp
             or rule["source"]["unit"] != decision["target"]["unit"]
         ):
             raise ValueError("Pilot material source, supplier or unit changed.")
+        if (
+            decision["rule_id"] == "bp-56229a990a6a39be"
+            and rule.get("mapping_method") == "reviewed_inventory_boundary_correction"
+        ):
+            if __package__:
+                from scripts.review_uvek_heat_38_corrections import preserve_superseding_lime_rule
+            else:
+                from review_uvek_heat_38_corrections import preserve_superseding_lime_rule
+
+            preserve_superseding_lime_rule(rule, decision, root)
+            pending.append((rule, None))
+            continue
         for row in decision["profiles"]:
             if row["source_profile"] not in resource["source_profiles"] or row["reference_amount"] != source_sign:
                 raise ValueError("Pilot material reference profile changed.")
         pending.append((rule, decision))
     for rule, decision in pending:
+        if decision is None:
+            continue
         source_sign = decision.get("source_reference_amount", 1)
         limitation = decision["limitations"]
         rule.update(
