@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 6,
-      "recipe": 926,
-      "unclassified": 29543
+      "proxy": 7,
+      "recipe": 927,
+      "unclassified": 29541
     },
     "mapped_identities": 30732,
     "mapping_methods": {
-      "curated_legacy": 287,
+      "curated_legacy": 286,
       "followup_review": 163,
-      "heuristic_similarity": 26716,
+      "heuristic_similarity": 26715,
       "pairwise_review": 2241,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -41,10 +41,12 @@
       "reviewed_gas_market_recipe": 2,
       "reviewed_ghana_uncontrolled_inventory": 1,
       "reviewed_heat_compressed_air_network_mix": 1,
+      "reviewed_heat_correct_native_boundary": 1,
       "reviewed_heat_dependency_proxy": 8,
       "reviewed_heat_documented_K2O_basis_conversion": 1,
       "reviewed_heat_fossil_hydrogen_proxy": 1,
       "reviewed_heat_native_route": 3,
+      "reviewed_heat_reconstruct_market": 1,
       "reviewed_heat_source_electrolysis_helper": 1,
       "reviewed_heat_vehicle_gas_proxy": 1,
       "reviewed_industrial_landfarming_service": 7,
@@ -100975,6 +100977,1284 @@
       "rationale": "Reconstruct the independently inspected Ghanaian uncontrolled domestic-refrigerator dismantling inventory per appliance, retaining all five direct refrigerant/blowing-agent emissions and every seven material-treatment or recovered-material input. Keep their quantities, marginal uncertainty and constant arithmetic formulas. The source negative one-appliance waste reference requires factor -1 to a positive-reference generated service; incoming negative treatment demand becomes positive service demand while avoided treatment remains negative. Each existing directional component mapping is applied independently, so recovered-product credits remain negative and negative waste inputs become positive treatment demand. Existing reviewed whole waste-market proxies approximate material, regional disposal shares, transport, emissions, technology and allocation; their being mapped does not establish equivalence. In particular, do not use a complete controlled European refrigerator-treatment proxy or remove uncontrolled refrigerant emissions. The two recovered-material suppliers are already reviewed positive-reference allocated cut-off stocks; no new empty treatment service is authorized. Preserve caller-owned uncertainty, formulas, foreground suppliers, production and separately listed emissions. Source parameters are absent and the retained source formulas contain arithmetic constants only. Only nine enumerated exact cut-off profiles are reviewed; no cross-model, missing-version or independently reversed correspondence is inferred. Native UVEK2026 physical-flow gaps must refuse transactionally in strict mode or remain explicitly unresolved with warnings under a permissive policy. No physical omission is authorized.",
       "reference product": "used domestic refrigerator",
       "unit": "unit"
+    },
+    "heat-310-condensate-collection-fa542e1be839dd63cfaf": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_310_closure_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.6832e-07,
+          "loc": 1.6832e-07,
+          "location": "CH",
+          "name": "Sewer grid, class 2",
+          "reference product": "Sewer grid, class 2",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilometer"
+        }
+      ],
+      "location": "CH",
+      "name": "Condensate collection, native class 2 sewer allocation per m3",
+      "rationale": "Source rural/urban collection references are per m3sewered wastewater, whereas native class2sewer infrastructure is per km. A separate1m3collection proxy uses the actual native condensate-treatment sewer allocation1.6832e-7km/m3and complete native sewer inventory. Both original collection entries call it separately at unchanged volumes and uncertainty. This replaces rural/urban geometry, capacity and infrastructure allocations by the native class2allocation; do not infer sewer length from density, annual flow, lifetime or population. Native sewer class is242km/100year/71133PCEdocumented infrastructure, not a geometrically equivalent rural/urban design.",
+      "reference product": "condensate collection",
+      "unit": "cubic meter"
+    },
+    "heat-310-condensate-market-08e0723e7fb6fe67b3d9": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_310_closure_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.4126619233000178,
+          "loc": 0.4126619233000178,
+          "recipe": "heat-310-condensate-treatment-18ba9aca8ce834387781",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.1723,
+          "loc": 0.1723,
+          "recipe": "heat-310-condensate-collection-fa542e1be839dd63cfaf",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.8277,
+          "loc": 0.8277,
+          "recipe": "heat-310-condensate-collection-fa542e1be839dd63cfaf",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0117467615339996,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0117467615339996,
+          "name": "Aluminium III",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0276868648744193,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0276868648744193,
+          "name": "BOD5, Biological Oxygen Demand",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0572454265789456,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0572454265789456,
+          "name": "COD, Chemical Oxygen Demand",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00587338076699982,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00587338076699982,
+          "name": "Chlorine",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000234935230679993,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.000234935230679993,
+          "name": "Chromium III",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.76201423009995e-05,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 1.76201423009995e-05,
+          "name": "Copper ion",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0099847473038997,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0099847473038997,
+          "name": "DOC, Dissolved Organic Carbon",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000264302134514992,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.000264302134514992,
+          "name": "Fluorine",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00939740922719972,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00939740922719972,
+          "name": "Hydrogen",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00117467615339996,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00117467615339996,
+          "name": "Iron ion",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00117467615339996,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00117467615339996,
+          "name": "Nickel II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00117467615339996,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00117467615339996,
+          "name": "Nitrogen",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0017987228598937,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0017987228598937,
+          "name": "Oxygen",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0493363984427985,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0493363984427985,
+          "name": "Sulfur",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0146834519174996,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0146834519174996,
+          "name": "TOC, Total Organic Carbon",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.587241188,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.587241188,
+          "name": "Water",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 1.17467615339996e-05,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 1.17467615339996e-05,
+          "name": "Zinc II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for condensate from light oil boiler, retained source fates on native treatment and collection",
+      "rationale": "Reconstruct the source condensate market composition: retain0.4126619233000178m3treated condensate, separate0.1723rural and0.8277urban m3collection entries, and all17direct untreated-discharge flows with their exact signed source amounts, units, compartments and supported uncertainty. Untreated water amount0.587241188m3is retained literally; do not renormalize it to the complement or claim closure of a recalculated water balance. Source waste reference is-1m3, target service+1m3: retain the already-correct factor-1exactly once. The source treated fraction uses a regional1/2/3stage portfolio; replace only that fraction with native Swiss class2three-stage condensate treatment as a complete process proxy. Materialize its full retained26technosphere and50canonical3.10biosphere exchanges, excluding only its embedded deterministic1.6832e-7kmsewer link. That component is relocated to collection accounting, not cancelled through an independent negative uncertain exchange. Do not retain both the embedded sewer and the separately reconstructed collection service. Source rural/urban collection references are per m3sewered wastewater, whereas native class2sewer infrastructure is per km. A separate1m3collection proxy uses the actual native condensate-treatment sewer allocation1.6832e-7km/m3and complete native sewer inventory. Both original collection entries call it separately at unchanged volumes and uncertainty. This replaces rural/urban geometry, capacity and infrastructure allocations by the native class2allocation; do not infer sewer length from density, annual flow, lifetime or population. Native sewer class is242km/100year/71133PCEdocumented infrastructure, not a geometrically equivalent rural/urban design. Treatment-stage portfolio, sludge disposal/use, municipal incineration, own energy purchases, auxiliaries, pollutant fate, long-term emissions and supply geography change inside the treated fraction. Retain the native copy's actual signed coefficients and supported uncertainty without changing residues, adding avoided-energy/recovery credits or adjusting separately retained untreated emissions. Full native quantities are preserved before multiplication by the source treated share. Its inherited biosphere exclusions remain a limitation; no pollutant-removal or impact equivalence is established. Exact independently inspected ecoinvent3.10cutoff only, to nativeUVEK2026 via the2025edge. Preserve foreground ownership, signed caller quantities, formulas, supported uncertainty, separate caller emissions and complete links. Source/native technology, allocation, vintage, geography and internal uncertainty differ. Native upstream biosphere exclusions remain explicit. Score effects are unquantified; no LCIA equivalence, impact completeness, inverse, unreviewed release or cross-system-model approval is inferred.",
+      "reference product": "condensate from light oil boiler",
+      "unit": "cubic meter"
+    },
+    "heat-310-condensate-treatment-18ba9aca8ce834387781": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_310_closure_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 7.1573e-12,
+          "loc": -25.662888301046248,
+          "location": "CH",
+          "name": "Residual material landfill facility",
+          "negative": false,
+          "reference product": "Residual material landfill facility",
+          "scale": 0.18560933468978663,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.00014712,
+          "loc": -8.824261977668208,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "negative": false,
+          "reference product": "Transport, freight, rail",
+          "scale": 0.20059465662268783,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 4.3627e-05,
+          "loc": -10.03983433322034,
+          "location": "CH",
+          "name": "Natural gas, burned in industrial furnace 1MW",
+          "negative": false,
+          "reference product": "Natural gas, burned in industrial furnace 1MW",
+          "scale": 0.4784859582405799,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0155,
+          "loc": -4.166915255056936,
+          "location": "CH",
+          "name": "Disposal, paper, 11.2% water, to municipal incineration",
+          "negative": false,
+          "reference product": "Disposal, paper, 11.2% water, to municipal incineration",
+          "scale": 0.033829324236907404,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.4894e-08,
+          "loc": -16.918961681417056,
+          "location": "GLO",
+          "name": "Chemicals inorganic, at plant",
+          "negative": false,
+          "reference product": "Chemicals inorganic, at plant",
+          "scale": 0.5863184620080416,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.6937e-08,
+          "loc": -17.42976503073963,
+          "location": "RER",
+          "name": "Hydrochloric acid, 30% in H2O, at plant",
+          "negative": false,
+          "reference product": "Hydrochloric acid, 30% in H2O, at plant",
+          "scale": 0.5863184620080416,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.6876e-06,
+          "loc": -12.077222191424191,
+          "location": "CH",
+          "name": "Iron (III) chloride, 40% in H2O, at plant",
+          "negative": false,
+          "reference product": "Iron (III) chloride, 40% in H2O, at plant",
+          "scale": 0.7123005976372387,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00017697,
+          "loc": -8.63953033128118,
+          "location": "CH",
+          "name": "Slurry spreading, by vacuum tanker",
+          "negative": false,
+          "reference product": "Slurry spreading, by vacuum tanker",
+          "scale": 0.0697940071035267,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 2.2229e-08,
+          "loc": -17.621868094237637,
+          "location": "RER",
+          "name": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "negative": false,
+          "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "scale": 0.3431116327435607,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0034355,
+          "loc": -5.673592803493143,
+          "location": "CH",
+          "name": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+          "negative": false,
+          "reference product": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+          "scale": 0.20866390032533824,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.075634,
+          "loc": -2.58184936144759,
+          "location": "CH",
+          "name": "Process-specific burdens, municipal waste incineration",
+          "negative": false,
+          "reference product": "Process-specific burdens, municipal waste incineration",
+          "scale": 0.27748823575063947,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.4735e-07,
+          "loc": -14.619924550952806,
+          "location": "CH",
+          "name": "Ammonia, liquid, at regional storehouse",
+          "negative": false,
+          "reference product": "Ammonia, liquid, at regional storehouse",
+          "scale": 0.4784859582405799,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0013742,
+          "loc": -6.589883535367298,
+          "location": "CH",
+          "name": "Cement, unspecified, at plant",
+          "negative": false,
+          "reference product": "Cement, unspecified, at plant",
+          "scale": 0.20866390032533824,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0155,
+          "loc": -4.166915255056936,
+          "location": "CH",
+          "name": "Disposal, plastics, mixture, 15.3% water, to municipal incineration",
+          "negative": false,
+          "reference product": "Disposal, plastics, mixture, 15.3% water, to municipal incineration",
+          "scale": 0.033829324236907404,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0059964,
+          "loc": -5.116595989826115,
+          "location": "CH",
+          "name": "Transport, freight, lorry, 16t-32t gross weight, fleet average",
+          "negative": false,
+          "reference product": "Transport, freight, lorry, 16t-32t gross weight, fleet average",
+          "scale": 0.06071042760216976,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.066203,
+          "loc": -2.715029499845425,
+          "location": "CH",
+          "name": "Electricity, low voltage, at grid",
+          "negative": false,
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.27734469370618914,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.9883e-09,
+          "loc": 1.9883e-09,
+          "location": "CH",
+          "name": "Wastewater treatment plant, class 2",
+          "reference product": "Wastewater treatment plant, class 2",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.010874,
+          "loc": -4.521380660258408,
+          "location": "CH",
+          "name": "Electricity from waste, at municipal waste incineration plant",
+          "negative": false,
+          "reference product": "Electricity from waste, at municipal waste incineration plant",
+          "scale": 0.7204504553053812,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 3.5279e-11,
+          "loc": -24.067733229862878,
+          "location": "CH",
+          "name": "Slag compartment",
+          "negative": false,
+          "reference product": "Slag compartment",
+          "scale": 0.1836392633614617,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.063433,
+          "loc": -2.757771048222696,
+          "location": "CH",
+          "name": "Heat from waste, at municipal waste incineration plant",
+          "negative": false,
+          "reference product": "Heat from waste, at municipal waste incineration plant",
+          "scale": 0.2785491680483347,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 1.8909e-11,
+          "loc": -24.691383116729465,
+          "location": "CH",
+          "name": "Municipal waste incineration plant",
+          "negative": false,
+          "reference product": "Municipal waste incineration plant",
+          "scale": 0.27748823575063947,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 2.6133e-10,
+          "loc": -22.065237139429637,
+          "location": "RER",
+          "name": "Chromium oxide, flakes, at plant",
+          "negative": false,
+          "reference product": "Chromium oxide, flakes, at plant",
+          "scale": 0.7430359102414713,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.019845,
+          "loc": -3.919803192747108,
+          "location": "CH",
+          "name": "Process-specific burdens, slag compartment",
+          "negative": false,
+          "reference product": "Process-specific burdens, slag compartment",
+          "scale": 0.1836392633614617,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0034355,
+          "loc": -5.673592803493143,
+          "location": "CH",
+          "name": "Process-specific burdens, residual material landfill",
+          "negative": false,
+          "reference product": "Process-specific burdens, residual material landfill",
+          "scale": 0.18560933468978663,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.2805e-08,
+          "loc": -18.173430117294924,
+          "location": "RER",
+          "name": "Titanium dioxide, production mix, at plant",
+          "negative": false,
+          "reference product": "Titanium dioxide, production mix, at plant",
+          "scale": 0.7430359102414713,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.0302e-09,
+          "loc": -19.329449834427674,
+          "location": "CH",
+          "name": "Quicklime, milled, packed, at plant",
+          "negative": false,
+          "reference product": "Quicklime, milled, packed, at plant",
+          "scale": 0.34794670311398523,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.8465e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -10.165761821053376,
+          "name": "DOC, Dissolved Organic Carbon",
+          "negative": false,
+          "scale": 0.17680512628294365,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00018674,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -8.585793282908494,
+          "name": "Methane, fossil",
+          "negative": false,
+          "scale": 0.23935778492387863,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.44504,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -0.8095911132150992,
+          "name": "Heat, waste",
+          "negative": false,
+          "scale": 0.168807220599995,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 7.9805e-09,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -18.646264770805935,
+          "name": "Cyanide",
+          "negative": false,
+          "scale": 0.5014176666371705,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.1854e-07,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -14.959517781122775,
+          "name": "Nitrate",
+          "negative": false,
+          "scale": 0.3105838553838906,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0012131,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -6.7145762121874,
+          "name": "Nickel II",
+          "negative": false,
+          "scale": 0.8020116398663008,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.8011e-05,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -10.924527875609353,
+          "name": "Aluminium III",
+          "negative": false,
+          "scale": 0.8415114453537522,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.0835e-11,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -24.594386851054132,
+          "name": "Nickel II",
+          "negative": false,
+          "scale": 0.8870437851585191,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.1836e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -11.993609931824231,
+          "name": "Zinc II",
+          "negative": false,
+          "scale": 0.7935859266899641,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.7344e-05,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -9.60569674593606,
+          "name": "Carbon monoxide, fossil",
+          "negative": false,
+          "scale": 0.313717318597282,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -4.605170185988091,
+          "name": "Chloride",
+          "negative": false,
+          "scale": 0.8058476812376577,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00045199,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -7.7018505022705845,
+          "name": "Nickel II",
+          "negative": false,
+          "scale": 0.8296375736406361,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.8465e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -10.165761821053376,
+          "name": "TOC, Total Organic Carbon",
+          "negative": false,
+          "scale": 0.17680512628294365,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0028001,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -5.878100148153004,
+          "name": "DOC, Dissolved Organic Carbon",
+          "negative": false,
+          "scale": 0.06901064894868741,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.4378e-06,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -12.12213599065762,
+          "name": "Dinitrogen monoxide",
+          "negative": false,
+          "scale": 0.2391718767603686,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0074931,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -4.893772681899614,
+          "name": "Nitrate",
+          "negative": false,
+          "scale": 0.24847489911517148,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00028294,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -8.170275696933485,
+          "name": "Iron ion",
+          "negative": false,
+          "scale": 1.233541032437724,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.007271,
+          "categories": [
+            "soil",
+            "agricultural"
+          ],
+          "loc": -4.923861445314217,
+          "name": "Aluminium III",
+          "negative": false,
+          "scale": 0.8321902699491123,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.3453e-06,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -12.346415756751234,
+          "name": "Nitrogen oxides",
+          "negative": false,
+          "scale": 0.30007715685539027,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00038094,
+          "categories": [
+            "soil",
+            "agricultural"
+          ],
+          "loc": -7.87286867555386,
+          "name": "Iron ion",
+          "negative": false,
+          "scale": 0.8305880539192574,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.3844e-10,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -22.700584097161403,
+          "name": "Zinc II",
+          "negative": false,
+          "scale": 0.8577540880805834,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.071518,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -2.6378061127137005,
+          "name": "Carbon dioxide, fossil",
+          "negative": false,
+          "scale": 0.07803156781579379,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00020694,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -8.48308166178747,
+          "name": "Chromium VI",
+          "negative": false,
+          "scale": 0.7882713753649156,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.011189,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -4.4928241261565525,
+          "name": "COD, Chemical Oxygen Demand",
+          "negative": false,
+          "scale": 0.053888796086715644,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.3138e-07,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -15.845171949482083,
+          "name": "Zinc II",
+          "negative": false,
+          "scale": 2.3422678706844158,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.2789e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -11.26692513151309,
+          "name": "Chromium VI",
+          "negative": false,
+          "scale": 1.0348092263655366,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0024842,
+          "categories": [
+            "soil",
+            "agricultural"
+          ],
+          "loc": -5.99780460285418,
+          "name": "Carbon",
+          "negative": false,
+          "scale": 0.15256449302775082,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.6188e-05,
+          "categories": [
+            "soil",
+            "agricultural"
+          ],
+          "loc": -9.48230658798796,
+          "name": "Chromium III",
+          "negative": false,
+          "scale": 0.8305880539192574,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0036744,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -5.60636542495269,
+          "name": "BOD5, Biological Oxygen Demand",
+          "negative": false,
+          "scale": 0.0730448529359476,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00045,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -7.706262975199908,
+          "name": "Fluoride",
+          "negative": false,
+          "scale": 0.8058476812376577,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.2109e-06,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -13.022110885515238,
+          "name": "Ammonia",
+          "negative": false,
+          "scale": 0.525847684440179,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0085323,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -4.76389631724717,
+          "name": "Aluminium III",
+          "negative": false,
+          "scale": 0.8378374951036265,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.9329e-12,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -25.441280025719056,
+          "name": "Chromium III",
+          "negative": false,
+          "scale": 0.884791012141676,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00030444,
+          "categories": [
+            "soil",
+            "agricultural"
+          ],
+          "loc": -8.097036534565083,
+          "name": "Nickel II",
+          "negative": false,
+          "scale": 0.8302460891282999,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.5929e-06,
+          "categories": [
+            "soil",
+            "agricultural"
+          ],
+          "loc": -11.664574277080165,
+          "name": "Copper ion",
+          "negative": false,
+          "scale": 0.8314703819757036,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.1796e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -10.356170062253408,
+          "name": "BOD5, Biological Oxygen Demand",
+          "negative": false,
+          "scale": 0.17680512628294365,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0029977,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -5.809909951019879,
+          "name": "TOC, Total Organic Carbon",
+          "negative": false,
+          "scale": 0.058090877144704726,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 9.7208e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -9.238657545357963,
+          "name": "COD, Chemical Oxygen Demand",
+          "negative": false,
+          "scale": 0.17680512628294365,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.0058e-10,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -23.020067685184728,
+          "name": "Copper ion",
+          "negative": false,
+          "scale": 0.8620792428791243,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.4744e-07,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -13.98104579665817,
+          "name": "NMVOC, non-methane volatile organic compounds",
+          "negative": false,
+          "scale": 0.41647630012541065,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0012005,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -6.725017142302966,
+          "name": "Aluminium III",
+          "negative": false,
+          "scale": 0.7238475761136145,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.1014e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -11.416343367123984,
+          "name": "Copper ion",
+          "negative": false,
+          "scale": 0.8400600115098156,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.0166e-08,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -17.719267818975386,
+          "name": "Iron ion",
+          "negative": false,
+          "scale": 0.8550848660940502,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0010152,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -6.892669641564096,
+          "name": "Iron ion",
+          "negative": false,
+          "scale": 0.8013576833366367,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.8504e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -14.769918611951557,
+          "name": "Chromium III",
+          "negative": false,
+          "scale": 0.8381462497096708,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.25661,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -1.3601978563986163,
+          "name": "Sulfate",
+          "negative": false,
+          "scale": 0.24814017616197742,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.8098e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -11.897147806809741,
+          "name": "Nitrogen",
+          "negative": false,
+          "scale": 0.30718724969727473,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.4417,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -0.8171243603796563,
+          "name": "Heat, waste",
+          "negative": false,
+          "scale": 0.06914129390000333,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 5.344e-06,
+          "categories": [
+            "soil",
+            "agricultural"
+          ],
+          "loc": -12.139536121729929,
+          "name": "Zinc II",
+          "negative": false,
+          "scale": 0.8312902479160933,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.7818e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -11.763722884066276,
+          "name": "Copper ion",
+          "negative": false,
+          "scale": 0.7903854562093571,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "CH",
+      "name": "Condensate treatment, native class 2, collection accounted separately",
+      "rationale": "The source treated fraction uses a regional1/2/3stage portfolio; replace only that fraction with native Swiss class2three-stage condensate treatment as a complete process proxy. Materialize its full retained26technosphere and50canonical3.10biosphere exchanges, excluding only its embedded deterministic1.6832e-7kmsewer link. That component is relocated to collection accounting, not cancelled through an independent negative uncertain exchange. Do not retain both the embedded sewer and the separately reconstructed collection service. Source rural/urban collection references are per m3sewered wastewater, whereas native class2sewer infrastructure is per km. A separate1m3collection proxy uses the actual native condensate-treatment sewer allocation1.6832e-7km/m3and complete native sewer inventory. Both original collection entries call it separately at unchanged volumes and uncertainty. This replaces rural/urban geometry, capacity and infrastructure allocations by the native class2allocation; do not infer sewer length from density, annual flow, lifetime or population. Native sewer class is242km/100year/71133PCEdocumented infrastructure, not a geometrically equivalent rural/urban design. Treatment-stage portfolio, sludge disposal/use, municipal incineration, own energy purchases, auxiliaries, pollutant fate, long-term emissions and supply geography change inside the treated fraction. Retain the native copy's actual signed coefficients and supported uncertainty without changing residues, adding avoided-energy/recovery credits or adjusting separately retained untreated emissions. Full native quantities are preserved before multiplication by the source treated share. Its inherited biosphere exclusions remain a limitation; no pollutant-removal or impact equivalence is established.",
+      "reference product": "condensate treatment without collection",
+      "unit": "cubic meter"
     },
     "heat-310-waste-57bf3348f28eb377601d": {
       "evidence": [
@@ -707166,7 +708446,7 @@
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-453f35f6f692ebf8", "mapping_method": "reviewed_pilot_nitrate_concrete_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_concrete_delivery_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_concrete_delivery_review.json#ecoinvent-3.9-cutoff/7e7b358f2e29b43873f6fbcf0ccac6a039274d4beb74cf3253e7bde94ce72df0"], "reason": "User instruction: auto-approve coming decisions, within the exact electricity pilot. Retain the complete ecoinvent3.9cutoff supply/delivery forest for nine normal-strength concrete markets(BR,PE,AT,IN,CO,RoW,RNA,CH,ZA). All41market/renaming nodes,88concrete supply entries and56individual freight entries retain original signedm3/tkm, sourceorder and supporteduncertainty. The graph is acyclic, with32internal marketlinks and56production supplier entries; no loss normalization or mean-only cycle elimination. Source grade labels20,25,25-30,30,30-32,35 and37MPa and binder formulations remain traceable through their original grade-market shares. Only the56complete producer leaves use a shared complete nativeSwiss Concrete normal atplant screening inventory peroriginalsignedm3. Native output is positive1m3, documented B35/25 with CEMI42.5,300kgcement,190kgwater,1890kggravel and density2380kg/m3. It includes allmanufacturing, internaltransport, infrastructure, wastewater andproductionwaste, excluding administration as documented. This substitutes source strength/binder recipes and sourceinternaluncertainty; do not claim structural-performance or strength-standard equivalence. Native CEMI versus source binder/clinker/slag/blended/recycledmaterial mixes, water/admixture, density,manufacturing energy/emissions/waste,allocation,internaluncertainty/correlation,geography and vintage differ. A common native supplier is shared across sourcebranches; independent sourceproducer uncertainty is not recreated. Original source grade labels on helpers are traceability labels, not verified native strength certification. No strength,clinker,binder,yield,volume/density or functional-performance multiplier, addedcement/grinding/mixing process, resource-correction wrapper, common-base-only inventory, piling/construction service or new disposal/recoverycredit. Retain all original marketfreights separately and unscaled through complete same-mode native genericRERrail/heavyroad,CH3.5tlightroad and CH32-40theavyfleet services. Source >32tEURO3→native32-40tfleet is an explicit upperclass/emissionstandard/fleet/geography approximation; source generic road and rail geographies/fuel/vintage also differ. Native transport includes its infrastructure once, not coal-only/diesel-only traction or vehicleoperation alone; no extra loading,payload,mass,distance or road/vehicle burden. Source original freight already encodes its shipment mass; native density differences do not authorize changing source tkm. All source market/alias layers have positive1m3 references, no directBIO, parameters or exchangeformulas; all original numericcoefficients and supporteduncertainty are retained without aggregation. Complete sourceproducer inventories remain frozen in witnesses and are not reproduced chemically. Preserve caller ownership, signedquantity/formulas/uncertainty, foregroundsuppliers and separately listedcement,aggregate,admixture,water,construction,transport,treatment and emissions. Native upstream biosphereexclusions and score/functional-performance effects remain explicit andunquantified. Only nine enumerated exact3.9cutoff parent closures qualify forUVEK2026cutoff/ecoinvent3.10biosphere; no standalone grade/producer/freight, otherrelease, inverse or cross-system-modelapproval. No fullpilot scenario/certification/export or LCIAequivalence claim.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-nitrate-concrete_delivery-c0e5316d6eb0f99d8476"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-6de9b7f0466eefa5", "source": {"location": "ZA", "name": "market for concrete, normal strength", "reference product": "concrete, normal strength", "unit": "cubic meter"}, "target": {"recipe_ref": "pilot-nitrate-concrete_delivery-c0e5316d6eb0f99d8476"}, "technosphere_information_loss": "User instruction: auto-approve coming decisions, within the exact electricity pilot. Retain the complete ecoinvent3.9cutoff supply/delivery forest for nine normal-strength concrete markets(BR,PE,AT,IN,CO,RoW,RNA,CH,ZA). All41market/renaming nodes,88concrete supply entries and56individual freight entries retain original signedm3/tkm, sourceorder and supporteduncertainty. The graph is acyclic, with32internal marketlinks and56production supplier entries; no loss normalization or mean-only cycle elimination. Source grade labels20,25,25-30,30,30-32,35 and37MPa and binder formulations remain traceable through their original grade-market shares. Only the56complete producer leaves use a shared complete nativeSwiss Concrete normal atplant screening inventory peroriginalsignedm3. Native output is positive1m3, documented B35/25 with CEMI42.5,300kgcement,190kgwater,1890kggravel and density2380kg/m3. It includes allmanufacturing, internaltransport, infrastructure, wastewater andproductionwaste, excluding administration as documented. This substitutes source strength/binder recipes and sourceinternaluncertainty; do not claim structural-performance or strength-standard equivalence. Native CEMI versus source binder/clinker/slag/blended/recycledmaterial mixes, water/admixture, density,manufacturing energy/emissions/waste,allocation,internaluncertainty/correlation,geography and vintage differ. A common native supplier is shared across sourcebranches; independent sourceproducer uncertainty is not recreated. Original source grade labels on helpers are traceability labels, not verified native strength certification. No strength,clinker,binder,yield,volume/density or functional-performance multiplier, addedcement/grinding/mixing process, resource-correction wrapper, common-base-only inventory, piling/construction service or new disposal/recoverycredit. Retain all original marketfreights separately and unscaled through complete same-mode native genericRERrail/heavyroad,CH3.5tlightroad and CH32-40theavyfleet services. Source >32tEURO3→native32-40tfleet is an explicit upperclass/emissionstandard/fleet/geography approximation; source generic road and rail geographies/fuel/vintage also differ. Native transport includes its infrastructure once, not coal-only/diesel-only traction or vehicleoperation alone; no extra loading,payload,mass,distance or road/vehicle burden. Source original freight already encodes its shipment mass; native density differences do not authorize changing source tkm. All source market/alias layers have positive1m3 references, no directBIO, parameters or exchangeformulas; all original numericcoefficients and supporteduncertainty are retained without aggregation. Complete sourceproducer inventories remain frozen in witnesses and are not reproduced chemically. Preserve caller ownership, signedquantity/formulas/uncertainty, foregroundsuppliers and separately listedcement,aggregate,admixture,water,construction,transport,treatment and emissions. Native upstream biosphereexclusions and score/functional-performance effects remain explicit andunquantified. Only nine enumerated exact3.9cutoff parent closures qualify forUVEK2026cutoff/ecoinvent3.10biosphere; no standalone grade/producer/freight, otherrelease, inverse or cross-system-modelapproval. No fullpilot scenario/certification/export or LCIAequivalence claim."},
     {"confidence": 0.775426, "id": "bp-6b60ae27d55196e6", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for concrete, sole plate and foundation", "reference product": "concrete, sole plate and foundation", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Concrete, sole plate and foundation, at plant", "reference product": "Concrete, sole plate and foundation, at plant", "unit": "cubic meter"}},
     {"confidence": 0.560771, "conversion_factor": -1, "id": "bp-835a621df3b45b8f", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-835a621df3b45b8f"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for condensate from light oil boiler", "reference product": "condensate from light oil boiler", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, condensate from light oil boiler, to wastewater treatment, class 2", "reference product": "Treatment, condensate from light oil boiler, to wastewater treatment, class 2", "unit": "cubic meter"}},
-    {"confidence": 0.480771, "conversion_factor": -1, "id": "bp-a1c34b995d6289b2", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-a1c34b995d6289b2"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for condensate from light oil boiler", "reference product": "condensate from light oil boiler", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, condensate from light oil boiler, to wastewater treatment, class 2", "reference product": "Treatment, condensate from light oil boiler, to wastewater treatment, class 2", "unit": "cubic meter"}},
+    {"classification": "proxy", "confidence": 0.480771, "conversion_factor": -1, "id": "bp-a1c34b995d6289b2", "mapping_method": "reviewed_heat_reconstruct_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_heat_310_closure_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_heat_310_closure_review.json"], "reason": "Reconstruct the source condensate market composition: retain0.4126619233000178m3treated condensate, separate0.1723rural and0.8277urban m3collection entries, and all17direct untreated-discharge flows with their exact signed source amounts, units, compartments and supported uncertainty. Untreated water amount0.587241188m3is retained literally; do not renormalize it to the complement or claim closure of a recalculated water balance. Source waste reference is-1m3, target service+1m3: retain the already-correct factor-1exactly once. The source treated fraction uses a regional1/2/3stage portfolio; replace only that fraction with native Swiss class2three-stage condensate treatment as a complete process proxy. Materialize its full retained26technosphere and50canonical3.10biosphere exchanges, excluding only its embedded deterministic1.6832e-7kmsewer link. That component is relocated to collection accounting, not cancelled through an independent negative uncertain exchange. Do not retain both the embedded sewer and the separately reconstructed collection service. Source rural/urban collection references are per m3sewered wastewater, whereas native class2sewer infrastructure is per km. A separate1m3collection proxy uses the actual native condensate-treatment sewer allocation1.6832e-7km/m3and complete native sewer inventory. Both original collection entries call it separately at unchanged volumes and uncertainty. This replaces rural/urban geometry, capacity and infrastructure allocations by the native class2allocation; do not infer sewer length from density, annual flow, lifetime or population. Native sewer class is242km/100year/71133PCEdocumented infrastructure, not a geometrically equivalent rural/urban design. Treatment-stage portfolio, sludge disposal/use, municipal incineration, own energy purchases, auxiliaries, pollutant fate, long-term emissions and supply geography change inside the treated fraction. Retain the native copy's actual signed coefficients and supported uncertainty without changing residues, adding avoided-energy/recovery credits or adjusting separately retained untreated emissions. Full native quantities are preserved before multiplication by the source treated share. Its inherited biosphere exclusions remain a limitation; no pollutant-removal or impact equivalence is established. Exact independently inspected ecoinvent3.10cutoff only, to nativeUVEK2026 via the2025edge. Preserve foreground ownership, signed caller quantities, formulas, supported uncertainty, separate caller emissions and complete links. Source/native technology, allocation, vintage, geography and internal uncertainty differ. Native upstream biosphere exclusions remain explicit. Score effects are unquantified; no LCIA equivalence, impact completeness, inverse, unreviewed release or cross-system-model approval is inferred.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}], "reason": "Only the independently inspected exact source profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-2b8c3fb71f89fc51", "source": {"location": "RoW", "name": "market for condensate from light oil boiler", "reference product": "condensate from light oil boiler", "unit": "cubic meter"}, "target": {"recipe_ref": "heat-310-condensate-market-08e0723e7fb6fe67b3d9"}, "technosphere_information_loss": "Reconstruct the source condensate market composition: retain0.4126619233000178m3treated condensate, separate0.1723rural and0.8277urban m3collection entries, and all17direct untreated-discharge flows with their exact signed source amounts, units, compartments and supported uncertainty. Untreated water amount0.587241188m3is retained literally; do not renormalize it to the complement or claim closure of a recalculated water balance. Source waste reference is-1m3, target service+1m3: retain the already-correct factor-1exactly once. The source treated fraction uses a regional1/2/3stage portfolio; replace only that fraction with native Swiss class2three-stage condensate treatment as a complete process proxy. Materialize its full retained26technosphere and50canonical3.10biosphere exchanges, excluding only its embedded deterministic1.6832e-7kmsewer link. That component is relocated to collection accounting, not cancelled through an independent negative uncertain exchange. Do not retain both the embedded sewer and the separately reconstructed collection service. Source rural/urban collection references are per m3sewered wastewater, whereas native class2sewer infrastructure is per km. A separate1m3collection proxy uses the actual native condensate-treatment sewer allocation1.6832e-7km/m3and complete native sewer inventory. Both original collection entries call it separately at unchanged volumes and uncertainty. This replaces rural/urban geometry, capacity and infrastructure allocations by the native class2allocation; do not infer sewer length from density, annual flow, lifetime or population. Native sewer class is242km/100year/71133PCEdocumented infrastructure, not a geometrically equivalent rural/urban design. Treatment-stage portfolio, sludge disposal/use, municipal incineration, own energy purchases, auxiliaries, pollutant fate, long-term emissions and supply geography change inside the treated fraction. Retain the native copy's actual signed coefficients and supported uncertainty without changing residues, adding avoided-energy/recovery credits or adjusting separately retained untreated emissions. Full native quantities are preserved before multiplication by the source treated share. Its inherited biosphere exclusions remain a limitation; no pollutant-removal or impact equivalence is established. Exact independently inspected ecoinvent3.10cutoff only, to nativeUVEK2026 via the2025edge. Preserve foreground ownership, signed caller quantities, formulas, supported uncertainty, separate caller emissions and complete links. Source/native technology, allocation, vintage, geography and internal uncertainty differ. Native upstream biosphere exclusions remain explicit. Score effects are unquantified; no LCIA equivalence, impact completeness, inverse, unreviewed release or cross-system-model approval is inferred."},
     {"confidence": 0.192226, "conversion_factor": -1, "id": "bp-2e0f151588d67c78", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-2e0f151588d67c78"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for conditioned spent nuclear fuel", "reference product": "conditioned spent nuclear fuel", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Radioactive waste, in final repository for nuclear waste LLW", "reference product": "Radioactive waste, in final repository for nuclear waste LLW", "unit": "cubic meter"}},
     {"confidence": 0.112226, "conversion_factor": -1, "id": "bp-af1408f4dec59bcc", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-af1408f4dec59bcc"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "market for conditioned spent nuclear fuel", "reference product": "conditioned spent nuclear fuel", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Radioactive waste, in final repository for nuclear waste LLW", "reference product": "Radioactive waste, in final repository for nuclear waste LLW", "unit": "cubic meter"}},
     {"confidence": 0.112226, "conversion_factor": -1, "id": "bp-935b955cbe63e4ac", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-935b955cbe63e4ac"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for conditioned spent nuclear fuel", "reference product": "conditioned spent nuclear fuel", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Radioactive waste, in final repository for nuclear waste LLW", "reference product": "Radioactive waste, in final repository for nuclear waste LLW", "unit": "cubic meter"}},
@@ -707214,7 +708494,7 @@
     {"confidence": 0.274118, "id": "bp-105c340d5a9160d0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for copper smeting facility", "reference product": "copper smeting facility", "unit": "unit"}, "target": {"location": "GLO", "name": "Facility of data center", "reference product": "Facility of data center", "unit": "unit"}},
     {"confidence": 0.426988, "id": "bp-2fe923231e331f54", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for copper sulfate", "reference product": "copper sulfate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cobalt sulfate", "reference product": "Cobalt sulfate", "unit": "kilogram"}},
     {"confidence": 0.657752, "id": "bp-23e02e8c4be8db14", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for copper telluride cement", "reference product": "copper telluride cement", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Copper telluride cement, from copper production", "reference product": "Copper telluride cement, from copper production", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-1240bf1e5820731a", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for copper, anode", "reference product": "copper, anode", "unit": "kilogram"}, "target": {"location": "RLA", "name": "Copper, primary, at refinery", "reference product": "Copper, primary, at refinery", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-1240bf1e5820731a", "mapping_method": "reviewed_heat_correct_native_boundary", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_heat_310_closure_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_heat_310_closure_review.json"], "reason": "The inspected pilot caller is a PEMfuel-cell stack using0.01979kgof copper-anode market supply; it lists no separate copper-refining service. Use complete native global primary copper at refinery as an explicit screening proxy for that material requirement, replacing the previous Latin-American candidate. The source supplies anode intermediate while native supplies cathode/refined copper; this is a grade and processing-boundary proxy, not a matched anode-making technology. Native includes electrorefining and9.4%SX-EWroute, beyond the source anode boundary. Its global smelter, concentrate, co-product allocation, slag/acid/emission and1994technology mix differ from the source smelters and allocated cobalt-production co-supply. Retain those additional/different burdens with explicit warnings and unquantified effects; do not subtract a guessed refinery inventory, infer an anode/cathode purity or yield multiplier, add a metal-recovery credit or claim a conservative score bound. Preserve signed physical kg. Other consumers with their own downstream refining need a separate boundary assessment; no matched refining-service equivalence is asserted. Exact independently inspected ecoinvent3.10cutoff only, to nativeUVEK2026 via the2025edge. Preserve foreground ownership, signed caller quantities, formulas, supported uncertainty, separate caller emissions and complete links. Source/native technology, allocation, vintage, geography and internal uncertainty differ. Native upstream biosphere exclusions remain explicit. Score effects are unquantified; no LCIA equivalence, impact completeness, inverse, unreviewed release or cross-system-model approval is inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}], "reason": "Only the independently inspected exact source profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1d200fe701b4a2f9", "source": {"location": "GLO", "name": "market for copper, anode", "reference product": "copper, anode", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Copper, primary, at refinery", "reference product": "Copper, primary, at refinery", "unit": "kilogram"}, "technosphere_information_loss": "The inspected pilot caller is a PEMfuel-cell stack using0.01979kgof copper-anode market supply; it lists no separate copper-refining service. Use complete native global primary copper at refinery as an explicit screening proxy for that material requirement, replacing the previous Latin-American candidate. The source supplies anode intermediate while native supplies cathode/refined copper; this is a grade and processing-boundary proxy, not a matched anode-making technology. Native includes electrorefining and9.4%SX-EWroute, beyond the source anode boundary. Its global smelter, concentrate, co-product allocation, slag/acid/emission and1994technology mix differ from the source smelters and allocated cobalt-production co-supply. Retain those additional/different burdens with explicit warnings and unquantified effects; do not subtract a guessed refinery inventory, infer an anode/cathode purity or yield multiplier, add a metal-recovery credit or claim a conservative score bound. Preserve signed physical kg. Other consumers with their own downstream refining need a separate boundary assessment; no matched refining-service equivalence is asserted. Exact independently inspected ecoinvent3.10cutoff only, to nativeUVEK2026 via the2025edge. Preserve foreground ownership, signed caller quantities, formulas, supported uncertainty, separate caller emissions and complete links. Source/native technology, allocation, vintage, geography and internal uncertainty differ. Native upstream biosphere exclusions remain explicit. Score effects are unquantified; no LCIA equivalence, impact completeness, inverse, unreviewed release or cross-system-model approval is inferred."},
     {"confidence": 0.430264, "id": "bp-ae3f7a64d7e9fb9d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for copper, blister-copper", "reference product": "copper, blister-copper", "unit": "kilogram"}, "target": {"location": "RER", "name": "Copper, blister-copper, at primary smelter", "reference product": "Copper, blister-copper, at primary smelter", "unit": "kilogram"}},
     {"confidence": 0.515139, "id": "bp-eb04730488ad462a", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_copper_cathode_review.json"], "reason": "Reviewed cut-off copper supply proxy: preserve one kg of bulk cathode copper using the complete UVEK Copper, at regional storage process. The former Cathode target supplies a lithium-ion battery electrode containing NMC material and aluminium, not bulk copper metal. Both reviewed copper suppliers have positive one-kg product references. Apply factor +1 to preserve signed caller mass, uncertainty, formulas, foreground suppliers and separate emissions. The global source market is approximated by UVEK's European storage supply based on German 1994 primary/secondary copper and import/logistics data. Retain the complete target, including concentrate production, separately modelled refining, scrap allocation and transport; do not add extra transport or copper production. This is a screening commodity proxy: grade/purity, supplier mix, vintage, recycling allocation, manufacturing, freight and LCIA equivalence are not established. The native secondary-copper documentation calls for a more detailed analysis when secondary copper materially affects results. No purity, yield or concentrate-mass normalization is inferred. This is a nonempty metal supply, not an allocation-only stock, treatment service, recovery credit or battery component. Only the nine inspected cut-off profiles are reviewed. Consequential conversion remains unsupported. The separately authored UVEK-to-ecoinvent 3.12 cut-off copper-supply proxy is retained unchanged; no inverse is inferred from this forward decision.", "source_sign": 1, "status": "verified", "target_sign": 1}, "review_ref": "r-2ee369fa860ee419", "source": {"location": "GLO", "name": "market for copper, cathode", "reference product": "copper, cathode", "unit": "kilogram"}, "target": {"location": "RER", "name": "Copper, at regional storage", "reference product": "Copper, at regional storage", "unit": "kilogram"}, "technosphere_information_loss": "Reviewed cut-off copper supply proxy: preserve one kg of bulk cathode copper using the complete UVEK Copper, at regional storage process. The former Cathode target supplies a lithium-ion battery electrode containing NMC material and aluminium, not bulk copper metal. Both reviewed copper suppliers have positive one-kg product references. Apply factor +1 to preserve signed caller mass, uncertainty, formulas, foreground suppliers and separate emissions. The global source market is approximated by UVEK's European storage supply based on German 1994 primary/secondary copper and import/logistics data. Retain the complete target, including concentrate production, separately modelled refining, scrap allocation and transport; do not add extra transport or copper production. This is a screening commodity proxy: grade/purity, supplier mix, vintage, recycling allocation, manufacturing, freight and LCIA equivalence are not established. The native secondary-copper documentation calls for a more detailed analysis when secondary copper materially affects results. No purity, yield or concentrate-mass normalization is inferred. This is a nonempty metal supply, not an allocation-only stock, treatment service, recovery credit or battery component. Only the nine inspected cut-off profiles are reviewed. Consequential conversion remains unsupported. The separately authored UVEK-to-ecoinvent 3.12 cut-off copper-supply proxy is retained unchanged; no inverse is inferred from this forward decision."},
     {"confidence": 0.27305, "id": "bp-8eb0006bae42b8e7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for copper-rich materials", "reference product": "copper-rich materials", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Tab Copper", "reference product": "Tab Copper", "unit": "kilogram"}},
@@ -726280,6 +727560,17 @@
       ],
       "rationale": "Reviewed physical cut-off beet-pulp/whey-yeast market composition: retain every unrounded supplier and freight coefficient through the independently inspected existing coproduct correspondences. These helpers inherit the component correspondences' heuristic, allocation, moisture, technology, geography and emission approximations. Do not replace coproducts with ethanol/sugar output or a crop-mass nutrient proxy; no supplier omission, normalization or nutritional scaling is introduced. Preserve caller signs, supported uncertainty/formulas, foreground ownership and separate emissions. Cut-off profiles receive physical-product helpers; consequential profiles retain their exact existing nutrient-omission records and warnings. Only observed exact profiles are approved. Independent reverse product selections do not reconstruct original market mixes or omitted nutrient credits. Product: sugar beet pulp."
     },
+    "r-1d200fe701b4a2f9": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_310_closure_review.json"
+      ],
+      "limitations": [
+        "The inspected pilot caller is a PEMfuel-cell stack using0.01979kgof copper-anode market supply; it lists no separate copper-refining service. Use complete native global primary copper at refinery as an explicit screening proxy for that material requirement, replacing the previous Latin-American candidate. The source supplies anode intermediate while native supplies cathode/refined copper; this is a grade and processing-boundary proxy, not a matched anode-making technology.",
+        "Native includes electrorefining and9.4%SX-EWroute, beyond the source anode boundary. Its global smelter, concentrate, co-product allocation, slag/acid/emission and1994technology mix differ from the source smelters and allocated cobalt-production co-supply. Retain those additional/different burdens with explicit warnings and unquantified effects; do not subtract a guessed refinery inventory, infer an anode/cathode purity or yield multiplier, add a metal-recovery credit or claim a conservative score bound. Preserve signed physical kg. Other consumers with their own downstream refining need a separate boundary assessment; no matched refining-service equivalence is asserted.",
+        "Exact independently inspected ecoinvent3.10cutoff only, to nativeUVEK2026 via the2025edge. Preserve foreground ownership, signed caller quantities, formulas, supported uncertainty, separate caller emissions and complete links. Source/native technology, allocation, vintage, geography and internal uncertainty differ. Native upstream biosphere exclusions remain explicit. Score effects are unquantified; no LCIA equivalence, impact completeness, inverse, unreviewed release or cross-system-model approval is inferred."
+      ],
+      "rationale": "The inspected pilot caller is a PEMfuel-cell stack using0.01979kgof copper-anode market supply; it lists no separate copper-refining service. Use complete native global primary copper at refinery as an explicit screening proxy for that material requirement, replacing the previous Latin-American candidate. The source supplies anode intermediate while native supplies cathode/refined copper; this is a grade and processing-boundary proxy, not a matched anode-making technology."
+    },
     "r-1ddbc7d67ae4ef4d": {
       "evidence": [
         "brightpath/data/export/uvek_wwt_residue_omission_review.json: exact read-only source/profile fingerprints; negative one-kg production; every installed profile checked. Direct treatment comments explicitly report 0% biogenic carbon; markets contain only technosphere inputs and supply 100% same-residue treatment plus freight. Dedicated UVEK residue service and disposal-boundary candidates were inspected independently.",
@@ -726626,6 +727917,19 @@
         "The mineral-wool final-disposal market contains only the landfill service, with no collection freight or direct handling dust. Do not use the broader native demolition/final-disposal wrapper, which adds particulate releases, collection and a different landfill process. Keep the complete source final-disposal boundary per as-received signed kg. Each original treatment uses1kg of generic inert-landfill operation and1.48e-9facility units. Preserve both coefficients, source uncertainty and the original waste-market-to-treatment exchange through a positive helper; negative waste reference-1 requires caller factor-1. Retain complete native operation and facility inventories once under the earlier generic-cleanfill whole-function/unit approval. Generic land occupation/transformation quantities match the full source operation(9) and facility(3) coordinates. The native operation has its own0.00143MJ oil-boiler input and4.8e-5MJ waste-heat release; the source uses mixed non-natural-gas heat. Complete facility material grades, source pitch and HDPE supplies, operating machines, electricity, fuel, freight, geography, vintage, internal uncertainty and allocation differ; retain them as screened whole-service differences, not new independent material/heat approvals. Both source and native facilities document450000m3; no capacity, density, moisture, water-content, dry-mass, distance, payload or lifetime scaling is introduced. Native2026 documentation states five years of recultivation/monitoring; no undocumented lifetime equality is assumed. Source market/treatment records have no direct elementary exchanges and explicitly omit negligible leachate; this is a source-data limitation, not evidence of physical zero or an authorization to omit any present emission. No handling dust, building demolition, crushing, recycling, collection freight absent from the source, recovery credit or material-specific leachate is added. Keep native facility access-road and operating logistics separate from original market collection. Preserve every original market freight term at its signed tkm and uncertainty, without aggregation or renormalization. Use the previously inspected whole RER generic mixed-traction rail and heavy-lorry fleet, retaining vehicle, network, fuel, maintenance and infrastructure once; do not substitute coal-only or diesel-only rail or infer payload/traction factors. Geographic fleet/traction, loading, fuel, infrastructure and vintage differences remain warnings. Preserve caller quantities, formulas, uncertainty, ownership, separate emissions and other purchases. Installed native biosphere exclusions and all score differences remain limitations with unquantified effects; no LCIA equivalence is asserted. Only enumerated source3.9cutoff closures qualify for UVEK2026cutoff and ecoinvent3.10biosphere; raw component bindings are drift guards and do not independently approve their use, other source versions, reverse or cross-system-model routes."
       ],
       "rationale": "The mineral-wool final-disposal market contains only the landfill service, with no collection freight or direct handling dust. Do not use the broader native demolition/final-disposal wrapper, which adds particulate releases, collection and a different landfill process. Keep the complete source final-disposal boundary per as-received signed kg. Each original treatment uses1kg of generic inert-landfill operation and1.48e-9facility units. Preserve both coefficients, source uncertainty and the original waste-market-to-treatment exchange through a positive helper; negative waste reference-1 requires caller factor-1. Retain complete native operation and facility inventories once under the earlier generic-cleanfill whole-function/unit approval. Generic land occupation/transformation quantities match the full source operation(9) and facility(3) coordinates. The native operation has its own0.00143MJ oil-boiler input and4.8e-5MJ waste-heat release; the source uses mixed non-natural-gas heat. Complete facility material grades, source pitch and HDPE supplies, operating machines, electricity, fuel, freight, geography, vintage, internal uncertainty and allocation differ; retain them as screened whole-service differences, not new independent material/heat approvals. Both source and native facilities document450000m3; no capacity, density, moisture, water-content, dry-mass, distance, payload or lifetime scaling is introduced. Native2026 documentation states five years of recultivation/monitoring; no undocumented lifetime equality is assumed. Source market/treatment records have no direct elementary exchanges and explicitly omit negligible leachate; this is a source-data limitation, not evidence of physical zero or an authorization to omit any present emission. No handling dust, building demolition, crushing, recycling, collection freight absent from the source, recovery credit or material-specific leachate is added. Keep native facility access-road and operating logistics separate from original market collection. Preserve every original market freight term at its signed tkm and uncertainty, without aggregation or renormalization. Use the previously inspected whole RER generic mixed-traction rail and heavy-lorry fleet, retaining vehicle, network, fuel, maintenance and infrastructure once; do not substitute coal-only or diesel-only rail or infer payload/traction factors. Geographic fleet/traction, loading, fuel, infrastructure and vintage differences remain warnings. Preserve caller quantities, formulas, uncertainty, ownership, separate emissions and other purchases. Installed native biosphere exclusions and all score differences remain limitations with unquantified effects; no LCIA equivalence is asserted. Only enumerated source3.9cutoff closures qualify for UVEK2026cutoff and ecoinvent3.10biosphere; raw component bindings are drift guards and do not independently approve their use, other source versions, reverse or cross-system-model routes."
+    },
+    "r-2b8c3fb71f89fc51": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_310_closure_review.json"
+      ],
+      "limitations": [
+        "Reconstruct the source condensate market composition: retain0.4126619233000178m3treated condensate, separate0.1723rural and0.8277urban m3collection entries, and all17direct untreated-discharge flows with their exact signed source amounts, units, compartments and supported uncertainty. Untreated water amount0.587241188m3is retained literally; do not renormalize it to the complement or claim closure of a recalculated water balance. Source waste reference is-1m3, target service+1m3: retain the already-correct factor-1exactly once.",
+        "The source treated fraction uses a regional1/2/3stage portfolio; replace only that fraction with native Swiss class2three-stage condensate treatment as a complete process proxy. Materialize its full retained26technosphere and50canonical3.10biosphere exchanges, excluding only its embedded deterministic1.6832e-7kmsewer link. That component is relocated to collection accounting, not cancelled through an independent negative uncertain exchange. Do not retain both the embedded sewer and the separately reconstructed collection service.",
+        "Source rural/urban collection references are per m3sewered wastewater, whereas native class2sewer infrastructure is per km. A separate1m3collection proxy uses the actual native condensate-treatment sewer allocation1.6832e-7km/m3and complete native sewer inventory. Both original collection entries call it separately at unchanged volumes and uncertainty. This replaces rural/urban geometry, capacity and infrastructure allocations by the native class2allocation; do not infer sewer length from density, annual flow, lifetime or population. Native sewer class is242km/100year/71133PCEdocumented infrastructure, not a geometrically equivalent rural/urban design.",
+        "Treatment-stage portfolio, sludge disposal/use, municipal incineration, own energy purchases, auxiliaries, pollutant fate, long-term emissions and supply geography change inside the treated fraction. Retain the native copy's actual signed coefficients and supported uncertainty without changing residues, adding avoided-energy/recovery credits or adjusting separately retained untreated emissions. Full native quantities are preserved before multiplication by the source treated share. Its inherited biosphere exclusions remain a limitation; no pollutant-removal or impact equivalence is established.",
+        "Exact independently inspected ecoinvent3.10cutoff only, to nativeUVEK2026 via the2025edge. Preserve foreground ownership, signed caller quantities, formulas, supported uncertainty, separate caller emissions and complete links. Source/native technology, allocation, vintage, geography and internal uncertainty differ. Native upstream biosphere exclusions remain explicit. Score effects are unquantified; no LCIA equivalence, impact completeness, inverse, unreviewed release or cross-system-model approval is inferred."
+      ],
+      "rationale": "Reconstruct the source condensate market composition: retain0.4126619233000178m3treated condensate, separate0.1723rural and0.8277urban m3collection entries, and all17direct untreated-discharge flows with their exact signed source amounts, units, compartments and supported uncertainty. Untreated water amount0.587241188m3is retained literally; do not renormalize it to the complement or claim closure of a recalculated water balance. Source waste reference is-1m3, target service+1m3: retain the already-correct factor-1exactly once."
     },
     "r-2b9b5150b130b25d": {
       "evidence": [
