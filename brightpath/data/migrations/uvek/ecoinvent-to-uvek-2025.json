@@ -3,16 +3,16 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 18,
+      "proxy": 22,
       "recipe": 937,
-      "unclassified": 29520
+      "unclassified": 29516
     },
     "mapped_identities": 30732,
     "mapping_methods": {
-      "curated_legacy": 278,
+      "curated_legacy": 277,
       "followup_review": 163,
-      "heuristic_similarity": 26703,
-      "pairwise_review": 2241,
+      "heuristic_similarity": 26701,
+      "pairwise_review": 2240,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
       "reviewed_allocated_sewage_gas": 2,
@@ -41,6 +41,7 @@
       "reviewed_deferred_waste_markets": 3,
       "reviewed_deferred_xanthate": 1,
       "reviewed_five_simple_waste_market_service": 5,
+      "reviewed_fuels_312_dependency": 4,
       "reviewed_gas_market_recipe": 2,
       "reviewed_ghana_uncontrolled_inventory": 1,
       "reviewed_heat_312_market_composition": 3,
@@ -99447,6 +99448,1480 @@
       "rationale": "Reviewed five cut-off waste-market compositions: retain complete independently reviewed uncontrolled-disposal children at their original wet-kilogram quantities plus the original positive road tonne-km, without normalization, omission or new credit. Exact source wastes are Indian biowaste and textile waste, Ecuadorian glazed clay roof tile, and Chinese used metallurgical coke and pitch/coke waste. Source reference -1kg becomes helper +1kg with caller factor -1; each negative child waste input uses its independently verified factor -1. All material-specific direct releases and original operating inputs remain in the unchanged reviewed uncontrolled-disposal children, including any canonical/native biosphere limitations. Complete RER average fleet freight includes energy, vehicles, maintenance and roads and approximates source geography, lorry size/EURO shares, vintage, loads and fuel/emissions. No fuel/capacity/lifetime rescaling, controlled-landfill substitution or LCIA equivalence is claimed. Preserve signed caller quantities, supported uncertainty, bounds, formulas, metadata, foreground suppliers, production, separate credits/transport and emissions; internal source uncertainty/parameter formulas are not reconstructed. Export/score every returned helper. Only the sixteen enumerated original cut-off profiles are approved; no implicit patch, consequential or inverse correspondence. Existing unresolved native physical flows, optional accounting indicators and the 36-context landfill refinement retain their independent scopes; no new chemical, receiving-context, land-class, negative-empty allocation or FLUWA technology proxy is approved.",
       "reference product": "damaged clay roof tile, glazed",
       "unit": "kilogram"
+    },
+    "fuels-312-15474c15acd1dd42435e": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_312_dependencies_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.9979129796140143,
+          "loc": 0.9979129796140143,
+          "location": "RER",
+          "name": "Tap water, at user",
+          "reference product": "Tap water, at user",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.002087020385985745,
+          "loc": 0.002087020385985745,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "reference product": "Tap water, at user",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RER",
+      "name": "market group for tap water, reviewed native supply",
+      "rationale": "Actual 3.12 European tap-water market group has exactly two positive-kg CH/non-CH inputs and no direct biosphere flows. Retain their original order, quantities and supported uncertainty through complete native CH/RER delivered-water services. The top-level portfolio is unchanged from inspected 3.9, but this is a separate exact-profile review. Internal treatment mix, feedback/loss assumptions, network, water returns, allocation and vintage are replaced by the native whole utilities; no self-loop/loss multiplier, double infrastructure, water-balance correction or recovery credit is inferred. Native CH/DE models are geographic/technology screening proxies, with unquantified score effects.",
+      "reference product": "tap water",
+      "unit": "kilogram"
+    },
+    "fuels-312-38f7724aa7f948124485": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_312_dependencies_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 36.0,
+          "loc": 36.0,
+          "location": "RER",
+          "name": "Natural gas, low pressure, at consumer",
+          "reference product": "Natural gas, low pressure, at consumer",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "megajoule"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for natural gas, low pressure, reviewed native supply",
+      "rationale": "Inspected 3.12 cut-off low-pressure delivered-gas supply. Source product information declares NCV 36.0 MJ per standard cubic metre at 15 C/1013 mbar, with GCV 40 MJ/m3 and density 0.735 kg/m3. Supply exactly 36 MJ of the complete native RER low-pressure gas-at-consumer process per original m3. This is an energy-functional supply proxy, not equal-volume/composition/carbon-mass proof for source Sm3 and native Nm3. Keep the complete native production, upstream transport and pressure-appropriate network/compression/leakage model once. Native RER geography/trade, technology, density/composition, vintage and internal uncertainty replace the source model; score effects are unquantified. No extra burner, fuel-production burden, state/ideal-gas/density, loss/self-loop or carbon correction is added. Separate caller stack emissions remain unchanged. The 3.6 high-pressure 38.256575270163715 MJ legacy calibration remains restricted to its prior inspected profile and is not reused for 3.12.",
+      "reference product": "natural gas, low pressure",
+      "unit": "cubic meter"
+    },
+    "fuels-312-48faa7f5cabbc76427b4": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_312_dependencies_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0275229357798165,
+          "loc": 0.0275229357798165,
+          "location": "RER",
+          "name": "Ethoxylated alcohols (AE7), coconut oil, at plant",
+          "reference product": "Ethoxylated alcohols (AE7), coconut oil, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.055045871559633,
+          "loc": 0.055045871559633,
+          "location": "RER",
+          "name": "Ethoxylated alcohols (AE7), palm kernel oil, at plant",
+          "reference product": "Ethoxylated alcohols (AE7), palm kernel oil, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.917431192660551,
+          "loc": 0.917431192660551,
+          "location": "RER",
+          "name": "Ethoxylated alcohols (AE7), petrochemical, at plant",
+          "reference product": "Ethoxylated alcohols (AE7), petrochemical, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41472882706655445,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41472882706655445,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41472882706655445,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for ethoxylated alcohol (AE7), reviewed native supply",
+      "rationale": "Retain the actual 3.12 European AE7 market's separate coconut-oil, palm-kernel-oil and petrochemical production shares using the corresponding complete native AE7 inventories, not AE3/AE11, unspecified surfactant or coconut-only supply. All have positive one-kg references. Retain the three original barge, unspecified-heavy-lorry and train freight quantities through their already reviewed complete native freight correspondences. No producer-share renormalization, feedstock or resin addition, allocation repeat or hidden transport omission. Source/native feedstock, processing, freight-fleet class, internal uncertainty, allocation, geography and vintage differences remain explicit; no LCIA equivalence is claimed.",
+      "reference product": "ethoxylated alcohol (AE7)",
+      "unit": "kilogram"
+    },
+    "fuels-312-8474b2c5b3efba4ba611": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_312_dependencies_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 36.0,
+          "loc": 36.0,
+          "location": "RER",
+          "name": "Natural gas, high pressure, at consumer",
+          "reference product": "Natural gas, high pressure, at consumer",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "megajoule"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "market group for natural gas, high pressure, reviewed native supply",
+      "rationale": "Inspected 3.12 cut-off high-pressure delivered-gas supply. Source product information declares NCV 36.0 MJ per standard cubic metre at 15 C/1013 mbar, with GCV 40 MJ/m3 and density 0.735 kg/m3. Supply exactly 36 MJ of the complete native RER high-pressure gas-at-consumer process per original m3. This is an energy-functional supply proxy, not equal-volume/composition/carbon-mass proof for source Sm3 and native Nm3. Keep the complete native production, upstream transport and pressure-appropriate network/compression/leakage model once. Native RER geography/trade, technology, density/composition, vintage and internal uncertainty replace the source model; score effects are unquantified. No extra burner, fuel-production burden, state/ideal-gas/density, loss/self-loop or carbon correction is added. Separate caller stack emissions remain unchanged. The 3.6 high-pressure 38.256575270163715 MJ legacy calibration remains restricted to its prior inspected profile and is not reused for 3.12.",
+      "reference product": "natural gas, high pressure",
+      "unit": "cubic meter"
+    },
+    "fuels-312-8eee1ea1cbeedf2834f8": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_312_dependencies_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "CH",
+          "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+          "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RER",
+      "name": "market for hydrogen, gaseous, low pressure, reviewed native baseline",
+      "rationale": "Retain a one-kg pure gaseous-hydrogen market interface for the actual 3.12 European low-pressure market. The complete native Swiss 25-bar SMR process supplies its baseline at factor +1; it is a screening proxy for the source portfolio (88.65867411151911% SMR and 11.34132588848089% refinery/industrial co-product hydrogen). Production route, co-product allocation, pressure, geography, vintage and internal uncertainty differ; no new compression/decompression, liquefaction, energy conversion, heat or avoided-production credit is inferred. The source market has no freight and none is added. This explicit market interface must subsequently use Premise's ordinary regional hydrogen market logic; it must not be mistaken for a technology-specific foreground demand. This preparation review does not certify the fuel-sector transformation or that subsequent link.",
+      "reference product": "hydrogen, gaseous, low pressure",
+      "unit": "kilogram"
+    },
+    "fuels-312-a51914af75a1d30b2da9": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_312_dependencies_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.1723,
+          "loc": 0.1723,
+          "recipe": "pilot-wastewater-routes-e4001c3975d57642d229",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.8277,
+          "loc": 0.8277,
+          "recipe": "pilot-wastewater-routes-997a7bcd8a81ffa6ee79",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.8729643339038445,
+          "loc": 0.8729643339038445,
+          "recipe": "pilot-wastewater-routes-925e10d1da0e457f8cfc",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 1.3441132995085e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Aluminium III",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 1.3441132995085e-06,
+          "name": "Aluminium III",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.59471069433211e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Antimony ion",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 1.59471069433211e-07,
+          "name": "Antimony ion",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.65700091208862e-08,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Arsenic ion",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 8.65700091208862e-08,
+          "name": "Arsenic ion",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0261332881779437,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "BOD5, Biological Oxygen Demand",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0261332881779437,
+          "name": "BOD5, Biological Oxygen Demand",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.0622902177565e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Barium II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 7.0622902177565e-06,
+          "name": "Barium II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.87286882909228e-09,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Beryllium II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 3.87286882909228e-09,
+          "name": "Beryllium II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.0622902177565e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Boron",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 7.0622902177565e-06,
+          "name": "Boron",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.054033247767215,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "COD, Chemical Oxygen Demand",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.054033247767215,
+          "name": "COD, Chemical Oxygen Demand",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.18942138866423e-08,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Cadmium II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 3.18942138866423e-08,
+          "name": "Cadmium II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00501194789647236,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Calcium II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00501194789647236,
+          "name": "Calcium II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0038150366067444,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Chlorine",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0038150366067444,
+          "name": "Chlorine",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.4291850986126e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Chromium III",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 8.4291850986126e-07,
+          "name": "Chromium III",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.77696334511293e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Cobalt II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 1.77696334511293e-07,
+          "name": "Cobalt II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.83447440428049e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Copper ion",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 6.83447440428049e-06,
+          "name": "Copper ion",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00942447907555764,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "DOC, Dissolved Organic Carbon",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00942447907555764,
+          "name": "DOC, Dissolved Organic Carbon",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.16281618691723e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Fluorine",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 4.16281618691723e-06,
+          "name": "Fluorine",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0016977921864056,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Hydrogen",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0016977921864056,
+          "name": "Hydrogen",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000426293996403252,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Iron ion",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.000426293996403252,
+          "name": "Iron ion",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.83686398357496e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Lead II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 7.83686398357496e-07,
+          "name": "Lead II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00102517116064207,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Magnesium",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00102517116064207,
+          "name": "Magnesium",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.29010603123252e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Manganese II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 7.29010603123252e-06,
+          "name": "Manganese II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.24103296748086e-09,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Mercury II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 7.24103296748086e-09,
+          "name": "Mercury II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.52875552958378e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Molybdenum VI",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 2.52875552958378e-07,
+          "name": "Molybdenum VI",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.92321115037642e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Nickel II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 5.92321115037642e-07,
+          "name": "Nickel II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00394003280045635,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Nitrogen",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00394003280045635,
+          "name": "Nitrogen",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.008870097953466,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Oxygen",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.008870097953466,
+          "name": "Oxygen",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000569539533690041,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Phosphorus",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.000569539533690041,
+          "name": "Phosphorus",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00157192911298451,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Potassium I",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00157192911298451,
+          "name": "Potassium I",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.05034232128415e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Scandium",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 2.05034232128415e-07,
+          "name": "Scandium",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 9.34044835251667e-08,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Selenium IV",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 9.34044835251667e-08,
+          "name": "Selenium IV",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000122109276023145,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Silicon",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.000122109276023145,
+          "name": "Silicon",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.25537655341256e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Silver I",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 2.25537655341256e-07,
+          "name": "Silver I",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00820136928513658,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Sodium I",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00820136928513658,
+          "name": "Sodium I",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.66783459696386e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Strontium II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 3.66783459696386e-05,
+          "name": "Strontium II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00198199757724134,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Sulfur",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.00198199757724134,
+          "name": "Sulfur",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0138595280522906,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "TOC, Total Organic Carbon",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.0138595280522906,
+          "name": "TOC, Total Organic Carbon",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.15102696385244e-09,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Thallium I",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 6.15102696385244e-09,
+          "name": "Thallium I",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.80691366434394e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Tin ion",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 4.80691366434394e-07,
+          "name": "Tin ion",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.18942138866423e-06,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Titanium ion",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 3.18942138866423e-06,
+          "name": "Titanium ion",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.10068464256829e-08,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Tungsten",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 4.10068464256829e-08,
+          "name": "Tungsten",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.69539533690041e-07,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Vanadium V",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 5.69539533690041e-07,
+          "name": "Vanadium V",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.126984477752946,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 0.126984477752946,
+          "name": "Water",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 1.73140018241772e-05,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact inspected publisherUUID/unit/fullcompartment/flowrole; label/CASdifferenceswarnedwithoutquantityfactor.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Zinc II",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": 1.73140018241772e-05,
+          "name": "Zinc II",
+          "type": "biosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "market for wastewater, average, reviewed native supply",
+      "rationale": "The actual 3.12 European average-wastewater market retains the inspected 3.9 three technosphere coefficients, their distributions, 43 direct biosphere quantities/compartments/UUIDs and parameters. The sole label change is Strontium to Strontium II with unchanged publisher UUID 4295ed5b-9824-4bbf-97a4-fc4cabd87f0d, kg, surface-water compartment and quantity; the existing helper already targets that exact canonical 3.10 definition. Reuse the independently reviewed complete volume-based rural/urban sewer and wastewater-treatment component proxies, retaining their original outer quantities and all direct untreated-discharge emissions. Native technology, treatment performance, nutrient/composition, plant/lifetime, regional background and vintage remain screening differences; internal source inventories are not reconstructed and no LCIA equivalence is claimed. Negative source reference becomes positive service with factor -1. Do not omit emissions, add a recovery credit, infer nutrient balancing or apply another volume/density/loss factor.",
+      "reference product": "wastewater, average",
+      "unit": "cubic meter"
     },
     "gas-market-ac6aba0d9d5bbe2c4c92": {
       "evidence": [
@@ -710675,7 +712150,7 @@
     {"confidence": 0.365702, "id": "bp-a4b707b702f109b7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ethoxylated alcohol (AE11)", "reference product": "ethoxylated alcohol (AE11)", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Ethoxylated alcohols (AE11), palm oil, at plant", "reference product": "xx Ethoxylated alcohols (AE11), palm oil, at plant", "unit": "kilogram"}},
     {"confidence": 0.457482, "id": "bp-df0913c9f6897c1d", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ethoxylated alcohol (AE3)", "reference product": "ethoxylated alcohol (AE3)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE3), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE3), coconut oil, at plant", "unit": "kilogram"}},
     {"confidence": 0.377482, "id": "bp-3b97f3203fd133fc", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethoxylated alcohol (AE3)", "reference product": "ethoxylated alcohol (AE3)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE3), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE3), coconut oil, at plant", "unit": "kilogram"}},
-    {"confidence": 0.457482, "id": "bp-92c5d186d8e2543e", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ethoxylated alcohol (AE7)", "reference product": "ethoxylated alcohol (AE7)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE7), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE7), coconut oil, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.457482, "id": "bp-92c5d186d8e2543e", "mapping_method": "reviewed_fuels_312_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "reason": "Retain the actual 3.12 European AE7 market's separate coconut-oil, palm-kernel-oil and petrochemical production shares using the corresponding complete native AE7 inventories, not AE3/AE11, unspecified surfactant or coconut-only supply. All have positive one-kg references. Retain the three original barge, unspecified-heavy-lorry and train freight quantities through their already reviewed complete native freight correspondences. No producer-share renormalization, feedstock or resin addition, allocation repeat or hidden transport omission. Source/native feedstock, processing, freight-fleet class, internal uncertainty, allocation, geography and vintage differences remain explicit; no LCIA equivalence is claimed.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "fuels-312-48faa7f5cabbc76427b4"}}], "reason": "Only the individually inspected exact source profiles authorize their selected targets and reference bases.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-419ad5b53ff5a69e", "source": {"location": "RER", "name": "market for ethoxylated alcohol (AE7)", "reference product": "ethoxylated alcohol (AE7)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE7), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE7), coconut oil, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."},
     {"confidence": 0.377482, "id": "bp-ec88710374651f3c", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethoxylated alcohol (AE7)", "reference product": "ethoxylated alcohol (AE7)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE7), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE7), coconut oil, at plant", "unit": "kilogram"}},
     {"confidence": 0.295945, "id": "bp-d9aed37a6d25789d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ethoxylated alcohol (AE>20)", "reference product": "ethoxylated alcohol (AE>20)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE3), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE3), coconut oil, at plant", "unit": "kilogram"}},
     {"confidence": 0.488939, "id": "bp-0d337819eb8b4ccb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ethyl acetate", "reference product": "ethyl acetate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethyl acetate, at plant", "reference product": "Ethyl acetate, at plant", "unit": "kilogram"}},
@@ -711348,7 +712823,7 @@
     {"confidence": 0.299583, "id": "bp-42413d0c0ab90f1f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for hydrogen sulfide", "reference product": "hydrogen sulfide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Hydrogen sulphide, H2S, at plant", "reference product": "Hydrogen sulphide, H2S, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "conversion_factor": 1, "id": "bp-abce5674d268a95a", "mapping_method": "reviewed_heat_fossil_hydrogen_proxy", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_heat_hydrogen_market_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_heat_hydrogen_market_review.json"], "reason": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact inspected3.9cutoff hydrogen-market profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7f53bc1c25ec306c", "source": {"location": "GLO", "name": "market for hydrogen, gaseous", "reference product": "hydrogen, gaseous", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}, "technosphere_information_loss": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported."},
     {"confidence": 0.5, "id": "bp-2932a5080192215e", "mapping_method": "pairwise_review", "review_ref": "r-5139ddc24507e89d", "source": {"location": "CN", "name": "market for hydrogen, gaseous, low pressure", "reference product": "hydrogen, gaseous, low pressure", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}},
-    {"confidence": 0.5, "id": "bp-cf83bb724223e5b7", "mapping_method": "pairwise_review", "review_ref": "r-5139ddc24507e89d", "source": {"location": "RER", "name": "market for hydrogen, gaseous, low pressure", "reference product": "hydrogen, gaseous, low pressure", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.5, "id": "bp-cf83bb724223e5b7", "mapping_method": "reviewed_fuels_312_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "reason": "Retain a one-kg pure gaseous-hydrogen market interface for the actual 3.12 European low-pressure market. The complete native Swiss 25-bar SMR process supplies its baseline at factor +1; it is a screening proxy for the source portfolio (88.65867411151911% SMR and 11.34132588848089% refinery/industrial co-product hydrogen). Production route, co-product allocation, pressure, geography, vintage and internal uncertainty differ; no new compression/decompression, liquefaction, energy conversion, heat or avoided-production credit is inferred. The source market has no freight and none is added. This explicit market interface must subsequently use Premise's ordinary regional hydrogen market logic; it must not be mistaken for a technology-specific foreground demand. This preparation review does not certify the fuel-sector transformation or that subsequent link.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "fuels-312-8eee1ea1cbeedf2834f8"}}], "reason": "Only the individually inspected exact source profiles authorize their selected targets and reference bases.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-419ad5b53ff5a69e", "source": {"location": "RER", "name": "market for hydrogen, gaseous, low pressure", "reference product": "hydrogen, gaseous, low pressure", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}, "technosphere_information_loss": "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."},
     {"confidence": 0.5, "id": "bp-6850bc6a799c3090", "mapping_method": "pairwise_review", "review_ref": "r-5139ddc24507e89d", "source": {"location": "RoW", "name": "market for hydrogen, gaseous, low pressure", "reference product": "hydrogen, gaseous, low pressure", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}},
     {"confidence": 0.5, "id": "bp-a8488ea5d0629086", "mapping_method": "pairwise_review", "review_ref": "r-5139ddc24507e89d", "source": {"location": "US", "name": "market for hydrogen, gaseous, low pressure", "reference product": "hydrogen, gaseous, low pressure", "unit": "kilogram"}, "target": {"location": "CH", "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar", "unit": "kilogram"}},
     {"confidence": 0.266523, "id": "bp-8dd9eafe3bba7d6f", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for hydrogen, gaseous, medium pressure, merchant", "reference product": "hydrogen, gaseous, medium pressure, merchant", "unit": "kilogram"}, "target": {"location": "RER", "name": "Hydrogen, liquid, mercury cell, at plant", "reference product": "Hydrogen, liquid, mercury cell, at plant", "unit": "kilogram"}},
@@ -712768,7 +714243,7 @@
     {"confidence": 0.385731, "id": "bp-587245b0c0ce743d", "mapping_method": "heuristic_similarity", "source": {"location": "MX", "name": "market for natural gas, low pressure", "reference product": "natural gas, low pressure", "unit": "cubic meter"}, "target": {"location": "MX", "name": "Natural gas, at production", "reference product": "Natural gas, at production", "unit": "cubic meter"}},
     {"confidence": 0.385731, "id": "bp-dc1c67b4284cf022", "mapping_method": "heuristic_similarity", "source": {"location": "NL", "name": "market for natural gas, low pressure", "reference product": "natural gas, low pressure", "unit": "cubic meter"}, "target": {"location": "NL", "name": "Natural gas, at production", "reference product": "Natural gas, at production", "unit": "cubic meter"}},
     {"confidence": 0.305731, "id": "bp-769cfa6415fa68e0", "mapping_method": "heuristic_similarity", "source": {"location": "RoE", "name": "market for natural gas, low pressure", "reference product": "natural gas, low pressure", "unit": "cubic meter"}, "target": {"location": "AE", "name": "Natural gas, at production", "reference product": "Natural gas, at production", "unit": "cubic meter"}},
-    {"confidence": 0.305731, "id": "bp-76fe8c58029110f6", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for natural gas, low pressure", "reference product": "natural gas, low pressure", "unit": "cubic meter"}, "target": {"location": "AE", "name": "Natural gas, at production", "reference product": "Natural gas, at production", "unit": "cubic meter"}},
+    {"classification": "proxy", "confidence": 0.305731, "id": "bp-76fe8c58029110f6", "mapping_method": "reviewed_fuels_312_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "reason": "Inspected 3.12 cut-off low-pressure delivered-gas supply. Source product information declares NCV 36.0 MJ per standard cubic metre at 15 C/1013 mbar, with GCV 40 MJ/m3 and density 0.735 kg/m3. Supply exactly 36 MJ of the complete native RER low-pressure gas-at-consumer process per original m3. This is an energy-functional supply proxy, not equal-volume/composition/carbon-mass proof for source Sm3 and native Nm3. Keep the complete native production, upstream transport and pressure-appropriate network/compression/leakage model once. Native RER geography/trade, technology, density/composition, vintage and internal uncertainty replace the source model; score effects are unquantified. No extra burner, fuel-production burden, state/ideal-gas/density, loss/self-loop or carbon correction is added. Separate caller stack emissions remain unchanged. The 3.6 high-pressure 38.256575270163715 MJ legacy calibration remains restricted to its prior inspected profile and is not reused for 3.12.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "fuels-312-38f7724aa7f948124485"}}], "reason": "Only the individually inspected exact source profiles authorize their selected targets and reference bases.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-419ad5b53ff5a69e", "source": {"location": "RoW", "name": "market for natural gas, low pressure", "reference product": "natural gas, low pressure", "unit": "cubic meter"}, "target": {"location": "AE", "name": "Natural gas, at production", "reference product": "Natural gas, at production", "unit": "cubic meter"}, "technosphere_information_loss": "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."},
     {"confidence": 0.385731, "id": "bp-7ea71c282ec7ddb2", "mapping_method": "heuristic_similarity", "source": {"location": "TR", "name": "market for natural gas, low pressure", "reference product": "natural gas, low pressure", "unit": "cubic meter"}, "target": {"location": "TR", "name": "Natural gas, at production", "reference product": "Natural gas, at production", "unit": "cubic meter"}},
     {"confidence": 0.385731, "id": "bp-2e7bdc0598307a42", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "market for natural gas, low pressure", "reference product": "natural gas, low pressure", "unit": "cubic meter"}, "target": {"location": "US", "name": "Natural gas, at production", "reference product": "Natural gas, at production", "unit": "cubic meter"}},
     {"confidence": 0.28346, "id": "bp-b0f9a1379aed18ca", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for natural gas, low pressure, vehicle grade", "reference product": "natural gas, low pressure, vehicle grade", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Natural gas, from low pressure network (<0.1 bar), at service station", "reference product": "xx Natural gas, from low pressure network (<0.1 bar), at service station", "unit": "kilogram"}},
@@ -716771,7 +718246,7 @@
     {"confidence": 0.276495, "id": "bp-24f4edfa09b66761", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for wastewater treatment facility, capacity 5E9l/year", "reference product": "wastewater treatment facility, capacity 5E9l/year", "unit": "unit"}, "target": {"location": "CH", "name": "Wastewater treatment plant, class 1", "reference product": "Wastewater treatment plant, class 1", "unit": "unit"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-50d00531fead75d6", "mapping_method": "reviewed_pilot_wastewater_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json#ecoinvent-3.9-cutoff/59340b0c8e2a8316c9e6b1d6599defbbb9fb327fb8d989e18dc4b1e4021ba2eb"], "reason": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-wastewater-routes-39cbd83822dc810e03e3"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bb2e8cc9a538ddc5", "source": {"location": "CA-QC", "name": "market for wastewater, average", "reference product": "wastewater, average", "unit": "cubic meter"}, "target": {"recipe_ref": "pilot-wastewater-routes-39cbd83822dc810e03e3"}, "technosphere_information_loss": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval."},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-1338a8724acf99de", "mapping_method": "reviewed_pilot_wastewater_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json#ecoinvent-3.9-cutoff/d16bc1e95b3dec86c81bd004dbadd8218a5bd503368e6eec8ec7ce0982beb5a5"], "reason": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-wastewater-routes-eff76270716fb3e521c0"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bb2e8cc9a538ddc5", "source": {"location": "CH", "name": "market for wastewater, average", "reference product": "wastewater, average", "unit": "cubic meter"}, "target": {"recipe_ref": "pilot-wastewater-routes-eff76270716fb3e521c0"}, "technosphere_information_loss": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval."},
-    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-abc1d07ff55a5bbe", "mapping_method": "reviewed_pilot_wastewater_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json#ecoinvent-3.9-cutoff/8c854acf54dac518c4dadb981e0c2aa6163046538b50d2249c5d35175dc778da"], "reason": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-wastewater-routes-bd88b9549e9e5edabb3e"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bb2e8cc9a538ddc5", "source": {"location": "Europe without Switzerland", "name": "market for wastewater, average", "reference product": "wastewater, average", "unit": "cubic meter"}, "target": {"recipe_ref": "pilot-wastewater-routes-bd88b9549e9e5edabb3e"}, "technosphere_information_loss": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-abc1d07ff55a5bbe", "mapping_method": "reviewed_pilot_wastewater_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json", "brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json#ecoinvent-3.9-cutoff/8c854acf54dac518c4dadb981e0c2aa6163046538b50d2249c5d35175dc778da"], "reason": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-wastewater-routes-bd88b9549e9e5edabb3e"}}, {"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "reason": "The actual 3.12 European average-wastewater market retains the inspected 3.9 three technosphere coefficients, their distributions, 43 direct biosphere quantities/compartments/UUIDs and parameters. The sole label change is Strontium to Strontium II with unchanged publisher UUID 4295ed5b-9824-4bbf-97a4-fc4cabd87f0d, kg, surface-water compartment and quantity; the existing helper already targets that exact canonical 3.10 definition. Reuse the independently reviewed complete volume-based rural/urban sewer and wastewater-treatment component proxies, retaining their original outer quantities and all direct untreated-discharge emissions. Native technology, treatment performance, nutrient/composition, plant/lifetime, regional background and vintage remain screening differences; internal source inventories are not reconstructed and no LCIA equivalence is claimed. Negative source reference becomes positive service with factor -1. Do not omit emissions, add a recovery credit, infer nutrient balancing or apply another volume/density/loss factor.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "fuels-312-a51914af75a1d30b2da9"}}], "reason": "Only the individually inspected exact source profiles authorize their selected targets and reference bases.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-419ad5b53ff5a69e", "source": {"location": "Europe without Switzerland", "name": "market for wastewater, average", "reference product": "wastewater, average", "unit": "cubic meter"}, "target": {"recipe_ref": "pilot-wastewater-routes-bd88b9549e9e5edabb3e"}, "technosphere_information_loss": "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."},
     {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-3c10f9aaee8ffe42", "mapping_method": "reviewed_pilot_wastewater_routes", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_wastewater_routes_review.json#ecoinvent-3.9-cutoff/d24d95d5dbbbf814a86533ad0061ea38caaaae6f2e8a8cd380da2f7cde9f342b"], "reason": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-wastewater-routes-d842e2a4b036631ca64a"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bb2e8cc9a538ddc5", "source": {"location": "RoW", "name": "market for wastewater, average", "reference product": "wastewater, average", "unit": "cubic meter"}, "target": {"recipe_ref": "pilot-wastewater-routes-d842e2a4b036631ca64a"}, "technosphere_information_loss": "User instruction auto-approve coming decisions within exactUVEK2026cutoff/ecoinvent3.10biosphere electricitypilot. Fourenumerated3.9cutoff wastewater-average markets only. Preservealloriginalrural/urbancollectionvolume shares,treatedfractions and172directuntreatedBIOterms withsignedmarginaluncertainty using43exactpublisherUUID/unit/fullcompartment/role canonical3.10definitions; label/CASdifferenceswarnedwithoutmass/speciationfactor. Negativewastereference-1m3 maps topositive1m3servicethroughfactor-1; transformnegativetreatmentdemandonce, leavepositivecollectionanduntreatedreleasesunchanged. No wholegroup100%treatment,aggregation,renormalization,physicalomission orrecovery/energycredit. Source rural/urban sewerconstructioneach explicitlydelivers1m3wastewater andhas100yearlife/70yearrenovation. Nativeclass3sewagetreatment alreadyincludes municipalSewergridclass3 at2.1782e-7kmper1m3; isolatethisoneexchangewithoriginaluncertaintyintocollection-onlyproxies forbothsourcegridproviders. Copynative2026class3treatmentinventoryonce, removingonlythatmunicipalsewerexchange; retainallother29technosphereand105biosphereinputs andtheiruncertainty exactly. Four source-regiontreatmentwrappers reuse thissharednativeplant-onlyhelper. Nativefullservice equalsplant-onlyhelper plusisolatedmunicipalgrid per1m3; no subtractiveLCI ornegativeavoidedservice. Applymunicipalcollectionperoriginal1m3collectionvolume andplant-onlytreatmentperoriginaltreatedfraction, soallsourcewaterhasitsoriginalcollectiondemandwhiletreated/untreatedportionsstaydistinct. Theclass2from-residence/plaincomparison isolatesanadditionalprivateResidentialsewergrid at2.8713e-7km/m3, butmetadataexplicitlystatesprivatebuildingnetwork; thiscandidateisexcluded andnoResidentialgridisadded. Thisisnotageneralm3-to-kmconversion; quantitiescomefromtheexactnativeper1m3sewageexchange,withnoextra length/lifetime/capacity/densityfactor. Source rural/urban networkgeometry,materialmix/endoflife,constructionenergy/machinery/geography/vintage/internaluncertainty andsharednativeuncertaintycorrelation differfromsingleSwissmunicipalgrid; distinctoriginalmarketweightsremainbutrural/urbantechnologyisnotreconstructed. Complete nativeclass3plant-onlyscreeningproxy retainshydraulicvolume despite sourceCOD0.42534kg/m3,TOC0.1091,BOD0.20572 versusnativeCOD0.1556kg/m3,24900PCEcapacityandSwiss3stage mechanical/biological/chemicaltreatmentwithsludgedigestion. Sourcegenericplantcomposition,removalefficiency,climate,sludge/energy/waterbalances,infrastructure,allocation,vintage,geography andinternaluncertainty differ; no organicload/capacity/LCIAequivalence. No2.73355CODscalingofwholemodel,whichwouldmultiplywater/infrastructurevolumes. Sourceinternalcollection/treatmentinventories,includingmaterials,sludgeroutes andinfrastructurerecoveryhandover,arereplacedbyexplicitnativecomponentmodels; donotaddthemagain oradjustoriginaluntreatedreleases tobalance nativeeffluent. All105nativecopiedbiospherecoordinatesbindexactinstalledcanonical3.10UUID/unit/fullcompartment/role; native2991upstreambiosphereexclusionspersistwithoutinventingremovedflows. Callerownership,formulas,signeduncertainty,foregroundsuppliers andseparateemissions/purchasesremain. Allproxy scoreeffects explicit/unquantified. No standalonecomponent,otherrelease,reverse,cross-system-model orfullscenario/certification/exportapproval."},
     {"confidence": 0.478141, "conversion_factor": -1, "id": "bp-f13e4ee49e1a95f1", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-f13e4ee49e1a95f1"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for wastewater, from residence", "reference product": "wastewater, from residence", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, sewage, from residence, to wastewater treatment, class 2", "reference product": "Treatment, sewage, from residence, to wastewater treatment, class 2", "unit": "cubic meter"}},
     {"confidence": 0.398141, "conversion_factor": -1, "id": "bp-6b97aaea975f4140", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-6b97aaea975f4140"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for wastewater, from residence", "reference product": "wastewater, from residence", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, sewage, from residence, to wastewater treatment, class 2", "reference product": "Treatment, sewage, from residence, to wastewater treatment, class 2", "unit": "cubic meter"}},
@@ -716981,7 +718456,7 @@
     {"confidence": 1.0, "id": "bp-8bbb01130472bd02", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for zeolite, powder", "reference product": "zeolite, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Zeolite, powder, at plant", "reference product": "Zeolite, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.354566, "id": "bp-a667ac375d491dab", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for zeolite, slurry, without water, in 50% solution state", "reference product": "zeolite, slurry, without water, in 50% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Zeolite, slurry, 50% in H2O, at plant", "reference product": "Zeolite, slurry, 50% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.274566, "id": "bp-869d0408b6bc7981", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for zeolite, slurry, without water, in 50% solution state", "reference product": "zeolite, slurry, without water, in 50% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Zeolite, slurry, 50% in H2O, at plant", "reference product": "Zeolite, slurry, 50% in H2O, at plant", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-9ff26f9cc56aec97", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for zinc", "reference product": "zinc", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Zinc concentrate, at beneficiation", "reference product": "Zinc concentrate, at beneficiation", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "id": "bp-9ff26f9cc56aec97", "mapping_method": "reviewed_fuels_312_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "reason": "The actual 3.12 source supplies zinc metal as ingots/shot, not concentrate. Use one kg of complete native SHG primary zinc at regional storage, which includes mining/refining background, pyro/hydrometallurgy, slag disposal and wastewater treatment. Do not substitute beneficiation or add refining, avoided primary metal, recovered-zinc or repeated co-product allocation credits. Native European primary-metal mix is a screening proxy for the global market, whose minor gold-mine co-product, market freight, origin/technology mix, grade and internal uncertainty are not reconstructed. Geography, allocation, vintage and biosphere differences have unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the individually inspected exact source profiles authorize their selected targets and reference bases.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-419ad5b53ff5a69e", "source": {"location": "GLO", "name": "market for zinc", "reference product": "zinc", "unit": "kilogram"}, "target": {"location": "RER", "name": "Zinc, primary, at regional storage", "reference product": "Zinc, primary, at regional storage", "unit": "kilogram"}, "technosphere_information_loss": "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."},
     {"confidence": 0.513182, "id": "bp-210e41bff5a7cba2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zinc coat, coils", "reference product": "zinc coat, coils", "unit": "square meter"}, "target": {"location": "RER", "name": "Zinc coating, coils", "reference product": "Zinc coating, coils", "unit": "square meter"}},
     {"confidence": 0.535745, "id": "bp-fef3bd133ce6cadc", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zinc coat, pieces", "reference product": "zinc coat, pieces", "unit": "square meter"}, "target": {"location": "RER", "name": "Zinc coating, pieces", "reference product": "Zinc coating, pieces", "unit": "square meter"}},
     {"confidence": 0.53625, "id": "bp-204dc1631bbfe24f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zinc coat, pieces, adjustment per micro-m", "reference product": "zinc coat, pieces, adjustment per micro-m", "unit": "square meter"}, "target": {"location": "RER", "name": "Zinc coating, pieces, adjustment per um", "reference product": "Zinc coating, pieces, adjustment per um", "unit": "square meter"}},
@@ -717094,7 +718569,7 @@
     {"confidence": 0.323818, "conversion_factor": -1, "id": "bp-168324086066bce9", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-168324086066bce9"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "market group for municipal solid waste", "reference product": "municipal solid waste", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, municipal solid waste, 22.9% water, to municipal incineration", "reference product": "Disposal, municipal solid waste, 22.9% water, to municipal incineration", "unit": "kilogram"}},
     {"confidence": 0.323818, "conversion_factor": -1, "id": "bp-b5bf651194b1a5a3", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-b5bf651194b1a5a3"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RER", "name": "market group for municipal solid waste", "reference product": "municipal solid waste", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, municipal solid waste, 22.9% water, to municipal incineration", "reference product": "Disposal, municipal solid waste, 22.9% water, to municipal incineration", "unit": "kilogram"}},
     {"confidence": 0.354188, "id": "bp-7b69dad0fd6d9812", "mapping_method": "heuristic_similarity", "source": {"location": "CA", "name": "market group for natural gas, high pressure", "reference product": "natural gas, high pressure", "unit": "cubic meter"}, "target": {"location": "CA", "name": "Natural gas, at production", "reference product": "Natural gas, at production", "unit": "cubic meter"}},
-    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-7fe8308839f735bb", "mapping_method": "reviewed_deferred_delivered_gas", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_delivered_gas_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_delivered_gas_review.json#ecoinvent-3.6-cutoff/5d7606fa5fa5ff740e3648bf01c538ca04252135a9a285344b73d5026c6d9857"], "reason": "User-approved autonomous modelling decision: legacy source-mass-based delivered-gas ENERGY SCREENING PROXY, not a verified source calorific property. The exact3.6cut-off Europe-without-Switzerland market group has positive1m3 reference, declared dry/wet fuel mass0.842655842955148kg and zero water, but no net calorific property; its gross-energy field10.9015926281975MJ is not substituted for net energy. Ecoinvent v2 Overview and Methodology(2007), Table4.6, provides a generic natural-gas net calorific value45.4MJ/kg. Apply that documented legacy FUEL-QUALITY ASSUMPTION to the audited source mass: 38.256575270163715MJ per original m3, supplied by the complete native RER high-pressure gas-at-consumer process. This is a calibrated functional fuel-supply proxy, not a measured3.6NCV or exact gas-composition/volume/carbon-mass equivalence. It avoids assuming equal m3/Nm3 states and does not inherit the independently documented3.9Swiss36MJ/m3. The native RER model represents EU-28 trade2023 with production, transport, distribution, compression, network own fuel and leakage; source geography/origin mix, historical fuel quality, density/carbon content, trade vintage, internal uncertainty and2991upstreambiosphere exclusions differ. Caller volume, signed uncertainty and formulas remain unchanged at factor+1, as do separately listed stack emissions. No extra burner, network, dilution/state correction, avoided credit or numerical calorific uncertainty distribution is invented; proxy score effects remain unquantified. Only the exact3.6cut-off identity/profile is qualified; no other release, reverse or cross-system-model route inherits this property assumption.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "deferred-delivered-gas-52beaa2b0f89f7430e73"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-f1eed5427fcbc17f", "source": {"location": "Europe without Switzerland", "name": "market group for natural gas, high pressure", "reference product": "natural gas, high pressure", "unit": "cubic meter"}, "target": {"recipe_ref": "deferred-delivered-gas-52beaa2b0f89f7430e73"}, "technosphere_information_loss": "User-approved autonomous modelling decision: legacy source-mass-based delivered-gas ENERGY SCREENING PROXY, not a verified source calorific property. The exact3.6cut-off Europe-without-Switzerland market group has positive1m3 reference, declared dry/wet fuel mass0.842655842955148kg and zero water, but no net calorific property; its gross-energy field10.9015926281975MJ is not substituted for net energy. Ecoinvent v2 Overview and Methodology(2007), Table4.6, provides a generic natural-gas net calorific value45.4MJ/kg. Apply that documented legacy FUEL-QUALITY ASSUMPTION to the audited source mass: 38.256575270163715MJ per original m3, supplied by the complete native RER high-pressure gas-at-consumer process. This is a calibrated functional fuel-supply proxy, not a measured3.6NCV or exact gas-composition/volume/carbon-mass equivalence. It avoids assuming equal m3/Nm3 states and does not inherit the independently documented3.9Swiss36MJ/m3. The native RER model represents EU-28 trade2023 with production, transport, distribution, compression, network own fuel and leakage; source geography/origin mix, historical fuel quality, density/carbon content, trade vintage, internal uncertainty and2991upstreambiosphere exclusions differ. Caller volume, signed uncertainty and formulas remain unchanged at factor+1, as do separately listed stack emissions. No extra burner, network, dilution/state correction, avoided credit or numerical calorific uncertainty distribution is invented; proxy score effects remain unquantified. Only the exact3.6cut-off identity/profile is qualified; no other release, reverse or cross-system-model route inherits this property assumption."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-7fe8308839f735bb", "mapping_method": "reviewed_deferred_delivered_gas", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_delivered_gas_review.json", "brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_delivered_gas_review.json#ecoinvent-3.6-cutoff/5d7606fa5fa5ff740e3648bf01c538ca04252135a9a285344b73d5026c6d9857"], "reason": "User-approved autonomous modelling decision: legacy source-mass-based delivered-gas ENERGY SCREENING PROXY, not a verified source calorific property. The exact3.6cut-off Europe-without-Switzerland market group has positive1m3 reference, declared dry/wet fuel mass0.842655842955148kg and zero water, but no net calorific property; its gross-energy field10.9015926281975MJ is not substituted for net energy. Ecoinvent v2 Overview and Methodology(2007), Table4.6, provides a generic natural-gas net calorific value45.4MJ/kg. Apply that documented legacy FUEL-QUALITY ASSUMPTION to the audited source mass: 38.256575270163715MJ per original m3, supplied by the complete native RER high-pressure gas-at-consumer process. This is a calibrated functional fuel-supply proxy, not a measured3.6NCV or exact gas-composition/volume/carbon-mass equivalence. It avoids assuming equal m3/Nm3 states and does not inherit the independently documented3.9Swiss36MJ/m3. The native RER model represents EU-28 trade2023 with production, transport, distribution, compression, network own fuel and leakage; source geography/origin mix, historical fuel quality, density/carbon content, trade vintage, internal uncertainty and2991upstreambiosphere exclusions differ. Caller volume, signed uncertainty and formulas remain unchanged at factor+1, as do separately listed stack emissions. No extra burner, network, dilution/state correction, avoided credit or numerical calorific uncertainty distribution is invented; proxy score effects remain unquantified. Only the exact3.6cut-off identity/profile is qualified; no other release, reverse or cross-system-model route inherits this property assumption.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "deferred-delivered-gas-52beaa2b0f89f7430e73"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "reason": "Inspected 3.12 cut-off high-pressure delivered-gas supply. Source product information declares NCV 36.0 MJ per standard cubic metre at 15 C/1013 mbar, with GCV 40 MJ/m3 and density 0.735 kg/m3. Supply exactly 36 MJ of the complete native RER high-pressure gas-at-consumer process per original m3. This is an energy-functional supply proxy, not equal-volume/composition/carbon-mass proof for source Sm3 and native Nm3. Keep the complete native production, upstream transport and pressure-appropriate network/compression/leakage model once. Native RER geography/trade, technology, density/composition, vintage and internal uncertainty replace the source model; score effects are unquantified. No extra burner, fuel-production burden, state/ideal-gas/density, loss/self-loop or carbon correction is added. Separate caller stack emissions remain unchanged. The 3.6 high-pressure 38.256575270163715 MJ legacy calibration remains restricted to its prior inspected profile and is not reused for 3.12.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "fuels-312-8474b2c5b3efba4ba611"}}], "reason": "Only the individually inspected exact source profiles authorize their selected targets and reference bases.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-419ad5b53ff5a69e", "source": {"location": "Europe without Switzerland", "name": "market group for natural gas, high pressure", "reference product": "natural gas, high pressure", "unit": "cubic meter"}, "target": {"recipe_ref": "deferred-delivered-gas-52beaa2b0f89f7430e73"}, "technosphere_information_loss": "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."},
     {"confidence": 0.362931, "id": "bp-e5c0f91e3ad85dad", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market group for natural gas, high pressure", "reference product": "natural gas, high pressure", "unit": "cubic meter"}, "target": {"location": "GLO", "name": "Natural gas, vented", "reference product": "Natural gas, vented", "unit": "cubic meter"}},
     {"confidence": 0.267274, "id": "bp-6d759c0e215d92cc", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market group for petroleum", "reference product": "petroleum", "unit": "kilogram"}, "target": {"location": "RER", "name": "Petroleum coke, at refinery", "reference product": "Petroleum coke, at refinery", "unit": "kilogram"}},
     {"confidence": 0.321373, "id": "bp-189c4cd608c42b60", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "market group for potato", "reference product": "potato", "unit": "kilogram"}, "target": {"location": "CH", "name": "Potato grading", "reference product": "Potato grading", "unit": "kilogram"}},
@@ -717102,7 +718577,7 @@
     {"confidence": 0.75, "id": "bp-366ea52e3ba33b8a", "mapping_method": "pairwise_review", "review_ref": "r-0a29ec14d6654ef1", "source": {"location": "US", "name": "market group for soybean", "reference product": "soybean", "unit": "kilogram"}, "target": {"location": "US", "name": "Soybeans, at farm", "reference product": "Soybeans, at farm", "unit": "kilogram"}},
     {"confidence": 0.237943, "id": "bp-ed4b9610676d0def", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "market group for sweet corn", "reference product": "sweet corn", "unit": "kilogram"}, "target": {"location": "US", "name": "Corn, at farm", "reference product": "Corn, at farm", "unit": "kilogram"}},
     {"confidence": 0.46, "id": "bp-15a5350bb1bcdb67", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market group for tap water", "reference product": "tap water", "unit": "kilogram"}, "target": {"location": "CH", "name": "Tap water, at user", "reference product": "Tap water, at user", "unit": "kilogram"}},
-    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-fe711136ab4271bf", "mapping_method": "reviewed_pilot_nitrate_water", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_water_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_water_review.json#ecoinvent-3.9-cutoff/cf5ca076f5d6ea77e6e3fd45cfc1b3b2b23e4c72e4284d1b3579ef3b5bed9da1"], "reason": "Explicit user reply: Approve screening proxies with warnings. Only seven exact ecoinvent3.9cutoff water markets required by the electricity pilot qualify. Six national markets(IN,BR,CA-QC,CO,PE,ZA) use one kg of complete native RER Tapwater atuser per original signedkg, as explicit European geographic screening proxies. The European group retains its original two separate CH/nonCHshares(.002087020385985745 and.9979129796140143kg), supporteduncertainty and source order through complete nativeCH/RERdeliveredwater. This substitutes the whole native utility model: source internal treatment mix, supply feedback/selfpurchases, loss assumptions, network quantities, direct waterreturns and internal uncertainty are replaced, not reconstructed. Source closure has48waterprocesses67internal links8selflinks24parameterdefinitions; those source uncertain cycles are not algebraically flattened or represented by a native supplier multiplier. Retain each complete native treatment, chemical, energy, network/infrastructure, delivery, maintenance, disposal, elementary-flow and uncertainty model once. Do not add source network purchases or waterreturns on top, no source selfloop/lossfactor, density/moisture multiplier, invented embodiedwater/returnflow correction or recoverycredit. Native historical Swiss/German design and geography differ from country treatment, electricity, waterwithdrawal/resource mix, returncompartments, allocation, vintage and sourceuncertainty. Direct nativeRERresourcewater .00112866m3/kg and returns .0008567565m3/kg differ from source European watersubsystem .0011680891035171265 and .00014767300888938914m3/kg; these exclude other upstreamsupplier water use and are not comparativeLCIA. Embodiedwater/accounting and geographic differences can materially affect water-related results; all scoreeffects remain unquantified. Countrylabelled MoeKprocesses are not silently substituted or repaired: they have separate caller embodiedwater requirements, missing exactPE/CA-QCidentities, COusesPEelectricity and a different recordedRERreturn. Preserve original caller signed quantities, formulas, uncertainty, ownership, foregroundsuppliers and every separately listed caller emission, wastewater and waterpurchase. No source input is removed from the caller. Native upstream biosphereexclusions remain warnings. Only these exact3.9cutoff parents qualify, not standalone source waterproductions/network/chemicals, otherreleases, reverse or cross-system-modelroutes. Full pilot scenario/certification/export and LCIA equivalence are not established by these component correspondences.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-nitrate-water-16a71bec35bd067a4660"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-d7761390abe81075", "source": {"location": "RER", "name": "market group for tap water", "reference product": "tap water", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-nitrate-water-16a71bec35bd067a4660"}, "technosphere_information_loss": "Explicit user reply: Approve screening proxies with warnings. Only seven exact ecoinvent3.9cutoff water markets required by the electricity pilot qualify. Six national markets(IN,BR,CA-QC,CO,PE,ZA) use one kg of complete native RER Tapwater atuser per original signedkg, as explicit European geographic screening proxies. The European group retains its original two separate CH/nonCHshares(.002087020385985745 and.9979129796140143kg), supporteduncertainty and source order through complete nativeCH/RERdeliveredwater. This substitutes the whole native utility model: source internal treatment mix, supply feedback/selfpurchases, loss assumptions, network quantities, direct waterreturns and internal uncertainty are replaced, not reconstructed. Source closure has48waterprocesses67internal links8selflinks24parameterdefinitions; those source uncertain cycles are not algebraically flattened or represented by a native supplier multiplier. Retain each complete native treatment, chemical, energy, network/infrastructure, delivery, maintenance, disposal, elementary-flow and uncertainty model once. Do not add source network purchases or waterreturns on top, no source selfloop/lossfactor, density/moisture multiplier, invented embodiedwater/returnflow correction or recoverycredit. Native historical Swiss/German design and geography differ from country treatment, electricity, waterwithdrawal/resource mix, returncompartments, allocation, vintage and sourceuncertainty. Direct nativeRERresourcewater .00112866m3/kg and returns .0008567565m3/kg differ from source European watersubsystem .0011680891035171265 and .00014767300888938914m3/kg; these exclude other upstreamsupplier water use and are not comparativeLCIA. Embodiedwater/accounting and geographic differences can materially affect water-related results; all scoreeffects remain unquantified. Countrylabelled MoeKprocesses are not silently substituted or repaired: they have separate caller embodiedwater requirements, missing exactPE/CA-QCidentities, COusesPEelectricity and a different recordedRERreturn. Preserve original caller signed quantities, formulas, uncertainty, ownership, foregroundsuppliers and every separately listed caller emission, wastewater and waterpurchase. No source input is removed from the caller. Native upstream biosphereexclusions remain warnings. Only these exact3.9cutoff parents qualify, not standalone source waterproductions/network/chemicals, otherreleases, reverse or cross-system-modelroutes. Full pilot scenario/certification/export and LCIA equivalence are not established by these component correspondences."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-fe711136ab4271bf", "mapping_method": "reviewed_pilot_nitrate_water", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_water_review.json", "brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_nitrate_water_review.json#ecoinvent-3.9-cutoff/cf5ca076f5d6ea77e6e3fd45cfc1b3b2b23e4c72e4284d1b3579ef3b5bed9da1"], "reason": "Explicit user reply: Approve screening proxies with warnings. Only seven exact ecoinvent3.9cutoff water markets required by the electricity pilot qualify. Six national markets(IN,BR,CA-QC,CO,PE,ZA) use one kg of complete native RER Tapwater atuser per original signedkg, as explicit European geographic screening proxies. The European group retains its original two separate CH/nonCHshares(.002087020385985745 and.9979129796140143kg), supporteduncertainty and source order through complete nativeCH/RERdeliveredwater. This substitutes the whole native utility model: source internal treatment mix, supply feedback/selfpurchases, loss assumptions, network quantities, direct waterreturns and internal uncertainty are replaced, not reconstructed. Source closure has48waterprocesses67internal links8selflinks24parameterdefinitions; those source uncertain cycles are not algebraically flattened or represented by a native supplier multiplier. Retain each complete native treatment, chemical, energy, network/infrastructure, delivery, maintenance, disposal, elementary-flow and uncertainty model once. Do not add source network purchases or waterreturns on top, no source selfloop/lossfactor, density/moisture multiplier, invented embodiedwater/returnflow correction or recoverycredit. Native historical Swiss/German design and geography differ from country treatment, electricity, waterwithdrawal/resource mix, returncompartments, allocation, vintage and sourceuncertainty. Direct nativeRERresourcewater .00112866m3/kg and returns .0008567565m3/kg differ from source European watersubsystem .0011680891035171265 and .00014767300888938914m3/kg; these exclude other upstreamsupplier water use and are not comparativeLCIA. Embodiedwater/accounting and geographic differences can materially affect water-related results; all scoreeffects remain unquantified. Countrylabelled MoeKprocesses are not silently substituted or repaired: they have separate caller embodiedwater requirements, missing exactPE/CA-QCidentities, COusesPEelectricity and a different recordedRERreturn. Preserve original caller signed quantities, formulas, uncertainty, ownership, foregroundsuppliers and every separately listed caller emission, wastewater and waterpurchase. No source input is removed from the caller. Native upstream biosphereexclusions remain warnings. Only these exact3.9cutoff parents qualify, not standalone source waterproductions/network/chemicals, otherreleases, reverse or cross-system-modelroutes. Full pilot scenario/certification/export and LCIA equivalence are not established by these component correspondences.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "pilot-nitrate-water-16a71bec35bd067a4660"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "reason": "Actual 3.12 European tap-water market group has exactly two positive-kg CH/non-CH inputs and no direct biosphere flows. Retain their original order, quantities and supported uncertainty through complete native CH/RER delivered-water services. The top-level portfolio is unchanged from inspected 3.9, but this is a separate exact-profile review. Internal treatment mix, feedback/loss assumptions, network, water returns, allocation and vintage are replaced by the native whole utilities; no self-loop/loss multiplier, double infrastructure, water-balance correction or recovery credit is inferred. Native CH/DE models are geographic/technology screening proxies, with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "fuels-312-15474c15acd1dd42435e"}}], "reason": "Only the individually inspected exact source profiles authorize their selected targets and reference bases.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-419ad5b53ff5a69e", "source": {"location": "RER", "name": "market group for tap water", "reference product": "tap water", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-nitrate-water-16a71bec35bd067a4660"}, "technosphere_information_loss": "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."},
     {"confidence": 0.4, "conversion_factor": 1, "id": "bp-59f60997076df042", "mapping_method": "followup_review", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.10-cutoff/4413afb539eae2053d01292c21cdcfdadf3edffe8fa34f27afc51c028fe6597a"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.10.1-cutoff/a087f90753c7cb6b2e666a318b9f5807b50466ddb03fa976f6f00cd283186538"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10.1"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.6-cutoff/cdc396b07f440beb5bcc4d3c6ce44ba57374be89b2a6e622a232d80a105c86fb"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.7-cutoff/9a30a5c6cb58437eff745e18290e3c06ad4c9e7c8a0e4181d2d7a9fb7485ce8a"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.7"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.8-cutoff/e3632b7d99eb00c06c34a2364f191d1cff8b69a09221898090d10b561e92f1bf"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.9-cutoff/1f6325b2a2226c92ecb219a2e35098071456833dc12e1ea0b6578f49b8bcecdf"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.9.1-cutoff/37fb2fa12a3447e2d9516fdbc03fd5ceb94204e85dc6f8cdad0a896f69412fa7"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9.1"}}], "reason": "Select only an exact independently inspected whole-freight source profile.", "status": "unresolved"}, "review_ref": "r-924de0a79f9f8a30", "source": {"location": "GLO", "name": "market group for transport, freight train", "reference product": "transport, freight train", "unit": "ton kilometer"}, "target": {"location": "RER", "name": "Transport, freight, rail", "reference product": "Transport, freight, rail", "unit": "ton kilometer"}, "technosphere_information_loss": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection."},
     {"confidence": 0.504091, "id": "bp-8e691fdb86f7b1c6", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market group for transport, freight train", "reference product": "transport, freight train", "unit": "ton kilometer"}, "target": {"location": "RER", "name": "Transport, aircraft, freight", "reference product": "Transport, aircraft, freight", "unit": "ton kilometer"}},
     {"confidence": 0.311716, "conversion_factor": 1, "id": "bp-999a70594224e212", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.10-cutoff/1f40b1500a6b3e96ade2f0c0dea8edad34663c728b047645275d986308031c47"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.10.1-cutoff/7557e3891509aaa2d5bb61aefded4609a5b9132bb71c94faac6da01911992a76"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10.1"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.6-cutoff/ca65a2109afbfa40468af094de873596b0c28ec51f9daa2fbcb5daab8d68fe61"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.7-cutoff/106f3131f0496b8a28456ae29e7eb858e9f3546a5eb2ef058d3eeb6d9de44e71"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.7"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.8-cutoff/c21b2f5dbf24a85fe6d8ddf34434fcb6cbb2457ece41f600b73e1edb3eb8f592"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.9-cutoff/93b93ae886bd3f0bbda601f2840433add9b6af6acf66ac4ff779c7439cb7aa56"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_whole_freight_review.json", "brightpath/data/export/uvek_whole_freight_review.json#ecoinvent-3.9.1-cutoff/0c902242687043973e181eb8e20e3360ab98cfd461523efa6a0cc267180dcd26"], "reason": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9.1"}}], "reason": "Select only an exact independently inspected whole-freight source profile.", "status": "unresolved"}, "review_ref": "r-924de0a79f9f8a30", "source": {"location": "GLO", "name": "market group for transport, freight, inland waterways, barge", "reference product": "transport, freight, inland waterways, barge", "unit": "ton kilometer"}, "target": {"location": "RER", "name": "Transport, barge", "reference product": "Transport, barge", "unit": "ton kilometer"}, "technosphere_information_loss": "Reviewed complete freight screening proxy per tonne-kilometre. Preserve the supplied freight mode and vehicle class: light-commercial freight uses the complete CH 3.5t light-duty fleet, heavy unspecified diesel freight uses the complete RER heavy-lorry diesel fleet across weight classes and delivery cycles, and generic rail and inland-barge freight use the complete RER services. Do not replace all heavy freight by a 3.5t vehicle or a single 18t long-haul vehicle, replace light-commercial freight by the heavy fleet, or replace full rail transport by train operation. The inspected target services include vehicle production, maintenance, disposal and road/track infrastructure through their linked inventories; add no second vehicle, operation or infrastructure. Positive source and target one-tkm references require factor +1: preserve signed quantities, uncertainty, formulas, foreground suppliers and separate emissions without absolute values, payload normalization, passenger-km conversion or kilometre scaling. These are whole-fleet geographic proxies: source country, vehicle, load, fuel, duty, age and emissions mixtures are not reconstructed. The CH light-duty mix includes diesel, hybrid, gas and battery-electric vehicles and replaces a source generic petrol/diesel light-commercial fleet. The RER heavy-diesel class weights use Swiss 2020 shares. Generic global rail supply can include steam; its steam/diesel/electricity shares are approximated by the RER fleet. No individual steam-transport correspondence is created. Vintage, technology, allocation, assets, background and LCIA equivalence remain unestablished. Only enumerated independently inspected cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. Reverse correspondences require independent inspection."},
@@ -730031,6 +731506,15 @@
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of sewage sludge, 97% water, WWT, WW from concrete production, landfarming / CH / kg external exchange with a warning. All inspected direct service comments for concrete production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
     },
+    "r-419ad5b53ff5a69e": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_312_dependencies_review.json"
+      ],
+      "limitations": [
+        "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."
+      ],
+      "rationale": "Independently inspected profile-specific supplies for the shared Premise fuel workflow."
+    },
     "r-4243b59c38a4c95a": {
       "evidence": [
         "brightpath/data/export/uvek_modal_transport_review.json: exact source/target inventory and positive-reference evidence."
@@ -735516,15 +737000,6 @@
         "Only this independently inspected ecoinvent3.8cut-off correspondence is qualified. Preserve signed caller physical quantities, formulas, supported uncertainty and foreground ownership; do not touch native inventories or separately listed caller emissions. Native biosphere exclusions and unquantified environmental-score differences remain limitations. No inverse, cross-system-model, other-profile, LCIA-equivalence or impact-completeness approval is inferred."
       ],
       "rationale": "Use complete native European diesel barge transport per signed tonne-km as an explicit geographic, fleet and infrastructure screening proxy for the source RoW inland-waterway service. Both inventories provide +1tonne-km and include vessel, fuel/operation, port and canal services; no vehicle-count, payload, distance, fuel-demand or lifetime multiplier is applied."
-    },
-    "r-f1eed5427fcbc17f": {
-      "evidence": [
-        "brightpath/data/export/uvek_deferred_delivered_gas_review.json"
-      ],
-      "limitations": [
-        "User-approved autonomous modelling decision: legacy source-mass-based delivered-gas ENERGY SCREENING PROXY, not a verified source calorific property. The exact3.6cut-off Europe-without-Switzerland market group has positive1m3 reference, declared dry/wet fuel mass0.842655842955148kg and zero water, but no net calorific property; its gross-energy field10.9015926281975MJ is not substituted for net energy. Ecoinvent v2 Overview and Methodology(2007), Table4.6, provides a generic natural-gas net calorific value45.4MJ/kg. Apply that documented legacy FUEL-QUALITY ASSUMPTION to the audited source mass: 38.256575270163715MJ per original m3, supplied by the complete native RER high-pressure gas-at-consumer process. This is a calibrated functional fuel-supply proxy, not a measured3.6NCV or exact gas-composition/volume/carbon-mass equivalence. It avoids assuming equal m3/Nm3 states and does not inherit the independently documented3.9Swiss36MJ/m3. The native RER model represents EU-28 trade2023 with production, transport, distribution, compression, network own fuel and leakage; source geography/origin mix, historical fuel quality, density/carbon content, trade vintage, internal uncertainty and2991upstreambiosphere exclusions differ. Caller volume, signed uncertainty and formulas remain unchanged at factor+1, as do separately listed stack emissions. No extra burner, network, dilution/state correction, avoided credit or numerical calorific uncertainty distribution is invented; proxy score effects remain unquantified. Only the exact3.6cut-off identity/profile is qualified; no other release, reverse or cross-system-model route inherits this property assumption."
-      ],
-      "rationale": "User-approved autonomous modelling decision: legacy source-mass-based delivered-gas ENERGY SCREENING PROXY, not a verified source calorific property. The exact3.6cut-off Europe-without-Switzerland market group has positive1m3 reference, declared dry/wet fuel mass0.842655842955148kg and zero water, but no net calorific property; its gross-energy field10.9015926281975MJ is not substituted for net energy. Ecoinvent v2 Overview and Methodology(2007), Table4.6, provides a generic natural-gas net calorific value45.4MJ/kg. Apply that documented legacy FUEL-QUALITY ASSUMPTION to the audited source mass: 38.256575270163715MJ per original m3, supplied by the complete native RER high-pressure gas-at-consumer process. This is a calibrated functional fuel-supply proxy, not a measured3.6NCV or exact gas-composition/volume/carbon-mass equivalence. It avoids assuming equal m3/Nm3 states and does not inherit the independently documented3.9Swiss36MJ/m3. The native RER model represents EU-28 trade2023 with production, transport, distribution, compression, network own fuel and leakage; source geography/origin mix, historical fuel quality, density/carbon content, trade vintage, internal uncertainty and2991upstreambiosphere exclusions differ. Caller volume, signed uncertainty and formulas remain unchanged at factor+1, as do separately listed stack emissions. No extra burner, network, dilution/state correction, avoided credit or numerical calorific uncertainty distribution is invented; proxy score effects remain unquantified. Only the exact3.6cut-off identity/profile is qualified; no other release, reverse or cross-system-model route inherits this property assumption."
     },
     "r-f30c305f59cffd5c": {
       "evidence": [

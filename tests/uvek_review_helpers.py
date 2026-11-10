@@ -21,3 +21,64 @@ def _historical_forward():
 def historical_forward_resource():
     """Return independent archived-review inputs without restoring runtime support."""
     return deepcopy(_historical_forward())
+
+
+def before_fuels_312_review(resource, *, before_wastewater=False):
+    """Restore the prior stage, including parents used as component bindings."""
+    import json
+
+    from brightpath import DATA_DIR
+
+    review = json.loads((DATA_DIR / "export/uvek_fuels_312_dependencies_review.json").read_text())
+    for row in review["records"]:
+        parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+        parent.clear()
+        parent.update(deepcopy(row["original_rule"]))
+        if "review_ref" in parent:
+            resource["reviews"][parent["review_ref"]] = deepcopy(row["original_review"])
+    if before_wastewater:
+        # These later reviews already superseded three component bindings before
+        # the fuel work. Replay the wastewater stage against its frozen inputs,
+        # not against the final resource containing those later corrections.
+        sources = (
+            ("uvek_pilot_steel_row_routes_review.json", "bp-32fc216e24665d6f"),
+            ("uvek_pilot_ng_heat_market_review.json", "bp-f7dd94e542cba21d"),
+            ("uvek_heat_dependency_batch_review.json", "bp-667e1179d41e1bd5"),
+        )
+        for filename, rule_id in sources:
+            authority = json.loads((DATA_DIR / "export" / filename).read_text())
+            row = next(r for r in authority["records"] if r.get("previous_rule", {}).get("id") == rule_id)
+            parent = next(r for r in resource["replace"] if r["id"] == rule_id)
+            parent.clear()
+            parent.update(deepcopy(row["previous_rule"]))
+            if "review_ref" in parent and row.get("previous_review"):
+                resource["reviews"][parent["review_ref"]] = deepcopy(row["previous_review"])
+    # Earlier authoring stages also freeze component-rule metadata. Restore all
+    # extended parents, then recompute only the summaries changed by that stage.
+    from collections import Counter
+
+    resource["coverage"]["mapping_methods"] = dict(
+        sorted(Counter(r["mapping_method"] for r in resource["replace"]).items())
+    )
+    resource["coverage"]["mean_confidence"] = round(
+        sum(r["confidence"] for r in resource["replace"]) / len(resource["replace"]), 6
+    )
+    dispositions = Counter(
+        "recipe" if "recipe_ref" in r["target"] else r.get("classification", "unclassified")
+        for r in resource["replace"]
+    )
+    dispositions["omitted"] = len(resource["delete"])
+    if resource["coverage"].get("unresolved_identities"):
+        dispositions["unresolved"] = resource["coverage"]["unresolved_identities"]
+    resource["coverage"]["dispositions"] = dict(dispositions)
+    return resource
+
+
+def reviewed_fuels_312_record(rule_id, version):
+    """Return a later exact-profile review without broadening older test scopes."""
+    import json
+
+    from brightpath import DATA_DIR
+
+    review = json.loads((DATA_DIR / "export/uvek_fuels_312_dependencies_review.json").read_text())
+    return next((r for r in review["records"] if r["rule_id"] == rule_id), None) if version == "3.12" else None

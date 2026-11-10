@@ -670,7 +670,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     water = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_water_review.json").read_text())
     water_ids = {row["rule_id"] for row in water["records"]}
     water_references = {r["review_ref"] for r in forward["replace"] if r["id"] in water_ids and "review_ref" in r}
-    assert len(water_ids) == 7 and len(water_references) == 2
+    assert len(water_ids) == 7 and len(water_references) == 3
     assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in water_references)
     paint = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_paint_review.json").read_text())
     paint_ids = {row["rule_id"] for row in paint["records"]}

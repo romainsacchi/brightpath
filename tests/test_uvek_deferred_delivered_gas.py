@@ -6,6 +6,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import before_fuels_312_review, reviewed_fuels_312_record
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -44,6 +45,12 @@ def test_gas_keeps_caller_volume_and_uncertainty_and_supplies_the_declared_energ
 def test_gas_uninspected_source_releases_remain_refused(row, version):
     inventory = BrightwayInventory.from_data(consumer(row["source"], 1), context=contexts("ecoinvent", version))
     before = deepcopy(inventory.data)
+    later = reviewed_fuels_312_record(row["rule_id"], version)
+    if later is not None:
+        actual = inventory.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert any(a.get("brightpath_conversion", {}).get("recipe_id") == later["new_recipe_id"] for a in actual.data)
+        assert inventory.data == before
+        return
     with pytest.raises(MigrationError):
         inventory.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert inventory.data == before
@@ -51,7 +58,7 @@ def test_gas_uninspected_source_releases_remain_refused(row, version):
 
 @pytest.mark.parametrize("drift", ["none", "late_parent", "helper", "shared_review"])
 def test_replay_checks_both_parent_rules_and_energy_coefficients_atomically(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = before_fuels_312_review(deepcopy(load_uvek_technosphere_resource()))
     if drift == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif drift == "helper":

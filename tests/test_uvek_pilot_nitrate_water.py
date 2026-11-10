@@ -6,6 +6,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import before_fuels_312_review, reviewed_fuels_312_record
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -92,6 +93,12 @@ def test_water_preserves_signed_caller_uncertainty_and_native_utility_inputs(row
 def test_water_refuses_uninspected_source_versions(row, version):
     source = BrightwayInventory.from_data(consumer(row["source"], -1), context=contexts("ecoinvent", version))
     before = deepcopy(source.data)
+    later = reviewed_fuels_312_record(row["rule_id"], version)
+    if later is not None:
+        actual = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert any(a.get("brightpath_conversion", {}).get("recipe_id") == later["new_recipe_id"] for a in actual.data)
+        assert source.data == before
+        return
     if row["source"]["location"] == "ZA" and version == "3.12":
         actual = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
         assert len(actual.data) == 1
@@ -105,7 +112,7 @@ def test_water_refuses_uninspected_source_versions(row, version):
 
 @pytest.mark.parametrize("change", ["none", "late_parent", "new_helper"])
 def test_water_authoring_replay_is_atomic_and_freezes_all_helpers(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = before_fuels_312_review(deepcopy(load_uvek_technosphere_resource()))
     if change == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif change == "new_helper":
@@ -147,7 +154,7 @@ def test_water_authoring_rejects_tampered_review_atomically(tmp_path):
     path = tmp_path / REVIEW_PATH
     path.parent.mkdir(parents=True)
     path.write_text("{}")
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = before_fuels_312_review(deepcopy(load_uvek_technosphere_resource()))
     before = deepcopy(resource)
     with pytest.raises(ValueError):
         apply_pilot_nitrate_water_review(resource, root=tmp_path)
