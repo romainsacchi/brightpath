@@ -65,6 +65,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    uvek-cement-treatment-review
    uvek-fuels-312-review
    uvek-fuels-39-endpoints
+   uvek-fuels-39-silica
    recycled-paper-migration
    simapro-reference-evidence
    adr/index

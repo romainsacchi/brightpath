@@ -94,7 +94,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
         ].keys()
     forward = load_uvek_technosphere_resource()
     # Includes subsequent heat/deferred reviews and the cement landfill service.
-    assert len(forward["reviews"]) == 796
+    assert len(forward["reviews"]) == 797
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517

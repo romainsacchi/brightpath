@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 25,
-      "recipe": 937,
-      "unclassified": 29513
+      "proxy": 28,
+      "recipe": 938,
+      "unclassified": 29509
     },
     "mapped_identities": 30732,
     "mapping_methods": {
-      "curated_legacy": 277,
+      "curated_legacy": 274,
       "followup_review": 163,
-      "heuristic_similarity": 26698,
+      "heuristic_similarity": 26697,
       "pairwise_review": 2240,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -43,6 +43,7 @@
       "reviewed_five_simple_waste_market_service": 5,
       "reviewed_fuels_312_dependency": 4,
       "reviewed_fuels_39_native_endpoint": 3,
+      "reviewed_fuels_39_silica_dependency": 4,
       "reviewed_gas_market_recipe": 2,
       "reviewed_ghana_uncontrolled_inventory": 1,
       "reviewed_heat_312_market_composition": 3,
@@ -127,7 +128,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.438413,
+    "mean_confidence": 0.438433,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -100923,6 +100924,398 @@
       "rationale": "The actual 3.12 European average-wastewater market retains the inspected 3.9 three technosphere coefficients, their distributions, 43 direct biosphere quantities/compartments/UUIDs and parameters. The sole label change is Strontium to Strontium II with unchanged publisher UUID 4295ed5b-9824-4bbf-97a4-fc4cabd87f0d, kg, surface-water compartment and quantity; the existing helper already targets that exact canonical 3.10 definition. Reuse the independently reviewed complete volume-based rural/urban sewer and wastewater-treatment component proxies, retaining their original outer quantities and all direct untreated-discharge emissions. Native technology, treatment performance, nutrient/composition, plant/lifetime, regional background and vintage remain screening differences; internal source inventories are not reconstructed and no LCIA equivalence is claimed. Negative source reference becomes positive service with factor -1. Do not omit emissions, add a recovery credit, infer nutrient balancing or apply another volume/density/loss factor.",
       "reference product": "wastewater, average",
       "unit": "cubic meter"
+    },
+    "fuels-39-silica-93071f822fe339144e72": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_39_silica_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 2.702052274718522e-10,
+          "loc": -22.031839343913607,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5565968020030299,
+          "scale without pedigree": 0.5655086206239476,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.28101343657072625,
+          "loc": -1.269352793813913,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 9.270338924403713,
+          "loc": 2.22681994033376,
+          "location": "CH",
+          "name": "District heat, at consumer, natural gas in industrial furnace 1MW",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "District heat, at consumer, natural gas in industrial furnace 1MW",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.7331020539159686,
+          "loc": -0.3104703590705727,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "chemical-heat-water-8853f63bfa46fbcdc1e2",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.12925505525234052,
+          "loc": -2.0459676541546656,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.9186490446079205,
+          "loc": -0.08485111791266636,
+          "location": "RER",
+          "name": "Sodium silicate, furnace process, pieces, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Sodium silicate, furnace process, pieces, at plant",
+          "scale": 0.4154515615568198,
+          "scale without pedigree": 0.4154515615568198,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.453682219992337,
+          "loc": -0.7903582819883521,
+          "location": "RER",
+          "name": "Sodium silicate, furnace process, pieces, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Sodium silicate, furnace process, pieces, at plant",
+          "scale": 0.4154515615568198,
+          "scale without pedigree": 0.4154515615568198,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.1275642795155039,
+          "loc": -2.0591348883633387,
+          "location": "RER",
+          "name": "Sulphuric acid, liquid, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Sulphuric acid, liquid, at plant",
+          "scale": 0.4154515615568198,
+          "scale without pedigree": 0.4154515615568198,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.9751059096754158,
+          "loc": -0.02520918857547271,
+          "location": "RER",
+          "name": "Sulphuric acid, liquid, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Sulphuric acid, liquid, at plant",
+          "scale": 0.4154515615568198,
+          "scale without pedigree": 0.4154515615568198,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01756333978567039,
+          "loc": -4.0419415160536944,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Tap water, at user",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.460638622286774e-06,
+          "loc": -13.436636805355812,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-d842e2a4b036631ca64a",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 5.200430008162598e-09,
+          "loc": -19.074524520900557,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-39cbd83822dc810e03e3",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 8.777636777205597e-09,
+          "loc": -18.55105862530095,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-eff76270716fb3e521c0",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 3.492685963628597e-07,
+          "loc": -14.867424593661791,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-bd88b9549e9e5edabb3e",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0009457182961514826,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "075e433b-4be4-448e-9510-9a5029c1ce94",
+          "loc": -6.963565817453963,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.011483607330332043,
+          "categories": [
+            "water"
+          ],
+          "flow_id": "2404b41a-2eed-4e9d-8ab6-783946fdf5d6",
+          "loc": -4.4668347100689605,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.01107841432634594,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "flow_id": "fc1c42ce-a759-49fa-b987-f1ec5e503db1",
+          "loc": -4.502756719245023,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0005809412390644822,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "flow_id": "8c75e7ab-8ab8-41e4-b394-c166ff5b050d",
+          "loc": -7.45086094380976,
+          "name": "Water, river",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0005606758470040933,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "flow_id": "67c40aae-d403-464d-9649-c12695e43ad8",
+          "loc": -7.48636763226667,
+          "name": "Water, well, in ground",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "GLO",
+      "name": "activated silica production, reviewed native reconstruction",
+      "parameters": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "name": "Na2SiO3_to_SiO2",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "name": "Na2SO4_to_SiO2",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "name": "H2SO4_to_SiO2",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "name": "H2O_to_SiO2",
+          "uncertainty type": 0
+        }
+      ],
+      "rationale": "Reconstruct one kg of dry activated/precipitated silica rather than substituting mined sand. Retain all 14 original input rows in their source order, all five direct water emissions/resources with their exact canonical 3.10 publisher UUIDs and signed quantities, all 19 lognormal distributions, and four local parameters. Use complete native solid-furnace silicate for both separate RER/RoW ingredient rows; do not aggregate or renormalize the source coefficients. Retain acid, electricity, heat, infrastructure, water and both reviewed chemical-steam supplies. Four negative source wastewater demands become positive complete wastewater-service helper inputs using their reviewed factor -1, with uncertainty/sign flags scaled consistently. Existing complete steam/wastewater helper closures and limitations are frozen; their documented zero-burden native waste-electricity/heat co-products retains the 100%-to-disposal allocation without assigning it invented generation burdens; do not infer a second treatment, water balance, dry-mass yield, neutralisation, recovered-salt or energy credit. Native global/Swiss/RER utility geography, district-versus-industrial heat infrastructure, source-market delivery, chemical grade/modulus, allocation, vintage, internal uncertainty and mapped biosphere exclusions remain screening differences; preserving the source coefficients and parameters is not a new stoichiometric or LCIA-equivalence claim.",
+      "reference product": "activated silica",
+      "unit": "kilogram"
     },
     "gas-market-ac6aba0d9d5bbe2c4c92": {
       "evidence": [
@@ -699485,7 +699878,7 @@
     {"confidence": 0.275495, "id": "bp-31896a2dffb46d67", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "activated bentonite production", "reference product": "activated bentonite", "unit": "kilogram"}, "target": {"location": "DE", "name": "Bentonite, at processing", "reference product": "Bentonite, at processing", "unit": "kilogram"}},
     {"confidence": 0.251, "id": "bp-e808e3bdc371b59f", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "activated carbon production, granular from hard coal", "reference product": "activated carbon, granular", "unit": "kilogram"}, "target": {"location": "RER", "name": "Carbon fiber production, weaved, at factory", "reference product": "Carbon fiber production, weaved, at factory", "unit": "kilogram"}},
     {"confidence": 0.163086, "id": "bp-849014459a4d0101", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-849014459a4d0101"], "reason": "Both imported reference production amounts are positive; preserve their quantity direction despite differing native flow classifications. This does not establish scientific equivalence.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "activated carbon production, granular from hard coal", "reference product": "activated carbon, granular", "unit": "kilogram"}, "target": {"location": "DE", "name": "Disposal, spent activated carbon with mercury, 0% water, to underground deposit", "reference product": "Disposal, spent activated carbon with mercury, 0% water, to underground deposit", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-c6828ba55cd05f7d", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "activated silica production", "reference product": "activated silica", "unit": "kilogram"}, "target": {"location": "DE", "name": "Silica sand, at plant", "reference product": "Silica sand, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-c6828ba55cd05f7d", "mapping_method": "reviewed_fuels_39_silica_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "reason": "Reconstruct one kg of dry activated/precipitated silica rather than substituting mined sand. Retain all 14 original input rows in their source order, all five direct water emissions/resources with their exact canonical 3.10 publisher UUIDs and signed quantities, all 19 lognormal distributions, and four local parameters. Use complete native solid-furnace silicate for both separate RER/RoW ingredient rows; do not aggregate or renormalize the source coefficients. Retain acid, electricity, heat, infrastructure, water and both reviewed chemical-steam supplies. Four negative source wastewater demands become positive complete wastewater-service helper inputs using their reviewed factor -1, with uncertainty/sign flags scaled consistently. Existing complete steam/wastewater helper closures and limitations are frozen; their documented zero-burden native waste-electricity/heat co-products retains the 100%-to-disposal allocation without assigning it invented generation burdens; do not infer a second treatment, water balance, dry-mass yield, neutralisation, recovered-salt or energy credit. Native global/Swiss/RER utility geography, district-versus-industrial heat infrastructure, source-market delivery, chemical grade/modulus, allocation, vintage, internal uncertainty and mapped biosphere exclusions remain screening differences; preserving the source coefficients and parameters is not a new stoichiometric or LCIA-equivalence claim.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the individually inspected exact cut-off profile authorizes this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0a3736bb7ebdf795", "source": {"location": "GLO", "name": "activated silica production", "reference product": "activated silica", "unit": "kilogram"}, "target": {"recipe_ref": "fuels-39-silica-93071f822fe339144e72"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off identity qualifies. Preserve signed caller quantities, uncertainty, formulas, separate emissions/freight and the complete recorded helper closure. Native technology, geography, allocation, vintage, delivery, internal uncertainty and biosphere coverage differ with unquantified score effects. No hidden omission, recovery credit, release extrapolation, cross-system-model or inverse mapping is approved."},
     {"confidence": 0.4, "id": "bp-e79b7aacb38470ca", "mapping_method": "pairwise_review", "review_ref": "r-36a16cb01d5e258d", "source": {"location": "GLO", "name": "activated silica production", "reference product": "sodium sulfate, anhydrite", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals inorganic, at plant", "reference product": "Chemicals inorganic, at plant", "unit": "kilogram"}},
     {"confidence": 0.510369, "id": "bp-3b6c6b3c6554378d", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "adhesive mortar production", "reference product": "adhesive mortar", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Adhesive mortar, at plant", "reference product": "xx Adhesive mortar, at plant", "unit": "kilogram"}},
     {"confidence": 0.430369, "id": "bp-9849bb0010b7e4a2", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "adhesive mortar production", "reference product": "adhesive mortar", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Adhesive mortar, at plant", "reference product": "xx Adhesive mortar, at plant", "unit": "kilogram"}},
@@ -710939,7 +711332,7 @@
     {"confidence": 0.093772, "id": "bp-c4ed8458ee289267", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for cheese, from cow milk, fresh, unripened", "reference product": "cheese, from cow milk, fresh, unripened", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Corrugated board, fresh fibre, single wall, at plant", "reference product": "xx Corrugated board, fresh fibre, single wall, at plant", "unit": "kilogram"}},
     {"confidence": 0.548721, "id": "bp-179ac987680d246a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for chemi-thermomechanical pulp", "reference product": "chemi-thermomechanical pulp", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Chemi-thermomechanical pulp, at plant", "reference product": "xx Chemi-thermomechanical pulp, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "conversion_factor": 833333.0, "id": "bp-9860f8d2b0136d04", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for chemical factory", "reference product": "chemical factory", "unit": "kilogram"}, "target": {"location": "RER", "name": "Chemical plant, organics", "reference product": "Chemical plant, organics", "unit": "unit"}},
-    {"confidence": 1.0, "id": "bp-5b8c937d3fb21468", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for chemical factory, organics", "reference product": "chemical factory, organics", "unit": "unit"}, "target": {"location": "RER", "name": "Chemical plant, organics", "reference product": "Chemical plant, organics", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-5b8c937d3fb21468", "mapping_method": "reviewed_fuels_39_silica_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "reason": "One complete organic chemical plant infrastructure unit. Actual source producers and native process describe land use, buildings/facilities and dismantling using estimates from two German sites, with a 50-year source lifetime. Retain native infrastructure once at factor +1 per unit; do not divide by lifetime, annual chemical output or capacity. Native RER infrastructure replaces the global market portfolio; construction/disposal, geography, vintage, allocation and internal uncertainty remain screening differences. This is not a kg of chemical or an operating plant-year.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the individually inspected exact cut-off profile authorizes this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0a3736bb7ebdf795", "source": {"location": "GLO", "name": "market for chemical factory, organics", "reference product": "chemical factory, organics", "unit": "unit"}, "target": {"location": "RER", "name": "Chemical plant, organics", "reference product": "Chemical plant, organics", "unit": "unit"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off identity qualifies. Preserve signed caller quantities, uncertainty, formulas, separate emissions/freight and the complete recorded helper closure. Native technology, geography, allocation, vintage, delivery, internal uncertainty and biosphere coverage differ with unquantified score effects. No hidden omission, recovery credit, release extrapolation, cross-system-model or inverse mapping is approved."},
     {"confidence": 0.46303, "id": "bp-1d21220403ae07ee", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for chemical, inorganic", "reference product": "chemical, inorganic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals inorganic, at plant", "reference product": "Chemicals inorganic, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-65d60275b4f9e27a", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for chemical, organic", "reference product": "chemical, organic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
     {"confidence": 0.413895, "id": "bp-07aab62e70d316ef", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for chemical, organic, alcohols", "reference product": "chemical, organic, alcohols", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
@@ -716271,7 +716664,7 @@
     {"confidence": 0.603333, "id": "bp-606f76acf685b311", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium phosphate", "reference product": "sodium phosphate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium phosphate, at plant", "reference product": "Sodium phosphate, at plant", "unit": "kilogram"}},
     {"confidence": 0.523333, "id": "bp-bf03e82e8ae5184b", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium phosphate", "reference product": "sodium phosphate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium phosphate, at plant", "reference product": "Sodium phosphate, at plant", "unit": "kilogram"}},
     {"confidence": 0.368636, "id": "bp-511888b7076dcccb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium pyrophosphate", "reference product": "sodium pyrophosphate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium phosphate, at plant", "reference product": "Sodium phosphate, at plant", "unit": "kilogram"}},
-    {"confidence": 0.385414, "id": "bp-14686a5e16256499", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium silicate, solid", "reference product": "sodium silicate, solid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium silicate, spray powder 80%, at plant", "reference product": "Sodium silicate, spray powder 80%, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-14686a5e16256499", "mapping_method": "reviewed_fuels_39_silica_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "reason": "Complete solid furnace-process sodium silicate per kg, not 80% spray powder, hydrothermal liquor, metasilicate reagent or sodium phosphate. Actual 3.9 RER producer and native solid furnace inventories agree on sand, soda and steam quantities per positive one-kg reference. The shared erroneous phosphate prose and generic formula/CAS metadata do not justify a concentration, hydrate, drying, solvent or stoichiometric multiplier. Retain factor +1; native historical producer, geography, energy, allocation, delivery, internal uncertainty and biosphere coverage differ from the source RER market and are explicit screening limitations.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the individually inspected exact cut-off profile authorizes this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0a3736bb7ebdf795", "source": {"location": "RER", "name": "market for sodium silicate, solid", "reference product": "sodium silicate, solid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium silicate, furnace process, pieces, at plant", "reference product": "Sodium silicate, furnace process, pieces, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off identity qualifies. Preserve signed caller quantities, uncertainty, formulas, separate emissions/freight and the complete recorded helper closure. Native technology, geography, allocation, vintage, delivery, internal uncertainty and biosphere coverage differ with unquantified score effects. No hidden omission, recovery credit, release extrapolation, cross-system-model or inverse mapping is approved."},
     {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-2b86a55ab1009223", "mapping_method": "reviewed_fuels_39_native_endpoint", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_endpoint_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_endpoint_review.json"], "reason": "Use complete native solid furnace-process sodium silicate per kg, not hydrothermal spray powder at 80% or a silicate solution. The actual source furnace producer and native furnace process have matching silica-sand and soda input quantities and a matching steam basis per one-kg solid reference; the source market product is explicitly without added solvent. Both carry the same erroneous sodium-phosphate/phosphoric-acid legacy prose, while their actual sand/soda reaction inventories identify sodium silicate. Do not infer metasilicate stoichiometry from generic CAS/formula metadata or use 1/0.8, drying, hydrate, solvent or yield corrections. Native European producer, process heat/electricity, historical recipe, emissions, allocation and internal freight replace the source market and its RoW origin/delivery portfolio; exact chemical grade/modulus and equal LCIA are not established.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the individually inspected exact source profile authorizes this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-25b464febeb277fe", "source": {"location": "RoW", "name": "market for sodium silicate, solid", "reference product": "sodium silicate, solid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium silicate, furnace process, pieces, at plant", "reference product": "Sodium silicate, furnace process, pieces, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off identity qualifies. Preserve signed caller coefficients, formulas, uncertainty, foreground ownership and separate freight/emissions. Complete native model, geography, allocation, vintage, delivery and biosphere coverage differ; no equal-score claim, new credit or omitted physical exchange is inferred. Other releases, consequential and inverse mappings remain unreviewed."},
     {"confidence": 0.743316, "id": "bp-2af73e81c72decb3", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium silicate, spray powder, 80%", "reference product": "sodium silicate, spray powder, 80%", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium silicate, spray powder 80%, at plant", "reference product": "Sodium silicate, spray powder 80%, at plant", "unit": "kilogram"}},
     {"confidence": 0.663316, "id": "bp-1b31732bf2e51fb6", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium silicate, spray powder, 80%", "reference product": "sodium silicate, spray powder, 80%", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium silicate, spray powder 80%, at plant", "reference product": "Sodium silicate, spray powder 80%, at plant", "unit": "kilogram"}},
@@ -716555,7 +716948,7 @@
     {"confidence": 0.40485, "id": "bp-6a97c5362cbe7587", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sulfur trioxide", "reference product": "sulfur trioxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphur trioxide, at plant", "reference product": "Sulphur trioxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.32485, "id": "bp-cfdaecfa011b0980", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sulfur trioxide", "reference product": "sulfur trioxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphur trioxide, at plant", "reference product": "Sulphur trioxide, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-7740a48a01851669", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for sulfuric acid", "reference product": "sulfuric acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphuric acid, liquid, at plant", "reference product": "Sulphuric acid, liquid, at plant", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-7532c17fac15ff33", "mapping_method": "curated_legacy", "source": {"location": "RoW", "name": "market for sulfuric acid", "reference product": "sulfuric acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphuric acid, liquid, at plant", "reference product": "Sulphuric acid, liquid, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-7532c17fac15ff33", "mapping_method": "reviewed_fuels_39_silica_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "reason": "Sulfuric acid per kg pure/100% active substance. Actual source product information explicitly models the pure substance and native documentation explicitly references 1 kg 100% sulphuric acid, despite the liquid title. Retain factor +1 without solution, water, hydrate or concentration scaling. Complete native European stable-operation acid production replaces the RoW market portfolio, including its recovered viscose-fibre/co-product supplies; feedstocks, allocation, recovery, energy, delivery, geography, vintage and native emission coverage differ. No recovered-material credit, repeated allocation, extra solvent or correction to separate caller emissions is inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the individually inspected exact cut-off profile authorizes this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0a3736bb7ebdf795", "source": {"location": "RoW", "name": "market for sulfuric acid", "reference product": "sulfuric acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphuric acid, liquid, at plant", "reference product": "Sulphuric acid, liquid, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off identity qualifies. Preserve signed caller quantities, uncertainty, formulas, separate emissions/freight and the complete recorded helper closure. Native technology, geography, allocation, vintage, delivery, internal uncertainty and biosphere coverage differ with unquantified score effects. No hidden omission, recovery credit, release extrapolation, cross-system-model or inverse mapping is approved."},
     {"confidence": 0.277401, "id": "bp-f8b5075e2170b5e7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sulfuryl chloride", "reference product": "sulfuryl chloride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium chloride, at plant", "reference product": "Lithium chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.437511, "id": "bp-f0879b30947d576a", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for sunflower", "reference product": "sunflower", "unit": "kilogram"}, "target": {"location": "CH", "name": "Sunflower IP, at farm", "reference product": "Sunflower IP, at farm", "unit": "kilogram"}},
     {"confidence": 0.298947, "id": "bp-ee1a08c62b57af9f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sunflower seed", "reference product": "sunflower seed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Sunflower IP, at farm", "reference product": "Sunflower IP, at farm", "unit": "kilogram"}},
@@ -729824,6 +730217,15 @@
         "Identity-level comparison only; inventory composition and LCIA equivalence are not verified."
       ],
       "rationale": "Branch supplies the named commodity rather than its oil, meal, fabricated form, grading service, or concentrate."
+    },
+    "r-0a3736bb7ebdf795": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_39_silica_review.json"
+      ],
+      "limitations": [
+        "Only the independently inspected ecoinvent 3.9 cut-off identity qualifies. Preserve signed caller quantities, uncertainty, formulas, separate emissions/freight and the complete recorded helper closure. Native technology, geography, allocation, vintage, delivery, internal uncertainty and biosphere coverage differ with unquantified score effects. No hidden omission, recovery credit, release extrapolation, cross-system-model or inverse mapping is approved."
+      ],
+      "rationale": "Independently inspected activated-silica reconstruction and exact native ingredient correspondences."
     },
     "r-0a75c9bfb592a161": {
       "evidence": [
