@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 2,
-      "recipe": 925,
-      "unclassified": 29548
+      "proxy": 3,
+      "recipe": 926,
+      "unclassified": 29546
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 288,
       "followup_review": 163,
-      "heuristic_similarity": 26719,
+      "heuristic_similarity": 26717,
       "pairwise_review": 2242,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -42,7 +42,9 @@
       "reviewed_ghana_uncontrolled_inventory": 1,
       "reviewed_heat_compressed_air_network_mix": 1,
       "reviewed_heat_dependency_proxy": 8,
+      "reviewed_heat_documented_K2O_basis_conversion": 1,
       "reviewed_heat_fossil_hydrogen_proxy": 1,
+      "reviewed_heat_source_electrolysis_helper": 1,
       "reviewed_heat_vehicle_gas_proxy": 1,
       "reviewed_industrial_landfarming_service": 7,
       "reviewed_industrial_waste_market_service": 14,
@@ -114,7 +116,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.438276,
+    "mean_confidence": 0.438318,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -101000,6 +101002,195 @@
       "rationale": "Use two complete native RER10bar-gauge<30kW supply-network services in the source market's literal50/50average/optimised shares. Both native services include compressor generation, operating materials, infrastructure delivery and distribution piping/losses; the earlier compressor-only candidate lacks that delivered-service boundary. No market freight or extra generation burden is added. Per signed declared m3 the caller factor is+1. Actual source and native references are+1m3;1000kPa gauge equals10bar gauge. Both inventory lineages cite Steiner/Frischknecht report23. Its chapter10tables use normalised-volume inputs and distinguish generation from consumer supply. This supports a common lineage-based volumetric screening basis, not proof of exact temperature/pressure-reference equivalence; those conditions are not individually stated in the installed metadata. No ideal-gas, pressure, density, Nm3 relabelling or energy-normalisation factor is invented. Preserve complete native inventories without repairing their internal loss model. Native average/optimised networks draw1.5/1.05units of generation per output; the inspected source producers have different operational and compressor coefficients, including their distribution model. Generation, loss, piping-material supply, delivery, electricity sourcing, compressor service-life, internal uncertainty and vintage therefore differ. This is a functional screening proxy, not a source-inventory reconstruction or an LCIA-equivalence claim. The average native service retains its literal xx-prefixed name in the original archive and both exact release catalogs. The original XML describes an ordinary product dataset with network/leakage scope and a+1m3reference; it provides no explicit meaning for that prefix. Do not remove the prefix or claim it certifies dataset quality. Its unexplained marking and native model quality remain an explicit screening limitation. Preserve caller signed quantities, formulas, supported uncertainty, separate flows and foreground ownership. Source internal uncertainty is replaced by native supplier uncertainty; no caller quantity renormalisation, added recovery credit, or silent omission is introduced. Native biosphere exclusions remain visible. Score effects are unquantified. Only exact inspected ecoinvent3.9cutoff is qualified; other releases, reverse and cross-system-model requests cannot inherit this review.",
       "reference product": "compressed air, 1000 kPa gauge",
       "unit": "cubic meter"
+    },
+    "heat-sodium-electrolysis-a25b1f4b760eecdb55da": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_salts_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 3.554563874313251e-10,
+          "loc": -21.757618553729074,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.2,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 9.00774804553942,
+          "loc": 2.1980851009283917,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.28407745422683583,
+          "scale without pedigree": 0.2,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 5.910502658452467,
+          "loc": 1.776730879992893,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 2.0440156555173448,
+          "scale without pedigree": 2.0,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 2.3540128956584168,
+          "loc": 0.8561214870127215,
+          "location": "RER",
+          "name": "Sodium chloride, powder, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 3,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Sodium chloride, powder, at plant",
+          "scale": 0.3474190553208042,
+          "scale without pedigree": 0.2,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00824610722790888,
+          "categories": [
+            "air"
+          ],
+          "formula": "water_cooling_UNO_input*fraction_CW_to_air",
+          "loc": -4.7980140411548975,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.3605897946420558,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.07109118962744171,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.6437918650769228,
+          "name": "Chloride",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.04660945542171798,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -3.0659518523877343,
+          "name": "Sodium I",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.013034169489275329,
+          "categories": [
+            "water"
+          ],
+          "formula": "water_cooling_UNO_input*(1-fraction_CW_to_air)",
+          "loc": -4.340180947529418,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.3605897946420558,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.021280276717184212,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -3.849974610966162,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "Sodium metal, molten-salt electrolysis, retained source inventory on native upstream suppliers",
+      "rationale": "Reject sodium metal -> sodium chloride: the chemicals have different functions. Reconstruct the inspected positive1kgsodium-metal reference using its complete already allocated source electrolysis/purification inputs: four upstream services and five direct canonical3.10biosphere flows. Saltpowder is retained only as an electrolysis input. The source allocation metadata is not applied a second time; add no chlorine co-product or avoided-production credit. Retain all actual source coefficients, supported internal uncertainty and formulas. Native chemical factory, medium-voltage grid and saltpowder supply are whole-service/product screening proxies; the source regional electricity market portfolio and salt-market producer/final-delivery mix are not reconstructed. The exact3.10chemical-heat helper retains its reviewed source make-upwater and two water releases without adding source combustion again. Those are heat-service water flows, distinct from the sodium process's five direct flows. This is a preserved source electrolysis model on approximate native upstream suppliers, not a native sodium dataset or LCIA-equivalence finding. Only exact inspected ecoinvent3.10cutoff is newly qualified. Preserve signed caller quantities, formulas and supported uncertainty and complete links. No reverse or cross-system-model route, invented credit or silent omission is approved. Native background/geography/vintage/allocation differences and prior biosphere exclusions remain limitations, with unquantified score effects.",
+      "reference product": "sodium",
+      "unit": "kilogram"
     },
     "industrial-landfarming-2741f727f35505b8226c": {
       "evidence": [
@@ -710390,7 +710581,7 @@
     {"confidence": 0.161738, "id": "bp-f7008a420e6acae5", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-f7008a420e6acae5"], "reason": "Both imported reference production amounts are positive; preserve their quantity direction despite differing native flow classifications. This does not establish scientific equivalence.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for potash salt", "reference product": "potash salt", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, salt tailings potash mining, 0% water, to residual material landfill", "reference product": "Disposal, salt tailings potash mining, 0% water, to residual material landfill", "unit": "kilogram"}},
     {"confidence": 0.343563, "id": "bp-f70fd601637a0103", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for potassium acetate", "reference product": "potassium acetate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Potassium carbonate, at plant", "reference product": "Potassium carbonate, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-c8730cd3ecd20245", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for potassium carbonate", "reference product": "potassium carbonate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Potassium carbonate, at plant", "reference product": "Potassium carbonate, at plant", "unit": "kilogram"}},
-    {"confidence": 0.434935, "id": "bp-112e275f32033672", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for potassium chloride", "reference product": "potassium chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Potassium chloride, as K2O, at regional storehouse", "reference product": "Potassium chloride, as K2O, at regional storehouse", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 0.6, "id": "bp-112e275f32033672", "mapping_method": "reviewed_heat_documented_K2O_basis_conversion", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_heat_salts_review.json"], "profiles": [{"conversion_factor": 0.6, "review": {"evidence": ["brightpath/data/export/uvek_heat_salts_review.json"], "reason": "The actual3.10producer explicitly provides1kgpotassiumchloride with60%K2O. Native references1kgK2O and declares60%K2Ocontent; use factor0.60per signed sourcekg. Its rounded1.67kgKClperkgK2Onote is not treated as an exact reciprocal. The generic source market text also contains anNPK0-0-50statement; the inspected actual producer's60%basis governs this qualification, while that metadata inconsistency is disclosed. Do not infer pureKClstoichiometry, concentration, purity or fertiliser factors for another profile. Use the complete native RERregional-storehouse service once. Its mining/concentration/drying, tailings, energy, infrastructure and delivery model replace the source producer and market as a screening proxy. The source market's three freight exchanges are not separately retained; do not add them on top of the complete regional-storehouse boundary. Source industrial-grade versus native fertiliser-oriented documentation, delivery, technology, allocation, uncertainty and vintage remain differences. No exact chemical-grade or score equivalence is claimed. Only exact inspected ecoinvent3.10cutoff is newly qualified. Preserve signed caller quantities, formulas and supported uncertainty and complete links. No reverse or cross-system-model route, invented credit or silent omission is approved. Native background/geography/vintage/allocation differences and prior biosphere exclusions remain limitations, with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}], "reason": "Only the independently inspected exact source profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-be33b63efffc37cf", "source": {"location": "RER", "name": "market for potassium chloride", "reference product": "potassium chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Potassium chloride, as K2O, at regional storehouse", "reference product": "Potassium chloride, as K2O, at regional storehouse", "unit": "kilogram"}, "technosphere_information_loss": "The actual3.10producer explicitly provides1kgpotassiumchloride with60%K2O. Native references1kgK2O and declares60%K2Ocontent; use factor0.60per signed sourcekg. Its rounded1.67kgKClperkgK2Onote is not treated as an exact reciprocal. The generic source market text also contains anNPK0-0-50statement; the inspected actual producer's60%basis governs this qualification, while that metadata inconsistency is disclosed. Do not infer pureKClstoichiometry, concentration, purity or fertiliser factors for another profile. Use the complete native RERregional-storehouse service once. Its mining/concentration/drying, tailings, energy, infrastructure and delivery model replace the source producer and market as a screening proxy. The source market's three freight exchanges are not separately retained; do not add them on top of the complete regional-storehouse boundary. Source industrial-grade versus native fertiliser-oriented documentation, delivery, technology, allocation, uncertainty and vintage remain differences. No exact chemical-grade or score equivalence is claimed. Only exact inspected ecoinvent3.10cutoff is newly qualified. Preserve signed caller quantities, formulas and supported uncertainty and complete links. No reverse or cross-system-model route, invented credit or silent omission is approved. Native background/geography/vintage/allocation differences and prior biosphere exclusions remain limitations, with unquantified score effects."},
     {"confidence": 0.354935, "id": "bp-3744248a0852ae33", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for potassium chloride", "reference product": "potassium chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Potassium chloride, as K2O, at regional storehouse", "reference product": "Potassium chloride, as K2O, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.311644, "id": "bp-8ba051f9a3e1ec73", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for potassium chloride sludge", "reference product": "potassium chloride sludge", "unit": "kilogram"}, "target": {"location": "RER", "name": "Potassium chloride, as K2O, at regional storehouse", "reference product": "Potassium chloride, as K2O, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.468165, "id": "bp-7515747743d5cc3f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for potassium chloride, as K2O", "reference product": "potassium chloride, as K2O", "unit": "kilogram"}, "target": {"location": "RER", "name": "Potassium chloride, as K2O, at regional storehouse", "reference product": "Potassium chloride, as K2O, at regional storehouse", "unit": "kilogram"}},
@@ -717994,7 +718185,7 @@
     {"confidence": 0.534103, "id": "bp-317e37f057aeac97", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "sodium phosphate production", "reference product": "sodium phosphate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium phosphate, at plant", "reference product": "Sodium phosphate, at plant", "unit": "kilogram"}},
     {"confidence": 0.363237, "id": "bp-6c071fc314e0d1c1", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "sodium production, sodium chloride electrolysis, molten salt cell", "reference product": "chlorine, gaseous", "unit": "kilogram"}, "target": {"location": "RER", "name": "Chlorine, gaseous, membrane cell, at plant", "reference product": "Chlorine, gaseous, membrane cell, at plant", "unit": "kilogram"}},
     {"confidence": 0.283237, "id": "bp-6e853a0bdab1b7f5", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "sodium production, sodium chloride electrolysis, molten salt cell", "reference product": "chlorine, gaseous", "unit": "kilogram"}, "target": {"location": "RER", "name": "Chlorine, gaseous, membrane cell, at plant", "reference product": "Chlorine, gaseous, membrane cell, at plant", "unit": "kilogram"}},
-    {"confidence": 0.295471, "id": "bp-2a1ae0fa7f1d5caa", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "sodium production, sodium chloride electrolysis, molten salt cell", "reference product": "sodium", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium chloride, powder, at plant", "reference product": "Sodium chloride, powder, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-2a1ae0fa7f1d5caa", "mapping_method": "reviewed_heat_source_electrolysis_helper", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_heat_salts_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_heat_salts_review.json"], "reason": "Reject sodium metal -> sodium chloride: the chemicals have different functions. Reconstruct the inspected positive1kgsodium-metal reference using its complete already allocated source electrolysis/purification inputs: four upstream services and five direct canonical3.10biosphere flows. Saltpowder is retained only as an electrolysis input. The source allocation metadata is not applied a second time; add no chlorine co-product or avoided-production credit. Retain all actual source coefficients, supported internal uncertainty and formulas. Native chemical factory, medium-voltage grid and saltpowder supply are whole-service/product screening proxies; the source regional electricity market portfolio and salt-market producer/final-delivery mix are not reconstructed. The exact3.10chemical-heat helper retains its reviewed source make-upwater and two water releases without adding source combustion again. Those are heat-service water flows, distinct from the sodium process's five direct flows. This is a preserved source electrolysis model on approximate native upstream suppliers, not a native sodium dataset or LCIA-equivalence finding. Only exact inspected ecoinvent3.10cutoff is newly qualified. Preserve signed caller quantities, formulas and supported uncertainty and complete links. No reverse or cross-system-model route, invented credit or silent omission is approved. Native background/geography/vintage/allocation differences and prior biosphere exclusions remain limitations, with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}], "reason": "Only the independently inspected exact source profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-acd14618d86ac15f", "source": {"location": "RER", "name": "sodium production, sodium chloride electrolysis, molten salt cell", "reference product": "sodium", "unit": "kilogram"}, "target": {"recipe_ref": "heat-sodium-electrolysis-a25b1f4b760eecdb55da"}, "technosphere_information_loss": "Reject sodium metal -> sodium chloride: the chemicals have different functions. Reconstruct the inspected positive1kgsodium-metal reference using its complete already allocated source electrolysis/purification inputs: four upstream services and five direct canonical3.10biosphere flows. Saltpowder is retained only as an electrolysis input. The source allocation metadata is not applied a second time; add no chlorine co-product or avoided-production credit. Retain all actual source coefficients, supported internal uncertainty and formulas. Native chemical factory, medium-voltage grid and saltpowder supply are whole-service/product screening proxies; the source regional electricity market portfolio and salt-market producer/final-delivery mix are not reconstructed. The exact3.10chemical-heat helper retains its reviewed source make-upwater and two water releases without adding source combustion again. Those are heat-service water flows, distinct from the sodium process's five direct flows. This is a preserved source electrolysis model on approximate native upstream suppliers, not a native sodium dataset or LCIA-equivalence finding. Only exact inspected ecoinvent3.10cutoff is newly qualified. Preserve signed caller quantities, formulas and supported uncertainty and complete links. No reverse or cross-system-model route, invented credit or silent omission is approved. Native background/geography/vintage/allocation differences and prior biosphere exclusions remain limitations, with unquantified score effects."},
     {"confidence": 0.215471, "id": "bp-22c3a688a60a1c06", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "sodium production, sodium chloride electrolysis, molten salt cell", "reference product": "sodium", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium chloride, powder, at plant", "reference product": "Sodium chloride, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.377727, "id": "bp-8956ebc1eda6069a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "sodium pyrophosphate production", "reference product": "sodium pyrophosphate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium phosphate, at plant", "reference product": "Sodium phosphate, at plant", "unit": "kilogram"}},
     {"confidence": 0.41713, "id": "bp-e9670e782e08b619", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "sodium silicate production, furnace liquor, product in 37% solution state", "reference product": "sodium silicate, without water, in 37% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium silicate, furnace liquor, 37% in H2O, at plant", "reference product": "Sodium silicate, furnace liquor, 37% in H2O, at plant", "unit": "kilogram"}},
@@ -730130,6 +730321,17 @@
       ],
       "rationale": "The regional concrete market retains its sole landfill fate and all original road/rail collection terms. Do not use the native building-waste crushing/recycling mix. Keep the complete source final-disposal boundary per as-received signed kg. Each original treatment uses1kg of generic inert-landfill operation and1.48e-9facility units. Preserve both coefficients, source uncertainty and the original waste-market-to-treatment exchange through a positive helper; negative waste reference-1 requires caller factor-1. Retain complete native operation and facility inventories once under the earlier generic-cleanfill whole-function/unit approval. Generic land occupation/transformation quantities match the full source operation(9) and facility(3) coordinates. The native operation has its own0.00143MJ oil-boiler input and4.8e-5MJ waste-heat release; the source uses mixed non-natural-gas heat. Complete facility material grades, source pitch and HDPE supplies, operating machines, electricity, fuel, freight, geography, vintage, internal uncertainty and allocation differ; retain them as screened whole-service differences, not new independent material/heat approvals. Both source and native facilities document450000m3; no capacity, density, moisture, water-content, dry-mass, distance, payload or lifetime scaling is introduced. Native2026 documentation states five years of recultivation/monitoring; no undocumented lifetime equality is assumed. Source market/treatment records have no direct elementary exchanges and explicitly omit negligible leachate; this is a source-data limitation, not evidence of physical zero or an authorization to omit any present emission. No handling dust, building demolition, crushing, recycling, collection freight absent from the source, recovery credit or material-specific leachate is added. Keep native facility access-road and operating logistics separate from original market collection. Preserve every original market freight term at its signed tkm and uncertainty, without aggregation or renormalization. Use the previously inspected whole RER generic mixed-traction rail and heavy-lorry fleet, retaining vehicle, network, fuel, maintenance and infrastructure once; do not substitute coal-only or diesel-only rail or infer payload/traction factors. Geographic fleet/traction, loading, fuel, infrastructure and vintage differences remain warnings. Preserve caller quantities, formulas, uncertainty, ownership, separate emissions and other purchases. Installed native biosphere exclusions and all score differences remain limitations with unquantified effects; no LCIA equivalence is asserted. Only enumerated source3.9cutoff closures qualify for UVEK2026cutoff and ecoinvent3.10biosphere; raw component bindings are drift guards and do not independently approve their use, other source versions, reverse or cross-system-model routes."
     },
+    "r-acd14618d86ac15f": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_salts_review.json"
+      ],
+      "limitations": [
+        "Reject sodium metal -> sodium chloride: the chemicals have different functions. Reconstruct the inspected positive1kgsodium-metal reference using its complete already allocated source electrolysis/purification inputs: four upstream services and five direct canonical3.10biosphere flows. Saltpowder is retained only as an electrolysis input. The source allocation metadata is not applied a second time; add no chlorine co-product or avoided-production credit.",
+        "Retain all actual source coefficients, supported internal uncertainty and formulas. Native chemical factory, medium-voltage grid and saltpowder supply are whole-service/product screening proxies; the source regional electricity market portfolio and salt-market producer/final-delivery mix are not reconstructed. The exact3.10chemical-heat helper retains its reviewed source make-upwater and two water releases without adding source combustion again. Those are heat-service water flows, distinct from the sodium process's five direct flows. This is a preserved source electrolysis model on approximate native upstream suppliers, not a native sodium dataset or LCIA-equivalence finding.",
+        "Only exact inspected ecoinvent3.10cutoff is newly qualified. Preserve signed caller quantities, formulas and supported uncertainty and complete links. No reverse or cross-system-model route, invented credit or silent omission is approved. Native background/geography/vintage/allocation differences and prior biosphere exclusions remain limitations, with unquantified score effects."
+      ],
+      "rationale": "Standing autonomous modelling approval: correct independently inspected material/reference-basis errors using complete functional proxies or faithfully retained source services, with warnings, no blanket profile approval."
+    },
     "r-ad66b0e9cfbf2080": {
       "limitations": [
         "Identity-level comparison only; inventory composition and LCIA equivalence are not verified.",
@@ -730618,6 +730820,17 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for sewage sludge, 75% water, WWT, WW from wafer fabrication / GLO / kg external exchange with a warning. All inspected direct service comments for wafer fabrication document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-be33b63efffc37cf": {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_salts_review.json"
+      ],
+      "limitations": [
+        "The actual3.10producer explicitly provides1kgpotassiumchloride with60%K2O. Native references1kgK2O and declares60%K2Ocontent; use factor0.60per signed sourcekg. Its rounded1.67kgKClperkgK2Onote is not treated as an exact reciprocal. The generic source market text also contains anNPK0-0-50statement; the inspected actual producer's60%basis governs this qualification, while that metadata inconsistency is disclosed. Do not infer pureKClstoichiometry, concentration, purity or fertiliser factors for another profile.",
+        "Use the complete native RERregional-storehouse service once. Its mining/concentration/drying, tailings, energy, infrastructure and delivery model replace the source producer and market as a screening proxy. The source market's three freight exchanges are not separately retained; do not add them on top of the complete regional-storehouse boundary. Source industrial-grade versus native fertiliser-oriented documentation, delivery, technology, allocation, uncertainty and vintage remain differences. No exact chemical-grade or score equivalence is claimed.",
+        "Only exact inspected ecoinvent3.10cutoff is newly qualified. Preserve signed caller quantities, formulas and supported uncertainty and complete links. No reverse or cross-system-model route, invented credit or silent omission is approved. Native background/geography/vintage/allocation differences and prior biosphere exclusions remain limitations, with unquantified score effects."
+      ],
+      "rationale": "Standing autonomous modelling approval: correct independently inspected material/reference-basis errors using complete functional proxies or faithfully retained source services, with warnings, no blanket profile approval."
     },
     "r-be98a87a283b503a": {
       "evidence": [
