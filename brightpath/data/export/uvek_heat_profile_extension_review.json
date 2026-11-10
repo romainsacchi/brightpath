@@ -1,0 +1,706 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing user auto-approval of coming modelling decisions and autonomous expanded UVEK sector work; inspect exact profiles and document limitations for review.",
+  "native_source_pin": "794d90f2c2dbb90f0c56ba8cc527fa1494aa8ef6",
+  "scope": "Five exact ecoinvent3.9cutoff heat dependency qualifications. Existing scopes and recipe semantics are preserved; no blanket migration approval.",
+  "records": [
+    {
+      "rule_id": "bp-745c517f85a78ba7",
+      "source": {
+        "location": "GLO",
+        "name": "market for natural gas, medium pressure, vehicle grade",
+        "reference product": "natural gas, medium pressure, vehicle grade",
+        "unit": "kilogram"
+      },
+      "target": {
+        "location": "CH",
+        "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+        "reference product": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+        "unit": "kilogram"
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_reference_amount": 1,
+      "target_reference_amount": 1,
+      "conversion_factor": 1,
+      "previous_rule": {
+        "confidence": 1.0,
+        "id": "bp-745c517f85a78ba7",
+        "mapping_method": "curated_legacy",
+        "source": {
+          "location": "GLO",
+          "name": "market for natural gas, medium pressure, vehicle grade",
+          "reference product": "natural gas, medium pressure, vehicle grade",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+          "reference product": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+          "unit": "kilogram"
+        }
+      },
+      "previous_rule_sha256": "3840eede07a268a09fe424d315d4e3127a3cfe6ab6dd620e4c55dbb0663bdd1e",
+      "source_inventory_sha256": "77ffeed5208ac0c43cf4b83f521f613fc6dfeccec0dfdeff7bf2c4e08623bb9b",
+      "source_metadata_sha256": "e174facee00e0067a2e187cf0e726624fd3129e1aa1519b6c3544573e4cd5288",
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "natural gas production, medium pressure, vehicle grade",
+            "reference product": "natural gas, medium pressure, vehicle grade",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "inventory_sha256": "d21abc13a2558119be136810afe37164b48c7fed783dacb5c3ec1f6aeaaf394d",
+          "metadata_sha256": "142f5fbface1fa579683dc33d2085e7e944f4c012fba807a142a7d29ff24fde6"
+        },
+        {
+          "identity": {
+            "name": "natural gas production, medium pressure, vehicle grade",
+            "reference product": "natural gas, medium pressure, vehicle grade",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "inventory_sha256": "598ad5f73ed955a36eaabbbe625cad1561c627922c6543b309ff30554b816751",
+          "metadata_sha256": "11c90d042f5c353fbd5917fec86256794e6d5704872436dd56a844ce0e114d62"
+        }
+      ],
+      "native_references": {
+        "2025": {
+          "identity": {
+            "location": "CH",
+            "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+            "reference product": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "inventory_sha256": "1a7da922111268a7c3f7a1a05d0ba74e63b5168ef4365c8c98d871f694276406",
+          "metadata_sha256": "785f52e3c0156b4866902403e6009b723403c6c02bf6b478150815d30ade6931"
+        },
+        "2026": {
+          "identity": {
+            "location": "CH",
+            "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+            "reference product": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "inventory_sha256": "24ab63bd0df21ac69fe47734778d2acd6a4757417d5436727acfedb434c7eb97",
+          "metadata_sha256": "e6028dce5a65b4bc992a5e0b58b489020b6930b2fa95d87b4095df15e241dd2f"
+        }
+      },
+      "limitations": [
+        "The actual source CH and RoW producer documentation and the native service-station documentation identify the same initial medium-pressure network boundary (0.1\u20131bar), electricity requirements and gas-loss emissions. This pressure is the inlet boundary; it does not establish the final vehicle delivery pressure. Both products reference+1kg. Use factor+1 per signed kg; do not add compression, assume a final pressure, or infer an energy/density factor.",
+        "Source global market shares are approximately99.1583%RoW and0.8417%CH, with no market freight or losses. Replace that market once by the complete native CH service station as a geographic screening proxy. Source CH station electricity and infrastructure draws match the native values; upstream gas supply, regional sourcing, LHV metadata and vintage differ. Source metadata contains conflicting46.5/48.98MJ/kg statements; native upstream fuel is MJ-based internally. Do not reinterpret the caller kg as MJ or normalize these inventories by an assumed heating value.",
+        "Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred."
+      ],
+      "resource_action": "compile_exact_profile_proxy",
+      "previous_scopes": []
+    },
+    {
+      "rule_id": "bp-deb7a57e4b2bc6e7",
+      "source": {
+        "location": "GLO",
+        "name": "market for NOx retained, by selective catalytic reduction",
+        "reference product": "NOx retained, by selective catalytic reduction",
+        "unit": "kilogram"
+      },
+      "target": {
+        "location": "GLO",
+        "name": "NOx retained, in SCR",
+        "reference product": "NOx retained, in SCR",
+        "unit": "kilogram"
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_reference_amount": 1,
+      "target_reference_amount": 1,
+      "conversion_factor": 1,
+      "previous_rule": {
+        "confidence": 0.31507,
+        "id": "bp-deb7a57e4b2bc6e7",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "GLO",
+          "name": "market for NOx retained, by selective catalytic reduction",
+          "reference product": "NOx retained, by selective catalytic reduction",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "GLO",
+          "name": "NOx retained, in SCR",
+          "reference product": "NOx retained, in SCR",
+          "unit": "kilogram"
+        }
+      },
+      "previous_rule_sha256": "146ec1115e9f930d7c128109c7b28b14b0fe29d979ff8435ef41a8bb96fba4d7",
+      "source_inventory_sha256": "4cf32cd5ebb3a5f372398bf16fdd0e3e7debb6f93b089eb38dea17c410cc5ed4",
+      "source_metadata_sha256": "bedd9d439bead8e04a3cb9e9336d531c52f81699879ff8049eb138dafe65db74",
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "selective catalytic reduction of nitrogen oxides",
+            "reference product": "NOx retained, by selective catalytic reduction",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "inventory_sha256": "59e9d30b905f4cb2d4de3415bd34e95bd51281a499c8f4626e0f810faf78e4f8",
+          "metadata_sha256": "da32754d32bea3e4b97faf5129bb0f916efe8876f01d416779bce272dc840d15"
+        }
+      ],
+      "native_references": {
+        "2025": {
+          "identity": {
+            "location": "GLO",
+            "name": "NOx retained, in SCR",
+            "reference product": "NOx retained, in SCR",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "inventory_sha256": "e0767c14b4ac81bce5ac1e855b22cae40055cd04c935eb091e2ccc4f3209375e",
+          "metadata_sha256": "93106308eaab4084a885821f851c3b80d17e1dda65b7e75d38cf012a225c5101"
+        },
+        "2026": {
+          "identity": {
+            "location": "GLO",
+            "name": "NOx retained, in SCR",
+            "reference product": "NOx retained, in SCR",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "inventory_sha256": "6b429bd8cce6d39db967e213e110e5ce49d3481843c0400fac2446802b20181c",
+          "metadata_sha256": "c1006a438b08ffa20e3aacc3f168d6921a877eb64caf8a383a8eaea0337b9035"
+        }
+      },
+      "limitations": [
+        "The inspected3.9producer provides+1kgNOx retained by SCR and states85%removal. Native provides+1kgNOx retained and states about80%. Use factor+1 of the complete native retained-mass service, preserving separately listed caller stack emissions. Do not multiply by85/80, alter plant emissions or introduce an avoided-NOx credit.",
+        "The native European1990s service includes ammonia supply and transport and spent-catalyst disposal. Source material/catalyst markets, allocation, geography and vintage differ. The earlier3.6approval is unchanged; the low heuristic matching confidence is not evidence of scientific or LCIA equivalence.",
+        "Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred."
+      ],
+      "resource_action": "qualify_existing_rule_without_change",
+      "previous_scopes": [
+        {
+          "source": {
+            "family": "ecoinvent",
+            "version": "3.6",
+            "system_model": "cutoff"
+          },
+          "target": {
+            "family": "uvek",
+            "version": "2025",
+            "system_model": "cutoff"
+          },
+          "fingerprint": "78a43711134ec0c9d53dc26e9226300c4f7b90ab7840210880e4bad54a1f078e"
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-412f090ea47af121",
+      "source": {
+        "location": "RER",
+        "name": "market for nitrogen, liquid",
+        "reference product": "nitrogen, liquid",
+        "unit": "kilogram"
+      },
+      "target": {
+        "location": "RER",
+        "name": "Nitrogen, liquid, at plant",
+        "reference product": "Nitrogen, liquid, at plant",
+        "unit": "kilogram"
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_reference_amount": 1,
+      "target_reference_amount": 1,
+      "conversion_factor": 1,
+      "previous_rule": {
+        "confidence": 1.0,
+        "id": "bp-412f090ea47af121",
+        "mapping_method": "curated_legacy",
+        "source": {
+          "location": "RER",
+          "name": "market for nitrogen, liquid",
+          "reference product": "nitrogen, liquid",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "reference product": "Nitrogen, liquid, at plant",
+          "unit": "kilogram"
+        }
+      },
+      "previous_rule_sha256": "caa8aaa4666c65170509ccd35cc8c22dfb56fabf85d363a5804b0c2142a4818d",
+      "source_inventory_sha256": "72abeb1b673ecc377e33f0a842036d7fca5645152017c606a2275fe5627e35eb",
+      "source_metadata_sha256": "9e1ac4a9296d18df27369320fdd3ee7956faaaec74d3436752164ce2c2d4fbfc",
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "air separation, cryogenic",
+            "reference product": "nitrogen, liquid",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "inventory_sha256": "a546a20b0c966faaf0a7b197c61c4860542ab62ed25611350c48a040de5260ac",
+          "metadata_sha256": "4d9b5c64d8fc0b7685b0464c235f84cb58c13eb851a2027b07ba481230eabfaa"
+        }
+      ],
+      "native_references": {
+        "2025": {
+          "identity": {
+            "location": "RER",
+            "name": "Nitrogen, liquid, at plant",
+            "reference product": "Nitrogen, liquid, at plant",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "inventory_sha256": "81040a2f4b26a7c17ae5aa043d745afada9b2cef1e3c0f907923e89e0a5a8914",
+          "metadata_sha256": "ffa0ab3c4ba098b36feee2fc6ea82cb1bfd20ef3950eb734312dbb01bd10e082"
+        },
+        "2026": {
+          "identity": {
+            "location": "RER",
+            "name": "Nitrogen, liquid, at plant",
+            "reference product": "Nitrogen, liquid, at plant",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "inventory_sha256": "74969c5cf801f7f306b85a8d434779cc34b356278cd42c7938fa43a954d54f35",
+          "metadata_sha256": "3f867419e38b8eeffcf5ec787389807a2166fdc087abea445f5ef350776faf28"
+        }
+      },
+      "limitations": [
+        "The actual3.9supplier and native inventories both produce+1kgliquid nitrogen by cryogenic air separation; neither is gaseous nitrogen or a gas-volume reference. Native allocation uses vaporisation heat and heat capacity for liquid nitrogen, oxygen and crude argon, excluding gaseous co-products. Source allocation, electricity sourcing, vintage and market delivery differ. Use the complete native at-plant liquid product per signed kg, without gas density, liquefaction or purity rescaling.",
+        "The earlier3.12approval remains unchanged. This screening proxy does not reconstruct source market freight, producer weights or source internal uncertainty.",
+        "Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred."
+      ],
+      "resource_action": "qualify_existing_rule_without_change",
+      "previous_scopes": [
+        {
+          "source": {
+            "family": "ecoinvent",
+            "version": "3.12",
+            "system_model": "cutoff"
+          },
+          "target": {
+            "family": "uvek",
+            "version": "2025",
+            "system_model": "cutoff"
+          },
+          "fingerprint": "a2490235b6b3a2b0f8b270db1bc4eb1691722392695326d19064c6378da6d8b9"
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-9f7197c47047750a",
+      "source": {
+        "location": "RER",
+        "name": "market for heat, from steam, in chemical industry",
+        "reference product": "heat, from steam, in chemical industry",
+        "unit": "megajoule"
+      },
+      "target": {
+        "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_reference_amount": 1,
+      "target_reference_amount": 1,
+      "conversion_factor": 1,
+      "previous_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": 1,
+        "id": "bp-9f7197c47047750a",
+        "mapping_method": "reviewed_chemical_heat_with_retained_water",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_chemical_heat_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.10-cutoff/49533c675cc695bf3860c9c56e1de169b06346b43a0859f5e09c16b7b157bae8"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.10.1-cutoff/68d2939b872cc157de505d81331d1ffd542a7627a475f623496cff6ca597cdc3"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10.1"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.11-cutoff/9531eb9849f4377df9968dc7d9daea008024bdfd0cbd357f20b532b58104c91e"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.11"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.12-cutoff/6f013bbd90182fac87ec5be13419bb37632eb542d1b35e663c0381a3e9d48b84"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.6-cutoff/77fdf512f5b04afe79db3f19eabfce89ae119585922920ca3f938fe16147d8a0"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-01c1617f96073c680c86"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.7-cutoff/48806c07b2ebb791a5809e615b573765b6a462e1825837b2e8eb402de602e2fa"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.7"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-01c1617f96073c680c86"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.8-cutoff/117e389929d2bd19157bc4ee835d02bea2dfa75092dd6588445b0c193f46c590"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.9-cutoff/2401364cb7d3637cb28682398b01d3e65e302c03b71ace94354914a3a037b69b"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_chemical_heat_review.json#ecoinvent-3.9.1-cutoff/65c78166bea06c74ae0deb358f88a477ca68d12802c8c1352d12c1d9778eab6c"
+                ],
+                "reason": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9.1"
+              },
+              "target": {
+                "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+              }
+            }
+          ],
+          "reason": "Only the 36 exact inspected cut-off heat-energy profiles and water balances are reviewed.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-5bf506ba909f6967",
+        "source": {
+          "location": "RER",
+          "name": "market for heat, from steam, in chemical industry",
+          "reference product": "heat, from steam, in chemical industry",
+          "unit": "megajoule"
+        },
+        "target": {
+          "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2"
+        },
+        "technosphere_information_loss": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred."
+      },
+      "previous_rule_sha256": "1e1fff80ac0885d928f67726bc3964748e8d700ebab3860c585b6ce49cdf42ec",
+      "source_inventory_sha256": "2401364cb7d3637cb28682398b01d3e65e302c03b71ace94354914a3a037b69b",
+      "source_metadata_sha256": "8e8a90410cb65c2898b2ba150acb4cf457202cc040d2a95c88213f14c4d778ab",
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "steam production, as energy carrier, in chemical industry",
+            "reference product": "heat, from steam, in chemical industry",
+            "location": "RER",
+            "unit": "megajoule"
+          },
+          "inventory_sha256": "027d6619a1074ed6bbcb2b79fbf989d125d301147e4c8c939dc6e986c0777477",
+          "metadata_sha256": "ae48f6664239f6f18beeb817d8218af6f7d963848fbd6dbcd7d1ce83d0f59df7"
+        }
+      ],
+      "native_references": {},
+      "limitations": [
+        "The existing chemical-heat review already independently inspected the exact3.9cutoff market: its inventory SHA256 matches the current read-only source. Select its actual3.9profile and profile-specific helper, not the older3.8profile by fallback. Retain one MJnative chemical heat, the original source make-up-water supply and both physical water releases. Do not substitute kg-steam or add source fuels a second time.",
+        "Verify the source market has only one local unit-share producer, source make-up-water and both water releases agree with the reviewed recipe, and all helper/review fingerprints remain unchanged. The native heat service excludes steam water; its fuel mix is an accepted screening proxy, not a reconstruction of source combustion. Earlier3.8approval and recipes remain unchanged.",
+        "Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred."
+      ],
+      "resource_action": "qualify_existing_rule_without_change",
+      "previous_scopes": [
+        {
+          "source": {
+            "family": "ecoinvent",
+            "version": "3.8",
+            "system_model": "cutoff"
+          },
+          "target": {
+            "family": "uvek",
+            "version": "2025",
+            "system_model": "cutoff"
+          },
+          "fingerprint": "63b06da8f257e5623e1866e6a380d72eeb42c2b9a8bc93c630b9811ea5f2e914"
+        }
+      ],
+      "existing_exact_profile_recipe": {
+        "recipe_ref": "chemical-heat-water-1ced12d9ab9a80752fd2",
+        "recipe_sha256": "8d5c315e9fce3aa96cfbeae9525bebc470f821bed4aa8a5bbc23d533e256f67d",
+        "review_path": "export/uvek_chemical_heat_review.json",
+        "review_sha256": "3c2b46a01a45020f2c5c02c3496610b7a9319fcd7327994f8c0aab98c961a6af",
+        "source_water_and_release_coefficients_verified": true
+      }
+    },
+    {
+      "rule_id": "bp-08f2432b62895931",
+      "source": {
+        "location": "RER",
+        "name": "market for epoxy resin, liquid",
+        "reference product": "epoxy resin, liquid",
+        "unit": "kilogram"
+      },
+      "target": {
+        "location": "RER",
+        "name": "Epoxy resin, liquid, at plant",
+        "reference product": "Epoxy resin, liquid, at plant",
+        "unit": "kilogram"
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_reference_amount": 1,
+      "target_reference_amount": 1,
+      "conversion_factor": 1,
+      "previous_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-08f2432b62895931",
+        "mapping_method": "reviewed_deferred_materials",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_deferred_materials_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_deferred_materials_review.json"
+                ],
+                "reason": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Source liquid epoxy producer explicitly consumes bisphenolA and epichlorohydrin. Native declares that production technology and a complete aggregated European liquid-resin eco-profile, but its CAS25928-94-3 conflicts with that stated chemistry (the independently checked label corresponds to a diethylene-glycol/epichlorohydrin polymer). Use the complete declared liquid-resin eco-profile only as an uncertain functional screening proxy: the CAS/technology conflict remains unresolved and no exact chemical-identity or LCIA equivalence is asserted. Source stoichiometric/Gendorf process versus older industry eco-profile, delivery, allocation, grade, emissions, vintage and uncertainty differ. No CAS relabelling, chemical reaction correction, concentration factor or extra upstream chemical burden is introduced.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              }
+            }
+          ],
+          "reason": "Only the exact inspected cut-off source profiles are approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-e31f44988faf6dd0",
+        "source": {
+          "location": "RER",
+          "name": "market for epoxy resin, liquid",
+          "reference product": "epoxy resin, liquid",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Epoxy resin, liquid, at plant",
+          "reference product": "Epoxy resin, liquid, at plant",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Source liquid epoxy producer explicitly consumes bisphenolA and epichlorohydrin. Native declares that production technology and a complete aggregated European liquid-resin eco-profile, but its CAS25928-94-3 conflicts with that stated chemistry (the independently checked label corresponds to a diethylene-glycol/epichlorohydrin polymer). Use the complete declared liquid-resin eco-profile only as an uncertain functional screening proxy: the CAS/technology conflict remains unresolved and no exact chemical-identity or LCIA equivalence is asserted. Source stoichiometric/Gendorf process versus older industry eco-profile, delivery, allocation, grade, emissions, vintage and uncertainty differ. No CAS relabelling, chemical reaction correction, concentration factor or extra upstream chemical burden is introduced."
+      },
+      "previous_rule_sha256": "1ac36cc80151bb82e7a55d5545ffd35121808816defc3aff6cc27964609e999b",
+      "source_inventory_sha256": "d99ab6d5ac6480b5c4532af04ad8810dfabb9401c29a06ee84a5e83d7e25cd5b",
+      "source_metadata_sha256": "2a3f5f1e6927c51ef858318454f968c33eaba4fcefce9a4ac1f3c3524c88f27e",
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "epoxy resin production, liquid",
+            "reference product": "epoxy resin, liquid",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "inventory_sha256": "1c46d70e620cce17679463bd7b19986d1ea960e31a2606dbb910e29596b60c93",
+          "metadata_sha256": "d37a8ecc5d6cdd3bf4d69ad56adfa0f445425e7788ccbad134cb8faea88a37a0"
+        }
+      ],
+      "native_references": {
+        "2025": {
+          "identity": {
+            "location": "RER",
+            "name": "Epoxy resin, liquid, at plant",
+            "reference product": "Epoxy resin, liquid, at plant",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "inventory_sha256": "e3a840103d230fca666df62e39dc3c30ccdfcb26200c98310b3195a149cb1dd2",
+          "metadata_sha256": "74324784ca1ec3a15c7bcdf0a53f61ce2edb5e3594863fe33cc139e425ce3339"
+        },
+        "2026": {
+          "identity": {
+            "location": "RER",
+            "name": "Epoxy resin, liquid, at plant",
+            "reference product": "Epoxy resin, liquid, at plant",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "inventory_sha256": "5f9d559ddbf432c2573c7114151c06cbb95905d3e29ca690fb488703059be01f",
+          "metadata_sha256": "1627ee265173b932264d5de632dc6700141d89148a465793d0153290162d5ce4"
+        }
+      },
+      "limitations": [
+        "The inspected3.9source liquid epoxy producer uses bisphenolA and epichlorohydrin and references+1kg without water. Native states the same production technology and a complete European liquid-resin eco-profile, but retains the previously reviewed CAS25928-94-3/technology conflict. Its chemical identity is uncertain; do not relabel its CAS, claim an exact monomer match or introduce a concentration factor.",
+        "Extend the existing complete native functional screening proxy to inspected3.9cutoff only at factor+1. Preserve the entire previous3.12profile decision, shared review and warning, including the unresolved CAS conflict. Source stoichiometric/Gendorf inputs versus the older European industry eco-profile, allocation, grade, delivery, emissions, internal uncertainty and vintage remain differences.",
+        "Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred."
+      ],
+      "resource_action": "append_exact_sign_profile_preserving_existing_projection",
+      "previous_scopes": [
+        {
+          "source": {
+            "family": "ecoinvent",
+            "version": "3.12",
+            "system_model": "cutoff"
+          },
+          "target": {
+            "family": "uvek",
+            "version": "2025",
+            "system_model": "cutoff"
+          },
+          "fingerprint": "40b5fff2d38fc092de9e4577a789a274e1eb84ffa06ec2ac5b97dbd38808d7d4"
+        }
+      ]
+    }
+  ]
+}
