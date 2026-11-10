@@ -40,7 +40,12 @@ def apply_deferred_materials_review(resource, root=ROOT):
         actual = indexed.get(row["rule_id"])
         compiled = replacements[row["rule_id"]]
         if actual not in (previous, compiled):
-            raise ValueError("Deferred material rule changed; repeat its review.")
+            if __package__:
+                from scripts.review_uvek_heat_38_profiles import qualified_extended_profile_rule
+            else:
+                from review_uvek_heat_38_profiles import qualified_extended_profile_rule
+
+            replacements[row["rule_id"]] = qualified_extended_profile_rule(actual, compiled, root)
         expected = row["previous_review"] if actual == previous else isolated["reviews"][compiled["review_ref"]]
         if rule_review(resource, actual) != expected:
             raise ValueError("Deferred material shared review changed; repeat its review.")

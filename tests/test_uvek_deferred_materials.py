@@ -1,5 +1,6 @@
 """Inspected material proxies restore caller quantities without widening profiles."""
 
+import hashlib
 import json
 from copy import deepcopy
 
@@ -43,9 +44,32 @@ def test_other_source_releases_do_not_inherit_review(row):
     assert inventory.data == before
 
 
+def deferred_materials_authoring_stage_resource():
+    """Restore the earlier epoxy stage; keep the later concrete extension visible."""
+    resource = deepcopy(load_uvek_technosphere_resource())
+    path = DATA_DIR / "export/uvek_heat_profile_extension_review.json"
+    assert (
+        hashlib.sha256(path.read_bytes()).hexdigest()
+        == "ceb5b782aa15161a5680d1901cffa0851e0b384ead67dcdc4deae1f183231b6b"
+    )
+    row = next(r for r in json.loads(path.read_text())["records"] if r["rule_id"] == "bp-08f2432b62895931")
+    current = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+    from brightpath import TechnosphereProfile
+    from brightpath.background.reference_signs import select_profile_sign_rules
+
+    profile = TechnosphereProfile("ecoinvent", "3.12", "cutoff")
+    assert (
+        select_profile_sign_rules({"replace": [current]}, profile)["replace"]
+        == select_profile_sign_rules({"replace": [row["previous_rule"]]}, profile)["replace"]
+    )
+    current.clear()
+    current.update(deepcopy(row["previous_rule"]))
+    return resource
+
+
 @pytest.mark.parametrize("drift", [False, True])
 def test_batch_replay_is_idempotent_and_rejects_late_drift_atomically(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = deferred_materials_authoring_stage_resource()
     if drift:
         rid = REVIEW["rules"][-1]["rule_id"]
         next(r for r in resource["replace"] if r["id"] == rid)["confidence"] = 0.123
