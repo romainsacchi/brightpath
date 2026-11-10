@@ -72,3 +72,10 @@ BAFU matrix produces finite supply and combined inventory results for 1 kg.
 No Brightway database is written; the source activity count and modified
 timestamp remain unchanged. These are inventory-preparation and native-matrix
 checks, not a successful prospective fuel-sector update or export.
+
+The reference-sign regression suite passes all 733 tests. Its historical
+observation/count test now replays the original 996-rule sign/material stage
+without changing any count, sign or quantity assertion. A separate full replay
+compares the complete current runtime resource with every frozen authoring
+stage. The old stale-count failure is repaired without skipping tests, relaxing
+validation or substituting the historical artifact for runtime coverage.

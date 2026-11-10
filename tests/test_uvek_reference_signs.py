@@ -452,11 +452,18 @@ def test_invalid_profile_sign_decisions_cannot_load(profile_resource, problem):
         validate_migration_resource(profile_resource)
 
 
-def test_all_approved_model_dependent_rules_have_exact_profile_decisions():
-    from scripts.review_uvek_cutoff_feed_products import PRODUCTS as CUTOFF_FEED_PRODUCTS
-    from scripts.review_uvek_slag_landfill_components import SOURCES as SLAG_LANDFILL_COMPONENTS
+def test_frozen_sign_and_initial_material_stage_has_exact_profile_decisions():
+    from uvek_review_helpers import historical_forward_resource
 
-    resource = load_uvek_technosphere_resource()
+    from scripts.review_uvek_cutoff_feed_products import PRODUCTS as CUTOFF_FEED_PRODUCTS
+    from scripts.review_uvek_pilot_materials import apply_pilot_material_review
+    from scripts.review_uvek_slag_landfill_components import SOURCES as SLAG_LANDFILL_COMPONENTS
+    from scripts.scope_uvek_system_models import cutoff_uvek_resource
+
+    # This evidence/count belongs to the original sign + six-material stage.
+    # Later reviewed overlays are checked by the complete runtime replay below.
+    resource = cutoff_uvek_resource(historical_forward_resource(), DATA_DIR / "export/reference_catalogs")
+    apply_pilot_material_review(resource)
     ledger = json.loads((ROOT / REVIEW_PATH).read_text(encoding="utf-8"))
     pilot = json.loads((DATA_DIR / "export/uvek_pilot_material_review.json").read_text())
     pilot_rules = {row["rule_id"]: row for row in pilot["rules"]}
@@ -1087,3 +1094,16 @@ def test_service_approval_reinspection_rejects_changed_reference_conventions(tmp
         result = build_review(tmp_path, profiles)["resources"]["forward"]["inspected-service"]
         assert result["review"]["status"] == "verified" and result["factor"] == -1
         assert result["uvek_native_flow_type"] == "PRODUCT_FLOW"
+
+
+def test_all_current_profile_decisions_match_complete_frozen_review_replay():
+    from uvek_review_helpers import historical_forward_resource
+
+    from brightpath.migrations.schema import dumps_migration_resource
+    from scripts.generate_uvek_migration_resources import apply_pilot_reviews
+    from scripts.scope_uvek_system_models import cutoff_uvek_resource
+
+    current = load_uvek_technosphere_resource()
+    replayed = cutoff_uvek_resource(historical_forward_resource(), DATA_DIR / "export/reference_catalogs")
+    apply_pilot_reviews(replayed)
+    assert dumps_migration_resource(current) == dumps_migration_resource(replayed)
