@@ -1,5 +1,6 @@
 """Check delivery, reference signs, uncertainty and exact heat-profile refusals."""
 
+import hashlib
 import json
 from copy import deepcopy
 
@@ -93,6 +94,29 @@ def test_closure_approval_cannot_escape_exact_profile(row, version, model, polic
 @pytest.mark.parametrize("drift", ["none", "rule", "import", "steam"])
 def test_authoring_batch_is_atomic_and_existing_helpers_cannot_drift(drift):
     resource = deepcopy(load_uvek_technosphere_resource())
+    # Replay the original 3.8 authoring stage, before the independently reviewed
+    # 3.9 oxide extension. Current full replay and 3.9 tests cover that extension.
+    path = DATA_DIR / "export/uvek_fuels_39_oxide_services_review.json"
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
+        "ab280c0ca2a309588ca89c2dbcc4e4d4d374bf9c7e97d64925c9936c2c38fb45"
+    )
+    from brightpath.background.reference_signs import select_profile_sign_rules
+
+    original_ids = {r["rule_id"] for r in REVIEW["records"]}
+    restored = 0
+    for row in json.loads(path.read_text())["records"]:
+        if row["rule_id"] not in original_ids:
+            continue
+        current = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+        profile = TechnosphereProfile("ecoinvent", "3.8", "cutoff")
+        assert (
+            select_profile_sign_rules({"replace": [current]}, profile)["replace"]
+            == select_profile_sign_rules({"replace": [row["original_rule"]]}, profile)["replace"]
+        )
+        current.clear()
+        current.update(deepcopy(row["original_rule"]))
+        restored += 1
+    assert restored == 3
     apply_heat_38_closure_review(resource)
     if drift == "rule":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["source"][

@@ -1,5 +1,6 @@
 """Dedicated incinerators retain exact waste identity and inspected profile gates."""
 
+import hashlib
 import json
 from copy import deepcopy
 
@@ -36,7 +37,9 @@ def test_exact_source_profile_selects_dedicated_endpoint(review, rule_id, materi
         assert rule["target"]["name"] == f"Disposal, {material}, to municipal incineration"
         assert rule["conversion_factor"] == -1
         assert rule["reference_flow_sign_review"]["status"] == (
-            "verified" if version == "3.6" or rule_id == "bp-76fc3358de421a01" else "unresolved"
+            "verified"
+            if version == "3.6" or rule_id in {"bp-76fc3358de421a01", "bp-fa607ec8232396e4"}
+            else "unresolved"
         )
         assert rule["mapping_method"] == "heuristic_similarity"
     raw_rule = next(r for r in resource["replace"] if r["id"] == rule_id)
@@ -47,11 +50,24 @@ def test_exact_source_profile_selects_dedicated_endpoint(review, rule_id, materi
 def test_authoring_replay_is_idempotent_and_changes_only_reviewed_rules(review):
     resource = deepcopy(load_uvek_technosphere_resource())
     # Replay this earlier stage against its own input, before the separately
-    # reviewed cement 3.9 polyethylene extension. The final-stage replay has
-    # independent idempotence and previous-profile preservation tests.
+    # reviewed 3.9 polyethylene and polypropylene extensions. Current full
+    # replay and extension tests check idempotence and profile preservation.
     cement = json.loads((DATA_DIR / "export/uvek_cement_treatment_39_review.json").read_text())
     pe = cement["polyethylene"]
     next(r for r in resource["replace"] if r["id"] == pe["rule_id"]).update(deepcopy(pe["original_rule"]))
+    path = DATA_DIR / "export/uvek_fuels_39_oxide_services_review.json"
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
+        "ab280c0ca2a309588ca89c2dbcc4e4d4d374bf9c7e97d64925c9936c2c38fb45"
+    )
+    pp = next(r for r in json.loads(path.read_text())["records"] if r["rule_id"] == "bp-fa607ec8232396e4")
+    current = next(r for r in resource["replace"] if r["id"] == pp["rule_id"])
+    profile = TechnosphereProfile("ecoinvent", "3.6", "cutoff")
+    assert (
+        select_profile_sign_rules({"replace": [current]}, profile)["replace"]
+        == select_profile_sign_rules({"replace": [pp["original_rule"]]}, profile)["replace"]
+    )
+    current.clear()
+    current.update(deepcopy(pp["original_rule"]))
     before = deepcopy(resource)
     for decision in review["records"]:
         next(r for r in resource["replace"] if r["id"] == decision["rule_id"])["target"] = deepcopy(

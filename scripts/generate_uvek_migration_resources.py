@@ -709,6 +709,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from scripts.review_uvek_fuels_39_molybdenum import apply_fuels_39_molybdenum_review
         from scripts.review_uvek_fuels_39_carbon import apply_fuels_39_carbon_review
         from scripts.review_uvek_fuels_39_material_markets import apply_fuels_39_material_markets_review
+        from scripts.review_uvek_fuels_39_oxide_services import apply_fuels_39_oxide_services_review
         from scripts.review_uvek_deferred_delivered_gas import apply_deferred_delivered_gas_review
         from scripts.review_uvek_deferred_waste_markets import apply_deferred_waste_markets_review
         from scripts.review_uvek_deferred_sorting import apply_deferred_sorting_review
@@ -792,6 +793,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_fuels_39_molybdenum import apply_fuels_39_molybdenum_review
         from review_uvek_fuels_39_carbon import apply_fuels_39_carbon_review
         from review_uvek_fuels_39_material_markets import apply_fuels_39_material_markets_review
+        from review_uvek_fuels_39_oxide_services import apply_fuels_39_oxide_services_review
         from review_uvek_deferred_delivered_gas import apply_deferred_delivered_gas_review
         from review_uvek_deferred_waste_markets import apply_deferred_waste_markets_review
         from review_uvek_deferred_sorting import apply_deferred_sorting_review
@@ -878,6 +880,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_fuels_39_molybdenum_review(technosphere)
     apply_fuels_39_carbon_review(technosphere)
     apply_fuels_39_material_markets_review(technosphere)
+    apply_fuels_39_oxide_services_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
