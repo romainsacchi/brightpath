@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+from collections import Counter
 from copy import deepcopy
 
 import pytest
@@ -15,6 +16,58 @@ from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_hazardous_paint import apply_pilot_hazardous_paint_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_hazardous_paint_review.json").read_text())
+
+
+def hazardous_paint_authoring_stage_resource():
+    """Restore the two frozen heat bindings superseded later in generator order.
+
+    Actual migration tests use the final resource. This authoring-stage fixture
+    uses the exact earlier rules recorded by the later independently reviewed
+    heat corrections; it does not relax the earlier component fingerprint guard.
+    """
+    resource = deepcopy(load_uvek_technosphere_resource())
+    expected = {
+        tuple(b["source"]): b["binding_sha256"]
+        for row in REVIEW["records"]
+        for profile in row["profiles"]
+        for b in profile["bindings"]
+    }
+    fields = ("name", "reference product", "location", "unit")
+    restored = set()
+    for name, sha in [
+        ("uvek_pilot_ng_heat_market_review.json", "af702c55886c65cf6f3ef1341d0dbfd29088df2e166cecf41eee64adf060f170"),
+        (
+            "uvek_pilot_mixed_heat_market_review.json",
+            "f48a6fc0038e40bfad7c71d620281d0da77d4588f20422d7e5f82b0396019986",
+        ),
+    ]:
+        raw = (DATA_DIR / "export" / name).read_bytes()
+        assert hashlib.sha256(raw).hexdigest() == sha
+        for row in json.loads(raw)["records"]:
+            previous = row["previous_rule"]
+            key = tuple(previous["source"][f] for f in fields)
+            if previous["source"]["location"] != "RoW" or key not in expected:
+                continue
+            assert hashlib.sha256(json.dumps(previous, sort_keys=True).encode()).hexdigest() == expected[key]
+            index = next(i for i, rule in enumerate(resource["replace"]) if rule["id"] == previous["id"])
+            resource["replace"][index] = deepcopy(previous)
+            restored.add(key)
+    assert len(restored) == 2
+    resource["coverage"]["mapping_methods"] = dict(
+        sorted(Counter(r["mapping_method"] for r in resource["replace"]).items())
+    )
+    resource["coverage"]["mean_confidence"] = round(
+        sum(r["confidence"] for r in resource["replace"]) / len(resource["replace"]), 6
+    )
+    dispositions = Counter(
+        "recipe" if "recipe_ref" in r["target"] else r.get("classification", "unclassified")
+        for r in resource["replace"]
+    )
+    dispositions["omitted"] = len(resource["delete"])
+    if resource["coverage"].get("unresolved_identities"):
+        dispositions["unresolved"] = resource["coverage"]["unresolved_identities"]
+    resource["coverage"]["dispositions"] = dict(dispositions)
+    return resource
 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["source"]["location"])
@@ -102,7 +155,7 @@ def test_hazardous_paint_refuses_uninspected_source_versions(row, version):
 
 @pytest.mark.parametrize("change", ["none", "late_parent", "new_helper", "component"])
 def test_hazardous_paint_authoring_replay_is_atomic_and_freezes_all_helpers(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = hazardous_paint_authoring_stage_resource()
     if change == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif change == "new_helper":

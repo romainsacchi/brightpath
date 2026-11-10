@@ -54,7 +54,11 @@ def apply_pilot_nitrate_hdpe_review(resource, root=ROOT):
         )
         compiled = compiled_venting_rule(decision)
         if rule not in (row["previous_rule"], compiled):
-            raise ValueError("Pilot HDPE trace parent changed; repeat its review.")
+            if __package__:
+                from scripts.review_uvek_heat_310_waste import qualified_extended_waste_rule
+            else:
+                from review_uvek_heat_310_waste import qualified_extended_waste_rule
+            compiled = qualified_extended_waste_rule(resource, rule, compiled, root)
         for key, recipe in decision["recipes"].items():
             if key in resource["recipes"] and resource["recipes"][key] != recipe:
                 raise ValueError("Pilot HDPE trace composed helper changed; repeat its review.")
