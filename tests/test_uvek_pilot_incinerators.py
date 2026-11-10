@@ -1,7 +1,7 @@
 """Dedicated incinerators retain exact waste identity and inspected profile gates."""
 
-from copy import deepcopy
 import json
+from copy import deepcopy
 
 import pytest
 
@@ -35,7 +35,9 @@ def test_exact_source_profile_selects_dedicated_endpoint(review, rule_id, materi
         assert rule["target"] == decision["target"] != decision["previous_target"]
         assert rule["target"]["name"] == f"Disposal, {material}, to municipal incineration"
         assert rule["conversion_factor"] == -1
-        assert rule["reference_flow_sign_review"]["status"] == ("verified" if version == "3.6" else "unresolved")
+        assert rule["reference_flow_sign_review"]["status"] == (
+            "verified" if version == "3.6" or rule_id == "bp-76fc3358de421a01" else "unresolved"
+        )
         assert rule["mapping_method"] == "heuristic_similarity"
     raw_rule = next(r for r in resource["replace"] if r["id"] == rule_id)
     assert raw_rule["reference_flow_sign_review"]["status"] == "unresolved"
@@ -44,6 +46,12 @@ def test_exact_source_profile_selects_dedicated_endpoint(review, rule_id, materi
 
 def test_authoring_replay_is_idempotent_and_changes_only_reviewed_rules(review):
     resource = deepcopy(load_uvek_technosphere_resource())
+    # Replay this earlier stage against its own input, before the separately
+    # reviewed cement 3.9 polyethylene extension. The final-stage replay has
+    # independent idempotence and previous-profile preservation tests.
+    cement = json.loads((DATA_DIR / "export/uvek_cement_treatment_39_review.json").read_text())
+    pe = cement["polyethylene"]
+    next(r for r in resource["replace"] if r["id"] == pe["rule_id"]).update(deepcopy(pe["original_rule"]))
     before = deepcopy(resource)
     for decision in review["records"]:
         next(r for r in resource["replace"] if r["id"] == decision["rule_id"])["target"] = deepcopy(

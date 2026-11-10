@@ -62,6 +62,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    migration-resource-schema
    migration-audit
    uvek-cement-heat-review
+   uvek-cement-treatment-review
    recycled-paper-migration
    simapro-reference-evidence
    adr/index

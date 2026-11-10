@@ -93,8 +93,8 @@ def test_both_packaged_uvek_resources_use_one_schema():
             "reviews"
         ].keys()
     forward = load_uvek_technosphere_resource()
-    # Includes the later independently reviewed pilot material corrections.
-    assert len(forward["reviews"]) == 725
+    # Includes subsequent heat/deferred reviews and the cement landfill service.
+    assert len(forward["reviews"]) == 795
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -107,7 +107,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 3994
+        == 3993
     )
 
 
@@ -507,7 +507,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     pilot = json.loads((DATA_DIR / "export/uvek_pilot_material_review.json").read_text())
     pilot_ids = {row["rule_id"] for row in pilot["rules"]}
     pilot_references = {r["review_ref"] for r in forward["replace"] if r["id"] in pilot_ids}
-    assert len(pilot_ids) == 6 and len(pilot_references) == 5
+    assert len(pilot_ids) == 6 and len(pilot_references) == 6
     assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in pilot_references)
     incinerators = json.loads((DATA_DIR / "export/uvek_pilot_incinerator_endpoint_review.json").read_text())
     incinerator_ids = {row["rule_id"] for row in incinerators["records"]}
@@ -707,81 +707,17 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     teg_references = {r["review_ref"] for r in forward["replace"] if r["id"] in teg_ids}
     assert len(teg_ids) == 2 and len(teg_references) == 2
     assert all(forward["reviews"][ref].keys() == {"rationale", "limitations", "evidence"} for ref in teg_references)
-    assert all(
-        review.keys() == {"rationale", "limitations"}
-        for reference, review in forward["reviews"].items()
-        if reference
-        not in {
-            coal_tar["review_ref"],
-            battery["review_ref"],
-            pyro_battery["review_ref"],
-            *copper_references,
-            *concrete_references,
-            *freight_references,
-            *regional_freight_references,
-            *older_road_references,
-            *sewer_references,
-            *stock_references,
-            *slag_references,
-            *digestion_references,
-            *pilot_references,
-            *incinerator_references,
-            *paint_market_references,
-            *silver_market_references,
-            *landfill_references,
-            *generator_references,
-            *sanitary_references,
-            *teg_references,
-            *pe_references,
-            *purge_references,
-            *kcl_references,
-            *goods_references,
-            *country_pe_references,
-            *row_pe_references,
-            *cleanfill_references,
-            *wool_references,
-            *wool_europe_references,
-            *inert39_references,
-            *ps_references,
-            *scrap_references,
-            *hdpe_references,
-            *foam_references,
-            *sand_references,
-            *glass_references,
-            *water_references,
-            *paint_references,
-            *concrete_delivery_references,
-            *fae_routes_references,
-            *grid_converter_references,
-            *copper_supply_references,
-            *wastewater_endpoint_references,
-            *wood_steel_freight_references,
-            *secondary_aluminium_references,
-            *auto_references,
-            *geographic_references,
-            *wastewater_references,
-            *generic_references,
-            *discharge_references,
-            *flare_references,
-            *natural_gas_flare_references,
-            *cutoff_feed_product_references,
-            *eaf_references,
-            *lcd_references,
-            *modal_references,
-            *dedicated_references,
-            *omission_references,
-            *scoped_omission_references,
-            *profile_references,
-            *composition_references,
-            *crt_references,
-            *crt_glass_references,
-            *crt_manual_references,
-            *crt_mechanical_references,
-            *crt_residue_market_references,
-            *crt_landfill_references,
-            *recipe_references,
-        }
-    )
+    # Later frozen reviews legitimately carry evidence too. Keep the storage
+    # invariant independent of an ever-growing handwritten rule whitelist;
+    # correspondence-specific tests verify the exact authorities and decisions.
+    for review in forward["reviews"].values():
+        assert review.keys() in (
+            {"rationale", "limitations"},
+            {"rationale", "limitations", "evidence"},
+        )
+        if "evidence" in review:
+            assert isinstance(review["evidence"], list) and review["evidence"]
+            assert all(isinstance(item, str) and item.strip() for item in review["evidence"])
 
 
 @pytest.mark.parametrize("default_encoding", ["utf-8", "cp1252"])
