@@ -45,7 +45,7 @@ def test_other_source_releases_do_not_inherit_review(row):
 
 
 def deferred_materials_authoring_stage_resource():
-    """Restore the earlier epoxy stage; keep the later concrete extension visible."""
+    """Restore historical epoxy/nickel stages; keep the concrete extension visible."""
     resource = deepcopy(load_uvek_technosphere_resource())
     path = DATA_DIR / "export/uvek_heat_profile_extension_review.json"
     assert (
@@ -64,6 +64,18 @@ def deferred_materials_authoring_stage_resource():
     )
     current.clear()
     current.update(deepcopy(row["previous_rule"]))
+    path = DATA_DIR / "export/uvek_fuels_39_material_markets_review.json"
+    assert hashlib.sha256(path.read_bytes()).hexdigest() == (
+        "39758c9adaca63c27ef0e6be1085b468782185b9bd20dcd83d33864beec22e1a"
+    )
+    row = next(r for r in json.loads(path.read_text())["records"] if r["rule_id"] == "bp-1104956dff1c701e")
+    current = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+    assert (
+        select_profile_sign_rules({"replace": [current]}, profile)["replace"]
+        == select_profile_sign_rules({"replace": [row["original_rule"]]}, profile)["replace"]
+    )
+    current.clear()
+    current.update(deepcopy(row["original_rule"]))
     return resource
 
 
