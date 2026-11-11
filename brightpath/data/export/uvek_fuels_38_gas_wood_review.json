@@ -1,0 +1,771 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-11",
+  "authorization": "Standing auto-approval of independently inspected modelling decisions with explicit warnings under the active BAFU/UVEK shared-Premise integration goal.",
+  "records": [
+    {
+      "rule_id": "bp-745c517f85a78ba7",
+      "original_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-745c517f85a78ba7",
+        "mapping_method": "reviewed_heat_vehicle_gas_proxy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_heat_profile_extension_review.json#bp-745c517f85a78ba7"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_heat_profile_extension_review.json#bp-745c517f85a78ba7"
+                ],
+                "reason": "The actual source CH and RoW producer documentation and the native service-station documentation identify the same initial medium-pressure network boundary (0.1–1bar), electricity requirements and gas-loss emissions. This pressure is the inlet boundary; it does not establish the final vehicle delivery pressure. Both products reference+1kg. Use factor+1 per signed kg; do not add compression, assume a final pressure, or infer an energy/density factor. Source global market shares are approximately99.1583%RoW and0.8417%CH, with no market freight or losses. Replace that market once by the complete native CH service station as a geographic screening proxy. Source CH station electricity and infrastructure draws match the native values; upstream gas supply, regional sourcing, LHV metadata and vintage differ. Source metadata contains conflicting46.5/48.98MJ/kg statements; native upstream fuel is MJ-based internally. Do not reinterpret the caller kg as MJ or normalize these inventories by an assumed heating value. Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            }
+          ],
+          "reason": "Only the inspected exact cut-off source profile is qualified.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-4a26f834d548ad9b",
+        "source": {
+          "location": "GLO",
+          "name": "market for natural gas, medium pressure, vehicle grade",
+          "reference product": "natural gas, medium pressure, vehicle grade",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+          "reference product": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "The actual source CH and RoW producer documentation and the native service-station documentation identify the same initial medium-pressure network boundary (0.1–1bar), electricity requirements and gas-loss emissions. This pressure is the inlet boundary; it does not establish the final vehicle delivery pressure. Both products reference+1kg. Use factor+1 per signed kg; do not add compression, assume a final pressure, or infer an energy/density factor. Source global market shares are approximately99.1583%RoW and0.8417%CH, with no market freight or losses. Replace that market once by the complete native CH service station as a geographic screening proxy. Source CH station electricity and infrastructure draws match the native values; upstream gas supply, regional sourcing, LHV metadata and vintage differ. Source metadata contains conflicting46.5/48.98MJ/kg statements; native upstream fuel is MJ-based internally. Do not reinterpret the caller kg as MJ or normalize these inventories by an assumed heating value. Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred."
+      },
+      "compiled_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-745c517f85a78ba7",
+        "mapping_method": "reviewed_heat_vehicle_gas_proxy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_heat_profile_extension_review.json#bp-745c517f85a78ba7"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_heat_profile_extension_review.json#bp-745c517f85a78ba7"
+                ],
+                "reason": "The actual source CH and RoW producer documentation and the native service-station documentation identify the same initial medium-pressure network boundary (0.1–1bar), electricity requirements and gas-loss emissions. This pressure is the inlet boundary; it does not establish the final vehicle delivery pressure. Both products reference+1kg. Use factor+1 per signed kg; do not add compression, assume a final pressure, or infer an energy/density factor. Source global market shares are approximately99.1583%RoW and0.8417%CH, with no market freight or losses. Replace that market once by the complete native CH service station as a geographic screening proxy. Source CH station electricity and infrastructure draws match the native values; upstream gas supply, regional sourcing, LHV metadata and vintage differ. Source metadata contains conflicting46.5/48.98MJ/kg statements; native upstream fuel is MJ-based internally. Do not reinterpret the caller kg as MJ or normalize these inventories by an assumed heating value. Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.8",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Use complete native Swiss medium-inlet-pressure vehicle-gas service station per kg gas. Source and native station documentation identify inlet pressure 0.1-1 bar; that does not establish final vehicle delivery pressure. Both reference positive one kg gas, not an MJ or cubic metre. Do not add compression, service-station infrastructure, electricity or losses again, infer final pressure, or apply heating-value/density factors. Native includes service-station electricity, gas-loss emissions and upstream gas supply once. Source global CH/RoW supply is replaced by a Swiss geographic screening proxy. Source gas heating-value metadata and native MJ-based upstream gas input differ and do not justify a caller mass conversion. Source market has no separate final freight or loss addition. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in the declared kg reference. Retain complete native producer inventory once; source country sourcing, production, allocation, internal uncertainty, vintage and native upstream biosphere exclusions remain limitations, with unquantified score effects. Separate caller transport, processing and emissions remain unchanged. No inventory or LCIA equivalence is claimed. Only exact independently inspected ecoinvent 3.8 cut-off is added; older selected decisions remain unchanged and other releases cannot borrow this inspection.",
+                "evidence": [
+                  "brightpath/data/export/uvek_fuels_38_gas_wood_review.json#bp-745c517f85a78ba7"
+                ]
+              }
+            }
+          ],
+          "reason": "Only the inspected exact cut-off source profile is qualified.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-4a26f834d548ad9b",
+        "source": {
+          "location": "GLO",
+          "name": "market for natural gas, medium pressure, vehicle grade",
+          "reference product": "natural gas, medium pressure, vehicle grade",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+          "reference product": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "The actual source CH and RoW producer documentation and the native service-station documentation identify the same initial medium-pressure network boundary (0.1–1bar), electricity requirements and gas-loss emissions. This pressure is the inlet boundary; it does not establish the final vehicle delivery pressure. Both products reference+1kg. Use factor+1 per signed kg; do not add compression, assume a final pressure, or infer an energy/density factor. Source global market shares are approximately99.1583%RoW and0.8417%CH, with no market freight or losses. Replace that market once by the complete native CH service station as a geographic screening proxy. Source CH station electricity and infrastructure draws match the native values; upstream gas supply, regional sourcing, LHV metadata and vintage differ. Source metadata contains conflicting46.5/48.98MJ/kg statements; native upstream fuel is MJ-based internally. Do not reinterpret the caller kg as MJ or normalize these inventories by an assumed heating value. Preserve signed caller quantities, formulas, supported uncertainty, separate freight and emissions. Retain the complete installed native inventory once, including its background, geography, allocation and vintage. This is an explicitly limited screening correspondence; score effects are unquantified and LCIA equivalence or impact completeness is not established. Only inspected ecoinvent3.9cutoff is added; no inverse, cross-system-model or other-release approval is inferred."
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.8",
+        "system_model": "cutoff"
+      },
+      "new_profile": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.8",
+          "system_model": "cutoff"
+        },
+        "conversion_factor": 1,
+        "review": {
+          "status": "verified",
+          "source_sign": 1,
+          "target_sign": 1,
+          "reason": "Use complete native Swiss medium-inlet-pressure vehicle-gas service station per kg gas. Source and native station documentation identify inlet pressure 0.1-1 bar; that does not establish final vehicle delivery pressure. Both reference positive one kg gas, not an MJ or cubic metre. Do not add compression, service-station infrastructure, electricity or losses again, infer final pressure, or apply heating-value/density factors. Native includes service-station electricity, gas-loss emissions and upstream gas supply once. Source global CH/RoW supply is replaced by a Swiss geographic screening proxy. Source gas heating-value metadata and native MJ-based upstream gas input differ and do not justify a caller mass conversion. Source market has no separate final freight or loss addition. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in the declared kg reference. Retain complete native producer inventory once; source country sourcing, production, allocation, internal uncertainty, vintage and native upstream biosphere exclusions remain limitations, with unquantified score effects. Separate caller transport, processing and emissions remain unchanged. No inventory or LCIA equivalence is claimed. Only exact independently inspected ecoinvent 3.8 cut-off is added; older selected decisions remain unchanged and other releases cannot borrow this inspection.",
+          "evidence": [
+            "brightpath/data/export/uvek_fuels_38_gas_wood_review.json#bp-745c517f85a78ba7"
+          ]
+        }
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for natural gas, medium pressure, vehicle grade",
+          "reference product": "natural gas, medium pressure, vehicle grade",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "metadata_sha256": "a80df8f354499d17f2fd6d6307ae683ef090613c40a0355a5841b371cbd1e853",
+        "inventory_sha256": "3691cec23d67f6eca3fd2d5587b993d51ddd6f8055be64864c577bb2bea78ca0"
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "natural gas production, medium pressure, vehicle grade",
+            "reference product": "natural gas, medium pressure, vehicle grade",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "b4fb70e7d96266e0a5e7061ed17fa7349b6b6c728fbfc071589c704b59ee5985",
+          "inventory_sha256": "e08a1e4c9687e298631e76c699e8c6c4f86d5198eedfa72924a6b0cf22cecc3d"
+        },
+        {
+          "identity": {
+            "name": "natural gas production, medium pressure, vehicle grade",
+            "reference product": "natural gas, medium pressure, vehicle grade",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "9fc7f466be1c37da444f5d0fa2377b68cf461a74488afb335aa2b22db8aaec5e",
+          "inventory_sha256": "5005baf5669ae8f979750884650ea39e2ef5a2fc3497c6ac2a46dcb398257589"
+        }
+      ],
+      "preserved_profiles": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.6",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "367f3b9ef70ffd1fd339dd932554b7260b58e61edc5a94c535617a49e3f41702"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.7",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "1f5d1d195c56adfa39405cabb4cd455b8fb9c05816aa600d9df0e95302bc5af1"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "1ee8044457fa2eecbba55e124f827fd0b84c064af03c601810fea5a779195491"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.10",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "2922b763039e87801674caa8b5f2979008e1bd8c7420286133a363eaca9339d6"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.10.1",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "b870c4508bb5b71644c72e348d4d26f89ea85b3a31cc69d56558999983817d3c"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.11",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "dc4b87f43d2074de252819ca1a59aad8a7c249ece98fb7f8b8372d795b4fe837"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.12",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "ce38d4d8fcfcd7a8c88a1fc9379707dfb5908aae015eda242f2f5c5040670254"
+        }
+      ],
+      "limitations": [
+        "Use complete native Swiss medium-inlet-pressure vehicle-gas service station per kg gas. Source and native station documentation identify inlet pressure 0.1-1 bar; that does not establish final vehicle delivery pressure. Both reference positive one kg gas, not an MJ or cubic metre. Do not add compression, service-station infrastructure, electricity or losses again, infer final pressure, or apply heating-value/density factors. Native includes service-station electricity, gas-loss emissions and upstream gas supply once. Source global CH/RoW supply is replaced by a Swiss geographic screening proxy. Source gas heating-value metadata and native MJ-based upstream gas input differ and do not justify a caller mass conversion. Source market has no separate final freight or loss addition. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in the declared kg reference. Retain complete native producer inventory once; source country sourcing, production, allocation, internal uncertainty, vintage and native upstream biosphere exclusions remain limitations, with unquantified score effects. Separate caller transport, processing and emissions remain unchanged. No inventory or LCIA equivalence is claimed. Only exact independently inspected ecoinvent 3.8 cut-off is added; older selected decisions remain unchanged and other releases cannot borrow this inspection."
+      ]
+    },
+    {
+      "rule_id": "bp-84bd9cf473cdeee9",
+      "original_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-84bd9cf473cdeee9",
+        "mapping_method": "reviewed_pilot_material",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_wood_steel_freight_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_wood_steel_freight_review.json"
+                ],
+                "reason": "Replace the hardwood-only sawmill target with the existing complete European production mix of wet wood chips, measured as dry mass. The source generic market supplies hardwood and softwood forest chips in 3.6, and forest plus sawmill chips in 3.9. Native RER supply includes hardwood/softwood forest and sawmill chips; this is not a hardwood-only, dry-chip, charcoal, combustion or heat service. Preserve signed kg dry matter at factor +1 despite the wet product label; do not apply a moisture, density, wood-yield, drying or heating-value factor or add another wood/chipping process. Keep the complete native species/forest/sawmill weights, allocated forestry and sawmill burdens and existing logistics once, without renormalizing its recorded coefficients. Native species, sawmill/forest and supply shares differ from the exact source profiles, particularly the 3.6 forestry-only mix; moisture, harvesting/co-product allocation, transport and delivery, geographic coverage, background, biosphere exclusions and vintage remain limitations. Separate caller freight and emissions remain unchanged; no equivalence of precise species composition, moisture, energy content or LCIA results is asserted and score effects are unquantified.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_wood_steel_freight_review.json"
+                ],
+                "reason": "Replace the hardwood-only sawmill target with the existing complete European production mix of wet wood chips, measured as dry mass. The source generic market supplies hardwood and softwood forest chips in 3.6, and forest plus sawmill chips in 3.9. Native RER supply includes hardwood/softwood forest and sawmill chips; this is not a hardwood-only, dry-chip, charcoal, combustion or heat service. Preserve signed kg dry matter at factor +1 despite the wet product label; do not apply a moisture, density, wood-yield, drying or heating-value factor or add another wood/chipping process. Keep the complete native species/forest/sawmill weights, allocated forestry and sawmill burdens and existing logistics once, without renormalizing its recorded coefficients. Native species, sawmill/forest and supply shares differ from the exact source profiles, particularly the 3.6 forestry-only mix; moisture, harvesting/co-product allocation, transport and delivery, geographic coverage, background, biosphere exclusions and vintage remain limitations. Separate caller freight and emissions remain unchanged; no equivalence of precise species composition, moisture, energy content or LCIA results is asserted and score effects are unquantified.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            }
+          ],
+          "reason": "Only the exact inspected cut-off source profiles are approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-50c411f643467ebd",
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "market for wood chips, wet, measured as dry mass",
+          "reference product": "wood chips, wet, measured as dry mass",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "Replace the hardwood-only sawmill target with the existing complete European production mix of wet wood chips, measured as dry mass. The source generic market supplies hardwood and softwood forest chips in 3.6, and forest plus sawmill chips in 3.9. Native RER supply includes hardwood/softwood forest and sawmill chips; this is not a hardwood-only, dry-chip, charcoal, combustion or heat service. Preserve signed kg dry matter at factor +1 despite the wet product label; do not apply a moisture, density, wood-yield, drying or heating-value factor or add another wood/chipping process. Keep the complete native species/forest/sawmill weights, allocated forestry and sawmill burdens and existing logistics once, without renormalizing its recorded coefficients. Native species, sawmill/forest and supply shares differ from the exact source profiles, particularly the 3.6 forestry-only mix; moisture, harvesting/co-product allocation, transport and delivery, geographic coverage, background, biosphere exclusions and vintage remain limitations. Separate caller freight and emissions remain unchanged; no equivalence of precise species composition, moisture, energy content or LCIA results is asserted and score effects are unquantified."
+      },
+      "compiled_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-84bd9cf473cdeee9",
+        "mapping_method": "reviewed_pilot_material",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_wood_steel_freight_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_wood_steel_freight_review.json"
+                ],
+                "reason": "Replace the hardwood-only sawmill target with the existing complete European production mix of wet wood chips, measured as dry mass. The source generic market supplies hardwood and softwood forest chips in 3.6, and forest plus sawmill chips in 3.9. Native RER supply includes hardwood/softwood forest and sawmill chips; this is not a hardwood-only, dry-chip, charcoal, combustion or heat service. Preserve signed kg dry matter at factor +1 despite the wet product label; do not apply a moisture, density, wood-yield, drying or heating-value factor or add another wood/chipping process. Keep the complete native species/forest/sawmill weights, allocated forestry and sawmill burdens and existing logistics once, without renormalizing its recorded coefficients. Native species, sawmill/forest and supply shares differ from the exact source profiles, particularly the 3.6 forestry-only mix; moisture, harvesting/co-product allocation, transport and delivery, geographic coverage, background, biosphere exclusions and vintage remain limitations. Separate caller freight and emissions remain unchanged; no equivalence of precise species composition, moisture, energy content or LCIA results is asserted and score effects are unquantified.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_wood_steel_freight_review.json"
+                ],
+                "reason": "Replace the hardwood-only sawmill target with the existing complete European production mix of wet wood chips, measured as dry mass. The source generic market supplies hardwood and softwood forest chips in 3.6, and forest plus sawmill chips in 3.9. Native RER supply includes hardwood/softwood forest and sawmill chips; this is not a hardwood-only, dry-chip, charcoal, combustion or heat service. Preserve signed kg dry matter at factor +1 despite the wet product label; do not apply a moisture, density, wood-yield, drying or heating-value factor or add another wood/chipping process. Keep the complete native species/forest/sawmill weights, allocated forestry and sawmill burdens and existing logistics once, without renormalizing its recorded coefficients. Native species, sawmill/forest and supply shares differ from the exact source profiles, particularly the 3.6 forestry-only mix; moisture, harvesting/co-product allocation, transport and delivery, geographic coverage, background, biosphere exclusions and vintage remain limitations. Separate caller freight and emissions remain unchanged; no equivalence of precise species composition, moisture, energy content or LCIA results is asserted and score effects are unquantified.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.8",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Use complete native European wet-wood-chip production mix per kg dry matter, plus the inspected source final road delivery. The wet product label does not change the dry-mass reference: do not apply moisture, density, drying, wood-yield or heating-value multipliers or add another forestry, sawmill, chipping, drying or combustion process. Native forest/species/sawmill weights replace the nine source producer shares; their allocation, geographic sourcing, land-use, upstream emissions, moisture and internal uncertainty are not reconstructed. Retain original native coefficients without normalization. Native mixture has zero-valued direct delivery; add only the original 0.105 tonne-km final road leg, with its nominal amount and marginal uncertainty unchanged, using native European generic road freight as a fleet proxy. Preserve the source freight coefficient as already calculated per kg dry wood; do not recalculate payload from native moisture or invent a wet-payload mass-balance correction. Source background freight formula/parameter context and correlations are not reconstructed or transplanted; its hash is retained for audit. Caller formulas remain preserved. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in the declared kg reference. Retain complete native producer inventory once; source country sourcing, production, allocation, internal uncertainty, vintage and native upstream biosphere exclusions remain limitations, with unquantified score effects. Separate caller transport, processing and emissions remain unchanged. No inventory or LCIA equivalence is claimed. Only exact independently inspected ecoinvent 3.8 cut-off is added; older selected decisions remain unchanged and other releases cannot borrow this inspection.",
+                "evidence": [
+                  "brightpath/data/export/uvek_fuels_38_gas_wood_review.json#bp-84bd9cf473cdeee9"
+                ]
+              },
+              "target": {
+                "recipe_ref": "fuels-38-wet-wood-dry-mass-delivery"
+              }
+            }
+          ],
+          "reason": "Only the exact inspected cut-off source profiles are approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-50c411f643467ebd",
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "market for wood chips, wet, measured as dry mass",
+          "reference product": "wood chips, wet, measured as dry mass",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "Replace the hardwood-only sawmill target with the existing complete European production mix of wet wood chips, measured as dry mass. The source generic market supplies hardwood and softwood forest chips in 3.6, and forest plus sawmill chips in 3.9. Native RER supply includes hardwood/softwood forest and sawmill chips; this is not a hardwood-only, dry-chip, charcoal, combustion or heat service. Preserve signed kg dry matter at factor +1 despite the wet product label; do not apply a moisture, density, wood-yield, drying or heating-value factor or add another wood/chipping process. Keep the complete native species/forest/sawmill weights, allocated forestry and sawmill burdens and existing logistics once, without renormalizing its recorded coefficients. Native species, sawmill/forest and supply shares differ from the exact source profiles, particularly the 3.6 forestry-only mix; moisture, harvesting/co-product allocation, transport and delivery, geographic coverage, background, biosphere exclusions and vintage remain limitations. Separate caller freight and emissions remain unchanged; no equivalence of precise species composition, moisture, energy content or LCIA results is asserted and score effects are unquantified."
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.8",
+        "system_model": "cutoff"
+      },
+      "new_profile": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.8",
+          "system_model": "cutoff"
+        },
+        "conversion_factor": 1,
+        "review": {
+          "status": "verified",
+          "source_sign": 1,
+          "target_sign": 1,
+          "reason": "Use complete native European wet-wood-chip production mix per kg dry matter, plus the inspected source final road delivery. The wet product label does not change the dry-mass reference: do not apply moisture, density, drying, wood-yield or heating-value multipliers or add another forestry, sawmill, chipping, drying or combustion process. Native forest/species/sawmill weights replace the nine source producer shares; their allocation, geographic sourcing, land-use, upstream emissions, moisture and internal uncertainty are not reconstructed. Retain original native coefficients without normalization. Native mixture has zero-valued direct delivery; add only the original 0.105 tonne-km final road leg, with its nominal amount and marginal uncertainty unchanged, using native European generic road freight as a fleet proxy. Preserve the source freight coefficient as already calculated per kg dry wood; do not recalculate payload from native moisture or invent a wet-payload mass-balance correction. Source background freight formula/parameter context and correlations are not reconstructed or transplanted; its hash is retained for audit. Caller formulas remain preserved. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in the declared kg reference. Retain complete native producer inventory once; source country sourcing, production, allocation, internal uncertainty, vintage and native upstream biosphere exclusions remain limitations, with unquantified score effects. Separate caller transport, processing and emissions remain unchanged. No inventory or LCIA equivalence is claimed. Only exact independently inspected ecoinvent 3.8 cut-off is added; older selected decisions remain unchanged and other releases cannot borrow this inspection.",
+          "evidence": [
+            "brightpath/data/export/uvek_fuels_38_gas_wood_review.json#bp-84bd9cf473cdeee9"
+          ]
+        },
+        "target": {
+          "recipe_ref": "fuels-38-wet-wood-dry-mass-delivery"
+        }
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for wood chips, wet, measured as dry mass",
+          "reference product": "wood chips, wet, measured as dry mass",
+          "location": "Europe without Switzerland",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "metadata_sha256": "cafe7bee7cbb32556dc69a490c5df1990efca6c339d50d24e36265fcb1d6c209",
+        "inventory_sha256": "1dfc11462b1f403f93694a48ff21b3c2aa942de44f774e5cb331bc2b57c5e19c"
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "wood chips production, hardwood, at sawmill",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "08e02f8921445b54d43f338c25e780be762b81a29df050eb45e4b64b97eb8fe3",
+          "inventory_sha256": "80f8b7ecc823b1fe1812f0ec037f627cb3ca9b75451b743e3ce4d15bdd34a039"
+        },
+        {
+          "identity": {
+            "name": "wood chips production, softwood, at sawmill",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "f41c8f7ada210c43f97e694148aedceafdb03d2f3bcaccac7f271fe81129b39a",
+          "inventory_sha256": "f051c4fc4642c5fe16a350f20174f4027b7acfd82deaec3b74c5d0f5b8c27887"
+        },
+        {
+          "identity": {
+            "name": "hardwood forestry, beech, sustainable forest management",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "DE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "51298a96db1343b9a9ebb6aa8233656f4727d2739faba00e6e5375a517d613e7",
+          "inventory_sha256": "3dee37fecfd181dc8a7050f258547ab207b094e5b9a5502859bd36d6694976a2"
+        },
+        {
+          "identity": {
+            "name": "hardwood forestry, birch, sustainable forest management",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "SE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "24210a97c6208a4c8c68c539d9ec0ebd3f6b802f00cd6d2de166ce1a01de636c",
+          "inventory_sha256": "19ad585b604c30ee8335c0bc7bfabb8d85dc42352c0f1a1634e2c0e358aebb25"
+        },
+        {
+          "identity": {
+            "name": "hardwood forestry, oak, sustainable forest management",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "DE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "3a4853f70a85d9acc69db5230d55e864229c1ef1d8f165feb9b1e20d7f953c02",
+          "inventory_sha256": "5c418a3a912ebdd01aafd10dc943844c08320f99274386fc627985159115ec01"
+        },
+        {
+          "identity": {
+            "name": "softwood forestry, pine, sustainable forest management",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "DE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "22e0325e79ee6e660245a0403cdad3f8bcd7c2dfb589b4ce403cbd216f9ad0e0",
+          "inventory_sha256": "846f37015b6a30f9446a5a97465962be8a4f44c21118ea0b39467092d454c04a"
+        },
+        {
+          "identity": {
+            "name": "softwood forestry, pine, sustainable forest management",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "SE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "9b7e2dc9bb6b71824c18ef05a1b13048613fa41d7b7e91a591359e5cca19ab28",
+          "inventory_sha256": "c337b5826c32effdd5b5938e8432aa46f7f1d262a70fb13150dd71e57b3166e5"
+        },
+        {
+          "identity": {
+            "name": "softwood forestry, spruce, sustainable forest management",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "DE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "ab74e9d74e9166c8dc02244514e02a96e1a64973eabd4bd0b7dc1b266184f78a",
+          "inventory_sha256": "8e549753afb1beaf0d13da203b66a9318aa49fa4138fbf7e12634b74b221f6a6"
+        },
+        {
+          "identity": {
+            "name": "softwood forestry, spruce, sustainable forest management",
+            "reference product": "wood chips, wet, measured as dry mass",
+            "location": "SE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "metadata_sha256": "6e287b1bb32319012d7adad4929981ce02ca4864e74ceae5cc073a116451a9b5",
+          "inventory_sha256": "76d9f2bd74579edad434f6eb07e2bd4652f99d40d107d2a560ec9a6f67b6654c"
+        }
+      ],
+      "preserved_profiles": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.6",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "912e3a710e7491bbb23d48dbf6972c7a1387360abfd462d81a3b3ac96fd0d201"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.7",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "66264f5027955098a73efa4b575b998e7d18cf574e7809003bc44b730ce37983"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "912e3a710e7491bbb23d48dbf6972c7a1387360abfd462d81a3b3ac96fd0d201"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.10",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "512df6f8dbc8f8b3434338b487ce816893236de4d59eee4f172a643d24e34e8d"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.10.1",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "03c640f09399903f70d6862641251728605a230ce371c2598786ebd900bbc165"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.11",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "6adb3389668f0e078d9b67da43c94a70f2da3cb2a1267923a731de441104c84f"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.12",
+            "system_model": "cutoff"
+          },
+          "selected_rule_sha256": "d2c43f20f6d6b4ba88b9ae5e7722a2f5d80a7e86d602c825c4049f1a48d7f0d7"
+        }
+      ],
+      "limitations": [
+        "Use complete native European wet-wood-chip production mix per kg dry matter, plus the inspected source final road delivery. The wet product label does not change the dry-mass reference: do not apply moisture, density, drying, wood-yield or heating-value multipliers or add another forestry, sawmill, chipping, drying or combustion process. Native forest/species/sawmill weights replace the nine source producer shares; their allocation, geographic sourcing, land-use, upstream emissions, moisture and internal uncertainty are not reconstructed. Retain original native coefficients without normalization. Native mixture has zero-valued direct delivery; add only the original 0.105 tonne-km final road leg, with its nominal amount and marginal uncertainty unchanged, using native European generic road freight as a fleet proxy. Preserve the source freight coefficient as already calculated per kg dry wood; do not recalculate payload from native moisture or invent a wet-payload mass-balance correction. Source background freight formula/parameter context and correlations are not reconstructed or transplanted; its hash is retained for audit. Caller formulas remain preserved. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in the declared kg reference. Retain complete native producer inventory once; source country sourcing, production, allocation, internal uncertainty, vintage and native upstream biosphere exclusions remain limitations, with unquantified score effects. Separate caller transport, processing and emissions remain unchanged. No inventory or LCIA equivalence is claimed. Only exact independently inspected ecoinvent 3.8 cut-off is added; older selected decisions remain unchanged and other releases cannot borrow this inspection."
+      ]
+    }
+  ],
+  "recipes": {
+    "fuels-38-wet-wood-dry-mass-delivery": {
+      "name": "market for wet wood chips, dry mass, source 3.8 delivery retained",
+      "reference product": "wood chips, wet, measured as dry mass",
+      "location": "Europe without Switzerland",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "amount": 1,
+          "type": "technosphere",
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.105,
+          "uncertainty type": 2,
+          "loc": -2.2537949288246137,
+          "scale": 0.3847076812334269,
+          "pedigree": {
+            "reliability": 4,
+            "completeness": 4,
+            "temporal correlation": 4,
+            "geographical correlation": 5,
+            "further technological correlation": 3
+          },
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer"
+        }
+      ],
+      "rationale": "Use complete native European wet-wood-chip production mix per kg dry matter, plus the inspected source final road delivery. The wet product label does not change the dry-mass reference: do not apply moisture, density, drying, wood-yield or heating-value multipliers or add another forestry, sawmill, chipping, drying or combustion process. Native forest/species/sawmill weights replace the nine source producer shares; their allocation, geographic sourcing, land-use, upstream emissions, moisture and internal uncertainty are not reconstructed. Retain original native coefficients without normalization. Native mixture has zero-valued direct delivery; add only the original 0.105 tonne-km final road leg, with its nominal amount and marginal uncertainty unchanged, using native European generic road freight as a fleet proxy. Preserve the source freight coefficient as already calculated per kg dry wood; do not recalculate payload from native moisture or invent a wet-payload mass-balance correction. Source background freight formula/parameter context and correlations are not reconstructed or transplanted; its hash is retained for audit. Caller formulas remain preserved. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in the declared kg reference. Retain complete native producer inventory once; source country sourcing, production, allocation, internal uncertainty, vintage and native upstream biosphere exclusions remain limitations, with unquantified score effects. Separate caller transport, processing and emissions remain unchanged. No inventory or LCIA equivalence is claimed. Only exact independently inspected ecoinvent 3.8 cut-off is added; older selected decisions remain unchanged and other releases cannot borrow this inspection.",
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_38_gas_wood_review.json#bp-84bd9cf473cdeee9"
+      ]
+    }
+  },
+  "wood_delivery_proof": {
+    "statistics": {
+      "amount": 0.105,
+      "uncertainty type": 2,
+      "loc": -2.2537949288246137,
+      "scale": 0.3847076812334269,
+      "pedigree": {
+        "reliability": 4,
+        "completeness": 4,
+        "temporal correlation": 4,
+        "geographical correlation": 5,
+        "further technological correlation": 3
+      },
+      "scale without pedigree": 0.34641016151377546
+    },
+    "target": {
+      "name": "Transport, freight, lorry, fleet average",
+      "reference product": "Transport, freight, lorry, fleet average",
+      "location": "RER",
+      "unit": "ton kilometer"
+    },
+    "source_formula_present": true,
+    "source_formula_sha256": "0e87d343f40150a75aae2aa91fa00755be8b3725bf743fe354b1358b114423d3",
+    "source_formula_transplanted": false,
+    "native_direct_delivery_amounts": [
+      0.0
+    ],
+    "native_species_coefficients_unchanged": true
+  },
+  "native_2026_witnesses": [
+    {
+      "identity": {
+        "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+        "reference product": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amount": 1,
+      "nonproduction_count": 10,
+      "metadata_sha256": "25b67b93b4254bbfc4a700e9a55f29ab587d49ad95ffea81841671319df3a09d",
+      "inventory_sha256": "f0a99094f6ee41836a6c1775cbd107211831fe6759851afc4f2a92e8b17a280a"
+    },
+    {
+      "identity": {
+        "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+        "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+        "location": "RER",
+        "unit": "kilogram"
+      },
+      "reference_amount": 1,
+      "nonproduction_count": 12,
+      "metadata_sha256": "909121b996b9da95ca54b2c13ece8beab19042adc711e89408c1b4f7bd900522",
+      "inventory_sha256": "61924eb66bedebc5caf28d2d5e3bf1d5858184f7b3059abb3bc678f28a1996fb"
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, lorry, fleet average",
+        "reference product": "Transport, freight, lorry, fleet average",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "reference_amount": 1,
+      "nonproduction_count": 4,
+      "metadata_sha256": "e8b66b48093579124a22c663539f1f3f57a5996ccbbe7d7f24339e5bf05dac8b",
+      "inventory_sha256": "8fa0c4608353f2a4c3a3334b23e90af00d8a80efa598094e024a350c496fedc4"
+    }
+  ],
+  "native_lci_checks": [
+    {
+      "rule_id": "bp-745c517f85a78ba7",
+      "finite_supply": true,
+      "finite_inventory": true,
+      "native_demands": [
+        {
+          "identity": {
+            "name": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+            "reference product": "Natural gas, from medium pressure network (0.1-1 bar), at service station",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "amount": 1
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-84bd9cf473cdeee9",
+      "finite_supply": true,
+      "finite_inventory": true,
+      "native_demands": [
+        {
+          "identity": {
+            "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+            "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "amount": 1
+        },
+        {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "amount": 0.105
+        }
+      ]
+    }
+  ],
+  "source_database_unchanged": {
+    "name": "BAFU:2026-reimported",
+    "activity_count": 11947,
+    "modified": "2026-09-22T10:55:01.512934"
+  },
+  "licensing": "Only derived native recipes, scalar reference facts and source witness hashes published. Raw licensed source vectors and background formula strings remain private."
+}

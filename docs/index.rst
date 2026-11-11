@@ -87,6 +87,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    uvek-fuels-38-construction-stocks
    uvek-fuels-38-cast-profiles
    uvek-fuels-38-construction-waste
+   uvek-fuels-38-gas-wood
    recycled-paper-migration
    simapro-reference-evidence
    adr/index
