@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 39,
-      "recipe": 958,
-      "unclassified": 29478
+      "proxy": 40,
+      "recipe": 959,
+      "unclassified": 29476
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 267,
       "followup_review": 163,
-      "heuristic_similarity": 26675,
+      "heuristic_similarity": 26673,
       "pairwise_review": 2238,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -42,6 +42,7 @@
       "reviewed_deferred_xanthate": 1,
       "reviewed_five_simple_waste_market_service": 5,
       "reviewed_fuels_312_dependency": 4,
+      "reviewed_fuels_38_native_services": 2,
       "reviewed_fuels_39_carbon_dependency": 7,
       "reviewed_fuels_39_final_market": 4,
       "reviewed_fuels_39_heat_recycling": 6,
@@ -134,7 +135,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.438891,
+    "mean_confidence": 0.438935,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -100930,6 +100931,360 @@
       "rationale": "The actual 3.12 European average-wastewater market retains the inspected 3.9 three technosphere coefficients, their distributions, 43 direct biosphere quantities/compartments/UUIDs and parameters. The sole label change is Strontium to Strontium II with unchanged publisher UUID 4295ed5b-9824-4bbf-97a4-fc4cabd87f0d, kg, surface-water compartment and quantity; the existing helper already targets that exact canonical 3.10 definition. Reuse the independently reviewed complete volume-based rural/urban sewer and wastewater-treatment component proxies, retaining their original outer quantities and all direct untreated-discharge emissions. Native technology, treatment performance, nutrient/composition, plant/lifetime, regional background and vintage remain screening differences; internal source inventories are not reconstructed and no LCIA equivalence is claimed. Negative source reference becomes positive service with factor -1. Do not omit emissions, add a recovery credit, infer nutrient balancing or apply another volume/density/loss factor.",
       "reference product": "wastewater, average",
       "unit": "cubic meter"
+    },
+    "fuels-38-native-petrol-62ec1518d8f03a5652eb": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_38_services_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.02447,
+          "loc": -3.710307401527557,
+          "location": "RER",
+          "name": "Petrol, at regional storage",
+          "negative": false,
+          "reference product": "Petrol, at regional storage",
+          "scale": 0.09909745297512237,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000514,
+          "loc": -7.573287292509109,
+          "location": "RER",
+          "name": "Lubricating oil, at plant",
+          "negative": false,
+          "reference product": "Lubricating oil, at plant",
+          "scale": 0.09909745297512237,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.34e-07,
+          "loc": -15.8254260369955,
+          "location": "RER",
+          "name": "Building machine",
+          "negative": false,
+          "reference product": "Building machine",
+          "scale": 0.5574396305659908,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.000514,
+          "loc": -7.573287292509109,
+          "location": "CH",
+          "name": "Disposal, used mineral oil, 10% water, to hazardous waste incineration",
+          "negative": false,
+          "reference product": "Disposal, used mineral oil, 10% water, to hazardous waste incineration",
+          "scale": 0.09798894162072011,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.67e-07,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "87883a4e-1e3e-4c9d-90c0-f1bea36f8014",
+          "loc": -14.576936579277515,
+          "name": "Ammonia",
+          "negative": false,
+          "scale": 0.1315665997651841,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.01e-10,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "5e13c2ab-5466-4ff5-816d-702dfdf25f76",
+          "loc": -21.078513228893957,
+          "name": "Benzo(a)pyrene",
+          "negative": false,
+          "scale": 0.5574396305659908,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.34e-10,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "1c5a7322-9261-4d59-a692-adde6c12de92",
+          "loc": -22.175700000570846,
+          "name": "Cadmium II",
+          "negative": false,
+          "scale": 0.8102977175649887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.076867,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "349b29d1-3e58-4c66-98b9-9d1a076efd2e",
+          "loc": -2.5656786233112476,
+          "name": "Carbon dioxide, fossil",
+          "negative": false,
+          "scale": 0.09798894162072011,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.023766,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "ba2f3f82-c93a-47a5-822a-37ec97495275",
+          "loc": -3.7394992911143023,
+          "name": "Carbon monoxide, fossil",
+          "negative": false,
+          "scale": 0.8102977175649887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.17e-09,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "e142b577-e934-4085-9a07-3983d4d92afb",
+          "loc": -20.566262088136746,
+          "name": "Chromium III",
+          "negative": false,
+          "scale": 0.8102977175649887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.97e-08,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "ec8144d6-d123-43b1-9c17-a295422a0498",
+          "loc": -17.041914649253265,
+          "name": "Copper ion",
+          "negative": false,
+          "scale": 0.8102977175649887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.8e-06,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "20185046-64bb-4c09-a8e7-e8a9e144ca98",
+          "loc": -12.785891140783116,
+          "name": "Dinitrogen monoxide",
+          "negative": false,
+          "scale": 0.22384705616293732,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.4e-15,
+          "categories": [
+            "water"
+          ],
+          "flow_id": "737c3221-1456-4c6b-8605-6ac00dc88b2e",
+          "loc": -34.20230415828947,
+          "name": "Dioxins, measured as 2,3,7,8-tetrachlorodibenzo-p-dioxin",
+          "negative": false,
+          "scale": 0.22384705616293732,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.06,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "f2d84834-d0b3-42e5-b41a-f04cc80337a4",
+          "loc": 0.058268908123975824,
+          "name": "Heat, waste",
+          "negative": false,
+          "scale": 0.09798894162072011,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 3.3429e-05,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "0795345f-c7ae-410c-ad25-1845784c75f5",
+          "loc": -10.306086771231248,
+          "name": "Methane, fossil",
+          "negative": false,
+          "scale": 0.22384705616293732,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.64e-09,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "a5506f4b-113f-4713-95c3-c819dde6e48b",
+          "loc": -20.228569595110304,
+          "name": "Nickel II",
+          "negative": false,
+          "scale": 0.8102977175649887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00013152,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "c1b91234-6f24-417b-8309-46111d09c457",
+          "loc": -8.936351626656405,
+          "name": "Nitrogen oxides",
+          "negative": false,
+          "scale": 0.22384705616293732,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00096726,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "d3260d0e-8203-4cbb-a45a-6a13131a5108",
+          "loc": -6.941043225848312,
+          "name": "NMVOC, non-methane volatile organic compounds",
+          "negative": false,
+          "scale": 0.22384705616293732,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.85e-08,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "3e5d7d91-67d7-4afb-91dd-36fab58e4685",
+          "loc": -16.36016721215805,
+          "name": "PAH, polycyclic aromatic hydrocarbons",
+          "negative": false,
+          "scale": 0.5574396305659908,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.4518e-06,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "21e46cb8-6233-4c99-bac3-c41d2ab99498",
+          "loc": -12.918688109285517,
+          "name": "Particulate Matter, < 2.5 um",
+          "negative": false,
+          "scale": 0.5574396305659908,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.34e-10,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "454c61fd-c52b-4a04-9731-f141bb7b5264",
+          "loc": -22.175700000570846,
+          "name": "Selenium IV",
+          "negative": false,
+          "scale": 0.8102977175649887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.36e-05,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "fd7aa71c-508c-480d-81a6-8052aad92646",
+          "loc": -10.654263845932709,
+          "name": "Sulfur dioxide",
+          "negative": false,
+          "scale": 0.09798894162072011,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.34e-08,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "5ce378a0-b48d-471c-977d-79681521efde",
+          "loc": -17.570529814582756,
+          "name": "Zinc II",
+          "negative": false,
+          "scale": 0.8102977175649887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.6328e-07,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "66020d27-7ae4-4e59-83a3-89214b72c40a",
+          "loc": -15.627799318444822,
+          "name": "Particulate Matter, > 10 um",
+          "negative": false,
+          "scale": 0.22384705616293732,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.0894e-07,
+          "categories": [
+            "air"
+          ],
+          "flow_id": "b967e1bf-f09b-4c89-8740-ace21db47bba",
+          "loc": -16.032468564990882,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "negative": false,
+          "scale": 0.3593343588950114,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "CH",
+      "name": "Petrol, burned in building machine, with particle filter, complete native 2026 reconstruction",
+      "rationale": "Correct refinery-gas flaring to the native petrol-burning non-road building-machine process per MJ fuel. Actual native input is 0.02447 kg petrol/MJ, not refinery gas or diesel, and its documentation identifies four-stroke tamping/vibratory equipment. Native documentation has inherited diesel wording and a particle-filter title, so those inconsistencies are retained as explicit limitations: actual fuel and documented petrol-specific emission factors support this screening proxy, not equivalence of engines or emission control. Complete native machine/oil/fuel/disposal and emissions replace the source machinery inventory. No fuel-ratio, engine-efficiency or emission-control rescaling is inferred. This actual native 2026 process is absent from the intermediate 2025 catalog. Reconstruct all four technosphere and twenty-one canonical biosphere exchanges, preserving signed quantities and uncertainty, rather than invent a 2025 catalog identity or weaken intermediate validation.",
+      "reference product": "Petrol, burned in building machine, with particle filter",
+      "unit": "megajoule"
     },
     "fuels-39-carbon-0b66cd1888d0c22230a0": {
       "evidence": [
@@ -723296,7 +723651,7 @@
     {"confidence": 0.314545, "id": "bp-7dd0c7a082858fd6", "mapping_method": "heuristic_similarity", "source": {"location": "PE", "name": "market for diesel", "reference product": "diesel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Diesel, at refinery", "reference product": "Diesel, at refinery", "unit": "kilogram"}},
     {"confidence": 0.314545, "id": "bp-68cfdf5960bfc216", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for diesel", "reference product": "diesel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Diesel, at refinery", "reference product": "Diesel, at refinery", "unit": "kilogram"}},
     {"confidence": 0.314545, "id": "bp-d4ccaca1927f096d", "mapping_method": "heuristic_similarity", "source": {"location": "ZA", "name": "market for diesel", "reference product": "diesel", "unit": "kilogram"}, "target": {"location": "CH", "name": "Diesel, at refinery", "reference product": "Diesel, at refinery", "unit": "kilogram"}},
-    {"confidence": 0.3509, "id": "bp-ab9ef0df411ba0fe", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for diesel, burned in agricultural machinery", "reference product": "diesel, burned in agricultural machinery", "unit": "megajoule"}, "target": {"location": "GLO", "name": "Diesel, burned in building machine, with particle filter", "reference product": "Diesel, burned in building machine, with particle filter", "unit": "megajoule"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-ab9ef0df411ba0fe", "mapping_method": "reviewed_fuels_38_native_services", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_38_services_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_38_services_review.json"], "reason": "Correct the particle-filter-specific building-machine target to the complete native average Swiss non-road diesel building-machine process per MJ fuel as a screening proxy for agricultural machinery. It represents a different non-road fleet, machine infrastructure and average mix of emission controls; it does not reproduce tractors, field-operation characteristics, load cycles or agricultural exhaust/noise. No uniform particle-filter reduction is imposed. Retain one MJ source fuel reference without a tractor-efficiency multiplier, extra diesel input or duplicated source emissions.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only independently inspected exact profiles authorize this reference and target.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1bfdb77d744626e7", "source": {"location": "GLO", "name": "market for diesel, burned in agricultural machinery", "reference product": "diesel, burned in agricultural machinery", "unit": "megajoule"}, "target": {"location": "CH", "name": "Diesel, burned in building machine, average", "reference product": "Diesel, burned in building machine, average", "unit": "megajoule"}, "technosphere_information_loss": "Exact inspected ecoinvent 3.8 cut-off approval only. Preserve signed caller quantities, uncertainty, formulas and separately listed caller water flows, emissions and transport. Complete native functional supply replaces source market/production mixes, technology, losses, infrastructure, process emissions and internal uncertainty; source internal inventories are not retained or added again. Geographic, fleet, efficiency, fuel quality, allocation, water-treatment and vintage differences have unquantified score effects. No additional loss, efficiency, water-balance, density, distance or calorific multiplier and no recovered-energy credit is invented. Shared Premise transformations continue unchanged."},
     {"confidence": 0.706792, "id": "bp-155787c4bf1ee018", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for diesel, burned in building machine", "reference product": "diesel, burned in building machine", "unit": "megajoule"}, "target": {"location": "CH", "name": "Diesel, burned in building machine, average", "reference product": "Diesel, burned in building machine, average", "unit": "megajoule"}},
     {"confidence": 0.821667, "id": "bp-72e073827ada5981", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for diesel, burned in diesel-electric generating set, 10MW", "reference product": "diesel, burned in diesel-electric generating set, 10MW", "unit": "megajoule"}, "target": {"location": "GLO", "name": "Diesel, burned in diesel-electric generating set", "reference product": "Diesel, burned in diesel-electric generating set", "unit": "megajoule"}},
     {"confidence": 0.631457, "id": "bp-ccad2da3dc456b0c", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for diesel, burned in diesel-electric generating set, 10MW, for oil and gas extraction", "reference product": "diesel, burned in diesel-electric generating set, 10MW, for oil and gas extraction", "unit": "megajoule"}, "target": {"location": "GLO", "name": "Diesel, burned in diesel-electric generating set, at extraction site", "reference product": "Diesel, burned in diesel-electric generating set, at extraction site", "unit": "megajoule"}},
@@ -732520,7 +732875,7 @@
     {"confidence": 0.41, "id": "bp-dadedf31b79a427c", "mapping_method": "heuristic_similarity", "source": {"location": "ZA", "name": "petrol production, unleaded, petroleum refinery operation", "reference product": "petrol, unleaded", "unit": "kilogram"}, "target": {"location": "CH", "name": "xxx Petrol, unleaded, at refinery", "reference product": "xxx Petrol, unleaded, at refinery", "unit": "kilogram"}},
     {"confidence": 0.266385, "id": "bp-e74d8d1f06ec59e7", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "petrol, low-sulfur, import from Europe", "reference product": "petrol, low-sulfur", "unit": "kilogram"}, "target": {"location": "CH", "name": "Petrol, at refinery", "reference product": "Petrol, at refinery", "unit": "kilogram"}},
     {"confidence": 0.246875, "id": "bp-26b9bf125450a107", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "petrol, low-sulfur, import from Europe without Switzerland", "reference product": "petrol, low-sulfur", "unit": "kilogram"}, "target": {"location": "CH", "name": "Petrol, at refinery", "reference product": "Petrol, at refinery", "unit": "kilogram"}},
-    {"confidence": 0.295175, "id": "bp-f5c20db2989094da", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "petrol, unleaded, burned in machinery", "reference product": "petrol, unleaded, burned in machinery", "unit": "megajoule"}, "target": {"location": "GLO", "name": "Refinery gas, burned in flare", "reference product": "Refinery gas, burned in flare", "unit": "megajoule"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-f5c20db2989094da", "mapping_method": "reviewed_fuels_38_native_services", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_38_services_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_38_services_review.json"], "reason": "Correct refinery-gas flaring to the native petrol-burning non-road building-machine process per MJ fuel. Actual native input is 0.02447 kg petrol/MJ, not refinery gas or diesel, and its documentation identifies four-stroke tamping/vibratory equipment. Native documentation has inherited diesel wording and a particle-filter title, so those inconsistencies are retained as explicit limitations: actual fuel and documented petrol-specific emission factors support this screening proxy, not equivalence of engines or emission control. Complete native machine/oil/fuel/disposal and emissions replace the source machinery inventory. No fuel-ratio, engine-efficiency or emission-control rescaling is inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only independently inspected exact profiles authorize this reference and target.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1bfdb77d744626e7", "source": {"location": "GLO", "name": "petrol, unleaded, burned in machinery", "reference product": "petrol, unleaded, burned in machinery", "unit": "megajoule"}, "target": {"recipe_ref": "fuels-38-native-petrol-62ec1518d8f03a5652eb"}, "technosphere_information_loss": "Exact inspected ecoinvent 3.8 cut-off approval only. Preserve signed caller quantities, uncertainty, formulas and separately listed caller water flows, emissions and transport. Complete native functional supply replaces source market/production mixes, technology, losses, infrastructure, process emissions and internal uncertainty; source internal inventories are not retained or added again. Geographic, fleet, efficiency, fuel quality, allocation, water-treatment and vintage differences have unquantified score effects. No additional loss, efficiency, water-balance, density, distance or calorific multiplier and no recovered-energy credit is invented. Shared Premise transformations continue unchanged."},
     {"confidence": 0.354902, "id": "bp-93f9ef3b59fd0dfa", "mapping_method": "heuristic_similarity", "source": {"location": "BR", "name": "petrol, unleaded, import from RoW", "reference product": "petrol, unleaded", "unit": "kilogram"}, "target": {"location": "CH", "name": "xxx Petrol, unleaded, at refinery", "reference product": "xxx Petrol, unleaded, at refinery", "unit": "kilogram"}},
     {"confidence": 0.354902, "id": "bp-9d29610cf8acd1de", "mapping_method": "heuristic_similarity", "source": {"location": "CO", "name": "petrol, unleaded, import from RoW", "reference product": "petrol, unleaded", "unit": "kilogram"}, "target": {"location": "CH", "name": "xxx Petrol, unleaded, at refinery", "reference product": "xxx Petrol, unleaded, at refinery", "unit": "kilogram"}},
     {"confidence": 0.354902, "id": "bp-3b4ddaba6d3ee6fb", "mapping_method": "heuristic_similarity", "source": {"location": "IN", "name": "petrol, unleaded, import from RoW", "reference product": "petrol, unleaded", "unit": "kilogram"}, "target": {"location": "CH", "name": "xxx Petrol, unleaded, at refinery", "reference product": "xxx Petrol, unleaded, at refinery", "unit": "kilogram"}},
@@ -742279,6 +742634,15 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of sewage sludge, 97% water, WWT, WW from glass production, landfarming / CH / kg external exchange with a warning. All inspected direct service comments for glass production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-1bfdb77d744626e7": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_38_services_review.json"
+      ],
+      "limitations": [
+        "Exact inspected ecoinvent 3.8 cut-off approval only. Preserve signed caller quantities, uncertainty, formulas and separately listed caller water flows, emissions and transport. Complete native functional supply replaces source market/production mixes, technology, losses, infrastructure, process emissions and internal uncertainty; source internal inventories are not retained or added again. Geographic, fleet, efficiency, fuel quality, allocation, water-treatment and vintage differences have unquantified score effects. No additional loss, efficiency, water-balance, density, distance or calorific multiplier and no recovered-energy credit is invented. Shared Premise transformations continue unchanged."
+      ],
+      "rationale": "Independently inspected 3.8 cut-off native grids, freight, fuel combustion, delivered water and irrigation; correct petrol-flare and diesel-filter mismatches."
     },
     "r-1c5efcd0d90512f5": {
       "evidence": [
