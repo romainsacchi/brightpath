@@ -71,6 +71,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    uvek-fuels-39-material-markets
    uvek-fuels-39-oxide-services
    uvek-fuels-39-heat-recycling
+   uvek-fuels-39-final-markets
    recycled-paper-migration
    simapro-reference-evidence
    adr/index
