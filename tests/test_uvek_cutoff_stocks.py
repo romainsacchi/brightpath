@@ -1,5 +1,6 @@
 """Known cut-off stocks retain allocation boundaries, including inside exact-profile assemblies."""
 
+import hashlib
 import json
 from copy import deepcopy
 from pathlib import Path
@@ -248,6 +249,7 @@ def test_nested_stock_never_inherits_an_unknown_profile_or_an_unbound_zero(neste
 
 def test_pending_assembly_counterparts_remain_visible_in_queue_and_cannot_execute():
     from scripts.review_uvek_additional_cutoff_waste_markets import SOURCES as ADDITIONAL_MARKETS
+    from scripts.review_uvek_fuels_39_carbon import REVIEW_PATH, REVIEW_SHA256
     from scripts.review_uvek_industrial_waste_markets import SOURCES as INDUSTRIAL_MARKETS
     from scripts.review_uvek_steel_residue_markets import SOURCES as STEEL_MARKETS
 
@@ -256,6 +258,22 @@ def test_pending_assembly_counterparts_remain_visible_in_queue_and_cannot_execut
     current_approvals = ASSEMBLIES | STEEL_MARKETS | INDUSTRIAL_MARKETS | ADDITIONAL_MARKETS
     resource = load_uvek_technosphere_resource()
     rules = {tuple(r["source"][f] for f in FIELDS): r for r in resource["replace"]}
+    # The separate fuel-carbon review subsequently qualified only 3.9 hard-coal
+    # ash. Keep every other held profile unresolved and bind this exception to
+    # its frozen evidence, rather than accepting the current rule as its oracle.
+    raw = (ROOT / REVIEW_PATH).read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == REVIEW_SHA256
+    carbon = json.loads(raw)
+    assert carbon["source_profile"] == {"family": "ecoinvent", "version": "3.9", "system_model": "cutoff"}
+    ash = next(row for row in carbon["records"] if row["rule_id"] == "bp-016903afcf2e9b33")
+    source = tuple(ash["source_witness"]["identity"][field] for field in FIELDS)
+    assert rules[source] == ash["compiled_rule"]
+    assert ash["source_witness"]["reference_amounts"] == [-1]
+    approval = deepcopy(current_approvals[source])
+    assert sum(p["label"] == "ecoinvent-3.9-cutoff" for p in approval["pending_profiles"]) == 1
+    approval["pending_profiles"] = [p for p in approval["pending_profiles"] if p["label"] != "ecoinvent-3.9-cutoff"]
+    approval["profiles"].append({"label": "ecoinvent-3.9-cutoff"})
+    current_approvals[source] = approval
     queue = json.loads((ROOT / "docs/uvek_forward_review_queue.json").read_text())
     pending_ids = {r["id"] for r in queue["rules"] if r["review_state"] == "partially_approved"}
     count = 0
