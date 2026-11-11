@@ -1,0 +1,528 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-11",
+  "authorization": "Standing auto-approval of independently inspected screening decisions with explicit limitations under the full BAFU/UVEK integration goal.",
+  "scope": "Two exact 3.7 sand/hour profiles; one sand delivery helper; prior 3.9 sand physical binding and 3.6 flight-hour helper preserved.",
+  "records": [
+    {
+      "rule_id": "bp-714b90acb435b476",
+      "original_rule": {
+        "confidence": 0.384444,
+        "id": "bp-714b90acb435b476",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "CH",
+          "name": "market for sand",
+          "reference product": "sand",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.384444,
+        "id": "bp-714b90acb435b476",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "CH",
+          "name": "market for sand",
+          "reference product": "sand",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "unit": "kilogram"
+        },
+        "classification": "proxy",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Profile-specific Swiss sand screening supply; use only the exact reviewed kg basis.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only the exact independently inspected 3.7 and earlier 3.9 profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_fuels_37_sand_hour_review.json#bp-714b90acb435b476"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Same Swiss quarried sand product per kg from joint sand/round-gravel production, not silica sand, crushed gravel or a separate excavation service. Source and native describe the same 35% sand/65% round-gravel production mix. Retain the complete native allocated product, internal logistics, machinery, water, land and recultivation once without applying the coproduct percentages again. Native exclusions of administration, dust and wastewater remain explicit; source market delivery, resource/land labels, vintage and emissions can differ. Add no gravel credit, extra quarrying or mass-volume conversion.",
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_stock_finish_review.json"
+                ]
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.7",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "target": {
+                "recipe_ref": "fuels-37-delivered-swiss-sand"
+              },
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "One kg allocated Swiss sand from joint sand/round-gravel quarrying, not silica sand, crushed stone, pure gravel or an excavation-only service. Both definitions describe the 35 percent sand/65 percent round-gravel production mix; do not apply those percentages a second time or add a gravel credit. Retain complete native extraction, internal logistics, machinery, land and recultivation once. New 3.7 delivery helper retains source patch 0.00372 rail and 0.02026 road tonne-km per kg, with marginal uncertainty. Native RER rail and generic road fleet replace source fleets; no additional density, distance or payload factor. Native administration/dust/wastewater exclusions and historical quarry/background differences remain explicit. The previously approved 3.9 at-mine target remains unchanged; that older profile does not inherit this new delivery recipe. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in their declared kg/hour units. Native inventories and source internal uncertainty/background differ; no inventory or score equivalence is asserted. Only exact reviewed cut-off profiles are qualified; no reverse or cross-system-model route is implied. Requested source remains ecoinvent 3.7 cut-off. Functional-reference witnesses were inspected in 3.7.1 under the documented limited patch-evidence decision; no bare-3.7 vector was directly inspected and no upstream/score equality is claimed. The inspected patch delivery quantities are adopted as screening assumptions rather than relabelling the requested source.",
+                "evidence": [
+                  "brightpath/data/export/uvek_fuels_37_sand_hour_review.json#bp-714b90acb435b476"
+                ]
+              }
+            }
+          ]
+        },
+        "review_ref": "r-5e6d12134ac06397"
+      },
+      "new_profile": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.7",
+          "system_model": "cutoff"
+        },
+        "conversion_factor": 1,
+        "target": {
+          "recipe_ref": "fuels-37-delivered-swiss-sand"
+        },
+        "review": {
+          "status": "verified",
+          "source_sign": 1,
+          "target_sign": 1,
+          "reason": "One kg allocated Swiss sand from joint sand/round-gravel quarrying, not silica sand, crushed stone, pure gravel or an excavation-only service. Both definitions describe the 35 percent sand/65 percent round-gravel production mix; do not apply those percentages a second time or add a gravel credit. Retain complete native extraction, internal logistics, machinery, land and recultivation once. New 3.7 delivery helper retains source patch 0.00372 rail and 0.02026 road tonne-km per kg, with marginal uncertainty. Native RER rail and generic road fleet replace source fleets; no additional density, distance or payload factor. Native administration/dust/wastewater exclusions and historical quarry/background differences remain explicit. The previously approved 3.9 at-mine target remains unchanged; that older profile does not inherit this new delivery recipe. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in their declared kg/hour units. Native inventories and source internal uncertainty/background differ; no inventory or score equivalence is asserted. Only exact reviewed cut-off profiles are qualified; no reverse or cross-system-model route is implied. Requested source remains ecoinvent 3.7 cut-off. Functional-reference witnesses were inspected in 3.7.1 under the documented limited patch-evidence decision; no bare-3.7 vector was directly inspected and no upstream/score equality is claimed. The inspected patch delivery quantities are adopted as screening assumptions rather than relabelling the requested source.",
+          "evidence": [
+            "brightpath/data/export/uvek_fuels_37_sand_hour_review.json#bp-714b90acb435b476"
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.7",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "activity_name": "market for sand",
+        "inspected_profile": {
+          "family": "ecoinvent",
+          "version": "3.7.1",
+          "system_model": "cutoff"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "source_file_sha256": "95937166e8aa7f3ca41673af9ae11e1253d58c96236b8fe7b39b57b906adefd4",
+        "metadata_sha256": "356114a86a355a6a37d9bd6f906ef41438509520c9f1bea00085e0a83c7abc0d",
+        "inventory_sha256": "6a48c8eee10f95bbea7ef38971b7c3ac016a5f11b4c0d3517ead05f6241cc73e",
+        "identity": {
+          "location": "CH",
+          "name": "market for sand",
+          "reference product": "sand",
+          "unit": "kilogram"
+        },
+        "requested_catalog_activity_id": "5085e1a2-efb4-4c17-9715-38e226f2a2dd",
+        "inspected_activity_id": "e32f5fc9-f2c0-4495-9f19-f979bd2a12cd",
+        "matching_product_id": "f51d7ccf-0bee-430d-98a3-8334adbe39fc"
+      },
+      "source_producer_witnesses": [
+        {
+          "activity_name": "gravel and sand quarry operation",
+          "inspected_profile": {
+            "family": "ecoinvent",
+            "version": "3.7.1",
+            "system_model": "cutoff"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "source_file_sha256": "0dbea3060b6f2d7c3969ebda635dee089ad3c8db8fbe3fec8c53ca0f7dd0cf13",
+          "metadata_sha256": "bd076bcd0899a8b81f2f86dbfea02fd36cb603edb4554abd2f84bf08733ca60c",
+          "inventory_sha256": "818f34c7c8fba34e9573f001ba2ef4a6d1d21c69700d14ffb12748221f9d833d"
+        }
+      ],
+      "conversion_factor": 1,
+      "quantity_basis": "kilogram",
+      "preserved_profiles": [],
+      "preserved_physical_bindings": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "source": {
+            "location": "CH",
+            "name": "market for sand",
+            "reference product": "sand",
+            "unit": "kilogram"
+          },
+          "target": {
+            "location": "CH",
+            "name": "Sand, at mine",
+            "reference product": "Sand, at mine",
+            "unit": "kilogram"
+          },
+          "conversion_factor": 1,
+          "prior_review": "export/uvek_pilot_stock_finish_review.json"
+        }
+      ],
+      "native_2026_witnesses": [
+        {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amount": 1,
+          "metadata_sha256": "5943d3e3188951f7ef9d28039c5cd22da5c48af9200c245329bc64c497c82346"
+        },
+        {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amount": 1,
+          "metadata_sha256": "e8b66b48093579124a22c663539f1f3f57a5996ccbbe7d7f24339e5bf05dac8b"
+        },
+        {
+          "identity": {
+            "name": "Sand, at mine",
+            "reference product": "Sand, at mine",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "metadata_sha256": "5fd1184db404dae57ac7b3df3a84c230e94976ec4bc61a15d1aa590acd582f0a"
+        }
+      ],
+      "limitations": [
+        "One kg allocated Swiss sand from joint sand/round-gravel quarrying, not silica sand, crushed stone, pure gravel or an excavation-only service. Both definitions describe the 35 percent sand/65 percent round-gravel production mix; do not apply those percentages a second time or add a gravel credit. Retain complete native extraction, internal logistics, machinery, land and recultivation once. New 3.7 delivery helper retains source patch 0.00372 rail and 0.02026 road tonne-km per kg, with marginal uncertainty. Native RER rail and generic road fleet replace source fleets; no additional density, distance or payload factor. Native administration/dust/wastewater exclusions and historical quarry/background differences remain explicit. The previously approved 3.9 at-mine target remains unchanged; that older profile does not inherit this new delivery recipe.",
+        "Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in their declared kg/hour units. Native inventories and source internal uncertainty/background differ; no inventory or score equivalence is asserted. Only exact reviewed cut-off profiles are qualified; no reverse or cross-system-model route is implied.",
+        "Requested source remains ecoinvent 3.7 cut-off. Functional-reference witnesses were inspected in 3.7.1 under the documented limited patch-evidence decision; no bare-3.7 vector was directly inspected and no upstream/score equality is claimed. The inspected patch delivery quantities are adopted as screening assumptions rather than relabelling the requested source."
+      ]
+    },
+    {
+      "rule_id": "bp-ab9eb6c9ccfd6290",
+      "original_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": 1,
+        "id": "bp-ab9eb6c9ccfd6290",
+        "mapping_method": "reviewed_pilot_legacy_components",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_legacy_components_review.json#ecoinvent-3.6-cutoff/afe7c86665b9a2dd59da4798845fd96da4743f68d9f246e01ab6a74d5f8744ee"
+                ],
+                "reason": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. ",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              },
+              "target": {
+                "recipe_ref": "pilot-legacy-hour-bddff022fdd02aaa1ff6"
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-c3304b805c678a31",
+        "source": {
+          "location": "GLO",
+          "name": "transport, helicopter",
+          "reference product": "transport, helicopter",
+          "unit": "hour"
+        },
+        "target": {
+          "recipe_ref": "pilot-legacy-hour-bddff022fdd02aaa1ff6"
+        },
+        "technosphere_information_loss": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. "
+      },
+      "compiled_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": 1,
+        "id": "bp-ab9eb6c9ccfd6290",
+        "mapping_method": "reviewed_pilot_legacy_components",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_legacy_components_review.json#ecoinvent-3.6-cutoff/afe7c86665b9a2dd59da4798845fd96da4743f68d9f246e01ab6a74d5f8744ee"
+                ],
+                "reason": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. ",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              },
+              "target": {
+                "recipe_ref": "pilot-legacy-hour-bddff022fdd02aaa1ff6"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.7",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "target": {
+                "recipe_ref": "pilot-legacy-hour-bddff022fdd02aaa1ff6"
+              },
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "One source helicopter flight hour becomes one complete reviewed native single-engine flight hour without LTO, preserving the functional hour rather than normalising by fuel. Inspected source patch kerosene totals 26.4 kg/hour; complete native proxy consumes 182.6 kg/hour. The same large discrepancy was explicitly reviewed for 3.6; its screening assumption is separately extended to this inspected requested profile. No fuel-ratio, 8760/year, aircraft-mass, passenger-km or cycles-per-hour multiplier. Native ECureuil AS350B3/1200 kg fleet and medium-haul-aircraft manufacturing proxy replace a generic source helicopter; flight envelope, infrastructure, allocation and emissions differ substantially and score effects remain unquantified. Native description mentions 20-minute flights/3 LTO per hour, but the without-LTO inventory has no explicit LTO supplier; do not add assumed cycles or duplicate separately listed caller LTO. Preserve the existing exact native2026 hourly-copy helper, which avoids an inconsistent year label in the staging2025 catalog. This does not correct or certify the source fuel demand. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in their declared kg/hour units. Native inventories and source internal uncertainty/background differ; no inventory or score equivalence is asserted. Only exact reviewed cut-off profiles are qualified; no reverse or cross-system-model route is implied. Requested source remains ecoinvent 3.7 cut-off. Functional-reference witnesses were inspected in 3.7.1 under the documented limited patch-evidence decision; no bare-3.7 vector was directly inspected and no upstream/score equality is claimed. The inspected patch delivery quantities are adopted as screening assumptions rather than relabelling the requested source.",
+                "evidence": [
+                  "brightpath/data/export/uvek_fuels_37_sand_hour_review.json#bp-ab9eb6c9ccfd6290"
+                ]
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-c3304b805c678a31",
+        "source": {
+          "location": "GLO",
+          "name": "transport, helicopter",
+          "reference product": "transport, helicopter",
+          "unit": "hour"
+        },
+        "target": {
+          "recipe_ref": "pilot-legacy-hour-bddff022fdd02aaa1ff6"
+        },
+        "technosphere_information_loss": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Correct the unrelated CPE-network-use target to the complete declared native helicopter flight-hour service without LTO. Source reference is one hour of generic Swiss civil helicopter flight, without an LTO technosphere exchange; preserve one flight hour and separately listed caller LTO cycles. Native lightweight single-engine ECureuilAS350B3/1200kg is a documented fleet/purpose proxy; source manufacture is a simplified1000kg steel/aluminium helicopter model. Native scaled medium-haul-aircraft manufacturing,10000h life,emission factors and flight profile replace that source model. Source fuel totals26.4kg/hour; native consumes182.6kg/hour. This large fuel/operation/vintage/model difference is explicit and unquantified, not a basis for dividing hours by a fuel ratio. Native description still mentions20min flights/3LTOperhour although this named without-LTO inventory has no explicit LTO supplier. Retain that documentation limitation; add no assumed3 or12cycles and do not substitute the twin-engine passenger-hour record containing1.791LTOperhour. No original fuel,manufacture or emissions are added a second time. Legacy2025reference-project metadata labels some hourly helicopter records as year while their catalog/index says hour; actual2026metadata and production reference are hour. This review validates the exact2026destination and introduces no8760/year conversion or correction of the reference project.  Exact native2026 hourly inventory copy: source and copied production references are each positive1hour. The2025intermediatecatalog labels this helicopter activity as year; do not treat that label as a physical time conversion. An on-demand helper reproduces every actual native2026 technosphere and biosphere coordinate, with signed amounts and marginal uncertainty unchanged, while validating its component inputs through the existing route. Consumer uses only this copy, not an extra complete native helicopter service. No LTO supplier is inserted, no implicit3/12cycle rate is assumed, and no model quantity is scaled. The native database remains unchanged; native182.6kgfuel/hour and its scaled aircraft manufacturing/emission model remain exactly as selected. Source26.4kgfuel/hour and native documentation/fleet/vintage differences remain explicit unquantified screening limitations. Legacy2025metadata/year inconsistency remains outside the validated2026destination; no8760factor, permissive coverage or catalog patch is introduced. "
+      },
+      "new_profile": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.7",
+          "system_model": "cutoff"
+        },
+        "conversion_factor": 1,
+        "target": {
+          "recipe_ref": "pilot-legacy-hour-bddff022fdd02aaa1ff6"
+        },
+        "review": {
+          "status": "verified",
+          "source_sign": 1,
+          "target_sign": 1,
+          "reason": "One source helicopter flight hour becomes one complete reviewed native single-engine flight hour without LTO, preserving the functional hour rather than normalising by fuel. Inspected source patch kerosene totals 26.4 kg/hour; complete native proxy consumes 182.6 kg/hour. The same large discrepancy was explicitly reviewed for 3.6; its screening assumption is separately extended to this inspected requested profile. No fuel-ratio, 8760/year, aircraft-mass, passenger-km or cycles-per-hour multiplier. Native ECureuil AS350B3/1200 kg fleet and medium-haul-aircraft manufacturing proxy replace a generic source helicopter; flight envelope, infrastructure, allocation and emissions differ substantially and score effects remain unquantified. Native description mentions 20-minute flights/3 LTO per hour, but the without-LTO inventory has no explicit LTO supplier; do not add assumed cycles or duplicate separately listed caller LTO. Preserve the existing exact native2026 hourly-copy helper, which avoids an inconsistent year label in the staging2025 catalog. This does not correct or certify the source fuel demand. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in their declared kg/hour units. Native inventories and source internal uncertainty/background differ; no inventory or score equivalence is asserted. Only exact reviewed cut-off profiles are qualified; no reverse or cross-system-model route is implied. Requested source remains ecoinvent 3.7 cut-off. Functional-reference witnesses were inspected in 3.7.1 under the documented limited patch-evidence decision; no bare-3.7 vector was directly inspected and no upstream/score equality is claimed. The inspected patch delivery quantities are adopted as screening assumptions rather than relabelling the requested source.",
+          "evidence": [
+            "brightpath/data/export/uvek_fuels_37_sand_hour_review.json#bp-ab9eb6c9ccfd6290"
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.7",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "activity_name": "transport, helicopter",
+        "inspected_profile": {
+          "family": "ecoinvent",
+          "version": "3.7.1",
+          "system_model": "cutoff"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "source_file_sha256": "16d7970c45bd9fd60252da5ccd96d06a3a65194e4b375f7dfb9c12b127c23697",
+        "metadata_sha256": "97c3e4279a5f9a27fcd3bbc032c98f204b0622a7794681f8af7150fca3439607",
+        "inventory_sha256": "91b33e9d445507e97ad7dd859682f121aea67b13aa64b2ff2811b8b34563a2e6",
+        "identity": {
+          "location": "GLO",
+          "name": "transport, helicopter",
+          "reference product": "transport, helicopter",
+          "unit": "hour"
+        },
+        "requested_catalog_activity_id": "a79e6d51-dc0f-4045-8b74-495ab090a84f",
+        "inspected_activity_id": "0ed35a10-b0c7-4d2b-9d53-239e71b889b3",
+        "matching_product_id": "c784e421-2f79-47e4-8b6d-2c29fa41aad0"
+      },
+      "source_producer_witnesses": [],
+      "conversion_factor": 1,
+      "quantity_basis": "hour",
+      "preserved_profiles": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.6"
+          },
+          "selected_rule_sha256": "c59e5c07b2c642336a5342de649771b1aa635859d032bec6dc4942b1fd4af319"
+        }
+      ],
+      "preserved_physical_bindings": [],
+      "native_2026_witnesses": [
+        {
+          "identity": {
+            "name": "Transport, passenger, helicopter, single-engine, without LTO",
+            "reference product": "Transport, passenger, helicopter, single-engine, without LTO",
+            "location": "CH",
+            "unit": "hour"
+          },
+          "reference_amount": 1,
+          "metadata_sha256": "f01c5f5d2d39851050be8274255628f693ef8377488349f621c12127f3ce4e1d",
+          "inventory_sha256": "42102a0106d98f81a1a70a53f89d22d15fb58f0e2e8abc3165e33d7b073937e4",
+          "source_kerosene_per_hour": 26.399999999999995,
+          "native_kerosene_per_hour": 182.6
+        }
+      ],
+      "limitations": [
+        "One source helicopter flight hour becomes one complete reviewed native single-engine flight hour without LTO, preserving the functional hour rather than normalising by fuel. Inspected source patch kerosene totals 26.4 kg/hour; complete native proxy consumes 182.6 kg/hour. The same large discrepancy was explicitly reviewed for 3.6; its screening assumption is separately extended to this inspected requested profile. No fuel-ratio, 8760/year, aircraft-mass, passenger-km or cycles-per-hour multiplier. Native ECureuil AS350B3/1200 kg fleet and medium-haul-aircraft manufacturing proxy replace a generic source helicopter; flight envelope, infrastructure, allocation and emissions differ substantially and score effects remain unquantified. Native description mentions 20-minute flights/3 LTO per hour, but the without-LTO inventory has no explicit LTO supplier; do not add assumed cycles or duplicate separately listed caller LTO. Preserve the existing exact native2026 hourly-copy helper, which avoids an inconsistent year label in the staging2025 catalog. This does not correct or certify the source fuel demand.",
+        "Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in their declared kg/hour units. Native inventories and source internal uncertainty/background differ; no inventory or score equivalence is asserted. Only exact reviewed cut-off profiles are qualified; no reverse or cross-system-model route is implied.",
+        "Requested source remains ecoinvent 3.7 cut-off. Functional-reference witnesses were inspected in 3.7.1 under the documented limited patch-evidence decision; no bare-3.7 vector was directly inspected and no upstream/score equality is claimed. The inspected patch delivery quantities are adopted as screening assumptions rather than relabelling the requested source."
+      ]
+    }
+  ],
+  "recipes": {
+    "fuels-37-delivered-swiss-sand": {
+      "name": "market for Swiss sand, reviewed 3.7 delivery",
+      "reference product": "sand",
+      "location": "CH",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "reference product": "Transport, freight, rail",
+          "amount": 0.00372,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "loc": -5.5940316106970815,
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "negative": false,
+          "pedigree": {
+            "reliability": 1.0,
+            "completeness": 1.0,
+            "temporal correlation": 4.0,
+            "geographical correlation": 5.0,
+            "further technological correlation": 4.0
+          }
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "amount": 0.02026,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "loc": -3.8991067801615995,
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "negative": false,
+          "pedigree": {
+            "reliability": 1.0,
+            "completeness": 1.0,
+            "temporal correlation": 4.0,
+            "geographical correlation": 5.0,
+            "further technological correlation": 4.0
+          }
+        },
+        {
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "unit": "kilogram",
+          "amount": 1.0,
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "loc": 1.0
+        }
+      ],
+      "rationale": "One kg allocated Swiss sand from joint sand/round-gravel quarrying, not silica sand, crushed stone, pure gravel or an excavation-only service. Both definitions describe the 35 percent sand/65 percent round-gravel production mix; do not apply those percentages a second time or add a gravel credit. Retain complete native extraction, internal logistics, machinery, land and recultivation once. New 3.7 delivery helper retains source patch 0.00372 rail and 0.02026 road tonne-km per kg, with marginal uncertainty. Native RER rail and generic road fleet replace source fleets; no additional density, distance or payload factor. Native administration/dust/wastewater exclusions and historical quarry/background differences remain explicit. The previously approved 3.9 at-mine target remains unchanged; that older profile does not inherit this new delivery recipe. Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in their declared kg/hour units. Native inventories and source internal uncertainty/background differ; no inventory or score equivalence is asserted. Only exact reviewed cut-off profiles are qualified; no reverse or cross-system-model route is implied. Requested source remains ecoinvent 3.7 cut-off. Functional-reference witnesses were inspected in 3.7.1 under the documented limited patch-evidence decision; no bare-3.7 vector was directly inspected and no upstream/score equality is claimed. The inspected patch delivery quantities are adopted as screening assumptions rather than relabelling the requested source.",
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_37_sand_hour_review.json#bp-714b90acb435b476"
+      ]
+    }
+  },
+  "reviews": [
+    {
+      "rationale": "Use the reviewed profile-specific complete Swiss sand supply per kg; the 3.7 delivery recipe and the earlier 3.9 at-mine target are distinct.",
+      "limitations": [
+        "Preserve signed caller quantities, supported uncertainty, formulas and properties at factor +1 in their declared kg/hour units. Native inventories and source internal uncertainty/background differ; no inventory or score equivalence is asserted. Only exact reviewed cut-off profiles are qualified; no reverse or cross-system-model route is implied."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_37_sand_hour_review.json#bp-714b90acb435b476"
+      ]
+    }
+  ],
+  "prior_inspections": [
+    {
+      "path": "export/uvek_pilot_legacy_components_review.json",
+      "sha256": "d284a761fa98db3db6b10f2889939852fcba9a079c6d9a5eb1764d2d82b84b25"
+    },
+    {
+      "path": "export/uvek_pilot_stock_finish_review.json",
+      "sha256": "c53e0f5d3d90bdf5228e54d1851587bb53f601ff1fe217759a3c8a1a6e27b6c4"
+    }
+  ],
+  "native_lci_checks": [
+    {
+      "rule_id": "bp-714b90acb435b476",
+      "finite_supply": true,
+      "finite_inventory": true,
+      "native_supplier_count": 3
+    },
+    {
+      "rule_id": "bp-ab9eb6c9ccfd6290",
+      "finite_supply": true,
+      "finite_inventory": true,
+      "native_supplier_count": 1
+    }
+  ],
+  "source_database_unchanged": {
+    "name": "BAFU:2026-reimported",
+    "activity_count": 11947,
+    "modified": "2026-09-22T10:55:01.512934"
+  },
+  "licensing": "Only native derived supply recipes, scalar reference facts and source witness hashes; no raw licensed inventories or formulas published."
+}
