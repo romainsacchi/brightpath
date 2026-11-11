@@ -730,6 +730,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from scripts.review_uvek_fuels_37_market_profiles import apply_fuels_37_market_profiles_review
         from scripts.review_uvek_fuels_37_sand_hour import apply_fuels_37_sand_hour_review
         from scripts.review_uvek_fuels_37_waste_oil import apply_fuels_37_waste_oil_review
+        from scripts.review_uvek_wool_europe_direct_grid import apply_wool_europe_direct_grid_review
         from scripts.review_uvek_deferred_delivered_gas import apply_deferred_delivered_gas_review
         from scripts.review_uvek_deferred_waste_markets import apply_deferred_waste_markets_review
         from scripts.review_uvek_deferred_sorting import apply_deferred_sorting_review
@@ -834,6 +835,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_fuels_37_market_profiles import apply_fuels_37_market_profiles_review
         from review_uvek_fuels_37_sand_hour import apply_fuels_37_sand_hour_review
         from review_uvek_fuels_37_waste_oil import apply_fuels_37_waste_oil_review
+        from review_uvek_wool_europe_direct_grid import apply_wool_europe_direct_grid_review
         from review_uvek_deferred_delivered_gas import apply_deferred_delivered_gas_review
         from review_uvek_deferred_waste_markets import apply_deferred_waste_markets_review
         from review_uvek_deferred_sorting import apply_deferred_sorting_review
@@ -941,6 +943,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_fuels_37_market_profiles_review(technosphere)
     apply_fuels_37_sand_hour_review(technosphere)
     apply_fuels_37_waste_oil_review(technosphere)
+    apply_wool_europe_direct_grid_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:

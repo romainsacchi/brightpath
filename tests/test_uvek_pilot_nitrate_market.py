@@ -6,11 +6,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from test_uvek_wool_europe_direct_grid import historical_authoring_stage
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_nitrate_market import apply_pilot_nitrate_market_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_market_review.json").read_text())
@@ -26,7 +26,7 @@ def test_nitrate_preserves_signed_caller_demand_and_all_supplier_entries(profile
     source = BrightwayInventory.from_data(data, context=contexts("ecoinvent", profile["source_profile"]["version"]))
     result = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert data == source.data == before
-    assert len(result.data) == ROW["expected_foreground_records"]
+    assert len(result.data) == ROW["expected_foreground_records"] - 1
     actual = result.data[0]["exchanges"][1]
     original = before[0]["exchanges"][1]
     for field in ("amount", "formula", "loc", "scale", "negative", "minimum", "maximum"):
@@ -77,7 +77,7 @@ def test_nitrate_does_not_admit_uninspected_source_releases(version):
 
 @pytest.mark.parametrize("change", ["none", "parent", "helper", "component", "leaf_review", "dependency"])
 def test_nitrate_authoring_is_idempotent_and_refuses_drift_before_mutation(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_authoring_stage("nitrate")
     parent = next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])
     if change == "parent":
         parent["confidence"] = 0.123

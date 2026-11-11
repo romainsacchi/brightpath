@@ -1,18 +1,18 @@
 """Wool markets retain source dust, treatment shares, operating inputs and freight."""
 
-from copy import deepcopy
 import hashlib
 import json
+from copy import deepcopy
 
 import pytest
-
-from brightpath import BrightwayInventory, DATA_DIR
-from brightpath.core.policies import MigrationPolicy
-from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
-from scripts.review_uvek_pilot_nitrate_wool_europe import apply_pilot_nitrate_wool_europe_review
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from test_uvek_wool_europe_direct_grid import historical_authoring_stage
+
+from brightpath import DATA_DIR, BrightwayInventory
+from brightpath.core.policies import MigrationPolicy
+from brightpath.exceptions import MigrationError
+from scripts.review_uvek_pilot_nitrate_wool_europe import apply_pilot_nitrate_wool_europe_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_wool_europe_review.json").read_text())
 
@@ -35,7 +35,7 @@ def test_european_wool_keeps_dust_fates_operating_inputs_and_signed_uncertainty(
     result = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert source.data == data == before
     records = result.data
-    assert len(records) == row["expected_foreground_records"]
+    assert len(records) == row["expected_foreground_records"] - 1
     assert records[0]["exchanges"][-1] == emission
     actual = records[0]["exchanges"][1]
     original = before[0]["exchanges"][1]
@@ -82,16 +82,12 @@ def test_european_wool_keeps_dust_fates_operating_inputs_and_signed_uncertainty(
         sum(x["type"] == "biosphere" for r in records[1:] for x in r["exchanges"])
         == row["expected_foreground_biosphere_exchanges"]
     )
-    grid = helpers[REVIEW["country_grid_recipe"]]
-    grid_inputs = [x for x in grid["exchanges"] if x["type"] != "production"]
-    assert len(grid_inputs) == 39
-    assert sum(x["location"] == "RER" for x in grid_inputs) == 7
-    for x, proof in zip(grid_inputs, REVIEW["operating_utility_witnesses"], strict=True):
-        assert x["amount"] == proof["original_coefficients"]["amount"]
-        assert all(x[k] == v for k, v in proof["target"].items())
-        assert proof["approved_country_proxy"] is (
-            proof["source"]["identity"]["location"] in REVIEW["approved_missing_countries"]
-        )
+    assert REVIEW["country_grid_recipe"] not in helpers
+    decision = json.loads((DATA_DIR / "export/uvek_wool_europe_direct_grid_review.json").read_text())
+    treatment = helpers[decision["owner_recipe_id"]]
+    electricity = [x for x in treatment["exchanges"] if x["type"] != "production"][decision["input_index"]]
+    assert all(electricity[k] == value for k, value in decision["native_supplier"].items())
+    assert electricity["amount"] == 0.0022
     assert not any(i.code == "migration.recipe_input_omission" for i in result.last_migration_report.issues)
 
 
@@ -107,7 +103,7 @@ def test_european_wool_refuses_uninspected_source_versions(row, version):
 
 @pytest.mark.parametrize("change", ["none", "late_parent", "new_helper", "prior_helper"])
 def test_european_wool_authoring_replay_is_atomic_and_freezes_all_helpers(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_authoring_stage("wool")
     if change == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif change == "new_helper":
