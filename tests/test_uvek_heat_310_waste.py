@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_pilot_hazardous_paint import hazardous_paint_authoring_stage_resource
+from test_uvek_pilot_nitrate_hdpe import hdpe_before_packaging_extension_resource
 from test_uvek_reference_signs import consumer, contexts
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
@@ -130,7 +131,7 @@ def test_uninspected_version_does_not_inherit_waste_or_omission_approval(row, po
 @pytest.mark.parametrize("case,author", [(0, apply_pilot_nitrate_hdpe_review), (1, apply_pilot_hazardous_paint_review)])
 @pytest.mark.parametrize("drift", ["extra_profile", "fresh_helper"])
 def test_older_authoring_stage_refuses_unqualified_extensions(case, author, drift):
-    resource = hazardous_paint_authoring_stage_resource() if case == 1 else deepcopy(load_uvek_technosphere_resource())
+    resource = hazardous_paint_authoring_stage_resource() if case == 1 else hdpe_before_packaging_extension_resource()
     row = REVIEW["records"][case]
     if drift == "extra_profile":
         rule = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
@@ -147,7 +148,7 @@ def test_older_authoring_stage_refuses_unqualified_extensions(case, author, drif
 
 @pytest.mark.parametrize("drift", [False, True])
 def test_new_authoring_replay_is_idempotent_and_atomic(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = hdpe_before_packaging_extension_resource()
     if drift:
         resource["recipes"][REVIEW["records"][0]["target"]["recipe_ref"]]["source_input_omissions"][0][
             "source_profile"

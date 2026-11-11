@@ -8,13 +8,35 @@ import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
 
-from brightpath import DATA_DIR, BrightwayInventory
+from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
+from brightpath.background.reference_signs import select_profile_sign_rules
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource
+from scripts.review_uvek_packaging_hdpe import digest
 from scripts.review_uvek_pilot_nitrate_hdpe import apply_pilot_nitrate_hdpe_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_hdpe_review.json").read_text())
+
+
+def hdpe_before_packaging_extension_resource():
+    """Restore the older authoring stage only after proving preserved current behavior."""
+    resource = deepcopy(load_uvek_technosphere_resource())
+    newer = json.loads((DATA_DIR / "export/uvek_packaging_hdpe_review.json").read_text())
+    rule = next(r for r in resource["replace"] if r["id"] == newer["rule_id"])
+    assert rule == newer["compiled_rule"]
+    for proof in newer["preserved_profiles"]:
+        selected = next(
+            r
+            for r in select_profile_sign_rules(resource, TechnosphereProfile(**proof["source_profile"]))["replace"]
+            if r["id"] == newer["rule_id"]
+        )
+        assert digest(selected) == proof["selected_rule_sha256"]
+        assert digest(resource["reviews"][selected["review_ref"]]) == proof["shared_review_sha256"]
+    assert all(digest(resource["recipes"][rid]) == expected for rid, expected in newer["recipe_dependencies"].items())
+    rule.clear()
+    rule.update(deepcopy(newer["original_rule"]))
+    return resource
 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["source"]["location"])
@@ -91,7 +113,7 @@ def test_hdpe_keeps_virgin_delivery_and_signed_uncertainty(row, amount, uncertai
 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["source"]["location"])
-@pytest.mark.parametrize("version", ["3.11", "3.12"])
+@pytest.mark.parametrize("version", ["3.7", "3.12"])  # 3.11 has a separately tested new exact approval.
 def test_hdpe_refuses_uninspected_source_versions(row, version):
     source = BrightwayInventory.from_data(consumer(row["source"], -1), context=contexts("ecoinvent", version))
     before = deepcopy(source.data)
@@ -102,7 +124,7 @@ def test_hdpe_refuses_uninspected_source_versions(row, version):
 
 @pytest.mark.parametrize("change", ["none", "late_parent", "new_helper", "component"])
 def test_hdpe_authoring_replay_is_atomic_and_freezes_all_helpers(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = hdpe_before_packaging_extension_resource()
     if change == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif change == "new_helper":
