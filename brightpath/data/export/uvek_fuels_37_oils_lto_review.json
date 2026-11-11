@@ -1,0 +1,531 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-11",
+  "authorization": "Standing auto-approval of independently inspected modelling decisions with explicit warnings under the active BAFU/UVEK shared-Premise integration goal.",
+  "scope": "Two exact 3.7 cut-off sign-profile extensions, with limited 3.7.1 reference evidence. Preserve older selected rules and all helper inventories. Waste-oil market is excluded pending its distinct cement-kiln treatment branch review.",
+  "patch_evidence_decision": {
+    "id": "37-functional-reference-only-from-371",
+    "requested_version": "3.7",
+    "inspected_version": "3.7.1",
+    "official_report_url": "https://support.ecoinvent.org/hubfs/Knowledge%20Base/Database/Releases/change%20report_v3%207%201_20201217.pdf",
+    "basis": "Section 2.1 describes sinter-emission, zinc-resource and paratungstate-uncertainty corrections. None of the inspected root/producer activities belongs to those named corrections. Matching product UUID, unit and exact functional definitions support the limited inference that the reference/function can be used for these 3.7 proxies. This is an inference, not proof of identical unpatched inventory vectors or downstream results.",
+    "restriction": "Do not apply this decision to changed activities, reconstruct unpatched source vectors from the patch, transfer any source LCIA result, or silently rename the requested source version."
+  },
+  "records": [
+    {
+      "rule_id": "bp-4f69327dbf9d3e42",
+      "resource_action": "add_exact_37_sign_profile",
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.7",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "inspected_profile": {
+          "family": "ecoinvent",
+          "version": "3.7.1",
+          "system_model": "cutoff"
+        },
+        "activity_name": "market for lubricating oil",
+        "reference_amounts": [
+          1.0
+        ],
+        "source_file_sha256": "7bf8a0a0f5fb9185f0426a65017c32cee2542f5863ce788bf3cf6eba02da7b98",
+        "metadata_sha256": "7ece9afb2c9bd7fff8964214f57a9c16ba815885d33c9a55545c7cce8d858b3e",
+        "inventory_sha256": "0b264dd3f7e2fa48448971e4189acd77387404a0a8a1a57c4b1885484aa12d62",
+        "identity": {
+          "location": "RER",
+          "name": "market for lubricating oil",
+          "reference product": "lubricating oil",
+          "unit": "kilogram"
+        },
+        "requested_catalog_activity_id": "065fc3f1-8347-48b3-b974-56204a233df7",
+        "inspected_activity_id": "4a7e6ffe-4185-4821-8354-dccbf126ca88",
+        "matching_product_id": "ea75b944-c676-4a13-85b8-2bea98f765a4"
+      },
+      "source_producer_witnesses": [
+        {
+          "inspected_profile": {
+            "family": "ecoinvent",
+            "version": "3.7.1",
+            "system_model": "cutoff"
+          },
+          "activity_name": "lubricating oil production",
+          "reference_amounts": [
+            1.0
+          ],
+          "source_file_sha256": "ddd82cb755be06e352165df22226f3785dc97e4027f24376961ef1fd5740906a",
+          "metadata_sha256": "54d89fd79adcda8fc21cd718a27e6f6d7ff154a5e8ed57041e953e0a204608cd",
+          "inventory_sha256": "7b1f8c1caa4170c18cf7be2b67c1fcf83778c1baa039e952126fb08d21d873b7"
+        }
+      ],
+      "native_2026_witness": {
+        "identity": {
+          "location": "RER",
+          "name": "Lubricating oil, at plant",
+          "reference product": "Lubricating oil, at plant",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1,
+        "nonproduction_count": 6,
+        "metadata_sha256": "0be433f1b03a7238b6d1ac3d83439e3e83e07264d82bccf1dbdd75ca0fc5de77",
+        "inventory_sha256": "654db62551cfb6cc0dfb806868c4e112f2103cb38ac5da0563484c54af1c9258"
+      },
+      "conversion_factor": 1,
+      "quantity_basis": "kilogram",
+      "limitations": [
+        "Complete native liquid lubricating oil per kg, not spent oil, lubricant application or a litre. Native hydrocracking/distillation/dewaxing is a theoretical screening model with 75 percent process yield already represented internally; no extra yield or density factor. Native production emissions are incomplete and solid wastes omitted. Native at-plant supply replaces the European delivered market, including its original road, rail and barge delivery rather than reconstructing them. Formulation, additives, route and delivery differences remain unquantified.",
+        "Preserve signed caller quantities, uncertainty, formulas and properties at factor +1 in the declared unit. Keep complete native inventory once, including its existing internal approximations, allocation, transport and background. Source internal supplier shares, final-market logistics and internal uncertainty are replaced rather than reconstructed. Geography, technology, grade/design, allocation, vintage and native biosphere exclusions differ; score effects are unquantified and no inventory or LCIA equivalence is claimed.",
+        "Requested source remains ecoinvent 3.7 cut-off. Functional-reference evidence was inspected in 3.7.1 for the exact matching name/product/location and product UUID, under the shared explicitly limited patch-evidence decision. This does not relabel the source, assert direct inspection of the unpatched inventory vector, or establish equality of upstream inventories, uncertainty or scores."
+      ],
+      "source_market_internal_shares_and_freight_reproduced": false,
+      "native_inventory_modified": false,
+      "original_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-4f69327dbf9d3e42",
+        "mapping_method": "reviewed_deferred_materials",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_deferred_materials_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_deferred_materials_review.json"
+                ],
+                "reason": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Complete native liquid lubricating oil is a hydrocracking/distillation/dewaxing screening proxy, documented75%yield with theoretical process data and incomplete air/water emissions and omitted solid wastes. Native1.33kgdiesel/kg already represents its yield; do not divide caller demand by0.75. It replaces the source European delivered market, including its production technology and source0.1713road/0.0438rail/0.0219bargetkm perkg rather than reconstructing those freight legs. Lubricant formulation, additives, production routes, delivery, emission completeness, geography, vintage and internal uncertainty differ.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_deferred_materials_review.json"
+                ],
+                "reason": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Complete native liquid lubricating oil is a hydrocracking/distillation/dewaxing screening proxy, documented75%yield with theoretical process data and incomplete air/water emissions and omitted solid wastes. Native1.33kgdiesel/kg already represents its yield; do not divide caller demand by0.75. It replaces the source European delivered market, including its production technology and source0.1713road/0.0438rail/0.0219bargetkm perkg rather than reconstructing those freight legs. Lubricant formulation, additives, production routes, delivery, emission completeness, geography, vintage and internal uncertainty differ.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_deferred_materials_review.json"
+                ],
+                "reason": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Complete native liquid lubricating oil is a hydrocracking/distillation/dewaxing screening proxy, documented75%yield with theoretical process data and incomplete air/water emissions and omitted solid wastes. Native1.33kgdiesel/kg already represents its yield; do not divide caller demand by0.75. It replaces the source European delivered market, including its production technology and source0.1713road/0.0438rail/0.0219bargetkm perkg rather than reconstructing those freight legs. Lubricant formulation, additives, production routes, delivery, emission completeness, geography, vintage and internal uncertainty differ.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              }
+            }
+          ],
+          "reason": "Only the exact inspected cut-off source profiles are approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-e72accecc14b6442",
+        "source": {
+          "location": "RER",
+          "name": "market for lubricating oil",
+          "reference product": "lubricating oil",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Lubricating oil, at plant",
+          "reference product": "Lubricating oil, at plant",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Complete native liquid lubricating oil is a hydrocracking/distillation/dewaxing screening proxy, documented75%yield with theoretical process data and incomplete air/water emissions and omitted solid wastes. Native1.33kgdiesel/kg already represents its yield; do not divide caller demand by0.75. It replaces the source European delivered market, including its production technology and source0.1713road/0.0438rail/0.0219bargetkm perkg rather than reconstructing those freight legs. Lubricant formulation, additives, production routes, delivery, emission completeness, geography, vintage and internal uncertainty differ."
+      },
+      "preserved_profiles": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.6"
+          },
+          "selected_rule_sha256": "918d1b8d81e0b31935abc7221e48f7fb74681a234b0b7811958648e6b0484e4f"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "selected_rule_sha256": "918d1b8d81e0b31935abc7221e48f7fb74681a234b0b7811958648e6b0484e4f"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.12"
+          },
+          "selected_rule_sha256": "918d1b8d81e0b31935abc7221e48f7fb74681a234b0b7811958648e6b0484e4f"
+        }
+      ],
+      "compiled_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-4f69327dbf9d3e42",
+        "mapping_method": "reviewed_deferred_materials",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_deferred_materials_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_deferred_materials_review.json"
+                ],
+                "reason": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Complete native liquid lubricating oil is a hydrocracking/distillation/dewaxing screening proxy, documented75%yield with theoretical process data and incomplete air/water emissions and omitted solid wastes. Native1.33kgdiesel/kg already represents its yield; do not divide caller demand by0.75. It replaces the source European delivered market, including its production technology and source0.1713road/0.0438rail/0.0219bargetkm perkg rather than reconstructing those freight legs. Lubricant formulation, additives, production routes, delivery, emission completeness, geography, vintage and internal uncertainty differ.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_deferred_materials_review.json"
+                ],
+                "reason": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Complete native liquid lubricating oil is a hydrocracking/distillation/dewaxing screening proxy, documented75%yield with theoretical process data and incomplete air/water emissions and omitted solid wastes. Native1.33kgdiesel/kg already represents its yield; do not divide caller demand by0.75. It replaces the source European delivered market, including its production technology and source0.1713road/0.0438rail/0.0219bargetkm perkg rather than reconstructing those freight legs. Lubricant formulation, additives, production routes, delivery, emission completeness, geography, vintage and internal uncertainty differ.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_deferred_materials_review.json"
+                ],
+                "reason": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Complete native liquid lubricating oil is a hydrocracking/distillation/dewaxing screening proxy, documented75%yield with theoretical process data and incomplete air/water emissions and omitted solid wastes. Native1.33kgdiesel/kg already represents its yield; do not divide caller demand by0.75. It replaces the source European delivered market, including its production technology and source0.1713road/0.0438rail/0.0219bargetkm perkg rather than reconstructing those freight legs. Lubricant formulation, additives, production routes, delivery, emission completeness, geography, vintage and internal uncertainty differ.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.7",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Complete native liquid lubricating oil per kg, not spent oil, lubricant application or a litre. Native hydrocracking/distillation/dewaxing is a theoretical screening model with 75 percent process yield already represented internally; no extra yield or density factor. Native production emissions are incomplete and solid wastes omitted. Native at-plant supply replaces the European delivered market, including its original road, rail and barge delivery rather than reconstructing them. Formulation, additives, route and delivery differences remain unquantified. Preserve signed caller quantities, uncertainty, formulas and properties at factor +1 in the declared unit. Keep complete native inventory once, including its existing internal approximations, allocation, transport and background. Source internal supplier shares, final-market logistics and internal uncertainty are replaced rather than reconstructed. Geography, technology, grade/design, allocation, vintage and native biosphere exclusions differ; score effects are unquantified and no inventory or LCIA equivalence is claimed. Requested source remains ecoinvent 3.7 cut-off. Functional-reference evidence was inspected in 3.7.1 for the exact matching name/product/location and product UUID, under the shared explicitly limited patch-evidence decision. This does not relabel the source, assert direct inspection of the unpatched inventory vector, or establish equality of upstream inventories, uncertainty or scores.",
+                "evidence": [
+                  "brightpath/data/export/uvek_fuels_37_oils_lto_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Only the exact inspected cut-off source profiles are approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-e72accecc14b6442",
+        "source": {
+          "location": "RER",
+          "name": "market for lubricating oil",
+          "reference product": "lubricating oil",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Lubricating oil, at plant",
+          "reference product": "Lubricating oil, at plant",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "User auto-approved coming modelling decisions and requested proceeding with the deferred UVEK electricity work. This is a complete native functional screening proxy in the exact inspected cut-off source profiles, not an LCIA-equivalence finding. Preserve signed caller quantities, formulas, uncertainty and separate exchanges at factor+1. Both actual source and native2026 reference outputs are positive1 in the same declared unit. Complete native upstream inventory and internal uncertainty replace the source supplier boundary once; native vintage/geography/allocation, the2991upstreambiosphere exclusions and unquantified score differences remain explicit. Other source releases, reverse and cross-system-model conversions are not approved by this review. Complete native liquid lubricating oil is a hydrocracking/distillation/dewaxing screening proxy, documented75%yield with theoretical process data and incomplete air/water emissions and omitted solid wastes. Native1.33kgdiesel/kg already represents its yield; do not divide caller demand by0.75. It replaces the source European delivered market, including its production technology and source0.1713road/0.0438rail/0.0219bargetkm perkg rather than reconstructing those freight legs. Lubricant formulation, additives, production routes, delivery, emission completeness, geography, vintage and internal uncertainty differ."
+      },
+      "new_profile": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.7",
+          "system_model": "cutoff"
+        },
+        "conversion_factor": 1,
+        "review": {
+          "status": "verified",
+          "source_sign": 1,
+          "target_sign": 1,
+          "reason": "Complete native liquid lubricating oil per kg, not spent oil, lubricant application or a litre. Native hydrocracking/distillation/dewaxing is a theoretical screening model with 75 percent process yield already represented internally; no extra yield or density factor. Native production emissions are incomplete and solid wastes omitted. Native at-plant supply replaces the European delivered market, including its original road, rail and barge delivery rather than reconstructing them. Formulation, additives, route and delivery differences remain unquantified. Preserve signed caller quantities, uncertainty, formulas and properties at factor +1 in the declared unit. Keep complete native inventory once, including its existing internal approximations, allocation, transport and background. Source internal supplier shares, final-market logistics and internal uncertainty are replaced rather than reconstructed. Geography, technology, grade/design, allocation, vintage and native biosphere exclusions differ; score effects are unquantified and no inventory or LCIA equivalence is claimed. Requested source remains ecoinvent 3.7 cut-off. Functional-reference evidence was inspected in 3.7.1 for the exact matching name/product/location and product UUID, under the shared explicitly limited patch-evidence decision. This does not relabel the source, assert direct inspection of the unpatched inventory vector, or establish equality of upstream inventories, uncertainty or scores.",
+          "evidence": [
+            "brightpath/data/export/uvek_fuels_37_oils_lto_review.json"
+          ]
+        }
+      }
+    },
+    {
+      "rule_id": "bp-b62924eca33d09c2",
+      "resource_action": "add_exact_37_sign_profile",
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.7",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "inspected_profile": {
+          "family": "ecoinvent",
+          "version": "3.7.1",
+          "system_model": "cutoff"
+        },
+        "activity_name": "transport, helicopter, LTO cycle",
+        "reference_amounts": [
+          1.0
+        ],
+        "source_file_sha256": "f37fd04981bd3a180b41452d177f4a18e77c9803b21aaa028baa6c3e62e6328b",
+        "metadata_sha256": "8da4549f3817bb8a0d4b77bf90937c33c68bebff56c51fc22ba596f26e5e050f",
+        "inventory_sha256": "2fd727b6188a05abb3eec3258d50c0158e5b5dbd6f98da1a21e467ac179b3658",
+        "identity": {
+          "location": "GLO",
+          "name": "transport, helicopter, LTO cycle",
+          "reference product": "transport, helicopter, LTO cycle",
+          "unit": "unit"
+        },
+        "requested_catalog_activity_id": "0a29a6ac-5018-4f3f-abe2-7a30f9ce3b30",
+        "inspected_activity_id": "74f7f833-7db7-4bac-bd30-3454067b0f31",
+        "matching_product_id": "cc7e810b-79d2-4c9c-96e6-60a3c739952c"
+      },
+      "source_producer_witnesses": [],
+      "native_2026_witness": {
+        "identity": {
+          "location": "CH",
+          "name": "Transport, helicopter, twin-engine, LTO cycle",
+          "reference product": "Transport, helicopter, twin-engine, LTO cycle",
+          "unit": "unit"
+        },
+        "reference_amount": 1,
+        "nonproduction_count": 23,
+        "metadata_sha256": "d6d9d6676a5931e1e9ea674fb99aa123994bc32baa255fed09f77ad3c932d8c5",
+        "inventory_sha256": "5a56f097c8b5129928e4f07b6603db243956fcf9260db3a25e4daee55840736c"
+      },
+      "conversion_factor": 1,
+      "quantity_basis": "unit",
+      "limitations": [
+        "One complete native twin-engine helicopter landing/take-off cycle per generic source LTO cycle, not an hour, aircraft or tonne-km. Source kerosene totals 45.2 kg per cycle; native fuel is 41.2 kg. No fuel-normalisation, cycles-per-hour, payload or aircraft-mass factor; separate caller cruise and infrastructure remain unchanged. Native documentation inconsistently names EC135VIP and a 6500 kg freight helicopter: preserve that ambiguity. Fleet, mission, cycle envelope, emissions, geography and vintage differ. This is an explicit cycle-service screening proxy, not exact aircraft equivalence.",
+        "Preserve signed caller quantities, uncertainty, formulas and properties at factor +1 in the declared unit. Keep complete native inventory once, including its existing internal approximations, allocation, transport and background. Source internal supplier shares, final-market logistics and internal uncertainty are replaced rather than reconstructed. Geography, technology, grade/design, allocation, vintage and native biosphere exclusions differ; score effects are unquantified and no inventory or LCIA equivalence is claimed.",
+        "Requested source remains ecoinvent 3.7 cut-off. Functional-reference evidence was inspected in 3.7.1 for the exact matching name/product/location and product UUID, under the shared explicitly limited patch-evidence decision. This does not relabel the source, assert direct inspection of the unpatched inventory vector, or establish equality of upstream inventories, uncertainty or scores."
+      ],
+      "source_market_internal_shares_and_freight_reproduced": false,
+      "native_inventory_modified": false,
+      "original_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-b62924eca33d09c2",
+        "mapping_method": "reviewed_pilot_legacy_components",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+                ],
+                "reason": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Qualify one complete native twin-engine helicopter landing/take-off cycle per source generic Swiss civil LTO cycle. Source reference and native reference are each one cycle, not an hour or an aircraft. Source fuel totals45.2kg/cycle; native41.2kg/cycle. Native model documents EC135VIP while another description states freight helicopter6500kg; preserve that model/mass inconsistency as a limitation rather than silently choosing a new aircraft or scaling by mass. Fleet,mission,altitude/time envelope,emission factors and vintage differ. Source generic civil cycle lacks a verified engine/payload distinction, so this is an explicit cycle-service screening proxy. Do not append cruise/manufacture or infer cycles per hour. Separate caller flight-hour exchanges remain unchanged. ",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            }
+          ],
+          "reason": "Only the exact inspected cut-off source profiles are approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-4712806767609264",
+        "source": {
+          "location": "GLO",
+          "name": "transport, helicopter, LTO cycle",
+          "reference product": "transport, helicopter, LTO cycle",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Transport, helicopter, twin-engine, LTO cycle",
+          "reference product": "Transport, helicopter, twin-engine, LTO cycle",
+          "unit": "unit"
+        },
+        "technosphere_information_loss": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Qualify one complete native twin-engine helicopter landing/take-off cycle per source generic Swiss civil LTO cycle. Source reference and native reference are each one cycle, not an hour or an aircraft. Source fuel totals45.2kg/cycle; native41.2kg/cycle. Native model documents EC135VIP while another description states freight helicopter6500kg; preserve that model/mass inconsistency as a limitation rather than silently choosing a new aircraft or scaling by mass. Fleet,mission,altitude/time envelope,emission factors and vintage differ. Source generic civil cycle lacks a verified engine/payload distinction, so this is an explicit cycle-service screening proxy. Do not append cruise/manufacture or infer cycles per hour. Separate caller flight-hour exchanges remain unchanged. "
+      },
+      "preserved_profiles": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.6"
+          },
+          "selected_rule_sha256": "ca1b3b816bdb59809c6ce021fcd6dee22aded699dd2fad7a9c4fcab10dfbb732"
+        }
+      ],
+      "compiled_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-b62924eca33d09c2",
+        "mapping_method": "reviewed_pilot_legacy_components",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_legacy_components_review.json"
+                ],
+                "reason": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Qualify one complete native twin-engine helicopter landing/take-off cycle per source generic Swiss civil LTO cycle. Source reference and native reference are each one cycle, not an hour or an aircraft. Source fuel totals45.2kg/cycle; native41.2kg/cycle. Native model documents EC135VIP while another description states freight helicopter6500kg; preserve that model/mass inconsistency as a limitation rather than silently choosing a new aircraft or scaling by mass. Fleet,mission,altitude/time envelope,emission factors and vintage differ. Source generic civil cycle lacks a verified engine/payload distinction, so this is an explicit cycle-service screening proxy. Do not append cruise/manufacture or infer cycles per hour. Separate caller flight-hour exchanges remain unchanged. ",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.7",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "One complete native twin-engine helicopter landing/take-off cycle per generic source LTO cycle, not an hour, aircraft or tonne-km. Source kerosene totals 45.2 kg per cycle; native fuel is 41.2 kg. No fuel-normalisation, cycles-per-hour, payload or aircraft-mass factor; separate caller cruise and infrastructure remain unchanged. Native documentation inconsistently names EC135VIP and a 6500 kg freight helicopter: preserve that ambiguity. Fleet, mission, cycle envelope, emissions, geography and vintage differ. This is an explicit cycle-service screening proxy, not exact aircraft equivalence. Preserve signed caller quantities, uncertainty, formulas and properties at factor +1 in the declared unit. Keep complete native inventory once, including its existing internal approximations, allocation, transport and background. Source internal supplier shares, final-market logistics and internal uncertainty are replaced rather than reconstructed. Geography, technology, grade/design, allocation, vintage and native biosphere exclusions differ; score effects are unquantified and no inventory or LCIA equivalence is claimed. Requested source remains ecoinvent 3.7 cut-off. Functional-reference evidence was inspected in 3.7.1 for the exact matching name/product/location and product UUID, under the shared explicitly limited patch-evidence decision. This does not relabel the source, assert direct inspection of the unpatched inventory vector, or establish equality of upstream inventories, uncertainty or scores.",
+                "evidence": [
+                  "brightpath/data/export/uvek_fuels_37_oils_lto_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Only the exact inspected cut-off source profiles are approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-4712806767609264",
+        "source": {
+          "location": "GLO",
+          "name": "transport, helicopter, LTO cycle",
+          "reference product": "transport, helicopter, LTO cycle",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Transport, helicopter, twin-engine, LTO cycle",
+          "reference product": "Transport, helicopter, twin-engine, LTO cycle",
+          "unit": "unit"
+        },
+        "technosphere_information_loss": "User auto-approved forthcoming modelling decisions within the exact UVEK2026 cut-off / ecoinvent3.10biosphere electricity pilot. Only the encountered ecoinvent3.6cut-off source identity/profile is qualified. Both inspected source and actual native2026 output references are positive1 in the declared unit, so factor+1 preserves caller signed demand, formulas, uncertainty, bounds, foreground ownership and separate exchanges. Use the complete identified native component/service with its own upstream supply, infrastructure, fuel, emissions and internal uncertainty. No new activity/helper, source omission, co-output credit, efficiency/density/time factor or operating-demand correction is introduced. Native vintage, geography, technology, allocation, internal uncertainty and 2,991 upstream biosphere exclusions remain explicit; score differences are unquantified and inventory/LCIA equivalence is not asserted. Other source releases, standalone related components, reverse and cross-system-model routes and full pilot certification/export do not inherit this decision. Qualify one complete native twin-engine helicopter landing/take-off cycle per source generic Swiss civil LTO cycle. Source reference and native reference are each one cycle, not an hour or an aircraft. Source fuel totals45.2kg/cycle; native41.2kg/cycle. Native model documents EC135VIP while another description states freight helicopter6500kg; preserve that model/mass inconsistency as a limitation rather than silently choosing a new aircraft or scaling by mass. Fleet,mission,altitude/time envelope,emission factors and vintage differ. Source generic civil cycle lacks a verified engine/payload distinction, so this is an explicit cycle-service screening proxy. Do not append cruise/manufacture or infer cycles per hour. Separate caller flight-hour exchanges remain unchanged. "
+      },
+      "new_profile": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.7",
+          "system_model": "cutoff"
+        },
+        "conversion_factor": 1,
+        "review": {
+          "status": "verified",
+          "source_sign": 1,
+          "target_sign": 1,
+          "reason": "One complete native twin-engine helicopter landing/take-off cycle per generic source LTO cycle, not an hour, aircraft or tonne-km. Source kerosene totals 45.2 kg per cycle; native fuel is 41.2 kg. No fuel-normalisation, cycles-per-hour, payload or aircraft-mass factor; separate caller cruise and infrastructure remain unchanged. Native documentation inconsistently names EC135VIP and a 6500 kg freight helicopter: preserve that ambiguity. Fleet, mission, cycle envelope, emissions, geography and vintage differ. This is an explicit cycle-service screening proxy, not exact aircraft equivalence. Preserve signed caller quantities, uncertainty, formulas and properties at factor +1 in the declared unit. Keep complete native inventory once, including its existing internal approximations, allocation, transport and background. Source internal supplier shares, final-market logistics and internal uncertainty are replaced rather than reconstructed. Geography, technology, grade/design, allocation, vintage and native biosphere exclusions differ; score effects are unquantified and no inventory or LCIA equivalence is claimed. Requested source remains ecoinvent 3.7 cut-off. Functional-reference evidence was inspected in 3.7.1 for the exact matching name/product/location and product UUID, under the shared explicitly limited patch-evidence decision. This does not relabel the source, assert direct inspection of the unpatched inventory vector, or establish equality of upstream inventories, uncertainty or scores.",
+          "evidence": [
+            "brightpath/data/export/uvek_fuels_37_oils_lto_review.json"
+          ]
+        }
+      }
+    }
+  ],
+  "native_lci_checks": [
+    {
+      "rule_id": "bp-4f69327dbf9d3e42",
+      "identity": {
+        "location": "RER",
+        "name": "Lubricating oil, at plant",
+        "reference product": "Lubricating oil, at plant",
+        "unit": "kilogram"
+      },
+      "demand": 1,
+      "finite_supply": true,
+      "finite_inventory": true
+    },
+    {
+      "rule_id": "bp-b62924eca33d09c2",
+      "identity": {
+        "location": "CH",
+        "name": "Transport, helicopter, twin-engine, LTO cycle",
+        "reference product": "Transport, helicopter, twin-engine, LTO cycle",
+        "unit": "unit"
+      },
+      "demand": 1,
+      "finite_supply": true,
+      "finite_inventory": true
+    }
+  ],
+  "source_database_unchanged": {
+    "name": "BAFU:2026-reimported",
+    "activity_count": 11947,
+    "modified": "2026-09-22T10:55:01.512934"
+  },
+  "licensing": "Only derived native correspondences, scalar basis facts and witness hashes published. Raw licensed source vectors and comments remain private."
+}
