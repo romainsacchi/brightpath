@@ -83,6 +83,7 @@ Start with :doc:`getting-started`, then choose the task-oriented guide.
    uvek-fuels-38-crops
    uvek-fuels-38-chemical-heat
    uvek-fuels-38-infrastructure-water
+   uvek-fuels-38-delivered-materials
    recycled-paper-migration
    simapro-reference-evidence
    adr/index
