@@ -56,9 +56,7 @@ def test_reviews_do_not_change_any_of_the_three_existing_rules():
         assert not row["source_market_internal_shares_and_freight_reproduced"]
         assert not row["native_inventory_modified"]
     assert all(
-        r["finite_supply"] and r["finite_inventory"]
-        for packet in (REVIEW,)
-        for r in packet["native_lci_checks"]
+        r["finite_supply"] and r["finite_inventory"] for packet in (REVIEW,) for r in packet["native_lci_checks"]
     )
 
 
@@ -71,13 +69,22 @@ def test_complete_installation_and_water_bases_are_explicit():
     assert all(row["conversion_factor"] == 1 for row in by_id.values())
 
 
-def test_pending_water_profile_is_not_implicitly_qualified():
-    from brightpath.exceptions import MigrationError
+def test_historical_pending_water_was_not_implicitly_qualified():
+    import hashlib
 
-    row = REVIEW["pending_water_case"]["record"]
-    source = BrightwayInventory.from_data(
-        consumer(row["rule"]["source"], 1, 2),
-        context=contexts("ecoinvent", "3.8", "cutoff"),
+    from brightpath import TechnosphereProfile
+    from brightpath.background.reference_signs import select_profile_sign_rules
+    from scripts.review_uvek_fuels_38_water_profile import REVIEW_SHA256
+
+    raw = (DATA_DIR / "export/uvek_fuels_38_water_profile_review.json").read_bytes()
+    assert hashlib.sha256(raw).hexdigest() == REVIEW_SHA256
+    later = json.loads(raw)
+    profile = TechnosphereProfile("ecoinvent", "3.8", "cutoff")
+    old = select_profile_sign_rules({"replace": [later["original_rule"]]}, profile)["replace"][0]
+    assert old["reference_flow_sign_review"]["status"] == "unresolved"
+    assert (
+        later["prior_inspection"]["sha256"]
+        == hashlib.sha256((DATA_DIR / "export/uvek_fuels_38_infrastructure_water_review.json").read_bytes()).hexdigest()
     )
-    with pytest.raises(MigrationError):
-        source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+    assert later["source_witness"]["reference_amounts"] == [1]
+    assert later["native_2026_witness"]["reference_amount"] == 1
