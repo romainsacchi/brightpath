@@ -33,4 +33,5 @@ database is unchanged. Evidence and warnings are packaged in
 
 Sodium methoxide is excluded: its native Brown-Schlesinger inventory does not
 represent the source market's majority direct-production route. It needs a
-separate modelling review.
+separate modelling review. That later decision is documented in
+:doc:`uvek-fuels-38-additional-chemicals`, with an explicit technology-proxy warning.

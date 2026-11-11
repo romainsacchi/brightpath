@@ -13,7 +13,8 @@ from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.migrations.resources import load_uvek_technosphere_resource
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_fuels_38_chemical_stocks_review.json").read_text())
-RECORDS = {r["rule_id"]: r for r in REVIEW["records"]}
+ADDITIONAL = json.loads((DATA_DIR / "export/uvek_fuels_38_additional_chemicals_review.json").read_text())
+RECORDS = {r["rule_id"]: r for packet in (REVIEW, ADDITIONAL) for r in packet["records"]}
 
 
 @pytest.mark.parametrize("rid", RECORDS)
@@ -46,7 +47,8 @@ def test_complete_native_stock_keeps_signed_caller_statistics(rid, amount, uncer
         assert edge["loc"] == amount
 
 
-def test_review_does_not_change_any_of_the_four_existing_rules():
+def test_reviews_do_not_change_any_of_the_seven_existing_rules():
+    assert len(RECORDS) == 7
     resource = load_uvek_technosphere_resource()
     for rid, row in RECORDS.items():
         assert next(r for r in resource["replace"] if r["id"] == rid) == row["rule"]
@@ -54,5 +56,10 @@ def test_review_does_not_change_any_of_the_four_existing_rules():
         assert row["native_2026_witness"]["reference_amount"] == 1
         assert not row["source_market_internal_shares_and_freight_reproduced"]
         assert not row["native_inventory_modified"]
-    assert all(r["finite_supply"] and r["finite_inventory"] for r in REVIEW["native_lci_checks"])
+    assert all(
+        r["finite_supply"] and r["finite_inventory"]
+        for packet in (REVIEW, ADDITIONAL)
+        for r in packet["native_lci_checks"]
+    )
     assert "Sodium methoxide" in REVIEW["excluded_case"]
+    assert "screening proxy" in ADDITIONAL["prior_methoxide_disposition"]["resolution"]
