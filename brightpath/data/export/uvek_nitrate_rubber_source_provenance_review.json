@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "authorization": "Active BAFU integration goal; retain independently inspected source supplier provenance and existing stochastic entries without merging, omissions, new proxies or validation suppression.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.9",
+    "system_model": "cutoff"
+  },
+  "source_identity": {
+    "name": "thermal storage system construction, solar thermal parabolic trough, 50 MW",
+    "reference product": "used nitrate salts, for solar power application",
+    "location": "RoW",
+    "unit": "kilogram"
+  },
+  "recipe_id": "pilot-nitrate-market-63ae3d87ff88f409fcd2",
+  "annotations": [
+    {
+      "recipe_input_index": 93,
+      "source_supplier": {
+        "name": "market for waste rubber, unspecified",
+        "reference product": "waste rubber, unspecified",
+        "location": "Europe without Switzerland",
+        "unit": "kilogram"
+      },
+      "source_exchange_index": 94,
+      "comment": "Retained source contributor: market for waste rubber, unspecified / waste rubber, unspecified / Europe without Switzerland / kilogram. Source nonproduction exchange 93 (full source exchange 94). Keep this stochastic contribution separate from the other source region mapped to the same native disposal supplier. Quantity, reference-sign conversion and uncertainty are unchanged.",
+      "previous_exchange_sha256": "c8133905d5ec60b7103fb69c0259699dbd849297164f201f052328baf7a36246"
+    },
+    {
+      "recipe_input_index": 94,
+      "source_supplier": {
+        "name": "market for waste rubber, unspecified",
+        "reference product": "waste rubber, unspecified",
+        "location": "RoW",
+        "unit": "kilogram"
+      },
+      "source_exchange_index": 95,
+      "comment": "Retained source contributor: market for waste rubber, unspecified / waste rubber, unspecified / RoW / kilogram. Source nonproduction exchange 94 (full source exchange 95). Keep this stochastic contribution separate from the other source region mapped to the same native disposal supplier. Quantity, reference-sign conversion and uncertainty are unchanged.",
+      "previous_exchange_sha256": "c8133905d5ec60b7103fb69c0259699dbd849297164f201f052328baf7a36246"
+    }
+  ],
+  "previous_recipe_sha256": "f4b2d3079054b09dd61f468d657734af448a03cef3885c747b80543d46dcbf93",
+  "updated_recipe_sha256": "def4bbe2a0bcea554b180b1e65c61c0a35d81f272ce2fb4ed0da84084b595837",
+  "non_comment_fields_identical": true,
+  "source_quantities_or_full_inventory_published": false,
+  "original_composition_review": "export/uvek_pilot_nitrate_market_review.json",
+  "reason": "Two geographically distinct original waste-rubber market inputs resolve to the same UVEK provider. Original supplier provenance preserves their separate stochastic contributions and prevents their misidentification as accidental exact duplicates."
+}

@@ -118,3 +118,26 @@ def test_nitrate_stage_graph_and_authorities_are_scoped_and_shared():
     for w in REVIEW["canonical_biosphere_witnesses"]:
         assert w["source_role"] == w["target_role"]
         assert w["source_definition_sha256"] and w["target_definition_sha256"]
+
+
+@pytest.mark.parametrize("amount", [-2, 2])
+def test_distinct_rubber_markets_keep_separate_source_provenance(amount):
+    data = consumer(ROW["source"], amount, 2)
+    before = deepcopy(data)
+    source = BrightwayInventory.from_data(data, context=contexts("ecoinvent", "3.9"))
+    result = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+    helper = next(
+        a
+        for a in result.data
+        if a.get("brightpath_conversion", {}).get("recipe_id") == "pilot-nitrate-market-63ae3d87ff88f409fcd2"
+    )
+    inputs = [e for e in helper["exchanges"] if e["type"] != "production"]
+    first, second = inputs[93], inputs[94]
+    assert first["name"] == second["name"] == "Disposal, rubber, unspecified, 0% water, to municipal incineration"
+    assert first["amount"] == second["amount"]
+    assert first["loc"] == second["loc"] and first["scale"] == second["scale"]
+    assert first["uncertainty type"] == second["uncertainty type"] == 2
+    assert "Europe without Switzerland" in first["comment"]
+    assert "/ RoW /" in second["comment"]
+    assert {k: v for k, v in first.items() if k != "comment"} == {k: v for k, v in second.items() if k != "comment"}
+    assert data == source.data == before
