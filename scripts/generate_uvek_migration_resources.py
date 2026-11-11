@@ -1006,6 +1006,12 @@ def main(argv: Sequence[str] | None = None) -> None:
     )
     _write_resource(args.output_directory / "ecoinvent-to-uvek-2025.json", technosphere)
     _write_resource(args.output_directory / "ecoinvent-to-ecoinvent-3.10-biosphere.json", biosphere)
+    from scripts.review_uvek_quizalofop_synonym import build_extended_biosphere_resource
+
+    _write_resource(
+        args.output_directory / "ecoinvent-to-ecoinvent-3.10-biosphere-v2.json",
+        build_extended_biosphere_resource(biosphere),
+    )
     print(
         f"Wrote {len(technosphere['replace'])} technosphere and "
         f"{len(biosphere['replace'])} biosphere mapping rules."

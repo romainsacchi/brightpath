@@ -13,7 +13,7 @@ from brightpath.migrations.schema import normalize_migration_resource
 
 _PROFILE_ID = re.compile(r"^ecoinvent-(?P<version>\d+(?:\.\d+){1,2})-(?P<kind>cutoff|consequential|biosphere)$")
 _UVEK_TECHNOSPHERE_RESOURCE = "ecoinvent-to-uvek-2025.json"
-_UVEK_BIOSPHERE_RESOURCE = "ecoinvent-to-ecoinvent-3.10-biosphere.json"
+_UVEK_BIOSPHERE_RESOURCE = "ecoinvent-to-ecoinvent-3.10-biosphere-v2.json"
 
 
 @lru_cache(maxsize=4)
