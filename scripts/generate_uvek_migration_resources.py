@@ -947,6 +947,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_fuels_37_waste_oil_review(technosphere)
     apply_wool_europe_direct_grid_review(technosphere)
     apply_packaging_38_complete_review(technosphere)
+    if __package__:
+        from scripts.review_uvek_geothermal_36_grids import apply_geothermal_36_grid_review
+    else:
+        from review_uvek_geothermal_36_grids import apply_geothermal_36_grid_review
+
+    apply_geothermal_36_grid_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:

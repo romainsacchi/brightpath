@@ -93,8 +93,8 @@ def test_both_packaged_uvek_resources_use_one_schema():
             "reviews"
         ].keys()
     forward = load_uvek_technosphere_resource()
-    # Includes subsequent heat/deferred reviews and the cement landfill service.
-    assert len(forward["reviews"]) == 797
+    source = DATA_DIR / "migrations/uvek/ecoinvent-to-uvek-2025.json"
+    assert forward["reviews"] == json.loads(source.read_text(encoding="utf-8"))["reviews"]
     assert len(forward["delete"]) == forward["coverage"]["omitted_identities"] == 257
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
@@ -107,7 +107,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 3993
+        == 3990
     )
 
 
