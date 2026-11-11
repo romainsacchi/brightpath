@@ -104,7 +104,7 @@ def test_petrol_and_agricultural_diesel_correct_physical_targets():
 
 
 def test_replay_idempotence_and_changed_parent_rejection():
-    resource = load_uvek_technosphere_resource()
+    resource = deepcopy(load_uvek_technosphere_resource())
     apply_fuels_38_services_review(resource)
     before = deepcopy(resource)
     apply_fuels_38_services_review(resource)

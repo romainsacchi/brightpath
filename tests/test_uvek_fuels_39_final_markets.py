@@ -120,7 +120,7 @@ def test_ethanol_preserves_eleven_entries_and_country_specific_suppliers():
 
 
 def test_frozen_replay_is_idempotent_and_rejects_changed_parent():
-    resource = load_uvek_technosphere_resource()
+    resource = deepcopy(load_uvek_technosphere_resource())
     apply_fuels_39_final_markets_review(resource)
     once = deepcopy(resource)
     apply_fuels_39_final_markets_review(resource)

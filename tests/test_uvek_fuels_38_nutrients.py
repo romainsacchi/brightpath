@@ -122,7 +122,7 @@ def test_native_nutrient_mix_consistency_limitations_are_not_silently_normalized
 
 
 def test_replay_idempotence_and_changed_parent_rejection():
-    resource = load_uvek_technosphere_resource()
+    resource = deepcopy(load_uvek_technosphere_resource())
     apply_fuels_38_nutrients_review(resource)
     before = deepcopy(resource)
     apply_fuels_38_nutrients_review(resource)
