@@ -1,0 +1,1770 @@
+{
+  "schema_version": 1,
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.9",
+    "system_model": "cutoff"
+  },
+  "authorization": "Standing autonomous approval of independently inspected corrections with warnings and decisions logged for review.",
+  "records": [
+    {
+      "rule_id": "bp-a617a8579b052845",
+      "original_rule": {
+        "confidence": 0.257296,
+        "conversion_factor": -1,
+        "id": "bp-a617a8579b052845",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-a617a8579b052845"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "GLO",
+          "name": "treatment of mill scale, residual material landfill",
+          "reference product": "mill scale",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "GLO",
+          "name": "Disposal, lead smelter slag, 0% water, to residual material landfill",
+          "reference product": "Disposal, lead smelter slag, 0% water, to residual material landfill",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "conversion_factor": -1,
+        "id": "bp-a617a8579b052845",
+        "mapping_method": "reviewed_steel_39_mill_scale_disposal",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "The previous sign-only match used a physically different waste. Only exact3.9cutoff treatment is reviewed.",
+          "evidence": [
+            "brightpath/data/export/uvek_steel_39_mill_scale_direct_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Direct exact3.9cutoff mill-scale landfill service: replace the incorrect lead-smelter-slag correspondence with the independently verified mill-scale-specific native reconstruction. Retain all68specific leachate flows, their exact receiving compartments and units, stabilization cement, three regional operating inputs, facility and three hydrated-cement treatment rows, with source exchange uncertainty. Negative1kg waste reference becomes positive service demand with factor-1; no collection freight is added at this direct treatment boundary. Reuse the reviewed market treatment recipe unchanged, including same-UUID strontium label normalization and Swiss component, moisture, technology, allocation, native inventory and unquantified-score limitations. Do not infer recovery credits, zero treatment burden or generic slag equivalence. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions. The previous universal sign-only approval did not establish product equivalence; other source releases and consequential/reverse routes are unresolved and cannot inherit this correction.",
+                "evidence": [
+                  "brightpath/data/export/uvek_steel_39_mill_scale_direct_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "GLO",
+          "name": "treatment of mill scale, residual material landfill",
+          "reference product": "mill scale",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "steel-39-mill-scale-landfill"
+        },
+        "classification": "proxy",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Direct exact3.9cutoff mill-scale landfill service: replace the incorrect lead-smelter-slag correspondence with the independently verified mill-scale-specific native reconstruction. Retain all68specific leachate flows, their exact receiving compartments and units, stabilization cement, three regional operating inputs, facility and three hydrated-cement treatment rows, with source exchange uncertainty. Negative1kg waste reference becomes positive service demand with factor-1; no collection freight is added at this direct treatment boundary. Reuse the reviewed market treatment recipe unchanged, including same-UUID strontium label normalization and Swiss component, moisture, technology, allocation, native inventory and unquantified-score limitations. Do not infer recovery credits, zero treatment burden or generic slag equivalence. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions. The previous universal sign-only approval did not establish product equivalence; other source releases and consequential/reverse routes are unresolved and cannot inherit this correction.",
+        "review_ref": "r-7b39e2830b71cf0e"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "treatment of mill scale, residual material landfill",
+          "reference product": "mill scale",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "inventory_sha256": "0f6b1ca1059a06fa28c5271ed9831ac56b21bc3aeee9636e00b29d30f455a82a",
+        "nonproduction_count": 76
+      },
+      "conversion_factor": -1,
+      "limitations": [
+        "Direct exact3.9cutoff mill-scale landfill service: replace the incorrect lead-smelter-slag correspondence with the independently verified mill-scale-specific native reconstruction. Retain all68specific leachate flows, their exact receiving compartments and units, stabilization cement, three regional operating inputs, facility and three hydrated-cement treatment rows, with source exchange uncertainty. Negative1kg waste reference becomes positive service demand with factor-1; no collection freight is added at this direct treatment boundary. Reuse the reviewed market treatment recipe unchanged, including same-UUID strontium label normalization and Swiss component, moisture, technology, allocation, native inventory and unquantified-score limitations. Do not infer recovery credits, zero treatment burden or generic slag equivalence. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions. The previous universal sign-only approval did not establish product equivalence; other source releases and consequential/reverse routes are unresolved and cannot inherit this correction."
+      ]
+    }
+  ],
+  "recipes": {},
+  "recipe_dependencies": {
+    "steel-39-mill-scale-landfill": {
+      "evidence": [
+        "brightpath/data/export/uvek_steel_39_first_residue_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.4,
+          "loc": -0.916290731874155,
+          "location": "CH",
+          "name": "Cement, unspecified, at plant",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Cement, unspecified, at plant",
+          "scale": 0.24307206827262712,
+          "scale without pedigree": 0.3756115418545239,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.711089591440322,
+          "loc": -0.34095684946554505,
+          "location": "CH",
+          "name": "Process-specific burdens, residual material landfill",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Process-specific burdens, residual material landfill",
+          "scale": 0.22360679774997896,
+          "scale without pedigree": 0.363318042491699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.28049352299999986,
+          "loc": -1.2712046451950767,
+          "location": "CH",
+          "name": "Process-specific burdens, residual material landfill",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Process-specific burdens, residual material landfill",
+          "scale": 0.22360679774997896,
+          "scale without pedigree": 0.363318042491699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.008416885559678245,
+          "loc": -4.777515405176572,
+          "location": "CH",
+          "name": "Process-specific burdens, residual material landfill",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Process-specific burdens, residual material landfill",
+          "scale": 0.22360679774997896,
+          "scale without pedigree": 0.363318042491699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.08333333333333e-09,
+          "loc": -19.989296661866213,
+          "location": "CH",
+          "name": "Residual material landfill facility",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Residual material landfill facility",
+          "scale": 0.22360679774997896,
+          "scale without pedigree": 0.363318042491699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.008416885559678245,
+          "loc": -4.777515405176572,
+          "location": "CH",
+          "name": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+          "scale": 0.24307206827262712,
+          "scale without pedigree": 0.24307206827262723,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.28049352299999986,
+          "loc": -1.2712046451950767,
+          "location": "CH",
+          "name": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+          "scale": 0.24307206827262712,
+          "scale without pedigree": 0.24307206827262723,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.711089591440322,
+          "loc": -0.34095684946554505,
+          "location": "CH",
+          "name": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+          "negative": false,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+          "scale": 0.24307206827262712,
+          "scale without pedigree": 0.24307206827262723,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000400750604398341,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -7.822171258307711,
+          "name": "Aluminium III",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0184748520888525,
+          "scale without pedigree": 1.05796551188468,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.6903272854481e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -14.21743285642316,
+          "name": "Aluminium III",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.1886902240106672,
+          "scale without pedigree": 1.2226955666307662,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.37602800491811e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -10.036784000209666,
+          "name": "Antimony ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0341997563499519,
+          "scale without pedigree": 1.0731118935294213,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.38397199508189e-05,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -10.64415746286553,
+          "name": "Antimony ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0458103685040945,
+          "scale without pedigree": 1.0843059194114317,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 9.38999973443266e-14,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -29.9965460369784,
+          "name": "Arsenic ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0217833953212687,
+          "scale without pedigree": 1.061150935048476,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 9.38999999061e-05,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -9.273280172750058,
+          "name": "Arsenic ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.01015077700869,
+          "scale without pedigree": 1.0499545667748018,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0040706717655915,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -5.503947240176492,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.7055466237114589,
+          "scale without pedigree": 0.7614433913500327,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.79577924138816e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -11.899208838291939,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0455657083415562,
+          "scale without pedigree": 1.0840699472173279,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.03253643442909e-06,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -13.783492225151162,
+          "name": "Barium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.25,
+          "scale without pedigree": 2.6106391173711354,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.72376700238579e-09,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -20.178753823266614,
+          "name": "Barium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.483199222483379,
+          "scale without pedigree": 1.5105892669999015,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.20765200260632e-07,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -14.952556444828764,
+          "name": "Beryllium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.37589821623937,
+          "scale without pedigree": 1.4053810520462697,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.35501169049469e-10,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -21.347818042944212,
+          "name": "Beryllium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.5341130765790474,
+          "scale without pedigree": 1.560609794833683,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.50617733927852e-06,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -12.109639943393754,
+          "name": "Boron",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.180861162155361,
+          "scale without pedigree": 1.2150856283764162,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.38766058623227e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -16.941884554979517,
+          "name": "Boron",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.337192558959165,
+          "scale without pedigree": 1.3675101241803513,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0124448196709058,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -4.38645083335147,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.7055466237114589,
+          "scale without pedigree": 0.7614433913500327,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.07759927727977e-05,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -10.781712431466916,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0455657083415562,
+          "scale without pedigree": 1.0840699472173279,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.3503281673943e-09,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -18.600964997371584,
+          "name": "Cadmium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.25,
+          "scale without pedigree": 2.8117169753057327,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.39404476918102e-11,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -24.99622659548703,
+          "name": "Cadmium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.6840302686006539,
+          "scale without pedigree": 1.7082031335772656,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00102104732315986,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -6.886926391059958,
+          "name": "Calcium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.3592573000094574,
+          "scale without pedigree": 1.389093376137472,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.70458651612665e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -13.282187989175403,
+          "name": "Calcium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.1419184042005583,
+          "scale without pedigree": 1.177275516543154,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000260145760184705,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -8.254268467940223,
+          "name": "Chromium VI",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.8205568059897931,
+          "scale without pedigree": 0.869087723912938,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.23542398152948e-05,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -9.40448061735575,
+          "name": "Chromium VI",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.9134386407112155,
+          "scale without pedigree": 0.9572722446328177,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.20187157497647e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -11.329045477346948,
+          "name": "Cobalt II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.3560459025319533,
+          "scale without pedigree": 1.385951113774833,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.0064633972896e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -17.7243070754624,
+          "name": "Cobalt II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.3696278883386392,
+          "scale without pedigree": 1.3992428497280092,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.32036212757959e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -11.235019426920585,
+          "name": "Copper ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.8710160230484774,
+          "scale without pedigree": 1.8928024087326547,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.20427734153521e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -17.630281025036034,
+          "name": "Copper ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.3647036647159998,
+          "scale without pedigree": 1.3944232113993513,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00492444579172799,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -5.313543540288393,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.7055466237114589,
+          "scale without pedigree": 0.7614433913500327,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.22111150538897e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -11.708805138403841,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0455657083415562,
+          "scale without pedigree": 1.0840699472173279,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00385420539493826,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -5.5585904164457745,
+          "name": "Iron ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.25,
+          "scale without pedigree": 2.673174574417623,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.43439965765986e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -11.953852014561225,
+          "name": "Iron ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.1556160816503118,
+          "scale without pedigree": 1.1905664736455583,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.27084133149064e-08,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -18.181001597074772,
+          "name": "Lead II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.25,
+          "scale without pedigree": 2.9164811436758917,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.12160489397436e-11,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -24.57626319519022,
+          "name": "Lead II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.6678101641828185,
+          "scale without pedigree": 1.6922147451643128,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000107941693625813,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -9.13391935045947,
+          "name": "Magnesium",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.3772383278798808,
+          "scale without pedigree": 1.4066930766095957,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.80203161311875e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -15.529180948574918,
+          "name": "Magnesium",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.2590303398444613,
+          "scale without pedigree": 1.2911844936525765,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.75641369543129e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -9.464405390251159,
+          "name": "Manganese II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 2.4851670985350665,
+          "scale without pedigree": 2.501610582732892,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.2948937721922e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -15.859666988366609,
+          "name": "Manganese II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.281600109265039,
+          "scale without pedigree": 1.3132017514716312,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.05259848268985e-08,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -18.36941889150375,
+          "name": "Mercury II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 2.035409926853586,
+          "scale without pedigree": 2.0554545897037277,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.7572595704338e-11,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -24.764680489619202,
+          "name": "Mercury II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.673113732721192,
+          "scale without pedigree": 1.6974420645843085,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.27970223180967e-06,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -12.151640857326981,
+          "name": "Molybdenum VI",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.8443311011795461,
+          "scale without pedigree": 0.8915688467073449,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00114472029776819,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -6.772594953242663,
+          "name": "Molybdenum VI",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.8303028277614927,
+          "scale without pedigree": 0.878295386409795,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000524954334512321,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -7.552199281037087,
+          "name": "Nickel II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.9577759730252644,
+          "scale without pedigree": 0.9996673519248751,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.76384531740102e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -13.947460879152535,
+          "name": "Nickel II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.1737724842509514,
+          "scale without pedigree": 1.2081977672486612,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000137002906823114,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -8.895508414674278,
+          "name": "Phosphate",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.2169408317076635,
+          "scale without pedigree": 1.2501779824798307,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.2871937700019e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -15.290770012789729,
+          "name": "Phosphate",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.3044098653973182,
+          "scale without pedigree": 1.3354718630303861,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00189582439368814,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -6.26810149880154,
+          "name": "Potassium I",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.7656547156437679,
+          "scale without pedigree": 0.8174516154412682,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000744175606311863,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -7.203233520992814,
+          "name": "Potassium I",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.7902735014932666,
+          "scale without pedigree": 0.8405547020643143,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.2915886297944e-06,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -12.9862652561129,
+          "name": "Selenium IV",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.208323247634502,
+          "scale without pedigree": 1.2417910737213367,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.2484113702056e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -13.59363871876877,
+          "name": "Selenium IV",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.2182755277893256,
+          "scale without pedigree": 1.2514772317586764,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00203541214628756,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -6.19705695170555,
+          "name": "Silicon",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.7844277671485603,
+          "scale without pedigree": 0.835061028831831,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.58785371243677e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -12.292098244027459,
+          "name": "Silicon",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0789068574242449,
+          "scale without pedigree": 1.116261621214785,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.32421157984659e-07,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -15.837278402701214,
+          "name": "Silver I",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 2.0275051048203134,
+          "scale without pedigree": 2.0476271511367568,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.21070380608779e-10,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -22.232540000816666,
+          "name": "Silver I",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.5724160022263765,
+          "scale without pedigree": 1.5982778494547123,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000974565012026162,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -6.93351932802879,
+          "name": "Sodium I",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.8098194943812214,
+          "scale without pedigree": 0.8589572826863144,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000585434987973838,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -7.443155417856975,
+          "name": "Sodium I",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.8223532011660385,
+          "scale without pedigree": 0.8707840073566069,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.16214028536865e-05,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -11.362662086315742,
+          "name": "Strontium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.1921692307135467,
+          "scale without pedigree": 1.2260780866894776,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.94013403233498e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -17.757923684431187,
+          "name": "Strontium II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.3717414132919805,
+          "scale without pedigree": 1.401311708700202,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00492444579172799,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -5.313543540288393,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.7055466237114589,
+          "scale without pedigree": 0.7614433913500327,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.22111150538897e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -11.708805138403841,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.0455657083415562,
+          "scale without pedigree": 1.0840699472173279,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.20765200260632e-07,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -14.952556444828764,
+          "name": "Thallium I",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.37589821623937,
+          "scale without pedigree": 1.4053810520462697,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.35501169049469e-10,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -21.347818042944212,
+          "name": "Thallium I",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.5341130765790474,
+          "scale without pedigree": 1.560609794833683,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.16884408540641e-06,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -12.387871758324227,
+          "name": "Tin ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 2.1998729442488263,
+          "scale without pedigree": 2.2184320974142975,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.95967293056162e-09,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -18.783133356439677,
+          "name": "Tin ion",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.4195423471353117,
+          "scale without pedigree": 1.4481368979866613,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00537293379302076,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -5.226381189473895,
+          "name": "Tungsten",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.6672619198202284,
+          "scale without pedigree": 0.7261118850715619,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00292706620697924,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -5.833754652129761,
+          "name": "Tungsten",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 0.685119449788538,
+          "scale without pedigree": 0.7425554931980162,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.09590809119515e-06,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -12.187072675336811,
+          "name": "Vanadium V",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.1787208083296528,
+          "scale without pedigree": 1.2130056652750267,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.6271339864313e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -17.9338605672738,
+          "name": "Vanadium V",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.3819434697847122,
+          "scale without pedigree": 1.4113000225609755,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.49523220553495e-06,
+          "categories": [
+            "water",
+            "ground-, long-term"
+          ],
+          "loc": -13.413229041754688,
+          "name": "Zinc II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 2.4144114858498957,
+          "scale without pedigree": 2.431333548282485,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.49621403261261e-09,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -19.808490639870136,
+          "name": "Zinc II",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "scale": 1.4666512412863053,
+          "scale without pedigree": 1.4943446267734428,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "GLO",
+      "name": "mill scale disposal, retained specific leachate and stabilization",
+      "rationale": "Exact3.9cutoff steel-residue market reconstruction. Preserve original signed source demands and every freight row with original lognormal uncertainty, without transport distance, payload, moisture or mass scaling. Generic rail uses complete RER rail, barge uses complete RER inland barge, and unspecified road uses the complete RER heavy-lorry fleet: no air-freight or single-truck substitution. Geography, country/fuel/fleet mixtures, vintage, allocation and native internal uncertainty differ; score equivalence is not established. Preserve caller signs, formulas and supported uncertainty; no reverse, consequential or other-release approval is added. Mill scale uses its own68direct leachate releases in their exact ecoinvent3.10 species, units and receiving compartments, including long-term groundwater. Preserve stabilization cement0.4kg, all three regional operating rows, facility2.08333333333333e-9units and all three hydrated-cement disposal rows, with original uncertainty. Existing independently reviewed complete Swiss residual-landfill operation,300000m3facility, unspecified cement and dedicated hydrated-cement disposal are background proxies. Preserve original quantities and geographic weights without renormalization; geographic mix is represented by Swiss suppliers and their operation/energy/construction assumptions. Negative inputs to negative waste-treatment references are disposal demand and become positive service inputs; never substitute lead-smelter slag or invent material recovery. Native0%-water cement-disposal label does not establish source moisture equivalence. The two Strontium labels normalize to Strontium II using identical published flow UUIDs, units and compartments; quantities do not change. No source leachate flow is omitted or replaced by generic metal labels; no extra operating, construction or leachate burden is added. The source market reference is-1kg, so the positive-service helper uses factor-1.",
+      "reference product": "mill scale treatment service",
+      "unit": "kilogram"
+    }
+  },
+  "reviews": [
+    {
+      "rationale": "Direct exact3.9cutoff mill-scale landfill service: replace the incorrect lead-smelter-slag correspondence with the independently verified mill-scale-specific native reconstruction. Retain all68specific leachate flows, their exact receiving compartments and units, stabilization cement, three regional operating inputs, facility and three hydrated-cement treatment rows, with source exchange uncertainty. Negative1kg waste reference becomes positive service demand with factor-1; no collection freight is added at this direct treatment boundary. Reuse the reviewed market treatment recipe unchanged, including same-UUID strontium label normalization and Swiss component, moisture, technology, allocation, native inventory and unquantified-score limitations. Do not infer recovery credits, zero treatment burden or generic slag equivalence. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions. The previous universal sign-only approval did not establish product equivalence; other source releases and consequential/reverse routes are unresolved and cannot inherit this correction.",
+      "limitations": [
+        "Direct exact3.9cutoff mill-scale landfill service: replace the incorrect lead-smelter-slag correspondence with the independently verified mill-scale-specific native reconstruction. Retain all68specific leachate flows, their exact receiving compartments and units, stabilization cement, three regional operating inputs, facility and three hydrated-cement treatment rows, with source exchange uncertainty. Negative1kg waste reference becomes positive service demand with factor-1; no collection freight is added at this direct treatment boundary. Reuse the reviewed market treatment recipe unchanged, including same-UUID strontium label normalization and Swiss component, moisture, technology, allocation, native inventory and unquantified-score limitations. Do not infer recovery credits, zero treatment burden or generic slag equivalence. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions. The previous universal sign-only approval did not establish product equivalence; other source releases and consequential/reverse routes are unresolved and cannot inherit this correction."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_steel_39_mill_scale_direct_review.json",
+        "brightpath/data/export/uvek_steel_39_first_residue_review.json"
+      ]
+    }
+  ],
+  "native_2026_witnesses": [
+    {
+      "identity": {
+        "name": "Process-specific burdens, residual material landfill",
+        "reference product": "Process-specific burdens, residual material landfill",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "d25d5ae1db457e49a5870abd67bc4444b16cbd8ff045c53b7ddef682675776b5",
+      "nonproduction_count": 13
+    },
+    {
+      "identity": {
+        "name": "Residual material landfill facility",
+        "reference product": "Residual material landfill facility",
+        "location": "CH",
+        "unit": "unit"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "cd6d2274e3a9e424a4661ee3b1792b263956b0c9a4af555e36fa1ec71a05954b",
+      "nonproduction_count": 13
+    },
+    {
+      "identity": {
+        "name": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+        "reference product": "Disposal, cement, hydrated, 0% water, to residual material landfill",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "87280176b5963951f0bf0d47415703453b5fa42ea8044465caad14d7b78ade8b",
+      "nonproduction_count": 44
+    },
+    {
+      "identity": {
+        "name": "Cement, unspecified, at plant",
+        "reference product": "Cement, unspecified, at plant",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "aa9da6e9e7db50739da5b70670360f2421801a45169df072c477647cb9b76656",
+      "nonproduction_count": 5
+    }
+  ],
+  "prior_review_sha256": "04fd6627fc00204ff56afcc35c9df275c08fcd70c96bda9659dd42b6b3887c7f",
+  "new_helpers": 0,
+  "licensing": "Previously reviewed derived native recipe and source witness hashes only; original source vectors remain private."
+}
