@@ -1,0 +1,228 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing autonomous approval of independently inspected freight-service screening proxies, with fleet, fuel, geographic and emissions limitations logged for review.",
+  "records": [
+    {
+      "rule_id": "bp-aa3f7acdc2cf5750",
+      "original_rule": {
+        "confidence": 0.334612,
+        "id": "bp-aa3f7acdc2cf5750",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "RoW",
+          "name": "market for transport, freight, inland waterways, barge",
+          "reference product": "transport, freight, inland waterways, barge",
+          "unit": "ton kilometer"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "unit": "ton kilometer"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.334612,
+        "id": "bp-aa3f7acdc2cf5750",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "RoW",
+          "name": "market for transport, freight, inland waterways, barge",
+          "reference product": "transport, freight, inland waterways, barge",
+          "unit": "ton kilometer"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "unit": "ton kilometer"
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for transport, freight, inland waterways, barge",
+          "reference product": "transport, freight, inland waterways, barge",
+          "location": "RoW",
+          "unit": "ton kilometer"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "inventory_sha256": "e32dd65acc72f31d693f25dee8f2c386f0a759ac11d488f3541b49cbc43cb4fa",
+        "nonproduction_count": 1
+      },
+      "conversion_factor": 1,
+      "native_2026_witness": {
+        "identity": {
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "location": "RER",
+          "unit": "ton kilometer"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "inventory_sha256": "5bbab786aad52cb1c3032c9e8ec5186b16b2bcde9e070630f9ebb03692396d48",
+        "nonproduction_count": 43
+      },
+      "parent_unchanged": true,
+      "limitations": [
+        "Exact3.9cutoff freight-service screening proxies per signed tonne-km, positive1tkm source/native references and factor+1. RoW inland-waterway barge source is itself extrapolated from European Rhine-fleet data and includes vessel, port/canal, operation, fuel and emissions. Use complete native RER Transport,barge once; vessel lifetime/performance, loading, port/canal allocation, geography, emissions and vintage differ. Brazilian >32ton EURO5 freight uses the complete native RER-labelled32t-40t fleet-average service rather than an all-size Swiss fleet. Native documentation explicitly says Swiss2020fleet shares/HBEFA5.1 despite the RER label. This is not a Brazilian or EURO5-specific inventory: source includes Brazilian ProconveP7/EURO5,12%biodiesel/10ppmS diesel, local emissions and utilization. Size-class upper bound, actual payload, empty returns, fleet standards, fuel carbon/biodiesel, emissions, road/vehicle infrastructure, geography and vintage differ with unquantified score and carbon effects. Preserve caller signed tonne-km and supported uncertainties/formulas; do not infer distance, tonnes, payload or an efficiency multiplier from GVW classes. Reuse each complete transport inventory once without adding another diesel, infrastructure, tailpipe emissions or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. Existing3.8barge parent, target and approval are retained byte-for-byte; only its independently inspected3.9scope is newly admitted. Only exact3.9cutoff lorry source qualifies; no consequential/reverse or other-version approval. No helper or source omission is added. Full pulp heat and steel transformation/export remain unfinished."
+      ]
+    },
+    {
+      "rule_id": "bp-5ba08ac3a7f56b96",
+      "original_rule": {
+        "confidence": 0.5,
+        "id": "bp-5ba08ac3a7f56b96",
+        "mapping_method": "pairwise_review",
+        "review_ref": "r-6b3fbe8c0b452dd8",
+        "source": {
+          "location": "BR",
+          "name": "market for transport, freight, lorry >32 metric ton, EURO5",
+          "reference product": "transport, freight, lorry >32 metric ton, EURO5",
+          "unit": "ton kilometer"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "unit": "ton kilometer"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "id": "bp-5ba08ac3a7f56b96",
+        "mapping_method": "reviewed_pulp_heat_heavy_freight",
+        "review_ref": "r-f97617341ae2261a",
+        "source": {
+          "location": "BR",
+          "name": "market for transport, freight, lorry >32 metric ton, EURO5",
+          "reference product": "transport, freight, lorry >32 metric ton, EURO5",
+          "unit": "ton kilometer"
+        },
+        "target": {
+          "name": "Transport, freight, lorry, 32t-40t gross weight, fleet average",
+          "reference product": "Transport, freight, lorry, 32t-40t gross weight, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer"
+        },
+        "conversion_factor": 1,
+        "classification": "proxy",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Exact3.9cutoff freight-service screening proxies per signed tonne-km, positive1tkm source/native references and factor+1. RoW inland-waterway barge source is itself extrapolated from European Rhine-fleet data and includes vessel, port/canal, operation, fuel and emissions. Use complete native RER Transport,barge once; vessel lifetime/performance, loading, port/canal allocation, geography, emissions and vintage differ. Brazilian >32ton EURO5 freight uses the complete native RER-labelled32t-40t fleet-average service rather than an all-size Swiss fleet. Native documentation explicitly says Swiss2020fleet shares/HBEFA5.1 despite the RER label. This is not a Brazilian or EURO5-specific inventory: source includes Brazilian ProconveP7/EURO5,12%biodiesel/10ppmS diesel, local emissions and utilization. Size-class upper bound, actual payload, empty returns, fleet standards, fuel carbon/biodiesel, emissions, road/vehicle infrastructure, geography and vintage differ with unquantified score and carbon effects. Preserve caller signed tonne-km and supported uncertainties/formulas; do not infer distance, tonnes, payload or an efficiency multiplier from GVW classes. Reuse each complete transport inventory once without adding another diesel, infrastructure, tailpipe emissions or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. Existing3.8barge parent, target and approval are retained byte-for-byte; only its independently inspected3.9scope is newly admitted. Only exact3.9cutoff lorry source qualifies; no consequential/reverse or other-version approval. No helper or source omission is added. Full pulp heat and steel transformation/export remain unfinished.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only individually inspected exact source profile qualifies.",
+          "evidence": [
+            "brightpath/data/export/uvek_pulp_heat_freight_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Exact3.9cutoff freight-service screening proxies per signed tonne-km, positive1tkm source/native references and factor+1. RoW inland-waterway barge source is itself extrapolated from European Rhine-fleet data and includes vessel, port/canal, operation, fuel and emissions. Use complete native RER Transport,barge once; vessel lifetime/performance, loading, port/canal allocation, geography, emissions and vintage differ. Brazilian >32ton EURO5 freight uses the complete native RER-labelled32t-40t fleet-average service rather than an all-size Swiss fleet. Native documentation explicitly says Swiss2020fleet shares/HBEFA5.1 despite the RER label. This is not a Brazilian or EURO5-specific inventory: source includes Brazilian ProconveP7/EURO5,12%biodiesel/10ppmS diesel, local emissions and utilization. Size-class upper bound, actual payload, empty returns, fleet standards, fuel carbon/biodiesel, emissions, road/vehicle infrastructure, geography and vintage differ with unquantified score and carbon effects. Preserve caller signed tonne-km and supported uncertainties/formulas; do not infer distance, tonnes, payload or an efficiency multiplier from GVW classes. Reuse each complete transport inventory once without adding another diesel, infrastructure, tailpipe emissions or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. Existing3.8barge parent, target and approval are retained byte-for-byte; only its independently inspected3.9scope is newly admitted. Only exact3.9cutoff lorry source qualifies; no consequential/reverse or other-version approval. No helper or source omission is added. Full pulp heat and steel transformation/export remain unfinished.",
+                "evidence": [
+                  "brightpath/data/export/uvek_pulp_heat_freight_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for transport, freight, lorry >32 metric ton, EURO5",
+          "reference product": "transport, freight, lorry >32 metric ton, EURO5",
+          "location": "BR",
+          "unit": "ton kilometer"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "inventory_sha256": "6a5d89165383c3f6267e44f79388f9952588831d806fecba1c4047e7d802f305",
+        "nonproduction_count": 1
+      },
+      "conversion_factor": 1,
+      "native_2026_witness": {
+        "identity": {
+          "name": "Transport, freight, lorry, 32t-40t gross weight, fleet average",
+          "reference product": "Transport, freight, lorry, 32t-40t gross weight, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "inventory_sha256": "d3ab010f93e49003eba8ffd88035a5ccbccd7500403c64b98d05517177a19e1a",
+        "nonproduction_count": 3
+      },
+      "parent_unchanged": false,
+      "limitations": [
+        "Exact3.9cutoff freight-service screening proxies per signed tonne-km, positive1tkm source/native references and factor+1. RoW inland-waterway barge source is itself extrapolated from European Rhine-fleet data and includes vessel, port/canal, operation, fuel and emissions. Use complete native RER Transport,barge once; vessel lifetime/performance, loading, port/canal allocation, geography, emissions and vintage differ. Brazilian >32ton EURO5 freight uses the complete native RER-labelled32t-40t fleet-average service rather than an all-size Swiss fleet. Native documentation explicitly says Swiss2020fleet shares/HBEFA5.1 despite the RER label. This is not a Brazilian or EURO5-specific inventory: source includes Brazilian ProconveP7/EURO5,12%biodiesel/10ppmS diesel, local emissions and utilization. Size-class upper bound, actual payload, empty returns, fleet standards, fuel carbon/biodiesel, emissions, road/vehicle infrastructure, geography and vintage differ with unquantified score and carbon effects. Preserve caller signed tonne-km and supported uncertainties/formulas; do not infer distance, tonnes, payload or an efficiency multiplier from GVW classes. Reuse each complete transport inventory once without adding another diesel, infrastructure, tailpipe emissions or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. Existing3.8barge parent, target and approval are retained byte-for-byte; only its independently inspected3.9scope is newly admitted. Only exact3.9cutoff lorry source qualifies; no consequential/reverse or other-version approval. No helper or source omission is added. Full pulp heat and steel transformation/export remain unfinished."
+      ]
+    }
+  ],
+  "native_2026_witnesses": [
+    {
+      "identity": {
+        "name": "Transport, barge",
+        "reference product": "Transport, barge",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "reference_amounts": [
+        1
+      ],
+      "inventory_sha256": "5bbab786aad52cb1c3032c9e8ec5186b16b2bcde9e070630f9ebb03692396d48",
+      "nonproduction_count": 43
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, lorry, 32t-40t gross weight, fleet average",
+        "reference product": "Transport, freight, lorry, 32t-40t gross weight, fleet average",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "reference_amounts": [
+        1
+      ],
+      "inventory_sha256": "d3ab010f93e49003eba8ffd88035a5ccbccd7500403c64b98d05517177a19e1a",
+      "nonproduction_count": 3
+    }
+  ],
+  "recipes": {},
+  "recipe_dependencies": {},
+  "reviews": [
+    {
+      "rationale": "Exact3.9cutoff freight-service screening proxies per signed tonne-km, positive1tkm source/native references and factor+1. RoW inland-waterway barge source is itself extrapolated from European Rhine-fleet data and includes vessel, port/canal, operation, fuel and emissions. Use complete native RER Transport,barge once; vessel lifetime/performance, loading, port/canal allocation, geography, emissions and vintage differ. Brazilian >32ton EURO5 freight uses the complete native RER-labelled32t-40t fleet-average service rather than an all-size Swiss fleet. Native documentation explicitly says Swiss2020fleet shares/HBEFA5.1 despite the RER label. This is not a Brazilian or EURO5-specific inventory: source includes Brazilian ProconveP7/EURO5,12%biodiesel/10ppmS diesel, local emissions and utilization. Size-class upper bound, actual payload, empty returns, fleet standards, fuel carbon/biodiesel, emissions, road/vehicle infrastructure, geography and vintage differ with unquantified score and carbon effects. Preserve caller signed tonne-km and supported uncertainties/formulas; do not infer distance, tonnes, payload or an efficiency multiplier from GVW classes. Reuse each complete transport inventory once without adding another diesel, infrastructure, tailpipe emissions or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. Existing3.8barge parent, target and approval are retained byte-for-byte; only its independently inspected3.9scope is newly admitted. Only exact3.9cutoff lorry source qualifies; no consequential/reverse or other-version approval. No helper or source omission is added. Full pulp heat and steel transformation/export remain unfinished.",
+      "limitations": [
+        "Exact3.9cutoff freight-service screening proxies per signed tonne-km, positive1tkm source/native references and factor+1. RoW inland-waterway barge source is itself extrapolated from European Rhine-fleet data and includes vessel, port/canal, operation, fuel and emissions. Use complete native RER Transport,barge once; vessel lifetime/performance, loading, port/canal allocation, geography, emissions and vintage differ. Brazilian >32ton EURO5 freight uses the complete native RER-labelled32t-40t fleet-average service rather than an all-size Swiss fleet. Native documentation explicitly says Swiss2020fleet shares/HBEFA5.1 despite the RER label. This is not a Brazilian or EURO5-specific inventory: source includes Brazilian ProconveP7/EURO5,12%biodiesel/10ppmS diesel, local emissions and utilization. Size-class upper bound, actual payload, empty returns, fleet standards, fuel carbon/biodiesel, emissions, road/vehicle infrastructure, geography and vintage differ with unquantified score and carbon effects. Preserve caller signed tonne-km and supported uncertainties/formulas; do not infer distance, tonnes, payload or an efficiency multiplier from GVW classes. Reuse each complete transport inventory once without adding another diesel, infrastructure, tailpipe emissions or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. Existing3.8barge parent, target and approval are retained byte-for-byte; only its independently inspected3.9scope is newly admitted. Only exact3.9cutoff lorry source qualifies; no consequential/reverse or other-version approval. No helper or source omission is added. Full pulp heat and steel transformation/export remain unfinished."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_freight_review.json"
+      ]
+    }
+  ],
+  "new_helpers": 0,
+  "new_source_omissions": [],
+  "licensing": "Selected identities, reference facts and hashes only. Full source inventories remain private."
+}
