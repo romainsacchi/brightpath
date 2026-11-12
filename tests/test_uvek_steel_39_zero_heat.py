@@ -101,3 +101,22 @@ def test_review_replay_is_atomic_even_when_the_last_parent_drifts(drift):
         with pytest.raises(ValueError, match="parent changed"):
             apply_steel_39_zero_heat_review(resource)
     assert resource == before
+
+
+@pytest.mark.parametrize("row", REVIEW["excluded_nonzero_heat_forwarders"], ids=lambda row: row["source"]["location"])
+def test_nonzero_internal_reuse_paths_do_not_match_zero_heat_approvals(row):
+    with pytest.raises(MigrationError):
+        BrightwayInventory.from_data(
+            consumer(row["source"], 1), context=contexts("ecoinvent", "3.9")
+        ).migrate_background(contexts("uvek", "2026").background, policy=policy())
+
+
+def test_heat_approvals_do_not_authorize_negative_kg_waste_treatment():
+    controls = [w for row in REVIEW["records"] for w in row["allocation_control_witnesses"]]
+    assert len(controls) == 12
+    data = consumer(controls[0]["identity"], -1)
+    data[0]["exchanges"] = data[0]["exchanges"][:1] + [consumer(w["identity"], -1)[0]["exchanges"][1] for w in controls]
+    with pytest.raises(MigrationError):
+        BrightwayInventory.from_data(data, context=contexts("ecoinvent", "3.9")).migrate_background(
+            contexts("uvek", "2026").background, policy=policy()
+        )
