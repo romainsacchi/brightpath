@@ -1043,6 +1043,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_steel_39_remaining_residue import apply_steel_39_remaining_residue_review
 
     apply_steel_39_remaining_residue_review(technosphere)
+    if __package__:
+        from scripts.review_uvek_ferrosilicon_voltage import apply_ferrosilicon_voltage_review
+    else:
+        from review_uvek_ferrosilicon_voltage import apply_ferrosilicon_voltage_review
+
+    apply_ferrosilicon_voltage_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
