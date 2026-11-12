@@ -4,12 +4,12 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 210,
-      "recipe": 1020,
-      "unclassified": 29245
+      "recipe": 1021,
+      "unclassified": 29244
     },
     "mapped_identities": 30732,
     "mapping_methods": {
-      "curated_legacy": 264,
+      "curated_legacy": 263,
       "followup_review": 163,
       "heuristic_similarity": 26474,
       "pairwise_review": 2212,
@@ -45,6 +45,7 @@
       "reviewed_deferred_waste_markets": 3,
       "reviewed_deferred_xanthate": 1,
       "reviewed_delivered_low_voltage_proxy": 46,
+      "reviewed_ether_ethanol_rer": 1,
       "reviewed_ferrosilicon_delivered_product": 2,
       "reviewed_ferrosilicon_inventory_reconstruction": 1,
       "reviewed_five_simple_waste_market_service": 5,
@@ -438760,6 +438761,85 @@
       "reference product": "used trawler, steel",
       "unit": "kilogram"
     },
+    "pulp-heat-39-auxiliary-market-533134d2fbe5ce77": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_ether_ethanol_rer_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Ethanol from ethylene, at plant",
+          "reference product": "Ethanol from ethylene, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for ethanol, without water, in 99.7% solution state, from ethylene, reviewed source3.9 fossil ethanol supply",
+      "rationale": "Exact3.9cutoff RER fossil ethanol-from-ethylene market reconstruction. Correct the existing biomass-distillation match to complete native RER direct ethylene-hydration production, retaining its mass-allocated ether co-product boundary. Source market positive1kg reference explicitly has1kgdry ethanol without water in99.7%solution state; native positive1kg legacy ethanol chemical reference follows active-substance quantity conventions. Apply factor+1 perkgactive ethanol, not1/0.997 or an elemental-carbon/energy multiplier. Source/native ethylene inputs0.6117015045477244and0.62193kg/kg differ because process/yield/allocation/vintage models differ; no feedstock-fitting correction is introduced. Preserve one source producer and three original final-product freight rows separately, with signed quantities, supported uncertainties/formulas, rail/barge/heavy-lorry modes and tonne-km, without renormalization. Native production includes precursor/internal transport; original final delivery is added once. Native raw-material origins, hydration efficiency, allocation, energy, emissions, internal uncertainty, geography/vintage and biosphere exclusions differ, with unquantified score/carbon effects. RER transport uses complete native rail/barge/fleet services with traction, fleet/load, fuel and technology warnings. Add no biogenic ethanol, biogenic uptake, denaturing chemical, fuel-distribution loss or invented carbon/water/purity/efficiency correction. Separate caller emissions and carbon-resource exchanges remain unchanged. Only independently inspected exact3.9cutoff RER qualifies. RoW coal-Fischer-Tropsch ethanol supply is not represented by ethylene hydration and remains unapproved pending separate reconstruction. No source omission, consequential/reverse or other-version approval is introduced. Ether-derived water, PCC, pulp heat and steel export remain unfinished.",
+      "reference product": "ethanol, without water, in 99.7% solution state, from ethylene",
+      "unit": "kilogram"
+    },
     "pulp-heat-39-auxiliary-market-aa26b987c1edf1e9": {
       "evidence": [
         "brightpath/data/export/uvek_pulp_heat_auxiliary_markets_review.json"
@@ -766708,7 +766788,7 @@
     {"confidence": 0.8425, "id": "bp-4c51b8491a9aebe9", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ethanol fermentation plant", "reference product": "ethanol fermentation plant", "unit": "unit"}, "target": {"location": "CH", "name": "Ethanol fermentation plant", "reference product": "Ethanol fermentation plant", "unit": "unit"}},
     {"confidence": 0.357888, "id": "bp-683f332fe56e5898", "mapping_method": "heuristic_similarity", "source": {"location": "BR", "name": "market for ethanol, without water, in 95% solution state, from fermentation", "reference product": "ethanol, without water, in 95% solution state, from fermentation", "unit": "kilogram"}, "target": {"location": "BR", "name": "Ethanol, 95% in H2O, from sugar cane, at fermentation plant", "reference product": "Ethanol, 95% in H2O, from sugar cane, at fermentation plant", "unit": "kilogram"}},
     {"confidence": 0.319308, "id": "bp-19ff43315690ca9d", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethanol, without water, in 95% solution state, from fermentation", "reference product": "ethanol, without water, in 95% solution state, from fermentation", "unit": "kilogram"}, "target": {"location": "CH", "name": "Ethanol, 95% in H2O, from whey, at fermentation plant", "reference product": "Ethanol, 95% in H2O, from whey, at fermentation plant", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-533134d2fbe5ce77", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for ethanol, without water, in 99.7% solution state, from ethylene", "reference product": "ethanol, without water, in 99.7% solution state, from ethylene", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethanol, 99.7% in H2O, from biomass, at distillation", "reference product": "Ethanol, 99.7% in H2O, from biomass, at distillation", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-533134d2fbe5ce77", "mapping_method": "reviewed_ether_ethanol_rer", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_ether_ethanol_rer_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_ether_ethanol_rer_review.json"], "reason": "Exact3.9cutoff RER fossil ethanol-from-ethylene market reconstruction. Correct the existing biomass-distillation match to complete native RER direct ethylene-hydration production, retaining its mass-allocated ether co-product boundary. Source market positive1kg reference explicitly has1kgdry ethanol without water in99.7%solution state; native positive1kg legacy ethanol chemical reference follows active-substance quantity conventions. Apply factor+1 perkgactive ethanol, not1/0.997 or an elemental-carbon/energy multiplier. Source/native ethylene inputs0.6117015045477244and0.62193kg/kg differ because process/yield/allocation/vintage models differ; no feedstock-fitting correction is introduced. Preserve one source producer and three original final-product freight rows separately, with signed quantities, supported uncertainties/formulas, rail/barge/heavy-lorry modes and tonne-km, without renormalization. Native production includes precursor/internal transport; original final delivery is added once. Native raw-material origins, hydration efficiency, allocation, energy, emissions, internal uncertainty, geography/vintage and biosphere exclusions differ, with unquantified score/carbon effects. RER transport uses complete native rail/barge/fleet services with traction, fleet/load, fuel and technology warnings. Add no biogenic ethanol, biogenic uptake, denaturing chemical, fuel-distribution loss or invented carbon/water/purity/efficiency correction. Separate caller emissions and carbon-resource exchanges remain unchanged. Only independently inspected exact3.9cutoff RER qualifies. RoW coal-Fischer-Tropsch ethanol supply is not represented by ethylene hydration and remains unapproved pending separate reconstruction. No source omission, consequential/reverse or other-version approval is introduced. Ether-derived water, PCC, pulp heat and steel export remain unfinished.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only exact inspected3.9cutoff source qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-95e740769e792128", "source": {"location": "RER", "name": "market for ethanol, without water, in 99.7% solution state, from ethylene", "reference product": "ethanol, without water, in 99.7% solution state, from ethylene", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-auxiliary-market-533134d2fbe5ce77"}, "technosphere_information_loss": "Exact3.9cutoff RER fossil ethanol-from-ethylene market reconstruction. Correct the existing biomass-distillation match to complete native RER direct ethylene-hydration production, retaining its mass-allocated ether co-product boundary. Source market positive1kg reference explicitly has1kgdry ethanol without water in99.7%solution state; native positive1kg legacy ethanol chemical reference follows active-substance quantity conventions. Apply factor+1 perkgactive ethanol, not1/0.997 or an elemental-carbon/energy multiplier. Source/native ethylene inputs0.6117015045477244and0.62193kg/kg differ because process/yield/allocation/vintage models differ; no feedstock-fitting correction is introduced. Preserve one source producer and three original final-product freight rows separately, with signed quantities, supported uncertainties/formulas, rail/barge/heavy-lorry modes and tonne-km, without renormalization. Native production includes precursor/internal transport; original final delivery is added once. Native raw-material origins, hydration efficiency, allocation, energy, emissions, internal uncertainty, geography/vintage and biosphere exclusions differ, with unquantified score/carbon effects. RER transport uses complete native rail/barge/fleet services with traction, fleet/load, fuel and technology warnings. Add no biogenic ethanol, biogenic uptake, denaturing chemical, fuel-distribution loss or invented carbon/water/purity/efficiency correction. Separate caller emissions and carbon-resource exchanges remain unchanged. Only independently inspected exact3.9cutoff RER qualifies. RoW coal-Fischer-Tropsch ethanol supply is not represented by ethylene hydration and remains unapproved pending separate reconstruction. No source omission, consequential/reverse or other-version approval is introduced. Ether-derived water, PCC, pulp heat and steel export remain unfinished."},
     {"confidence": 0.249853, "id": "bp-02ad72c78509d9d0", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethanol, without water, in 99.7% solution state, from ethylene", "reference product": "ethanol, without water, in 99.7% solution state, from ethylene", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethanol from ethylene, at plant", "reference product": "Ethanol from ethylene, at plant", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-d262805ddd8a5f1e", "mapping_method": "reviewed_fuels_39_final_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_final_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_final_markets_review.json"], "reason": "Retain all eleven ethanol supplier entries. Use complete native fermentation/dehydration ethanol on the active dry-kg basis, not wet solution kg. Original CN/US/RER native documentation explicitly states dry basis; CH source and native match grass/beet/whey shares and useful-heat/electricity quantities; BR source and native dewatering conventions consume one kg active hydrated ethanol per kg active anhydrous output. Use native CH/US/BR by matching country, native RER for European and otherwise unlocated dewatering, and BR sugarcane/mollasses production for Brazilian, Colombian and RoW sugarcane branches. These complete native proxies replace modern/traditional, annexed/autonomous plant technology and sugar/electricity co-product allocation; they do not reproduce those source production routes. Geographic, feedstock, water, dehydration, energy, allocation, emissions and vintage differences remain explicit. No 1/0.997 multiplier or solvent addition is introduced.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact cut-off profiles authorize this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-df33b3625a62d0ea", "source": {"location": "GLO", "name": "market for ethanol, without water, in 99.7% solution state, from fermentation", "reference product": "ethanol, without water, in 99.7% solution state, from fermentation", "unit": "kilogram"}, "target": {"recipe_ref": "fuels-39-final-market-59cc8dcff2cce6ee4885"}, "technosphere_information_loss": "Exact inspected ecoinvent 3.9 cut-off only. Preserve all original producer shares and freight rows, signed caller amounts, formulas and uncertainty without renormalization. Complete native inventories replace production technology, allocation, geography, vintage and internal uncertainty, with unquantified score effects. No omitted source rows, invented recovery credit, concentration, yield or density correction. Native internal upstream transport remains part of its complete production boundary; retained source market delivery is separate and boundary differences must be reviewed if transport dominates."},
     {"confidence": 0.447712, "id": "bp-1e72fdf328096fd1", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for ethanol, without water, in 99.7% solution state, from fermentation, at service station", "reference product": "ethanol, without water, in 99.7% solution state, from fermentation, at service station", "unit": "kilogram"}, "target": {"location": "CH", "name": "Ethanol, 99.7% in H2O, from biomass, at service station", "reference product": "Ethanol, 99.7% in H2O, from biomass, at service station", "unit": "kilogram"}},
@@ -789141,6 +789221,15 @@
         "Independently inspected physical cut-off beet-pulp/whey-yeast coproduct proxy: preserve one wet-basis kg and its incoming sign using the existing corresponding UVEK allocated coproduct supplier. Whey-fermentation legacy metadata explicitly identifies the fodder-yeast coproduct as yeast paste, alongside ethanol and protein concentrate. Sugar-refinery pulp documents 25.6% dry matter in source and target. Beet-ethanol pulp uses the existing Swiss sugar-refinery pulp correspondence as an explicit same-product allocation/technology proxy: the source separates pulp during beet extraction, but its primary fermentation process differs and identical moisture is not independently quantified. Target economic allocation, old Swiss background, process energy, whey collection, infrastructure, water/emissions and regional representation differ. Yeast-paste dry matter/nutrient equivalence is not independently quantified. Do not infer a dry-matter, energy or protein conversion, equal insulation/feed performance or LCIA equivalence. Preserve caller signed quantities, supported uncertainty/formulas, foreground suppliers, production and separate emissions. Only the observed exact cut-off profiles are approved; consequential physical coproduct counterparts are absent and no patch fallback is inferred. The original consequential nutritional omissions remain separately approved and unchanged."
       ],
       "rationale": "Standing independently inspected matching-product and physical-quantity approval: ethanol production from whey / fodder yeast / CH. Independently inspected physical cut-off beet-pulp/whey-yeast coproduct proxy: preserve one wet-basis kg and its incoming sign using the existing corresponding UVEK allocated coproduct supplier. Whey-fermentation legacy metadata explicitly identifies the fodder-yeast coproduct as yeast paste, alongside ethanol and protein concentrate. Sugar-refinery pulp documents 25.6% dry matter in source and target. Beet-ethanol pulp uses the existing Swiss sugar-refinery pulp correspondence as an explicit same-product allocation/technology proxy: the source separates pulp during beet extraction, but its primary fermentation process differs and identical moisture is not independently quantified. Target economic allocation, old Swiss background, process energy, whey collection, infrastructure, water/emissions and regional representation differ. Yeast-paste dry matter/nutrient equivalence is not independently quantified. Do not infer a dry-matter, energy or protein conversion, equal insulation/feed performance or LCIA equivalence. Preserve caller signed quantities, supported uncertainty/formulas, foreground suppliers, production and separate emissions. Only the observed exact cut-off profiles are approved; consequential physical coproduct counterparts are absent and no patch fallback is inferred. The original consequential nutritional omissions remain separately approved and unchanged."
+    },
+    "r-95e740769e792128": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_ether_ethanol_rer_review.json"
+      ],
+      "limitations": [
+        "Exact3.9cutoff RER fossil ethanol-from-ethylene market reconstruction. Correct the existing biomass-distillation match to complete native RER direct ethylene-hydration production, retaining its mass-allocated ether co-product boundary. Source market positive1kg reference explicitly has1kgdry ethanol without water in99.7%solution state; native positive1kg legacy ethanol chemical reference follows active-substance quantity conventions. Apply factor+1 perkgactive ethanol, not1/0.997 or an elemental-carbon/energy multiplier. Source/native ethylene inputs0.6117015045477244and0.62193kg/kg differ because process/yield/allocation/vintage models differ; no feedstock-fitting correction is introduced. Preserve one source producer and three original final-product freight rows separately, with signed quantities, supported uncertainties/formulas, rail/barge/heavy-lorry modes and tonne-km, without renormalization. Native production includes precursor/internal transport; original final delivery is added once. Native raw-material origins, hydration efficiency, allocation, energy, emissions, internal uncertainty, geography/vintage and biosphere exclusions differ, with unquantified score/carbon effects. RER transport uses complete native rail/barge/fleet services with traction, fleet/load, fuel and technology warnings. Add no biogenic ethanol, biogenic uptake, denaturing chemical, fuel-distribution loss or invented carbon/water/purity/efficiency correction. Separate caller emissions and carbon-resource exchanges remain unchanged. Only independently inspected exact3.9cutoff RER qualifies. RoW coal-Fischer-Tropsch ethanol supply is not represented by ethylene hydration and remains unapproved pending separate reconstruction. No source omission, consequential/reverse or other-version approval is introduced. Ether-derived water, PCC, pulp heat and steel export remain unfinished."
+      ],
+      "rationale": "Exact3.9cutoff RER fossil ethanol-from-ethylene market reconstruction. Correct the existing biomass-distillation match to complete native RER direct ethylene-hydration production, retaining its mass-allocated ether co-product boundary. Source market positive1kg reference explicitly has1kgdry ethanol without water in99.7%solution state; native positive1kg legacy ethanol chemical reference follows active-substance quantity conventions. Apply factor+1 perkgactive ethanol, not1/0.997 or an elemental-carbon/energy multiplier. Source/native ethylene inputs0.6117015045477244and0.62193kg/kg differ because process/yield/allocation/vintage models differ; no feedstock-fitting correction is introduced. Preserve one source producer and three original final-product freight rows separately, with signed quantities, supported uncertainties/formulas, rail/barge/heavy-lorry modes and tonne-km, without renormalization. Native production includes precursor/internal transport; original final delivery is added once. Native raw-material origins, hydration efficiency, allocation, energy, emissions, internal uncertainty, geography/vintage and biosphere exclusions differ, with unquantified score/carbon effects. RER transport uses complete native rail/barge/fleet services with traction, fleet/load, fuel and technology warnings. Add no biogenic ethanol, biogenic uptake, denaturing chemical, fuel-distribution loss or invented carbon/water/purity/efficiency correction. Separate caller emissions and carbon-resource exchanges remain unchanged. Only independently inspected exact3.9cutoff RER qualifies. RoW coal-Fischer-Tropsch ethanol supply is not represented by ethylene hydration and remains unapproved pending separate reconstruction. No source omission, consequential/reverse or other-version approval is introduced. Ether-derived water, PCC, pulp heat and steel export remain unfinished."
     },
     "r-9657fa792334eee2": {
       "evidence": [
