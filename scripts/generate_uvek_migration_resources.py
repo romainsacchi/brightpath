@@ -1037,6 +1037,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_steel_39_mill_scale_direct import apply_steel_39_mill_scale_direct_review
 
     apply_steel_39_mill_scale_direct_review(technosphere)
+    if __package__:
+        from scripts.review_uvek_steel_39_remaining_residue import apply_steel_39_remaining_residue_review
+    else:
+        from review_uvek_steel_39_remaining_residue import apply_steel_39_remaining_residue_review
+
+    apply_steel_39_remaining_residue_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
