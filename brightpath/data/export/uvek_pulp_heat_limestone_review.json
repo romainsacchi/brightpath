@@ -1,0 +1,1483 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing autonomous approval of independently inspected reconstructions and explicitly audited omissions of proven empty allocated interfaces, logged for review.",
+  "records": [
+    {
+      "rule_id": "bp-72a8ad74c81bdc51",
+      "kind": "landfill",
+      "original_rule": {
+        "confidence": 0.289493,
+        "conversion_factor": -1,
+        "id": "bp-72a8ad74c81bdc51",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-72a8ad74c81bdc51"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "RoW",
+          "name": "treatment of limestone residue, inert material landfill",
+          "reference product": "limestone residue",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, limestone residue, 5% water, to construction waste landfill",
+          "reference product": "Disposal, limestone residue, 5% water, to construction waste landfill",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "conversion_factor": -1,
+        "id": "bp-72a8ad74c81bdc51",
+        "mapping_method": "reviewed_pulp_heat_limestone_residue",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only individually inspected exact source profiles qualify; uninspected landfill profiles require review.",
+          "evidence": [
+            "brightpath/data/export/uvek_pulp_heat_limestone_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "pulp-heat-39-limestone-inert-landfill"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished.",
+                "evidence": [
+                  "brightpath/data/export/uvek_pulp_heat_limestone_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "RoW",
+          "name": "treatment of limestone residue, inert material landfill",
+          "reference product": "limestone residue",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, limestone residue, 5% water, to construction waste landfill",
+          "reference product": "Disposal, limestone residue, 5% water, to construction waste landfill",
+          "unit": "kilogram"
+        },
+        "classification": "proxy",
+        "review_ref": "r-2e66d459233ff4d3",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished."
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "treatment of limestone residue, inert material landfill",
+          "reference product": "limestone residue",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "inventory_sha256": "89e5c30e288b60c98bfb6851eb495270f6b5ebae79f38567d73987dcb379fede",
+        "nonproduction_count": 2
+      },
+      "conversion_factor": -1,
+      "recipe_id": "pulp-heat-39-limestone-inert-landfill",
+      "component_bindings": [
+        {
+          "source_unit": "unit",
+          "source_exchange_sha256": "43c9fa61d21c784b4120ebf0b0f7efc0e73f0d5d72d8983b8cd0046ff193d2e6",
+          "source_statistics": {
+            "amount": 1.48e-09,
+            "uncertainty type": 2,
+            "loc": -20.331223749170388,
+            "scale": 0.044721359549995794,
+            "pedigree": {
+              "reliability": 1,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 1
+            },
+            "scale without pedigree": 0.20976176963403032
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 1.48e-09,
+            "uncertainty type": 2,
+            "loc": -20.331223749170388,
+            "scale": 0.044721359549995794,
+            "pedigree": {
+              "reliability": 1,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 1
+            },
+            "scale without pedigree": 0.20976176963403032
+          },
+          "target": {
+            "name": "xx Inert material landfill facility",
+            "reference product": "xx Inert material landfill facility",
+            "location": "CH",
+            "unit": "unit"
+          }
+        },
+        {
+          "source_unit": "kilogram",
+          "source_exchange_sha256": "37359d323ab9c5c6f1e4ec8fe152be0cf9d99fcb5633cd9f383fcaca8299bbc8",
+          "source_statistics": {
+            "amount": 1.0,
+            "uncertainty type": 2,
+            "loc": 0.0,
+            "scale": 0.044721359549995794,
+            "pedigree": {
+              "reliability": 1,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 1
+            },
+            "scale without pedigree": 0.20976176963403032
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 1.0,
+            "uncertainty type": 2,
+            "loc": 0.0,
+            "scale": 0.044721359549995794,
+            "pedigree": {
+              "reliability": 1,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 1
+            },
+            "scale without pedigree": 0.20976176963403032
+          },
+          "target": {
+            "name": "Process-specific burdens, inert material landfill",
+            "reference product": "Process-specific burdens, inert material landfill",
+            "location": "CH",
+            "unit": "kilogram"
+          }
+        }
+      ],
+      "source_omissions": [],
+      "limitations": [
+        "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished.",
+        "Scoped omission of an independently verified empty negative-reference clinker waste interface only. Complete source matrix column has-1self-production and empty biosphere column; same-activity clinker output is nonempty. Preserve the signed source quantity and context in the audit. No modeled source LCI burden is removed; no standalone zero correspondence, clinker burden or credit, nonempty-treatment omission or renormalization is authorized."
+      ]
+    },
+    {
+      "rule_id": "bp-d0ba52e7d658a135",
+      "kind": "market",
+      "original_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": -1.0,
+        "id": "bp-d0ba52e7d658a135",
+        "mapping_method": "reviewed_market_composition",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_market_composition_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": -1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/d39f68c06a375da492434f4911fa4b453d56252b480c0f6adcee2e998d63a59a"
+                ],
+                "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": -1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.11"
+              },
+              "target": {
+                "recipe_ref": "regional-freight-market-composition-051864e6846e78faa62c"
+              }
+            },
+            {
+              "conversion_factor": -1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/035d579876302e3825fdbd3b1aa5ff95d7ee67e476b2bd03c05ae4ed1c1d8a28"
+                ],
+                "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": -1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              },
+              "target": {
+                "recipe_ref": "regional-freight-market-composition-5345a09d9ec6ded7e78d"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.10-cutoff/277fecba0ca8fc4a1937f51bc0e08b012871091a200d58ad9a7a353f860e3c73"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.6-cutoff/c920ca78f19c2f38ee628452654445e146b0fbc933b006173ef4b1411a499ecc"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.7-cutoff/b73a64b3d07b212ca171f6e439d7fb9505877a14cb25cdd2437ec8a400d6b00a"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.7"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.8-cutoff/0cde3e596a0afea97f38a88b4aad99279ad3515f7d34d5a4ce26d21213900f29"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.9-cutoff/077cf2138add3b5c5636a223501522134baac301706472f71b119bb329d8ca54"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-7a90c836ca379739",
+        "source": {
+          "location": "RoW",
+          "name": "market for limestone residue",
+          "reference product": "limestone residue",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "regional-freight-market-composition-051864e6846e78faa62c"
+        },
+        "technosphere_information_loss": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred."
+      },
+      "compiled_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": -1.0,
+        "id": "bp-d0ba52e7d658a135",
+        "mapping_method": "reviewed_pulp_heat_limestone_residue",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only individually inspected exact source profiles qualify; uninspected landfill profiles require review.",
+          "evidence": [
+            "brightpath/data/export/uvek_pulp_heat_limestone_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": -1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/d39f68c06a375da492434f4911fa4b453d56252b480c0f6adcee2e998d63a59a"
+                ],
+                "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": -1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.11"
+              },
+              "target": {
+                "recipe_ref": "regional-freight-market-composition-051864e6846e78faa62c"
+              }
+            },
+            {
+              "conversion_factor": -1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/035d579876302e3825fdbd3b1aa5ff95d7ee67e476b2bd03c05ae4ed1c1d8a28"
+                ],
+                "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": -1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              },
+              "target": {
+                "recipe_ref": "regional-freight-market-composition-5345a09d9ec6ded7e78d"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.10-cutoff/277fecba0ca8fc4a1937f51bc0e08b012871091a200d58ad9a7a353f860e3c73"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.6-cutoff/c920ca78f19c2f38ee628452654445e146b0fbc933b006173ef4b1411a499ecc"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.7-cutoff/b73a64b3d07b212ca171f6e439d7fb9505877a14cb25cdd2437ec8a400d6b00a"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.7"
+              }
+            },
+            {
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.8-cutoff/0cde3e596a0afea97f38a88b4aad99279ad3515f7d34d5a4ce26d21213900f29"
+                ],
+                "reason": "This source inventory/profile has unreviewed components, direct biosphere flows or an unapproved allocation/treatment boundary; no inferred counterpart is approved.",
+                "source_sign": -1,
+                "status": "unresolved",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "pulp-heat-39-limestone-residue-market"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished.",
+                "evidence": [
+                  "brightpath/data/export/uvek_pulp_heat_limestone_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "report_correspondence": true,
+        "review_ref": "r-2e66d459233ff4d3",
+        "source": {
+          "location": "RoW",
+          "name": "market for limestone residue",
+          "reference product": "limestone residue",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "regional-freight-market-composition-051864e6846e78faa62c"
+        },
+        "technosphere_information_loss": "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished."
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for limestone residue",
+          "reference product": "limestone residue",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "inventory_sha256": "c5aba45ead19a2ada1813a76918fbbb0f2b98861c558bd6b934eb00647507bf6",
+        "nonproduction_count": 12
+      },
+      "conversion_factor": -1,
+      "recipe_id": "pulp-heat-39-limestone-residue-market",
+      "component_bindings": [
+        {
+          "source_unit": "kilogram",
+          "source_exchange_sha256": "ae4b8a6acad72bc2b4716d3bc279910deaa11cb340584de918b61efe49ec107c",
+          "source_statistics": {
+            "amount": -8.47378205105051e-10,
+            "uncertainty type": 0,
+            "loc": -8.47378205105051e-10
+          },
+          "component_conversion_factor": -1,
+          "statistics": {
+            "amount": 8.47378205105051e-10,
+            "uncertainty type": 0,
+            "loc": 8.47378205105051e-10
+          },
+          "target": {
+            "recipe": "pulp-heat-39-limestone-inert-landfill"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "7260e992df676894f8886b30cdca428c0ebd354a0ba16a643c1a9ea3fb79d32c",
+          "source_statistics": {
+            "amount": 0.0007675684181920615,
+            "uncertainty type": 2,
+            "loc": -7.172282938251848,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.0007675684181920615,
+            "uncertainty type": 2,
+            "loc": -7.172282938251848,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "e575f93426f4a1433e58309898f9a3d13457968876f5cf586f91c6187c640648",
+          "source_statistics": {
+            "amount": 0.0027704532824479535,
+            "uncertainty type": 2,
+            "loc": -5.888744332297526,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.0027704532824479535,
+            "uncertainty type": 2,
+            "loc": -5.888744332297526,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "45fbbb67e1f76c20d072c6b10f1915160deaf953be8708d60f4ab32b7f73c960",
+          "source_statistics": {
+            "amount": 0.00019436435879336528,
+            "uncertainty type": 2,
+            "loc": -8.545776022286985,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.00019436435879336528,
+            "uncertainty type": 2,
+            "loc": -8.545776022286985,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "3f40c2b74b0072661906ddf322e5ad8deb4737bca6eae927dc0870d5b9a707cf",
+          "source_statistics": {
+            "amount": 0.0038221621180260434,
+            "uncertainty type": 2,
+            "loc": -5.566939016997688,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.0038221621180260434,
+            "uncertainty type": 2,
+            "loc": -5.566939016997688,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "d7f925a29abc5f8c1ab9e4b34ff98b138c811353722dbf88ce051ab6838a7748",
+          "source_statistics": {
+            "amount": 0.0030262768297576337,
+            "uncertainty type": 2,
+            "loc": -5.800422184073443,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.0030262768297576337,
+            "uncertainty type": 2,
+            "loc": -5.800422184073443,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "8329abccdf67279501e8c8abbb52dd1e2b6e4d15725fce3eb6b1059cb702bf56",
+          "source_statistics": {
+            "amount": 0.000619174992782942,
+            "uncertainty type": 2,
+            "loc": -7.387122622836765,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.000619174992782942,
+            "uncertainty type": 2,
+            "loc": -7.387122622836765,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "0515259112520f26bf0dacc99f3dccce9520e207408571de2c794552ffc6938a",
+          "source_statistics": {
+            "amount": 0.0003461605163611663,
+            "uncertainty type": 2,
+            "loc": -7.96860797036524,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.0003461605163611663,
+            "uncertainty type": 2,
+            "loc": -7.96860797036524,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "61e1cf8c61a968f8b2d1e2934f2febb6c6a92e6048430a05fb9d57b676ecdf25",
+          "source_statistics": {
+            "amount": 0.016762842782120813,
+            "uncertainty type": 2,
+            "loc": -4.0885905812399015,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.016762842782120813,
+            "uncertainty type": 2,
+            "loc": -4.0885905812399015,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        },
+        {
+          "source_unit": "ton kilometer",
+          "source_exchange_sha256": "e144400fba64e26709bfe613e8dd1e91e2fc26674fd6de1aed576f3e76ebe068",
+          "source_statistics": {
+            "amount": 0.002210996701518021,
+            "uncertainty type": 2,
+            "loc": -6.114311868958677,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "component_conversion_factor": 1,
+          "statistics": {
+            "amount": 0.002210996701518021,
+            "uncertainty type": 2,
+            "loc": -6.114311868958677,
+            "scale": 0.4074309757492673,
+            "pedigree": {
+              "reliability": 3,
+              "completeness": 1,
+              "temporal correlation": 5,
+              "geographical correlation": 5,
+              "further technological correlation": 4
+            },
+            "scale without pedigree": 0.5
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          }
+        }
+      ],
+      "source_omissions": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "source_activity": {
+            "name": "market for limestone residue",
+            "reference product": "limestone residue",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "source_inventory_sha256": "c5aba45ead19a2ada1813a76918fbbb0f2b98861c558bd6b934eb00647507bf6",
+          "original_index": 1,
+          "source_exchange": {
+            "name": "clinker production",
+            "reference product": "limestone residue",
+            "location": "BR",
+            "unit": "kilogram",
+            "amount": -0.26714150300729,
+            "uncertainty type": 0,
+            "loc": -0.26714150300729,
+            "type": "technosphere"
+          },
+          "rationale": "Scoped omission of an independently verified empty negative-reference clinker waste interface only. Complete source matrix column has-1self-production and empty biosphere column; same-activity clinker output is nonempty. Preserve the signed source quantity and context in the audit. No modeled source LCI burden is removed; no standalone zero correspondence, clinker burden or credit, nonempty-treatment omission or renormalization is authorized. Waste inventory SHA256:0f4419b72c00bc3e0533b667dbff954ed664bccec8e1bee4a9a4221efc0f007c; nonempty clinker inventory SHA256:3f9ed58e84b384e67bcd3777550861f13bf73e3a311a31f583afe9b533206801"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "source_activity": {
+            "name": "market for limestone residue",
+            "reference product": "limestone residue",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "source_inventory_sha256": "c5aba45ead19a2ada1813a76918fbbb0f2b98861c558bd6b934eb00647507bf6",
+          "original_index": 3,
+          "source_exchange": {
+            "name": "clinker production",
+            "reference product": "limestone residue",
+            "location": "RoW",
+            "unit": "kilogram",
+            "amount": -0.732858496145332,
+            "uncertainty type": 0,
+            "loc": -0.732858496145332,
+            "type": "technosphere"
+          },
+          "rationale": "Scoped omission of an independently verified empty negative-reference clinker waste interface only. Complete source matrix column has-1self-production and empty biosphere column; same-activity clinker output is nonempty. Preserve the signed source quantity and context in the audit. No modeled source LCI burden is removed; no standalone zero correspondence, clinker burden or credit, nonempty-treatment omission or renormalization is authorized. Waste inventory SHA256:486430853cf301ce0aeb78d0dc2eead65f887002a6959992e82ff7952565fc28; nonempty clinker inventory SHA256:0383e9389b75fe2c22b9f433c77f505d68f66e0fac22a5375f87422e455ee463"
+        }
+      ],
+      "limitations": [
+        "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished.",
+        "Scoped omission of an independently verified empty negative-reference clinker waste interface only. Complete source matrix column has-1self-production and empty biosphere column; same-activity clinker output is nonempty. Preserve the signed source quantity and context in the audit. No modeled source LCI burden is removed; no standalone zero correspondence, clinker burden or credit, nonempty-treatment omission or renormalization is authorized."
+      ]
+    }
+  ],
+  "recipes": {
+    "pulp-heat-39-limestone-inert-landfill": {
+      "name": "treatment of limestone residue, inert material landfill, retained source3.9 limestone service boundary",
+      "reference product": "limestone residue",
+      "location": "RoW",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "xx Inert material landfill facility",
+          "reference product": "xx Inert material landfill facility",
+          "location": "CH",
+          "unit": "unit",
+          "amount": 1.48e-09,
+          "uncertainty type": 2,
+          "loc": -20.331223749170388,
+          "scale": 0.044721359549995794,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 1
+          },
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere"
+        },
+        {
+          "name": "Process-specific burdens, inert material landfill",
+          "reference product": "Process-specific burdens, inert material landfill",
+          "location": "CH",
+          "unit": "kilogram",
+          "amount": 1.0,
+          "uncertainty type": 2,
+          "loc": 0.0,
+          "scale": 0.044721359549995794,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 1
+          },
+          "scale without pedigree": 0.20976176963403032,
+          "type": "technosphere"
+        }
+      ],
+      "rationale": "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished.",
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_limestone_review.json"
+      ]
+    },
+    "pulp-heat-39-limestone-residue-market": {
+      "name": "market for limestone residue, retained source3.9 limestone service boundary",
+      "reference product": "limestone residue",
+      "location": "RoW",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "recipe": "pulp-heat-39-limestone-inert-landfill",
+          "amount": 8.47378205105051e-10,
+          "uncertainty type": 0,
+          "loc": 8.47378205105051e-10
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.0007675684181920615,
+          "uncertainty type": 2,
+          "loc": -7.172282938251848,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.0027704532824479535,
+          "uncertainty type": 2,
+          "loc": -5.888744332297526,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.00019436435879336528,
+          "uncertainty type": 2,
+          "loc": -8.545776022286985,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.0038221621180260434,
+          "uncertainty type": 2,
+          "loc": -5.566939016997688,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.0030262768297576337,
+          "uncertainty type": 2,
+          "loc": -5.800422184073443,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.000619174992782942,
+          "uncertainty type": 2,
+          "loc": -7.387122622836765,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.0003461605163611663,
+          "uncertainty type": 2,
+          "loc": -7.96860797036524,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.016762842782120813,
+          "uncertainty type": 2,
+          "loc": -4.0885905812399015,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "amount": 0.002210996701518021,
+          "uncertainty type": 2,
+          "loc": -6.114311868958677,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere"
+        }
+      ],
+      "rationale": "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished.",
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_limestone_review.json"
+      ],
+      "source_input_omissions": [
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "source_activity": {
+            "name": "market for limestone residue",
+            "reference product": "limestone residue",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "source_inventory_sha256": "c5aba45ead19a2ada1813a76918fbbb0f2b98861c558bd6b934eb00647507bf6",
+          "original_index": 1,
+          "source_exchange": {
+            "name": "clinker production",
+            "reference product": "limestone residue",
+            "location": "BR",
+            "unit": "kilogram",
+            "amount": -0.26714150300729,
+            "uncertainty type": 0,
+            "loc": -0.26714150300729,
+            "type": "technosphere"
+          },
+          "rationale": "Scoped omission of an independently verified empty negative-reference clinker waste interface only. Complete source matrix column has-1self-production and empty biosphere column; same-activity clinker output is nonempty. Preserve the signed source quantity and context in the audit. No modeled source LCI burden is removed; no standalone zero correspondence, clinker burden or credit, nonempty-treatment omission or renormalization is authorized. Waste inventory SHA256:0f4419b72c00bc3e0533b667dbff954ed664bccec8e1bee4a9a4221efc0f007c; nonempty clinker inventory SHA256:3f9ed58e84b384e67bcd3777550861f13bf73e3a311a31f583afe9b533206801"
+        },
+        {
+          "source_profile": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "source_activity": {
+            "name": "market for limestone residue",
+            "reference product": "limestone residue",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "source_inventory_sha256": "c5aba45ead19a2ada1813a76918fbbb0f2b98861c558bd6b934eb00647507bf6",
+          "original_index": 3,
+          "source_exchange": {
+            "name": "clinker production",
+            "reference product": "limestone residue",
+            "location": "RoW",
+            "unit": "kilogram",
+            "amount": -0.732858496145332,
+            "uncertainty type": 0,
+            "loc": -0.732858496145332,
+            "type": "technosphere"
+          },
+          "rationale": "Scoped omission of an independently verified empty negative-reference clinker waste interface only. Complete source matrix column has-1self-production and empty biosphere column; same-activity clinker output is nonempty. Preserve the signed source quantity and context in the audit. No modeled source LCI burden is removed; no standalone zero correspondence, clinker burden or credit, nonempty-treatment omission or renormalization is authorized. Waste inventory SHA256:486430853cf301ce0aeb78d0dc2eead65f887002a6959992e82ff7952565fc28; nonempty clinker inventory SHA256:0383e9389b75fe2c22b9f433c77f505d68f66e0fac22a5375f87422e455ee463"
+        }
+      ]
+    }
+  },
+  "recipe_dependencies": {
+    "regional-freight-market-composition-051864e6846e78faa62c": {
+      "evidence": [
+        "brightpath/data/export/uvek_market_composition_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "location": "CH",
+          "name": "Disposal, limestone residue, 5% water, to construction waste landfill",
+          "reference product": "Disposal, limestone residue, 5% water, to construction waste landfill",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.06680843137801773,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "type": "technosphere",
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0013796252463669672,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "type": "technosphere",
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.008811943375615302,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "type": "technosphere",
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for limestone residue, composed from resolved suppliers, RoW",
+      "rationale": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+      "reference product": "limestone residue",
+      "unit": "kilogram"
+    },
+    "regional-freight-market-composition-5345a09d9ec6ded7e78d": {
+      "evidence": [
+        "brightpath/data/export/uvek_market_composition_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "location": "CH",
+          "name": "Disposal, limestone residue, 5% water, to construction waste landfill",
+          "reference product": "Disposal, limestone residue, 5% water, to construction waste landfill",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0013796252463669672,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "type": "technosphere",
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.008811943375615302,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "type": "technosphere",
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.06680843137801773,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "type": "technosphere",
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for limestone residue, composed from resolved suppliers, RoW",
+      "rationale": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+      "reference product": "limestone residue",
+      "unit": "kilogram"
+    }
+  },
+  "reviews": [
+    {
+      "rationale": "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished.",
+      "limitations": [
+        "Exact ecoinvent3.9cutoff limestone-residue market and inert-landfill reconstruction. Source market and landfill references are-1kg waste; target helpers have+1kg treatment references, so caller conversion is-1. Retain the tiny original inert-landfill share8.47378205105051e-10kg perkg and all six rail/three road freight rows separately, with their original quantities and supported uncertainty/formulas, without renormalizing. Do not replace the entire market with1kglandfill. Landfill helper retains its two source components:1kg process-specific inert-landfill burdens plus1.48e-9facility units. Use complete native CH generic inert-landfill operation and facility components, not the composition-specific5%-water construction-landfill dataset with added waste-specific leachate. Source reference properties report0.5%water; no5%water assumption, moisture multiplier or invented leachate is introduced. Native facility has legacy xx-prefixed name but independently verified positive1unit output and nonempty inventory; the label is not treated as an empty process. Native operation has no facility input, so the separately listed facility is included once. Source landfill documentation already describes Swiss2000technology and50%sealed sites; native documentation matches this broad class. Geography, operation, energy, infrastructure, site, vintage, generic land-use/biosphere exclusions and internal uncertainty remain screening differences with unquantified score effects. RER rail and heavy-lorry services retain original tonne-km with country/traction/fleet/load/fuel/empty-return/geography warnings; no extra fuel, distance, recovery or emissions credit is added. Separate caller emissions and carbon-resource exchanges remain unchanged. Two exact negative-reference clinker waste branches have only-1kg self-production and no other exchanges, proven by full source A/B columns and four exact signed zero-LCI matrix checks; their same-activity positive clinker outputs are nonempty. Omit only those two zero-burden source interfaces inside this exact market, recording original signed amounts, identities, positions and hashes, without assigning clinker-production burdens or credits. This loses two explicit interfaces but no modeled source LCI burden; it does not authorize standalone zero maps, unknown/nonempty treatments or quantity-threshold omissions. Only exact3.9cutoff is newly approved. Earlier3.11/3.12market profiles and their helper inventories remain scientifically unchanged; no consequential/reverse or other new source-profile approval is inferred. Full pulp heat, industrial heat and steel transformation/export remain unfinished.",
+        "Scoped omission of an independently verified empty negative-reference clinker waste interface only. Complete source matrix column has-1self-production and empty biosphere column; same-activity clinker output is nonempty. Preserve the signed source quantity and context in the audit. No modeled source LCI burden is removed; no standalone zero correspondence, clinker burden or credit, nonempty-treatment omission or renormalization is authorized."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_limestone_review.json"
+      ]
+    }
+  ],
+  "native_2026_witnesses": [
+    {
+      "identity": {
+        "name": "xx Inert material landfill facility",
+        "reference product": "xx Inert material landfill facility",
+        "location": "CH",
+        "unit": "unit"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "c776979b5739f089eff4f0c47f91f3a864964f84ea5a21bb3fc850044ecdfffa",
+      "nonproduction_count": 13
+    },
+    {
+      "identity": {
+        "name": "Process-specific burdens, inert material landfill",
+        "reference product": "Process-specific burdens, inert material landfill",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "794800a5351542b5438c0badeae48052a880c98270fa93ad66a63e7bba393cd8",
+      "nonproduction_count": 13
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, rail",
+        "reference product": "Transport, freight, rail",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "0b3cf4b17bfa32cc78fc565b14fb4d041d0ab98fca1cb0e96c2bec4d032bc4a8",
+      "nonproduction_count": 66
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, lorry, fleet average",
+        "reference product": "Transport, freight, lorry, fleet average",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "a3b9ac4ab71ebde133bff9e5c360e47ccab7b7dae03d9bdddcc091c20afb9561",
+      "nonproduction_count": 4
+    }
+  ],
+  "empty_clinker_controls": [
+    {
+      "source_witness": {
+        "identity": {
+          "name": "clinker production",
+          "reference product": "limestone residue",
+          "location": "BR",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1
+        ],
+        "inventory_sha256": "0f4419b72c00bc3e0533b667dbff954ed664bccec8e1bee4a9a4221efc0f007c",
+        "nonproduction_count": 0
+      },
+      "main_clinker_witness": {
+        "identity": {
+          "name": "clinker production",
+          "reference product": "clinker",
+          "location": "BR",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "inventory_sha256": "3f9ed58e84b384e67bcd3777550861f13bf73e3a311a31f583afe9b533206801",
+        "nonproduction_count": 59
+      },
+      "same_activity_uuid": true
+    },
+    {
+      "source_witness": {
+        "identity": {
+          "name": "clinker production",
+          "reference product": "limestone residue",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1
+        ],
+        "inventory_sha256": "486430853cf301ce0aeb78d0dc2eead65f887002a6959992e82ff7952565fc28",
+        "nonproduction_count": 0
+      },
+      "main_clinker_witness": {
+        "identity": {
+          "name": "clinker production",
+          "reference product": "clinker",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "inventory_sha256": "0383e9389b75fe2c22b9f433c77f505d68f66e0fac22a5375f87422e455ee463",
+        "nonproduction_count": 245
+      },
+      "same_activity_uuid": true
+    }
+  ],
+  "empty_clinker_matrix_proofs": [
+    {
+      "identity": {
+        "name": "clinker production",
+        "reference product": "limestone residue",
+        "location": "BR",
+        "unit": "kilogram"
+      },
+      "signed_exact_zero_matrix_checks": 2,
+      "column_only_negative_unit_self_production": true,
+      "biosphere_column_empty": true
+    },
+    {
+      "identity": {
+        "name": "clinker production",
+        "reference product": "limestone residue",
+        "location": "RoW",
+        "unit": "kilogram"
+      },
+      "signed_exact_zero_matrix_checks": 2,
+      "column_only_negative_unit_self_production": true,
+      "biosphere_column_empty": true
+    }
+  ],
+  "new_source_omissions": 2,
+  "licensing": "Derived native recipes and bounded identity/reference/quantity facts with hashes only. Complete licensed source inventories remain private."
+}
