@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 163,
-      "recipe": 997,
-      "unclassified": 29315
+      "recipe": 998,
+      "unclassified": 29314
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 266,
       "followup_review": 163,
-      "heuristic_similarity": 26540,
+      "heuristic_similarity": 26539,
       "pairwise_review": 2214,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -46,6 +46,7 @@
       "reviewed_deferred_xanthate": 1,
       "reviewed_delivered_low_voltage_proxy": 46,
       "reviewed_ferrosilicon_delivered_product": 2,
+      "reviewed_ferrosilicon_inventory_reconstruction": 1,
       "reviewed_five_simple_waste_market_service": 5,
       "reviewed_fuels_312_dependency": 4,
       "reviewed_fuels_38_native_services": 2,
@@ -156,7 +157,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.441246,
+    "mean_confidence": 0.441275,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -99529,6 +99530,1377 @@
       "name": "market for petroleum coke, reviewed source3.9 delivered supply",
       "rationale": "Exact3.9cutoff delivered supply reconstruction. Keep every original producer share separately and every freight quantity and supported uncertainty without renormalization. The three coal-tar producers use complete native GLO coke-plant tar; this replaces the small rare-earth-processing tar co-product as an explicit production-route/allocation proxy, not rare-earth oxide production. The three petroleum-coke producers use complete native RER refinery petroleum coke, preserving original shares but replacing regional refining/allocation with that native model. No generic coal, heat service or waste treatment is substituted for these products. Rail, inland barge, road fleet and dry-bulk sea use complete native RER rail/barge/lorry fleet and OCE transoceanic freight ship respectively, at original signed tonne-km. Native technology, cargo vessel design, fuel/load, geography, vintage, infrastructure, distribution assumptions, product grade/moisture/carbon/energy content, allocation, biosphere exclusions and internal uncertainty differ. Score and carbon-balance differences are unquantified. For RoW low-pressure gas only, source positive1m3 explicitly declares net heating value36MJ; supply36MJ of complete native RoW low-pressure at-consumer gas, preserving source signedm3 caller reference in a helper. No added loss, density/state/carbon correction, combustion or recovery credit. Caller signs, uncertainties, formulas and separate emissions remain. Only exact inspected3.9cutoff profiles qualify. Existing3.12RoWgas selection and its recipe remain unchanged; no cross-model or reverse route is inferred.",
       "reference product": "petroleum coke",
+      "unit": "kilogram"
+    },
+    "ferrosilicon-39-global-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ferrosilicon_market_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.453551912568306,
+          "loc": 0.453551912568306,
+          "recipe": "ferrosilicon-39-production-row",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.546448087431694,
+          "loc": 0.546448087431694,
+          "recipe": "ferrosilicon-39-production-cn",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.1903,
+          "loc": -1.6591535046800332,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0201,
+          "loc": -3.907035463917107,
+          "location": "RER",
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2065,
+          "loc": -1.5774548665810497,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.4409,
+          "loc": -0.8189371866182451,
+          "location": "OCE",
+          "name": "Transport, transoceanic freight ship",
+          "reference product": "Transport, transoceanic freight ship",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "Market for ferrosilicon, reviewed source3.9 native reconstruction",
+      "rationale": "Exact ecoinvent3.9cutoff ferrosilicon market reconstruction using the independently migrated complete CN and RoW producer inventories and already-reviewed native background supplies. Retain the source global producer shares, all four freight quantities and uncertainty, every signed producer input, and all eight direct biosphere exchanges per producer after canonical3.10flow migration. Preserve source waste-treatment signs and reference bases, reviewed recipe dependencies and their previously approved scoped omissions; no new source-exchange omission is approved. Preserve the source28MJ coke demand and8.56kWh direct electricity per kg through their documented energy and complete low-voltage supply mappings. Do not infer a silicon grade from the generic product label or repair source carbon/emission data from an assumed alloy composition. Existing source properties do not establish an independently closed elemental carbon balance; no invented carbon/density/moisture correction is applied. The two new producer recipes and global market are on-demand positive1kg helpers. Original source2regional producer inventories are reconstructed, not replaced by battery retention or a generic steel/silicon blend. Freight uses complete native RER rail/barge/fleet-average lorry and OCE transoceanic dry-freight shipping, retaining all originaltonne-km. Native backgrounds, gas composition, production routes, regional membership, grades, allocation, technology, vintage, internal uncertainty and biosphere exclusions differ as documented in the19reused recipes and their supplier reviews; score and carbon-balance effects remain unquantified. Caller signed quantities, uncertainty, formulas and separate emissions remain unchanged with factor+1. Only exact inspected ecoinvent3.9cutoff qualifies; other releases, consequential and reverse routes are not inferred. This correspondence does not establish operational steel transformation or a successful full steel export.",
+      "reference product": "ferrosilicon",
+      "unit": "kilogram"
+    },
+    "ferrosilicon-39-production-cn": {
+      "evidence": [
+        "brightpath/data/export/uvek_ferrosilicon_market_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.01704,
+          "loc": -4.072191757580967,
+          "recipe": "ferrosilicon-39-final-0281677fb9d20241",
+          "scale": 0.1174734012447073,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 28.0,
+          "loc": 3.332204510175204,
+          "location": "GLO",
+          "name": "Hard coal coke, at plant",
+          "reference product": "Hard coal coke, at plant",
+          "scale": 0.0565685424949238,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 4e-11,
+          "loc": -23.942141661814613,
+          "location": "RER",
+          "name": "Electric arc furnace converter",
+          "reference product": "Electric arc furnace converter",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 8.56,
+          "loc": 2.1471001901536506,
+          "location": "CN",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.0565685424949238,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.000156,
+          "loc": -8.765654550714737,
+          "location": "CPA",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.1174734012447073,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.4e-05,
+          "loc": -10.637456727616328,
+          "location": "RER",
+          "name": "Heavy fuel oil, at regional storage",
+          "reference product": "Heavy fuel oil, at regional storage",
+          "scale": 0.1174734012447073,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.9,
+          "loc": 0.6418538861723947,
+          "negative": false,
+          "recipe": "deferred-titanium-inert-56c49e46b8a65138c045",
+          "scale": 0.5,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.000396,
+          "loc": -7.834096346709794,
+          "recipe": "ferrosilicon-39-final-76fe8c58029110f6",
+          "scale": 0.1174734012447073,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.04278,
+          "loc": -3.1516845753278777,
+          "recipe": "ferrosilicon-39-final-ed9567d915d3e1af",
+          "scale": 0.1174734012447073,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.9,
+          "loc": 0.6418538861723947,
+          "recipe": "fuels-39-final-market-5135e054986e0de8eda4",
+          "scale": 0.0565685424949238,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.2375,
+          "loc": -1.4375876555074412,
+          "location": "RER",
+          "name": "Steel, converter, unalloyed, at plant",
+          "reference product": "Steel, converter, unalloyed, at plant",
+          "scale": 0.0565685424949238,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09,
+          "loc": -2.4079456086518722,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "reference product": "Tap water, at user",
+          "scale": 0.1174734012447073,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.65e-05,
+          "loc": -9.478219817131784,
+          "negative": false,
+          "recipe": "pilot-wastewater-routes-d842e2a4b036631ca64a",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 4.7e-09,
+          "categories": [
+            "air"
+          ],
+          "loc": -19.175703328230398,
+          "name": "Benzo(a)pyrene",
+          "scale": 1.7357995275952807,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01856,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.9867465516240825,
+          "name": "Carbon dioxide, fossil",
+          "scale": 0.0565685424949238,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.6e-06,
+          "categories": [
+            "air"
+          ],
+          "loc": -11.928440908931893,
+          "name": "Nitrogen oxides",
+          "scale": 0.2306512518934159,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.52e-07,
+          "categories": [
+            "air"
+          ],
+          "loc": -14.409717790669315,
+          "name": "PAH, polycyclic aromatic hydrocarbons",
+          "scale": 0.5596427431853289,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.03,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.506557897319982,
+          "name": "Particulate Matter, < 2.5 um",
+          "scale": 0.5500909015790026,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.6e-06,
+          "categories": [
+            "air"
+          ],
+          "loc": -11.928440908931893,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "scale": 0.5596427431853289,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6e-05,
+          "categories": [
+            "air"
+          ],
+          "loc": -9.721165995742174,
+          "name": "Sulfur dioxide",
+          "scale": 0.0565685424949238,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.35e-05,
+          "categories": [
+            "air"
+          ],
+          "loc": -11.21282087251989,
+          "name": "Water",
+          "scale": 0.20663978319771825,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "CN",
+      "name": "Ferrosilicon production, reviewed source3.9 native reconstruction",
+      "rationale": "Exact ecoinvent3.9cutoff ferrosilicon market reconstruction using the independently migrated complete CN and RoW producer inventories and already-reviewed native background supplies. Retain the source global producer shares, all four freight quantities and uncertainty, every signed producer input, and all eight direct biosphere exchanges per producer after canonical3.10flow migration. Preserve source waste-treatment signs and reference bases, reviewed recipe dependencies and their previously approved scoped omissions; no new source-exchange omission is approved. Preserve the source28MJ coke demand and8.56kWh direct electricity per kg through their documented energy and complete low-voltage supply mappings. Do not infer a silicon grade from the generic product label or repair source carbon/emission data from an assumed alloy composition. Existing source properties do not establish an independently closed elemental carbon balance; no invented carbon/density/moisture correction is applied. The two new producer recipes and global market are on-demand positive1kg helpers. Original source2regional producer inventories are reconstructed, not replaced by battery retention or a generic steel/silicon blend. Freight uses complete native RER rail/barge/fleet-average lorry and OCE transoceanic dry-freight shipping, retaining all originaltonne-km. Native backgrounds, gas composition, production routes, regional membership, grades, allocation, technology, vintage, internal uncertainty and biosphere exclusions differ as documented in the19reused recipes and their supplier reviews; score and carbon-balance effects remain unquantified. Caller signed quantities, uncertainty, formulas and separate emissions remain unchanged with factor+1. Only exact inspected ecoinvent3.9cutoff qualifies; other releases, consequential and reverse routes are not inferred. This correspondence does not establish operational steel transformation or a successful full steel export.",
+      "reference product": "ferrosilicon",
+      "unit": "kilogram"
+    },
+    "ferrosilicon-39-production-row": {
+      "evidence": [
+        "brightpath/data/export/uvek_ferrosilicon_market_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.01704,
+          "loc": -4.072191757580967,
+          "recipe": "ferrosilicon-39-final-0281677fb9d20241",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 28.0,
+          "loc": 3.332204510175204,
+          "location": "GLO",
+          "name": "Hard coal coke, at plant",
+          "reference product": "Hard coal coke, at plant",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 4e-11,
+          "loc": -23.942141661814613,
+          "location": "RER",
+          "name": "Electric arc furnace converter",
+          "reference product": "Electric arc furnace converter",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.00913924267229431,
+          "loc": -4.695177755560168,
+          "location": "RME",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.005738849736350971,
+          "loc": -5.160496483096238,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0018623837387321378,
+          "loc": -6.285898031816145,
+          "location": "RAS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0025906570741250417,
+          "loc": -5.95584373887285,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.008358213379823915,
+          "loc": -4.784510585272258,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.28099998646516594,
+          "loc": -1.2694006578150616,
+          "location": "KR",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.4873817767499516,
+          "loc": -0.7187075271852221,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.1336582484147229,
+          "loc": -2.012469121767942,
+          "location": "TR",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.001357800627762964,
+          "loc": -6.601889073758519,
+          "location": "RME",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.007342888683834525,
+          "loc": -4.91402296012171,
+          "location": "RAS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.049790826918540025,
+          "loc": -2.999924510341034,
+          "location": "KZ",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.03109977129395108,
+          "loc": -3.470554813716237,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.11258869007297051,
+          "loc": -2.184014011723006,
+          "location": "VN",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.003567032213875082,
+          "loc": -5.636021341562596,
+          "location": "RAS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.03471687699115105,
+          "loc": -3.3605293416471365,
+          "location": "BD",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.006196955202741306,
+          "loc": -5.083697203890437,
+          "location": "RAS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 2.387744052948816,
+          "loc": 0.8703490092789187,
+          "location": "RNA",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.6853786653184162,
+          "loc": 0.5219902657488905,
+          "location": "RER",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.08117201768103664,
+          "loc": -2.5111847010455706,
+          "location": "MY",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.010485870099520875,
+          "loc": -4.557726632900052,
+          "location": "RAS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.3509446820101615,
+          "loc": -1.0471266690472822,
+          "location": "RAF",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.08942743468934251,
+          "loc": -2.4143277681596764,
+          "location": "ID",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.017831507380042664,
+          "loc": -4.0267883088946395,
+          "location": "RME",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.6162565516677186,
+          "loc": -0.4840919221722687,
+          "location": "IN",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.03166254118754019,
+          "loc": -3.452620962824864,
+          "location": "IL",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.006859624304549992,
+          "loc": -4.982102604844645,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.024927360044177362,
+          "loc": -3.6917892817920865,
+          "location": "CN",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.008344147607602829,
+          "loc": -4.786194871171341,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.060926706109989896,
+          "loc": -2.7980836764162613,
+          "location": "PK",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.05928245455780506,
+          "loc": -2.825441892680717,
+          "location": "TH",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0032276175053703882,
+          "loc": -5.736011028355359,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.009319617008587055,
+          "loc": -4.675633744628241,
+          "location": "RME",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.4033677344922389,
+          "loc": -0.9079066405671089,
+          "location": "RME",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.1191777199674939,
+          "loc": -2.127139454845684,
+          "location": "AU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.11799621539769663,
+          "loc": -2.137102727931695,
+          "location": "TW",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.005669471763947029,
+          "loc": -5.172659328907487,
+          "location": "RAS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.024187543212000374,
+          "loc": -3.7219175216510814,
+          "location": "SG",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.006750148724983545,
+          "loc": -4.998190741009533,
+          "location": "RME",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0009389122311969758,
+          "loc": -6.970788553628404,
+          "location": "QA",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.010609583245876743,
+          "loc": -4.545997606498412,
+          "location": "RU",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.6954907567916941,
+          "loc": -0.3631375577260839,
+          "location": "RLA",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.004052682849739055,
+          "loc": -5.508376185140608,
+          "location": "RAS",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.04964849180725427,
+          "loc": -3.0027872654426773,
+          "location": "PH",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.021672962999384388,
+          "loc": -3.8316897399990157,
+          "location": "NZ",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.4733397923016177,
+          "loc": -0.7479417714403991,
+          "location": "JP",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.006916933858204975,
+          "loc": -4.973782691617738,
+          "location": "RME",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.6852500262246783e-05,
+          "loc": -10.991011528657518,
+          "location": "AU",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.6514345284801064e-05,
+          "loc": -11.01128114357668,
+          "location": "AU",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.918733684068206e-06,
+          "loc": -12.44974199612901,
+          "location": "RLA",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.642055341793329e-05,
+          "loc": -10.220377288340028,
+          "location": "UCTE",
+          "name": "Hard coal mix, at regional storage",
+          "reference product": "Hard coal mix, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.0200164131259091e-05,
+          "loc": -11.493106746503601,
+          "location": "WEU",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.166706231040007e-06,
+          "loc": -11.846064390903772,
+          "location": "ZA",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.4620957093843376e-05,
+          "loc": -10.611912563315176,
+          "location": "US",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.7448181558422802e-05,
+          "loc": -10.503210637797869,
+          "location": "IN",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.2857858336385385e-05,
+          "loc": -11.261555389852106,
+          "location": "RU",
+          "name": "Hard coal, at regional storage",
+          "reference product": "Hard coal, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.793818374063081e-05,
+          "loc": -10.92857894722633,
+          "location": "RER",
+          "name": "Heavy fuel oil, at regional storage",
+          "reference product": "Heavy fuel oil, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.673598105223174e-07,
+          "loc": -14.080310031468848,
+          "location": "RER",
+          "name": "Heavy fuel oil, at regional storage",
+          "reference product": "Heavy fuel oil, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.592108879622717e-07,
+          "loc": -15.165623867323237,
+          "location": "RER",
+          "name": "Heavy fuel oil, at regional storage",
+          "reference product": "Heavy fuel oil, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.6956673581461623e-06,
+          "loc": -12.508349408736704,
+          "location": "RER",
+          "name": "Heavy fuel oil, at regional storage",
+          "reference product": "Heavy fuel oil, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.93636232981344e-07,
+          "loc": -15.457284525785772,
+          "location": "RER",
+          "name": "Heavy fuel oil, at regional storage",
+          "reference product": "Heavy fuel oil, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.5094188854410516e-07,
+          "loc": -15.706370918281747,
+          "location": "RER",
+          "name": "Heavy fuel oil, at regional storage",
+          "reference product": "Heavy fuel oil, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 9.95000081212989e-07,
+          "loc": -13.820523018166726,
+          "location": "RER",
+          "name": "Heavy fuel oil, at regional storage",
+          "reference product": "Heavy fuel oil, at regional storage",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.4191036967271649,
+          "loc": -0.8696369034573119,
+          "negative": false,
+          "recipe": "deferred-concrete-ccc89e73133fcd6a3b64",
+          "scale": 0.5,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.477286693261862,
+          "loc": 0.3902070898330255,
+          "negative": false,
+          "recipe": "deferred-titanium-inert-56c49e46b8a65138c045",
+          "scale": 0.5,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.003609610010972831,
+          "loc": -5.624155542674462,
+          "negative": false,
+          "recipe": "deferred-waste-market-bad1b3a323f58dd0d12d",
+          "scale": 0.5,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0005024798263316911,
+          "loc": -7.595955065440539,
+          "location": "CA",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00018044163339591898,
+          "loc": -8.620103193171108,
+          "location": "TR",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00039137456132401873,
+          "loc": -7.845845499176796,
+          "location": "RoE",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 7.26778801178007e-05,
+          "loc": -9.52947348220069,
+          "location": "BE",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00021385280332545444,
+          "loc": -8.45022261453718,
+          "recipe": "ferrosilicon-39-final-76fe8c58029110f6",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0002957237880655339,
+          "loc": -8.126084687721498,
+          "location": "IT",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00015078571679612675,
+          "loc": -8.799650823082338,
+          "location": "ES",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 1.4201424850604736e-05,
+          "loc": -11.162168256799056,
+          "location": "CH",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0035361547878005792,
+          "loc": -5.64471536033435,
+          "location": "US",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0003704901130143059,
+          "loc": -7.9006837991056384,
+          "location": "DE",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0001812770113283075,
+          "loc": -8.615484247314814,
+          "location": "FR",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00015370953955948656,
+          "loc": -8.780445843246287,
+          "location": "NL",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.000378843892338191,
+          "loc": -7.878386331300082,
+          "location": "MX",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00032913890536107445,
+          "loc": -8.01903069155734,
+          "location": "GB",
+          "name": "Natural gas, low pressure, at consumer",
+          "negative": false,
+          "reference product": "Natural gas, low pressure, at consumer",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.04278,
+          "loc": -3.1516845753278777,
+          "recipe": "ferrosilicon-39-final-ed9567d915d3e1af",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.9,
+          "loc": 0.6418538861723947,
+          "recipe": "fuels-39-final-market-5135e054986e0de8eda4",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.2375,
+          "loc": -1.4375876555074412,
+          "location": "RER",
+          "name": "Steel, converter, unalloyed, at plant",
+          "reference product": "Steel, converter, unalloyed, at plant",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09,
+          "loc": -2.4079456086518722,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "reference product": "Tap water, at user",
+          "scale": 0.4589117562233506,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.126418996701768e-05,
+          "loc": -9.700315062440566,
+          "negative": false,
+          "recipe": "pilot-wastewater-routes-d842e2a4b036631ca64a",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 2.1812385833769935e-07,
+          "loc": -15.33820277798531,
+          "negative": false,
+          "recipe": "pilot-wastewater-routes-39cbd83822dc810e03e3",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 3.681641706408503e-07,
+          "loc": -14.814736882385704,
+          "negative": false,
+          "recipe": "pilot-wastewater-routes-eff76270716fb3e521c0",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.4649522004003773e-05,
+          "loc": -11.131102850746545,
+          "negative": false,
+          "recipe": "pilot-wastewater-routes-bd88b9549e9e5edabb3e",
+          "scale": 0.4589117562233506,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 4.7e-09,
+          "categories": [
+            "air"
+          ],
+          "loc": -19.175703328230398,
+          "name": "Benzo(a)pyrene",
+          "scale": 1.7916472867168918,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01856,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.9867465516240825,
+          "name": "Carbon dioxide, fossil",
+          "scale": 0.4589117562233506,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.6e-06,
+          "categories": [
+            "air"
+          ],
+          "loc": -11.928440908931893,
+          "name": "Nitrogen oxides",
+          "scale": 0.5,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.52e-07,
+          "categories": [
+            "air"
+          ],
+          "loc": -14.409717790669315,
+          "name": "PAH, polycyclic aromatic hydrocarbons",
+          "scale": 0.714142842854285,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.03,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.506557897319982,
+          "name": "Particulate Matter, < 2.5 um",
+          "scale": 0.714142842854285,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.6e-06,
+          "categories": [
+            "air"
+          ],
+          "loc": -11.928440908931893,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "scale": 0.714142842854285,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6e-05,
+          "categories": [
+            "air"
+          ],
+          "loc": -9.721165995742174,
+          "name": "Sulfur dioxide",
+          "scale": 0.4589117562233506,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.35e-05,
+          "categories": [
+            "air"
+          ],
+          "loc": -11.21282087251989,
+          "name": "Water",
+          "scale": 0.5,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RoW",
+      "name": "Ferrosilicon production, reviewed source3.9 native reconstruction",
+      "rationale": "Exact ecoinvent3.9cutoff ferrosilicon market reconstruction using the independently migrated complete CN and RoW producer inventories and already-reviewed native background supplies. Retain the source global producer shares, all four freight quantities and uncertainty, every signed producer input, and all eight direct biosphere exchanges per producer after canonical3.10flow migration. Preserve source waste-treatment signs and reference bases, reviewed recipe dependencies and their previously approved scoped omissions; no new source-exchange omission is approved. Preserve the source28MJ coke demand and8.56kWh direct electricity per kg through their documented energy and complete low-voltage supply mappings. Do not infer a silicon grade from the generic product label or repair source carbon/emission data from an assumed alloy composition. Existing source properties do not establish an independently closed elemental carbon balance; no invented carbon/density/moisture correction is applied. The two new producer recipes and global market are on-demand positive1kg helpers. Original source2regional producer inventories are reconstructed, not replaced by battery retention or a generic steel/silicon blend. Freight uses complete native RER rail/barge/fleet-average lorry and OCE transoceanic dry-freight shipping, retaining all originaltonne-km. Native backgrounds, gas composition, production routes, regional membership, grades, allocation, technology, vintage, internal uncertainty and biosphere exclusions differ as documented in the19reused recipes and their supplier reviews; score and carbon-balance effects remain unquantified. Caller signed quantities, uncertainty, formulas and separate emissions remain unchanged with factor+1. Only exact inspected ecoinvent3.9cutoff qualifies; other releases, consequential and reverse routes are not inferred. This correspondence does not establish operational steel transformation or a successful full steel export.",
+      "reference product": "ferrosilicon",
       "unit": "kilogram"
     },
     "five-simple-waste-market-5cb7cc3e55833a974289": {
@@ -762591,7 +763963,7 @@
     {"confidence": 0.394281, "id": "bp-8599277b333713a0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferronickel", "reference product": "ferronickel", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferronickel, 25% Ni, at plant", "reference product": "Ferronickel, 25% Ni, at plant", "unit": "kilogram"}},
     {"confidence": 0.62508, "id": "bp-c2e7e627b536e593", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferronickel, 25% Ni", "reference product": "ferronickel, 25% Ni", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferronickel, 25% Ni, at plant", "reference product": "Ferronickel, 25% Ni, at plant", "unit": "kilogram"}},
     {"confidence": 0.090203, "id": "bp-08ac8f1b52c4e243", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferroniobium, 66% Nb", "reference product": "ferroniobium, 66% Nb", "unit": "kilogram"}, "target": {"location": "RER", "name": "Nylon 66, at plant", "reference product": "Nylon 66, at plant", "unit": "kilogram"}},
-    {"confidence": 0.131382, "id": "bp-ab66d17baa663f1c", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferrosilicon", "reference product": "ferrosilicon", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery retention", "reference product": "Battery retention", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-ab66d17baa663f1c", "mapping_method": "reviewed_ferrosilicon_inventory_reconstruction", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ferrosilicon_market_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ferrosilicon_market_review.json"], "reason": "Exact ecoinvent3.9cutoff ferrosilicon market reconstruction using the independently migrated complete CN and RoW producer inventories and already-reviewed native background supplies. Retain the source global producer shares, all four freight quantities and uncertainty, every signed producer input, and all eight direct biosphere exchanges per producer after canonical3.10flow migration. Preserve source waste-treatment signs and reference bases, reviewed recipe dependencies and their previously approved scoped omissions; no new source-exchange omission is approved. Preserve the source28MJ coke demand and8.56kWh direct electricity per kg through their documented energy and complete low-voltage supply mappings. Do not infer a silicon grade from the generic product label or repair source carbon/emission data from an assumed alloy composition. Existing source properties do not establish an independently closed elemental carbon balance; no invented carbon/density/moisture correction is applied. The two new producer recipes and global market are on-demand positive1kg helpers. Original source2regional producer inventories are reconstructed, not replaced by battery retention or a generic steel/silicon blend. Freight uses complete native RER rail/barge/fleet-average lorry and OCE transoceanic dry-freight shipping, retaining all originaltonne-km. Native backgrounds, gas composition, production routes, regional membership, grades, allocation, technology, vintage, internal uncertainty and biosphere exclusions differ as documented in the19reused recipes and their supplier reviews; score and carbon-balance effects remain unquantified. Caller signed quantities, uncertainty, formulas and separate emissions remain unchanged with factor+1. Only exact inspected ecoinvent3.9cutoff qualifies; other releases, consequential and reverse routes are not inferred. This correspondence does not establish operational steel transformation or a successful full steel export.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact3.9cutoff source qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-af432205a69ec36d", "source": {"location": "GLO", "name": "market for ferrosilicon", "reference product": "ferrosilicon", "unit": "kilogram"}, "target": {"recipe_ref": "ferrosilicon-39-global-market"}, "technosphere_information_loss": "Exact ecoinvent3.9cutoff ferrosilicon market reconstruction using the independently migrated complete CN and RoW producer inventories and already-reviewed native background supplies. Retain the source global producer shares, all four freight quantities and uncertainty, every signed producer input, and all eight direct biosphere exchanges per producer after canonical3.10flow migration. Preserve source waste-treatment signs and reference bases, reviewed recipe dependencies and their previously approved scoped omissions; no new source-exchange omission is approved. Preserve the source28MJ coke demand and8.56kWh direct electricity per kg through their documented energy and complete low-voltage supply mappings. Do not infer a silicon grade from the generic product label or repair source carbon/emission data from an assumed alloy composition. Existing source properties do not establish an independently closed elemental carbon balance; no invented carbon/density/moisture correction is applied. The two new producer recipes and global market are on-demand positive1kg helpers. Original source2regional producer inventories are reconstructed, not replaced by battery retention or a generic steel/silicon blend. Freight uses complete native RER rail/barge/fleet-average lorry and OCE transoceanic dry-freight shipping, retaining all originaltonne-km. Native backgrounds, gas composition, production routes, regional membership, grades, allocation, technology, vintage, internal uncertainty and biosphere exclusions differ as documented in the19reused recipes and their supplier reviews; score and carbon-balance effects remain unquantified. Caller signed quantities, uncertainty, formulas and separate emissions remain unchanged with factor+1. Only exact inspected ecoinvent3.9cutoff qualifies; other releases, consequential and reverse routes are not inferred. This correspondence does not establish operational steel transformation or a successful full steel export."},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1.0, "id": "bp-695890f7cd225c94", "mapping_method": "reviewed_market_composition", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.7-cutoff/5fb345d8aa90ea13bd328d898defee5dd1b5b20308e959197655457b79f02323"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Reviewed source-function boundary repairs are applied only to source-witnessed child suppliers. All other inventory inputs, freight choices and emissions are retained; see brightpath/data/export/uvek_cable_rail_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.7"}, "target": {"recipe_ref": "cable-rail-parent-e8f1b79f-a748c4ffd2ae72d7022c"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.8-cutoff/153ce07c45a2630fd5e7e381dd3a0991847516e617f1f0746abf4d49bef0660d"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Reviewed source-function boundary repairs are applied only to source-witnessed child suppliers. All other inventory inputs, freight choices and emissions are retained; see brightpath/data/export/uvek_cable_rail_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "cable-rail-parent-b920aa25-a748c4ffd2ae72d7022c"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.9-cutoff/b642228ce7a66746341260ff5c5c3291abc229a9b0746a5db410e9201399a4da"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Reviewed source-function boundary repairs are applied only to source-witnessed child suppliers. All other inventory inputs, freight choices and emissions are retained; see brightpath/data/export/uvek_cable_rail_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "cable-rail-parent-c1acd91c-8e8f3fda4b88196f751d"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.10-cutoff/6b8944666ee417e81d6f7c489158b807a448d3a6d2d7b469a9696267d7944455"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Reviewed source-function boundary repairs are applied only to source-witnessed child suppliers. All other inventory inputs, freight choices and emissions are retained; see brightpath/data/export/uvek_cable_rail_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}, "target": {"recipe_ref": "cable-rail-parent-c1acd91c-8e8f3fda4b88196f751d"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/e92cbd63e8b3358bd29cefb4ab22cfa2f2eb40354c436ba7d2e99c9fad04b6f7"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.11"}, "target": {"recipe_ref": "regional-freight-market-composition-4ab53fbba2c89868ffe1"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/02f5318257e1a5376827ed65c8cea4c6a5513daf97b6455af0b9eae080e359ae"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "regional-freight-market-composition-43c16dd89018978f88b2"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7a90c836ca379739", "source": {"location": "CH", "name": "market for ferrous metal, in mixed metal scrap", "reference product": "ferrous metal, in mixed metal scrap", "unit": "kilogram"}, "target": {"recipe_ref": "cable-rail-parent-e8f1b79f-a748c4ffd2ae72d7022c"}, "technosphere_information_loss": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred."},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1.0, "id": "bp-d070e1c44bc20c4a", "mapping_method": "reviewed_market_composition", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.7-cutoff/2cf3cd6cdd11cdf8d4d9c580f9a4a1adac396014fa6079101f52355e2091c4d4"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.7"}, "target": {"recipe_ref": "older-regional-road-market-composition-6054424cdb4f0016388c"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.8-cutoff/66ffab7331fdfcb6e2307816613f428e3d5f6ab0447585c0f39c501d0e64253d"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "older-regional-road-market-composition-6054424cdb4f0016388c"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.9-cutoff/9542372d22c9948fc2049b8b3d832d6e1633f195d6ce85ac29d834c11d983c16"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "older-regional-road-market-composition-8b705497ece7f4e44c6d"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.10-cutoff/0f0ba0967976d0ea708592c666883739259fb17b5cb4948c21969c2a9593347b"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}, "target": {"recipe_ref": "older-regional-road-market-composition-8b705497ece7f4e44c6d"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/a0789a53721c1d1d5f17cfa4ce6d478e987d52ed2d45984cf902a641bfc8c421"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.11"}, "target": {"recipe_ref": "regional-freight-market-composition-592c74afaddb9c71c0f0"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/6fbc3d44d947debd6a6d68bb4f2d82fd0d71307e77d5a3193bd0e11b3c7c27ba"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "regional-freight-market-composition-592c74afaddb9c71c0f0"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7a90c836ca379739", "source": {"location": "Europe without Switzerland", "name": "market for ferrous metal, in mixed metal scrap", "reference product": "ferrous metal, in mixed metal scrap", "unit": "kilogram"}, "target": {"recipe_ref": "older-regional-road-market-composition-6054424cdb4f0016388c"}, "technosphere_information_loss": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred."},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1.0, "id": "bp-8b48137fc70e83ff", "mapping_method": "reviewed_market_composition", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.7-cutoff/8b0479c90620b5fe02fadc00ebf59eee7c55994208460172b9ebdea36c6babcf"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.7"}, "target": {"recipe_ref": "older-regional-road-market-composition-d96c87767df58fc10b78"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.8-cutoff/d3f3a05498141cab132ba0b48b53fecee15821d61df397247afb47baf2909b31"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "older-regional-road-market-composition-34b41468819f19527d52"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.9-cutoff/bc1317856d6b53ed99e37f3de2149ed21cb6951a8054558b1e42943ac0d13413"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "older-regional-road-market-composition-06649a6cacaa4a54d2b3"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.10-cutoff/edc487c7d07b2f5d0d450f2a109b04575708f07413eeb67769f5af199b674fa0"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}, "target": {"recipe_ref": "older-regional-road-market-composition-83064ee1d1388f5edc83"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/a1782291d0d581a67b4153616a20405a53bca34eb1bc1dc84a658f7e3bd7d342"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.11"}, "target": {"recipe_ref": "regional-freight-market-composition-2f6167aa5250bb9b20ea"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/61f610ef191cab936c380302dee3c24149948dce60a096d8cc7723f7d6381f94"], "reason": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "regional-freight-market-composition-44e3a1a1de049c70aa69"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7a90c836ca379739", "source": {"location": "RoW", "name": "market for ferrous metal, in mixed metal scrap", "reference product": "ferrous metal, in mixed metal scrap", "unit": "kilogram"}, "target": {"recipe_ref": "older-regional-road-market-composition-d96c87767df58fc10b78"}, "technosphere_information_loss": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred."},
@@ -785541,6 +786913,15 @@
         "Geographic proxy."
       ],
       "rationale": "Model-matched ventilation equipment replaces a cogeneration heat exchanger."
+    },
+    "r-af432205a69ec36d": {
+      "evidence": [
+        "brightpath/data/export/uvek_ferrosilicon_market_review.json"
+      ],
+      "limitations": [
+        "Exact ecoinvent3.9cutoff ferrosilicon market reconstruction using the independently migrated complete CN and RoW producer inventories and already-reviewed native background supplies. Retain the source global producer shares, all four freight quantities and uncertainty, every signed producer input, and all eight direct biosphere exchanges per producer after canonical3.10flow migration. Preserve source waste-treatment signs and reference bases, reviewed recipe dependencies and their previously approved scoped omissions; no new source-exchange omission is approved. Preserve the source28MJ coke demand and8.56kWh direct electricity per kg through their documented energy and complete low-voltage supply mappings. Do not infer a silicon grade from the generic product label or repair source carbon/emission data from an assumed alloy composition. Existing source properties do not establish an independently closed elemental carbon balance; no invented carbon/density/moisture correction is applied. The two new producer recipes and global market are on-demand positive1kg helpers. Original source2regional producer inventories are reconstructed, not replaced by battery retention or a generic steel/silicon blend. Freight uses complete native RER rail/barge/fleet-average lorry and OCE transoceanic dry-freight shipping, retaining all originaltonne-km. Native backgrounds, gas composition, production routes, regional membership, grades, allocation, technology, vintage, internal uncertainty and biosphere exclusions differ as documented in the19reused recipes and their supplier reviews; score and carbon-balance effects remain unquantified. Caller signed quantities, uncertainty, formulas and separate emissions remain unchanged with factor+1. Only exact inspected ecoinvent3.9cutoff qualifies; other releases, consequential and reverse routes are not inferred. This correspondence does not establish operational steel transformation or a successful full steel export."
+      ],
+      "rationale": "Exact ecoinvent3.9cutoff ferrosilicon market reconstruction using the independently migrated complete CN and RoW producer inventories and already-reviewed native background supplies. Retain the source global producer shares, all four freight quantities and uncertainty, every signed producer input, and all eight direct biosphere exchanges per producer after canonical3.10flow migration. Preserve source waste-treatment signs and reference bases, reviewed recipe dependencies and their previously approved scoped omissions; no new source-exchange omission is approved. Preserve the source28MJ coke demand and8.56kWh direct electricity per kg through their documented energy and complete low-voltage supply mappings. Do not infer a silicon grade from the generic product label or repair source carbon/emission data from an assumed alloy composition. Existing source properties do not establish an independently closed elemental carbon balance; no invented carbon/density/moisture correction is applied. The two new producer recipes and global market are on-demand positive1kg helpers. Original source2regional producer inventories are reconstructed, not replaced by battery retention or a generic steel/silicon blend. Freight uses complete native RER rail/barge/fleet-average lorry and OCE transoceanic dry-freight shipping, retaining all originaltonne-km. Native backgrounds, gas composition, production routes, regional membership, grades, allocation, technology, vintage, internal uncertainty and biosphere exclusions differ as documented in the19reused recipes and their supplier reviews; score and carbon-balance effects remain unquantified. Caller signed quantities, uncertainty, formulas and separate emissions remain unchanged with factor+1. Only exact inspected ecoinvent3.9cutoff qualifies; other releases, consequential and reverse routes are not inferred. This correspondence does not establish operational steel transformation or a successful full steel export."
     },
     "r-afd1f17c4341f9a9": {
       "evidence": [
