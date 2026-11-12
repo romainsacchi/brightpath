@@ -1061,6 +1061,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_ferrosilicon_stored_fuels import apply_ferrosilicon_stored_fuels_review
 
     apply_ferrosilicon_stored_fuels_review(technosphere)
+    if __package__:
+        from scripts.review_uvek_ferrosilicon_last_supplies import apply_ferrosilicon_last_supplies_review
+    else:
+        from review_uvek_ferrosilicon_last_supplies import apply_ferrosilicon_last_supplies_review
+
+    apply_ferrosilicon_last_supplies_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
