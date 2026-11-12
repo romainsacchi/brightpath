@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 211,
-      "recipe": 1029,
-      "unclassified": 29235
+      "recipe": 1031,
+      "unclassified": 29233
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 262,
       "followup_review": 163,
-      "heuristic_similarity": 26467,
+      "heuristic_similarity": 26465,
       "pairwise_review": 2211,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -131,6 +131,7 @@
       "reviewed_precious_anode_market": 3,
       "reviewed_processing_composition": 48,
       "reviewed_pulp_heat_active_solution_market": 2,
+      "reviewed_pulp_heat_allyl_markets": 2,
       "reviewed_pulp_heat_auxiliary_market": 8,
       "reviewed_pulp_heat_biomethanol_market": 1,
       "reviewed_pulp_heat_dry_chemical_market": 9,
@@ -172,7 +173,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.442677,
+    "mean_confidence": 0.442722,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -566769,6 +566770,297 @@
       "reference product": "sewage sludge, 97% water, WWT-SLF, municipal solid waste",
       "unit": "kilogram"
     },
+    "so2-39-allyl-market-rer": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_allyl_markets_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Allyl chloride, from reacting propylene and chlorine, at plant",
+          "reference product": "Allyl chloride, from reacting propylene and chlorine, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for allyl chloride, retained source3.9production and delivery",
+      "rationale": "Reviewed exact3.9cutoff allyl-chloride markets RERandRoW. Correct the existing physically different vinyl-chloride match to the complete native Allylchloride,fromreactingpropyleneandchlorine,atplant,RERprocess. Source product is pureC3H5Cl,CAS107-05-1,positive1kgdryreference. Source/native both describe liquid propene with gaseous chlorine and the same three-output production system (allylchloride,HCl36wt%,1,3-dichloropropene). Their already allocated complete allyl product is used once perkg with factor+1; HCl36%is a co-product descriptor, not allyl purity, so add no inverse concentration,molar,stoichiometric,yield or secondallocation factor. Keep each original unit producer share and all original final-product freight rows separately,13acrossbothmarkets, including signedtonne-km, supporteduncertainty,pedigree,scale-without-pedigree andformulas without aggregation or normalization. Native precursor/internal logistics remain once; original final delivery is distinct and added once. Native process efficiency,energy,co-productallocation,water/waste-treatment/emissions,internaluncertainty,geography/vintageandbiospherecoverage differ, especially RoWtoRERproduction and whole RERrail/barge/heavy-fleet/OCEcontainer freight. These remain explicit screening proxies with unquantified score effects. Add no extra fuel,vehicle/port/network,coproductcredit,disposal or separate caller emission correction. No source omission, other-version, reverse or consequential approval. Full sulfuryl chloride,TCP/SO2feedback,sodiumsulfite,pulpheat andsteel export remain unfinished.",
+      "reference product": "allyl chloride",
+      "unit": "kilogram"
+    },
+    "so2-39-allyl-market-row": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_allyl_markets_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Allyl chloride, from reacting propylene and chlorine, at plant",
+          "reference product": "Allyl chloride, from reacting propylene and chlorine, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0224231473350459,
+          "loc": -3.797661490501636,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08093386943083909,
+          "loc": -2.514122884547314,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0056780093482361425,
+          "loc": -5.171154574536774,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.11165767412994829,
+          "loc": -2.192317569247477,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08840729975593056,
+          "loc": -2.4258007363232306,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0037411136550834123,
+          "loc": -5.588371943141128,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.18116364249000133,
+          "loc": -1.7083545540157898,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.02389524385491526,
+          "loc": -3.7340758417345654,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for allyl chloride, retained source3.9production and delivery",
+      "rationale": "Reviewed exact3.9cutoff allyl-chloride markets RERandRoW. Correct the existing physically different vinyl-chloride match to the complete native Allylchloride,fromreactingpropyleneandchlorine,atplant,RERprocess. Source product is pureC3H5Cl,CAS107-05-1,positive1kgdryreference. Source/native both describe liquid propene with gaseous chlorine and the same three-output production system (allylchloride,HCl36wt%,1,3-dichloropropene). Their already allocated complete allyl product is used once perkg with factor+1; HCl36%is a co-product descriptor, not allyl purity, so add no inverse concentration,molar,stoichiometric,yield or secondallocation factor. Keep each original unit producer share and all original final-product freight rows separately,13acrossbothmarkets, including signedtonne-km, supporteduncertainty,pedigree,scale-without-pedigree andformulas without aggregation or normalization. Native precursor/internal logistics remain once; original final delivery is distinct and added once. Native process efficiency,energy,co-productallocation,water/waste-treatment/emissions,internaluncertainty,geography/vintageandbiospherecoverage differ, especially RoWtoRERproduction and whole RERrail/barge/heavy-fleet/OCEcontainer freight. These remain explicit screening proxies with unquantified score effects. Add no extra fuel,vehicle/port/network,coproductcredit,disposal or separate caller emission correction. No source omission, other-version, reverse or consequential approval. Full sulfuryl chloride,TCP/SO2feedback,sodiumsulfite,pulpheat andsteel export remain unfinished.",
+      "reference product": "allyl chloride",
+      "unit": "kilogram"
+    },
     "source-gas-flare-0fe36e8d8518d940b4c6": {
       "evidence": [
         "brightpath/data/export/uvek_remaining_gas_flare_review.json"
@@ -767339,8 +767631,8 @@
     {"confidence": 0.234026, "id": "bp-96deb21a4093d5ba", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for alkylketene dimer sizing agent, for paper production", "reference product": "alkylketene dimer sizing agent, for paper production", "unit": "kilogram"}, "target": {"location": "RER", "name": "AKD sizer, in paper production, at plant", "reference product": "AKD sizer, in paper production, at plant", "unit": "kilogram"}},
     {"confidence": 0.342845, "id": "bp-26ab5900beedb310", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for allyl alcohol", "reference product": "allyl alcohol", "unit": "kilogram"}, "target": {"location": "RER", "name": "Benzyl alcohol, at plant", "reference product": "Benzyl alcohol, at plant", "unit": "kilogram"}},
     {"confidence": 0.262845, "id": "bp-5638da3abcfc41ed", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for allyl alcohol", "reference product": "allyl alcohol", "unit": "kilogram"}, "target": {"location": "RER", "name": "Benzyl alcohol, at plant", "reference product": "Benzyl alcohol, at plant", "unit": "kilogram"}},
-    {"confidence": 0.351912, "id": "bp-fc82dcc3d3185026", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for allyl chloride", "reference product": "allyl chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Vinyl chloride, at plant", "reference product": "Vinyl chloride, at plant", "unit": "kilogram"}},
-    {"confidence": 0.271912, "id": "bp-1de3542379924d2f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for allyl chloride", "reference product": "allyl chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Vinyl chloride, at plant", "reference product": "Vinyl chloride, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-fc82dcc3d3185026", "mapping_method": "reviewed_pulp_heat_allyl_markets", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_allyl_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_allyl_markets_review.json"], "reason": "Reviewed exact3.9cutoff allyl-chloride markets RERandRoW. Correct the existing physically different vinyl-chloride match to the complete native Allylchloride,fromreactingpropyleneandchlorine,atplant,RERprocess. Source product is pureC3H5Cl,CAS107-05-1,positive1kgdryreference. Source/native both describe liquid propene with gaseous chlorine and the same three-output production system (allylchloride,HCl36wt%,1,3-dichloropropene). Their already allocated complete allyl product is used once perkg with factor+1; HCl36%is a co-product descriptor, not allyl purity, so add no inverse concentration,molar,stoichiometric,yield or secondallocation factor. Keep each original unit producer share and all original final-product freight rows separately,13acrossbothmarkets, including signedtonne-km, supporteduncertainty,pedigree,scale-without-pedigree andformulas without aggregation or normalization. Native precursor/internal logistics remain once; original final delivery is distinct and added once. Native process efficiency,energy,co-productallocation,water/waste-treatment/emissions,internaluncertainty,geography/vintageandbiospherecoverage differ, especially RoWtoRERproduction and whole RERrail/barge/heavy-fleet/OCEcontainer freight. These remain explicit screening proxies with unquantified score effects. Add no extra fuel,vehicle/port/network,coproductcredit,disposal or separate caller emission correction. No source omission, other-version, reverse or consequential approval. Full sulfuryl chloride,TCP/SO2feedback,sodiumsulfite,pulpheat andsteel export remain unfinished.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only inspected exact3.9cutoff qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-35757af643935ace", "source": {"location": "RER", "name": "market for allyl chloride", "reference product": "allyl chloride", "unit": "kilogram"}, "target": {"recipe_ref": "so2-39-allyl-market-rer"}, "technosphere_information_loss": "Reviewed exact3.9cutoff allyl-chloride markets RERandRoW. Correct the existing physically different vinyl-chloride match to the complete native Allylchloride,fromreactingpropyleneandchlorine,atplant,RERprocess. Source product is pureC3H5Cl,CAS107-05-1,positive1kgdryreference. Source/native both describe liquid propene with gaseous chlorine and the same three-output production system (allylchloride,HCl36wt%,1,3-dichloropropene). Their already allocated complete allyl product is used once perkg with factor+1; HCl36%is a co-product descriptor, not allyl purity, so add no inverse concentration,molar,stoichiometric,yield or secondallocation factor. Keep each original unit producer share and all original final-product freight rows separately,13acrossbothmarkets, including signedtonne-km, supporteduncertainty,pedigree,scale-without-pedigree andformulas without aggregation or normalization. Native precursor/internal logistics remain once; original final delivery is distinct and added once. Native process efficiency,energy,co-productallocation,water/waste-treatment/emissions,internaluncertainty,geography/vintageandbiospherecoverage differ, especially RoWtoRERproduction and whole RERrail/barge/heavy-fleet/OCEcontainer freight. These remain explicit screening proxies with unquantified score effects. Add no extra fuel,vehicle/port/network,coproductcredit,disposal or separate caller emission correction. No source omission, other-version, reverse or consequential approval. Full sulfuryl chloride,TCP/SO2feedback,sodiumsulfite,pulpheat andsteel export remain unfinished."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-1de3542379924d2f", "mapping_method": "reviewed_pulp_heat_allyl_markets", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_allyl_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_allyl_markets_review.json"], "reason": "Reviewed exact3.9cutoff allyl-chloride markets RERandRoW. Correct the existing physically different vinyl-chloride match to the complete native Allylchloride,fromreactingpropyleneandchlorine,atplant,RERprocess. Source product is pureC3H5Cl,CAS107-05-1,positive1kgdryreference. Source/native both describe liquid propene with gaseous chlorine and the same three-output production system (allylchloride,HCl36wt%,1,3-dichloropropene). Their already allocated complete allyl product is used once perkg with factor+1; HCl36%is a co-product descriptor, not allyl purity, so add no inverse concentration,molar,stoichiometric,yield or secondallocation factor. Keep each original unit producer share and all original final-product freight rows separately,13acrossbothmarkets, including signedtonne-km, supporteduncertainty,pedigree,scale-without-pedigree andformulas without aggregation or normalization. Native precursor/internal logistics remain once; original final delivery is distinct and added once. Native process efficiency,energy,co-productallocation,water/waste-treatment/emissions,internaluncertainty,geography/vintageandbiospherecoverage differ, especially RoWtoRERproduction and whole RERrail/barge/heavy-fleet/OCEcontainer freight. These remain explicit screening proxies with unquantified score effects. Add no extra fuel,vehicle/port/network,coproductcredit,disposal or separate caller emission correction. No source omission, other-version, reverse or consequential approval. Full sulfuryl chloride,TCP/SO2feedback,sodiumsulfite,pulpheat andsteel export remain unfinished.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only inspected exact3.9cutoff qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-35757af643935ace", "source": {"location": "RoW", "name": "market for allyl chloride", "reference product": "allyl chloride", "unit": "kilogram"}, "target": {"recipe_ref": "so2-39-allyl-market-row"}, "technosphere_information_loss": "Reviewed exact3.9cutoff allyl-chloride markets RERandRoW. Correct the existing physically different vinyl-chloride match to the complete native Allylchloride,fromreactingpropyleneandchlorine,atplant,RERprocess. Source product is pureC3H5Cl,CAS107-05-1,positive1kgdryreference. Source/native both describe liquid propene with gaseous chlorine and the same three-output production system (allylchloride,HCl36wt%,1,3-dichloropropene). Their already allocated complete allyl product is used once perkg with factor+1; HCl36%is a co-product descriptor, not allyl purity, so add no inverse concentration,molar,stoichiometric,yield or secondallocation factor. Keep each original unit producer share and all original final-product freight rows separately,13acrossbothmarkets, including signedtonne-km, supporteduncertainty,pedigree,scale-without-pedigree andformulas without aggregation or normalization. Native precursor/internal logistics remain once; original final delivery is distinct and added once. Native process efficiency,energy,co-productallocation,water/waste-treatment/emissions,internaluncertainty,geography/vintageandbiospherecoverage differ, especially RoWtoRERproduction and whole RERrail/barge/heavy-fleet/OCEcontainer freight. These remain explicit screening proxies with unquantified score effects. Add no extra fuel,vehicle/port/network,coproductcredit,disposal or separate caller emission correction. No source omission, other-version, reverse or consequential approval. Full sulfuryl chloride,TCP/SO2feedback,sodiumsulfite,pulpheat andsteel export remain unfinished."},
     {"confidence": 0.122393, "id": "bp-231ce13c59333ef1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for almond", "reference product": "almond", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Aluminium collector foil production, for Li-ion battery", "reference product": "Aluminium collector foil production, for Li-ion battery", "unit": "kilogram"}},
     {"confidence": 0.4, "id": "bp-80c92a62a0958139", "mapping_method": "pairwise_review", "review_ref": "r-36a16cb01d5e258d", "source": {"location": "GLO", "name": "market for alpha-naphthol", "reference product": "alpha-naphthol", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
     {"confidence": 0.153951, "id": "bp-b3ff5d4fae8dd78f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for alpha-picoline", "reference product": "alpha-picoline", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Bauxite, at mine", "reference product": "Bauxite, at mine", "unit": "kilogram"}},
@@ -788719,6 +789011,15 @@
         "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty."
       ],
       "rationale": "Reviewed low-alloyed cast-stock market helper. Preserve every inspected source producer share, its BOF/electric route and original separate road, rail, barge and sea delivery demand. Use the complete native RER low-alloyed converter/casting process for BOF supply and the complete native Swiss low-alloyed electric/casting process for electric supply as independently inspected same whole-material/function/unit geographic proxies. All 25 source producer references and all six native component references are positive 1; source markets have a self-linked positive 1 kg reference and only active technosphere inputs. Their declared endpoints are steelmaking and casting; the Austrian narrative mentions downstream rolling but its included-activities boundary ends at billets. No source or chosen native producer has a direct rolling-service input. Do not import the old native whole-market target: it adds one kg hot rolling and fixes the furnace split at 63% BOF/37% electric. This helper retains source route shares without extra rolling, an alloy/iron ratio, scrap yield, 0.99 allocation multiplier, capacity normalization, new steelmaking primitive or recovered-product credit. Preserve complete native alloy additions, infrastructure, scrap sourcing, by-product gases, wastes and allocation once. The native Swiss electric process has 0.99 economic allocation to steel; other source plants, technologies, alloy recipes, steel quality and coproduct allocation are approximated, not reconstructed. Whole native freight services retain vehicle/rail/ship/port/infrastructure/fuel/emissions inventories at the original signed net-ton-km quantities; native fleet, rail/ship class, geography, trade representation and vintage differ. No individual traction, payload, gross-weight or distance multiplier is inferred. Specific mechanical grades or application performance, inventory and LCIA equivalence are unverified; effects on scores are unquantified. Preserve signed caller quantities, uncertainty, formulas, ownership and separate processing/emissions. Only the enumerated exact cut-off profiles qualify; no inverse or cross-system-model route is inferred. Repeated native furnace suppliers are combined only for deterministic source shares, without rounding or renormalizing them; each freight exchange retains its original uncertainty."
+    },
+    "r-35757af643935ace": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_allyl_markets_review.json"
+      ],
+      "limitations": [
+        "Reviewed exact3.9cutoff allyl-chloride markets RERandRoW. Correct the existing physically different vinyl-chloride match to the complete native Allylchloride,fromreactingpropyleneandchlorine,atplant,RERprocess. Source product is pureC3H5Cl,CAS107-05-1,positive1kgdryreference. Source/native both describe liquid propene with gaseous chlorine and the same three-output production system (allylchloride,HCl36wt%,1,3-dichloropropene). Their already allocated complete allyl product is used once perkg with factor+1; HCl36%is a co-product descriptor, not allyl purity, so add no inverse concentration,molar,stoichiometric,yield or secondallocation factor. Keep each original unit producer share and all original final-product freight rows separately,13acrossbothmarkets, including signedtonne-km, supporteduncertainty,pedigree,scale-without-pedigree andformulas without aggregation or normalization. Native precursor/internal logistics remain once; original final delivery is distinct and added once. Native process efficiency,energy,co-productallocation,water/waste-treatment/emissions,internaluncertainty,geography/vintageandbiospherecoverage differ, especially RoWtoRERproduction and whole RERrail/barge/heavy-fleet/OCEcontainer freight. These remain explicit screening proxies with unquantified score effects. Add no extra fuel,vehicle/port/network,coproductcredit,disposal or separate caller emission correction. No source omission, other-version, reverse or consequential approval. Full sulfuryl chloride,TCP/SO2feedback,sodiumsulfite,pulpheat andsteel export remain unfinished."
+      ],
+      "rationale": "Reviewed exact3.9cutoff allyl-chloride markets RERandRoW. Correct the existing physically different vinyl-chloride match to the complete native Allylchloride,fromreactingpropyleneandchlorine,atplant,RERprocess. Source product is pureC3H5Cl,CAS107-05-1,positive1kgdryreference. Source/native both describe liquid propene with gaseous chlorine and the same three-output production system (allylchloride,HCl36wt%,1,3-dichloropropene). Their already allocated complete allyl product is used once perkg with factor+1; HCl36%is a co-product descriptor, not allyl purity, so add no inverse concentration,molar,stoichiometric,yield or secondallocation factor. Keep each original unit producer share and all original final-product freight rows separately,13acrossbothmarkets, including signedtonne-km, supporteduncertainty,pedigree,scale-without-pedigree andformulas without aggregation or normalization. Native precursor/internal logistics remain once; original final delivery is distinct and added once. Native process efficiency,energy,co-productallocation,water/waste-treatment/emissions,internaluncertainty,geography/vintageandbiospherecoverage differ, especially RoWtoRERproduction and whole RERrail/barge/heavy-fleet/OCEcontainer freight. These remain explicit screening proxies with unquantified score effects. Add no extra fuel,vehicle/port/network,coproductcredit,disposal or separate caller emission correction. No source omission, other-version, reverse or consequential approval. Full sulfuryl chloride,TCP/SO2feedback,sodiumsulfite,pulpheat andsteel export remain unfinished."
     },
     "r-358f18c860385094": {
       "evidence": [
