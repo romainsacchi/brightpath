@@ -1007,6 +1007,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_steel_39_small_heat import apply_steel_39_small_heat_review
 
     apply_steel_39_small_heat_review(technosphere)
+    if __package__:
+        from scripts.review_uvek_steel_39_zero_heat import apply_steel_39_zero_heat_review
+    else:
+        from review_uvek_steel_39_zero_heat import apply_steel_39_zero_heat_review
+
+    apply_steel_39_zero_heat_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
