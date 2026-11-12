@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 211,
-      "recipe": 1031,
-      "unclassified": 29233
+      "proxy": 212,
+      "recipe": 1035,
+      "unclassified": 29228
     },
     "mapped_identities": 30732,
     "mapping_methods": {
-      "curated_legacy": 262,
+      "curated_legacy": 261,
       "followup_review": 163,
-      "heuristic_similarity": 26465,
+      "heuristic_similarity": 26461,
       "pairwise_review": 2211,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -140,6 +140,7 @@
       "reviewed_pulp_heat_heavy_freight": 1,
       "reviewed_pulp_heat_limestone_residue": 2,
       "reviewed_pulp_heat_route_markets": 3,
+      "reviewed_pulp_heat_so2_sulfite": 5,
       "reviewed_r134a_cutoff_product_recipe": 2,
       "reviewed_r134a_reclamation_recipe": 1,
       "reviewed_refrigerant_disposal_recipe": 5,
@@ -173,7 +174,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.442722,
+    "mean_confidence": 0.442807,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -443610,6 +443611,1065 @@
       "reference product": "sugar, from sugar beet",
       "unit": "kilogram"
     },
+    "pulp-heat-39-so2-native-market-rer": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Sulphur dioxide, liquid, at plant",
+          "reference product": "Sulphur dioxide, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09273,
+          "loc": -2.3780632341700025,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.06264,
+          "loc": -2.770351227299589,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for sulfur dioxide, liquid, native functional production proxy and retained delivery",
+      "rationale": "Use a complete native functional production proxy for exact ecoinvent3.9cutoff liquidSO2markets, preserving the original delivered-product market rows. Source and native both define positive1kgpureSO2,CAS7446-09-5,with a liquid reference. Map each source producer entry to the complete native RERliquidSO2process per unchanged signedkg; retain original producer quantities and their supported uncertainty separately. This deliberately replaces the source production technologies and their upstream co-product allocations with the target-native production model. In RoW,18.6519413306824%ofsource supply is allocated co-product SO2fromprimaryzinc(18.1395241756592%)andTCPchlorination(0.512417155023209%);81.3480586693176%is dedicatedSO2production. The native process instead represents complete production using secondary sulfur recovered fromrefineries. It is not a reconstruction of those zinc/TCPco-product burdens, nor does keeping their separate market coefficients preserve their technologies or allocation. Those technology/allocation shifts may materially change scores and remain unquantified. No source producer-specific internal amounts or uncertainty are claimed retained; the complete native internal inventory/uncertainty replaces them. Caller amounts,signs,uncertainty,formulas and source market delivery-row metadata remain unchanged with factor+1. The native positive1kgSO2plant includes secondary sulfur,process energy/heat andinfrastructure once; add no separate source-producer inputs,second sulfur supply,avoidedSO2emission,zinc recovery,TCPcredit,yield/purity/stoichiometric factor or nominal flattened-feedback multiplier. Native production documentation describes rough estimates, European energy/geography,vintageandbiosphere-data gaps; these are screening limitations. Retain all original source rail/heavy-road finaldelivery rows at exacttonne-km using complete native RERrail/heavyfleet services. Freight traction,fuel,fleet/loading,infrastructure,geography,vintage,allocation and internaluncertainty differ; no invented distance,payload,return-trip or vehicle/fuel multiplier. This mapping replaces external product supplies rather than reproducing the source chemical-background loop; it requires no cyclic recipe support. No physical source-exchange omission,consequential,reverse or other-version approval. Sodiumsulfite uses its own explicitNa2SO3source inventory,not the native ambiguousSO3(2-)reference. Full pulpheat andsteel export remain unverified.",
+      "reference product": "sulfur dioxide, liquid",
+      "unit": "kilogram"
+    },
+    "pulp-heat-39-so2-native-market-row": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.000487919610247929,
+          "loc": 0.000487919610247929,
+          "location": "RER",
+          "name": "Sulphur dioxide, liquid, at plant",
+          "reference product": "Sulphur dioxide, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00512417155023209,
+          "loc": 0.00512417155023209,
+          "location": "RER",
+          "name": "Sulphur dioxide, liquid, at plant",
+          "reference product": "Sulphur dioxide, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.180907322146344,
+          "loc": 0.180907322146344,
+          "location": "RER",
+          "name": "Sulphur dioxide, liquid, at plant",
+          "reference product": "Sulphur dioxide, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.813480586693176,
+          "loc": 0.813480586693176,
+          "location": "RER",
+          "name": "Sulphur dioxide, liquid, at plant",
+          "reference product": "Sulphur dioxide, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.006726944200513771,
+          "loc": -5.001634294827572,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.02428016082925173,
+          "loc": -3.7180956888732504,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0017034028044708432,
+          "loc": -6.375127378862709,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.03349730223898449,
+          "loc": -3.3962903735734127,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.026522189926779172,
+          "loc": -3.6297735406491665,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0011223340965250237,
+          "loc": -6.792344747467064,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0543490927470004,
+          "loc": -2.912327358341726,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.007168573156474578,
+          "loc": -4.938048646060501,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for sulfur dioxide, liquid, native functional production proxy and retained delivery",
+      "rationale": "Use a complete native functional production proxy for exact ecoinvent3.9cutoff liquidSO2markets, preserving the original delivered-product market rows. Source and native both define positive1kgpureSO2,CAS7446-09-5,with a liquid reference. Map each source producer entry to the complete native RERliquidSO2process per unchanged signedkg; retain original producer quantities and their supported uncertainty separately. This deliberately replaces the source production technologies and their upstream co-product allocations with the target-native production model. In RoW,18.6519413306824%ofsource supply is allocated co-product SO2fromprimaryzinc(18.1395241756592%)andTCPchlorination(0.512417155023209%);81.3480586693176%is dedicatedSO2production. The native process instead represents complete production using secondary sulfur recovered fromrefineries. It is not a reconstruction of those zinc/TCPco-product burdens, nor does keeping their separate market coefficients preserve their technologies or allocation. Those technology/allocation shifts may materially change scores and remain unquantified. No source producer-specific internal amounts or uncertainty are claimed retained; the complete native internal inventory/uncertainty replaces them. Caller amounts,signs,uncertainty,formulas and source market delivery-row metadata remain unchanged with factor+1. The native positive1kgSO2plant includes secondary sulfur,process energy/heat andinfrastructure once; add no separate source-producer inputs,second sulfur supply,avoidedSO2emission,zinc recovery,TCPcredit,yield/purity/stoichiometric factor or nominal flattened-feedback multiplier. Native production documentation describes rough estimates, European energy/geography,vintageandbiosphere-data gaps; these are screening limitations. Retain all original source rail/heavy-road finaldelivery rows at exacttonne-km using complete native RERrail/heavyfleet services. Freight traction,fuel,fleet/loading,infrastructure,geography,vintage,allocation and internaluncertainty differ; no invented distance,payload,return-trip or vehicle/fuel multiplier. This mapping replaces external product supplies rather than reproducing the source chemical-background loop; it requires no cyclic recipe support. No physical source-exchange omission,consequential,reverse or other-version approval. Sodiumsulfite uses its own explicitNa2SO3source inventory,not the native ambiguousSO3(2-)reference. Full pulpheat andsteel export remain unverified.",
+      "reference product": "sulfur dioxide, liquid",
+      "unit": "kilogram"
+    },
+    "pulp-heat-39-sodium-sulfite-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "pulp-heat-39-sodium-sulfite-production",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0224231473350459,
+          "loc": -3.797661490501636,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08093386943083909,
+          "loc": -2.514122884547314,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0056780093482361425,
+          "loc": -5.171154574536774,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.11165767412994829,
+          "loc": -2.192317569247477,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08840729975593056,
+          "loc": -2.4258007363232306,
+          "location": "US",
+          "name": "Transport, freight, rail, diesel",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail, diesel",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0037411136550834123,
+          "loc": -5.588371943141128,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.18116364249000133,
+          "loc": -1.7083545540157898,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.02389524385491526,
+          "loc": -3.7340758417345654,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for sodium sulfite, retained source3.9 sodium-salt reference",
+      "parameters": [],
+      "rationale": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished.",
+      "reference product": "sodium sulfite",
+      "unit": "kilogram"
+    },
+    "pulp-heat-39-sodium-sulfite-production": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5565968020030299,
+          "scale without pedigree": 0.5655086206239476,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.02958017686270765,
+          "loc": -3.5206508425859298,
+          "location": "RLA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.014845220183711571,
+          "loc": -4.210077338696445,
+          "location": "RAF",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.2714005324700779,
+          "loc": -1.304159569644907,
+          "location": "RAS",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.004494698962883478,
+          "loc": -5.404856584851086,
+          "location": "AU",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0008808969524219609,
+          "loc": -7.034569905473125,
+          "location": "NZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.09479847456819745,
+          "loc": -2.356001960903393,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pcc-39-rna-mv-ca-us-market",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 2.11524115852151,
+          "loc": 0.749168828939732,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-ng-heat-market-38d5f92829d188b38bb8",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.03475884147848997,
+          "loc": -3.3593213082977402,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pcc-39-quebec-gas-production-heat-market",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.2,
+          "loc": -1.6094379124341003,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pcc-39-chemical-heat-retained-water-uncertainty",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.030075,
+          "loc": -3.5040610171213946,
+          "location": "RER",
+          "name": "Hydrochloric acid, 30% in H2O, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "reference product": "Hydrochloric acid, 30% in H2O, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.20420577856662137,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.019,
+          "loc": -3.9633162998156966,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.66834,
+          "loc": -0.40295825289698356,
+          "location": "RER",
+          "name": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.20420577856662137,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.53467,
+          "loc": -0.6261055448292557,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "recipe": "pulp-heat-39-so2-native-market-row",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.20420577856662137,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.002030215716871247,
+          "loc": -6.199613227105515,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-0da9b8586a87f75b6039",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.00015023293979285265,
+          "loc": -8.803323536467595,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-d9d587baa173b811a254",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0232327894277076,
+          "loc": -3.7621906607299267,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Tap water, at user",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0004047165189007847,
+          "loc": -7.812323689270834,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-5e8d9a613361e3b63996",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 4.8716999421344246e-05,
+          "loc": -9.929482524691116,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-bb5245dfa484b4d04713",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 8.051284590938174e-05,
+          "loc": -9.427093809756675,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-6c559b0e4af6dc43c99e",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 5.281555139678895e-05,
+          "loc": -9.848704876588597,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-b136619e560fb256f3d8",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 2.6904210759018487e-06,
+          "loc": -12.825812842808153,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-d842e2a4b036631ca64a",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 9.578924098151152e-09,
+          "loc": -18.463700558352897,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-39cbd83822dc810e03e3",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.019,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.9633162998156966,
+          "name": "Nitrogen",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0010693,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -6.840751050201663,
+          "name": "Sulfur dioxide",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0014,
+          "categories": [
+            "air"
+          ],
+          "loc": -6.571283042360924,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.02924,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -3.5322176441005593,
+          "name": "Chloride",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.019215,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -3.9520640549653296,
+          "name": "Sodium I",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.8149846624323676,
+          "scale without pedigree": 0.8149846624323676,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0167,
+          "categories": [
+            "water"
+          ],
+          "loc": -4.092346559559427,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0164,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -4.110473944151984,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00086,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.05857816871672,
+          "name": "Water, river",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00083,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.09408485717363,
+          "name": "Water, well, in ground",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RoW",
+      "name": "sodium sulfite production, retained source3.9 sodium-salt reference",
+      "parameters": [],
+      "rationale": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished.",
+      "reference product": "sodium sulfite",
+      "unit": "kilogram"
+    },
     "pulp-heat-39-solution-market-172446e59949fefa": {
       "evidence": [
         "brightpath/data/export/uvek_pulp_heat_solution_markets_review.json",
@@ -774104,7 +775164,7 @@
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-ac0e66ba02739e93", "mapping_method": "reviewed_pulp_heat_dry_chemical_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_dry_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_dry_markets_review.json"], "reason": "Exact ecoinvent3.9cutoff nominal-kg chemical market reconstructions for chlorine dioxide, EDTA acid, aluminium sulphate powder, magnesium sulphate, malusil, sodium chlorate powder, sodium formate, anhydrous sodium sulphate and elemental sulphur. Source positive1kg references and native positive1kg nonempty chemical inventories are independently inspected. Keep every original producer share separately, every original freight row/quantity and supported uncertainty; no renormalization. Complete native RER producers replace source regional production routes and allocations. Use sodium sulphate powder production mix, not chemically different persulphate; use secondary refinery sulphur, not cobalt sulphate. Source compound/CAS/nominal reference facts and native documentation support the selected chemical identity; no solvent multiplier, hydration, purity, density or elemental correction is invented. Native sodium formate is the documented sold co-product of pentaerythritol manufacture with mass-price allocation; its shared pentaerythritol formula in the comment is not treated as a formate formula or reference basis. Native magnesium sulphate and malusil inventories are explicitly based on lime mining/crushing/milling approximations. Native EDTA/chlorine-dioxide estimates omit solid wastes and have weak/incomplete emissions data; these inherited limitations and all native biosphere exclusions remain screening limitations, not new source-exchange omission approvals. Preserve distinct rail, road, barge, barge-tanker, container-sea, dry-bulk-sea and liquid-tanker quantities at signedtonne-km using complete native RER rail/barge/barge-tanker/fleet-average heavy-lorry/3.5t-light-lorry and OCE container/freight/tanker services. Light-commercial <3.5t -> native3.5t fleet, regional rail traction/fleet/load, global-to-European services, liquid chemical/sulphur cargo vs generic tanker design, handling/phase, upstream product transport and vessel/vintage/infrastructure differences are explicit proxies; no petroleum/LNG cargo equivalence is claimed. Plant inputs already contain upstream raw-material transport; only the original final-product market freight is added. Source/native mining/refining/synthesis, coproduct shares, allocation, product grade, geography, vintage, uncertainty and emission completeness differ; LCIA and carbon-balance equivalence and the size of score effects are unquantified. Preserve caller signedkg, uncertainty, formulas and separate pulp-heat emissions/carbon-resource exchanges with factor+1. No new recovery credit, combustion, source-exchange omission or other-release/consequential/reverse approval is introduced.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected3.9cutoff source qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-3b7f3f372006d1d6", "source": {"location": "RoW", "name": "market for sodium sulfate, anhydrite", "reference product": "sodium sulfate, anhydrite", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-dry-market-ac0e66ba02739e93"}, "technosphere_information_loss": "Exact ecoinvent3.9cutoff nominal-kg chemical market reconstructions for chlorine dioxide, EDTA acid, aluminium sulphate powder, magnesium sulphate, malusil, sodium chlorate powder, sodium formate, anhydrous sodium sulphate and elemental sulphur. Source positive1kg references and native positive1kg nonempty chemical inventories are independently inspected. Keep every original producer share separately, every original freight row/quantity and supported uncertainty; no renormalization. Complete native RER producers replace source regional production routes and allocations. Use sodium sulphate powder production mix, not chemically different persulphate; use secondary refinery sulphur, not cobalt sulphate. Source compound/CAS/nominal reference facts and native documentation support the selected chemical identity; no solvent multiplier, hydration, purity, density or elemental correction is invented. Native sodium formate is the documented sold co-product of pentaerythritol manufacture with mass-price allocation; its shared pentaerythritol formula in the comment is not treated as a formate formula or reference basis. Native magnesium sulphate and malusil inventories are explicitly based on lime mining/crushing/milling approximations. Native EDTA/chlorine-dioxide estimates omit solid wastes and have weak/incomplete emissions data; these inherited limitations and all native biosphere exclusions remain screening limitations, not new source-exchange omission approvals. Preserve distinct rail, road, barge, barge-tanker, container-sea, dry-bulk-sea and liquid-tanker quantities at signedtonne-km using complete native RER rail/barge/barge-tanker/fleet-average heavy-lorry/3.5t-light-lorry and OCE container/freight/tanker services. Light-commercial <3.5t -> native3.5t fleet, regional rail traction/fleet/load, global-to-European services, liquid chemical/sulphur cargo vs generic tanker design, handling/phase, upstream product transport and vessel/vintage/infrastructure differences are explicit proxies; no petroleum/LNG cargo equivalence is claimed. Plant inputs already contain upstream raw-material transport; only the original final-product market freight is added. Source/native mining/refining/synthesis, coproduct shares, allocation, product grade, geography, vintage, uncertainty and emission completeness differ; LCIA and carbon-balance equivalence and the size of score effects are unquantified. Preserve caller signedkg, uncertainty, formulas and separate pulp-heat emissions/carbon-resource exchanges with factor+1. No new recovery credit, combustion, source-exchange omission or other-release/consequential/reverse approval is introduced."},
     {"confidence": 0.307879, "id": "bp-6d6bd5e2524913cf", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium sulfide", "reference product": "sodium sulfide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium arsenide, at plant", "reference product": "Sodium arsenide, at plant", "unit": "kilogram"}},
     {"confidence": 0.285681, "id": "bp-c56f5f3c2b9a021a", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium sulfite", "reference product": "sodium sulfite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium phosphate, at plant", "reference product": "Sodium phosphate, at plant", "unit": "kilogram"}},
-    {"confidence": 0.242225, "id": "bp-5484396eb5e79c5d", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium sulfite", "reference product": "sodium sulfite", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium persulfate, at plant", "reference product": "Sodium persulfate, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-5484396eb5e79c5d", "mapping_method": "reviewed_pulp_heat_so2_sulfite", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "reason": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only exactinspected3.9cutoff qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-b8b283765eabcef6", "source": {"location": "RoW", "name": "market for sodium sulfite", "reference product": "sodium sulfite", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-sodium-sulfite-market"}, "technosphere_information_loss": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished."},
     {"confidence": 0.509158, "id": "bp-d93f03d796a46e38", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium tetrafluoroborate", "reference product": "sodium tetrafluoroborate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium tetrafluorborate, at plant", "reference product": "Sodium tetrafluorborate, at plant", "unit": "kilogram"}},
     {"confidence": 0.500452, "id": "bp-12a50a02dac97d63", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium tetrahydridoborate", "reference product": "sodium tetrahydridoborate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium tetrahydroborate, at plant", "reference product": "Sodium tetrahydroborate, at plant", "unit": "kilogram"}},
     {"confidence": 0.583142, "id": "bp-07d240d81f74d5bb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium tripolyphosphate", "reference product": "sodium tripolyphosphate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium tripolyphosphate, at plant", "reference product": "Sodium tripolyphosphate, at plant", "unit": "kilogram"}},
@@ -774367,8 +775427,8 @@
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-12e7a5399b37ae6a", "mapping_method": "reviewed_pulp_heat_dry_chemical_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_dry_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_dry_markets_review.json"], "reason": "Exact ecoinvent3.9cutoff nominal-kg chemical market reconstructions for chlorine dioxide, EDTA acid, aluminium sulphate powder, magnesium sulphate, malusil, sodium chlorate powder, sodium formate, anhydrous sodium sulphate and elemental sulphur. Source positive1kg references and native positive1kg nonempty chemical inventories are independently inspected. Keep every original producer share separately, every original freight row/quantity and supported uncertainty; no renormalization. Complete native RER producers replace source regional production routes and allocations. Use sodium sulphate powder production mix, not chemically different persulphate; use secondary refinery sulphur, not cobalt sulphate. Source compound/CAS/nominal reference facts and native documentation support the selected chemical identity; no solvent multiplier, hydration, purity, density or elemental correction is invented. Native sodium formate is the documented sold co-product of pentaerythritol manufacture with mass-price allocation; its shared pentaerythritol formula in the comment is not treated as a formate formula or reference basis. Native magnesium sulphate and malusil inventories are explicitly based on lime mining/crushing/milling approximations. Native EDTA/chlorine-dioxide estimates omit solid wastes and have weak/incomplete emissions data; these inherited limitations and all native biosphere exclusions remain screening limitations, not new source-exchange omission approvals. Preserve distinct rail, road, barge, barge-tanker, container-sea, dry-bulk-sea and liquid-tanker quantities at signedtonne-km using complete native RER rail/barge/barge-tanker/fleet-average heavy-lorry/3.5t-light-lorry and OCE container/freight/tanker services. Light-commercial <3.5t -> native3.5t fleet, regional rail traction/fleet/load, global-to-European services, liquid chemical/sulphur cargo vs generic tanker design, handling/phase, upstream product transport and vessel/vintage/infrastructure differences are explicit proxies; no petroleum/LNG cargo equivalence is claimed. Plant inputs already contain upstream raw-material transport; only the original final-product market freight is added. Source/native mining/refining/synthesis, coproduct shares, allocation, product grade, geography, vintage, uncertainty and emission completeness differ; LCIA and carbon-balance equivalence and the size of score effects are unquantified. Preserve caller signedkg, uncertainty, formulas and separate pulp-heat emissions/carbon-resource exchanges with factor+1. No new recovery credit, combustion, source-exchange omission or other-release/consequential/reverse approval is introduced.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected3.9cutoff source qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-3b7f3f372006d1d6", "source": {"location": "GLO", "name": "market for sulfur", "reference product": "sulfur", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-dry-market-12e7a5399b37ae6a"}, "technosphere_information_loss": "Exact ecoinvent3.9cutoff nominal-kg chemical market reconstructions for chlorine dioxide, EDTA acid, aluminium sulphate powder, magnesium sulphate, malusil, sodium chlorate powder, sodium formate, anhydrous sodium sulphate and elemental sulphur. Source positive1kg references and native positive1kg nonempty chemical inventories are independently inspected. Keep every original producer share separately, every original freight row/quantity and supported uncertainty; no renormalization. Complete native RER producers replace source regional production routes and allocations. Use sodium sulphate powder production mix, not chemically different persulphate; use secondary refinery sulphur, not cobalt sulphate. Source compound/CAS/nominal reference facts and native documentation support the selected chemical identity; no solvent multiplier, hydration, purity, density or elemental correction is invented. Native sodium formate is the documented sold co-product of pentaerythritol manufacture with mass-price allocation; its shared pentaerythritol formula in the comment is not treated as a formate formula or reference basis. Native magnesium sulphate and malusil inventories are explicitly based on lime mining/crushing/milling approximations. Native EDTA/chlorine-dioxide estimates omit solid wastes and have weak/incomplete emissions data; these inherited limitations and all native biosphere exclusions remain screening limitations, not new source-exchange omission approvals. Preserve distinct rail, road, barge, barge-tanker, container-sea, dry-bulk-sea and liquid-tanker quantities at signedtonne-km using complete native RER rail/barge/barge-tanker/fleet-average heavy-lorry/3.5t-light-lorry and OCE container/freight/tanker services. Light-commercial <3.5t -> native3.5t fleet, regional rail traction/fleet/load, global-to-European services, liquid chemical/sulphur cargo vs generic tanker design, handling/phase, upstream product transport and vessel/vintage/infrastructure differences are explicit proxies; no petroleum/LNG cargo equivalence is claimed. Plant inputs already contain upstream raw-material transport; only the original final-product market freight is added. Source/native mining/refining/synthesis, coproduct shares, allocation, product grade, geography, vintage, uncertainty and emission completeness differ; LCIA and carbon-balance equivalence and the size of score effects are unquantified. Preserve caller signedkg, uncertainty, formulas and separate pulp-heat emissions/carbon-resource exchanges with factor+1. No new recovery credit, combustion, source-exchange omission or other-release/consequential/reverse approval is introduced."},
     {"confidence": 0.312692, "id": "bp-59144519d9b01a5d", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sulfur dichloride", "reference product": "sulfur dichloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene dichloride, at plant", "reference product": "Ethylene dichloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.232692, "id": "bp-a3c90f3b76023f77", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sulfur dichloride", "reference product": "sulfur dichloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene dichloride, at plant", "reference product": "Ethylene dichloride, at plant", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-e592b4af2986b53f", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for sulfur dioxide, liquid", "reference product": "sulfur dioxide, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphur dioxide, liquid, at plant", "reference product": "Sulphur dioxide, liquid, at plant", "unit": "kilogram"}},
-    {"confidence": 0.42088, "id": "bp-dc071fc3d9a52df4", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sulfur dioxide, liquid", "reference product": "sulfur dioxide, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphur dioxide, liquid, at plant", "reference product": "Sulphur dioxide, liquid, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-e592b4af2986b53f", "mapping_method": "reviewed_pulp_heat_so2_sulfite", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "reason": "Use a complete native functional production proxy for exact ecoinvent3.9cutoff liquidSO2markets, preserving the original delivered-product market rows. Source and native both define positive1kgpureSO2,CAS7446-09-5,with a liquid reference. Map each source producer entry to the complete native RERliquidSO2process per unchanged signedkg; retain original producer quantities and their supported uncertainty separately. This deliberately replaces the source production technologies and their upstream co-product allocations with the target-native production model. In RoW,18.6519413306824%ofsource supply is allocated co-product SO2fromprimaryzinc(18.1395241756592%)andTCPchlorination(0.512417155023209%);81.3480586693176%is dedicatedSO2production. The native process instead represents complete production using secondary sulfur recovered fromrefineries. It is not a reconstruction of those zinc/TCPco-product burdens, nor does keeping their separate market coefficients preserve their technologies or allocation. Those technology/allocation shifts may materially change scores and remain unquantified. No source producer-specific internal amounts or uncertainty are claimed retained; the complete native internal inventory/uncertainty replaces them. Caller amounts,signs,uncertainty,formulas and source market delivery-row metadata remain unchanged with factor+1. The native positive1kgSO2plant includes secondary sulfur,process energy/heat andinfrastructure once; add no separate source-producer inputs,second sulfur supply,avoidedSO2emission,zinc recovery,TCPcredit,yield/purity/stoichiometric factor or nominal flattened-feedback multiplier. Native production documentation describes rough estimates, European energy/geography,vintageandbiosphere-data gaps; these are screening limitations. Retain all original source rail/heavy-road finaldelivery rows at exacttonne-km using complete native RERrail/heavyfleet services. Freight traction,fuel,fleet/loading,infrastructure,geography,vintage,allocation and internaluncertainty differ; no invented distance,payload,return-trip or vehicle/fuel multiplier. This mapping replaces external product supplies rather than reproducing the source chemical-background loop; it requires no cyclic recipe support. No physical source-exchange omission,consequential,reverse or other-version approval. Sodiumsulfite uses its own explicitNa2SO3source inventory,not the native ambiguousSO3(2-)reference. Full pulpheat andsteel export remain unverified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact3.9cutoff qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0ae21fb4bf1b3b82", "source": {"location": "RER", "name": "market for sulfur dioxide, liquid", "reference product": "sulfur dioxide, liquid", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-so2-native-market-rer"}, "technosphere_information_loss": "Use a complete native functional production proxy for exact ecoinvent3.9cutoff liquidSO2markets, preserving the original delivered-product market rows. Source and native both define positive1kgpureSO2,CAS7446-09-5,with a liquid reference. Map each source producer entry to the complete native RERliquidSO2process per unchanged signedkg; retain original producer quantities and their supported uncertainty separately. This deliberately replaces the source production technologies and their upstream co-product allocations with the target-native production model. In RoW,18.6519413306824%ofsource supply is allocated co-product SO2fromprimaryzinc(18.1395241756592%)andTCPchlorination(0.512417155023209%);81.3480586693176%is dedicatedSO2production. The native process instead represents complete production using secondary sulfur recovered fromrefineries. It is not a reconstruction of those zinc/TCPco-product burdens, nor does keeping their separate market coefficients preserve their technologies or allocation. Those technology/allocation shifts may materially change scores and remain unquantified. No source producer-specific internal amounts or uncertainty are claimed retained; the complete native internal inventory/uncertainty replaces them. Caller amounts,signs,uncertainty,formulas and source market delivery-row metadata remain unchanged with factor+1. The native positive1kgSO2plant includes secondary sulfur,process energy/heat andinfrastructure once; add no separate source-producer inputs,second sulfur supply,avoidedSO2emission,zinc recovery,TCPcredit,yield/purity/stoichiometric factor or nominal flattened-feedback multiplier. Native production documentation describes rough estimates, European energy/geography,vintageandbiosphere-data gaps; these are screening limitations. Retain all original source rail/heavy-road finaldelivery rows at exacttonne-km using complete native RERrail/heavyfleet services. Freight traction,fuel,fleet/loading,infrastructure,geography,vintage,allocation and internaluncertainty differ; no invented distance,payload,return-trip or vehicle/fuel multiplier. This mapping replaces external product supplies rather than reproducing the source chemical-background loop; it requires no cyclic recipe support. No physical source-exchange omission,consequential,reverse or other-version approval. Sodiumsulfite uses its own explicitNa2SO3source inventory,not the native ambiguousSO3(2-)reference. Full pulpheat andsteel export remain unverified."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-dc071fc3d9a52df4", "mapping_method": "reviewed_pulp_heat_so2_sulfite", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "reason": "Use a complete native functional production proxy for exact ecoinvent3.9cutoff liquidSO2markets, preserving the original delivered-product market rows. Source and native both define positive1kgpureSO2,CAS7446-09-5,with a liquid reference. Map each source producer entry to the complete native RERliquidSO2process per unchanged signedkg; retain original producer quantities and their supported uncertainty separately. This deliberately replaces the source production technologies and their upstream co-product allocations with the target-native production model. In RoW,18.6519413306824%ofsource supply is allocated co-product SO2fromprimaryzinc(18.1395241756592%)andTCPchlorination(0.512417155023209%);81.3480586693176%is dedicatedSO2production. The native process instead represents complete production using secondary sulfur recovered fromrefineries. It is not a reconstruction of those zinc/TCPco-product burdens, nor does keeping their separate market coefficients preserve their technologies or allocation. Those technology/allocation shifts may materially change scores and remain unquantified. No source producer-specific internal amounts or uncertainty are claimed retained; the complete native internal inventory/uncertainty replaces them. Caller amounts,signs,uncertainty,formulas and source market delivery-row metadata remain unchanged with factor+1. The native positive1kgSO2plant includes secondary sulfur,process energy/heat andinfrastructure once; add no separate source-producer inputs,second sulfur supply,avoidedSO2emission,zinc recovery,TCPcredit,yield/purity/stoichiometric factor or nominal flattened-feedback multiplier. Native production documentation describes rough estimates, European energy/geography,vintageandbiosphere-data gaps; these are screening limitations. Retain all original source rail/heavy-road finaldelivery rows at exacttonne-km using complete native RERrail/heavyfleet services. Freight traction,fuel,fleet/loading,infrastructure,geography,vintage,allocation and internaluncertainty differ; no invented distance,payload,return-trip or vehicle/fuel multiplier. This mapping replaces external product supplies rather than reproducing the source chemical-background loop; it requires no cyclic recipe support. No physical source-exchange omission,consequential,reverse or other-version approval. Sodiumsulfite uses its own explicitNa2SO3source inventory,not the native ambiguousSO3(2-)reference. Full pulpheat andsteel export remain unverified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact3.9cutoff qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0ae21fb4bf1b3b82", "source": {"location": "RoW", "name": "market for sulfur dioxide, liquid", "reference product": "sulfur dioxide, liquid", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-so2-native-market-row"}, "technosphere_information_loss": "Use a complete native functional production proxy for exact ecoinvent3.9cutoff liquidSO2markets, preserving the original delivered-product market rows. Source and native both define positive1kgpureSO2,CAS7446-09-5,with a liquid reference. Map each source producer entry to the complete native RERliquidSO2process per unchanged signedkg; retain original producer quantities and their supported uncertainty separately. This deliberately replaces the source production technologies and their upstream co-product allocations with the target-native production model. In RoW,18.6519413306824%ofsource supply is allocated co-product SO2fromprimaryzinc(18.1395241756592%)andTCPchlorination(0.512417155023209%);81.3480586693176%is dedicatedSO2production. The native process instead represents complete production using secondary sulfur recovered fromrefineries. It is not a reconstruction of those zinc/TCPco-product burdens, nor does keeping their separate market coefficients preserve their technologies or allocation. Those technology/allocation shifts may materially change scores and remain unquantified. No source producer-specific internal amounts or uncertainty are claimed retained; the complete native internal inventory/uncertainty replaces them. Caller amounts,signs,uncertainty,formulas and source market delivery-row metadata remain unchanged with factor+1. The native positive1kgSO2plant includes secondary sulfur,process energy/heat andinfrastructure once; add no separate source-producer inputs,second sulfur supply,avoidedSO2emission,zinc recovery,TCPcredit,yield/purity/stoichiometric factor or nominal flattened-feedback multiplier. Native production documentation describes rough estimates, European energy/geography,vintageandbiosphere-data gaps; these are screening limitations. Retain all original source rail/heavy-road finaldelivery rows at exacttonne-km using complete native RERrail/heavyfleet services. Freight traction,fuel,fleet/loading,infrastructure,geography,vintage,allocation and internaluncertainty differ; no invented distance,payload,return-trip or vehicle/fuel multiplier. This mapping replaces external product supplies rather than reproducing the source chemical-background loop; it requires no cyclic recipe support. No physical source-exchange omission,consequential,reverse or other-version approval. Sodiumsulfite uses its own explicitNa2SO3source inventory,not the native ambiguousSO3(2-)reference. Full pulpheat andsteel export remain unverified."},
     {"confidence": 1.0, "id": "bp-31d7335a1d0c9bda", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for sulfur hexafluoride, liquid", "reference product": "sulfur hexafluoride, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphur hexafluoride, liquid, at plant", "reference product": "Sulphur hexafluoride, liquid, at plant", "unit": "kilogram"}},
     {"confidence": 0.462778, "id": "bp-ff15327274793c60", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sulfur hexafluoride, liquid", "reference product": "sulfur hexafluoride, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphur hexafluoride, liquid, at plant", "reference product": "Sulphur hexafluoride, liquid, at plant", "unit": "kilogram"}},
     {"confidence": 0.149112, "id": "bp-9e9958f0ccb410e2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sulfur stockpiling", "reference product": "sulfur stockpiling", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cobalt sulfate", "reference product": "Cobalt sulfate", "unit": "kilogram"}},
@@ -774574,7 +775634,7 @@
     {"confidence": 0.876066, "id": "bp-de6e3850c0ac2785", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for transmission network, electricity, medium voltage", "reference product": "transmission network, electricity, medium voltage", "unit": "kilometer"}, "target": {"location": "CH", "name": "Transmission network, electricity, medium voltage", "reference product": "Transmission network, electricity, medium voltage", "unit": "kilometer"}},
     {"confidence": 0.83875, "id": "bp-854ac882d64b33e5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for transmission network, long-distance", "reference product": "transmission network, long-distance", "unit": "kilometer"}, "target": {"location": "UCTE", "name": "Transmission network, long-distance", "reference product": "Transmission network, long-distance", "unit": "kilometer"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-97d38b4e34e0274c", "mapping_method": "reviewed_older_swiss_rail", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_cable_rail_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cable_rail_review.json#ecoinvent-3.10-cutoff/897b1e23b9168a2c8fcb195477b5b5142f4d5b4257adae702bb5c1bcae48eb41"], "reason": "Use complete already-reviewed Swiss PF-diesel and electric-with-shunting freight services with the exact observed positive source market shares. Include vehicle manufacture, maintenance, tracks, operation and end of life. Do not substitute the former operation-only placeholder, normalize the shares or scale capacity/lifetimes. Native energy intensity, load factors, fleets, vintage and inventories remain screening approximations. Preserve caller signed amounts, uncertainty, formulas, foreground ownership and separate emissions; internal source market uncertainty/formulas are not reconstructed. No consequential conversion or inverse inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}, "target": {"recipe_ref": "older-swiss-rail-061b7121127c9a779bfc"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cable_rail_review.json#ecoinvent-3.10.1-cutoff/a679d662b5c9af749303216c059859ba8a971103cc36a2bfe44d733641adf811"], "reason": "Use complete already-reviewed Swiss PF-diesel and electric-with-shunting freight services with the exact observed positive source market shares. Include vehicle manufacture, maintenance, tracks, operation and end of life. Do not substitute the former operation-only placeholder, normalize the shares or scale capacity/lifetimes. Native energy intensity, load factors, fleets, vintage and inventories remain screening approximations. Preserve caller signed amounts, uncertainty, formulas, foreground ownership and separate emissions; internal source market uncertainty/formulas are not reconstructed. No consequential conversion or inverse inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10.1"}, "target": {"recipe_ref": "older-swiss-rail-061b7121127c9a779bfc"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cable_rail_review.json#ecoinvent-3.6-cutoff/29e02540f754c6ab09a0d5d74b75543ff7e06b0f6418730c844ec66b6dff6af6"], "reason": "Use complete already-reviewed Swiss PF-diesel and electric-with-shunting freight services with the exact observed positive source market shares. Include vehicle manufacture, maintenance, tracks, operation and end of life. Do not substitute the former operation-only placeholder, normalize the shares or scale capacity/lifetimes. Native energy intensity, load factors, fleets, vintage and inventories remain screening approximations. Preserve caller signed amounts, uncertainty, formulas, foreground ownership and separate emissions; internal source market uncertainty/formulas are not reconstructed. No consequential conversion or inverse inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "older-swiss-rail-bfabb4f16ac370ddda34"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cable_rail_review.json#ecoinvent-3.7-cutoff/1208ee6d4295f9e29d8c3482c0c928c30408cd1b6f6b37e91eab86036756bed4"], "reason": "Use complete already-reviewed Swiss PF-diesel and electric-with-shunting freight services with the exact observed positive source market shares. Include vehicle manufacture, maintenance, tracks, operation and end of life. Do not substitute the former operation-only placeholder, normalize the shares or scale capacity/lifetimes. Native energy intensity, load factors, fleets, vintage and inventories remain screening approximations. Preserve caller signed amounts, uncertainty, formulas, foreground ownership and separate emissions; internal source market uncertainty/formulas are not reconstructed. No consequential conversion or inverse inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.7"}, "target": {"recipe_ref": "older-swiss-rail-061b7121127c9a779bfc"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cable_rail_review.json#ecoinvent-3.8-cutoff/a252d0e0c90c09d3932b93cc368ca117263733f7f008b3af3cc5e2e02f2ea805"], "reason": "Use complete already-reviewed Swiss PF-diesel and electric-with-shunting freight services with the exact observed positive source market shares. Include vehicle manufacture, maintenance, tracks, operation and end of life. Do not substitute the former operation-only placeholder, normalize the shares or scale capacity/lifetimes. Native energy intensity, load factors, fleets, vintage and inventories remain screening approximations. Preserve caller signed amounts, uncertainty, formulas, foreground ownership and separate emissions; internal source market uncertainty/formulas are not reconstructed. No consequential conversion or inverse inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "older-swiss-rail-061b7121127c9a779bfc"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cable_rail_review.json#ecoinvent-3.9-cutoff/091ca166a7c4f161d285e0b8413f8d8c57775213e94b6234b1d20823875fd5c1"], "reason": "Use complete already-reviewed Swiss PF-diesel and electric-with-shunting freight services with the exact observed positive source market shares. Include vehicle manufacture, maintenance, tracks, operation and end of life. Do not substitute the former operation-only placeholder, normalize the shares or scale capacity/lifetimes. Native energy intensity, load factors, fleets, vintage and inventories remain screening approximations. Preserve caller signed amounts, uncertainty, formulas, foreground ownership and separate emissions; internal source market uncertainty/formulas are not reconstructed. No consequential conversion or inverse inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "older-swiss-rail-061b7121127c9a779bfc"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cable_rail_review.json#ecoinvent-3.9.1-cutoff/842df885ee0596e55f922b960c39fedcea382e13ae3edb17e188c35829ab89b1"], "reason": "Use complete already-reviewed Swiss PF-diesel and electric-with-shunting freight services with the exact observed positive source market shares. Include vehicle manufacture, maintenance, tracks, operation and end of life. Do not substitute the former operation-only placeholder, normalize the shares or scale capacity/lifetimes. Native energy intensity, load factors, fleets, vintage and inventories remain screening approximations. Preserve caller signed amounts, uncertainty, formulas, foreground ownership and separate emissions; internal source market uncertainty/formulas are not reconstructed. No consequential conversion or inverse inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9.1"}, "target": {"recipe_ref": "older-swiss-rail-061b7121127c9a779bfc"}}], "reason": "Select an exact independently inspected cut-off cable/wire-plastic/freight profile.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-adb5f1e4657af743", "source": {"location": "CH", "name": "market for transport, freight train", "reference product": "transport, freight train", "unit": "ton kilometer"}, "target": {"recipe_ref": "older-swiss-rail-061b7121127c9a779bfc"}, "technosphere_information_loss": "Use complete already-reviewed Swiss PF-diesel and electric-with-shunting freight services with the exact observed positive source market shares. Include vehicle manufacture, maintenance, tracks, operation and end of life. Do not substitute the former operation-only placeholder, normalize the shares or scale capacity/lifetimes. Native energy intensity, load factors, fleets, vintage and inventories remain screening approximations. Preserve caller signed amounts, uncertainty, formulas, foreground ownership and separate emissions; internal source market uncertainty/formulas are not reconstructed. No consequential conversion or inverse inferred."},
-    {"confidence": 0.495686, "id": "bp-46ffc4892be8fcb1", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for transport, freight train", "reference product": "transport, freight train", "unit": "ton kilometer"}, "target": {"location": "CN", "name": "Transport, coal freight, rail", "reference product": "Transport, coal freight, rail", "unit": "ton kilometer"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-46ffc4892be8fcb1", "mapping_method": "reviewed_pulp_heat_so2_sulfite", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "reason": "The current Chinese coal-freight supplier has a different commodity portfolio, and its original documentation questions the functional unit inferred from Chinese official statistics and limits use to cases where transport is a minor contributor. The available complete RERgeneral-freight process has a documented1tkmservice basis. Select that as an explicit geographic and traction proxy rather than silently accepting the CNcoal-data limitation. Exact3.9cutoff Chinese freight-rail market supplies1metricton across1km,positive1tkm. Use complete native European freight-rail life-cycle service per unchanged signedtkm atfactor+1 as a geographic/traction screening proxy. Native includes train energy and shunting,vehicles,track construction/maintenance/disposal and land use; add no separate locomotive,rail,grid,diesel,fuel,empty-return,payload,network,distance or efficiency adjustment. Source historical market uses28.7%electric,1.6%coal-firedsteam and69.7%diesel; the native RERtrain portfolio uses European electric/diesel instead. These internal source traction shares,Chinese electricity/fuel mixes,loads,operating conditions,emissions,allocation,uncertainty,vintageandgeography are replaced by the complete native service,not claimed preserved. Retain every caller ton-km and its sign/uncertainty/formula, including distinct finished-product delivery entries. No road,passenger,pipeline or generic mass transport substitution. Differences and resulting score effects remain unquantified. This proxy does not authorize other source versions/models or missing chloride chemistry.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only exactinspected3.9cutoff qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-65a584886f28e9c1", "source": {"location": "CN", "name": "market for transport, freight train", "reference product": "transport, freight train", "unit": "ton kilometer"}, "target": {"location": "RER", "name": "Transport, freight, rail", "reference product": "Transport, freight, rail", "unit": "ton kilometer"}, "technosphere_information_loss": "The current Chinese coal-freight supplier has a different commodity portfolio, and its original documentation questions the functional unit inferred from Chinese official statistics and limits use to cases where transport is a minor contributor. The available complete RERgeneral-freight process has a documented1tkmservice basis. Select that as an explicit geographic and traction proxy rather than silently accepting the CNcoal-data limitation. Exact3.9cutoff Chinese freight-rail market supplies1metricton across1km,positive1tkm. Use complete native European freight-rail life-cycle service per unchanged signedtkm atfactor+1 as a geographic/traction screening proxy. Native includes train energy and shunting,vehicles,track construction/maintenance/disposal and land use; add no separate locomotive,rail,grid,diesel,fuel,empty-return,payload,network,distance or efficiency adjustment. Source historical market uses28.7%electric,1.6%coal-firedsteam and69.7%diesel; the native RERtrain portfolio uses European electric/diesel instead. These internal source traction shares,Chinese electricity/fuel mixes,loads,operating conditions,emissions,allocation,uncertainty,vintageandgeography are replaced by the complete native service,not claimed preserved. Retain every caller ton-km and its sign/uncertainty/formula, including distinct finished-product delivery entries. No road,passenger,pipeline or generic mass transport substitution. Differences and resulting score effects remain unquantified. This proxy does not authorize other source versions/models or missing chloride chemistry."},
     {"confidence": 0.6, "id": "bp-a3a951644bd5ed9c", "mapping_method": "followup_review", "review_ref": "r-3e3dfa37830cabd0", "source": {"location": "Europe without Switzerland", "name": "market for transport, freight train", "reference product": "transport, freight train", "unit": "ton kilometer"}, "target": {"location": "RER", "name": "Transport, freight, rail", "reference product": "Transport, freight, rail", "unit": "ton kilometer"}},
     {"confidence": 0.6, "id": "bp-949e9423153a45de", "mapping_method": "followup_review", "review_ref": "r-2efe7b2a8f2f9e9a", "source": {"location": "IN", "name": "market for transport, freight train", "reference product": "transport, freight train", "unit": "ton kilometer"}, "target": {"location": "RER", "name": "Transport, freight, rail", "reference product": "Transport, freight, rail", "unit": "ton kilometer"}},
     {"confidence": 0.6, "id": "bp-b25755fd394b9346", "mapping_method": "followup_review", "review_ref": "r-2efe7b2a8f2f9e9a", "source": {"location": "RoW", "name": "market for transport, freight train", "reference product": "transport, freight train", "unit": "ton kilometer"}, "target": {"location": "RER", "name": "Transport, freight, rail", "reference product": "Transport, freight, rail", "unit": "ton kilometer"}},
@@ -780332,7 +781392,7 @@
     {"confidence": 0.336138, "id": "bp-11409c785a2bd0a7", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "sodium sulfate production, from natural sources", "reference product": "sodium sulfate, anhydrite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium sulphate, from natural sources, at plant", "reference product": "Sodium sulphate, from natural sources, at plant", "unit": "kilogram"}},
     {"confidence": 0.315909, "id": "bp-b5139646e34be277", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "sodium sulfide production", "reference product": "sodium sulfide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium arsenide, at plant", "reference product": "Sodium arsenide, at plant", "unit": "kilogram"}},
     {"confidence": 0.340031, "id": "bp-6b08bbe4d92bd7c7", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "sodium sulfite production", "reference product": "sodium sulfite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium sulphate, powder, production mix, at plant", "reference product": "Sodium sulphate, powder, production mix, at plant", "unit": "kilogram"}},
-    {"confidence": 0.260031, "id": "bp-8d2ec25ccb852299", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "sodium sulfite production", "reference product": "sodium sulfite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium sulphate, powder, production mix, at plant", "reference product": "Sodium sulphate, powder, production mix, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-8d2ec25ccb852299", "mapping_method": "reviewed_pulp_heat_so2_sulfite", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"], "reason": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only exactinspected3.9cutoff qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-b8b283765eabcef6", "source": {"location": "RoW", "name": "sodium sulfite production", "reference product": "sodium sulfite", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-sodium-sulfite-production"}, "technosphere_information_loss": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished."},
     {"confidence": 0.517852, "id": "bp-d531138f75c739ed", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "sodium tetrafluoroborate production", "reference product": "sodium tetrafluoroborate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium tetrafluorborate, at plant", "reference product": "Sodium tetrafluorborate, at plant", "unit": "kilogram"}},
     {"confidence": 0.320905, "id": "bp-6b3a7c69bae52de8", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "sodium tetrafluoroborate production, sodium tetrahydridoborate fluorination", "reference product": "diborane", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Diborane, at plant", "reference product": "Diborane, at plant", "unit": "kilogram"}},
     {"confidence": 0.46803, "id": "bp-97d239450c0282b4", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "sodium tetrafluoroborate production, sodium tetrahydridoborate fluorination", "reference product": "sodium tetrafluoroborate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium tetrafluorborate, at plant", "reference product": "Sodium tetrafluorborate, at plant", "unit": "kilogram"}},
@@ -787683,6 +788743,15 @@
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for sewage sludge, 70% water, WWT, WW from PV cell production / CH / kg external exchange with a warning. All inspected direct service comments for PV cell production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
     },
+    "r-0ae21fb4bf1b3b82": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"
+      ],
+      "limitations": [
+        "Use a complete native functional production proxy for exact ecoinvent3.9cutoff liquidSO2markets, preserving the original delivered-product market rows. Source and native both define positive1kgpureSO2,CAS7446-09-5,with a liquid reference. Map each source producer entry to the complete native RERliquidSO2process per unchanged signedkg; retain original producer quantities and their supported uncertainty separately. This deliberately replaces the source production technologies and their upstream co-product allocations with the target-native production model. In RoW,18.6519413306824%ofsource supply is allocated co-product SO2fromprimaryzinc(18.1395241756592%)andTCPchlorination(0.512417155023209%);81.3480586693176%is dedicatedSO2production. The native process instead represents complete production using secondary sulfur recovered fromrefineries. It is not a reconstruction of those zinc/TCPco-product burdens, nor does keeping their separate market coefficients preserve their technologies or allocation. Those technology/allocation shifts may materially change scores and remain unquantified. No source producer-specific internal amounts or uncertainty are claimed retained; the complete native internal inventory/uncertainty replaces them. Caller amounts,signs,uncertainty,formulas and source market delivery-row metadata remain unchanged with factor+1. The native positive1kgSO2plant includes secondary sulfur,process energy/heat andinfrastructure once; add no separate source-producer inputs,second sulfur supply,avoidedSO2emission,zinc recovery,TCPcredit,yield/purity/stoichiometric factor or nominal flattened-feedback multiplier. Native production documentation describes rough estimates, European energy/geography,vintageandbiosphere-data gaps; these are screening limitations. Retain all original source rail/heavy-road finaldelivery rows at exacttonne-km using complete native RERrail/heavyfleet services. Freight traction,fuel,fleet/loading,infrastructure,geography,vintage,allocation and internaluncertainty differ; no invented distance,payload,return-trip or vehicle/fuel multiplier. This mapping replaces external product supplies rather than reproducing the source chemical-background loop; it requires no cyclic recipe support. No physical source-exchange omission,consequential,reverse or other-version approval. Sodiumsulfite uses its own explicitNa2SO3source inventory,not the native ambiguousSO3(2-)reference. Full pulpheat andsteel export remain unverified."
+      ],
+      "rationale": "Use a complete native functional production proxy for exact ecoinvent3.9cutoff liquidSO2markets, preserving the original delivered-product market rows. Source and native both define positive1kgpureSO2,CAS7446-09-5,with a liquid reference. Map each source producer entry to the complete native RERliquidSO2process per unchanged signedkg; retain original producer quantities and their supported uncertainty separately. This deliberately replaces the source production technologies and their upstream co-product allocations with the target-native production model. In RoW,18.6519413306824%ofsource supply is allocated co-product SO2fromprimaryzinc(18.1395241756592%)andTCPchlorination(0.512417155023209%);81.3480586693176%is dedicatedSO2production. The native process instead represents complete production using secondary sulfur recovered fromrefineries. It is not a reconstruction of those zinc/TCPco-product burdens, nor does keeping their separate market coefficients preserve their technologies or allocation. Those technology/allocation shifts may materially change scores and remain unquantified. No source producer-specific internal amounts or uncertainty are claimed retained; the complete native internal inventory/uncertainty replaces them. Caller amounts,signs,uncertainty,formulas and source market delivery-row metadata remain unchanged with factor+1. The native positive1kgSO2plant includes secondary sulfur,process energy/heat andinfrastructure once; add no separate source-producer inputs,second sulfur supply,avoidedSO2emission,zinc recovery,TCPcredit,yield/purity/stoichiometric factor or nominal flattened-feedback multiplier. Native production documentation describes rough estimates, European energy/geography,vintageandbiosphere-data gaps; these are screening limitations. Retain all original source rail/heavy-road finaldelivery rows at exacttonne-km using complete native RERrail/heavyfleet services. Freight traction,fuel,fleet/loading,infrastructure,geography,vintage,allocation and internaluncertainty differ; no invented distance,payload,return-trip or vehicle/fuel multiplier. This mapping replaces external product supplies rather than reproducing the source chemical-background loop; it requires no cyclic recipe support. No physical source-exchange omission,consequential,reverse or other-version approval. Sodiumsulfite uses its own explicitNa2SO3source inventory,not the native ambiguousSO3(2-)reference. Full pulpheat andsteel export remain unverified."
+    },
     "r-0aec735168b98530": {
       "limitations": [
         "Identity-level comparison only; inventory composition and LCIA equivalence are not verified.",
@@ -790787,6 +791856,15 @@
       ],
       "rationale": "The co-product is a fatty acid, not a fatty alcohol. The candidate supplies fatty acids from vegetable oil; feedstock and allocation remain proxies."
     },
+    "r-65a584886f28e9c1": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"
+      ],
+      "limitations": [
+        "The current Chinese coal-freight supplier has a different commodity portfolio, and its original documentation questions the functional unit inferred from Chinese official statistics and limits use to cases where transport is a minor contributor. The available complete RERgeneral-freight process has a documented1tkmservice basis. Select that as an explicit geographic and traction proxy rather than silently accepting the CNcoal-data limitation. Exact3.9cutoff Chinese freight-rail market supplies1metricton across1km,positive1tkm. Use complete native European freight-rail life-cycle service per unchanged signedtkm atfactor+1 as a geographic/traction screening proxy. Native includes train energy and shunting,vehicles,track construction/maintenance/disposal and land use; add no separate locomotive,rail,grid,diesel,fuel,empty-return,payload,network,distance or efficiency adjustment. Source historical market uses28.7%electric,1.6%coal-firedsteam and69.7%diesel; the native RERtrain portfolio uses European electric/diesel instead. These internal source traction shares,Chinese electricity/fuel mixes,loads,operating conditions,emissions,allocation,uncertainty,vintageandgeography are replaced by the complete native service,not claimed preserved. Retain every caller ton-km and its sign/uncertainty/formula, including distinct finished-product delivery entries. No road,passenger,pipeline or generic mass transport substitution. Differences and resulting score effects remain unquantified. This proxy does not authorize other source versions/models or missing chloride chemistry."
+      ],
+      "rationale": "The current Chinese coal-freight supplier has a different commodity portfolio, and its original documentation questions the functional unit inferred from Chinese official statistics and limits use to cases where transport is a minor contributor. The available complete RERgeneral-freight process has a documented1tkmservice basis. Select that as an explicit geographic and traction proxy rather than silently accepting the CNcoal-data limitation. Exact3.9cutoff Chinese freight-rail market supplies1metricton across1km,positive1tkm. Use complete native European freight-rail life-cycle service per unchanged signedtkm atfactor+1 as a geographic/traction screening proxy. Native includes train energy and shunting,vehicles,track construction/maintenance/disposal and land use; add no separate locomotive,rail,grid,diesel,fuel,empty-return,payload,network,distance or efficiency adjustment. Source historical market uses28.7%electric,1.6%coal-firedsteam and69.7%diesel; the native RERtrain portfolio uses European electric/diesel instead. These internal source traction shares,Chinese electricity/fuel mixes,loads,operating conditions,emissions,allocation,uncertainty,vintageandgeography are replaced by the complete native service,not claimed preserved. Retain every caller ton-km and its sign/uncertainty/formula, including distinct finished-product delivery entries. No road,passenger,pipeline or generic mass transport substitution. Differences and resulting score effects remain unquantified. This proxy does not authorize other source versions/models or missing chloride chemistry."
+    },
     "r-65b4f84b0f8ad194": {
       "evidence": [
         "brightpath/data/export/uvek_deferred_materials_review.json"
@@ -793488,6 +794566,15 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for sewage sludge, 70% water, WWT, WW from ammonium paratungstate production / CN / kg external exchange with a warning. All inspected direct service comments for ammonium paratungstate production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-b8b283765eabcef6": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_so2_sulfite_review.json"
+      ],
+      "limitations": [
+        "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished."
+      ],
+      "rationale": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished."
     },
     "r-b95d77464666d191": {
       "evidence": [
