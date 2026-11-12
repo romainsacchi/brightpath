@@ -1079,6 +1079,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_pulp_heat_energy import apply_pulp_heat_energy_review
 
     apply_pulp_heat_energy_review(technosphere)
+    if __package__:
+        from scripts.review_uvek_pulp_heat_dry_markets import apply_pulp_heat_dry_markets_review
+    else:
+        from review_uvek_pulp_heat_dry_markets import apply_pulp_heat_dry_markets_review
+
+    apply_pulp_heat_dry_markets_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
