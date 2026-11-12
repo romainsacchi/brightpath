@@ -6,7 +6,7 @@ from copy import deepcopy
 
 import pytest
 
-from brightpath import TechnosphereProfile
+from brightpath import DATA_DIR, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
 from scripts import review_uvek_chemical_heat as heat
 from scripts.review_uvek_reference_signs import compiled_venting_rule, rule_binding
@@ -22,8 +22,19 @@ def original_resource():
     for index, rule in enumerate(resource["replace"]):
         if heat.identity(rule["source"]) in heat.SOURCES and "recipe_ref" in rule["target"]:
             decision = prior[rule["id"]]
-            assert compiled_venting_rule(decision) == rule
+            if rule["id"] == "bp-05200779ee64a17f":
+                later = json.loads((DATA_DIR / "export/uvek_pcc_last_four_review.json").read_text())
+                row = next(r for r in later["records"] if r["rule_id"] == rule["id"])
+                assert rule == row["compiled_rule"]
+            else:
+                assert compiled_venting_rule(decision) == rule
             resource["replace"][index] = deepcopy(decision["original_rule"])
+    # Test the original frozen composition stage, before later scoped water reviews.
+    water = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_water_review.json").read_text())
+    prior_water = {row["rule_id"]: row["previous_rule"] for row in water["records"]}
+    for index, rule in enumerate(resource["replace"]):
+        if rule["id"] in prior_water:
+            resource["replace"][index] = deepcopy(prior_water[rule["id"]])
     return resource
 
 

@@ -17,6 +17,18 @@ from scripts.review_uvek_fuels_38_chemical_heat import apply_fuels_38_chemical_h
 REVIEW = json.loads((DATA_DIR / "export/uvek_fuels_38_chemical_heat_review.json").read_text())
 
 
+def resource_at_38_refinement_stage():
+    """Replay the earlier frozen stage before its explicitly reviewed 3.9 successor."""
+    resource = deepcopy(load_uvek_technosphere_resource())
+    later = json.loads((DATA_DIR / "export/uvek_pcc_last_four_review.json").read_text())
+    row = next(r for r in later["records"] if r["rule_id"] == REVIEW["rule_id"])
+    parent = next(r for r in resource["replace"] if r["id"] == REVIEW["rule_id"])
+    assert parent == row["compiled_rule"] and row["original_rule"] == REVIEW["compiled_rule"]
+    parent.clear()
+    parent.update(deepcopy(REVIEW["compiled_rule"]))
+    return resource
+
+
 def migrate(amount=1, uncertainty=3):
     source = BrightwayInventory.from_data(
         consumer(REVIEW["original_rule"]["source"], amount, uncertainty),
@@ -69,8 +81,8 @@ def test_heat_once_and_all_nine_original_water_marginal_distributions():
             assert actual["name"] == "Tap water, at user" and actual["unit"] == "kilogram"
 
 
-def test_all_other_eight_profile_selections_and_old_helpers_are_unchanged():
-    resource = load_uvek_technosphere_resource()
+def test_all_other_eight_profile_selections_at_38_stage_and_old_helpers_are_unchanged():
+    resource = resource_at_38_refinement_stage()
     for proof in REVIEW["preserved_profiles"]:
         selected = next(
             q
@@ -83,7 +95,7 @@ def test_all_other_eight_profile_selections_and_old_helpers_are_unchanged():
 
 
 def test_refinement_replay_rejects_changed_water_statistics_without_mutation():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = resource_at_38_refinement_stage()
     before = deepcopy(resource)
     apply_fuels_38_chemical_heat_review(resource)
     assert resource == before

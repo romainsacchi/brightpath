@@ -1,5 +1,6 @@
 """Exercise retained-water chemical heat through the actual canonical and native migration routes."""
 
+import json
 from copy import deepcopy
 
 import pytest
@@ -7,6 +8,7 @@ from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
 
 from brightpath import (
+    DATA_DIR,
     BackgroundContext,
     BiosphereProfile,
     BrightwayInventory,
@@ -62,6 +64,17 @@ def test_signed_heat_uncertainty_and_every_water_flow_survive_real_migration(ver
         source = heat.identity(before)
         profile = next(p for p in heat.SOURCES[source]["profiles"] if p["label"] == f"ecoinvent-{version}-cutoff")
         rid, recipe = heat.heat_recipe(source, profile)
+        # Later scoped reviews retain point quantities and restore water metadata.
+        if source[0] == "market for heat, from steam, in chemical industry" and source[2] == "RoW":
+            if version == "3.8":
+                review = json.loads((DATA_DIR / "export/uvek_fuels_38_chemical_heat_review.json").read_text())
+                rid = review["new_recipe_id"]
+                recipe = review["recipes"][rid]
+            elif version == "3.9":
+                review = json.loads((DATA_DIR / "export/uvek_pcc_last_four_review.json").read_text())
+                row = next(r for r in review["records"] if r["rule_id"] == "bp-05200779ee64a17f")
+                rid = row["recipe_id"]
+                recipe = review["recipes"][rid]
         assert helper["brightpath_conversion"]["recipe_id"] == rid
         assert helper["unit"] == "megajoule"
         assert helper["exchanges"][0]["type"] == "production" and helper["exchanges"][0]["amount"] == 1
