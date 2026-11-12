@@ -1,0 +1,2056 @@
+{
+  "schema_version": 1,
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.9",
+    "system_model": "cutoff"
+  },
+  "authorization": "Standing autonomous approval of inspected boundary-preserving reconstructions with warnings; log decisions for later review.",
+  "records": [
+    {
+      "rule_id": "bp-0b346b8f3969e16b",
+      "original_rule": {
+        "confidence": 0.41927,
+        "conversion_factor": -1,
+        "id": "bp-0b346b8f3969e16b",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-0b346b8f3969e16b"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "market for wastewater from pig iron production",
+          "reference product": "wastewater from pig iron production",
+          "unit": "cubic meter"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "unit": "cubic meter"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "conversion_factor": -1,
+        "id": "bp-0b346b8f3969e16b",
+        "mapping_method": "reviewed_steel_39_wastewater_market",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Exact source market boundary and reference sign require review.",
+          "evidence": [
+            "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+                "evidence": [
+                  "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "market for wastewater from pig iron production",
+          "reference product": "wastewater from pig iron production",
+          "unit": "cubic meter"
+        },
+        "target": {
+          "recipe_ref": "steel-39-pig-iron-wastewater-Europe-without-Switzerland"
+        },
+        "classification": "proxy",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+        "review_ref": "r-05c7fb46676c53f5"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for wastewater from pig iron production",
+          "reference product": "wastewater from pig iron production",
+          "location": "Europe without Switzerland",
+          "unit": "cubic meter"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "inventory_sha256": "988f0f80adc789ef9f156b4374d73b5a6b14b7938a64efea0000ec7102cfb1ab",
+        "nonproduction_count": 15
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "treatment of wastewater from pig iron production, wastewater treatment",
+            "reference product": "wastewater from pig iron production",
+            "location": "Europe without Switzerland",
+            "unit": "cubic meter"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "inventory_sha256": "d388532368f4815f9de844f2aad4e02fd9c6b24788e60b08eaad91114cdbb24f",
+          "nonproduction_count": 70
+        }
+      ],
+      "conversion_factor": -1,
+      "treated_fraction": 0.8729643339038445,
+      "sewer_services": [
+        {
+          "source": {
+            "name": "sewer grid construction, rural",
+            "reference product": "sewer grid, rural",
+            "location": "GLO",
+            "unit": "cubic meter"
+          },
+          "recipe_ref": "sewer-throughput-b7b0053b62e47219bbda",
+          "amount": 0.1723
+        },
+        {
+          "source": {
+            "name": "sewer grid construction, urban",
+            "reference product": "sewer grid, urban",
+            "location": "GLO",
+            "unit": "cubic meter"
+          },
+          "recipe_ref": "sewer-throughput-5ad254f2a66ab4151737",
+          "amount": 0.8277
+        }
+      ],
+      "untreated_discharges": [
+        {
+          "type": "biosphere",
+          "name": "BOD5, Biological Oxygen Demand",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 9.82098712136059e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "COD, Chemical Oxygen Demand",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 2.03058959451944e-06
+        },
+        {
+          "type": "biosphere",
+          "name": "Chromium III",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 2.54071332192311e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Copper ion",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 5.33549797603853e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "DOC, Dissolved Organic Carbon",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.54175437076081e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Hydrogen",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.33341587836312e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Lead II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 2.54071332192311e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Nickel II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.81106998288466e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Oxygen",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 6.38036632967941e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "TOC, Total Organic Carbon",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 5.20846230994237e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Water",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "cubic meter",
+          "amount": 0.127035661214651
+        },
+        {
+          "type": "biosphere",
+          "name": "Zinc II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 2.54071332192311e-06
+        }
+      ],
+      "embedded_native_sewer_correction": {
+        "name": "Sewer grid, class 3",
+        "reference product": "Sewer grid, class 3",
+        "location": "CH",
+        "unit": "kilometer",
+        "type": "technosphere",
+        "amount": -1.9014909121093543e-07,
+        "comment": "Cancel only deterministic sewer infrastructure embedded in the native treatment; retain source rural/urban service quantities."
+      },
+      "native_2026_witness": {
+        "identity": {
+          "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "location": "CH",
+          "unit": "cubic meter"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "inventory_sha256": "877fce90d147d501ffd6816b5a57c497d2707deb440b37da742ed0550ffd82bd",
+        "nonproduction_count": 59
+      },
+      "limitations": [
+        "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved."
+      ]
+    },
+    {
+      "rule_id": "bp-370d86f95a1eb95a",
+      "original_rule": {
+        "confidence": 0.49927,
+        "conversion_factor": -1,
+        "id": "bp-370d86f95a1eb95a",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-370d86f95a1eb95a"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "CH",
+          "name": "market for wastewater from pig iron production",
+          "reference product": "wastewater from pig iron production",
+          "unit": "cubic meter"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "unit": "cubic meter"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "conversion_factor": -1,
+        "id": "bp-370d86f95a1eb95a",
+        "mapping_method": "reviewed_steel_39_wastewater_market",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Exact source market boundary and reference sign require review.",
+          "evidence": [
+            "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+                "evidence": [
+                  "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "CH",
+          "name": "market for wastewater from pig iron production",
+          "reference product": "wastewater from pig iron production",
+          "unit": "cubic meter"
+        },
+        "target": {
+          "recipe_ref": "steel-39-pig-iron-wastewater-CH"
+        },
+        "classification": "proxy",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+        "review_ref": "r-05c7fb46676c53f5"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for wastewater from pig iron production",
+          "reference product": "wastewater from pig iron production",
+          "location": "CH",
+          "unit": "cubic meter"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "inventory_sha256": "f5252da13265088fa606b9223b43fe047f1dc59230f98d6903351e9887e02841",
+        "nonproduction_count": 15
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "treatment of wastewater from pig iron production, wastewater treatment",
+            "reference product": "wastewater from pig iron production",
+            "location": "CH",
+            "unit": "cubic meter"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "inventory_sha256": "ec02b0fe77bd786720f990ec5fbed63453e0c1365b12231a5ab6373141ad6d56",
+          "nonproduction_count": 66
+        }
+      ],
+      "conversion_factor": -1,
+      "treated_fraction": 0.981093834,
+      "sewer_services": [
+        {
+          "source": {
+            "name": "sewer grid construction, rural",
+            "reference product": "sewer grid, rural",
+            "location": "GLO",
+            "unit": "cubic meter"
+          },
+          "recipe_ref": "sewer-throughput-b7b0053b62e47219bbda",
+          "amount": 0.2482
+        },
+        {
+          "source": {
+            "name": "sewer grid construction, urban",
+            "reference product": "sewer grid, urban",
+            "location": "GLO",
+            "unit": "cubic meter"
+          },
+          "recipe_ref": "sewer-throughput-5ad254f2a66ab4151737",
+          "amount": 0.7518
+        }
+      ],
+      "untreated_discharges": [
+        {
+          "type": "biosphere",
+          "name": "BOD5, Biological Oxygen Demand",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 1.46161482445223e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "COD, Chemical Oxygen Demand",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.02203823001948e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Chromium III",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.78123319999999e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Copper ion",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 7.94058971999998e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "DOC, Dissolved Organic Carbon",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 5.27103908079998e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Hydrogen",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 4.96097795839999e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Lead II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.78123319999999e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Nickel II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 5.67184979999998e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Oxygen",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 9.49562187349997e-09
+        },
+        {
+          "type": "biosphere",
+          "name": "TOC, Total Organic Carbon",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 7.75152805999998e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Water",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "cubic meter",
+          "amount": 0.0189061652735069
+        },
+        {
+          "type": "biosphere",
+          "name": "Zinc II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.78123319999999e-07
+        }
+      ],
+      "embedded_native_sewer_correction": {
+        "name": "Sewer grid, class 3",
+        "reference product": "Sewer grid, class 3",
+        "location": "CH",
+        "unit": "kilometer",
+        "type": "technosphere",
+        "amount": -2.1370185892188e-07,
+        "comment": "Cancel only deterministic sewer infrastructure embedded in the native treatment; retain source rural/urban service quantities."
+      },
+      "native_2026_witness": {
+        "identity": {
+          "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "location": "CH",
+          "unit": "cubic meter"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "inventory_sha256": "877fce90d147d501ffd6816b5a57c497d2707deb440b37da742ed0550ffd82bd",
+        "nonproduction_count": 59
+      },
+      "limitations": [
+        "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved."
+      ]
+    }
+  ],
+  "recipes": {
+    "steel-39-pig-iron-wastewater-Europe-without-Switzerland": {
+      "name": "pig iron wastewater market, retained collection and untreated discharge, Europe without Switzerland",
+      "reference product": "wastewater from pig iron production",
+      "location": "Europe without Switzerland",
+      "unit": "cubic meter",
+      "inputs": [
+        {
+          "recipe": "sewer-throughput-b7b0053b62e47219bbda",
+          "amount": 0.1723
+        },
+        {
+          "recipe": "sewer-throughput-5ad254f2a66ab4151737",
+          "amount": 0.8277
+        },
+        {
+          "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "location": "CH",
+          "unit": "cubic meter",
+          "type": "technosphere",
+          "amount": 0.8729643339038445
+        },
+        {
+          "type": "biosphere",
+          "name": "BOD5, Biological Oxygen Demand",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 9.82098712136059e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "COD, Chemical Oxygen Demand",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 2.03058959451944e-06
+        },
+        {
+          "type": "biosphere",
+          "name": "Chromium III",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 2.54071332192311e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Copper ion",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 5.33549797603853e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "DOC, Dissolved Organic Carbon",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.54175437076081e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Hydrogen",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.33341587836312e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Lead II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 2.54071332192311e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Nickel II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.81106998288466e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Oxygen",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 6.38036632967941e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "TOC, Total Organic Carbon",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 5.20846230994237e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Water",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "cubic meter",
+          "amount": 0.127035661214651
+        },
+        {
+          "type": "biosphere",
+          "name": "Zinc II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 2.54071332192311e-06
+        },
+        {
+          "name": "Sewer grid, class 3",
+          "reference product": "Sewer grid, class 3",
+          "location": "CH",
+          "unit": "kilometer",
+          "type": "technosphere",
+          "amount": -1.9014909121093543e-07,
+          "comment": "Cancel only deterministic sewer infrastructure embedded in the native treatment; retain source rural/urban service quantities."
+        }
+      ],
+      "rationale": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+      "evidence": [
+        "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+      ]
+    },
+    "steel-39-pig-iron-wastewater-CH": {
+      "name": "pig iron wastewater market, retained collection and untreated discharge, CH",
+      "reference product": "wastewater from pig iron production",
+      "location": "CH",
+      "unit": "cubic meter",
+      "inputs": [
+        {
+          "recipe": "sewer-throughput-b7b0053b62e47219bbda",
+          "amount": 0.2482
+        },
+        {
+          "recipe": "sewer-throughput-5ad254f2a66ab4151737",
+          "amount": 0.7518
+        },
+        {
+          "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "location": "CH",
+          "unit": "cubic meter",
+          "type": "technosphere",
+          "amount": 0.981093834
+        },
+        {
+          "type": "biosphere",
+          "name": "BOD5, Biological Oxygen Demand",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 1.46161482445223e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "COD, Chemical Oxygen Demand",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.02203823001948e-07
+        },
+        {
+          "type": "biosphere",
+          "name": "Chromium III",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.78123319999999e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Copper ion",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 7.94058971999998e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "DOC, Dissolved Organic Carbon",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 5.27103908079998e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Hydrogen",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 4.96097795839999e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Lead II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.78123319999999e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Nickel II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 5.67184979999998e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Oxygen",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 9.49562187349997e-09
+        },
+        {
+          "type": "biosphere",
+          "name": "TOC, Total Organic Carbon",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 7.75152805999998e-08
+        },
+        {
+          "type": "biosphere",
+          "name": "Water",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "cubic meter",
+          "amount": 0.0189061652735069
+        },
+        {
+          "type": "biosphere",
+          "name": "Zinc II",
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "unit": "kilogram",
+          "amount": 3.78123319999999e-07
+        },
+        {
+          "name": "Sewer grid, class 3",
+          "reference product": "Sewer grid, class 3",
+          "location": "CH",
+          "unit": "kilometer",
+          "type": "technosphere",
+          "amount": -2.1370185892188e-07,
+          "comment": "Cancel only deterministic sewer infrastructure embedded in the native treatment; retain source rural/urban service quantities."
+        }
+      ],
+      "rationale": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+      "evidence": [
+        "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+      ]
+    }
+  },
+  "recipe_dependencies": {
+    "sewer-throughput-b7b0053b62e47219bbda": {
+      "evidence": [
+        "brightpath/data/export/uvek_sewer_throughput_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.00236222462806739,
+          "location": "RER",
+          "name": "Cast iron, at plant",
+          "reference product": "Cast iron, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0005710037068601523,
+          "location": "CH",
+          "name": "Cement mortar, at plant",
+          "reference product": "Cement mortar, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.8729679647623353e-06,
+          "location": "CH",
+          "name": "Cement mortar, at plant",
+          "reference product": "Cement mortar, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.169181275524214e-07,
+          "location": "CH",
+          "name": "Cement mortar, at plant",
+          "reference product": "Cement mortar, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.037338147394001,
+          "location": "CH",
+          "name": "Cement, unspecified, at plant",
+          "reference product": "Cement, unspecified, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00010452104669419,
+          "location": "CH",
+          "name": "Concrete, normal, at plant",
+          "reference product": "Concrete, normal, at plant",
+          "type": "technosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00776383201262133,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "reference product": "Diesel, burned in building machine, average",
+          "type": "technosphere",
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00334634733938968,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "reference product": "Electricity, medium voltage, at grid",
+          "type": "technosphere",
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.1656984e-05,
+          "location": "CH",
+          "name": "Excavation, hydraulic digger, average",
+          "reference product": "Excavation, hydraulic digger, average",
+          "type": "technosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0086746956734511,
+          "location": "RER",
+          "name": "Extrusion, plastic pipes",
+          "reference product": "Extrusion, plastic pipes",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.15143675750186902,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.2090830709932555e-05,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.008618104299702452,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0007889860102321777,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.03945341024184241,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00779591598466781,
+          "location": "RER",
+          "name": "Polyethylene, HDPE, granulate, at plant",
+          "reference product": "Polyethylene, HDPE, granulate, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000452522451224013,
+          "location": "RER",
+          "name": "Polypropylene, granulate, at plant",
+          "reference product": "Polypropylene, granulate, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000426257237559283,
+          "location": "RER",
+          "name": "Polyvinylchloride, emulsion polymerised, at plant",
+          "reference product": "Polyvinylchloride, emulsion polymerised, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0139817882854261,
+          "location": "RER",
+          "name": "Reinforcing steel, at plant",
+          "reference product": "Reinforcing steel, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0017205187814402132,
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.932132014469133e-06,
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.0600174124608394e-05,
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.1119642148951057,
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00485213076892997,
+          "location": "RER",
+          "name": "Chromium steel 18/8, at plant",
+          "reference product": "Chromium steel 18/8, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000127688227000863,
+          "location": "RER",
+          "name": "Synthetic rubber, at plant",
+          "reference product": "Synthetic rubber, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.65706636149852,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "reference product": "Tap water, at user",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.23426218578731445,
+          "location": "CH",
+          "name": "Disposal, building, concrete, not reinforced, to final disposal",
+          "reference product": "Disposal, building, concrete, not reinforced, to final disposal",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.016414403257042416,
+          "location": "CH",
+          "name": "Disposal, building, concrete, not reinforced, to final disposal",
+          "reference product": "Disposal, building, concrete, not reinforced, to final disposal",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00017392302169913268,
+          "location": "CH",
+          "name": "Disposal, building, concrete, not reinforced, to final disposal",
+          "reference product": "Disposal, building, concrete, not reinforced, to final disposal",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.3316160367091167e-06,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.222812754059141e-07,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.3949729584524546e-05,
+          "recipe": "market-composition-15db2f24d1615c70ee00"
+        },
+        {
+          "amount": 5.500051143107902e-07,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.008201832345209562,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.2219578440099058e-07,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.9929554932639993e-05,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.0070795426769645e-07,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.265712404222548e-06,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.1555482356508552e-08,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.1772283156503998e-07,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.8501845950150917e-07,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0004171250552223012,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.1178883434789525e-07,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.7558679402968185e-08,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.282825645585327e-06,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.8545917335068574e-05,
+          "location": "CH",
+          "name": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "reference product": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.7104360963576e-05,
+          "location": "CH",
+          "name": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "reference product": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.037948702218411e-06,
+          "location": "CH",
+          "name": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "reference product": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000548559954224778,
+          "categories": [
+            "air"
+          ],
+          "name": "Water",
+          "type": "biosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00310850640727374,
+          "categories": [
+            "water"
+          ],
+          "name": "Water",
+          "type": "biosphere",
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "GLO",
+      "name": "sewer grid construction, rural, composed from resolved suppliers, GLO",
+      "rationale": "Reviewed complete positive-reference sewer-throughput service per one cubic metre wastewater conveyed. Source rural and urban inventories are already normalized per cubic metre; retain every original material, machine, electricity, disposal and direct water quantity. The stated 100-year lifetime and renovation after 70 years are already incorporated; no second lifetime, capacity, pipe-length or litre conversion is applied. These are sewer infrastructure services, not wastewater treatment or kilometre sewer construction. Positive product and conversion-only inputs keep factor +1; negative waste references require factor -1 independently. Retain the original regional supply weights without renormalization. Complete UVEK material and operating suppliers are screening proxies: Swiss/European cement/mortar and concrete blends, cast-iron and steel production mixes, gravel and sand supply, electricity mix, diesel machines, water delivery, full HDPE/PP/emulsion-PVC resin and separate pipe extrusion differ in background, freight, vintage and technology. The source synthetic-rubber producers and UVEK product both include EPDM profile extrusion and vulcanisation; retain the source separate plastic-pipe extrusion demand without adding a second rubber conversion. Disposal uses the existing independently sign-reviewed component correspondences and inherits their treatment-route, regional, waste composition, moisture and freight approximations; the Swiss services do not reconstruct original country-specific disposal mixes. The exact 3.9.1 and 3.10.1 polyethylene-waste market groups retains its RER/Europe-without-Switzerland/Swiss weights using the existing country-market correspondences; no inheritance from 3.10 and no global polyethylene rule rewrite. These helpers do not establish LCIA equivalence. Preserve the separate reported water releases in cubic metres; native UVEK uses the existing reviewed 1000 kg/m3 correspondence without altering compartments. No real emission is omitted. Score/export all helpers. Preserve caller amounts, uncertainty, formulas, metadata, foreground suppliers, production and separately listed emissions; internal source uncertainty and parameter formulas are not reconstructed. Only enumerated exact cut-off profiles are approved. No patch, version, model, capacity-class fallback, global supplier replacement or reverse sewer-throughput correspondence is inferred.",
+      "reference product": "sewer grid, rural",
+      "unit": "cubic meter"
+    },
+    "market-composition-15db2f24d1615c70ee00": {
+      "evidence": [
+        "brightpath/data/export/uvek_market_composition_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.7090229136656682,
+          "recipe": "market-composition-7ad838486a67908f4d24"
+        },
+        {
+          "amount": 0.2909770863343322,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RER",
+      "name": "market group for waste polyethylene, composed from resolved suppliers, RER",
+      "rationale": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred.",
+      "reference product": "waste polyethylene",
+      "unit": "kilogram"
+    },
+    "market-composition-7ad838486a67908f4d24": {
+      "evidence": [
+        "brightpath/data/export/uvek_market_composition_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.036035641467284926,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0020146332813454995,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01917029685764025,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.013032542846521441,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0231678428507243,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.013890110152030103,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.018268238878744285,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.002056633522535754,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0019270829947662525,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.015402610930788447,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.003916183625859294,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0015212875642773216,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.002878784904422654,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02235062461336895,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.022500202837569403,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.008183683477709073,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0033686655568602292,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.005710729019542068,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0888969831810406,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.17024408371413394,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.1337414148446676,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0005989488190742579,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.013462765132159035,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.053843069930867175,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.002080328905790325,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.005537268274602648,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.002326427225550554,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.027969894648490836,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.15845632332005133,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.005391736031213306,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.015211898780550676,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.007361130097592476,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.07508985374130973,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.009360060337620333,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01503201763329478,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "market group for waste polyethylene, composed from resolved suppliers, Europe without Switzerland",
+      "rationale": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred.",
+      "reference product": "waste polyethylene",
+      "unit": "kilogram"
+    },
+    "sewer-throughput-5ad254f2a66ab4151737": {
+      "evidence": [
+        "brightpath/data/export/uvek_sewer_throughput_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.000674928685856835,
+          "location": "RER",
+          "name": "Cast iron, at plant",
+          "reference product": "Cast iron, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00016314403639318875,
+          "location": "CH",
+          "name": "Cement mortar, at plant",
+          "reference product": "Cement mortar, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.2084859444607e-07,
+          "location": "CH",
+          "name": "Cement mortar, at plant",
+          "reference product": "Cement mortar, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.048339015791968e-07,
+          "location": "CH",
+          "name": "Cement mortar, at plant",
+          "reference product": "Cement mortar, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0129170228052265,
+          "location": "CH",
+          "name": "Cement, unspecified, at plant",
+          "reference product": "Cement, unspecified, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.06068487582619e-05,
+          "location": "CH",
+          "name": "Concrete, normal, at plant",
+          "reference product": "Concrete, normal, at plant",
+          "type": "technosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00261594845774424,
+          "location": "CH",
+          "name": "Diesel, burned in building machine, average",
+          "reference product": "Diesel, burned in building machine, average",
+          "type": "technosphere",
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00216462925527423,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "reference product": "Electricity, medium voltage, at grid",
+          "type": "technosphere",
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 8.4738e-06,
+          "location": "CH",
+          "name": "Excavation, hydraulic digger, average",
+          "reference product": "Excavation, hydraulic digger, average",
+          "type": "technosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00537740668670761,
+          "location": "RER",
+          "name": "Extrusion, plastic pipes",
+          "reference product": "Extrusion, plastic pipes",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.06048731031012454,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.080627116851051e-05,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0034422682950979526,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00031513908788407483,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.015758595914611515,
+          "location": "CH",
+          "name": "Gravel, crushed, at mine",
+          "reference product": "Gravel, crushed, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00497276663457189,
+          "location": "RER",
+          "name": "Polyethylene, HDPE, granulate, at plant",
+          "reference product": "Polyethylene, HDPE, granulate, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000208523927975623,
+          "location": "RER",
+          "name": "Polypropylene, granulate, at plant",
+          "reference product": "Polypropylene, granulate, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000196116124160098,
+          "location": "RER",
+          "name": "Polyvinylchloride, emulsion polymerised, at plant",
+          "reference product": "Polyvinylchloride, emulsion polymerised, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00399481224304016,
+          "location": "RER",
+          "name": "Reinforcing steel, at plant",
+          "reference product": "Reinforcing steel, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0006595716803746521,
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.4241889049185913e-06,
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.897206127563878e-06,
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.04292218495771166,
+          "location": "CH",
+          "name": "Sand, at mine",
+          "reference product": "Sand, at mine",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00138633194811041,
+          "location": "RER",
+          "name": "Chromium steel 18/8, at plant",
+          "reference product": "Chromium steel 18/8, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.64830175976543e-05,
+          "location": "RER",
+          "name": "Synthetic rubber, at plant",
+          "reference product": "Synthetic rubber, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.60451398209734,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "reference product": "Tap water, at user",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09101180526710226,
+          "location": "CH",
+          "name": "Disposal, building, concrete, not reinforced, to final disposal",
+          "reference product": "Disposal, building, concrete, not reinforced, to final disposal",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.006377061956392494,
+          "location": "CH",
+          "name": "Disposal, building, concrete, not reinforced, to final disposal",
+          "reference product": "Disposal, building, concrete, not reinforced, to final disposal",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.756979633374796e-05,
+          "location": "CH",
+          "name": "Disposal, building, concrete, not reinforced, to final disposal",
+          "reference product": "Disposal, building, concrete, not reinforced, to final disposal",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.364600957577364e-07,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.2807313339223066e-07,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.5044121240197546e-05,
+          "recipe": "market-composition-15db2f24d1615c70ee00"
+        },
+        {
+          "amount": 3.454879769401163e-07,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.005152014754806925,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.3957319675748052e-07,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.2518831981449498e-05,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.326011609059979e-08,
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.9626059331870705e-06,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 9.917433140526789e-09,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.416294063154e-08,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.311337630572052e-07,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00019191451056332453,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.1432775762864004e-08,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.1881209403243554e-08,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.9704795415910048e-06,
+          "location": "CH",
+          "name": "Disposal, plastics polyvinylchloride, as building waste",
+          "reference product": "Disposal, plastics polyvinylchloride, as building waste",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.3870515693021625e-05,
+          "location": "CH",
+          "name": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "reference product": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.2030220200888374e-05,
+          "location": "CH",
+          "name": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "reference product": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.822817037442968e-07,
+          "location": "CH",
+          "name": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "reference product": "Disposal, rubber, unspecified, 0% water, to municipal incineration",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000390677097314601,
+          "categories": [
+            "air"
+          ],
+          "name": "Water",
+          "type": "biosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00221383688478274,
+          "categories": [
+            "water"
+          ],
+          "name": "Water",
+          "type": "biosphere",
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "GLO",
+      "name": "sewer grid construction, urban, composed from resolved suppliers, GLO",
+      "rationale": "Reviewed complete positive-reference sewer-throughput service per one cubic metre wastewater conveyed. Source rural and urban inventories are already normalized per cubic metre; retain every original material, machine, electricity, disposal and direct water quantity. The stated 100-year lifetime and renovation after 70 years are already incorporated; no second lifetime, capacity, pipe-length or litre conversion is applied. These are sewer infrastructure services, not wastewater treatment or kilometre sewer construction. Positive product and conversion-only inputs keep factor +1; negative waste references require factor -1 independently. Retain the original regional supply weights without renormalization. Complete UVEK material and operating suppliers are screening proxies: Swiss/European cement/mortar and concrete blends, cast-iron and steel production mixes, gravel and sand supply, electricity mix, diesel machines, water delivery, full HDPE/PP/emulsion-PVC resin and separate pipe extrusion differ in background, freight, vintage and technology. The source synthetic-rubber producers and UVEK product both include EPDM profile extrusion and vulcanisation; retain the source separate plastic-pipe extrusion demand without adding a second rubber conversion. Disposal uses the existing independently sign-reviewed component correspondences and inherits their treatment-route, regional, waste composition, moisture and freight approximations; the Swiss services do not reconstruct original country-specific disposal mixes. The exact 3.9.1 and 3.10.1 polyethylene-waste market groups retains its RER/Europe-without-Switzerland/Swiss weights using the existing country-market correspondences; no inheritance from 3.10 and no global polyethylene rule rewrite. These helpers do not establish LCIA equivalence. Preserve the separate reported water releases in cubic metres; native UVEK uses the existing reviewed 1000 kg/m3 correspondence without altering compartments. No real emission is omitted. Score/export all helpers. Preserve caller amounts, uncertainty, formulas, metadata, foreground suppliers, production and separately listed emissions; internal source uncertainty and parameter formulas are not reconstructed. Only enumerated exact cut-off profiles are approved. No patch, version, model, capacity-class fallback, global supplier replacement or reverse sewer-throughput correspondence is inferred.",
+      "reference product": "sewer grid, urban",
+      "unit": "cubic meter"
+    }
+  },
+  "reviews": [
+    {
+      "rationale": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+      "limitations": [
+        "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+      ]
+    }
+  ],
+  "native_2026_witnesses": [
+    {
+      "identity": {
+        "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+        "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+        "location": "CH",
+        "unit": "cubic meter"
+      },
+      "reference_amounts": [
+        1.0
+      ],
+      "inventory_sha256": "877fce90d147d501ffd6816b5a57c497d2707deb440b37da742ed0550ffd82bd",
+      "nonproduction_count": 59
+    }
+  ],
+  "embedded_sewer_boundary": {
+    "identity": {
+      "name": "Sewer grid, class 3",
+      "reference product": "Sewer grid, class 3",
+      "location": "CH",
+      "unit": "kilometer"
+    },
+    "native_input_km_per_treated_m3": 2.1782e-07,
+    "deterministic": true,
+    "municipal_network_length_km": 109.4,
+    "person_equivalents": 24864,
+    "lifetime_years": 100,
+    "renovation_after_years": 70,
+    "source_metadata_sha256": "72947bb4050c87ae4e65561a9adffc037d9c8cbdd88945ce2ce562a52f70a99a",
+    "limitation": "This is the municipal sewer network, not merely an internal treatment-plant pipe. Cancel this infrastructure only because separately reconstructed source sewer services remain."
+  },
+  "licensing": "Derived native recipe, reference/boundary facts and hashes only; proprietary original records remain private."
+}

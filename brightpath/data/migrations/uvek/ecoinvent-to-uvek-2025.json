@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 89,
-      "recipe": 978,
-      "unclassified": 29408
+      "recipe": 980,
+      "unclassified": 29406
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 266,
       "followup_review": 163,
-      "heuristic_similarity": 26633,
+      "heuristic_similarity": 26631,
       "pairwise_review": 2214,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -138,6 +138,7 @@
       "reviewed_steel_39_native_service": 2,
       "reviewed_steel_39_production_heat_mix": 1,
       "reviewed_steel_39_small_heat_mix": 1,
+      "reviewed_steel_39_wastewater_market": 2,
       "reviewed_steel_39_zero_heat_allocation": 36,
       "reviewed_steel_residue_service": 11,
       "reviewed_swiss_cement_market_delivery": 2,
@@ -147,7 +148,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.439831,
+    "mean_confidence": 0.439867,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -561588,6 +561589,320 @@
       "reference product": "heat, district or industrial, natural gas",
       "unit": "megajoule"
     },
+    "steel-39-pig-iron-wastewater-CH": {
+      "evidence": [
+        "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.2482,
+          "recipe": "sewer-throughput-b7b0053b62e47219bbda"
+        },
+        {
+          "amount": 0.7518,
+          "recipe": "sewer-throughput-5ad254f2a66ab4151737"
+        },
+        {
+          "amount": 0.981093834,
+          "location": "CH",
+          "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "type": "technosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 1.46161482445223e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "BOD5, Biological Oxygen Demand",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.02203823001948e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "COD, Chemical Oxygen Demand",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.78123319999999e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Chromium III",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.94058971999998e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Copper ion",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.27103908079998e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "DOC, Dissolved Organic Carbon",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.96097795839999e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Hydrogen",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.78123319999999e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Lead II",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.67184979999998e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Nickel II",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 9.49562187349997e-09,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Oxygen",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 7.75152805999998e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "TOC, Total Organic Carbon",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0189061652735069,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Water",
+          "type": "biosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 3.78123319999999e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Zinc II",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": -2.1370185892188e-07,
+          "comment": "Cancel only deterministic sewer infrastructure embedded in the native treatment; retain source rural/urban service quantities.",
+          "location": "CH",
+          "name": "Sewer grid, class 3",
+          "reference product": "Sewer grid, class 3",
+          "type": "technosphere",
+          "unit": "kilometer"
+        }
+      ],
+      "location": "CH",
+      "name": "pig iron wastewater market, retained collection and untreated discharge, CH",
+      "rationale": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+      "reference product": "wastewater from pig iron production",
+      "unit": "cubic meter"
+    },
+    "steel-39-pig-iron-wastewater-Europe-without-Switzerland": {
+      "evidence": [
+        "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.1723,
+          "recipe": "sewer-throughput-b7b0053b62e47219bbda"
+        },
+        {
+          "amount": 0.8277,
+          "recipe": "sewer-throughput-5ad254f2a66ab4151737"
+        },
+        {
+          "amount": 0.8729643339038445,
+          "location": "CH",
+          "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3",
+          "type": "technosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 9.82098712136059e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "BOD5, Biological Oxygen Demand",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.03058959451944e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "COD, Chemical Oxygen Demand",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.54071332192311e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Chromium III",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.33549797603853e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Copper ion",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.54175437076081e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "DOC, Dissolved Organic Carbon",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.33341587836312e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Hydrogen",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.54071332192311e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Lead II",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.81106998288466e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Nickel II",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.38036632967941e-08,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Oxygen",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.20846230994237e-07,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "TOC, Total Organic Carbon",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.127035661214651,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Water",
+          "type": "biosphere",
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 2.54071332192311e-06,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "name": "Zinc II",
+          "type": "biosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": -1.9014909121093543e-07,
+          "comment": "Cancel only deterministic sewer infrastructure embedded in the native treatment; retain source rural/urban service quantities.",
+          "location": "CH",
+          "name": "Sewer grid, class 3",
+          "reference product": "Sewer grid, class 3",
+          "type": "technosphere",
+          "unit": "kilometer"
+        }
+      ],
+      "location": "Europe without Switzerland",
+      "name": "pig iron wastewater market, retained collection and untreated discharge, Europe without Switzerland",
+      "rationale": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.",
+      "reference product": "wastewater from pig iron production",
+      "unit": "cubic meter"
+    },
     "steel-39-small-non-gas-heat-production-mix": {
       "evidence": [
         "brightpath/data/export/uvek_steel_39_small_heat_review.json"
@@ -751891,8 +752206,8 @@
     {"confidence": 0.533093, "conversion_factor": -1, "id": "bp-d087f017cea247c2", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-d087f017cea247c2"], "reason": "For this exact inspected and approved correspondence, UVEK's native PRODUCT_FLOW output represents a wastewater-treatment service, not recovered material. Reference production -1/+1 requires opposite exchange signs; boundary and treatment-model limitations are independently disclosed.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-7924a4e6a89f9f7f", "source": {"location": "RER", "name": "market for wastewater from particle board production", "reference product": "wastewater from particle board production", "unit": "cubic meter"}, "target": {"location": "RER", "name": "Treatment, particle board production effluent, to wastewater treatment, class 1", "reference product": "Treatment, particle board production effluent, to wastewater treatment, class 1", "unit": "cubic meter"}, "technosphere_information_loss": "Approved full-treatment market screening proxy: the RER source treats about 87.3% of the wastewater and has about 12.7% untreated discharge. The UVEK proxy represents 100% treatment of the full source volume; untreated-discharge emissions are omitted. This may understate water-pollution impacts and overstate treatment burdens. Both inspected source and proxy include sewer infrastructure; regional sewer and treatment mixes are replaced by the RER class-1 service using Swiss infrastructure. Wastewater composition, pollutant removal, sludge fate, energy recovery, allocation and background supplies may differ; LCIA equivalence is not established or quantified."},
     {"confidence": 0.458093, "conversion_factor": -1, "id": "bp-18b0d656c542a3f5", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-18b0d656c542a3f5"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for wastewater from particle board production", "reference product": "wastewater from particle board production", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, particle board production effluent, to wastewater treatment, class 3", "reference product": "Treatment, particle board production effluent, to wastewater treatment, class 3", "unit": "cubic meter"}},
     {"confidence": 0.33697, "conversion_factor": -1, "id": "bp-3f29cab87f451565", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-3f29cab87f451565"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "GLO", "name": "market for wastewater from particleboard production", "reference product": "wastewater from particleboard production", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, particle board production effluent, to wastewater treatment, class 3", "reference product": "Treatment, particle board production effluent, to wastewater treatment, class 3", "unit": "cubic meter"}},
-    {"confidence": 0.49927, "conversion_factor": -1, "id": "bp-370d86f95a1eb95a", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-370d86f95a1eb95a"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for wastewater from pig iron production", "reference product": "wastewater from pig iron production", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3", "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3", "unit": "cubic meter"}},
-    {"confidence": 0.41927, "conversion_factor": -1, "id": "bp-0b346b8f3969e16b", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-0b346b8f3969e16b"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "Europe without Switzerland", "name": "market for wastewater from pig iron production", "reference product": "wastewater from pig iron production", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3", "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3", "unit": "cubic meter"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-370d86f95a1eb95a", "mapping_method": "reviewed_steel_39_wastewater_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_steel_39_wastewater_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_steel_39_wastewater_review.json"], "reason": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Exact source market boundary and reference sign require review.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-05c7fb46676c53f5", "source": {"location": "CH", "name": "market for wastewater from pig iron production", "reference product": "wastewater from pig iron production", "unit": "cubic meter"}, "target": {"recipe_ref": "steel-39-pig-iron-wastewater-CH"}, "technosphere_information_loss": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": -1, "id": "bp-0b346b8f3969e16b", "mapping_method": "reviewed_steel_39_wastewater_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_steel_39_wastewater_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_steel_39_wastewater_review.json"], "reason": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Exact source market boundary and reference sign require review.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-05c7fb46676c53f5", "source": {"location": "Europe without Switzerland", "name": "market for wastewater from pig iron production", "reference product": "wastewater from pig iron production", "unit": "cubic meter"}, "target": {"recipe_ref": "steel-39-pig-iron-wastewater-Europe-without-Switzerland"}, "technosphere_information_loss": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved."},
     {"confidence": 0.41927, "conversion_factor": -1, "id": "bp-7e371cf8a52dd86c", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-7e371cf8a52dd86c"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for wastewater from pig iron production", "reference product": "wastewater from pig iron production", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, pig iron production effluent, to wastewater treatment, class 3", "reference product": "Treatment, pig iron production effluent, to wastewater treatment, class 3", "unit": "cubic meter"}},
     {"confidence": 0.47927, "conversion_factor": -1, "id": "bp-1b42540d71bfdaf0", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-1b42540d71bfdaf0"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for wastewater from plywood production", "reference product": "wastewater from plywood production", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, plywood production effluent, to wastewater treatment, class 3", "reference product": "Treatment, plywood production effluent, to wastewater treatment, class 3", "unit": "cubic meter"}},
     {"confidence": 0.39927, "conversion_factor": -1, "id": "bp-28b58caaa550a73c", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-28b58caaa550a73c"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "GLO", "name": "market for wastewater from plywood production", "reference product": "wastewater from plywood production", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Treatment, plywood production effluent, to wastewater treatment, class 3", "reference product": "Treatment, plywood production effluent, to wastewater treatment, class 3", "unit": "cubic meter"}},
@@ -763407,6 +763722,15 @@
         "User instruction: auto-approve coming decisions, within the existing electricity pilot. Approve this exact dry white solvent-based alkyd-paint screening refinement for only two ecoinvent3.9cutoff RER/RoW markets, not earlier water-based paint or standalone resin. Source reference is1kgwithoutsolvent. Scale complete copied native60%paint inventory by1/.60, remove only its explicit.28kgwhite-spirit carrier per native paint reference, and replace resin with a copied native long-oil resin removing only.429kgwhite-spirit carrier per resin reference. The four principal resin precursor quantities match source resin; no extra.7resin factor. Scale supported uncertainty consistently with all remaining signedpaint exchanges; preserve remaining resin quantities and uncertainty. Retain every other native technical and elementary exchange, infrastructure, processing emissions, productionwaste, internal freight, energy and allocation once. The two original sourceproducer processing-white-spirit demands.01356kg each are retained through complete nativeRERwhiteSpirit with their separate original uncertainty. This is not an avoided-solvent credit; no negative carrier purchase, change to caller solvent demand or invented mass-balance correction. Source/native formulation differs: source resin.4882kg versus.49proxy; TiO2.5051versus.5066666666666667kg; aliphatic hydrocarbon emission.00683versus.006666666666666667kg. Source nitrogen purge includes.019kgliquid nitrogen and.019kgdirect nitrogen release per source paint unit, absent from nativepaint. This exact internal boundary difference is retained in the inspection audit with signed source exchanges and hashes, not assumed burdenfree. These are modified-native proxies, not reconstruction of every sourceproducer input or uncertainty. Native heat/electricity, wastes, nitrogen-purge boundary, water/emissions, rawmaterial logistics, embedded infrastructure, allocation, geography, grade and vintage differences remain explicit. Preserve all14original market delivery entries separately, in originalorder at originaltkm and supporteduncertainty; do not concentration-scale freight. Complete same-mode genericRERrail/heavyroad,CH3.5tlightroad,RERbarge andOCEcontainership retain fleet/fuel/geographic approximations and full lifecycle burdens once. Market producer shares remain unchanged. Canonical copiednative elementaryflows retain exact UUID,unit,fullreceivingcompartment androle in installed ecoinvent3.10; no mass/speciation/compartment factor. Native upstream biosphereexclusions and all scoreeffects remain explicit/unquantified; equal LCIA or functional performance is not established. Preserve caller ownership, original signedquantities, uncertainty, formulas, foregroundsuppliers and all separately listed solvent, wastewater and emissions. No standalone source chemical/component/resin, other painttype, other release, inverse or cross-system-modelroute is approved. No whole-pilot scenario/certification/export completion follows."
       ],
       "rationale": "User instruction: auto-approve coming decisions, within the existing electricity pilot. Approve this exact dry white solvent-based alkyd-paint screening refinement for only two ecoinvent3.9cutoff RER/RoW markets, not earlier water-based paint or standalone resin. Source reference is1kgwithoutsolvent. Scale complete copied native60%paint inventory by1/.60, remove only its explicit.28kgwhite-spirit carrier per native paint reference, and replace resin with a copied native long-oil resin removing only.429kgwhite-spirit carrier per resin reference. The four principal resin precursor quantities match source resin; no extra.7resin factor. Scale supported uncertainty consistently with all remaining signedpaint exchanges; preserve remaining resin quantities and uncertainty. Retain every other native technical and elementary exchange, infrastructure, processing emissions, productionwaste, internal freight, energy and allocation once. The two original sourceproducer processing-white-spirit demands.01356kg each are retained through complete nativeRERwhiteSpirit with their separate original uncertainty. This is not an avoided-solvent credit; no negative carrier purchase, change to caller solvent demand or invented mass-balance correction. Source/native formulation differs: source resin.4882kg versus.49proxy; TiO2.5051versus.5066666666666667kg; aliphatic hydrocarbon emission.00683versus.006666666666666667kg. Source nitrogen purge includes.019kgliquid nitrogen and.019kgdirect nitrogen release per source paint unit, absent from nativepaint. This exact internal boundary difference is retained in the inspection audit with signed source exchanges and hashes, not assumed burdenfree. These are modified-native proxies, not reconstruction of every sourceproducer input or uncertainty. Native heat/electricity, wastes, nitrogen-purge boundary, water/emissions, rawmaterial logistics, embedded infrastructure, allocation, geography, grade and vintage differences remain explicit. Preserve all14original market delivery entries separately, in originalorder at originaltkm and supporteduncertainty; do not concentration-scale freight. Complete same-mode genericRERrail/heavyroad,CH3.5tlightroad,RERbarge andOCEcontainership retain fleet/fuel/geographic approximations and full lifecycle burdens once. Market producer shares remain unchanged. Canonical copiednative elementaryflows retain exact UUID,unit,fullreceivingcompartment androle in installed ecoinvent3.10; no mass/speciation/compartment factor. Native upstream biosphereexclusions and all scoreeffects remain explicit/unquantified; equal LCIA or functional performance is not established. Preserve caller ownership, original signedquantities, uncertainty, formulas, foregroundsuppliers and all separately listed solvent, wastewater and emissions. No standalone source chemical/component/resin, other painttype, other release, inverse or cross-system-modelroute is approved. No whole-pilot scenario/certification/export completion follows."
+    },
+    "r-05c7fb46676c53f5": {
+      "evidence": [
+        "brightpath/data/export/uvek_steel_39_wastewater_review.json"
+      ],
+      "limitations": [
+        "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved."
+      ],
+      "rationale": "Reconstruct the exact3.9cutoff pig-iron wastewater market as a positive physical service, factor-1 from its negative1m3 waste reference. Preserve original rural/urban sewer-throughput quantities, the original treated fraction, and every separate untreated water/pollutant discharge with its signed amount, original surface-water compartment and units. Use complete native Swiss class3 pig-iron effluent treatment only for the treated fraction. Native documented COD0.0000203kg/m3 versus source0.00002kg/m3 does not establish equal pollutant inventories; no COD or efficiency rescaling is inferred. The native treatment includes deterministic class3 sewer infrastructure: subtract exactly that embedded length times treated fraction from the same native supplier to prevent double counting with retained source sewer services. This negative correction is bookkeeping, not avoided sewer construction or a physical recovery credit. Native treatment retains all other inputs/emissions and embeds sludge handling. Treatment technology, plant capacity, geography, vintage, internal uncertainty, biosphere exclusions and LCIA scores can differ; effects unquantified. Existing separately reviewed sewer-throughput reconstructions and their documented material, freight, operation and native-supply proxies apply unchanged. No full-volume treatment approximation, renormalization, omitted untreated release, extra treatment, network lifetime multiplier, kg/m3 conversion, moisture correction or cross-system-model route. Preserve caller signs, supported uncertainty, formulas and separate foreground emissions. Only exact independently inspected3.9cutoff profiles qualify; other releases and reverse routes remain unapproved."
     },
     "r-0644e917de737f31": {
       "evidence": [
