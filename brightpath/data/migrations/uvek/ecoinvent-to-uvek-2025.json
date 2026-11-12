@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 209,
-      "recipe": 1016,
-      "unclassified": 29250
+      "recipe": 1017,
+      "unclassified": 29249
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 264,
       "followup_review": 163,
-      "heuristic_similarity": 26478,
+      "heuristic_similarity": 26477,
       "pairwise_review": 2213,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -126,7 +126,7 @@
       "reviewed_precious_anode_market": 3,
       "reviewed_processing_composition": 48,
       "reviewed_pulp_heat_active_solution_market": 2,
-      "reviewed_pulp_heat_auxiliary_market": 7,
+      "reviewed_pulp_heat_auxiliary_market": 8,
       "reviewed_pulp_heat_dry_chemical_market": 9,
       "reviewed_pulp_heat_energy_supply": 43,
       "reviewed_pulp_heat_heavy_freight": 1,
@@ -163,7 +163,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.44244,
+    "mean_confidence": 0.442454,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -440845,6 +440845,59 @@
       "reference product": "pulpwood, hardwood, measured as solid wood under bark",
       "unit": "cubic meter"
     },
+    "pulp-heat-39-wood-market-b03f1fe5a9169a5f": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_bark_market_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.1944600793287361,
+          "loc": 0.1944600793287361,
+          "location": "RER",
+          "name": "Bark chips, hardwood, wet, measured as dry mass, at sawmill",
+          "reference product": "Bark chips, hardwood, wet, measured as dry mass, at sawmill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 6.512909795910207e-05,
+          "loc": 6.512909795910207e-05,
+          "location": "RER",
+          "name": "Bark chips, wet, from soft fibreboard production, from wet & dry processes, measured as dry mass, at plant",
+          "reference product": "Bark chips, wet, from soft fibreboard production, from wet & dry processes, measured as dry mass, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.8054747915733048,
+          "loc": 0.8054747915733048,
+          "location": "RER",
+          "name": "Bark chips, softwood, wet, measured as dry mass, at sawmill",
+          "reference product": "Bark chips, softwood, wet, measured as dry mass, at sawmill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.12,
+          "loc": -2.120263536200091,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "CA-QC",
+      "name": "market for bark chips, wet, measured as dry mass, reviewed source3.9 auxiliary-chemical supply",
+      "rationale": "Exact ecoinvent3.9cutoff Quebec bark market reconstruction per signed kilogram measured as dry mass. Preserve all three producer shares separately: hardwood sawmill bark, softwood sawmill bark and allocated bark from soft fibreboard production using wet/dry processes. Use the corresponding complete native RER hardwood/softwood sawmill and soft-fibreboard bark co-product inventories, not full fibreboard output or an all-hardwood bark substitute. All source/native reference outputs are positive1kg measured as dry mass, factor+1. Source wet mass2.4kg per drykg does not justify a wet-mass multiplier. Native allocated inventories retain their own allocation, wood/energy/resource uptake and emission models; do not reallocate, add main-board burdens or an avoided-product credit. RER is a geographic screening proxy for Quebec. Species within the hardwood/softwood class, mill yields, allocation, wet/dry process mix, density/moisture, carbon, energy, infrastructure, vintage, native biosphere exclusions and internal uncertainty can differ, with unquantified score effects. Original final-product lorry tonne-km, signed quantities and supported uncertainty/formulas remain unchanged. Native precursor transport is inside production; original market final delivery is added once, using the complete RER fleet service with geographic/fleet/load/fuel/standard warnings and no extra diesel or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, no carbon/energy/moisture correction is invented, and no main-product or co-product quantities are renormalized. Only independently inspected exact3.9cutoff Quebec bark qualifies. RoW pulp/paper bark, window-frame pellet co-products and residual-wood transformations remain unapproved; no other source version or consequential/reverse route is inferred. Full pulp heat and steel transformation/export remain unfinished.",
+      "reference product": "bark chips, wet, measured as dry mass",
+      "unit": "kilogram"
+    },
     "pulp-heat-39-wood-market-c7c819284fdc5629": {
       "evidence": [
         "brightpath/data/export/uvek_pulp_heat_wood_markets_review.json"
@@ -764024,7 +764077,7 @@
     {"confidence": 0.537094, "id": "bp-1a8c33a41f0d3a82", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for bark chips, green, measured as dry mass", "reference product": "bark chips, green, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
     {"confidence": 0.457094, "id": "bp-a170210ffe971192", "mapping_method": "heuristic_similarity", "source": {"location": "Europe without Switzerland", "name": "market for bark chips, green, measured as dry mass", "reference product": "bark chips, green, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
     {"confidence": 0.457094, "id": "bp-068d15d66946870f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for bark chips, green, measured as dry mass", "reference product": "bark chips, green, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
-    {"confidence": 0.569153, "id": "bp-b03f1fe5a9169a5f", "mapping_method": "heuristic_similarity", "source": {"location": "CA-QC", "name": "market for bark chips, wet, measured as dry mass", "reference product": "bark chips, wet, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-b03f1fe5a9169a5f", "mapping_method": "reviewed_pulp_heat_auxiliary_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_bark_market_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_bark_market_review.json"], "reason": "Exact ecoinvent3.9cutoff Quebec bark market reconstruction per signed kilogram measured as dry mass. Preserve all three producer shares separately: hardwood sawmill bark, softwood sawmill bark and allocated bark from soft fibreboard production using wet/dry processes. Use the corresponding complete native RER hardwood/softwood sawmill and soft-fibreboard bark co-product inventories, not full fibreboard output or an all-hardwood bark substitute. All source/native reference outputs are positive1kg measured as dry mass, factor+1. Source wet mass2.4kg per drykg does not justify a wet-mass multiplier. Native allocated inventories retain their own allocation, wood/energy/resource uptake and emission models; do not reallocate, add main-board burdens or an avoided-product credit. RER is a geographic screening proxy for Quebec. Species within the hardwood/softwood class, mill yields, allocation, wet/dry process mix, density/moisture, carbon, energy, infrastructure, vintage, native biosphere exclusions and internal uncertainty can differ, with unquantified score effects. Original final-product lorry tonne-km, signed quantities and supported uncertainty/formulas remain unchanged. Native precursor transport is inside production; original market final delivery is added once, using the complete RER fleet service with geographic/fleet/load/fuel/standard warnings and no extra diesel or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, no carbon/energy/moisture correction is invented, and no main-product or co-product quantities are renormalized. Only independently inspected exact3.9cutoff Quebec bark qualifies. RoW pulp/paper bark, window-frame pellet co-products and residual-wood transformations remain unapproved; no other source version or consequential/reverse route is inferred. Full pulp heat and steel transformation/export remain unfinished.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only exact inspected3.9cutoff source qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-29062e1121b2c904", "source": {"location": "CA-QC", "name": "market for bark chips, wet, measured as dry mass", "reference product": "bark chips, wet, measured as dry mass", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-wood-market-b03f1fe5a9169a5f"}, "technosphere_information_loss": "Exact ecoinvent3.9cutoff Quebec bark market reconstruction per signed kilogram measured as dry mass. Preserve all three producer shares separately: hardwood sawmill bark, softwood sawmill bark and allocated bark from soft fibreboard production using wet/dry processes. Use the corresponding complete native RER hardwood/softwood sawmill and soft-fibreboard bark co-product inventories, not full fibreboard output or an all-hardwood bark substitute. All source/native reference outputs are positive1kg measured as dry mass, factor+1. Source wet mass2.4kg per drykg does not justify a wet-mass multiplier. Native allocated inventories retain their own allocation, wood/energy/resource uptake and emission models; do not reallocate, add main-board burdens or an avoided-product credit. RER is a geographic screening proxy for Quebec. Species within the hardwood/softwood class, mill yields, allocation, wet/dry process mix, density/moisture, carbon, energy, infrastructure, vintage, native biosphere exclusions and internal uncertainty can differ, with unquantified score effects. Original final-product lorry tonne-km, signed quantities and supported uncertainty/formulas remain unchanged. Native precursor transport is inside production; original market final delivery is added once, using the complete RER fleet service with geographic/fleet/load/fuel/standard warnings and no extra diesel or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, no carbon/energy/moisture correction is invented, and no main-product or co-product quantities are renormalized. Only independently inspected exact3.9cutoff Quebec bark qualifies. RoW pulp/paper bark, window-frame pellet co-products and residual-wood transformations remain unapproved; no other source version or consequential/reverse route is inferred. Full pulp heat and steel transformation/export remain unfinished."},
     {"confidence": 0.649153, "id": "bp-29dfedca8ab64da8", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for bark chips, wet, measured as dry mass", "reference product": "bark chips, wet, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
     {"confidence": 0.569153, "id": "bp-49944628d82413c3", "mapping_method": "heuristic_similarity", "source": {"location": "Europe without Switzerland", "name": "market for bark chips, wet, measured as dry mass", "reference product": "bark chips, wet, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
     {"confidence": 0.569153, "id": "bp-7578834456a1de5e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for bark chips, wet, measured as dry mass", "reference product": "bark chips, wet, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Bark chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
@@ -784734,6 +784787,15 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external protein, from grass to generic market for protein feed / protein feed, 100% crude / CH / kilogram reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents 100%-crude-protein feed in kg, not an unscaled kilogram of crop, oil or unspecified protein concentrate. No validated nutritional conversion establishes equivalence with the former Protein peas IP, at feed mill / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-29062e1121b2c904": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_bark_market_review.json"
+      ],
+      "limitations": [
+        "Exact ecoinvent3.9cutoff Quebec bark market reconstruction per signed kilogram measured as dry mass. Preserve all three producer shares separately: hardwood sawmill bark, softwood sawmill bark and allocated bark from soft fibreboard production using wet/dry processes. Use the corresponding complete native RER hardwood/softwood sawmill and soft-fibreboard bark co-product inventories, not full fibreboard output or an all-hardwood bark substitute. All source/native reference outputs are positive1kg measured as dry mass, factor+1. Source wet mass2.4kg per drykg does not justify a wet-mass multiplier. Native allocated inventories retain their own allocation, wood/energy/resource uptake and emission models; do not reallocate, add main-board burdens or an avoided-product credit. RER is a geographic screening proxy for Quebec. Species within the hardwood/softwood class, mill yields, allocation, wet/dry process mix, density/moisture, carbon, energy, infrastructure, vintage, native biosphere exclusions and internal uncertainty can differ, with unquantified score effects. Original final-product lorry tonne-km, signed quantities and supported uncertainty/formulas remain unchanged. Native precursor transport is inside production; original market final delivery is added once, using the complete RER fleet service with geographic/fleet/load/fuel/standard warnings and no extra diesel or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, no carbon/energy/moisture correction is invented, and no main-product or co-product quantities are renormalized. Only independently inspected exact3.9cutoff Quebec bark qualifies. RoW pulp/paper bark, window-frame pellet co-products and residual-wood transformations remain unapproved; no other source version or consequential/reverse route is inferred. Full pulp heat and steel transformation/export remain unfinished."
+      ],
+      "rationale": "Exact ecoinvent3.9cutoff Quebec bark market reconstruction per signed kilogram measured as dry mass. Preserve all three producer shares separately: hardwood sawmill bark, softwood sawmill bark and allocated bark from soft fibreboard production using wet/dry processes. Use the corresponding complete native RER hardwood/softwood sawmill and soft-fibreboard bark co-product inventories, not full fibreboard output or an all-hardwood bark substitute. All source/native reference outputs are positive1kg measured as dry mass, factor+1. Source wet mass2.4kg per drykg does not justify a wet-mass multiplier. Native allocated inventories retain their own allocation, wood/energy/resource uptake and emission models; do not reallocate, add main-board burdens or an avoided-product credit. RER is a geographic screening proxy for Quebec. Species within the hardwood/softwood class, mill yields, allocation, wet/dry process mix, density/moisture, carbon, energy, infrastructure, vintage, native biosphere exclusions and internal uncertainty can differ, with unquantified score effects. Original final-product lorry tonne-km, signed quantities and supported uncertainty/formulas remain unchanged. Native precursor transport is inside production; original market final delivery is added once, using the complete RER fleet service with geographic/fleet/load/fuel/standard warnings and no extra diesel or empty-return multiplier. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, no carbon/energy/moisture correction is invented, and no main-product or co-product quantities are renormalized. Only independently inspected exact3.9cutoff Quebec bark qualifies. RoW pulp/paper bark, window-frame pellet co-products and residual-wood transformations remain unapproved; no other source version or consequential/reverse route is inferred. Full pulp heat and steel transformation/export remain unfinished."
     },
     "r-2951b687a17fa929": {
       "evidence": [
