@@ -1187,6 +1187,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_pulp_heat_so2_sulfite import apply_pulp_heat_so2_sulfite_review
 
     apply_pulp_heat_so2_sulfite_review(technosphere)
+    if __package__:
+        from scripts.review_uvek_native_nongas_heat_proxy import apply_native_nongas_heat_proxy_review
+    else:
+        from review_uvek_native_nongas_heat_proxy import apply_native_nongas_heat_proxy_review
+
+    apply_native_nongas_heat_proxy_review(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:
