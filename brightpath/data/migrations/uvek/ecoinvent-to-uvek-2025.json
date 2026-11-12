@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 208,
-      "recipe": 1009,
-      "unclassified": 29258
+      "recipe": 1011,
+      "unclassified": 29256
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 264,
       "followup_review": 163,
-      "heuristic_similarity": 26485,
+      "heuristic_similarity": 26483,
       "pairwise_review": 2214,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -126,6 +126,7 @@
       "reviewed_precious_anode_market": 3,
       "reviewed_processing_composition": 48,
       "reviewed_pulp_heat_active_solution_market": 2,
+      "reviewed_pulp_heat_auxiliary_market": 2,
       "reviewed_pulp_heat_dry_chemical_market": 9,
       "reviewed_pulp_heat_energy_supply": 43,
       "reviewed_r134a_cutoff_product_recipe": 2,
@@ -161,7 +162,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.442315,
+    "mean_confidence": 0.442351,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -438713,6 +438714,214 @@
       "reference product": "used trawler, steel",
       "unit": "kilogram"
     },
+    "pulp-heat-39-auxiliary-market-aa26b987c1edf1e9": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_auxiliary_markets_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.174,
+          "loc": 0.174,
+          "location": "RER",
+          "name": "Adipic acid, at plant",
+          "reference product": "Adipic acid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.826,
+          "loc": 0.826,
+          "location": "RER",
+          "name": "Adipic acid, at plant",
+          "reference product": "Adipic acid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for adipic acid, reviewed source3.9 auxiliary-chemical supply",
+      "rationale": "Exact ecoinvent3.9cutoff nominal-kg retention-aid and adipic-acid market reconstructions. Both source and native retention-aid documentation explicitly reference1kg retention aids and use rough acrylic-acid process estimates; native1.05kg acrylic acid,4e-10chemical-plant units,0.333kWh and2MJ corroborate the process. Further inputs, solid wastes and emissions are omitted in that rough underlying model and are not invented. Both source adipic producers and native documentation include refining to99%; retain the nominal1kg product basis with factor+1, not1/0.99. Source adipic N2O abatement is95% versus native80%; the source allocated succinic/glutaric by-products, native precursor/energy model, emissions, allocation and vintage differ, with unquantified score effects. No efficiency, N2O or purity compensation is introduced. Replace producer inventories with complete existing native RER at-plant suppliers, preserving every original source market producer share and final-product freight row separately, with original signed quantities and supported uncertainties/formulas and no renormalization. Native plants already include precursor transport; original market freight represents final-product delivery, added only once. RER chemical and rail/barge/lorry/LCV suppliers and OCE container shipping are explicit geography, traction, fleet/load, technology and vintage screening proxies; tonne-km and modes remain unchanged. Native biosphere exclusions and internal uncertainties remain; no source/native score equivalence is claimed. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, and no new credit, carbon uptake, field emission or water correction is added. Only independently inspected exact3.9cutoff profiles qualify; no other source version, consequential or reverse route is approved. Pulp heat, industrial heat and steel transformation/export remain unfinished.",
+      "reference product": "adipic acid",
+      "unit": "kilogram"
+    },
+    "pulp-heat-39-auxiliary-market-eb13cb39b0f5fbce": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_auxiliary_markets_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Retention aids, in paper production, at plant",
+          "reference product": "Retention aids, in paper production, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0224231473350459,
+          "loc": -3.797661490501636,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08093386943083909,
+          "loc": -2.514122884547314,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0056780093482361425,
+          "loc": -5.171154574536774,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.11165767412994829,
+          "loc": -2.192317569247477,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08840729975593056,
+          "loc": -2.4258007363232306,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0037411136550834123,
+          "loc": -5.588371943141128,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.18116364249000133,
+          "loc": -1.7083545540157898,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.02389524385491526,
+          "loc": -3.7340758417345654,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for retention aid, for paper production, reviewed source3.9 auxiliary-chemical supply",
+      "rationale": "Exact ecoinvent3.9cutoff nominal-kg retention-aid and adipic-acid market reconstructions. Both source and native retention-aid documentation explicitly reference1kg retention aids and use rough acrylic-acid process estimates; native1.05kg acrylic acid,4e-10chemical-plant units,0.333kWh and2MJ corroborate the process. Further inputs, solid wastes and emissions are omitted in that rough underlying model and are not invented. Both source adipic producers and native documentation include refining to99%; retain the nominal1kg product basis with factor+1, not1/0.99. Source adipic N2O abatement is95% versus native80%; the source allocated succinic/glutaric by-products, native precursor/energy model, emissions, allocation and vintage differ, with unquantified score effects. No efficiency, N2O or purity compensation is introduced. Replace producer inventories with complete existing native RER at-plant suppliers, preserving every original source market producer share and final-product freight row separately, with original signed quantities and supported uncertainties/formulas and no renormalization. Native plants already include precursor transport; original market freight represents final-product delivery, added only once. RER chemical and rail/barge/lorry/LCV suppliers and OCE container shipping are explicit geography, traction, fleet/load, technology and vintage screening proxies; tonne-km and modes remain unchanged. Native biosphere exclusions and internal uncertainties remain; no source/native score equivalence is claimed. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, and no new credit, carbon uptake, field emission or water correction is added. Only independently inspected exact3.9cutoff profiles qualify; no other source version, consequential or reverse route is approved. Pulp heat, industrial heat and steel transformation/export remain unfinished.",
+      "reference product": "retention aid, for paper production",
+      "unit": "kilogram"
+    },
     "pulp-heat-39-dry-market-06eec793f6cddf6e": {
       "evidence": [
         "brightpath/data/export/uvek_pulp_heat_dry_markets_review.json"
@@ -763005,7 +763214,7 @@
     {"confidence": 0.440299, "id": "bp-7e437cb0ca7d436a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for adhesive mortar", "reference product": "adhesive mortar", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Adhesive mortar, at plant", "reference product": "xx Adhesive mortar, at plant", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 0.41064, "conversion_factor": 1, "id": "bp-1000a6cd16a9b940", "mapping_method": "reviewed_heat_312_market_composition", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_heat_312_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_heat_312_markets_review.json"], "reason": "Reconstruct the European metal-adhesive market with its one German production share and all three source barge/road/rail delivery entries unchanged. Native German metal-adhesive production describes the same epoxy-resin/hydrated-lime/silica/organic-chemical mixture and the same0.616/0.274/0.0685/0.0411kgcoordinates. This is complete adhesive compound, not neat epoxy resin, a dry-resin basis or a curing/application service. Both source and native production explicitly omit process energy and use an estimated chemical-plant infrastructure. Do not invent curing energy, water/solvent removal, pure-resin scaling or normalize the rounded ingredient sum to1kg. Source/native upstream chemical/epoxy/lime/sand supply, geography, allocation, vintage and uncertainty differ; native complete upstream freight remains while source finished-adhesive market delivery is retained separately. Complete native ocean-container, European rail/traction/shunting, European lorry-fleet and Rhine-barge services are geographic/fleet/vintage proxies per tonne-km. NativeRERlorry fleet derives from Swiss2020shares. Port/canal/road/infrastructure, load, fuel, emissions and allocation differ, including no separate native barge bilge-oil treatment exchange. Source finished-product market delivery remains distinct from native upstream raw-material/production transport. No fuel/load/distance or fleet-share multiplier or extra source production emissions is added. Exact inspected ecoinvent3.12cut-off profile only. Preserve signed caller quantities, formulas, supported uncertainty, foreground ownership and separate caller emissions. Retain every original market producer share and freight entry separately with its amount and supported uncertainty; do not renormalize. Complete native production/services remain unchanged once, replacing source internal inventories as explicitly qualified screening proxies. Native biosphere exclusions, background/geography, vintage, internal uncertainty and unquantified score differences remain warnings. No inverse, cross-system-model, other-profile, LCIA-equivalence or impact-completeness approval is inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only independently inspected exact cut-off profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-7592c762272f98f6", "source": {"location": "RER", "name": "market for adhesive, for metal", "reference product": "adhesive, for metal", "unit": "kilogram"}, "target": {"recipe_ref": "heat-312-market-a8b12b6c772427b7a07d"}, "technosphere_information_loss": "Reconstruct the European metal-adhesive market with its one German production share and all three source barge/road/rail delivery entries unchanged. Native German metal-adhesive production describes the same epoxy-resin/hydrated-lime/silica/organic-chemical mixture and the same0.616/0.274/0.0685/0.0411kgcoordinates. This is complete adhesive compound, not neat epoxy resin, a dry-resin basis or a curing/application service. Both source and native production explicitly omit process energy and use an estimated chemical-plant infrastructure. Do not invent curing energy, water/solvent removal, pure-resin scaling or normalize the rounded ingredient sum to1kg. Source/native upstream chemical/epoxy/lime/sand supply, geography, allocation, vintage and uncertainty differ; native complete upstream freight remains while source finished-adhesive market delivery is retained separately. Complete native ocean-container, European rail/traction/shunting, European lorry-fleet and Rhine-barge services are geographic/fleet/vintage proxies per tonne-km. NativeRERlorry fleet derives from Swiss2020shares. Port/canal/road/infrastructure, load, fuel, emissions and allocation differ, including no separate native barge bilge-oil treatment exchange. Source finished-product market delivery remains distinct from native upstream raw-material/production transport. No fuel/load/distance or fleet-share multiplier or extra source production emissions is added. Exact inspected ecoinvent3.12cut-off profile only. Preserve signed caller quantities, formulas, supported uncertainty, foreground ownership and separate caller emissions. Retain every original market producer share and freight entry separately with its amount and supported uncertainty; do not renormalize. Complete native production/services remain unchanged once, replacing source internal inventories as explicitly qualified screening proxies. Native biosphere exclusions, background/geography, vintage, internal uncertainty and unquantified score differences remain warnings. No inverse, cross-system-model, other-profile, LCIA-equivalence or impact-completeness approval is inferred."},
     {"confidence": 0.41064, "id": "bp-991fb6828df58d00", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for adhesive, for metal", "reference product": "adhesive, for metal", "unit": "kilogram"}, "target": {"location": "DE", "name": "Adhesive for metals, at plant", "reference product": "Adhesive for metals, at plant", "unit": "kilogram"}},
-    {"confidence": 0.461749, "id": "bp-aa26b987c1edf1e9", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for adipic acid", "reference product": "adipic acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Adipic acid, at plant", "reference product": "Adipic acid, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-aa26b987c1edf1e9", "mapping_method": "reviewed_pulp_heat_auxiliary_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_auxiliary_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_auxiliary_markets_review.json"], "reason": "Exact ecoinvent3.9cutoff nominal-kg retention-aid and adipic-acid market reconstructions. Both source and native retention-aid documentation explicitly reference1kg retention aids and use rough acrylic-acid process estimates; native1.05kg acrylic acid,4e-10chemical-plant units,0.333kWh and2MJ corroborate the process. Further inputs, solid wastes and emissions are omitted in that rough underlying model and are not invented. Both source adipic producers and native documentation include refining to99%; retain the nominal1kg product basis with factor+1, not1/0.99. Source adipic N2O abatement is95% versus native80%; the source allocated succinic/glutaric by-products, native precursor/energy model, emissions, allocation and vintage differ, with unquantified score effects. No efficiency, N2O or purity compensation is introduced. Replace producer inventories with complete existing native RER at-plant suppliers, preserving every original source market producer share and final-product freight row separately, with original signed quantities and supported uncertainties/formulas and no renormalization. Native plants already include precursor transport; original market freight represents final-product delivery, added only once. RER chemical and rail/barge/lorry/LCV suppliers and OCE container shipping are explicit geography, traction, fleet/load, technology and vintage screening proxies; tonne-km and modes remain unchanged. Native biosphere exclusions and internal uncertainties remain; no source/native score equivalence is claimed. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, and no new credit, carbon uptake, field emission or water correction is added. Only independently inspected exact3.9cutoff profiles qualify; no other source version, consequential or reverse route is approved. Pulp heat, industrial heat and steel transformation/export remain unfinished.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only exact inspected3.9cutoff source qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1b47ee5c2439daff", "source": {"location": "GLO", "name": "market for adipic acid", "reference product": "adipic acid", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-auxiliary-market-aa26b987c1edf1e9"}, "technosphere_information_loss": "Exact ecoinvent3.9cutoff nominal-kg retention-aid and adipic-acid market reconstructions. Both source and native retention-aid documentation explicitly reference1kg retention aids and use rough acrylic-acid process estimates; native1.05kg acrylic acid,4e-10chemical-plant units,0.333kWh and2MJ corroborate the process. Further inputs, solid wastes and emissions are omitted in that rough underlying model and are not invented. Both source adipic producers and native documentation include refining to99%; retain the nominal1kg product basis with factor+1, not1/0.99. Source adipic N2O abatement is95% versus native80%; the source allocated succinic/glutaric by-products, native precursor/energy model, emissions, allocation and vintage differ, with unquantified score effects. No efficiency, N2O or purity compensation is introduced. Replace producer inventories with complete existing native RER at-plant suppliers, preserving every original source market producer share and final-product freight row separately, with original signed quantities and supported uncertainties/formulas and no renormalization. Native plants already include precursor transport; original market freight represents final-product delivery, added only once. RER chemical and rail/barge/lorry/LCV suppliers and OCE container shipping are explicit geography, traction, fleet/load, technology and vintage screening proxies; tonne-km and modes remain unchanged. Native biosphere exclusions and internal uncertainties remain; no source/native score equivalence is claimed. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, and no new credit, carbon uptake, field emission or water correction is added. Only independently inspected exact3.9cutoff profiles qualify; no other source version, consequential or reverse route is approved. Pulp heat, industrial heat and steel transformation/export remain unfinished."},
     {"confidence": 0.4, "id": "bp-423021d0fba14e74", "mapping_method": "pairwise_review", "review_ref": "r-2f90c108e290ea23", "source": {"location": "RER", "name": "market for adiponitrile", "reference product": "adiponitrile", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
     {"confidence": 0.4, "id": "bp-83050b88b46f48fc", "mapping_method": "pairwise_review", "review_ref": "r-2f90c108e290ea23", "source": {"location": "RoW", "name": "market for adiponitrile", "reference product": "adiponitrile", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
     {"confidence": 0.212024, "id": "bp-b7c3ee0e487ed563", "mapping_method": "heuristic_similarity", "source": {"location": "EC", "name": "market for adobe brick", "reference product": "adobe brick", "unit": "kilogram"}, "target": {"location": "RER", "name": "Brick, at plant", "reference product": "Brick, at plant", "unit": "kilogram"}},
@@ -768768,7 +768977,7 @@
     {"confidence": 0.774788, "id": "bp-bb00459d5ef236a1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for resistor, wirewound, through-hole mounting", "reference product": "resistor, wirewound, through-hole mounting", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Resistor, wirewound, through-hole mounting, at plant", "reference product": "Resistor, wirewound, through-hole mounting, at plant", "unit": "kilogram"}},
     {"confidence": 0.111317, "id": "bp-4a404acf0533fc8b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for resorcinol", "reference product": "resorcinol", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery retention", "reference product": "Battery retention", "unit": "kilogram"}},
     {"confidence": 0.541269, "id": "bp-cf4f434b4ed0e4a0", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for retention aid, for paper production", "reference product": "retention aid, for paper production", "unit": "kilogram"}, "target": {"location": "RER", "name": "Retention aids, in paper production, at plant", "reference product": "Retention aids, in paper production, at plant", "unit": "kilogram"}},
-    {"confidence": 0.461269, "id": "bp-eb13cb39b0f5fbce", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for retention aid, for paper production", "reference product": "retention aid, for paper production", "unit": "kilogram"}, "target": {"location": "RER", "name": "Retention aids, in paper production, at plant", "reference product": "Retention aids, in paper production, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-eb13cb39b0f5fbce", "mapping_method": "reviewed_pulp_heat_auxiliary_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_auxiliary_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_auxiliary_markets_review.json"], "reason": "Exact ecoinvent3.9cutoff nominal-kg retention-aid and adipic-acid market reconstructions. Both source and native retention-aid documentation explicitly reference1kg retention aids and use rough acrylic-acid process estimates; native1.05kg acrylic acid,4e-10chemical-plant units,0.333kWh and2MJ corroborate the process. Further inputs, solid wastes and emissions are omitted in that rough underlying model and are not invented. Both source adipic producers and native documentation include refining to99%; retain the nominal1kg product basis with factor+1, not1/0.99. Source adipic N2O abatement is95% versus native80%; the source allocated succinic/glutaric by-products, native precursor/energy model, emissions, allocation and vintage differ, with unquantified score effects. No efficiency, N2O or purity compensation is introduced. Replace producer inventories with complete existing native RER at-plant suppliers, preserving every original source market producer share and final-product freight row separately, with original signed quantities and supported uncertainties/formulas and no renormalization. Native plants already include precursor transport; original market freight represents final-product delivery, added only once. RER chemical and rail/barge/lorry/LCV suppliers and OCE container shipping are explicit geography, traction, fleet/load, technology and vintage screening proxies; tonne-km and modes remain unchanged. Native biosphere exclusions and internal uncertainties remain; no source/native score equivalence is claimed. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, and no new credit, carbon uptake, field emission or water correction is added. Only independently inspected exact3.9cutoff profiles qualify; no other source version, consequential or reverse route is approved. Pulp heat, industrial heat and steel transformation/export remain unfinished.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only exact inspected3.9cutoff source qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1b47ee5c2439daff", "source": {"location": "RoW", "name": "market for retention aid, for paper production", "reference product": "retention aid, for paper production", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-auxiliary-market-eb13cb39b0f5fbce"}, "technosphere_information_loss": "Exact ecoinvent3.9cutoff nominal-kg retention-aid and adipic-acid market reconstructions. Both source and native retention-aid documentation explicitly reference1kg retention aids and use rough acrylic-acid process estimates; native1.05kg acrylic acid,4e-10chemical-plant units,0.333kWh and2MJ corroborate the process. Further inputs, solid wastes and emissions are omitted in that rough underlying model and are not invented. Both source adipic producers and native documentation include refining to99%; retain the nominal1kg product basis with factor+1, not1/0.99. Source adipic N2O abatement is95% versus native80%; the source allocated succinic/glutaric by-products, native precursor/energy model, emissions, allocation and vintage differ, with unquantified score effects. No efficiency, N2O or purity compensation is introduced. Replace producer inventories with complete existing native RER at-plant suppliers, preserving every original source market producer share and final-product freight row separately, with original signed quantities and supported uncertainties/formulas and no renormalization. Native plants already include precursor transport; original market freight represents final-product delivery, added only once. RER chemical and rail/barge/lorry/LCV suppliers and OCE container shipping are explicit geography, traction, fleet/load, technology and vintage screening proxies; tonne-km and modes remain unchanged. Native biosphere exclusions and internal uncertainties remain; no source/native score equivalence is claimed. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, and no new credit, carbon uptake, field emission or water correction is added. Only independently inspected exact3.9cutoff profiles qualify; no other source version, consequential or reverse route is approved. Pulp heat, industrial heat and steel transformation/export remain unfinished."},
     {"confidence": 0.243667, "id": "bp-784eaa38818bbb13", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for rhodium", "reference product": "rhodium", "unit": "kilogram"}, "target": {"location": "RER", "name": "Rhodium, at regional storage", "reference product": "Rhodium, at regional storage", "unit": "kilogram"}},
     {"confidence": 0.220395, "id": "bp-6908d0fef1b4f23f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for rice seed, for sowing", "reference product": "rice seed, for sowing", "unit": "kilogram"}, "target": {"location": "US", "name": "Rice seed, at regional storehouse", "reference product": "Rice seed, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.202089, "id": "bp-113f72f83fd611e0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for rice, basmati", "reference product": "rice, basmati", "unit": "kilogram"}, "target": {"location": "US", "name": "Rice, at farm", "reference product": "Rice, at farm", "unit": "kilogram"}},
@@ -783566,6 +783775,15 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external ethanol production from grass / protein feed, 100% crude / CH / kilogram reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents 100%-crude-protein feed in kg, not an unscaled kilogram of crop, oil or unspecified protein concentrate. No validated nutritional conversion establishes equivalence with the former Protein peas IP, at feed mill / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-1b47ee5c2439daff": {
+      "evidence": [
+        "brightpath/data/export/uvek_pulp_heat_auxiliary_markets_review.json"
+      ],
+      "limitations": [
+        "Exact ecoinvent3.9cutoff nominal-kg retention-aid and adipic-acid market reconstructions. Both source and native retention-aid documentation explicitly reference1kg retention aids and use rough acrylic-acid process estimates; native1.05kg acrylic acid,4e-10chemical-plant units,0.333kWh and2MJ corroborate the process. Further inputs, solid wastes and emissions are omitted in that rough underlying model and are not invented. Both source adipic producers and native documentation include refining to99%; retain the nominal1kg product basis with factor+1, not1/0.99. Source adipic N2O abatement is95% versus native80%; the source allocated succinic/glutaric by-products, native precursor/energy model, emissions, allocation and vintage differ, with unquantified score effects. No efficiency, N2O or purity compensation is introduced. Replace producer inventories with complete existing native RER at-plant suppliers, preserving every original source market producer share and final-product freight row separately, with original signed quantities and supported uncertainties/formulas and no renormalization. Native plants already include precursor transport; original market freight represents final-product delivery, added only once. RER chemical and rail/barge/lorry/LCV suppliers and OCE container shipping are explicit geography, traction, fleet/load, technology and vintage screening proxies; tonne-km and modes remain unchanged. Native biosphere exclusions and internal uncertainties remain; no source/native score equivalence is claimed. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, and no new credit, carbon uptake, field emission or water correction is added. Only independently inspected exact3.9cutoff profiles qualify; no other source version, consequential or reverse route is approved. Pulp heat, industrial heat and steel transformation/export remain unfinished."
+      ],
+      "rationale": "Exact ecoinvent3.9cutoff nominal-kg retention-aid and adipic-acid market reconstructions. Both source and native retention-aid documentation explicitly reference1kg retention aids and use rough acrylic-acid process estimates; native1.05kg acrylic acid,4e-10chemical-plant units,0.333kWh and2MJ corroborate the process. Further inputs, solid wastes and emissions are omitted in that rough underlying model and are not invented. Both source adipic producers and native documentation include refining to99%; retain the nominal1kg product basis with factor+1, not1/0.99. Source adipic N2O abatement is95% versus native80%; the source allocated succinic/glutaric by-products, native precursor/energy model, emissions, allocation and vintage differ, with unquantified score effects. No efficiency, N2O or purity compensation is introduced. Replace producer inventories with complete existing native RER at-plant suppliers, preserving every original source market producer share and final-product freight row separately, with original signed quantities and supported uncertainties/formulas and no renormalization. Native plants already include precursor transport; original market freight represents final-product delivery, added only once. RER chemical and rail/barge/lorry/LCV suppliers and OCE container shipping are explicit geography, traction, fleet/load, technology and vintage screening proxies; tonne-km and modes remain unchanged. Native biosphere exclusions and internal uncertainties remain; no source/native score equivalence is claimed. Separate caller emissions and carbon-resource exchanges remain unchanged. No source exchange is omitted, and no new credit, carbon uptake, field emission or water correction is added. Only independently inspected exact3.9cutoff profiles qualify; no other source version, consequential or reverse route is approved. Pulp heat, industrial heat and steel transformation/export remain unfinished."
     },
     "r-1b8afaa5270e89b2": {
       "evidence": [
