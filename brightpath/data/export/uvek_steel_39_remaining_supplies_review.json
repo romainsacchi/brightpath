@@ -286,6 +286,23 @@
                 "system_model": "cutoff",
                 "version": "3.8"
               }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Independently inspected 3.9 source and complete native supplier both reference +1 kg of hard-coal supply. Preserve signed caller mass without energy, composition or loss correction; existing 3.8 selection remains unchanged. Screening limitations are recorded in the exact supply review.",
+                "evidence": [
+                  "brightpath/data/export/uvek_steel_39_remaining_supplies_review.json"
+                ]
+              }
             }
           ],
           "reason": "Only independently inspected cut-off profiles are qualified.",
@@ -352,7 +369,55 @@
       "limitations": [
         "One kg complete native UCTE hard-coal supply at regional storage replaces RoW hard-coal market. Native supply includes producing-region portfolio, import transport, handling dust/losses and storage-related leaching. Source nominal 27.91 MJ/kg does not establish equal native fuel quality. Preserve signed kg and separate caller combustion emissions; no calorific-value, carbon-content, loss, combustion or extra delivery correction. Regional fuel-grade and routing differences remain unquantified.",
         "Complete native inventory is a screening proxy. Grade detail, technology, delivery, allocation, geography, vintage, internal uncertainty and native biosphere exclusions can differ; score effects unquantified. Preserve caller signs, quantities, formulas, uncertainty and separately listed emissions/freight. Only inspected ecoinvent3.9cutoff; no reverse, other-release or cross-system-model approval."
-      ]
+      ],
+      "original_rule": {
+        "classification": "proxy",
+        "confidence": 0.427708,
+        "conversion_factor": 1,
+        "id": "bp-5ede2be860ad337d",
+        "mapping_method": "reviewed_inventory_boundary_correction",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_heat_38_corrections_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_heat_38_corrections_review.json"
+                ],
+                "reason": "The source RoWhard-coal market includes prepared coal, transport, losses, handling dust and storage emissions. Replace its Australian mine-gate candidate with the complete nativeUCTEregional-storage supply mix, which includes regional coal supplies and import rail/sea/road transport, losses and storage. It is a delivered-fuel geographic/portfolio proxy, not a matched global coal market. Native updated2022regional/import shares, mine methane, coal quality/energy content, routes, distances, handling, losses and storage differ from the source. Preserve signed kgas physical mass: do not convert to an energy-equivalent mass from a genericLHV, normalize regional shares, add source freight to native delivery, or claim an equal heating service. Retain actual native quantities and allocation once. Exact independently inspected cut-off profiles only, to nativeUVEK2026 via the existing2025edge. Preserve signed caller quantities, formulas, supported uncertainty, foreground ownership and separately listed emissions. Keep complete native supplier inventories unchanged; add no extra production, disposal or recovery credit. Native biosphere exclusions, geography, vintage, internal uncertainty and unquantified score differences remain explicit. No LCIA equivalence, impact completeness, purity/density/LHV/capacity factor, inverse or cross-system-model approval is inferred.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              }
+            }
+          ],
+          "reason": "Only independently inspected cut-off profiles are qualified.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-58aa2d940408ef39",
+        "source": {
+          "location": "RoW",
+          "name": "market for hard coal",
+          "reference product": "hard coal",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "UCTE",
+          "name": "Hard coal mix, at regional storage",
+          "reference product": "Hard coal mix, at regional storage",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "The source RoWhard-coal market includes prepared coal, transport, losses, handling dust and storage emissions. Replace its Australian mine-gate candidate with the complete nativeUCTEregional-storage supply mix, which includes regional coal supplies and import rail/sea/road transport, losses and storage. It is a delivered-fuel geographic/portfolio proxy, not a matched global coal market. Native updated2022regional/import shares, mine methane, coal quality/energy content, routes, distances, handling, losses and storage differ from the source. Preserve signed kgas physical mass: do not convert to an energy-equivalent mass from a genericLHV, normalize regional shares, add source freight to native delivery, or claim an equal heating service. Retain actual native quantities and allocation once. Exact independently inspected cut-off profiles only, to nativeUVEK2026 via the existing2025edge. Preserve signed caller quantities, formulas, supported uncertainty, foreground ownership and separately listed emissions. Keep complete native supplier inventories unchanged; add no extra production, disposal or recovery credit. Native biosphere exclusions, geography, vintage, internal uncertainty and unquantified score differences remain explicit. No LCIA equivalence, impact completeness, purity/density/LHV/capacity factor, inverse or cross-system-model approval is inferred."
+      }
     },
     {
       "rule_id": "bp-14199ba2d41a9688",
