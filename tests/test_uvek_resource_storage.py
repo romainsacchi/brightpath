@@ -109,7 +109,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 4023
+        == 4022
     )
 
 

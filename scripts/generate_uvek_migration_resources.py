@@ -1293,6 +1293,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_unsorted_iron_scrap_39_review(technosphere)
     if __package__:
+        from scripts.review_uvek_methane_sulfonic_acid_39 import apply_methane_sulfonic_acid_39_review
+    else:
+        from review_uvek_methane_sulfonic_acid_39 import apply_methane_sulfonic_acid_39_review
+
+    apply_methane_sulfonic_acid_39_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews

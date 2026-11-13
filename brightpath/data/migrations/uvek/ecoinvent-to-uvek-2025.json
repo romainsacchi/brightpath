@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 221,
-      "recipe": 1061,
-      "unclassified": 29193
+      "recipe": 1064,
+      "unclassified": 29190
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 260,
       "followup_review": 163,
-      "heuristic_similarity": 26425,
+      "heuristic_similarity": 26422,
       "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -85,6 +85,7 @@
       "reviewed_low_pressure_delivered_gas_energy": 13,
       "reviewed_market_composition": 366,
       "reviewed_mdea_native_derived_screening": 1,
+      "reviewed_methane_sulfonic_acid_inventory_39": 3,
       "reviewed_mining_38_high_slag": 2,
       "reviewed_mining_38_material_suppliers": 2,
       "reviewed_mining_38_msw_portfolio": 1,
@@ -190,7 +191,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.443521,
+    "mean_confidence": 0.443598,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -170522,6 +170523,1399 @@
       ],
       "rationale": "Only ecoinvent 3.8 cut-off to UVEK qualifies. Preserve signed caller quantities and supported uncertainty. No consequential, inverse or other-release approval is inferred. These are screening proxies with unquantified score effects; native biosphere exclusions and historical technology/allocation/uncertainty remain limitations. Construct a fixed one-kg 85%-slag variant of the complete native CEM III/B no-burdens cement finishing inventory. Retain source 0.85 kg delivered GGBFS, 0.1425 kg clinker and 0.0075 kg delivered mineral gypsum, including their source formulas and supported uncertainty. Their central binder mass sums to one kg; no claim of sampled compositional closure is made. Remove only the native prototype incoming road/rail delivery rows, which the two replacement material-market helpers supply. Retain native finishing fuel, electricity quantity, waste heat, grinding aid, steel, plant and uncertainty; rebind the site medium-voltage electricity to US. Native 0.2336 MJ fuel-burning service is not equated to source 0.272 MJ useful heat; do not add source finishing energy or an efficiency correction. Native finishing performance, clinker geography, grade/strength, allocation, vintage and internal uncertainty are proxies. Cement parameter is fixed at one kg to retain the source binder formulas. This is a source-composition variant, not an assertion of identical cement performance.",
       "reference product": "cement, blast furnace slag 70-100%",
+      "unit": "kilogram"
+    },
+    "msa-39-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.33,
+          "loc": 0.33,
+          "recipe": "msa-39-production-rer",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.67,
+          "loc": 0.67,
+          "recipe": "msa-39-production-row",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for methane sulfonic acid, retained source inventory with native supplies",
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier.",
+      "reference product": "methane sulfonic acid",
+      "unit": "kilogram"
+    },
+    "msa-39-production-rer": {
+      "evidence": [
+        "brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.333,
+          "loc": -1.0996127890016931,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 2.0,
+          "loc": 0.6931471805599453,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.004842502758814687,
+          "loc": -5.330323592974522,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "recipe": "fuels-312-8474b2c5b3efba4ba611",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 3.469724118531294e-05,
+          "loc": -10.268850378918156,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "recipe": "deferred-delivered-gas-dce31adcf468d41bd94d",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.87719,
+          "loc": -0.13103166241218409,
+          "location": "RER",
+          "name": "Sulphur trioxide, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Sulphur trioxide, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.023158,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Carbon dioxide, fossil",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -3.765414985792056,
+          "name": "Carbon dioxide, fossil",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00035088,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Methane, fossil",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -7.955066273294696,
+          "name": "Methane, fossil",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0017544,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Sulfur trioxide",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -6.345628360860596,
+          "name": "Sulfur trioxide",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0093,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "air"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "air"
+          ],
+          "loc": -4.677740878822926,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.30335622624235026,
+          "scale without pedigree": 0.4266731770336636,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.050526,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Sulfate",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.9852672237062268,
+          "name": "Sulfate",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0147,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water"
+          ],
+          "loc": -4.219907785197447,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.30335622624235026,
+          "scale without pedigree": 0.4266731770336636,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.024,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "in water"
+                ],
+                "name": "Water, cooling, unspecified natural origin",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -3.7297014486341915,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "methane sulfonic acid production, retained source inventory with native supplies",
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier.",
+      "reference product": "methane sulfonic acid",
+      "unit": "kilogram"
+    },
+    "msa-39-production-row": {
+      "evidence": [
+        "brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.023678362729042425,
+          "loc": -3.743193612866749,
+          "location": "RLA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.01188331327205758,
+          "loc": -4.4326201089772646,
+          "location": "RAF",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.21725090700128832,
+          "loc": -1.5267023399257265,
+          "location": "RAS",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0035979200832697076,
+          "loc": -5.627399355131905,
+          "location": "AU",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0007051410700877716,
+          "loc": -7.257112675753945,
+          "location": "NZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.07588435584425421,
+          "loc": -2.5785447311842122,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "recipe": "pcc-39-rna-mv-ca-us-market",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 2.0,
+          "loc": 0.6931471805599453,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "recipe": "pcc-39-chemical-heat-retained-water-uncertainty",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0004260185113859836,
+          "loc": -7.7610277586812915,
+          "location": "LY",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0010076159176832754,
+          "loc": -6.900168215989248,
+          "location": "KW",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 1.933073664756111e-05,
+          "loc": -10.853814156439586,
+          "location": "RoW",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.002442705254989758,
+          "loc": -6.014649142781846,
+          "location": "ID",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.005035303786990252,
+          "loc": -5.291281419579016,
+          "location": "MX",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0014467477032962068,
+          "loc": -6.538437205003407,
+          "location": "BR",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0010379286230751638,
+          "loc": -6.870528260499545,
+          "location": "NG",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.002398292432171763,
+          "loc": -6.032998281450042,
+          "location": "TR",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.006001282683281656,
+          "loc": -5.115782052054944,
+          "location": "JP",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.058716404890305704,
+          "loc": -2.8350361211703152,
+          "location": "RoW",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0014434167415848572,
+          "loc": -6.540742238678624,
+          "location": "VE",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00667857823125609,
+          "loc": -5.008850153719474,
+          "location": "CA",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0006106763137474395,
+          "loc": -7.400943503901737,
+          "location": "IQ",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0006550891365654352,
+          "loc": -7.3307392452284885,
+          "location": "AZ",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0034975097969171536,
+          "loc": -5.655704050308574,
+          "location": "AE",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0009215660734734089,
+          "loc": -6.989436081337609,
+          "location": "KZ",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.002509324489216752,
+          "loc": -5.987741689861921,
+          "location": "MY",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.009881853077004022,
+          "loc": -4.617055226408023,
+          "location": "CN",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.00232612159509252,
+          "loc": -6.063552949772014,
+          "location": "QA",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.002503772886364502,
+          "loc": -5.989956530191475,
+          "location": "DZ",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.04699986974714385,
+          "loc": -3.057610448613284,
+          "location": "US",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0121247006293128,
+          "loc": -4.412510532829357,
+          "location": "IR",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.006173382371701388,
+          "loc": -5.087508394883625,
+          "location": "SA",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0007217083707924286,
+          "loc": -7.23388941923857,
+          "location": "RoW",
+          "name": "Natural gas, high pressure, at consumer",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Natural gas, high pressure, at consumer",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.87719,
+          "loc": -0.13103166241218409,
+          "location": "RER",
+          "name": "Sulphur trioxide, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Sulphur trioxide, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.023158,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Carbon dioxide, fossil",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -3.765414985792056,
+          "name": "Carbon dioxide, fossil",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00035088,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Methane, fossil",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -7.955066273294696,
+          "name": "Methane, fossil",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0017544,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Sulfur trioxide",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -6.345628360860596,
+          "name": "Sulfur trioxide",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0093,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "air"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "air"
+          ],
+          "loc": -4.677740878822926,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.30335622624235026,
+          "scale without pedigree": 0.4266731770336636,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.050526,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Sulfate",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.9852672237062268,
+          "name": "Sulfate",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0147,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water"
+          ],
+          "loc": -4.219907785197447,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.30335622624235026,
+          "scale without pedigree": 0.4266731770336636,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.024,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "All seven independently checked source direct-flow identities match the selected canonical biosphere, preserving quantity and full compartment.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "in water"
+                ],
+                "name": "Water, cooling, unspecified natural origin",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -3.7297014486341915,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RoW",
+      "name": "methane sulfonic acid production, retained source inventory with native supplies",
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier.",
+      "reference product": "methane sulfonic acid",
       "unit": "kilogram"
     },
     "older-pet-whole-freight-2b3557151d33d7fbf035": {
@@ -804212,7 +805606,7 @@
     {"confidence": 0.141908, "id": "bp-b50924bfd213bd67", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for metazachlor", "reference product": "metazachlor", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ammonium chloride, at plant", "reference product": "Ammonium chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.30681, "id": "bp-19145171e7c81e81", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methacrylic acid", "reference product": "methacrylic acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acrylic acid, at plant", "reference product": "Acrylic acid, at plant", "unit": "kilogram"}},
     {"confidence": 0.204676, "id": "bp-6302ae27848bfe6e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methallylchloride", "reference product": "methallylchloride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ammonium chloride, at plant", "reference product": "Ammonium chloride, at plant", "unit": "kilogram"}},
-    {"confidence": 0.21337, "id": "bp-e757d1c18dff9ec7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methane sulfonic acid", "reference product": "methane sulfonic acid", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium sulphate from sulfuric acid digestion of spodumene", "reference product": "Sodium sulphate from sulfuric acid digestion of spodumene", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-e757d1c18dff9ec7", "mapping_method": "reviewed_methane_sulfonic_acid_inventory_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"], "reason": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "msa-39-market"}}], "reason": "Only the enumerated exact 3.9 cut-off inventory is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1739e0c9d8bf2c11", "source": {"location": "GLO", "name": "market for methane sulfonic acid", "reference product": "methane sulfonic acid", "unit": "kilogram"}, "target": {"recipe_ref": "msa-39-market"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier."},
     {"confidence": 0.330623, "id": "bp-b8f71214fd0859bf", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for methane, 96% by volume", "reference product": "methane, 96% by volume", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Methane, 96 vol-%, from biogas, at purification", "reference product": "Methane, 96 vol-%, from biogas, at purification", "unit": "cubic meter"}},
     {"confidence": 0.250623, "id": "bp-949e5767823d4295", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for methane, 96% by volume", "reference product": "methane, 96% by volume", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Methane, 96 vol-%, from biogas, at purification", "reference product": "Methane, 96 vol-%, from biogas, at purification", "unit": "cubic meter"}},
     {"confidence": 0.784614, "id": "bp-0904105aa41f818d", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for methane, 96% by volume, from biogas, from high pressure network, at service station", "reference product": "methane, 96% by volume, from biogas, from high pressure network, at service station", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Methane, 96 vol-%, from biogas, from high pressure network, at service station", "reference product": "xx Methane, 96 vol-%, from biogas, from high pressure network, at service station", "unit": "kilogram"}},
@@ -808967,8 +810361,8 @@
     {"confidence": 0.320432, "id": "bp-45402a675a8bb03b", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "methane production, 96% by volume, from synthetic gas, wood, fixed bed technology", "reference product": "methane, 96% by volume", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Methane, 96 vol.-%, from synthetic gas, wood, at plant", "reference product": "Methane, 96 vol.-%, from synthetic gas, wood, at plant", "unit": "cubic meter"}},
     {"confidence": 0.408268, "id": "bp-566dda6d9f78d0f6", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "methane production, 96% by volume, from synthetic gas, wood, fluidised technology", "reference product": "methane, 96% by volume", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Methane, 96 vol.-%, from synthetic gas, wood, at plant", "reference product": "Methane, 96 vol.-%, from synthetic gas, wood, at plant", "unit": "cubic meter"}},
     {"confidence": 0.328268, "id": "bp-ab90cded31408cb0", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "methane production, 96% by volume, from synthetic gas, wood, fluidised technology", "reference product": "methane, 96% by volume", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Methane, 96 vol.-%, from synthetic gas, wood, at plant", "reference product": "Methane, 96 vol.-%, from synthetic gas, wood, at plant", "unit": "cubic meter"}},
-    {"confidence": 0.243482, "id": "bp-b28c726fd2e15f2c", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "methane sulfonic acid production", "reference product": "methane sulfonic acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphuric acid, liquid, at plant", "reference product": "Sulphuric acid, liquid, at plant", "unit": "kilogram"}},
-    {"confidence": 0.178973, "id": "bp-0a429fe2a73586ad", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "methane sulfonic acid production", "reference product": "methane sulfonic acid", "unit": "kilogram"}, "target": {"location": "CH", "name": "Methane, 96 vol-%, from biogas, production mix, at service station", "reference product": "Methane, 96 vol-%, from biogas, production mix, at service station", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-b28c726fd2e15f2c", "mapping_method": "reviewed_methane_sulfonic_acid_inventory_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"], "reason": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "msa-39-production-rer"}}], "reason": "Only the enumerated exact 3.9 cut-off inventory is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1739e0c9d8bf2c11", "source": {"location": "RER", "name": "methane sulfonic acid production", "reference product": "methane sulfonic acid", "unit": "kilogram"}, "target": {"recipe_ref": "msa-39-production-rer"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-0a429fe2a73586ad", "mapping_method": "reviewed_methane_sulfonic_acid_inventory_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"], "reason": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "msa-39-production-row"}}], "reason": "Only the enumerated exact 3.9 cut-off inventory is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1739e0c9d8bf2c11", "source": {"location": "RoW", "name": "methane sulfonic acid production", "reference product": "methane sulfonic acid", "unit": "kilogram"}, "target": {"recipe_ref": "msa-39-production-row"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier."},
     {"confidence": 0.362253, "id": "bp-96c2b1b22eb7ffdf", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "methanol factory construction", "reference product": "methanol factory", "unit": "unit"}, "target": {"location": "GLO", "name": "Methanol plant", "reference product": "Methanol plant", "unit": "unit"}},
     {"confidence": 0.466097, "id": "bp-415c1ed4bc3065bb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "methanol production", "reference product": "methanol", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Methanol, at plant", "reference product": "Methanol, at plant", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 0.468462, "conversion_factor": 1, "id": "bp-15b87e168609b72f", "mapping_method": "reviewed_heat_native_route", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_heat_310_routes_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_heat_310_routes_review.json"], "reason": "The source is biomass-gasification methanol at the plant gate. The independently inspected native plant-gate process uses biomass-derived syngas, matching the source7.1255m3syngas/kg and0.27675kWhelectricity/kg. Both gas suppliers use equal fixed/fluidized wood-gasifier shares. This is not fossil methanol merely because the native name says synthetic gas. Replace the regional-storage candidate with this complete plant-gate methanol; exclude its extra downstream tank operation, evaporative loss and final distribution. Native and source full-methanol reforming do not export a hydrogen or CO2credit. Native weak pilot-scale data, catalysts, water, waste treatment, actual feedstock sourcing and gas-calorific metadata remain limitations. Source generic syngas-market LHVmetadata differs from actual producer descriptions; preserve actual per-kg methanol and gas volume rather than inventing a heating-value or density conversion. Do not add source synthesis or additional upstream biomass/gasification on top of the native complete product. Only independently inspected exactecoinvent3.10cutoff is qualified to nativeUVEK2026 via the2025edge. Preserve signed caller quantities, formulas, supported uncertainty and foreground ownership at factor+1 in the same unit. Complete native inventories and original caller emissions remain unchanged. Native biosphere exclusions remain explicit. No LCIA equivalence, impact completeness, inverse, unreviewed version or cross-system-model conversion is approved; score effects are unquantified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}], "reason": "Only the independently inspected exact source profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bfb7a6dcc1507f7b", "source": {"location": "CH", "name": "methanol production, biomass gasification", "reference product": "methanol, from biomass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Methanol, from synthetic gas, at plant", "reference product": "Methanol, from synthetic gas, at plant", "unit": "kilogram"}, "technosphere_information_loss": "The source is biomass-gasification methanol at the plant gate. The independently inspected native plant-gate process uses biomass-derived syngas, matching the source7.1255m3syngas/kg and0.27675kWhelectricity/kg. Both gas suppliers use equal fixed/fluidized wood-gasifier shares. This is not fossil methanol merely because the native name says synthetic gas. Replace the regional-storage candidate with this complete plant-gate methanol; exclude its extra downstream tank operation, evaporative loss and final distribution. Native and source full-methanol reforming do not export a hydrogen or CO2credit. Native weak pilot-scale data, catalysts, water, waste treatment, actual feedstock sourcing and gas-calorific metadata remain limitations. Source generic syngas-market LHVmetadata differs from actual producer descriptions; preserve actual per-kg methanol and gas volume rather than inventing a heating-value or density conversion. Do not add source synthesis or additional upstream biomass/gasification on top of the native complete product. Only independently inspected exactecoinvent3.10cutoff is qualified to nativeUVEK2026 via the2025edge. Preserve signed caller quantities, formulas, supported uncertainty and foreground ownership at factor+1 in the same unit. Complete native inventories and original caller emissions remain unchanged. Native biosphere exclusions remain explicit. No LCIA equivalence, impact completeness, inverse, unreviewed version or cross-system-model conversion is approved; score effects are unquantified."},
@@ -820479,6 +821873,20 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of sewage sludge, 70% water, WWT, WW from PV cell production, municipal incineration FAE / CH / kg external exchange with a warning. All inspected direct service comments for PV cell production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-1739e0c9d8bf2c11": {
+      "evidence": [
+        "brightpath/data/export/uvek_methane_sulfonic_acid_39_review.json"
+      ],
+      "limitations": [
+        "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval.",
+        "Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model.",
+        "The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction.",
+        "All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented.",
+        "Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed.",
+        "The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier."
+      ],
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off MSA market and RER/RoW production routes are reviewed. All references are positive one kg of methane sulfonic acid, CAS 75-75-2, with zero declared water in the product. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Do not use sulfuric acid, sodium sulphate or vehicle biogas as the acid product. Other source releases, patches, system models and reverse routes gain no approval. Reconstruct the documented source inventories using reviewed native supplies. Keep every source regional entry separately, including six RER-route technosphere and seven direct biosphere exchanges, 33 RoW-route technosphere and seven direct biosphere exchanges. Preserve their coefficients and uncertainty, scaling only by each already reviewed supplier conversion factor. Keep the original 0.33 RER and 0.67 RoW market shares and all four final freight entries. Do not merge, renormalize or replace regional shares with an invented global chemistry model. The source describes stoichiometric methane/SO3 sulfoxidation, estimated emissions and standard chemical-plant energy/infrastructure. Preserve the model and its quality limitations rather than claim industrial validation. In particular, both routes report total natural-gas feed 0.0048772 m3 per kg product, alongside 0.87719 kg SO3, 0.333 kWh electricity, 2 MJ chemical steam and 4e-10 plant units. The gas/feedstock basis is questionable relative to the product carbon content; preserve the observed quantities, flag possible source-data error and do not assert elemental closure or infer a gas, purity, yield, efficiency or molecular-mass correction. All seven direct source biosphere identities, complete compartments, units, signed amounts and supported uncertainty are retained for the selected ecoinvent 3.10 biosphere. Keep emitted fossil CO2 and CH4, SO3, sulfate, water returns and cooling-water resource separately. No direct flow, source exchange, process loss or recovery credit is omitted or invented. Native supplies inherit the existing exact-profile chemical-plant, chemical-steam, grid, gas and freight mappings and their documented geography, technology, allocation, vintage and internal-uncertainty limitations. Preserve native complete utilities once; do not duplicate source raw-material transport, infrastructure or combustion emissions on top. Caller uncertainty remains; native supplier internal uncertainty and correlations differ. Score effects remain unquantified; no source/native LCI, LCIA or stochastic equivalence is claimed. The RoW SO3 market has one positive producer and no freight, loss or direct emissions. Native RER liquid SO3, CAS 7446-11-9, references positive one kg and shares the source oleum-distillation lineage, including the same 1.49 kg sulfuric-acid input and 0.0016 kg direct SO2. Use that complete process as a geographic/historical-data proxy. Both datasets disclose weak stoichiometric data, estimated/incomplete emissions and omitted solid wastes. Retain those limitations; do not invent missing emissions, waste treatment or an oleum/concentration multiplier."
     },
     "r-1766db44963d294e": {
       "evidence": [
