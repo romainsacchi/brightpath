@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 221,
-      "recipe": 1060,
-      "unclassified": 29194
+      "recipe": 1061,
+      "unclassified": 29193
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 260,
       "followup_review": 163,
-      "heuristic_similarity": 26426,
+      "heuristic_similarity": 26425,
       "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -184,12 +184,13 @@
       "reviewed_swiss_cement_market_delivery": 2,
       "reviewed_swiss_pet_fluwa_market_service": 1,
       "reviewed_uncontrolled_disposal_service": 37,
+      "reviewed_unsorted_iron_scrap_market_39": 1,
       "reviewed_urea_nitrogen_equivalent_supply": 2,
       "reviewed_venting_recipe": 5,
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.443499,
+    "mean_confidence": 0.443521,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -773160,6 +773161,74 @@
       "reference product": "waste polyethylene terephthalate",
       "unit": "kilogram"
     },
+    "unsorted-iron-scrap-39-stock-and-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_unsorted_iron_scrap_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "comment": "Original stock or finished-product delivery amount and supported uncertainty retained. Exact approved cut-off stock boundary or complete same-mode geographic freight proxy.",
+          "loc": 1.0,
+          "recipe": "cutoff-stock-5d2d3e0335d9fe263a14",
+          "uncertainty type": 0,
+          "zero_burden_supplier": {
+            "profile_review_sha256": "aaa3cde2dd0a32688825fa08d0926af887a0292ab9b1d1d1ae6ba47ee5b5aaa0",
+            "rule_id": "bp-679e09d6edfabf75",
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.9"
+            }
+          }
+        },
+        {
+          "amount": 0.0112,
+          "comment": "Original stock or finished-product delivery amount and supported uncertainty retained. Exact approved cut-off stock boundary or complete same-mode geographic freight proxy.",
+          "loc": -4.491841500681089,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01932,
+          "comment": "Original stock or finished-product delivery amount and supported uncertainty retained. Exact approved cut-off stock boundary or complete same-mode geographic freight proxy.",
+          "loc": -3.946614450197765,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for iron scrap, unsorted, existing cut-off stock and retained delivery",
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval. The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero. Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections. This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground.",
+      "reference product": "iron scrap, unsorted",
+      "unit": "kilogram"
+    },
     "venting-r12": {
       "evidence": [
         "brightpath/data/export/uvek_refrigerant_venting_review.json: approved 2026-11-05; inspected source inventories are fingerprint-bound, with no active processing inputs. Recipe coefficients follow the definition of complete venting and mass conservation."
@@ -803322,7 +803391,7 @@
     {"confidence": 0.290833, "id": "bp-8b4aa586ba63a055", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for iron scrap, sorted, pressed", "reference product": "iron scrap, sorted, pressed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Iron scrap, at plant", "reference product": "Iron scrap, at plant", "unit": "kilogram"}},
     {"confidence": 0.365833, "id": "bp-34cb99481a3d69e5", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for iron scrap, sorted, pressed", "reference product": "iron scrap, sorted, pressed", "unit": "kilogram"}, "target": {"location": "RER", "name": "Iron scrap, at plant", "reference product": "Iron scrap, at plant", "unit": "kilogram"}},
     {"confidence": 0.290833, "id": "bp-e4d29736d626d202", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for iron scrap, sorted, pressed", "reference product": "iron scrap, sorted, pressed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Iron scrap, at plant", "reference product": "Iron scrap, at plant", "unit": "kilogram"}},
-    {"confidence": 0.3388, "id": "bp-c4d523bcaba06d16", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for iron scrap, unsorted", "reference product": "iron scrap, unsorted", "unit": "kilogram"}, "target": {"location": "CH", "name": "Iron scrap, at plant", "reference product": "Iron scrap, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-c4d523bcaba06d16", "mapping_method": "reviewed_unsorted_iron_scrap_market_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_unsorted_iron_scrap_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_unsorted_iron_scrap_39_review.json"], "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval. The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero. Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections. This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "unsorted-iron-scrap-39-stock-and-delivery"}}], "reason": "Only the enumerated source-3.9 cut-off profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0bb5580907b4a426", "source": {"location": "GLO", "name": "market for iron scrap, unsorted", "reference product": "iron scrap, unsorted", "unit": "kilogram"}, "target": {"recipe_ref": "unsorted-iron-scrap-39-stock-and-delivery"}, "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval. The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero. Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections. This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground."},
     {"confidence": 0.485619, "id": "bp-18b11a3eb803a8cb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for iron sinter", "reference product": "iron sinter", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sinter, iron, at plant", "reference product": "Sinter, iron, at plant", "unit": "kilogram"}},
     {"confidence": 0.3625, "id": "bp-51a403b26c08f41a", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for iron sulfate", "reference product": "iron sulfate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Iron sulphate, at plant", "reference product": "Iron sulphate, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-c72d44ff0bcd02b4", "mapping_method": "curated_legacy", "source": {"location": "RoW", "name": "market for iron sulfate", "reference product": "iron sulfate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Iron sulphate, at plant", "reference product": "Iron sulphate, at plant", "unit": "kilogram"}},
@@ -820130,6 +820199,18 @@
         "Reconstruct the independently inspected Ghanaian uncontrolled domestic-refrigerator dismantling inventory per appliance, retaining all five direct refrigerant/blowing-agent emissions and every seven material-treatment or recovered-material input. Keep their quantities, marginal uncertainty and constant arithmetic formulas. The source negative one-appliance waste reference requires factor -1 to a positive-reference generated service; incoming negative treatment demand becomes positive service demand while avoided treatment remains negative. Each existing directional component mapping is applied independently, so recovered-product credits remain negative and negative waste inputs become positive treatment demand. Existing reviewed whole waste-market proxies approximate material, regional disposal shares, transport, emissions, technology and allocation; their being mapped does not establish equivalence. In particular, do not use a complete controlled European refrigerator-treatment proxy or remove uncontrolled refrigerant emissions. The two recovered-material suppliers are already reviewed positive-reference allocated cut-off stocks; no new empty treatment service is authorized. Preserve caller-owned uncertainty, formulas, foreground suppliers, production and separately listed emissions. Source parameters are absent and the retained source formulas contain arithmetic constants only. Only nine enumerated exact cut-off profiles are reviewed; no cross-model, missing-version or independently reversed correspondence is inferred. Native UVEK2026 physical-flow gaps must refuse transactionally in strict mode or remain explicitly unresolved with warnings under a permissive policy. No physical omission is authorized."
       ],
       "rationale": "Reconstruct the independently inspected Ghanaian uncontrolled domestic-refrigerator dismantling inventory per appliance, retaining all five direct refrigerant/blowing-agent emissions and every seven material-treatment or recovered-material input. Keep their quantities, marginal uncertainty and constant arithmetic formulas. The source negative one-appliance waste reference requires factor -1 to a positive-reference generated service; incoming negative treatment demand becomes positive service demand while avoided treatment remains negative. Each existing directional component mapping is applied independently, so recovered-product credits remain negative and negative waste inputs become positive treatment demand. Existing reviewed whole waste-market proxies approximate material, regional disposal shares, transport, emissions, technology and allocation; their being mapped does not establish equivalence. In particular, do not use a complete controlled European refrigerator-treatment proxy or remove uncontrolled refrigerant emissions. The two recovered-material suppliers are already reviewed positive-reference allocated cut-off stocks; no new empty treatment service is authorized. Preserve caller-owned uncertainty, formulas, foreground suppliers, production and separately listed emissions. Source parameters are absent and the retained source formulas contain arithmetic constants only. Only nine enumerated exact cut-off profiles are reviewed; no cross-model, missing-version or independently reversed correspondence is inferred. Native UVEK2026 physical-flow gaps must refuse transactionally in strict mode or remain explicitly unresolved with warnings under a permissive policy. No physical omission is authorized."
+    },
+    "r-0bb5580907b4a426": {
+      "evidence": [
+        "brightpath/data/export/uvek_unsorted_iron_scrap_39_review.json"
+      ],
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval.",
+        "The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero.",
+        "Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections.",
+        "This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground."
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval. The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero. Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections. This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground."
     },
     "r-0bc4689aa4cfb38d": {
       "evidence": [

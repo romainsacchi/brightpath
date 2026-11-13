@@ -1,0 +1,551 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing user approval to resolve remaining mappings autonomously with explicit warnings and logged decisions.",
+  "records": [
+    {
+      "rule_id": "bp-c4d523bcaba06d16",
+      "original_rule": {
+        "confidence": 0.3388,
+        "id": "bp-c4d523bcaba06d16",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "GLO",
+          "name": "market for iron scrap, unsorted",
+          "reference product": "iron scrap, unsorted",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "id": "bp-c4d523bcaba06d16",
+        "mapping_method": "reviewed_unsorted_iron_scrap_market_39",
+        "source": {
+          "location": "GLO",
+          "name": "market for iron scrap, unsorted",
+          "reference product": "iron scrap, unsorted",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "unsorted-iron-scrap-39-stock-and-delivery"
+        },
+        "classification": "proxy",
+        "conversion_factor": 1,
+        "review_ref": "r-0bb5580907b4a426",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval. The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero. Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections. This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only the enumerated source-3.9 cut-off profile is reviewed.",
+          "evidence": [
+            "brightpath/data/export/uvek_unsorted_iron_scrap_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "target": {
+                "recipe_ref": "unsorted-iron-scrap-39-stock-and-delivery"
+              },
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval. The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero. Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections. This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground.",
+                "evidence": [
+                  "brightpath/data/export/uvek_unsorted_iron_scrap_39_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for iron scrap, unsorted",
+          "reference product": "iron scrap, unsorted",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 3,
+        "metadata_sha256": "2e4ef74bdaa3fa4473c2bd55b39725133fae8a25fcb225d078d33b8fb41751b4",
+        "inventory_sha256": "bb9018cd44dc65a0fec3ba054804cf52f45342746fb35e5a855ab15eceb3c7b5",
+        "activity_comment_sha256": "6e3ada2879d3357b3353b3c297d4e5b141f4f87eb8572cb68d94804568d6e2de",
+        "product_information_sha256": "94512cfe8bbe50950aca610af62143af06d3f6e657e61ad20bb52d98ecb1e15e"
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "iron scrap, unsorted, Recycled Content cut-off",
+            "reference product": "iron scrap, unsorted",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 0,
+          "metadata_sha256": "361bb21a65dca15b8ac98c03b068f53df529fba4db01262fab3493759a3615d4",
+          "inventory_sha256": "e4a60c5e5194d011d6da055ea40bf57e91e7aa0fb0fec5be6cbba8f56b69acf9",
+          "activity_comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "product_information_sha256": "94512cfe8bbe50950aca610af62143af06d3f6e657e61ad20bb52d98ecb1e15e"
+        }
+      ],
+      "recipe_id": "unsorted-iron-scrap-39-stock-and-delivery",
+      "conversion_factor": 1,
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval.",
+        "The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero.",
+        "Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections.",
+        "This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground."
+      ]
+    }
+  ],
+  "recipes": {
+    "unsorted-iron-scrap-39-stock-and-delivery": {
+      "name": "market for iron scrap, unsorted, existing cut-off stock and retained delivery",
+      "reference product": "iron scrap, unsorted",
+      "location": "GLO",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "amount": 1.0,
+          "uncertainty type": 0,
+          "loc": 1.0,
+          "recipe": "cutoff-stock-5d2d3e0335d9fe263a14",
+          "zero_burden_supplier": {
+            "rule_id": "bp-679e09d6edfabf75",
+            "source_profile": {
+              "family": "ecoinvent",
+              "version": "3.9",
+              "system_model": "cutoff"
+            },
+            "profile_review_sha256": "aaa3cde2dd0a32688825fa08d0926af887a0292ab9b1d1d1ae6ba47ee5b5aaa0"
+          },
+          "comment": "Original stock or finished-product delivery amount and supported uncertainty retained. Exact approved cut-off stock boundary or complete same-mode geographic freight proxy."
+        },
+        {
+          "amount": 0.0112,
+          "uncertainty type": 2,
+          "loc": -4.491841500681089,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "comment": "Original stock or finished-product delivery amount and supported uncertainty retained. Exact approved cut-off stock boundary or complete same-mode geographic freight proxy."
+        },
+        {
+          "amount": 0.01932,
+          "uncertainty type": 2,
+          "loc": -3.946614450197765,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "comment": "Original stock or finished-product delivery amount and supported uncertainty retained. Exact approved cut-off stock boundary or complete same-mode geographic freight proxy."
+        }
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval. The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero. Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections. This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground.",
+      "evidence": [
+        "brightpath/data/export/uvek_unsorted_iron_scrap_39_review.json"
+      ]
+    }
+  },
+  "recipe_dependencies": {
+    "cutoff-stock-5d2d3e0335d9fe263a14": {
+      "evidence": [
+        "brightpath/data/export/uvek_cutoff_stock_review.json: exact positive cut-off production-only supplier and inventory fingerprints."
+      ],
+      "inputs": [],
+      "location": "GLO",
+      "name": "Allocated cut-off stock, iron scrap, unsorted, GLO",
+      "rationale": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+      "reference product": "iron scrap, unsorted",
+      "unit": "kilogram",
+      "zero_burden": true,
+      "zero_burden_reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers."
+    }
+  },
+  "source_rule_dependencies": {
+    "bp-679e09d6edfabf75": {
+      "confidence": 1,
+      "conversion_factor": 1,
+      "id": "bp-679e09d6edfabf75",
+      "mapping_method": "reviewed_cutoff_stock_recipe",
+      "reference_flow_sign_review": {
+        "evidence": [
+          "brightpath/data/export/uvek_cutoff_stock_review.json"
+        ],
+        "profiles": [
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.10-cutoff/571997fb50042c65a6444433edfabc845c8d3f56e15af636aa8f4f779f407108"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.10"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.10.1-cutoff/c4ee414fcfc3a1772b3022bfb9e5e96293f7c3fabdf6b943f7ba000763e0754d",
+                "brightpath/data/export/uvek_complete_patch_boundary_review.json#ecoinvent-3.10.1-cutoff/c4ee414fcfc3a1772b3022bfb9e5e96293f7c3fabdf6b943f7ba000763e0754d"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.10.1"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.11-cutoff/a1bdda4797dff4dfca8d3d6a49c368c9276868ced5d46c121e3ea1ba034cad10"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.11"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.12-cutoff/e10f299c72425d4f14dba43b44453550c1cce00b4828c8e04de8f78253e6a748"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.12"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.6-cutoff/0da4b0996fc1b48e4452ec574988d5c82665828d876e0fa785af8e390a35c979"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.6"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.7-cutoff/c0c0cd3305e702318cce71b9a76ce1eaa89b50e38f81dac6873f04e68d8e8f1f"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.7"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.8-cutoff/a525db4cac63bf4fc429a4d3386bb520a05fa4442ad97dd8d0cc09db1d2d0727"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.8"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.9-cutoff/e4a60c5e5194d011d6da055ea40bf57e91e7aa0fb0fec5be6cbba8f56b69acf9"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.9"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.9.1-cutoff/379c44b02add592b08cbc099471104f8fc1c4598716a69972ee1ad9b893c70c6",
+                "brightpath/data/export/uvek_complete_patch_boundary_review.json#ecoinvent-3.9.1-cutoff/379c44b02add592b08cbc099471104f8fc1c4598716a69972ee1ad9b893c70c6"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.9.1"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+            }
+          }
+        ],
+        "reason": "Select only an exact inspected positive cut-off stock profile; no other allocation or treatment context is approved.",
+        "status": "unresolved"
+      },
+      "report_correspondence": true,
+      "review_ref": "r-67fdeecb5d1482a6",
+      "source": {
+        "location": "GLO",
+        "name": "iron scrap, unsorted, Recycled Content cut-off",
+        "reference product": "iron scrap, unsorted",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "cutoff-stock-5d2d3e0335d9fe263a14"
+      }
+    }
+  },
+  "reviews": [
+    {
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval. The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero. Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections. This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground.",
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off unsorted iron-scrap market is reviewed. Reference is positive one kg and conversion factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions. Other source versions, patches, system models and reverse routes gain no approval.",
+        "The source stock supplier is explicitly Recycled Content cut-off and contains only self-linked production +1, without collection, processing, transport, biosphere or other exchanges. Its observed inventory hash exactly matches the existing independently approved source-3.9 stock. Reuse that existing production-only recipe and its exact direct-supplier binding. This preserves an observed allocation boundary, not a claim that physical recycling has zero impact. No uncharacterized or nonempty supplier is assigned zero.",
+        "Keep one kg of the explicit cut-off stock plus the original 0.0112 tkm rail and 0.01932 tkm generic lorry delivery per kg scrap, preserving each supported exchange uncertainty. Complete RER rail and lorry fleet are geographic, fleet and vintage proxies for global delivery groups. The freight already includes its native operation and infrastructure. Do not add BAFU sorted/pressed scrap, scrap-yard electricity, pressing, another collection stage, avoided-primary-metal credits, yield, payload or loss corrections.",
+        "This is an unsorted scrap supply, distinct from sorted and pressed scrap or concrete-demolition recovery. Native freight geography, energy, allocation, vintage, internal uncertainty and biosphere coverage differ; score differences remain unquantified. No source omission or market renormalization is introduced. Export the returned stock and market helpers with the foreground."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_unsorted_iron_scrap_39_review.json"
+      ]
+    }
+  ],
+  "stock_39_witness": {
+    "label": "ecoinvent-3.9-cutoff",
+    "inventory_sha256": "e4a60c5e5194d011d6da055ea40bf57e91e7aa0fb0fec5be6cbba8f56b69acf9",
+    "total_exchanges": 1,
+    "only_self_production": true,
+    "production_amount": 1
+  },
+  "native_freight_witnesses": [
+    {
+      "identity": {
+        "name": "Transport, freight, rail",
+        "reference product": "Transport, freight, rail",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 66,
+          "metadata_sha256": "bf0b92330f5550e4ff8ca6fb8c07a5e36f231d0ece20aeda1672d032024f8d92",
+          "inventory_sha256": "4af095b1c680e50755cc7969de9c7b096ce871af491062204697dd4d3c617400",
+          "activity_comment_sha256": "1df979a6bc0882b7d94bc3904a8832568a6c5463344665f169125ea352d9d7a5",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 66,
+          "metadata_sha256": "a086e7cd14dc8078d57f5caaa5dc4fa25a8cd4b4dcac023249504ba59e713476",
+          "inventory_sha256": "d21630645414a88763748d1e1cae72eaa78561f67bae72f1dfa2024d292bad81",
+          "activity_comment_sha256": "da69ddf1a7bd9c6a5875566456db36cee98d7997affe7edfd22d55ac7241aee3",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, lorry, fleet average",
+        "reference product": "Transport, freight, lorry, fleet average",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "1712dcc1e47789fd051de828c7fa8576057a018e81bae15590c87e3285c8eae6",
+          "inventory_sha256": "22d4f5fe504956cb8774ee629f64ea5799f0eba27e825034f8a6ad6e2076e32c",
+          "activity_comment_sha256": "0716216989810c286263da289b407ae09aa4a17e1c375b712652b6590cfd6b6d",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "2e25c36bfe498c028ee90845bf35d49ed777fb811dc4c2353e70e567f87d5c35",
+          "inventory_sha256": "1dce512cce0f49d845545ea0ed7d0a6e9f64ed59e5583c9ad0185f0fd4d6c0fd",
+          "activity_comment_sha256": "f40ff5cc0336e900ff57b6126375b05b5a17f7212403cff0f8a08f32f35c4e5c",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "source_market_interface": [
+    {
+      "name": "iron scrap, unsorted, Recycled Content cut-off",
+      "reference product": "iron scrap, unsorted",
+      "unit": "kilogram",
+      "location": "GLO",
+      "type": "technosphere",
+      "amount": 1.0
+    },
+    {
+      "name": "market group for transport, freight train",
+      "reference product": "transport, freight train",
+      "unit": "ton kilometer",
+      "location": "GLO",
+      "type": "technosphere",
+      "amount": 0.0112
+    },
+    {
+      "name": "market group for transport, freight, lorry, unspecified",
+      "reference product": "transport, freight, lorry, unspecified",
+      "unit": "ton kilometer",
+      "location": "GLO",
+      "type": "technosphere",
+      "amount": 0.01932
+    }
+  ],
+  "new_source_omissions": [],
+  "licensing": "Bounded market interface facts and source/native hashes; proprietary inventories and comments remain private."
+}
