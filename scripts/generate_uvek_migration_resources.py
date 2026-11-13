@@ -633,6 +633,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     """Replay inspected pilot corrections independently of system-model projection."""
     if __package__:
         from scripts.review_uvek_pilot_materials import (
+            apply_cogen_heat_exchanger_review,
             apply_pilot_material_review,
             apply_pilot_paint_market_review,
             apply_pilot_silver_market_review,
@@ -739,6 +740,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from scripts.review_uvek_pilot_legacy_components import apply_pilot_legacy_components_review
     else:
         from review_uvek_pilot_materials import (
+            apply_cogen_heat_exchanger_review,
             apply_pilot_material_review,
             apply_pilot_paint_market_review,
             apply_pilot_silver_market_review,
@@ -848,6 +850,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_pilot_incinerator_review(technosphere)
     apply_pilot_paint_market_review(technosphere)
     apply_pilot_silver_market_review(technosphere)
+    apply_cogen_heat_exchanger_review(technosphere)
     apply_pilot_landfill_review(technosphere)
     apply_pilot_generator_fuel_review(technosphere)
     apply_pilot_grid_converter_review(technosphere)

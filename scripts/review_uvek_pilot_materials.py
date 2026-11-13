@@ -38,6 +38,17 @@ def apply_pilot_silver_market_review(resource, root=ROOT):
     _apply_material_review(resource, root, SILVER_MARKET_PATH, SILVER_MARKET_SHA256)
 
 
+def apply_cogen_heat_exchanger_review(resource, root=ROOT):
+    """Correct the mislabeled Jakobsberg component from its inspected inventory."""
+    _apply_material_review(
+        resource,
+        root,
+        "brightpath/data/export/uvek_cogen_heat_exchanger_review.json",
+        "02da3a3c90820c416d962194690890ccd11374b15edff933f525996e750c45e1",
+        mapping_method="reviewed_inventory_boundary_correction",
+    )
+
+
 def _apply_material_review(resource, root, review_path, approval_sha256, *, mapping_method="reviewed_pilot_material"):
     raw = (root / review_path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != approval_sha256:
