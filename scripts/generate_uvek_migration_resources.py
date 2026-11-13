@@ -1251,6 +1251,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_battery_first_materials_39_review(technosphere)
     if __package__:
+        from scripts.review_uvek_battery_fluoride_39 import apply_battery_fluoride_39_review
+    else:
+        from review_uvek_battery_fluoride_39 import apply_battery_fluoride_39_review
+
+    apply_battery_fluoride_39_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
