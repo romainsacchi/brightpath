@@ -101,6 +101,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
     assert len(reverse["delete"]) == reverse["coverage"]["omitted_identities"] == 1
     # Current reviewed additions; frozen historical mapping values are checked below.
     # Reviewed 50 kW heat and European delivered water add destinations; earlier suppliers remain used.
+    # Correcting LMO cells adds their native LMO/graphite destination; NMC remains for NMC sources.
     assert (
         len(
             {
@@ -109,7 +110,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 4023
+        == 4024
     )
 
 
