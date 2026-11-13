@@ -99,6 +99,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
     reverse = json.loads((DATA_DIR / "migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
     assert len(reverse["replace"]) == 1517
     assert len(reverse["delete"]) == reverse["coverage"]["omitted_identities"] == 1
+    # Current reviewed additions; frozen historical mapping values are checked below.
     assert (
         len(
             {
@@ -107,7 +108,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 3990
+        == 4020
     )
 
 

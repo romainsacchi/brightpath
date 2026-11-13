@@ -1211,6 +1211,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_mining_38_high_slag import apply_mining_38_high_slag_review
 
     apply_mining_38_high_slag_review(technosphere)
+    if __package__:
+        from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
+    else:
+        from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
+
+    archive_unreferenced_reviews(technosphere)
 
 
 def build_resources(catalog_directory: Path, curated_path: Path, conversion_factors_path: Path) -> tuple[dict, dict]:

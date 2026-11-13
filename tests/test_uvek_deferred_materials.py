@@ -38,7 +38,9 @@ def test_restored_material_keeps_signed_quantity_and_uncertainty(row, version, a
 
 @pytest.mark.parametrize("row", REVIEW["rules"], ids=lambda r: r["rule_id"])
 def test_other_source_releases_do_not_inherit_review(row):
-    inventory = BrightwayInventory.from_data(consumer(row["source"], 1), context=contexts("ecoinvent", "3.11"))
+    # Nickel 3.11 has its own later review; 3.10 remains unapproved.
+    version = "3.10" if row["rule_id"] == "bp-1104956dff1c701e" else "3.11"
+    inventory = BrightwayInventory.from_data(consumer(row["source"], 1), context=contexts("ecoinvent", version))
     before = deepcopy(inventory.data)
     with pytest.raises(MigrationError):
         inventory.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
