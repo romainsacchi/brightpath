@@ -1,0 +1,325 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing user approval for autonomous modelling choices with warnings and logged decisions.",
+  "records": [
+    {
+      "rule_id": "bp-a3c515458cd0a130",
+      "original_rule": {
+        "confidence": 0.397826,
+        "id": "bp-a3c515458cd0a130",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "RoW",
+          "name": "market for petrol, unleaded",
+          "reference product": "petrol, unleaded",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "xxx Petrol, unleaded, at refinery",
+          "reference product": "xxx Petrol, unleaded, at refinery",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "id": "bp-a3c515458cd0a130",
+        "mapping_method": "reviewed_complete_fossil_petrol_delivery_39",
+        "source": {
+          "location": "RoW",
+          "name": "market for petrol, unleaded",
+          "reference product": "petrol, unleaded",
+          "unit": "kilogram"
+        },
+        "target": {
+          "name": "Petrol, fossil, at regional storage",
+          "reference product": "Petrol, fossil, at regional storage",
+          "location": "CH",
+          "unit": "kilogram"
+        },
+        "classification": "proxy",
+        "conversion_factor": 1,
+        "review_ref": "r-1571b1717b689723",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off RoW market for fossil unleaded petrol is reviewed, per positive one kg of delivered fuel. Use complete native CH Petrol, fossil, at regional storage per positive one kg, factor +1. Preserve signed caller fuel mass, supported uncertainty/formulas, foreground ownership, separate combustion emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. The source function includes distribution to the final consumer, storage and petrol-station operation, evaporation and effluent treatment. The former xxx Swiss refinery-only correspondence has the wrong delivery boundary. Native fossil regional storage includes the complete refinery supply and distribution lifecycle. Native ordinary RER/CH petrol-storage mixes explicitly include biomass ethanol and do not match the source declared zero non-fossil carbon. Choose the existing complete fossil supplier; add no ethanol, biomass credit, use-phase combustion, second refinery, delivery, storage, infrastructure, evaporation or wastewater stage. This is a whole delivered-fuel screening proxy, replacing all 122 source internal nonproduction rows (112 technosphere and 10 direct biosphere) with the complete 28-row native model. Source producer, regional electricity/utility shares, waste/wastewater routes, freight, storage and evaporation model are not reconstructed or individually preserved. No caller exchange is omitted. Warnings explicitly retain geographic, refinery technology, additive/blend, allocation, delivery-network, waste-treatment, loss, vintage, internal uncertainty/correlation and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Source RoW refinery documentation itself uses a European-complexity proxy rather than a production-weighted global refinery mix. Native fossil supply uses 0.25735 kg CH petrol, 0.7249 kg RER petrol and 0.018944 kg fossil MTBE per delivered kg. Their sum is 1.001194 kg, including native loss allowance. Preserve these complete native quantities without renormalization or copying the source one-kg producer a second time. Country shares, refinery model, octane/oxygenate specification, fuel carbon and calorific value differ or lack verified equivalence. Source declares 43.2 MJ/kg and 0.865 kg fossil carbon/kg; retain caller kg and separate caller emissions without inventing energy, density, carbon, concentration or efficiency rescaling. Distribution electricity changes from 0.0067 kWh/kg across 92 source country entries to native Swiss 0.050762 kWh/kg. Source freight includes petroleum tanker/pipeline and varied road/rail routes; native Swiss delivery uses its complete different mode mix, including small air freight. Distribution infrastructure changes from 2.78e-10 to 5.5408e-10 units/kg. Retain the native complete delivery model as a geographic/technology proxy, without correcting its fleet, distances, payloads, losses or utilities to the source model. All ten source evaporation flows have matching publisher identities and receiving compartments in native2026, but different amounts: for example benzene 4.9e-6 -> 1.2e-5 kg/kg, aliphatic alkanes 0.000268 -> 0.00095846 kg/kg and MTBE 2.45e-5 -> 5.9982e-5 kg/kg. Native also reports 0.18274 MJ waste heat absent from the source. Preserve these differences as explicit limitations of whole-process replacement; do not overlay source emissions or invent compensating credits. Separately listed caller emissions remain independent and unchanged.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only the exact independently inspected source-3.9 cut-off profile is reviewed.",
+          "evidence": [
+            "brightpath/data/export/uvek_petrol_row_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Only the independently inspected ecoinvent 3.9 cut-off RoW market for fossil unleaded petrol is reviewed, per positive one kg of delivered fuel. Use complete native CH Petrol, fossil, at regional storage per positive one kg, factor +1. Preserve signed caller fuel mass, supported uncertainty/formulas, foreground ownership, separate combustion emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. The source function includes distribution to the final consumer, storage and petrol-station operation, evaporation and effluent treatment. The former xxx Swiss refinery-only correspondence has the wrong delivery boundary. Native fossil regional storage includes the complete refinery supply and distribution lifecycle. Native ordinary RER/CH petrol-storage mixes explicitly include biomass ethanol and do not match the source declared zero non-fossil carbon. Choose the existing complete fossil supplier; add no ethanol, biomass credit, use-phase combustion, second refinery, delivery, storage, infrastructure, evaporation or wastewater stage. This is a whole delivered-fuel screening proxy, replacing all 122 source internal nonproduction rows (112 technosphere and 10 direct biosphere) with the complete 28-row native model. Source producer, regional electricity/utility shares, waste/wastewater routes, freight, storage and evaporation model are not reconstructed or individually preserved. No caller exchange is omitted. Warnings explicitly retain geographic, refinery technology, additive/blend, allocation, delivery-network, waste-treatment, loss, vintage, internal uncertainty/correlation and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Source RoW refinery documentation itself uses a European-complexity proxy rather than a production-weighted global refinery mix. Native fossil supply uses 0.25735 kg CH petrol, 0.7249 kg RER petrol and 0.018944 kg fossil MTBE per delivered kg. Their sum is 1.001194 kg, including native loss allowance. Preserve these complete native quantities without renormalization or copying the source one-kg producer a second time. Country shares, refinery model, octane/oxygenate specification, fuel carbon and calorific value differ or lack verified equivalence. Source declares 43.2 MJ/kg and 0.865 kg fossil carbon/kg; retain caller kg and separate caller emissions without inventing energy, density, carbon, concentration or efficiency rescaling. Distribution electricity changes from 0.0067 kWh/kg across 92 source country entries to native Swiss 0.050762 kWh/kg. Source freight includes petroleum tanker/pipeline and varied road/rail routes; native Swiss delivery uses its complete different mode mix, including small air freight. Distribution infrastructure changes from 2.78e-10 to 5.5408e-10 units/kg. Retain the native complete delivery model as a geographic/technology proxy, without correcting its fleet, distances, payloads, losses or utilities to the source model. All ten source evaporation flows have matching publisher identities and receiving compartments in native2026, but different amounts: for example benzene 4.9e-6 -> 1.2e-5 kg/kg, aliphatic alkanes 0.000268 -> 0.00095846 kg/kg and MTBE 2.45e-5 -> 5.9982e-5 kg/kg. Native also reports 0.18274 MJ waste heat absent from the source. Preserve these differences as explicit limitations of whole-process replacement; do not overlay source emissions or invent compensating credits. Separately listed caller emissions remain independent and unchanged.",
+                "evidence": [
+                  "brightpath/data/export/uvek_petrol_row_39_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for petrol, unleaded",
+          "reference product": "petrol, unleaded",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 122,
+        "metadata_sha256": "d6ef866214ecbbc16db322b4795e08ea19c000dc008f9a734737a5fce940ef37",
+        "inventory_sha256": "bcb893e1f6af517049f129fb71451f358e09e78450d9203865bbe74afb2d21cf",
+        "activity_comment_sha256": "e4c5e296359fde1564553d661e645d1b0c3f72ddd8fa43cd59bffba3279de0b8",
+        "product_information_sha256": "ccb5111948d2495d6aae32a5791e177bdfbcc08f455e0073a797b9f9062d60bc"
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "petrol production, unleaded, petroleum refinery operation",
+            "reference product": "petrol, unleaded",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 140,
+          "metadata_sha256": "400276fe6b94585d2fc1255cbe89bee08e4c696b95eafb1838fe67a509b3b120",
+          "inventory_sha256": "9086971cce474d04949261319b32dc7dbb628276737280b1d0de13e1e8fa3422",
+          "activity_comment_sha256": "09a9e1a3c43bd5242e06a1c43878256ea266c37cd0beb788654f66db723887fe",
+          "product_information_sha256": "ccb5111948d2495d6aae32a5791e177bdfbcc08f455e0073a797b9f9062d60bc"
+        }
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Petrol, fossil, at regional storage",
+            "reference product": "Petrol, fossil, at regional storage",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 28,
+          "metadata_sha256": "7fa29f1aebe648d865f870de7e3f9972a3831f88fbae5b075292d01e9645f9b1",
+          "inventory_sha256": "7838259bc0dbd8dbe9108849aa73c60a059e2ef29d693fceb6a5bb0ffe459bc2",
+          "activity_comment_sha256": "345bceb5c7fca4d080130f7b9ee8aada76215c57e89d74ad3b07ddccd70e4eab",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Petrol, fossil, at regional storage",
+            "reference product": "Petrol, fossil, at regional storage",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 28,
+          "metadata_sha256": "36a037104c85e87592a3a65ec5c67c9b431199375bb26732176dac1226505d19",
+          "inventory_sha256": "91c26f65b93791059f5bdf4fb8d3dab4a4cf7144b7861c4d313fbc178ca619f4",
+          "activity_comment_sha256": "f17f1283fa8cc5cffd257224e4e411d03429899a764ff334ac68c59cb9b08d37",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "recipe_id": null,
+      "conversion_factor": 1,
+      "limitations": [
+        "Only the independently inspected ecoinvent 3.9 cut-off RoW market for fossil unleaded petrol is reviewed, per positive one kg of delivered fuel. Use complete native CH Petrol, fossil, at regional storage per positive one kg, factor +1. Preserve signed caller fuel mass, supported uncertainty/formulas, foreground ownership, separate combustion emissions and credits. Other source releases, patches, system models and reverse routes gain no approval.",
+        "The source function includes distribution to the final consumer, storage and petrol-station operation, evaporation and effluent treatment. The former xxx Swiss refinery-only correspondence has the wrong delivery boundary. Native fossil regional storage includes the complete refinery supply and distribution lifecycle. Native ordinary RER/CH petrol-storage mixes explicitly include biomass ethanol and do not match the source declared zero non-fossil carbon. Choose the existing complete fossil supplier; add no ethanol, biomass credit, use-phase combustion, second refinery, delivery, storage, infrastructure, evaporation or wastewater stage.",
+        "This is a whole delivered-fuel screening proxy, replacing all 122 source internal nonproduction rows (112 technosphere and 10 direct biosphere) with the complete 28-row native model. Source producer, regional electricity/utility shares, waste/wastewater routes, freight, storage and evaporation model are not reconstructed or individually preserved. No caller exchange is omitted. Warnings explicitly retain geographic, refinery technology, additive/blend, allocation, delivery-network, waste-treatment, loss, vintage, internal uncertainty/correlation and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed.",
+        "Source RoW refinery documentation itself uses a European-complexity proxy rather than a production-weighted global refinery mix. Native fossil supply uses 0.25735 kg CH petrol, 0.7249 kg RER petrol and 0.018944 kg fossil MTBE per delivered kg. Their sum is 1.001194 kg, including native loss allowance. Preserve these complete native quantities without renormalization or copying the source one-kg producer a second time. Country shares, refinery model, octane/oxygenate specification, fuel carbon and calorific value differ or lack verified equivalence. Source declares 43.2 MJ/kg and 0.865 kg fossil carbon/kg; retain caller kg and separate caller emissions without inventing energy, density, carbon, concentration or efficiency rescaling.",
+        "Distribution electricity changes from 0.0067 kWh/kg across 92 source country entries to native Swiss 0.050762 kWh/kg. Source freight includes petroleum tanker/pipeline and varied road/rail routes; native Swiss delivery uses its complete different mode mix, including small air freight. Distribution infrastructure changes from 2.78e-10 to 5.5408e-10 units/kg. Retain the native complete delivery model as a geographic/technology proxy, without correcting its fleet, distances, payloads, losses or utilities to the source model.",
+        "All ten source evaporation flows have matching publisher identities and receiving compartments in native2026, but different amounts: for example benzene 4.9e-6 -> 1.2e-5 kg/kg, aliphatic alkanes 0.000268 -> 0.00095846 kg/kg and MTBE 2.45e-5 -> 5.9982e-5 kg/kg. Native also reports 0.18274 MJ waste heat absent from the source. Preserve these differences as explicit limitations of whole-process replacement; do not overlay source emissions or invent compensating credits. Separately listed caller emissions remain independent and unchanged."
+      ]
+    }
+  ],
+  "recipes": {},
+  "recipe_dependencies": {},
+  "reviews": [
+    {
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off RoW market for fossil unleaded petrol is reviewed, per positive one kg of delivered fuel. Use complete native CH Petrol, fossil, at regional storage per positive one kg, factor +1. Preserve signed caller fuel mass, supported uncertainty/formulas, foreground ownership, separate combustion emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. The source function includes distribution to the final consumer, storage and petrol-station operation, evaporation and effluent treatment. The former xxx Swiss refinery-only correspondence has the wrong delivery boundary. Native fossil regional storage includes the complete refinery supply and distribution lifecycle. Native ordinary RER/CH petrol-storage mixes explicitly include biomass ethanol and do not match the source declared zero non-fossil carbon. Choose the existing complete fossil supplier; add no ethanol, biomass credit, use-phase combustion, second refinery, delivery, storage, infrastructure, evaporation or wastewater stage. This is a whole delivered-fuel screening proxy, replacing all 122 source internal nonproduction rows (112 technosphere and 10 direct biosphere) with the complete 28-row native model. Source producer, regional electricity/utility shares, waste/wastewater routes, freight, storage and evaporation model are not reconstructed or individually preserved. No caller exchange is omitted. Warnings explicitly retain geographic, refinery technology, additive/blend, allocation, delivery-network, waste-treatment, loss, vintage, internal uncertainty/correlation and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Source RoW refinery documentation itself uses a European-complexity proxy rather than a production-weighted global refinery mix. Native fossil supply uses 0.25735 kg CH petrol, 0.7249 kg RER petrol and 0.018944 kg fossil MTBE per delivered kg. Their sum is 1.001194 kg, including native loss allowance. Preserve these complete native quantities without renormalization or copying the source one-kg producer a second time. Country shares, refinery model, octane/oxygenate specification, fuel carbon and calorific value differ or lack verified equivalence. Source declares 43.2 MJ/kg and 0.865 kg fossil carbon/kg; retain caller kg and separate caller emissions without inventing energy, density, carbon, concentration or efficiency rescaling. Distribution electricity changes from 0.0067 kWh/kg across 92 source country entries to native Swiss 0.050762 kWh/kg. Source freight includes petroleum tanker/pipeline and varied road/rail routes; native Swiss delivery uses its complete different mode mix, including small air freight. Distribution infrastructure changes from 2.78e-10 to 5.5408e-10 units/kg. Retain the native complete delivery model as a geographic/technology proxy, without correcting its fleet, distances, payloads, losses or utilities to the source model. All ten source evaporation flows have matching publisher identities and receiving compartments in native2026, but different amounts: for example benzene 4.9e-6 -> 1.2e-5 kg/kg, aliphatic alkanes 0.000268 -> 0.00095846 kg/kg and MTBE 2.45e-5 -> 5.9982e-5 kg/kg. Native also reports 0.18274 MJ waste heat absent from the source. Preserve these differences as explicit limitations of whole-process replacement; do not overlay source emissions or invent compensating credits. Separately listed caller emissions remain independent and unchanged.",
+      "limitations": [
+        "Only the independently inspected ecoinvent 3.9 cut-off RoW market for fossil unleaded petrol is reviewed, per positive one kg of delivered fuel. Use complete native CH Petrol, fossil, at regional storage per positive one kg, factor +1. Preserve signed caller fuel mass, supported uncertainty/formulas, foreground ownership, separate combustion emissions and credits. Other source releases, patches, system models and reverse routes gain no approval.",
+        "The source function includes distribution to the final consumer, storage and petrol-station operation, evaporation and effluent treatment. The former xxx Swiss refinery-only correspondence has the wrong delivery boundary. Native fossil regional storage includes the complete refinery supply and distribution lifecycle. Native ordinary RER/CH petrol-storage mixes explicitly include biomass ethanol and do not match the source declared zero non-fossil carbon. Choose the existing complete fossil supplier; add no ethanol, biomass credit, use-phase combustion, second refinery, delivery, storage, infrastructure, evaporation or wastewater stage.",
+        "This is a whole delivered-fuel screening proxy, replacing all 122 source internal nonproduction rows (112 technosphere and 10 direct biosphere) with the complete 28-row native model. Source producer, regional electricity/utility shares, waste/wastewater routes, freight, storage and evaporation model are not reconstructed or individually preserved. No caller exchange is omitted. Warnings explicitly retain geographic, refinery technology, additive/blend, allocation, delivery-network, waste-treatment, loss, vintage, internal uncertainty/correlation and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed.",
+        "Source RoW refinery documentation itself uses a European-complexity proxy rather than a production-weighted global refinery mix. Native fossil supply uses 0.25735 kg CH petrol, 0.7249 kg RER petrol and 0.018944 kg fossil MTBE per delivered kg. Their sum is 1.001194 kg, including native loss allowance. Preserve these complete native quantities without renormalization or copying the source one-kg producer a second time. Country shares, refinery model, octane/oxygenate specification, fuel carbon and calorific value differ or lack verified equivalence. Source declares 43.2 MJ/kg and 0.865 kg fossil carbon/kg; retain caller kg and separate caller emissions without inventing energy, density, carbon, concentration or efficiency rescaling.",
+        "Distribution electricity changes from 0.0067 kWh/kg across 92 source country entries to native Swiss 0.050762 kWh/kg. Source freight includes petroleum tanker/pipeline and varied road/rail routes; native Swiss delivery uses its complete different mode mix, including small air freight. Distribution infrastructure changes from 2.78e-10 to 5.5408e-10 units/kg. Retain the native complete delivery model as a geographic/technology proxy, without correcting its fleet, distances, payloads, losses or utilities to the source model.",
+        "All ten source evaporation flows have matching publisher identities and receiving compartments in native2026, but different amounts: for example benzene 4.9e-6 -> 1.2e-5 kg/kg, aliphatic alkanes 0.000268 -> 0.00095846 kg/kg and MTBE 2.45e-5 -> 5.9982e-5 kg/kg. Native also reports 0.18274 MJ waste heat absent from the source. Preserve these differences as explicit limitations of whole-process replacement; do not overlay source emissions or invent compensating credits. Separately listed caller emissions remain independent and unchanged."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_petrol_row_39_review.json"
+      ]
+    }
+  ],
+  "source_inventory_replaced_whole": true,
+  "source_internal_nonproduction_rows": 122,
+  "native_nonproduction_rows": 28,
+  "native_fossil_blend": [
+    {
+      "name": "Petrol, at refinery",
+      "location": "CH",
+      "amount": 0.25735,
+      "unit": "kilogram"
+    },
+    {
+      "name": "Petrol, at refinery",
+      "location": "RER",
+      "amount": 0.7249,
+      "unit": "kilogram"
+    },
+    {
+      "name": "Methyl tert-butyl ether, at plant",
+      "location": "RER",
+      "amount": 0.018944,
+      "unit": "kilogram"
+    }
+  ],
+  "native_blend_and_loss_input_mass_kg": 1.001194,
+  "source_declared_nonfossil_carbon_kg_per_kg": 0,
+  "source_distribution_electricity_kWh_per_kg": 0.0067,
+  "native_distribution_electricity_kWh_per_kg": 0.050762,
+  "direct_biosphere_comparison_2026": {
+    "source_count": 10,
+    "native_count": 11,
+    "matching_identity_compartment_unit_count": 10,
+    "exact_amount_match_count": 0,
+    "quantity_differences": [
+      {
+        "name": "Benzene",
+        "source_amount": 4.9e-06,
+        "native_amount": 1.2e-05,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "Benzene, ethyl-",
+        "source_amount": 1.03e-05,
+        "native_amount": 2.52e-05,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "Hexane",
+        "source_amount": 6.37e-06,
+        "native_amount": 1.56e-05,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "Hydrocarbons, aliphatic, alkanes, unspecified",
+        "source_amount": 0.000268,
+        "native_amount": 0.00095846,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "Hydrocarbons, aliphatic, unsaturated",
+        "source_amount": 4.9e-05,
+        "native_amount": 8.28e-05,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "Hydrocarbons, aromatic",
+        "source_amount": 4.9e-05,
+        "native_amount": 1.2e-05,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "Methane, fossil",
+        "source_amount": 1.47e-07,
+        "native_amount": 3.5989e-07,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "Toluene",
+        "source_amount": 2.45e-05,
+        "native_amount": 2.4e-05,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "Xylene",
+        "source_amount": 5.39e-05,
+        "native_amount": 9.6e-06,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      },
+      {
+        "name": "t-Butyl methyl ether",
+        "source_amount": 2.45e-05,
+        "native_amount": 5.9982e-05,
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "kilogram"
+      }
+    ],
+    "native_only_flows": [
+      {
+        "publisher_uuid": "b411ec8b-c60a-4235-a3b2-8bf8443cbc55",
+        "name": "Heat, waste",
+        "categories": [
+          "air",
+          "urban air close to ground"
+        ],
+        "unit": "megajoule",
+        "amount": 0.18274
+      }
+    ]
+  },
+  "new_caller_exchange_omissions": [],
+  "new_source_omissions": [],
+  "licensing": "Native-facing supplier choice, bounded comparison facts and metadata hashes. Original full proprietary vectors, comments, codes and archives remain private."
+}
