@@ -1347,6 +1347,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_sodium_sulfate_39_review(technosphere)
     if __package__:
+        from scripts.review_uvek_ammonium_sulfate_39 import apply_ammonium_sulfate_39_review
+    else:
+        from review_uvek_ammonium_sulfate_39 import apply_ammonium_sulfate_39_review
+
+    apply_ammonium_sulfate_39_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
