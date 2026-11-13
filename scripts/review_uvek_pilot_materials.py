@@ -49,6 +49,17 @@ def apply_cogen_heat_exchanger_review(resource, root=ROOT):
     )
 
 
+def apply_cdr_small_biomethane_heat_review(resource, root=ROOT):
+    """Use the inspected small-boiler useful-heat reference, without fuel rescaling."""
+    _apply_material_review(
+        resource,
+        root,
+        "brightpath/data/export/uvek_cdr_small_biomethane_heat_review.json",
+        "0c09ba9540db167307a7a89b130061df98ac571a15f7de69bd5913ebbb79510d",
+        mapping_method="reviewed_inventory_boundary_correction",
+    )
+
+
 def _apply_material_review(resource, root, review_path, approval_sha256, *, mapping_method="reviewed_pilot_material"):
     raw = (root / review_path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != approval_sha256:
