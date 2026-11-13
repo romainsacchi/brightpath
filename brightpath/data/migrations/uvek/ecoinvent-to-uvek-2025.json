@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 221,
-      "recipe": 1064,
-      "unclassified": 29190
+      "recipe": 1067,
+      "unclassified": 29187
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 260,
       "followup_review": 163,
-      "heuristic_similarity": 26422,
+      "heuristic_similarity": 26419,
       "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -78,6 +78,7 @@
       "reviewed_heat_reconstruct_market": 1,
       "reviewed_heat_source_electrolysis_helper": 1,
       "reviewed_heat_vehicle_gas_proxy": 1,
+      "reviewed_ilmenite_built_mine_inventory_39": 3,
       "reviewed_industrial_landfarming_service": 7,
       "reviewed_industrial_waste_market_service": 14,
       "reviewed_inventory_boundary_correction": 9,
@@ -191,7 +192,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.443598,
+    "mean_confidence": 0.443646,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -126213,6 +126214,292 @@
       "rationale": "Reject sodium metal -> sodium chloride: the chemicals have different functions. Reconstruct the inspected positive1kgsodium-metal reference using its complete already allocated source electrolysis/purification inputs: four upstream services and five direct canonical3.10biosphere flows. Saltpowder is retained only as an electrolysis input. The source allocation metadata is not applied a second time; add no chlorine co-product or avoided-production credit. Retain all actual source coefficients, supported internal uncertainty and formulas. Native chemical factory, medium-voltage grid and saltpowder supply are whole-service/product screening proxies; the source regional electricity market portfolio and salt-market producer/final-delivery mix are not reconstructed. The exact3.10chemical-heat helper retains its reviewed source make-upwater and two water releases without adding source combustion again. Those are heat-service water flows, distinct from the sodium process's five direct flows. This is a preserved source electrolysis model on approximate native upstream suppliers, not a native sodium dataset or LCIA-equivalence finding. Only exact inspected ecoinvent3.10cutoff is newly qualified. Preserve signed caller quantities, formulas and supported uncertainty and complete links. No reverse or cross-system-model route, invented credit or silent omission is approved. Native background/geography/vintage/allocation differences and prior biosphere exclusions remain limitations, with unquantified score effects.",
       "reference product": "sodium",
       "unit": "kilogram"
+    },
+    "ilmenite-mine-39-asset-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ilmenite_mine_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "ilmenite-mine-39-built-asset",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "GLO",
+      "name": "market for mine infrastructure, open cast, ilmenite from hard-rock ore, retained built-site inventory with native buildings",
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted.",
+      "reference product": "mine infrastructure, open cast, ilmenite from hard-rock ore",
+      "unit": "unit"
+    },
+    "ilmenite-mine-39-built-asset": {
+      "evidence": [
+        "brightpath/data/export/uvek_ilmenite_mine_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 7910.0,
+          "loc": 8.9758830607617,
+          "location": "CH",
+          "name": "Building, hall",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 3
+          },
+          "reference product": "Building, hall",
+          "scale": 0.555517776493246,
+          "scale without pedigree": 0.5649778756730214,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "square meter"
+        },
+        {
+          "amount": 118650.0,
+          "loc": 11.68393326186391,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 3
+          },
+          "recipe": "ilmenite-mine-39-multi-storey-market",
+          "scale": 0.555517776493246,
+          "scale without pedigree": 0.5649778756730214,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1582000.0,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Independently checked source land-use identity and full compartment unchanged in the selected canonical biosphere.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "land"
+                ],
+                "name": "Occupation, industrial area",
+                "unit": "square meter-year"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "land"
+          ],
+          "loc": 14.274200427309736,
+          "name": "Occupation, industrial area",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 3
+          },
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.24331050121192882,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "square meter-year"
+        },
+        {
+          "amount": 1091000.0,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Independently checked source land-use identity and full compartment unchanged in the selected canonical biosphere.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "land"
+                ],
+                "name": "Occupation, traffic area, road network",
+                "unit": "square meter-year"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "land"
+          ],
+          "loc": 13.902605264815207,
+          "name": "Occupation, traffic area, road network",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 3
+          },
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.24331050121192882,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "square meter-year"
+        },
+        {
+          "amount": 26730.0,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Independently checked source land-use identity and full compartment unchanged in the selected canonical biosphere.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "land"
+                ],
+                "name": "Transformation, from forest, unspecified",
+                "unit": "square meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "land"
+          ],
+          "loc": 10.193541809132965,
+          "name": "Transformation, from forest, unspecified",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 3
+          },
+          "scale": 0.3586084215408221,
+          "scale without pedigree": 0.3730951621235526,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "square meter"
+        },
+        {
+          "amount": 15820.0,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Independently checked source land-use identity and full compartment unchanged in the selected canonical biosphere.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "land"
+                ],
+                "name": "Transformation, to industrial area",
+                "unit": "square meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "land"
+          ],
+          "loc": 9.669030241321645,
+          "name": "Transformation, to industrial area",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 3
+          },
+          "scale": 0.3586084215408221,
+          "scale without pedigree": 0.3730951621235526,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "square meter"
+        },
+        {
+          "amount": 10910.0,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Independently checked source land-use identity and full compartment unchanged in the selected canonical biosphere.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "land"
+                ],
+                "name": "Transformation, to traffic area, road network",
+                "unit": "square meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "land"
+          ],
+          "loc": 9.297435078827116,
+          "name": "Transformation, to traffic area, road network",
+          "pedigree": {
+            "completeness": 2,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 3
+          },
+          "scale": 0.3606937759374287,
+          "scale without pedigree": 0.377094152699296,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "square meter"
+        }
+      ],
+      "location": "GLO",
+      "name": "mine construction, open cast, ilmenite from hard-rock ore, retained built-site inventory with native buildings",
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted.",
+      "reference product": "mine infrastructure, open cast, ilmenite from hard-rock ore",
+      "unit": "unit"
+    },
+    "ilmenite-mine-39-multi-storey-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ilmenite_mine_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.669407648360697,
+          "loc": 0.669407648360697,
+          "location": "RER",
+          "name": "Building, multi-storey",
+          "reference product": "Building, multi-storey",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.330592351639303,
+          "loc": 0.330592351639303,
+          "location": "RER",
+          "name": "Building, multi-storey",
+          "reference product": "Building, multi-storey",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for building, multi-storey, retained built-site inventory with native buildings",
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted.",
+      "reference product": "building, multi-storey",
+      "unit": "cubic meter"
     },
     "industrial-landfarming-2741f727f35505b8226c": {
       "evidence": [
@@ -802211,7 +802498,7 @@
     {"confidence": 0.853333, "id": "bp-9115d014b93814da", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for building, hall, wood construction", "reference product": "building, hall, wood construction", "unit": "square meter"}, "target": {"location": "CH", "name": "Building, hall, wood construction", "reference product": "Building, hall, wood construction", "unit": "square meter"}},
     {"confidence": 0.300024, "id": "bp-3231f1e273b25e90", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for building, hostel", "reference product": "building, hostel", "unit": "unit"}, "target": {"location": "RER", "name": "Building machine", "reference product": "Building machine", "unit": "unit"}},
     {"confidence": 0.245916, "id": "bp-435c3d26619db1c8", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for building, luxury hotel", "reference product": "building, luxury hotel", "unit": "unit"}, "target": {"location": "RER", "name": "Building machine", "reference product": "Building machine", "unit": "unit"}},
-    {"confidence": 0.823571, "id": "bp-1a960033d07f1ebd", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for building, multi-storey", "reference product": "building, multi-storey", "unit": "cubic meter"}, "target": {"location": "RER", "name": "Building, multi-storey", "reference product": "Building, multi-storey", "unit": "cubic meter"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-1a960033d07f1ebd", "mapping_method": "reviewed_ilmenite_built_mine_inventory_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ilmenite_mine_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ilmenite_mine_39_review.json"], "reason": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "ilmenite-mine-39-multi-storey-market"}}], "reason": "Only the enumerated exact source-3.9 cut-off profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bd071fb50a2b04f8", "source": {"location": "GLO", "name": "market for building, multi-storey", "reference product": "building, multi-storey", "unit": "cubic meter"}, "target": {"recipe_ref": "ilmenite-mine-39-multi-storey-market"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted."},
     {"confidence": 0.243676, "id": "bp-aa977a8a5689c89d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for building, upmarket hotel", "reference product": "building, upmarket hotel", "unit": "unit"}, "target": {"location": "RER", "name": "Building machine", "reference product": "Building machine", "unit": "unit"}},
     {"confidence": 0.147424, "id": "bp-4a1eaf252b5e3b68", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for bulk carrier, for dry goods", "reference product": "bulk carrier, for dry goods", "unit": "unit"}, "target": {"location": "RER", "name": "Goods wagon", "reference product": "Goods wagon", "unit": "unit"}},
     {"confidence": 0.395737, "id": "bp-abdeca6a78791c95", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for bulk lead-zinc concentrate", "reference product": "bulk lead-zinc concentrate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Zinc concentrate, at beneficiation", "reference product": "Zinc concentrate, at beneficiation", "unit": "kilogram"}},
@@ -805689,7 +805976,7 @@
     {"confidence": 0.632857, "id": "bp-85f71044415d6cf1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for mine infrastructure, gold-silver-zinc-lead-copper", "reference product": "mine infrastructure, gold-silver-zinc-lead-copper", "unit": "unit"}, "target": {"location": "SE", "name": "Mine, gold-silver-zinc-lead-copper", "reference product": "Mine, gold-silver-zinc-lead-copper", "unit": "unit"}},
     {"confidence": 0.4998, "id": "bp-9ce28b09e04940ad", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for mine infrastructure, iron", "reference product": "mine infrastructure, iron", "unit": "unit"}, "target": {"location": "GLO", "name": "Mine, iron", "reference product": "Mine, iron", "unit": "unit"}},
     {"confidence": 0.609096, "id": "bp-93d99dd0addae77e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for mine infrastructure, open cast, hard coal", "reference product": "mine infrastructure, open cast, hard coal", "unit": "unit"}, "target": {"location": "GLO", "name": "Open cast mine, hard coal", "reference product": "Open cast mine, hard coal", "unit": "unit"}},
-    {"confidence": 0.353304, "id": "bp-ef2d0f2c82b1e1b1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for mine infrastructure, open cast, ilmenite from hard-rock ore", "reference product": "mine infrastructure, open cast, ilmenite from hard-rock ore", "unit": "unit"}, "target": {"location": "GLO", "name": "Open cast mine, hard coal", "reference product": "Open cast mine, hard coal", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-ef2d0f2c82b1e1b1", "mapping_method": "reviewed_ilmenite_built_mine_inventory_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ilmenite_mine_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ilmenite_mine_39_review.json"], "reason": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "ilmenite-mine-39-asset-market"}}], "reason": "Only the enumerated exact source-3.9 cut-off profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bd071fb50a2b04f8", "source": {"location": "GLO", "name": "market for mine infrastructure, open cast, ilmenite from hard-rock ore", "reference product": "mine infrastructure, open cast, ilmenite from hard-rock ore", "unit": "unit"}, "target": {"recipe_ref": "ilmenite-mine-39-asset-market"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted."},
     {"confidence": 0.511276, "id": "bp-7a4a313795365b94", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for mine infrastructure, open cast, lignite", "reference product": "mine infrastructure, open cast, lignite", "unit": "unit"}, "target": {"location": "RER", "name": "Open cast mine, lignite", "reference product": "Open cast mine, lignite", "unit": "unit"}},
     {"confidence": 0.429492, "id": "bp-15c7c1e79791a6cc", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for mine infrastructure, open cast, non-ferrous metal", "reference product": "mine infrastructure, open cast, non-ferrous metal", "unit": "unit"}, "target": {"location": "GLO", "name": "Non-ferrous metal mine, surface", "reference product": "Non-ferrous metal mine, surface", "unit": "unit"}},
     {"confidence": 0.469151, "id": "bp-c116b3eb679dbbd5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for mine infrastructure, open cast, peat", "reference product": "mine infrastructure, open cast, peat", "unit": "unit"}, "target": {"location": "NORDEL", "name": "Open cast mine, peat", "reference product": "Open cast mine, peat", "unit": "unit"}},
@@ -810511,7 +810798,7 @@
     {"confidence": 0.732067, "id": "bp-09bee2b179df9fa5", "mapping_method": "heuristic_similarity", "source": {"location": "SE", "name": "mine construction, gold-silver-zinc-lead-copper", "reference product": "mine infrastructure, gold-silver-zinc-lead-copper", "unit": "unit"}, "target": {"location": "SE", "name": "Mine, gold-silver-zinc-lead-copper", "reference product": "Mine, gold-silver-zinc-lead-copper", "unit": "unit"}},
     {"confidence": 0.4998, "id": "bp-b806d7a660588576", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "mine construction, iron", "reference product": "mine infrastructure, iron", "unit": "unit"}, "target": {"location": "GLO", "name": "Mine, iron", "reference product": "Mine, iron", "unit": "unit"}},
     {"confidence": 0.625801, "id": "bp-aa23de99787cd132", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "mine construction, open cast, hard coal", "reference product": "mine infrastructure, open cast, hard coal", "unit": "unit"}, "target": {"location": "GLO", "name": "Open cast mine, hard coal", "reference product": "Open cast mine, hard coal", "unit": "unit"}},
-    {"confidence": 0.361259, "id": "bp-03f7ef8484d90cd9", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "mine construction, open cast, ilmenite from hard-rock ore", "reference product": "mine infrastructure, open cast, ilmenite from hard-rock ore", "unit": "unit"}, "target": {"location": "GLO", "name": "Open cast mine, hard coal", "reference product": "Open cast mine, hard coal", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-03f7ef8484d90cd9", "mapping_method": "reviewed_ilmenite_built_mine_inventory_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ilmenite_mine_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ilmenite_mine_39_review.json"], "reason": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "ilmenite-mine-39-built-asset"}}], "reason": "Only the enumerated exact source-3.9 cut-off profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bd071fb50a2b04f8", "source": {"location": "GLO", "name": "mine construction, open cast, ilmenite from hard-rock ore", "reference product": "mine infrastructure, open cast, ilmenite from hard-rock ore", "unit": "unit"}, "target": {"recipe_ref": "ilmenite-mine-39-built-asset"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted."},
     {"confidence": 0.600955, "id": "bp-0aabf637a69b1a31", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "mine construction, open cast, lignite", "reference product": "mine infrastructure, open cast, lignite", "unit": "unit"}, "target": {"location": "RER", "name": "Open cast mine, lignite", "reference product": "Open cast mine, lignite", "unit": "unit"}},
     {"confidence": 0.520955, "id": "bp-7b5cfbf1381288f4", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "mine construction, open cast, lignite", "reference product": "mine infrastructure, open cast, lignite", "unit": "unit"}, "target": {"location": "RER", "name": "Open cast mine, lignite", "reference product": "Open cast mine, lignite", "unit": "unit"}},
     {"confidence": 0.438907, "id": "bp-dadab6f8586d0f95", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "mine construction, open cast, non-ferrous metal", "reference product": "mine infrastructure, open cast, non-ferrous metal", "unit": "unit"}, "target": {"location": "GLO", "name": "Non-ferrous metal mine, surface", "reference product": "Non-ferrous metal mine, surface", "unit": "unit"}},
@@ -827715,6 +828002,20 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of bottom ash, MSWI-WWT, WW from PET pelletising, slag compartment / RER / kg external exchange with a warning. All inspected direct service comments for PET pelletising document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-bd071fb50a2b04f8": {
+      "evidence": [
+        "brightpath/data/export/uvek_ilmenite_mine_39_review.json"
+      ],
+      "limitations": [
+        "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval.",
+        "Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit.",
+        "Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections.",
+        "The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced.",
+        "The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed.",
+        "Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted."
+      ],
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off Tellnes ilmenite/magnetite built-mine asset, its one-producer global market and the global multi-storey-building market are reviewed. Preserve one capital unit of the asset, signed caller quantities, supported uncertainty/formulas, foreground ownership and separate emissions. This is neither a kg of ore nor a year of mine operation; other source releases, patches, system models and reverse routes gain no approval. Reconstruct the seven-row built-site inventory: 7910 m2 hall supply, 118650 m3 multi-storey-building supply and all five source land-use flows. The mine market retains its sole one-unit producer, with no added freight or loss. The source estimates the built part of the Norwegian Tellnes mine from aerial imagery; it excludes a complete coal mine, excavation and ore-production inventory. Do not substitute native hard-coal mine construction, scale by annual mineral output, add extraction/recultivation, or introduce an avoided coproduct credit. Retain the source occupation and transformation coefficients: industrial occupation 1582000 m2-year, road occupation 1091000 m2-year, transformation from unspecified forest 26730 m2, to industrial area 15820 m2 and to road network 10910 m2. All five direct identities, full compartments, units, amounts and supported uncertainty map unchanged to the selected ecoinvent 3.10 biosphere. Transformation areas balance as observed; do not infer extra land restoration, background conversion or occupation corrections. The existing exact-profile hall correspondence is reused unchanged. The multi-storey market retains both original RoW/RER producer entries and shares 0.669407648360697 and 0.330592351639303, separately, without renormalization. Use the complete native European multi-storey building per positive m3 for each entry as an explicit geographic/historical proxy; source and native share the composite 1927/1972 concrete-building lineage, assumed 80-year life, construction/maintenance/demolition energy, material delivery and end-of-life, excluding operation. No m2/m3, floor-count, height, lifetime, heating or annual-capacity multiplier is introduced. The source site occupation coefficients correspond to 100 years, while the supplied building inventory assumes 80 years. Preserve these different source lifetime conventions, and flag their compatibility for review without inventing replacements or a lifetime adjustment. Both source and native building documentation warn against high-importance use; that limitation matters for a buildings-dominated asset. Warnings retain original data quality, geography, technology, upstream allocation, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score effects. No LCI, LCIA or stochastic equivalence is claimed. Complete native building inventories already contain materials, construction, maintenance, delivery and disposal; use each once, keeping the original mine-level land accounting separately. Do not add duplicate operations, construction/disposal or land-use corrections. No source exchange, credit or emission is omitted."
     },
     "r-bd18bd4381104cab": {
       "limitations": [
