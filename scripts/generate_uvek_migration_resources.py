@@ -1218,6 +1218,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_mining_38_polyester_fibre_review(technosphere)
     if __package__:
+        from scripts.review_uvek_mining_38_pam_public import apply_mining_38_pam_public_review
+    else:
+        from review_uvek_mining_38_pam_public import apply_mining_38_pam_public_review
+
+    apply_mining_38_pam_public_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews

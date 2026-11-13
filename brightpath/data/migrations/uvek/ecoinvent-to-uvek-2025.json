@@ -4,15 +4,15 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 215,
-      "recipe": 1040,
-      "unclassified": 29220
+      "recipe": 1041,
+      "unclassified": 29219
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 260,
       "followup_review": 163,
       "heuristic_similarity": 26454,
-      "pairwise_review": 2211,
+      "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
       "reviewed_allocated_compost_delivery": 7,
@@ -80,6 +80,7 @@
       "reviewed_market_composition": 366,
       "reviewed_mining_38_high_slag": 2,
       "reviewed_mining_38_material_suppliers": 2,
+      "reviewed_mining_38_pam_public_screening": 1,
       "reviewed_mining_38_polyester_fibre": 1,
       "reviewed_native_nongas_industrial_heat_proxy": 1,
       "reviewed_older_pet_whole_freight": 1,
@@ -179,7 +180,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.442951,
+    "mean_confidence": 0.44297,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -140628,6 +140629,202 @@
       "name": "Ordinary Portland cement, retained final delivery, 3.8",
       "rationale": "Only the independently inspected ecoinvent3.8cutoff profile qualifies. Preserve signed caller quantities, formulas, supported uncertainty and separately listed exchanges. Complete native processes replace source technology, allocation, upstream supply, internal uncertainty, geography and vintage; score effects are unquantified. Native source biosphere exclusions remain inherited limitations. No inverse, consequential or other-release approval is inferred. Correct ordinary Portland cement to the complete native CEMI42.5product, not slag-blended cement. Source CEMIlabel specifies95–100%clinker; native historical recipe states90%clinker,5%gypsum and5%milling substances. This explicit composition/strength/vintage proxy is not an identical grade and no clinker-fitting multiplier is applied. Retain all original light-commercial, rail and heavy-road freight rows independently, with uncertainty and pedigree, outside the native at-plant cement once. Light-commercial freight uses complete native3.5t fleet service rather than generic heavy-lorry average. Native class, traction, loading, fuel, geography and fleet vintage differ; add no vehicle, payload/gross-weight or distance correction.",
       "reference product": "cement, Portland",
+      "unit": "kilogram"
+    },
+    "mining-38-pam-market-retained-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_mining_38_pam_public_review.json",
+        "https://kompetenzwasser.de/media/pages/forschung/publikationen/911/fddcbc82b0-1702634140/Gross-2015-911.pdf"
+      ],
+      "inputs": [
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic freight ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic freight ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "mining-38-pam-reactants-and-production-services",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "GLO",
+      "name": "Polyacrylamide screening market, retained production and delivery, 3.8",
+      "rationale": "Only the inspected ecoinvent 3.8 cut-off profile qualifies. Replace the generic-organic-chemical average with a polyacrylamide screening recipe using the rounded public reactant baseline of Gross et al. (2015), DEMEAU D51.1, section 4.4.2.4/Table 4-7, printed page 71: 0.75 kg Sohio acrylonitrile plus 0.25 kg tap water per kg active polymer. These are rounded reactant coefficients, not an atomically exact synthesis yield. Water is incorporated into the acrylamide repeat unit; do not interpret it as 25% free moisture or apply a dilution/dry-mass multiplier. Complete native RER monomer and delivered tap water replace the source monomer supply mix, deionised-water portfolio and internal reactant uncertainty. Retain the inspected source production-service quantities and supported uncertainty/pedigree separately: organic chemical plant units, global medium-voltage electricity and both RER/RoW MJ heat purchases. The existing exact-profile chemical-steam heat helpers retain useful heat, source make-up water and physical water releases; freeze their recipes and dependencies unchanged. Do not convert MJ to kg steam, invent an efficiency, fit energy or omit the factory energy. Reaction water and utility make-up water serve different purposes and are not duplicated. The native chemical plant has different capacity, lifetime, technology, geography and vintage; retain the original unit dose without a capacity-fitting multiplier. Native GLO electricity and native RER chemical heat replace historical grid/fuel/combustion/allocation boundaries. The sparse source factory model already excludes enzymes/catalysts, wastes and direct emissions; these remain unrepresented, not physically zero or negligible. This is not a complete industrial recipe, source/native score equivalence or an impact bound. Native Sohio mass allocation, water quality, reactant rounding, historical technology and native biosphere exclusions remain explicit limitations with unquantified score effects. Retain all four final-market freight rows, quantities and supported uncertainty/pedigree separately, with native RER rail/barge/lorry and OCE transoceanic services. National/mode, vessel/container, fleet/loading and vintage differences remain proxies without payload or distance corrections. Preserve signed caller quantities, formula and supported uncertainty at factor +1. No oil-recovery-polymer formulation, average-chemical/PAN substitution, recovery credit, consequential, other-release or inverse approval is introduced.",
+      "reference product": "polyacrylamide",
+      "unit": "kilogram"
+    },
+    "mining-38-pam-reactants-and-production-services": {
+      "evidence": [
+        "brightpath/data/export/uvek_mining_38_pam_public_review.json",
+        "https://kompetenzwasser.de/media/pages/forschung/publikationen/911/fddcbc82b0-1702634140/Gross-2015-911.pdf"
+      ],
+      "inputs": [
+        {
+          "amount": 0.75,
+          "loc": 0.75,
+          "location": "RER",
+          "name": "Acrylonitrile from Sohio process, at plant",
+          "reference product": "Acrylonitrile from Sohio process, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.25,
+          "loc": 0.25,
+          "location": "RER",
+          "name": "Tap water, at user",
+          "reference product": "Tap water, at user",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.6928203230275509,
+          "scale without pedigree": 0.5196152422706632,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.333,
+          "loc": -1.0996127890016931,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4589117562233506,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.29977153056,
+          "loc": -1.2047346592637234,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 0.4589117562233506,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.70022846944,
+          "loc": 0.5307626358203696,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "recipe": "fuels-38-chemical-heat-uq-b79ce56ce460b47414a9",
+          "scale": 0.4589117562233506,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        }
+      ],
+      "location": "GLO",
+      "name": "Polyacrylamide, public reactants and retained production services, 3.8",
+      "rationale": "Only the inspected ecoinvent 3.8 cut-off profile qualifies. Replace the generic-organic-chemical average with a polyacrylamide screening recipe using the rounded public reactant baseline of Gross et al. (2015), DEMEAU D51.1, section 4.4.2.4/Table 4-7, printed page 71: 0.75 kg Sohio acrylonitrile plus 0.25 kg tap water per kg active polymer. These are rounded reactant coefficients, not an atomically exact synthesis yield. Water is incorporated into the acrylamide repeat unit; do not interpret it as 25% free moisture or apply a dilution/dry-mass multiplier. Complete native RER monomer and delivered tap water replace the source monomer supply mix, deionised-water portfolio and internal reactant uncertainty. Retain the inspected source production-service quantities and supported uncertainty/pedigree separately: organic chemical plant units, global medium-voltage electricity and both RER/RoW MJ heat purchases. The existing exact-profile chemical-steam heat helpers retain useful heat, source make-up water and physical water releases; freeze their recipes and dependencies unchanged. Do not convert MJ to kg steam, invent an efficiency, fit energy or omit the factory energy. Reaction water and utility make-up water serve different purposes and are not duplicated. The native chemical plant has different capacity, lifetime, technology, geography and vintage; retain the original unit dose without a capacity-fitting multiplier. Native GLO electricity and native RER chemical heat replace historical grid/fuel/combustion/allocation boundaries. The sparse source factory model already excludes enzymes/catalysts, wastes and direct emissions; these remain unrepresented, not physically zero or negligible. This is not a complete industrial recipe, source/native score equivalence or an impact bound. Native Sohio mass allocation, water quality, reactant rounding, historical technology and native biosphere exclusions remain explicit limitations with unquantified score effects. Retain all four final-market freight rows, quantities and supported uncertainty/pedigree separately, with native RER rail/barge/lorry and OCE transoceanic services. National/mode, vessel/container, fleet/loading and vintage differences remain proxies without payload or distance corrections. Preserve signed caller quantities, formula and supported uncertainty at factor +1. No oil-recovery-polymer formulation, average-chemical/PAN substitution, recovery credit, consequential, other-release or inverse approval is introduced.",
+      "reference product": "polyacrylamide",
       "unit": "kilogram"
     },
     "mining-38-pet-fibre-native-granulate-and-conversion": {
@@ -775538,7 +775735,7 @@
     {"confidence": 0.240909, "id": "bp-a3bf5a009b644e49", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for polishing powder", "reference product": "polishing powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Coating powder, at plant", "reference product": "Coating powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.371506, "conversion_factor": -1, "id": "bp-b3d0883187b67679", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-b3d0883187b67679"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for pollutant from rail ballast", "reference product": "pollutant from rail ballast", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, pollutants from rail ballast, 0% water, to residual material landfill", "reference product": "Disposal, pollutants from rail ballast, 0% water, to residual material landfill", "unit": "kilogram"}},
     {"confidence": 0.291506, "conversion_factor": -1, "id": "bp-f495284ebfd63a03", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-f495284ebfd63a03"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for pollutant from rail ballast", "reference product": "pollutant from rail ballast", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, pollutants from rail ballast, 0% water, to residual material landfill", "reference product": "Disposal, pollutants from rail ballast, 0% water, to residual material landfill", "unit": "kilogram"}},
-    {"confidence": 0.4, "id": "bp-656e502f8a1766b9", "mapping_method": "pairwise_review", "review_ref": "r-36a16cb01d5e258d", "source": {"location": "GLO", "name": "market for polyacrylamide", "reference product": "polyacrylamide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-656e502f8a1766b9", "mapping_method": "reviewed_mining_38_pam_public_screening", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_mining_38_pam_public_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_mining_38_pam_public_review.json", "https://kompetenzwasser.de/media/pages/forschung/publikationen/911/fddcbc82b0-1702634140/Gross-2015-911.pdf"], "reason": "Only the inspected ecoinvent 3.8 cut-off profile qualifies. Replace the generic-organic-chemical average with a polyacrylamide screening recipe using the rounded public reactant baseline of Gross et al. (2015), DEMEAU D51.1, section 4.4.2.4/Table 4-7, printed page 71: 0.75 kg Sohio acrylonitrile plus 0.25 kg tap water per kg active polymer. These are rounded reactant coefficients, not an atomically exact synthesis yield. Water is incorporated into the acrylamide repeat unit; do not interpret it as 25% free moisture or apply a dilution/dry-mass multiplier. Complete native RER monomer and delivered tap water replace the source monomer supply mix, deionised-water portfolio and internal reactant uncertainty. Retain the inspected source production-service quantities and supported uncertainty/pedigree separately: organic chemical plant units, global medium-voltage electricity and both RER/RoW MJ heat purchases. The existing exact-profile chemical-steam heat helpers retain useful heat, source make-up water and physical water releases; freeze their recipes and dependencies unchanged. Do not convert MJ to kg steam, invent an efficiency, fit energy or omit the factory energy. Reaction water and utility make-up water serve different purposes and are not duplicated. The native chemical plant has different capacity, lifetime, technology, geography and vintage; retain the original unit dose without a capacity-fitting multiplier. Native GLO electricity and native RER chemical heat replace historical grid/fuel/combustion/allocation boundaries. The sparse source factory model already excludes enzymes/catalysts, wastes and direct emissions; these remain unrepresented, not physically zero or negligible. This is not a complete industrial recipe, source/native score equivalence or an impact bound. Native Sohio mass allocation, water quality, reactant rounding, historical technology and native biosphere exclusions remain explicit limitations with unquantified score effects. Retain all four final-market freight rows, quantities and supported uncertainty/pedigree separately, with native RER rail/barge/lorry and OCE transoceanic services. National/mode, vessel/container, fleet/loading and vintage differences remain proxies without payload or distance corrections. Preserve signed caller quantities, formula and supported uncertainty at factor +1. No oil-recovery-polymer formulation, average-chemical/PAN substitution, recovery credit, consequential, other-release or inverse approval is introduced.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only the inspected source profile qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-d6e36c59b353abb5", "source": {"location": "GLO", "name": "market for polyacrylamide", "reference product": "polyacrylamide", "unit": "kilogram"}, "target": {"recipe_ref": "mining-38-pam-market-retained-delivery"}, "technosphere_information_loss": "Only the inspected ecoinvent 3.8 cut-off profile qualifies. Replace the generic-organic-chemical average with a polyacrylamide screening recipe using the rounded public reactant baseline of Gross et al. (2015), DEMEAU D51.1, section 4.4.2.4/Table 4-7, printed page 71: 0.75 kg Sohio acrylonitrile plus 0.25 kg tap water per kg active polymer. These are rounded reactant coefficients, not an atomically exact synthesis yield. Water is incorporated into the acrylamide repeat unit; do not interpret it as 25% free moisture or apply a dilution/dry-mass multiplier. Complete native RER monomer and delivered tap water replace the source monomer supply mix, deionised-water portfolio and internal reactant uncertainty. Retain the inspected source production-service quantities and supported uncertainty/pedigree separately: organic chemical plant units, global medium-voltage electricity and both RER/RoW MJ heat purchases. The existing exact-profile chemical-steam heat helpers retain useful heat, source make-up water and physical water releases; freeze their recipes and dependencies unchanged. Do not convert MJ to kg steam, invent an efficiency, fit energy or omit the factory energy. Reaction water and utility make-up water serve different purposes and are not duplicated. The native chemical plant has different capacity, lifetime, technology, geography and vintage; retain the original unit dose without a capacity-fitting multiplier. Native GLO electricity and native RER chemical heat replace historical grid/fuel/combustion/allocation boundaries. The sparse source factory model already excludes enzymes/catalysts, wastes and direct emissions; these remain unrepresented, not physically zero or negligible. This is not a complete industrial recipe, source/native score equivalence or an impact bound. Native Sohio mass allocation, water quality, reactant rounding, historical technology and native biosphere exclusions remain explicit limitations with unquantified score effects. Retain all four final-market freight rows, quantities and supported uncertainty/pedigree separately, with native RER rail/barge/lorry and OCE transoceanic services. National/mode, vessel/container, fleet/loading and vintage differences remain proxies without payload or distance corrections. Preserve signed caller quantities, formula and supported uncertainty at factor +1. No oil-recovery-polymer formulation, average-chemical/PAN substitution, recovery credit, consequential, other-release or inverse approval is introduced."},
     {"confidence": 0.336588, "id": "bp-a7e48336f29b3157", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for polyaluminium chloride", "reference product": "polyaluminium chloride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ammonium chloride, at plant", "reference product": "Ammonium chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.455605, "id": "bp-cdf4eb891e35bc0b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for polybutadiene", "reference product": "polybutadiene", "unit": "kilogram"}, "target": {"location": "RER", "name": "Polybutadiene, at plant", "reference product": "Polybutadiene, at plant", "unit": "kilogram"}},
     {"confidence": 0.455605, "id": "bp-22bb67f43abdb078", "mapping_method": "heuristic_similarity", "source": {"location": "JP", "name": "market for polybutadiene", "reference product": "polybutadiene", "unit": "kilogram"}, "target": {"location": "RER", "name": "Polybutadiene, at plant", "reference product": "Polybutadiene, at plant", "unit": "kilogram"}},
@@ -797430,6 +797627,16 @@
         "User automatic approval for subsequent modelling decisions applies only within the exact UVEK 2026 cut-off / ecoinvent 3.10 biosphere electricity pilot. Only the encountered ecoinvent 3.9 cut-off RoW other-than-natural-gas district/industrial heat market is qualified. Preserve all 188 original market supplier coefficients, source order and marginal uncertainty individually, without omission, aggregation or normalization. Positive source and reconstructed heat reference 1 MJ means factor +1: negative caller heat credits remain negative. There is no district consumer network, loss uplift, efficiency multiplier, co-output credit, avoided fuel or material credit. Complete native useful-heat services include their own efficiency, infrastructure, fuel, emissions, ash handling and allocation. Furnace/wood species/feedstock/capacity matches remain distinct where available. Native historical CH, national coal and ENTSO-E coal fleets proxy missing source locations; historical UCTE is used for absent oil-power locations, not an invented global oil fleet. Native geographic text/identity contradictions, vintage, efficiency, emissions and internal uncertainty remain limitations. Wood CHP 1 MWth substitutes source 6667 kW CHP and 2014 variants. LPG 50 kW condensing/modulating propane/butane heat substitutes industrial >100 kW propane. Coal-tar heat uses the complete heavy-fuel-oil furnace on which the source explicitly based its proxy, with fuel sourcing, composition, PAH/metals, allocation and emissions differences. Two straw and six pulp-mill heat entries use complete native biomass heat screening proxies; industrial wood replaces straw, and wood-chip CHP replaces pulp-mill/black-liquor recovered heat. Cultivation/organic status, ash/alkali, chemical recovery, feedstock, source coproduct versus native exergy allocation, scale and emissions differences are explicit; no source internal inventory or LCIA equivalence is asserted. For 48 gas-plant heat outputs and one coke furnace, source allocated fuel demand per heat MJ drives native per-fuel-MJ combustion; do not equate fuel MJ to heat MJ. Native blast-furnace gas excludes fuel production whereas source buys gas: retain this upstream boundary/allocation difference explicitly; native coke-oven fuel production stays included. For refinery heat, preserve audited gas mass by source kg divided by native kg per fuel MJ, retaining source reference ambiguity and native infrastructure difference without inferred thermal efficiency. For 24 bagasse/oil CHP outputs and one EAF heat output, source nonproduction coordinates are proportional to companion electricity/steel inventory; the audited ratio weights the complete native donor as an allocated-burden proxy, not physical electricity consumption or a steel purchase. Native bagasse donor includes economic agricultural/refinery/distillery allocation; source separate combustion allocation differs. Native oil fleet/CHP share, EAF steel/slag allocation, output heat quality and internal uncertainties differ. These ratios do not establish native allocation equivalence or an energy-unit conversion. Twelve exact positive source heat outputs contain production only; use the verified native positive recovered-heat output whose documented allocation is 100% to waste disposal and 0% to energy and whose inventory likewise contains production only. Retain their original heat shares with explicit waste/feedstock/technology/geography proxy warnings, not an invented zero physical combustion or empty disposal service. Six municipal recovered-heat wrappers use that same complete native recovered-heat service at plant gate; source internal regional routing, recovery and allocation are replaced, not claimed identical. No generic empty-provider fallback, zero-burden helper or omission authorization is introduced. Source producer internal formulas, parameters, exchanges and uncertainty are replaced by the specified native models; audited driver coefficients and market/caller quantities remain distinct. Native bundle pin and 2,991 upstream biosphere exclusions persist. All proxy score effects remain unquantified. Preserve caller ownership, formulas, signed uncertainty, foreground links and separate exchanges. Uninspected profiles, standalone producers, reverse or cross-system-model routes and full scenario/certification/export are outside this decision."
       ],
       "rationale": "User automatic approval for subsequent modelling decisions applies only within the exact UVEK 2026 cut-off / ecoinvent 3.10 biosphere electricity pilot. Only the encountered ecoinvent 3.9 cut-off RoW other-than-natural-gas district/industrial heat market is qualified. Preserve all 188 original market supplier coefficients, source order and marginal uncertainty individually, without omission, aggregation or normalization. Positive source and reconstructed heat reference 1 MJ means factor +1: negative caller heat credits remain negative. There is no district consumer network, loss uplift, efficiency multiplier, co-output credit, avoided fuel or material credit. Complete native useful-heat services include their own efficiency, infrastructure, fuel, emissions, ash handling and allocation. Furnace/wood species/feedstock/capacity matches remain distinct where available. Native historical CH, national coal and ENTSO-E coal fleets proxy missing source locations; historical UCTE is used for absent oil-power locations, not an invented global oil fleet. Native geographic text/identity contradictions, vintage, efficiency, emissions and internal uncertainty remain limitations. Wood CHP 1 MWth substitutes source 6667 kW CHP and 2014 variants. LPG 50 kW condensing/modulating propane/butane heat substitutes industrial >100 kW propane. Coal-tar heat uses the complete heavy-fuel-oil furnace on which the source explicitly based its proxy, with fuel sourcing, composition, PAH/metals, allocation and emissions differences. Two straw and six pulp-mill heat entries use complete native biomass heat screening proxies; industrial wood replaces straw, and wood-chip CHP replaces pulp-mill/black-liquor recovered heat. Cultivation/organic status, ash/alkali, chemical recovery, feedstock, source coproduct versus native exergy allocation, scale and emissions differences are explicit; no source internal inventory or LCIA equivalence is asserted. For 48 gas-plant heat outputs and one coke furnace, source allocated fuel demand per heat MJ drives native per-fuel-MJ combustion; do not equate fuel MJ to heat MJ. Native blast-furnace gas excludes fuel production whereas source buys gas: retain this upstream boundary/allocation difference explicitly; native coke-oven fuel production stays included. For refinery heat, preserve audited gas mass by source kg divided by native kg per fuel MJ, retaining source reference ambiguity and native infrastructure difference without inferred thermal efficiency. For 24 bagasse/oil CHP outputs and one EAF heat output, source nonproduction coordinates are proportional to companion electricity/steel inventory; the audited ratio weights the complete native donor as an allocated-burden proxy, not physical electricity consumption or a steel purchase. Native bagasse donor includes economic agricultural/refinery/distillery allocation; source separate combustion allocation differs. Native oil fleet/CHP share, EAF steel/slag allocation, output heat quality and internal uncertainties differ. These ratios do not establish native allocation equivalence or an energy-unit conversion. Twelve exact positive source heat outputs contain production only; use the verified native positive recovered-heat output whose documented allocation is 100% to waste disposal and 0% to energy and whose inventory likewise contains production only. Retain their original heat shares with explicit waste/feedstock/technology/geography proxy warnings, not an invented zero physical combustion or empty disposal service. Six municipal recovered-heat wrappers use that same complete native recovered-heat service at plant gate; source internal regional routing, recovery and allocation are replaced, not claimed identical. No generic empty-provider fallback, zero-burden helper or omission authorization is introduced. Source producer internal formulas, parameters, exchanges and uncertainty are replaced by the specified native models; audited driver coefficients and market/caller quantities remain distinct. Native bundle pin and 2,991 upstream biosphere exclusions persist. All proxy score effects remain unquantified. Preserve caller ownership, formulas, signed uncertainty, foreground links and separate exchanges. Uninspected profiles, standalone producers, reverse or cross-system-model routes and full scenario/certification/export are outside this decision."
+    },
+    "r-d6e36c59b353abb5": {
+      "evidence": [
+        "brightpath/data/export/uvek_mining_38_pam_public_review.json",
+        "https://kompetenzwasser.de/media/pages/forschung/publikationen/911/fddcbc82b0-1702634140/Gross-2015-911.pdf"
+      ],
+      "limitations": [
+        "Only the inspected ecoinvent 3.8 cut-off profile qualifies. Replace the generic-organic-chemical average with a polyacrylamide screening recipe using the rounded public reactant baseline of Gross et al. (2015), DEMEAU D51.1, section 4.4.2.4/Table 4-7, printed page 71: 0.75 kg Sohio acrylonitrile plus 0.25 kg tap water per kg active polymer. These are rounded reactant coefficients, not an atomically exact synthesis yield. Water is incorporated into the acrylamide repeat unit; do not interpret it as 25% free moisture or apply a dilution/dry-mass multiplier. Complete native RER monomer and delivered tap water replace the source monomer supply mix, deionised-water portfolio and internal reactant uncertainty. Retain the inspected source production-service quantities and supported uncertainty/pedigree separately: organic chemical plant units, global medium-voltage electricity and both RER/RoW MJ heat purchases. The existing exact-profile chemical-steam heat helpers retain useful heat, source make-up water and physical water releases; freeze their recipes and dependencies unchanged. Do not convert MJ to kg steam, invent an efficiency, fit energy or omit the factory energy. Reaction water and utility make-up water serve different purposes and are not duplicated. The native chemical plant has different capacity, lifetime, technology, geography and vintage; retain the original unit dose without a capacity-fitting multiplier. Native GLO electricity and native RER chemical heat replace historical grid/fuel/combustion/allocation boundaries. The sparse source factory model already excludes enzymes/catalysts, wastes and direct emissions; these remain unrepresented, not physically zero or negligible. This is not a complete industrial recipe, source/native score equivalence or an impact bound. Native Sohio mass allocation, water quality, reactant rounding, historical technology and native biosphere exclusions remain explicit limitations with unquantified score effects. Retain all four final-market freight rows, quantities and supported uncertainty/pedigree separately, with native RER rail/barge/lorry and OCE transoceanic services. National/mode, vessel/container, fleet/loading and vintage differences remain proxies without payload or distance corrections. Preserve signed caller quantities, formula and supported uncertainty at factor +1. No oil-recovery-polymer formulation, average-chemical/PAN substitution, recovery credit, consequential, other-release or inverse approval is introduced."
+      ],
+      "rationale": "Only the inspected ecoinvent 3.8 cut-off profile qualifies. Replace the generic-organic-chemical average with a polyacrylamide screening recipe using the rounded public reactant baseline of Gross et al. (2015), DEMEAU D51.1, section 4.4.2.4/Table 4-7, printed page 71: 0.75 kg Sohio acrylonitrile plus 0.25 kg tap water per kg active polymer. These are rounded reactant coefficients, not an atomically exact synthesis yield. Water is incorporated into the acrylamide repeat unit; do not interpret it as 25% free moisture or apply a dilution/dry-mass multiplier. Complete native RER monomer and delivered tap water replace the source monomer supply mix, deionised-water portfolio and internal reactant uncertainty. Retain the inspected source production-service quantities and supported uncertainty/pedigree separately: organic chemical plant units, global medium-voltage electricity and both RER/RoW MJ heat purchases. The existing exact-profile chemical-steam heat helpers retain useful heat, source make-up water and physical water releases; freeze their recipes and dependencies unchanged. Do not convert MJ to kg steam, invent an efficiency, fit energy or omit the factory energy. Reaction water and utility make-up water serve different purposes and are not duplicated. The native chemical plant has different capacity, lifetime, technology, geography and vintage; retain the original unit dose without a capacity-fitting multiplier. Native GLO electricity and native RER chemical heat replace historical grid/fuel/combustion/allocation boundaries. The sparse source factory model already excludes enzymes/catalysts, wastes and direct emissions; these remain unrepresented, not physically zero or negligible. This is not a complete industrial recipe, source/native score equivalence or an impact bound. Native Sohio mass allocation, water quality, reactant rounding, historical technology and native biosphere exclusions remain explicit limitations with unquantified score effects. Retain all four final-market freight rows, quantities and supported uncertainty/pedigree separately, with native RER rail/barge/lorry and OCE transoceanic services. National/mode, vessel/container, fleet/loading and vintage differences remain proxies without payload or distance corrections. Preserve signed caller quantities, formula and supported uncertainty at factor +1. No oil-recovery-polymer formulation, average-chemical/PAN substitution, recovery credit, consequential, other-release or inverse approval is introduced."
     },
     "r-d71b6aa7f3ce4f4e": {
       "evidence": [
