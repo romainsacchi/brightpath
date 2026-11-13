@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 215,
-      "recipe": 1042,
-      "unclassified": 29218
+      "recipe": 1043,
+      "unclassified": 29217
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 260,
       "followup_review": 163,
-      "heuristic_similarity": 26450,
+      "heuristic_similarity": 26449,
       "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -78,6 +78,7 @@
       "reviewed_inventory_boundary_correction": 9,
       "reviewed_low_pressure_delivered_gas_energy": 13,
       "reviewed_market_composition": 366,
+      "reviewed_mdea_native_derived_screening": 1,
       "reviewed_mining_38_high_slag": 2,
       "reviewed_mining_38_material_suppliers": 2,
       "reviewed_mining_38_msw_portfolio": 1,
@@ -181,7 +182,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.44305,
+    "mean_confidence": 0.443076,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -140551,6 +140552,697 @@
       "name": "market for bark, composed from resolved suppliers, GLO",
       "rationale": "Reviewed market-composition helper: retain the inspected active supply mix and freight quantities, using only the existing resolved directional component mappings for this exact source profile. The source has a unit-magnitude reference, active technosphere inputs only and no direct biosphere exchanges. Apply each component's reference-sign factor independently: negative inputs to negative treatment references are treatment demand, whereas negative inputs to positive product references are recovery credits. No component omission, empty allocation or missing-provider fallback is used. These helpers inherit the component correspondences' heuristic, technology, composition, geography and allocation approximations; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, uncertainty, formulas, foreground suppliers, production and separate emissions. Score and export all returned helpers. Missing or changed exact profiles require a new review; no reverse correspondence is inferred.",
       "reference product": "bark",
+      "unit": "kilogram"
+    },
+    "mdea-312-native-derived-ethoxylation": {
+      "evidence": [
+        "brightpath/data/export/uvek_mdea_312_review.json",
+        "https://patents.google.com/patent/US5395973A/en",
+        "https://patents.google.com/patent/US9345988B2/en"
+      ],
+      "inputs": [
+        {
+          "amount": 4e-10,
+          "comment": "Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again.",
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5860034129593444,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.358,
+          "comment": "Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again.",
+          "loc": -1.0272222925814367,
+          "location": "ENTSO-E",
+          "name": "Electricity, medium voltage, production ENTSO-E, at grid",
+          "pedigree": {
+            "completeness": 2,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, production ENTSO-E, at grid",
+          "scale": 0.20856653614614212,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 3.72,
+          "comment": "Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again.",
+          "loc": 1.3137236682850553,
+          "pedigree": {
+            "completeness": 2,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 0.20856653614614212,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.103553608882231,
+          "comment": "Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service.",
+          "loc": -2.267665840157011,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "negative": false,
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.3709686723646887,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.6232632834599278,
+          "comment": "Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service.",
+          "loc": -0.47278624359271254,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "negative": false,
+          "reference product": "Transport, freight, rail",
+          "scale": 0.3709686723646887,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.277102747869839,
+          "comment": "Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor.",
+          "loc": -1.2833669106346246,
+          "location": "RER",
+          "name": "Methylamine, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 2,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Methylamine, at plant",
+          "scale": 0.05099019513592785,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.786108042926247,
+          "comment": "Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor.",
+          "loc": -0.24066103680588127,
+          "location": "RER",
+          "name": "Ethylene oxide, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 2,
+            "geographical correlation": 1,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Ethylene oxide, at plant",
+          "scale": 0.05099019513592785,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02448644761375984,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "BOD5, Biological Oxygen Demand",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -3.7096354731021766,
+          "name": "BOD5, Biological Oxygen Demand",
+          "negative": false,
+          "scale": 0.3709686723646887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0015722160858524941,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Ethylene oxide",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -6.4552691352280736,
+          "name": "Ethylene oxide",
+          "negative": false,
+          "scale": 0.41645456146755205,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0013519336692189422,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Ethylene oxide",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -6.6062193637935,
+          "name": "Ethylene oxide",
+          "negative": false,
+          "scale": 0.3709686723646887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000554205495739678,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Methylamine",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -7.497975009056816,
+          "name": "Methylamine",
+          "negative": false,
+          "scale": 0.41645456146755205,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00082,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "in water"
+                ],
+                "name": "Water, unspecified natural origin",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "comment": "Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service.",
+          "loc": -7.106206217705975,
+          "name": "Water, unspecified natural origin",
+          "negative": false,
+          "scale": 0.09116077839697724,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.024,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "natural resource",
+                  "in water"
+                ],
+                "name": "Water, cooling, unspecified natural origin",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "comment": "Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service.",
+          "loc": -3.7297014486341915,
+          "name": "Water, cooling, unspecified natural origin",
+          "negative": false,
+          "scale": 0.32092694308619735,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0005862122126210456,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Ammonium",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -7.441828696364672,
+          "name": "Ammonium",
+          "negative": false,
+          "scale": 0.3709686723646887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.009219779805744314,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "DOC, Dissolved Organic Carbon",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -4.686404123939132,
+          "name": "DOC, Dissolved Organic Carbon",
+          "negative": false,
+          "scale": 0.3709686723646887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.030464359707259893,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Carbon dioxide, fossil",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -3.4911978128253796,
+          "name": "Carbon dioxide, fossil",
+          "negative": false,
+          "scale": 0.32092694308619735,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.009219779805744314,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "TOC, Total Organic Carbon",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -4.686404123939132,
+          "name": "TOC, Total Organic Carbon",
+          "negative": false,
+          "scale": 0.3709686723646887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02448644761375984,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "COD, Chemical Oxygen Demand",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -3.7096354731021766,
+          "name": "COD, Chemical Oxygen Demand",
+          "negative": false,
+          "scale": 0.3709686723646887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.29009009009009,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "air",
+                  "urban air close to ground"
+                ],
+                "name": "Heat, waste",
+                "unit": "megajoule"
+              }
+            }
+          ],
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "comment": "Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service.",
+          "loc": 0.25471205321421103,
+          "name": "Heat, waste",
+          "negative": false,
+          "scale": 0.32092694308619735,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.0013440457638054892,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water",
+                  "surface water"
+                ],
+                "name": "Nitrate",
+                "unit": "kilogram"
+              }
+            }
+          ],
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "comment": "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+          "loc": -6.6120709870103695,
+          "name": "Nitrate",
+          "negative": false,
+          "scale": 0.3709686723646887,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0007790000000000001,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water"
+          ],
+          "comment": "Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service.",
+          "loc": -7.157499512093525,
+          "name": "Water",
+          "negative": false,
+          "scale": 0.4620500793828185,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0228,
+          "biosphere_targets": [
+            {
+              "profile": {
+                "family": "ecoinvent",
+                "version": "3.10"
+              },
+              "reason": "Exact existing ecoinvent 3.10 biosphere identity, unit and full compartment; model quantities remain screening estimates.",
+              "target": {
+                "categories": [
+                  "water"
+                ],
+                "name": "Water",
+                "unit": "cubic meter"
+              }
+            }
+          ],
+          "categories": [
+            "water"
+          ],
+          "comment": "Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service.",
+          "loc": -3.780994743021742,
+          "name": "Water",
+          "negative": false,
+          "scale": 0.4620500793828185,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "Methyldiethanolamine production, native-derived ethoxylation screening model",
+      "rationale": "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval. Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor. Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again. Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added. Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence. Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service. The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions. Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses. Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred. Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight. Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence.",
+      "reference product": "methyldiethanolamine",
+      "unit": "kilogram"
+    },
+    "mdea-312-rer-delivered-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_mdea_312_review.json",
+        "https://patents.google.com/patent/US5395973A/en",
+        "https://patents.google.com/patent/US9345988B2/en"
+      ],
+      "inputs": [
+        {
+          "amount": 1,
+          "comment": "One kg pure MDEA production; no concentration or repeated yield factor.",
+          "recipe": "mdea-312-native-derived-ethoxylation"
+        },
+        {
+          "amount": 0.0219,
+          "comment": "Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight.",
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 2
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4125530268947254,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "comment": "Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight.",
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 2
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4125530268947254,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0438,
+          "comment": "Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight.",
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 2
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4125530268947254,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "Methyldiethanolamine market, native-derived production and retained delivery",
+      "rationale": "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval. Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor. Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again. Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added. Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence. Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service. The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions. Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses. Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred. Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight. Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence.",
+      "reference product": "methyldiethanolamine",
       "unit": "kilogram"
     },
     "mining-38-european-portland-cement-delivery": {
@@ -798450,7 +799142,7 @@
     {"confidence": 0.463929, "id": "bp-a03bddee5eee2616", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for methylchloride", "reference product": "methylchloride", "unit": "kilogram"}, "target": {"location": "WEU", "name": "Methylchloride, at plant", "reference product": "Methylchloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.413939, "id": "bp-9b93f2d3584ae3c7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methylcyclohexane", "reference product": "methylcyclohexane", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Methylcyclohexane, at plant", "reference product": "xx Methylcyclohexane, at plant", "unit": "kilogram"}},
     {"confidence": 0.318955, "id": "bp-6fdd4c2cfe39cd0c", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methylcyclopentane", "reference product": "methylcyclopentane", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Methylcyclopentane, from naphtha, at plant", "reference product": "xx Methylcyclopentane, from naphtha, at plant", "unit": "kilogram"}},
-    {"confidence": 0.204623, "id": "bp-05e536a8f677ffd7", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for methyldiethanolamine", "reference product": "methyldiethanolamine", "unit": "kilogram"}, "target": {"location": "RER", "name": "2-methyl-2-butanol, at plant", "reference product": "2-methyl-2-butanol, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-05e536a8f677ffd7", "mapping_method": "reviewed_mdea_native_derived_screening", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_mdea_312_review.json", "https://patents.google.com/patent/US5395973A/en", "https://patents.google.com/patent/US9345988B2/en"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_mdea_312_review.json", "https://patents.google.com/patent/US5395973A/en", "https://patents.google.com/patent/US9345988B2/en"], "reason": "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval. Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor. Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again. Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added. Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence. Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service. The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions. Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses. Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred. Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight. Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "mdea-312-rer-delivered-market"}}], "reason": "Only the enumerated source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-f85b9548989be949", "source": {"location": "RER", "name": "market for methyldiethanolamine", "reference product": "methyldiethanolamine", "unit": "kilogram"}, "target": {"recipe_ref": "mdea-312-rer-delivered-market"}, "technosphere_information_loss": "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval. Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor. Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again. Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added. Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence. Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service. The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions. Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses. Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred. Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight. Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence."},
     {"confidence": 0.124623, "id": "bp-4527addc63b46179", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for methyldiethanolamine", "reference product": "methyldiethanolamine", "unit": "kilogram"}, "target": {"location": "RER", "name": "2-methyl-2-butanol, at plant", "reference product": "2-methyl-2-butanol, at plant", "unit": "kilogram"}},
     {"confidence": 0.730472, "id": "bp-cc4fa621316f7390", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for methylene diphenyl diisocyanate", "reference product": "methylene diphenyl diisocyanate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Methylene diphenyl diisocyanate, at plant", "reference product": "Methylene diphenyl diisocyanate, at plant", "unit": "kilogram"}},
     {"confidence": 0.650472, "id": "bp-9c711174d10dea3d", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for methylene diphenyl diisocyanate", "reference product": "methylene diphenyl diisocyanate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Methylene diphenyl diisocyanate, at plant", "reference product": "Methylene diphenyl diisocyanate, at plant", "unit": "kilogram"}},
@@ -822229,6 +822921,27 @@
         "Approved CRT-incineration screening proxy: CRT coating/luminophore powder at 10% water is represented by the dedicated coating-disposal service. Legacy documentation contains inconsistent LCD-use wording; the CRT dataset name, luminophore synonym and active silver, strontium, sulfate and zinc flows support the CRT interpretation. This ambiguity is disclosed, not corrected or treated as proof of equal toxicity. Preserve wet waste mass without heating-value or moisture scaling. CH is represented by the CH service. Emission controls, fly-ash extraction, ash treatment, leaching, metal speciation and long-term metal releases may differ; source-specific extraction/leaching performance is not reconstructed. Energy recovery, metal recovery, allocation, background supplies and consequential substitution credits may differ; the source credit model is not reconstructed. LCIA equivalence, including toxicity impacts, is not established or quantified. The source market supplies 100% incineration of the same coating. Additional market-level freight is omitted; its transport burdens are not represented. CH markets have two freight suppliers, RoW markets have three, eight or nine depending on profile. Glass, whole-screen treatment, sludge, ash-disposal and recovered-energy reference products remain separate."
       ],
       "rationale": "Auto-approved under the similar-CRT-treatment authorization on 2026-11-05: use the inspected dedicated CH, kilogram CRT coating incineration service for the exact market for coating from waste cathode ray tube display / CH reference with factor -1. Preserve wet waste mass without heating-value or moisture scaling. The source market supplies 100% incineration of the same coating. Additional market-level freight is omitted; its transport burdens are not represented. CH markets have two freight suppliers, RoW markets have three, eight or nine depending on profile."
+    },
+    "r-f85b9548989be949": {
+      "evidence": [
+        "brightpath/data/export/uvek_mdea_312_review.json",
+        "https://patents.google.com/patent/US5395973A/en",
+        "https://patents.google.com/patent/US9345988B2/en"
+      ],
+      "limitations": [
+        "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval.",
+        "Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor.",
+        "Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again.",
+        "Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added.",
+        "Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence.",
+        "Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service.",
+        "The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions.",
+        "Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses.",
+        "Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred.",
+        "Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight.",
+        "Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence."
+      ],
+      "rationale": "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval. Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor. Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again. Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added. Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence. Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service. The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions. Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses. Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred. Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight. Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence."
     },
     "r-f87e9e412e251b2a": {
       "evidence": [

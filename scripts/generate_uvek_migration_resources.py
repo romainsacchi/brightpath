@@ -1239,6 +1239,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
     apply_mining_38_msw_portfolio_review(technosphere)
     apply_european_delivered_water_review(technosphere)
     if __package__:
+        from scripts.review_uvek_mdea_312 import apply_mdea_312_review
+    else:
+        from review_uvek_mdea_312 import apply_mdea_312_review
+
+    apply_mdea_312_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
