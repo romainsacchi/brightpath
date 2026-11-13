@@ -7,6 +7,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import before_mining_38_material_profiles
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -46,7 +47,7 @@ def test_other_source_releases_do_not_inherit_review(row):
 
 def deferred_materials_authoring_stage_resource():
     """Restore historical epoxy/nickel stages; keep the concrete extension visible."""
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = before_mining_38_material_profiles(deepcopy(load_uvek_technosphere_resource()))
     path = DATA_DIR / "export/uvek_heat_profile_extension_review.json"
     assert (
         hashlib.sha256(path.read_bytes()).hexdigest()
@@ -76,6 +77,36 @@ def deferred_materials_authoring_stage_resource():
     )
     current.clear()
     current.update(deepcopy(row["original_rule"]))
+    # The later 3.7 lubricant qualification is also outside this authoring stage.
+    # Restore its frozen parent only after proving all earlier projections match.
+    path = DATA_DIR / "export/uvek_fuels_37_oils_lto_review.json"
+    row = next(r for r in json.loads(path.read_text())["records"] if r["rule_id"] == "bp-4f69327dbf9d3e42")
+    current = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+    assert current == row["compiled_rule"]
+    for entry in row["original_rule"]["reference_flow_sign_review"]["profiles"]:
+        profile = TechnosphereProfile(**entry["source_profile"])
+        assert select_profile_sign_rules({"replace": [current]}, profile) == select_profile_sign_rules(
+            {"replace": [row["original_rule"]]}, profile
+        )
+    current.clear()
+    current.update(deepcopy(row["original_rule"]))
+
+    # Final resources retain archived review cards that did not yet belong to
+    # this authoring stage. Remove only cards with no reference anywhere in the
+    # stage copy; keep every rule, helper and referenced review intact.
+    def review_references(value):
+        if isinstance(value, dict):
+            for key, item in value.items():
+                if key == "review_ref":
+                    yield item
+                else:
+                    yield from review_references(item)
+        elif isinstance(value, list):
+            for item in value:
+                yield from review_references(item)
+
+    references = set(review_references({k: v for k, v in resource.items() if k != "reviews"}))
+    resource["reviews"] = {k: v for k, v in resource["reviews"].items() if k in references}
     return resource
 
 

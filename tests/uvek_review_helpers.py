@@ -82,3 +82,29 @@ def reviewed_fuels_312_record(rule_id, version):
 
     review = json.loads((DATA_DIR / "export/uvek_fuels_312_dependencies_review.json").read_text())
     return next((r for r in review["records"] if r["rule_id"] == rule_id), None) if version == "3.12" else None
+
+
+def before_mining_38_material_profiles(resource):
+    """Restore the exact pre-extension parents for historical authoring tests."""
+    import json
+
+    from brightpath import DATA_DIR, TechnosphereProfile
+    from brightpath.background.reference_signs import select_profile_sign_rules
+
+    review = json.loads((DATA_DIR / "export/uvek_mining_38_material_suppliers_review.json").read_text())
+    indexed = {rule["id"]: rule for rule in resource["replace"]}
+    for row in review["records"]:
+        previous = row["original_rule"]
+        profiles = previous.get("reference_flow_sign_review", {}).get("profiles", [])
+        if not profiles:
+            continue
+        actual = indexed[row["rule_id"]]
+        assert actual in (previous, row["compiled_rule"])
+        for entry in profiles:
+            profile = TechnosphereProfile(**entry["source_profile"])
+            assert select_profile_sign_rules({"replace": [actual]}, profile) == select_profile_sign_rules(
+                {"replace": [previous]}, profile
+            )
+        actual.clear()
+        actual.update(deepcopy(previous))
+    return resource
