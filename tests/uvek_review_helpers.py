@@ -23,6 +23,22 @@ def historical_forward_resource():
     return deepcopy(_historical_forward())
 
 
+def before_plastic_processing_39_review(resource):
+    """Restore frozen parents for testing the earlier 3.12 authoring stage."""
+    import json
+
+    from brightpath import DATA_DIR
+
+    review = json.loads((DATA_DIR / "export/uvek_plastic_processing_39_review.json").read_text())
+    for row in review["records"]:
+        parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+        if parent not in (row["original_rule"], row["compiled_rule"]):
+            raise ValueError("Plastic-processing parent changed; repeat review.")
+        parent.clear()
+        parent.update(deepcopy(row["original_rule"]))
+    return resource
+
+
 def before_fuels_312_review(resource, *, before_wastewater=False):
     """Restore the prior stage, including parents used as component bindings."""
     import json
