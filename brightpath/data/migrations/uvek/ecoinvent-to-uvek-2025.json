@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 219,
-      "recipe": 1058,
-      "unclassified": 29198
+      "proxy": 220,
+      "recipe": 1059,
+      "unclassified": 29196
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 260,
       "followup_review": 163,
-      "heuristic_similarity": 26430,
+      "heuristic_similarity": 26428,
       "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -81,6 +81,7 @@
       "reviewed_industrial_landfarming_service": 7,
       "reviewed_industrial_waste_market_service": 14,
       "reviewed_inventory_boundary_correction": 9,
+      "reviewed_lcd_module_39": 2,
       "reviewed_low_pressure_delivered_gas_energy": 13,
       "reviewed_market_composition": 366,
       "reviewed_mdea_native_derived_screening": 1,
@@ -187,7 +188,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.443405,
+    "mean_confidence": 0.443456,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -130770,6 +130771,69 @@
       "name": "market for residues, MSWI-WWT, WW from hard fibreboard production, composed from resolved suppliers, RER",
       "rationale": "Reviewed complete industrial-waste market per one kg source waste. The source reference is -1 kg and the helper reference is +1 kg: apply factor -1 to caller quantities and each inspected child reference factor independently. Retain the exact reviewed waste-specific residual-landfill or wet-sludge landfarming child at its original mass. Landfill children preserve their releases, cement stabilization, hydrated-cement disposal, operation and construction with their approved material/heat/background warnings. Landfarming children preserve all local wastewater-specific releases, fossil/biogenic carbon, geographic water fate, reported older soil carbon and the original 0.00097087 m3 spreading service per kg wet sludge with its own full-service proxy warnings. Preserve all original positive road ton-km and separate country rows without kg/tonne, distance, moisture, lifetime, capacity or share normalization. Source markets have no direct biosphere exchanges and no omitted inputs. The scoped road choice is the complete RER UVEK fleet service, including vehicles, maintenance and roads. Actual source markets, EURO-class and size links were followed to full transport inventories. Source regions, EURO/vehicle mix, loads, empty returns, diesel/biodiesel blend, fuel consumption, infrastructure, vintage and emissions differ from the Swiss-2020-based HBEFA5.1 fleet; this is a screening whole-service proxy, not a reconstructed regional fleet or equal LCIA scores. Small rounded sums in source fleet links remain evidence and do not change caller ton-km. Add no second transport operation, vehicles, roads, sludge releases, spreading, upstream incineration/wastewater treatment, recovered products, fertilizer or substitution credits. Existing child native water/land refinements and explicitly marked inventory-indicator omissions retain their scopes and warnings; unsupported physical native biosphere flows remain unresolved under the default coverage policy. Canonical biospheres are independent. Score/export every returned helper, including children. Preserve signed caller amounts, uncertainty, formulas, metadata, foreground suppliers, production and separate emissions. Source-internal uncertainty/formulas are not reconstructed. Only enumerated exact cut-off profiles are approved; no patch, model, geography or inverse waste-market fallback is inferred. Global freight and independent reverse rules remain unchanged.",
       "reference product": "residues, MSWI-WWT, WW from hard fibreboard production",
+      "unit": "kilogram"
+    },
+    "lcd-39-native-module-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_lcd_module_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "comment": "Retained original supply or final delivery quantity and uncertainty. Complete native product or same-mode geographic fleet proxy; see reviewed limitations.",
+          "loc": 1.0,
+          "location": "GLO",
+          "name": "LCD module, at plant",
+          "reference product": "LCD module, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02,
+          "comment": "Retained original supply or final delivery quantity and uncertainty. Complete native product or same-mode geographic fleet proxy; see reviewed limitations.",
+          "loc": -3.912023005428146,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.02,
+          "comment": "Retained original supply or final delivery quantity and uncertainty. Complete native product or same-mode geographic fleet proxy; see reviewed limitations.",
+          "loc": -3.912023005428146,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for liquid crystal display, unmounted, native module and retained delivery",
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off source profile is reviewed. Both products reference positive one kg of an unmounted TFT-LCD module, including glass, backlight, driver electronics and module assembly. Use the complete native LCD module once, factor +1; preserve signed caller quantities, uncertainty, formulas and separate foreground emissions. Do not use mercury, a mounted monitor, the distinct LCD screen assembly service, an equipment unit or a guessed kg-per-screen factor. Source and native share the late-1990s 15-inch EPA component lineage: backlight 0.4307 kg, glass 0.2965 kg, logic IC 0.0082 kg, polycarbonate and injection moulding 0.0938 kg each. Source nylon regional shares total 0.0063 kg and four populated-board shares total 0.0438 kg, matching native aggregate masses. Native retains the complete assembly inventory. It replaces, rather than duplicates, source component production and internal uncertainty/correlations. This is a screening proxy, not equal LCI, LCIA or uncertainty. Native regional component supply, populated-board mounting/solder mix, upstream energy, allocation, vintage and biosphere exclusions differ. Retain the complete native product without reconstructing internal mixes, adding component or assembly burdens, correcting yield, or adding a use/disposal stage. Score differences remain unquantified. The source market retains one kg producer supply and its original 0.02 tkm rail and 0.02 tkm generic lorry final delivery, each with its supported source uncertainty. Complete native RER rail and RER lorry fleet are explicit geographic/fleet proxies for global market groups. No coal freight, added product losses, payload scaling or duplicate infrastructure. Other source releases, system models and reverse routes gain no scope.",
+      "reference product": "liquid crystal display, unmounted",
       "unit": "kilogram"
     },
     "market-composition-0182a6b8eb7e826c4fd5": {
@@ -799296,7 +799360,7 @@
     {"confidence": 0.453091, "id": "bp-b5ad5192699beab5", "mapping_method": "heuristic_similarity", "source": {"location": "PE", "name": "liquefied petroleum gas, import from unspecified", "reference product": "liquefied petroleum gas", "unit": "kilogram"}, "target": {"location": "CH", "name": "Liquefied petroleum gas, at service station", "reference product": "Liquefied petroleum gas, at service station", "unit": "kilogram"}},
     {"confidence": 0.453091, "id": "bp-65064f75036a5674", "mapping_method": "heuristic_similarity", "source": {"location": "ZA", "name": "liquefied petroleum gas, import from unspecified", "reference product": "liquefied petroleum gas", "unit": "kilogram"}, "target": {"location": "CH", "name": "Liquefied petroleum gas, at service station", "reference product": "Liquefied petroleum gas, at service station", "unit": "kilogram"}},
     {"confidence": 0.212555, "id": "bp-f44f2537610ede09", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "liquid crystal display production, minor components, auxilliaries and assembly effort", "reference product": "liquid crystal display, minor components, auxilliaries and assembly effort", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Panel components, at plant", "reference product": "Panel components, at plant", "unit": "kilogram"}},
-    {"confidence": 0.213205, "id": "bp-7a3bce81ec325a28", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "liquid crystal display production, unmounted", "reference product": "liquid crystal display, unmounted", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Mercury, liquid, at plant", "reference product": "Mercury, liquid, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-7a3bce81ec325a28", "mapping_method": "reviewed_lcd_module_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_lcd_module_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_lcd_module_39_review.json"], "reason": "Only the independently inspected ecoinvent 3.9 cut-off source profile is reviewed. Both products reference positive one kg of an unmounted TFT-LCD module, including glass, backlight, driver electronics and module assembly. Use the complete native LCD module once, factor +1; preserve signed caller quantities, uncertainty, formulas and separate foreground emissions. Do not use mercury, a mounted monitor, the distinct LCD screen assembly service, an equipment unit or a guessed kg-per-screen factor. Source and native share the late-1990s 15-inch EPA component lineage: backlight 0.4307 kg, glass 0.2965 kg, logic IC 0.0082 kg, polycarbonate and injection moulding 0.0938 kg each. Source nylon regional shares total 0.0063 kg and four populated-board shares total 0.0438 kg, matching native aggregate masses. Native retains the complete assembly inventory. It replaces, rather than duplicates, source component production and internal uncertainty/correlations. This is a screening proxy, not equal LCI, LCIA or uncertainty. Native regional component supply, populated-board mounting/solder mix, upstream energy, allocation, vintage and biosphere exclusions differ. Retain the complete native product without reconstructing internal mixes, adding component or assembly burdens, correcting yield, or adding a use/disposal stage. Score differences remain unquantified. The source market retains one kg producer supply and its original 0.02 tkm rail and 0.02 tkm generic lorry final delivery, each with its supported source uncertainty. Complete native RER rail and RER lorry fleet are explicit geographic/fleet proxies for global market groups. No coal freight, added product losses, payload scaling or duplicate infrastructure. Other source releases, system models and reverse routes gain no scope.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the enumerated source 3.9 cut-off profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bf82b31c78b6d515", "source": {"location": "GLO", "name": "liquid crystal display production, unmounted", "reference product": "liquid crystal display, unmounted", "unit": "kilogram"}, "target": {"location": "GLO", "name": "LCD module, at plant", "reference product": "LCD module, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off source profile is reviewed. Both products reference positive one kg of an unmounted TFT-LCD module, including glass, backlight, driver electronics and module assembly. Use the complete native LCD module once, factor +1; preserve signed caller quantities, uncertainty, formulas and separate foreground emissions. Do not use mercury, a mounted monitor, the distinct LCD screen assembly service, an equipment unit or a guessed kg-per-screen factor. Source and native share the late-1990s 15-inch EPA component lineage: backlight 0.4307 kg, glass 0.2965 kg, logic IC 0.0082 kg, polycarbonate and injection moulding 0.0938 kg each. Source nylon regional shares total 0.0063 kg and four populated-board shares total 0.0438 kg, matching native aggregate masses. Native retains the complete assembly inventory. It replaces, rather than duplicates, source component production and internal uncertainty/correlations. This is a screening proxy, not equal LCI, LCIA or uncertainty. Native regional component supply, populated-board mounting/solder mix, upstream energy, allocation, vintage and biosphere exclusions differ. Retain the complete native product without reconstructing internal mixes, adding component or assembly burdens, correcting yield, or adding a use/disposal stage. Score differences remain unquantified. The source market retains one kg producer supply and its original 0.02 tkm rail and 0.02 tkm generic lorry final delivery, each with its supported source uncertainty. Complete native RER rail and RER lorry fleet are explicit geographic/fleet proxies for global market groups. No coal freight, added product losses, payload scaling or duplicate infrastructure. Other source releases, system models and reverse routes gain no scope."},
     {"confidence": 0.186818, "id": "bp-07b1843538939997", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "liquid crystal display production, unmounted, mobile device", "reference product": "liquid crystal display, unmounted, mobile device", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Mercury, liquid, at plant", "reference product": "Mercury, liquid, at plant", "unit": "kilogram"}},
     {"confidence": 0.5088, "id": "bp-951b64dcf68997c0", "mapping_method": "heuristic_similarity", "source": {"location": "CA-QC", "name": "liquid manure spreading, by vacuum tanker", "reference product": "liquid manure spreading, by vacuum tanker", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Slurry spreading, by vacuum tanker", "reference product": "Slurry spreading, by vacuum tanker", "unit": "cubic meter"}},
     {"confidence": 0.5888, "id": "bp-491d97a701989711", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "liquid manure spreading, by vacuum tanker", "reference product": "liquid manure spreading, by vacuum tanker", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Slurry spreading, by vacuum tanker", "reference product": "Slurry spreading, by vacuum tanker", "unit": "cubic meter"}},
@@ -803760,7 +803824,7 @@
     {"confidence": 0.515053, "id": "bp-37fe097bd92fa3a1", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for liquefied petroleum gas", "reference product": "liquefied petroleum gas", "unit": "kilogram"}, "target": {"location": "CH", "name": "Liquefied petroleum gas, at service station", "reference product": "Liquefied petroleum gas, at service station", "unit": "kilogram"}},
     {"confidence": 0.515053, "id": "bp-1c22f1db9d4b38da", "mapping_method": "heuristic_similarity", "source": {"location": "ZA", "name": "market for liquefied petroleum gas", "reference product": "liquefied petroleum gas", "unit": "kilogram"}, "target": {"location": "CH", "name": "Liquefied petroleum gas, at service station", "reference product": "Liquefied petroleum gas, at service station", "unit": "kilogram"}},
     {"confidence": 0.213384, "id": "bp-3170af38d412b946", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for liquid crystal display, minor components, auxilliaries and assembly effort", "reference product": "liquid crystal display, minor components, auxilliaries and assembly effort", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Panel components, at plant", "reference product": "Panel components, at plant", "unit": "kilogram"}},
-    {"confidence": 0.218581, "id": "bp-35d5814b156beee8", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for liquid crystal display, unmounted", "reference product": "liquid crystal display, unmounted", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Mercury, liquid, at plant", "reference product": "Mercury, liquid, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-35d5814b156beee8", "mapping_method": "reviewed_lcd_module_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_lcd_module_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_lcd_module_39_review.json"], "reason": "Only the independently inspected ecoinvent 3.9 cut-off source profile is reviewed. Both products reference positive one kg of an unmounted TFT-LCD module, including glass, backlight, driver electronics and module assembly. Use the complete native LCD module once, factor +1; preserve signed caller quantities, uncertainty, formulas and separate foreground emissions. Do not use mercury, a mounted monitor, the distinct LCD screen assembly service, an equipment unit or a guessed kg-per-screen factor. Source and native share the late-1990s 15-inch EPA component lineage: backlight 0.4307 kg, glass 0.2965 kg, logic IC 0.0082 kg, polycarbonate and injection moulding 0.0938 kg each. Source nylon regional shares total 0.0063 kg and four populated-board shares total 0.0438 kg, matching native aggregate masses. Native retains the complete assembly inventory. It replaces, rather than duplicates, source component production and internal uncertainty/correlations. This is a screening proxy, not equal LCI, LCIA or uncertainty. Native regional component supply, populated-board mounting/solder mix, upstream energy, allocation, vintage and biosphere exclusions differ. Retain the complete native product without reconstructing internal mixes, adding component or assembly burdens, correcting yield, or adding a use/disposal stage. Score differences remain unquantified. The source market retains one kg producer supply and its original 0.02 tkm rail and 0.02 tkm generic lorry final delivery, each with its supported source uncertainty. Complete native RER rail and RER lorry fleet are explicit geographic/fleet proxies for global market groups. No coal freight, added product losses, payload scaling or duplicate infrastructure. Other source releases, system models and reverse routes gain no scope.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "lcd-39-native-module-market"}}], "reason": "Only the enumerated source 3.9 cut-off profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bf82b31c78b6d515", "source": {"location": "GLO", "name": "market for liquid crystal display, unmounted", "reference product": "liquid crystal display, unmounted", "unit": "kilogram"}, "target": {"recipe_ref": "lcd-39-native-module-market"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off source profile is reviewed. Both products reference positive one kg of an unmounted TFT-LCD module, including glass, backlight, driver electronics and module assembly. Use the complete native LCD module once, factor +1; preserve signed caller quantities, uncertainty, formulas and separate foreground emissions. Do not use mercury, a mounted monitor, the distinct LCD screen assembly service, an equipment unit or a guessed kg-per-screen factor. Source and native share the late-1990s 15-inch EPA component lineage: backlight 0.4307 kg, glass 0.2965 kg, logic IC 0.0082 kg, polycarbonate and injection moulding 0.0938 kg each. Source nylon regional shares total 0.0063 kg and four populated-board shares total 0.0438 kg, matching native aggregate masses. Native retains the complete assembly inventory. It replaces, rather than duplicates, source component production and internal uncertainty/correlations. This is a screening proxy, not equal LCI, LCIA or uncertainty. Native regional component supply, populated-board mounting/solder mix, upstream energy, allocation, vintage and biosphere exclusions differ. Retain the complete native product without reconstructing internal mixes, adding component or assembly burdens, correcting yield, or adding a use/disposal stage. Score differences remain unquantified. The source market retains one kg producer supply and its original 0.02 tkm rail and 0.02 tkm generic lorry final delivery, each with its supported source uncertainty. Complete native RER rail and RER lorry fleet are explicit geographic/fleet proxies for global market groups. No coal freight, added product losses, payload scaling or duplicate infrastructure. Other source releases, system models and reverse routes gain no scope."},
     {"confidence": 0.191124, "id": "bp-05cad437a1e997cd", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for liquid crystal display, unmounted, mobile device", "reference product": "liquid crystal display, unmounted, mobile device", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Mercury, liquid, at plant", "reference product": "Mercury, liquid, at plant", "unit": "kilogram"}},
     {"confidence": 0.4818, "id": "bp-ae1114da0659496a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for liquid manure spreading, by vacuum tanker", "reference product": "liquid manure spreading, by vacuum tanker", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Slurry spreading, by vacuum tanker", "reference product": "Slurry spreading, by vacuum tanker", "unit": "cubic meter"}},
     {"confidence": 0.146225, "id": "bp-f0133704b3c2a920", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for liquid manure storage and processing facility", "reference product": "liquid manure storage and processing facility", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Three and five layered board production, at regional storage", "reference product": "Three and five layered board production, at regional storage", "unit": "cubic meter"}},
@@ -826179,6 +826243,18 @@
         "Only the exact independently inspected ecoinvent3.8cut-off profile is newly qualified. Preserve signed caller amounts, formulas, supported uncertainty, foreground ownership and separately listed caller emissions. Keep native complete suppliers unchanged and count them once. No density, purity, LHV, stoichiometric, yield, capacity, lifetime or payload factor, new recovery credit, inverse or cross-system-model route is inferred. Native biosphere exclusions, geography, vintage and unquantified score differences remain explicit. No LCIAequivalence or impactcompleteness is established."
       ],
       "rationale": "Reconstruct the source global300kWscrew-compressor market with its two original producer shares kept separately, mapping each complete4600kgcompressor to the complete native European300kWunit. The source market has no separate freight/loss inputs. This is a geographic/background complete-capital-service proxy; no rated-power, equipment-mass, lifetime, compressed-air-output or operating-electricity factor is introduced."
+    },
+    "r-bf82b31c78b6d515": {
+      "evidence": [
+        "brightpath/data/export/uvek_lcd_module_39_review.json"
+      ],
+      "limitations": [
+        "Only the independently inspected ecoinvent 3.9 cut-off source profile is reviewed. Both products reference positive one kg of an unmounted TFT-LCD module, including glass, backlight, driver electronics and module assembly. Use the complete native LCD module once, factor +1; preserve signed caller quantities, uncertainty, formulas and separate foreground emissions. Do not use mercury, a mounted monitor, the distinct LCD screen assembly service, an equipment unit or a guessed kg-per-screen factor.",
+        "Source and native share the late-1990s 15-inch EPA component lineage: backlight 0.4307 kg, glass 0.2965 kg, logic IC 0.0082 kg, polycarbonate and injection moulding 0.0938 kg each. Source nylon regional shares total 0.0063 kg and four populated-board shares total 0.0438 kg, matching native aggregate masses. Native retains the complete assembly inventory. It replaces, rather than duplicates, source component production and internal uncertainty/correlations. This is a screening proxy, not equal LCI, LCIA or uncertainty.",
+        "Native regional component supply, populated-board mounting/solder mix, upstream energy, allocation, vintage and biosphere exclusions differ. Retain the complete native product without reconstructing internal mixes, adding component or assembly burdens, correcting yield, or adding a use/disposal stage. Score differences remain unquantified.",
+        "The source market retains one kg producer supply and its original 0.02 tkm rail and 0.02 tkm generic lorry final delivery, each with its supported source uncertainty. Complete native RER rail and RER lorry fleet are explicit geographic/fleet proxies for global market groups. No coal freight, added product losses, payload scaling or duplicate infrastructure. Other source releases, system models and reverse routes gain no scope."
+      ],
+      "rationale": "Only the independently inspected ecoinvent 3.9 cut-off source profile is reviewed. Both products reference positive one kg of an unmounted TFT-LCD module, including glass, backlight, driver electronics and module assembly. Use the complete native LCD module once, factor +1; preserve signed caller quantities, uncertainty, formulas and separate foreground emissions. Do not use mercury, a mounted monitor, the distinct LCD screen assembly service, an equipment unit or a guessed kg-per-screen factor. Source and native share the late-1990s 15-inch EPA component lineage: backlight 0.4307 kg, glass 0.2965 kg, logic IC 0.0082 kg, polycarbonate and injection moulding 0.0938 kg each. Source nylon regional shares total 0.0063 kg and four populated-board shares total 0.0438 kg, matching native aggregate masses. Native retains the complete assembly inventory. It replaces, rather than duplicates, source component production and internal uncertainty/correlations. This is a screening proxy, not equal LCI, LCIA or uncertainty. Native regional component supply, populated-board mounting/solder mix, upstream energy, allocation, vintage and biosphere exclusions differ. Retain the complete native product without reconstructing internal mixes, adding component or assembly burdens, correcting yield, or adding a use/disposal stage. Score differences remain unquantified. The source market retains one kg producer supply and its original 0.02 tkm rail and 0.02 tkm generic lorry final delivery, each with its supported source uncertainty. Complete native RER rail and RER lorry fleet are explicit geographic/fleet proxies for global market groups. No coal freight, added product losses, payload scaling or duplicate infrastructure. Other source releases, system models and reverse routes gain no scope."
     },
     "r-bfb7a6dcc1507f7b": {
       "evidence": [
