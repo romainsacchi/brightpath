@@ -6,7 +6,7 @@ represented by the complete Swiss incineration process. This evidence prepares
 those missing routes without changing Premise's sector algorithms.
 
 `brightpath/data/export/uvek_msw_public_treatment_calculation.json` contains
-independently calculated direct emissions for nine exact ecoinvent 3.8 cut-off
+independently calculated direct biosphere exchanges for nine exact ecoinvent 3.8 cut-off
 cases: open burning, and four infiltration classes each for open dumps and
 unsanitary landfills. It is calculation evidence, **not a conversion approval or
 a complete treatment inventory**. No mapping rule or supported-sector gate is
@@ -55,10 +55,10 @@ used for the recorded results.
 
 ## Verification and limits
 
-All 1,008 nonzero direct-emission coordinates match the privately inspected
+All 1,008 nonzero direct-biosphere coordinates match the privately inspected
 source means, basic/total variances and lognormal locations. Each of the eight
-landfill/dump cases has 115 coordinates; burning has 88. Source datasets were
-not modified. Separate fossil/non-fossil flows and near-/long-term groundwater
+landfill/dump cases has 115 coordinates; burning has 88. This includes resource exchanges as well as emissions; the resource quantities
+are retained too. Source datasets were not modified. Separate fossil/non-fossil flows and near-/long-term groundwater
 compartments remain distinct. This is a fixed-case calibration; it does not
 establish other versions, system models, waste mixtures or LCIA equivalence.
 
