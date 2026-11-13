@@ -1281,6 +1281,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_lcd_module_39_review(technosphere)
     if __package__:
+        from scripts.review_uvek_pvf_treatment_39 import apply_pvf_treatment_39_review
+    else:
+        from review_uvek_pvf_treatment_39 import apply_pvf_treatment_39_review
+
+    apply_pvf_treatment_39_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
