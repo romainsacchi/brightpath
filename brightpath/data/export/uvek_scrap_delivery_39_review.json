@@ -1,0 +1,2163 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing user approval to resolve remaining mappings autonomously with logged screening proxies and explicit warnings.",
+  "records": [
+    {
+      "rule_id": "bp-e4d29736d626d202",
+      "original_rule": {
+        "confidence": 0.290833,
+        "id": "bp-e4d29736d626d202",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "RoW",
+          "name": "market for iron scrap, sorted, pressed",
+          "reference product": "iron scrap, sorted, pressed",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.290833,
+        "id": "bp-e4d29736d626d202",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "RoW",
+          "name": "market for iron scrap, sorted, pressed",
+          "reference product": "iron scrap, sorted, pressed",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "unit": "kilogram"
+        },
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only explicitly enumerated source profiles are reviewed.",
+          "evidence": [
+            "brightpath/data/export/uvek_scrap_delivery_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "sorted-iron-scrap-39-supply-and-delivery"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Use complete native European Iron scrap, at plant, whose documentation explicitly includes collecting new/old iron scrap, transport to scrap-yard, sorting and pressing to blocks. Retain the three source producer shares separately: mixed-scrap sorting 0.000519541957317269, ordinary sorting/pressing 0.995905325297607, and tinplate handoff 0.00357513274507606 kg/kg. All three use the complete native process as a screening proxy, not a zero stock or unsorted scrap. Native RER production is preferred to the previous Swiss producer for this non-Swiss market. The main source sorting/pressing route and native process both use 0.1 MJ diesel, 0.01 kWh electricity and 1e-9 preparation facility units per kg. Source regional electricity/facility definitions and native ENTSO-E/European assumptions differ. Native collection is 0.1 road and 0.2 rail tkm and includes 0.036 MJ waste heat; this replaces source upstream unsorted-stock collection and internal allocation, rather than adding a second reconstructed source sorting inventory. Retained final-market delivery remains a separate boundary. Do not subtract native internal collection or invent a balancing heat/energy credit. The two minor producer routes are not identical technologies: mixed scrap has different diesel/yield/waste-treatment/facility allocation; the tinplate route hands off tinplate scrap and may carry different sorting, tin and recycling-allocation burdens. Replacing both complete internal supply models with native collected/sorted/pressed ferrous scrap is an explicit feedstock, yield, treatment and allocation proxy. Their combined source share is approximately 0.4095%; retain each original share and supported caller uncertainty, without asserting impact insignificance or chemical equivalence.",
+                "evidence": [
+                  "brightpath/data/export/uvek_scrap_delivery_39_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "review_ref": "r-f88f3d88a84d6ed6",
+        "technosphere_information_loss": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Use complete native European Iron scrap, at plant, whose documentation explicitly includes collecting new/old iron scrap, transport to scrap-yard, sorting and pressing to blocks. Retain the three source producer shares separately: mixed-scrap sorting 0.000519541957317269, ordinary sorting/pressing 0.995905325297607, and tinplate handoff 0.00357513274507606 kg/kg. All three use the complete native process as a screening proxy, not a zero stock or unsorted scrap. Native RER production is preferred to the previous Swiss producer for this non-Swiss market. The main source sorting/pressing route and native process both use 0.1 MJ diesel, 0.01 kWh electricity and 1e-9 preparation facility units per kg. Source regional electricity/facility definitions and native ENTSO-E/European assumptions differ. Native collection is 0.1 road and 0.2 rail tkm and includes 0.036 MJ waste heat; this replaces source upstream unsorted-stock collection and internal allocation, rather than adding a second reconstructed source sorting inventory. Retained final-market delivery remains a separate boundary. Do not subtract native internal collection or invent a balancing heat/energy credit. The two minor producer routes are not identical technologies: mixed scrap has different diesel/yield/waste-treatment/facility allocation; the tinplate route hands off tinplate scrap and may carry different sorting, tin and recycling-allocation burdens. Replacing both complete internal supply models with native collected/sorted/pressed ferrous scrap is an explicit feedstock, yield, treatment and allocation proxy. Their combined source share is approximately 0.4095%; retain each original share and supported caller uncertainty, without asserting impact insignificance or chemical equivalence."
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for iron scrap, sorted, pressed",
+          "reference product": "iron scrap, sorted, pressed",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 13,
+        "metadata_sha256": "2570973ac5a45c4cc7adae2e459d9918a0a9d60615878d0e0aa2e51944d96c7e",
+        "inventory_sha256": "c83a39106ef18c0db7050d07f98f06d60d48352c4c9b965ce61dd030170fdbff",
+        "activity_comment_sha256": "62f9330cb240e60d73795324ea7f2bd1fc024bbf3956cbfca3f9095b46944a51",
+        "product_information_sha256": "4aa8f2cafcba82e021d76de08c926f26aaba8202b16fa9af61d06fa93625e556"
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "treatment of metal scrap, mixed, for recycling, unsorted, sorting",
+            "reference product": "iron scrap, sorted, pressed",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 13,
+          "metadata_sha256": "f6dfdf81e09c377ec74ab26f83577051c911c7cc580409148c618a24787244bc",
+          "inventory_sha256": "ff8e3925f3cc9a4efbbf47016d2c4394783cb3e9a74efc3a2a75ab189252eeaf",
+          "activity_comment_sha256": "1293946fc6d790fba2d007e771645fbf2d3abad0850e299c2eb0aceb89232dad",
+          "product_information_sha256": "4aa8f2cafcba82e021d76de08c926f26aaba8202b16fa9af61d06fa93625e556"
+        },
+        {
+          "identity": {
+            "name": "sorting and pressing of iron scrap",
+            "reference product": "iron scrap, sorted, pressed",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 9,
+          "metadata_sha256": "60a6503e8a66ed709ee90642aa398fcbc17911947fc3170b4ccc27af0ab01e5c",
+          "inventory_sha256": "9d2e067da86bc27a17901b84a818f93c61bdae8856d32252e3a754f65de6f597",
+          "activity_comment_sha256": "d4b403949c43d02e6e511b6f80ed320bcc3f2197cbf7c371db5b749767c63d1f",
+          "product_information_sha256": "4aa8f2cafcba82e021d76de08c926f26aaba8202b16fa9af61d06fa93625e556"
+        },
+        {
+          "identity": {
+            "name": "tinplate scrap, sorted to generic market for iron scrap, sorted, pressed",
+            "reference product": "iron scrap, sorted, pressed",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "acee2eb20d1ec13e7e0d0a5441d27767fe0aa98786b9a2a4754f8fd6d6ba3754",
+          "inventory_sha256": "405309b540a4b6bd325fc93c5143f87f6d03e0719c2678b9fdf10508d4c655fd",
+          "activity_comment_sha256": "af1428c563e28d8d004bb34568e66c3fa91dbed16b34c9e4644fe196f6cb43bb",
+          "product_information_sha256": "4aa8f2cafcba82e021d76de08c926f26aaba8202b16fa9af61d06fa93625e556"
+        }
+      ],
+      "recipe_id": "sorted-iron-scrap-39-supply-and-delivery",
+      "conversion_factor": 1,
+      "limitations": [
+        "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities.",
+        "Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified.",
+        "Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced.",
+        "Use complete native European Iron scrap, at plant, whose documentation explicitly includes collecting new/old iron scrap, transport to scrap-yard, sorting and pressing to blocks. Retain the three source producer shares separately: mixed-scrap sorting 0.000519541957317269, ordinary sorting/pressing 0.995905325297607, and tinplate handoff 0.00357513274507606 kg/kg. All three use the complete native process as a screening proxy, not a zero stock or unsorted scrap. Native RER production is preferred to the previous Swiss producer for this non-Swiss market.",
+        "The main source sorting/pressing route and native process both use 0.1 MJ diesel, 0.01 kWh electricity and 1e-9 preparation facility units per kg. Source regional electricity/facility definitions and native ENTSO-E/European assumptions differ. Native collection is 0.1 road and 0.2 rail tkm and includes 0.036 MJ waste heat; this replaces source upstream unsorted-stock collection and internal allocation, rather than adding a second reconstructed source sorting inventory. Retained final-market delivery remains a separate boundary. Do not subtract native internal collection or invent a balancing heat/energy credit.",
+        "The two minor producer routes are not identical technologies: mixed scrap has different diesel/yield/waste-treatment/facility allocation; the tinplate route hands off tinplate scrap and may carry different sorting, tin and recycling-allocation burdens. Replacing both complete internal supply models with native collected/sorted/pressed ferrous scrap is an explicit feedstock, yield, treatment and allocation proxy. Their combined source share is approximately 0.4095%; retain each original share and supported caller uncertainty, without asserting impact insignificance or chemical equivalence."
+      ]
+    },
+    {
+      "rule_id": "bp-6206d7098aaa1c8e",
+      "original_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": 1.0,
+        "id": "bp-6206d7098aaa1c8e",
+        "mapping_method": "reviewed_market_composition",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_market_composition_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.10-cutoff/e47af215236096def362fbb50c7a912970891540e77102879dc93768c814d504"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-ff2ca96002f20f3de048"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/08ab43655ff492739c36b06aabc941940b2fe60b357adc2b3f1077b54b48dba1"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.11"
+              },
+              "target": {
+                "recipe_ref": "regional-freight-market-composition-9eccc396d9657b76d157"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/7c1e4371d3897a4ca1b339b6cc4cd4fb8252c461f0ea8643e2b1f53cf0a0ee93"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              },
+              "target": {
+                "recipe_ref": "regional-freight-market-composition-7d238ff041c11ed63168"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.6-cutoff/b29e42ec03422568ba8d076233964d1618725fe7a747f6eef9b62f8212b79835"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-0f8deedcaceed4f9f17e"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.7-cutoff/7cd257ddba061f25c419b8ecad99021a7747d406da5f3aea8e5f003125f77517"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.7"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-83829757e812f7ab7151"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.8-cutoff/1165711c489c69bf50d2f1938a173397d9c02b96a17d35826f1a95b72ff02cf8"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-b000bf1a459b91a8dbe9"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.9-cutoff/f8ded64dfbad919d975cea42a3a96aa991625f47a3458f0c58d9fc0d01d15a3b"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-b620c5b2c14a40a78b2c"
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-cfbe3f53a4dda919",
+        "source": {
+          "location": "RoW",
+          "name": "market for aluminium scrap, new",
+          "reference product": "aluminium scrap, new",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "older-regional-road-market-composition-ff2ca96002f20f3de048"
+        },
+        "technosphere_information_loss": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred."
+      },
+      "compiled_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": 1.0,
+        "id": "bp-6206d7098aaa1c8e",
+        "mapping_method": "reviewed_market_composition",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_market_composition_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.10-cutoff/e47af215236096def362fbb50c7a912970891540e77102879dc93768c814d504"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-ff2ca96002f20f3de048"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/08ab43655ff492739c36b06aabc941940b2fe60b357adc2b3f1077b54b48dba1"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.11"
+              },
+              "target": {
+                "recipe_ref": "regional-freight-market-composition-9eccc396d9657b76d157"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/7c1e4371d3897a4ca1b339b6cc4cd4fb8252c461f0ea8643e2b1f53cf0a0ee93"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up regional freight correction retains every signed source coefficient: complete RER heavy-lorry fleet for unspecified diesel road markets; original Swiss electric/diesel rail shares through complete CH rail services. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              },
+              "target": {
+                "recipe_ref": "regional-freight-market-composition-7d238ff041c11ed63168"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.6-cutoff/b29e42ec03422568ba8d076233964d1618725fe7a747f6eef9b62f8212b79835"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-0f8deedcaceed4f9f17e"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.7-cutoff/7cd257ddba061f25c419b8ecad99021a7747d406da5f3aea8e5f003125f77517"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.7"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-83829757e812f7ab7151"
+              }
+            },
+            {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.8-cutoff/1165711c489c69bf50d2f1938a173397d9c02b96a17d35826f1a95b72ff02cf8"
+                ],
+                "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up older regional road correction retains every signed source coefficient: complete RER heavy-lorry fleet for original all-sizes road markets. Geographic fleet, vintage and inventory differences remain screening limitations; no inverse is inferred.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "older-regional-road-market-composition-b000bf1a459b91a8dbe9"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Reuse the exact existing positive-reference empty new-aluminium Recycled Content cut-off stock and its direct-supplier binding. Current source stock and market hashes match frozen earlier witnesses. This preserves an observed source allocation boundary, not a statement that recycling is impact-free. No unreviewed or nonempty process receives zero burden, and no native aluminium-recycling or primary-metal process is added. Correct the older source3.9 recipe that used coal-specific rail for a generic CN freight entry and dropped internal uncertainty fields. Preserve one kg stock and all ten market delivery entries, including five rail country entries, inland barge, three road entries and container shipping. Use complete same-mode generic supplies with explicit geographic/traction/fleet warnings; the source stock and every delivery coefficient remain unchanged.",
+                "evidence": [
+                  "brightpath/data/export/uvek_scrap_delivery_39_review.json"
+                ]
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "new-aluminium-scrap-39-stock-and-delivery"
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-3c38147b107875a3",
+        "source": {
+          "location": "RoW",
+          "name": "market for aluminium scrap, new",
+          "reference product": "aluminium scrap, new",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "older-regional-road-market-composition-ff2ca96002f20f3de048"
+        },
+        "technosphere_information_loss": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Reuse the exact existing positive-reference empty new-aluminium Recycled Content cut-off stock and its direct-supplier binding. Current source stock and market hashes match frozen earlier witnesses. This preserves an observed source allocation boundary, not a statement that recycling is impact-free. No unreviewed or nonempty process receives zero burden, and no native aluminium-recycling or primary-metal process is added. Correct the older source3.9 recipe that used coal-specific rail for a generic CN freight entry and dropped internal uncertainty fields. Preserve one kg stock and all ten market delivery entries, including five rail country entries, inland barge, three road entries and container shipping. Use complete same-mode generic supplies with explicit geographic/traction/fleet warnings; the source stock and every delivery coefficient remain unchanged."
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for aluminium scrap, new",
+          "reference product": "aluminium scrap, new",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 11,
+        "metadata_sha256": "327e6d57dc8bc029df1450304bc74d348824d8a6999af46c5e8f3a9ce2505290",
+        "inventory_sha256": "f8ded64dfbad919d975cea42a3a96aa991625f47a3458f0c58d9fc0d01d15a3b",
+        "activity_comment_sha256": "a210124cf841f554438d52f4ce89ff9a3c8234b8032fed47b96d30af7b4752eb",
+        "product_information_sha256": "caf57a10b6c6e4e5b35ef3844cd94245b45c4fff4c7416adae9fa44b67a26dae"
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "aluminium scrap, new, Recycled Content cut-off",
+            "reference product": "aluminium scrap, new",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 0,
+          "metadata_sha256": "67d43442d761f1e27e7501aed73caafe0a09cfd43017fac314ea6668861ab7c1",
+          "inventory_sha256": "887d2d84ba21f2eabb5b319ef17cc9b630ccaff6e0fad3ad61d889e7fe7d98c2",
+          "activity_comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "product_information_sha256": "caf57a10b6c6e4e5b35ef3844cd94245b45c4fff4c7416adae9fa44b67a26dae"
+        }
+      ],
+      "recipe_id": "new-aluminium-scrap-39-stock-and-delivery",
+      "conversion_factor": 1,
+      "limitations": [
+        "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities.",
+        "Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified.",
+        "Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced.",
+        "Reuse the exact existing positive-reference empty new-aluminium Recycled Content cut-off stock and its direct-supplier binding. Current source stock and market hashes match frozen earlier witnesses. This preserves an observed source allocation boundary, not a statement that recycling is impact-free. No unreviewed or nonempty process receives zero burden, and no native aluminium-recycling or primary-metal process is added.",
+        "Correct the older source3.9 recipe that used coal-specific rail for a generic CN freight entry and dropped internal uncertainty fields. Preserve one kg stock and all ten market delivery entries, including five rail country entries, inland barge, three road entries and container shipping. Use complete same-mode generic supplies with explicit geographic/traction/fleet warnings; the source stock and every delivery coefficient remain unchanged."
+      ]
+    }
+  ],
+  "recipes": {
+    "sorted-iron-scrap-39-supply-and-delivery": {
+      "name": "market for iron scrap, sorted, pressed, source3.9 retained supplies and delivery",
+      "reference product": "iron scrap, sorted, pressed",
+      "location": "RoW",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "amount": 0.000519541957317269,
+          "uncertainty type": 0,
+          "loc": 0.000519541957317269,
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "location": "RER",
+          "unit": "kilogram",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.995905325297607,
+          "uncertainty type": 0,
+          "loc": 0.995905325297607,
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "location": "RER",
+          "unit": "kilogram",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.00357513274507606,
+          "uncertainty type": 0,
+          "loc": 0.00357513274507606,
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "location": "RER",
+          "unit": "kilogram",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.008124854420980722,
+          "uncertainty type": 2,
+          "loc": -4.812827468344612,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.029325763106612675,
+          "uncertainty type": 2,
+          "loc": -3.5292888623902905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.0020573828760997994,
+          "uncertainty type": 2,
+          "loc": -6.18632055237975,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.04045829667600844,
+          "uncertainty type": 2,
+          "loc": -3.207483547090453,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.03203370292029836,
+          "uncertainty type": 2,
+          "loc": -3.4409667141662066,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.0199,
+          "uncertainty type": 2,
+          "loc": -3.9170355472516905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.0034616051636116633,
+          "uncertainty type": 2,
+          "loc": -5.666022877371194,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.16762842782120813,
+          "uncertainty type": 2,
+          "loc": -1.786005488245856,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.022109967015180212,
+          "uncertainty type": 2,
+          "loc": -3.8117267759646314,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.2115,
+          "uncertainty type": 2,
+          "loc": -1.5535302804958044,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "location": "OCE",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      ],
+      "rationale": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Use complete native European Iron scrap, at plant, whose documentation explicitly includes collecting new/old iron scrap, transport to scrap-yard, sorting and pressing to blocks. Retain the three source producer shares separately: mixed-scrap sorting 0.000519541957317269, ordinary sorting/pressing 0.995905325297607, and tinplate handoff 0.00357513274507606 kg/kg. All three use the complete native process as a screening proxy, not a zero stock or unsorted scrap. Native RER production is preferred to the previous Swiss producer for this non-Swiss market. The main source sorting/pressing route and native process both use 0.1 MJ diesel, 0.01 kWh electricity and 1e-9 preparation facility units per kg. Source regional electricity/facility definitions and native ENTSO-E/European assumptions differ. Native collection is 0.1 road and 0.2 rail tkm and includes 0.036 MJ waste heat; this replaces source upstream unsorted-stock collection and internal allocation, rather than adding a second reconstructed source sorting inventory. Retained final-market delivery remains a separate boundary. Do not subtract native internal collection or invent a balancing heat/energy credit. The two minor producer routes are not identical technologies: mixed scrap has different diesel/yield/waste-treatment/facility allocation; the tinplate route hands off tinplate scrap and may carry different sorting, tin and recycling-allocation burdens. Replacing both complete internal supply models with native collected/sorted/pressed ferrous scrap is an explicit feedstock, yield, treatment and allocation proxy. Their combined source share is approximately 0.4095%; retain each original share and supported caller uncertainty, without asserting impact insignificance or chemical equivalence.",
+      "evidence": [
+        "brightpath/data/export/uvek_scrap_delivery_39_review.json"
+      ]
+    },
+    "new-aluminium-scrap-39-stock-and-delivery": {
+      "name": "market for aluminium scrap, new, source3.9 retained supplies and delivery",
+      "reference product": "aluminium scrap, new",
+      "location": "RoW",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "amount": 1.0,
+          "uncertainty type": 0,
+          "loc": 1.0,
+          "recipe": "cutoff-stock-c799837c419be7ab840f",
+          "zero_burden_supplier": {
+            "rule_id": "bp-37b9b46586e881e7",
+            "source_profile": {
+              "family": "ecoinvent",
+              "version": "3.9",
+              "system_model": "cutoff"
+            },
+            "profile_review_sha256": "1820d99ff2642cd4dcee445a231ea560aa33787ed2be1f12d6a287476e953801"
+          }
+        },
+        {
+          "amount": 0.008124854420980722,
+          "uncertainty type": 2,
+          "loc": -4.812827468344612,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.029325763106612675,
+          "uncertainty type": 2,
+          "loc": -3.5292888623902905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.0020573828760997994,
+          "uncertainty type": 2,
+          "loc": -6.18632055237975,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.04045829667600844,
+          "uncertainty type": 2,
+          "loc": -3.207483547090453,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.03203370292029836,
+          "uncertainty type": 2,
+          "loc": -3.4409667141662066,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.0199,
+          "uncertainty type": 2,
+          "loc": -3.9170355472516905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.0034616051636116633,
+          "uncertainty type": 2,
+          "loc": -5.666022877371194,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.16762842782120813,
+          "uncertainty type": 2,
+          "loc": -1.786005488245856,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.022109967015180212,
+          "uncertainty type": 2,
+          "loc": -3.8117267759646314,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.2115,
+          "uncertainty type": 2,
+          "loc": -1.5535302804958044,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "location": "OCE",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      ],
+      "rationale": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Reuse the exact existing positive-reference empty new-aluminium Recycled Content cut-off stock and its direct-supplier binding. Current source stock and market hashes match frozen earlier witnesses. This preserves an observed source allocation boundary, not a statement that recycling is impact-free. No unreviewed or nonempty process receives zero burden, and no native aluminium-recycling or primary-metal process is added. Correct the older source3.9 recipe that used coal-specific rail for a generic CN freight entry and dropped internal uncertainty fields. Preserve one kg stock and all ten market delivery entries, including five rail country entries, inland barge, three road entries and container shipping. Use complete same-mode generic supplies with explicit geographic/traction/fleet warnings; the source stock and every delivery coefficient remain unchanged.",
+      "evidence": [
+        "brightpath/data/export/uvek_scrap_delivery_39_review.json"
+      ]
+    }
+  },
+  "recipe_dependencies": {
+    "cutoff-stock-c799837c419be7ab840f": {
+      "evidence": [
+        "brightpath/data/export/uvek_cutoff_stock_review.json: exact positive cut-off production-only supplier and inventory fingerprints."
+      ],
+      "inputs": [],
+      "location": "GLO",
+      "name": "Allocated cut-off stock, aluminium scrap, new, GLO",
+      "rationale": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+      "reference product": "aluminium scrap, new",
+      "unit": "kilogram",
+      "zero_burden": true,
+      "zero_burden_reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers."
+    }
+  },
+  "source_rule_dependencies": {
+    "bp-37b9b46586e881e7": {
+      "confidence": 1,
+      "conversion_factor": 1,
+      "id": "bp-37b9b46586e881e7",
+      "mapping_method": "reviewed_cutoff_stock_recipe",
+      "reference_flow_sign_review": {
+        "evidence": [
+          "brightpath/data/export/uvek_cutoff_stock_review.json"
+        ],
+        "profiles": [
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.10-cutoff/8f86c812ca04efcb2dd4f714b03008c163fa15a43ce08972e89681e0ef5f3f21"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.10"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.10.1-cutoff/f5e09e7a20d924ccde28d80b159fca0e16eb8d555532712c2052e741f4321041",
+                "brightpath/data/export/uvek_complete_patch_boundary_review.json#ecoinvent-3.10.1-cutoff/f5e09e7a20d924ccde28d80b159fca0e16eb8d555532712c2052e741f4321041"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.10.1"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.11-cutoff/f6f034faf3fa0630be0747775e70a3817377b8d88cd94e965cc4908d5458670a"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.11"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.12-cutoff/6f8babef34d2d1e1cfc54db38f6c7f1b9d3ff0bcf158f82a8aed0d6468ad3fea"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.12"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.6-cutoff/27a257bf2b0caa031560f98554737a495cb60ee26e0a7d6cb0dc99f7908b07dd"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.6"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.7-cutoff/2d07056666f7bbaf7cb8505a99728b69514c178eee160c93eee1a8e4ec74cb52"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.7"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.8-cutoff/226157ebf7052f1edac040ee0a32d546bbf1acfca44ffa515d4f13dec8f0e6c6"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.8"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.9-cutoff/887d2d84ba21f2eabb5b319ef17cc9b630ccaff6e0fad3ad61d889e7fe7d98c2"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.9"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          },
+          {
+            "conversion_factor": 1,
+            "review": {
+              "evidence": [
+                "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.9.1-cutoff/d20203449674509b7a5dcf44d2f6a5ae9e0a7c390cd3f8629fc1a1b2682f970f",
+                "brightpath/data/export/uvek_complete_patch_boundary_review.json#ecoinvent-3.9.1-cutoff/d20203449674509b7a5dcf44d2f6a5ae9e0a7c390cd3f8629fc1a1b2682f970f"
+              ],
+              "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+              "source_sign": 1,
+              "status": "verified",
+              "target_sign": 1
+            },
+            "source_profile": {
+              "family": "ecoinvent",
+              "system_model": "cutoff",
+              "version": "3.9.1"
+            },
+            "target": {
+              "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+            }
+          }
+        ],
+        "reason": "Select only an exact inspected positive cut-off stock profile; no other allocation or treatment context is approved.",
+        "status": "unresolved"
+      },
+      "report_correspondence": true,
+      "review_ref": "r-67fdeecb5d1482a6",
+      "source": {
+        "location": "GLO",
+        "name": "aluminium scrap, new, Recycled Content cut-off",
+        "reference product": "aluminium scrap, new",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+      }
+    }
+  },
+  "reviews": [
+    {
+      "rationale": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Use complete native European Iron scrap, at plant, whose documentation explicitly includes collecting new/old iron scrap, transport to scrap-yard, sorting and pressing to blocks. Retain the three source producer shares separately: mixed-scrap sorting 0.000519541957317269, ordinary sorting/pressing 0.995905325297607, and tinplate handoff 0.00357513274507606 kg/kg. All three use the complete native process as a screening proxy, not a zero stock or unsorted scrap. Native RER production is preferred to the previous Swiss producer for this non-Swiss market. The main source sorting/pressing route and native process both use 0.1 MJ diesel, 0.01 kWh electricity and 1e-9 preparation facility units per kg. Source regional electricity/facility definitions and native ENTSO-E/European assumptions differ. Native collection is 0.1 road and 0.2 rail tkm and includes 0.036 MJ waste heat; this replaces source upstream unsorted-stock collection and internal allocation, rather than adding a second reconstructed source sorting inventory. Retained final-market delivery remains a separate boundary. Do not subtract native internal collection or invent a balancing heat/energy credit. The two minor producer routes are not identical technologies: mixed scrap has different diesel/yield/waste-treatment/facility allocation; the tinplate route hands off tinplate scrap and may carry different sorting, tin and recycling-allocation burdens. Replacing both complete internal supply models with native collected/sorted/pressed ferrous scrap is an explicit feedstock, yield, treatment and allocation proxy. Their combined source share is approximately 0.4095%; retain each original share and supported caller uncertainty, without asserting impact insignificance or chemical equivalence.",
+      "limitations": [
+        "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities.",
+        "Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified.",
+        "Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced.",
+        "Use complete native European Iron scrap, at plant, whose documentation explicitly includes collecting new/old iron scrap, transport to scrap-yard, sorting and pressing to blocks. Retain the three source producer shares separately: mixed-scrap sorting 0.000519541957317269, ordinary sorting/pressing 0.995905325297607, and tinplate handoff 0.00357513274507606 kg/kg. All three use the complete native process as a screening proxy, not a zero stock or unsorted scrap. Native RER production is preferred to the previous Swiss producer for this non-Swiss market.",
+        "The main source sorting/pressing route and native process both use 0.1 MJ diesel, 0.01 kWh electricity and 1e-9 preparation facility units per kg. Source regional electricity/facility definitions and native ENTSO-E/European assumptions differ. Native collection is 0.1 road and 0.2 rail tkm and includes 0.036 MJ waste heat; this replaces source upstream unsorted-stock collection and internal allocation, rather than adding a second reconstructed source sorting inventory. Retained final-market delivery remains a separate boundary. Do not subtract native internal collection or invent a balancing heat/energy credit.",
+        "The two minor producer routes are not identical technologies: mixed scrap has different diesel/yield/waste-treatment/facility allocation; the tinplate route hands off tinplate scrap and may carry different sorting, tin and recycling-allocation burdens. Replacing both complete internal supply models with native collected/sorted/pressed ferrous scrap is an explicit feedstock, yield, treatment and allocation proxy. Their combined source share is approximately 0.4095%; retain each original share and supported caller uncertainty, without asserting impact insignificance or chemical equivalence."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_scrap_delivery_39_review.json"
+      ]
+    },
+    {
+      "rationale": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Reuse the exact existing positive-reference empty new-aluminium Recycled Content cut-off stock and its direct-supplier binding. Current source stock and market hashes match frozen earlier witnesses. This preserves an observed source allocation boundary, not a statement that recycling is impact-free. No unreviewed or nonempty process receives zero burden, and no native aluminium-recycling or primary-metal process is added. Correct the older source3.9 recipe that used coal-specific rail for a generic CN freight entry and dropped internal uncertainty fields. Preserve one kg stock and all ten market delivery entries, including five rail country entries, inland barge, three road entries and container shipping. Use complete same-mode generic supplies with explicit geographic/traction/fleet warnings; the source stock and every delivery coefficient remain unchanged.",
+      "limitations": [
+        "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities.",
+        "Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified.",
+        "Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced.",
+        "Reuse the exact existing positive-reference empty new-aluminium Recycled Content cut-off stock and its direct-supplier binding. Current source stock and market hashes match frozen earlier witnesses. This preserves an observed source allocation boundary, not a statement that recycling is impact-free. No unreviewed or nonempty process receives zero burden, and no native aluminium-recycling or primary-metal process is added.",
+        "Correct the older source3.9 recipe that used coal-specific rail for a generic CN freight entry and dropped internal uncertainty fields. Preserve one kg stock and all ten market delivery entries, including five rail country entries, inland barge, three road entries and container shipping. Use complete same-mode generic supplies with explicit geographic/traction/fleet warnings; the source stock and every delivery coefficient remain unchanged."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_scrap_delivery_39_review.json"
+      ]
+    }
+  ],
+  "native_witnesses": [
+    {
+      "identity": {
+        "name": "Iron scrap, at plant",
+        "reference product": "Iron scrap, at plant",
+        "location": "RER",
+        "unit": "kilogram"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Iron scrap, at plant",
+            "reference product": "Iron scrap, at plant",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 6,
+          "metadata_sha256": "88536c441d7790c70e7a71411a1f3eaec07c3a4662ac848a58d4674dabe3d87b",
+          "inventory_sha256": "5e0b83f8d844af50e0e65041776ed8a2ea20402054c63892494b6c1d07f8a406",
+          "activity_comment_sha256": "8fdcf61b652ccd8685b66376cb9dedfe8b8934260246e373222369de7ec826b5",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Iron scrap, at plant",
+            "reference product": "Iron scrap, at plant",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 6,
+          "metadata_sha256": "fbd1f2bb7a4c0d509f0a2c512de20769a1b741325ee343f6cee01c2f133c8372",
+          "inventory_sha256": "2188874dca3ec28f6d85e3ee501ea4784d19ce508f1052426a9f2e39dcc8d3b4",
+          "activity_comment_sha256": "c61fdb284e6b1b235fdc7dff42684f0380ed3a289b4a06eb3ee4c25579b89ce7",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, rail",
+        "reference product": "Transport, freight, rail",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 66,
+          "metadata_sha256": "bf0b92330f5550e4ff8ca6fb8c07a5e36f231d0ece20aeda1672d032024f8d92",
+          "inventory_sha256": "4af095b1c680e50755cc7969de9c7b096ce871af491062204697dd4d3c617400",
+          "activity_comment_sha256": "1df979a6bc0882b7d94bc3904a8832568a6c5463344665f169125ea352d9d7a5",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 66,
+          "metadata_sha256": "a086e7cd14dc8078d57f5caaa5dc4fa25a8cd4b4dcac023249504ba59e713476",
+          "inventory_sha256": "d21630645414a88763748d1e1cae72eaa78561f67bae72f1dfa2024d292bad81",
+          "activity_comment_sha256": "da69ddf1a7bd9c6a5875566456db36cee98d7997affe7edfd22d55ac7241aee3",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, barge",
+        "reference product": "Transport, barge",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, barge",
+            "reference product": "Transport, barge",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 43,
+          "metadata_sha256": "8c795eea4f351dabbfc92de69dc20492da53a616acb47ae1319acec310385b08",
+          "inventory_sha256": "8496871de053ce8a70b39531f4eda4f8532a235e4881aaf8a6f393b149c6efb0",
+          "activity_comment_sha256": "551fedfee8fd1f2e20a9a5f1d03171ed5f1403a9172e36632ccd39b4a846edc0",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, barge",
+            "reference product": "Transport, barge",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 43,
+          "metadata_sha256": "22ea7909644698e64590db4af0a206286fd10a828f7fe381e5cc2f53db6991c3",
+          "inventory_sha256": "8dfd99174434709ec317338ef637fa8e6841898accea4770d7910de7c89fa7b0",
+          "activity_comment_sha256": "58658e919fef368c9d5fce181878b4f23da633ba13b04226cebd77ee7a6377e0",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, lorry, fleet average",
+        "reference product": "Transport, freight, lorry, fleet average",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "1712dcc1e47789fd051de828c7fa8576057a018e81bae15590c87e3285c8eae6",
+          "inventory_sha256": "22d4f5fe504956cb8774ee629f64ea5799f0eba27e825034f8a6ad6e2076e32c",
+          "activity_comment_sha256": "0716216989810c286263da289b407ae09aa4a17e1c375b712652b6590cfd6b6d",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "2e25c36bfe498c028ee90845bf35d49ed777fb811dc4c2353e70e567f87d5c35",
+          "inventory_sha256": "1dce512cce0f49d845545ea0ed7d0a6e9f64ed59e5583c9ad0185f0fd4d6c0fd",
+          "activity_comment_sha256": "f40ff5cc0336e900ff57b6126375b05b5a17f7212403cff0f8a08f32f35c4e5c",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, transoceanic container ship",
+        "reference product": "Transport, transoceanic container ship",
+        "location": "OCE",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, transoceanic container ship",
+            "reference product": "Transport, transoceanic container ship",
+            "location": "OCE",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 35,
+          "metadata_sha256": "03407e29c161b23e19c2f7a40a63ccb0c6af3ae75e1b15a8411f63a9094c58ed",
+          "inventory_sha256": "bfc7d9e7e4cf300178df599162a669f5cf889b3409d343999efc6753bc484459",
+          "activity_comment_sha256": "1fa4cf7ddcadc6f3a56dc9cb83c870172228b0b7d1989127432a61f431bb4453",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, transoceanic container ship",
+            "reference product": "Transport, transoceanic container ship",
+            "location": "OCE",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 36,
+          "metadata_sha256": "2bb3d84c656e7c5472dbea11260c1e0c451d2dcdc94dabd28b55aca2165a51ce",
+          "inventory_sha256": "6a8e016af6d8fbbff8b883f346e2b5367df5253ee6338761be535dee06f96a44",
+          "activity_comment_sha256": "65b0638873b516d7f1c26a90f91c06e2f13927db4ca5bdc60d66c3be9b2bfe2e",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  ],
+  "stock_39_witness": {
+    "label": "ecoinvent-3.9-cutoff",
+    "inventory_sha256": "887d2d84ba21f2eabb5b319ef17cc9b630ccaff6e0fad3ad61d889e7fe7d98c2",
+    "total_exchanges": 1,
+    "only_self_production": true,
+    "production_amount": 1
+  },
+  "retained_market_interfaces": {
+    "sorted-iron-scrap-39-supply-and-delivery": [
+      {
+        "source": {
+          "name": "treatment of metal scrap, mixed, for recycling, unsorted, sorting",
+          "reference product": "iron scrap, sorted, pressed",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "kind": "sorted_supply",
+        "statistics": {
+          "amount": 0.000519541957317269,
+          "uncertainty type": 0,
+          "loc": 0.000519541957317269
+        },
+        "target": {
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "location": "RER",
+          "unit": "kilogram",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "sorting and pressing of iron scrap",
+          "reference product": "iron scrap, sorted, pressed",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "kind": "sorted_supply",
+        "statistics": {
+          "amount": 0.995905325297607,
+          "uncertainty type": 0,
+          "loc": 0.995905325297607
+        },
+        "target": {
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "location": "RER",
+          "unit": "kilogram",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "tinplate scrap, sorted to generic market for iron scrap, sorted, pressed",
+          "reference product": "iron scrap, sorted, pressed",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "kind": "sorted_supply",
+        "statistics": {
+          "amount": 0.00357513274507606,
+          "uncertainty type": 0,
+          "loc": 0.00357513274507606
+        },
+        "target": {
+          "name": "Iron scrap, at plant",
+          "reference product": "Iron scrap, at plant",
+          "location": "RER",
+          "unit": "kilogram",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "IN",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.008124854420980722,
+          "uncertainty type": 2,
+          "loc": -4.812827468344612,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "CN",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.029325763106612675,
+          "uncertainty type": 2,
+          "loc": -3.5292888623902905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "ZA",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.0020573828760997994,
+          "uncertainty type": 2,
+          "loc": -6.18632055237975,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "RoW",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.04045829667600844,
+          "uncertainty type": 2,
+          "loc": -3.207483547090453,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "US",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.03203370292029836,
+          "uncertainty type": 2,
+          "loc": -3.4409667141662066,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, inland waterways, barge",
+          "reference product": "transport, freight, inland waterways, barge",
+          "location": "RoW",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.0199,
+          "uncertainty type": 2,
+          "loc": -3.9170355472516905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, lorry, unspecified",
+          "reference product": "transport, freight, lorry, unspecified",
+          "location": "ZA",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.0034616051636116633,
+          "uncertainty type": 2,
+          "loc": -5.666022877371194,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, lorry, unspecified",
+          "reference product": "transport, freight, lorry, unspecified",
+          "location": "RoW",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.16762842782120813,
+          "uncertainty type": 2,
+          "loc": -1.786005488245856,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, lorry, unspecified",
+          "reference product": "transport, freight, lorry, unspecified",
+          "location": "BR",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.022109967015180212,
+          "uncertainty type": 2,
+          "loc": -3.8117267759646314,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, sea, container ship",
+          "reference product": "transport, freight, sea, container ship",
+          "location": "GLO",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.2115,
+          "uncertainty type": 2,
+          "loc": -1.5535302804958044,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "location": "OCE",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      }
+    ],
+    "new-aluminium-scrap-39-stock-and-delivery": [
+      {
+        "source": {
+          "name": "aluminium scrap, new, Recycled Content cut-off",
+          "reference product": "aluminium scrap, new",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "kind": "cutoff_stock",
+        "statistics": {
+          "amount": 1.0,
+          "uncertainty type": 0,
+          "loc": 1.0
+        },
+        "target": {
+          "recipe": "cutoff-stock-c799837c419be7ab840f",
+          "zero_burden_supplier": {
+            "rule_id": "bp-37b9b46586e881e7",
+            "source_profile": {
+              "family": "ecoinvent",
+              "version": "3.9",
+              "system_model": "cutoff"
+            },
+            "profile_review_sha256": "1820d99ff2642cd4dcee445a231ea560aa33787ed2be1f12d6a287476e953801"
+          }
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "IN",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.008124854420980722,
+          "uncertainty type": 2,
+          "loc": -4.812827468344612,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "CN",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.029325763106612675,
+          "uncertainty type": 2,
+          "loc": -3.5292888623902905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "ZA",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.0020573828760997994,
+          "uncertainty type": 2,
+          "loc": -6.18632055237975,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "RoW",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.04045829667600844,
+          "uncertainty type": 2,
+          "loc": -3.207483547090453,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight train",
+          "reference product": "transport, freight train",
+          "location": "US",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.03203370292029836,
+          "uncertainty type": 2,
+          "loc": -3.4409667141662066,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, inland waterways, barge",
+          "reference product": "transport, freight, inland waterways, barge",
+          "location": "RoW",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.0199,
+          "uncertainty type": 2,
+          "loc": -3.9170355472516905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, lorry, unspecified",
+          "reference product": "transport, freight, lorry, unspecified",
+          "location": "ZA",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.0034616051636116633,
+          "uncertainty type": 2,
+          "loc": -5.666022877371194,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, lorry, unspecified",
+          "reference product": "transport, freight, lorry, unspecified",
+          "location": "RoW",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.16762842782120813,
+          "uncertainty type": 2,
+          "loc": -1.786005488245856,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, lorry, unspecified",
+          "reference product": "transport, freight, lorry, unspecified",
+          "location": "BR",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.022109967015180212,
+          "uncertainty type": 2,
+          "loc": -3.8117267759646314,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      },
+      {
+        "source": {
+          "name": "market for transport, freight, sea, container ship",
+          "reference product": "transport, freight, sea, container ship",
+          "location": "GLO",
+          "unit": "ton kilometer"
+        },
+        "kind": "freight",
+        "statistics": {
+          "amount": 0.2115,
+          "uncertainty type": 2,
+          "loc": -1.5535302804958044,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        "target": {
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "location": "OCE",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      }
+    ]
+  },
+  "new_source_omissions": [],
+  "licensing": "Native-facing recipes, bounded source interface facts and inventory hashes only; original proprietary records/comments and full upstream source inventories remain private."
+}
