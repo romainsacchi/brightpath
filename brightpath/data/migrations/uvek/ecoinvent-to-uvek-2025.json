@@ -104997,6 +104997,114 @@
       "reference product": "transport, freight, lorry 16-32 metric ton, EURO5",
       "unit": "ton kilometer"
     },
+    "ferrochromium-high-carbon-39-retained-supply-and-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_ferrochromium_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.25,
+          "loc": 0.25,
+          "location": "GLO",
+          "name": "Ferrochromium, high-carbon, 68% Cr, at plant",
+          "reference product": "Ferrochromium, high-carbon, 68% Cr, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.75,
+          "loc": 0.75,
+          "location": "GLO",
+          "name": "Ferrochromium, high-carbon, 68% Cr, at plant",
+          "reference product": "Ferrochromium, high-carbon, 68% Cr, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.1903,
+          "loc": -1.6591535046800332,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0201,
+          "loc": -3.907035463917107,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2065,
+          "loc": -1.5774548665810497,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.4409,
+          "loc": -0.8189371866182451,
+          "location": "OCE",
+          "name": "Transport, transoceanic freight ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic freight ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for high-carbon 68%-Cr ferrochromium, source3.9 retained supply and delivery",
+      "rationale": "New approval covers only the inspected ecoinvent 3.9 cut-off global high-carbon ferrochromium market, positive one kg of 68%-Cr alloy. The native reference is positive one kg of the same named high-carbon 68%-Cr ferrochromium, factor +1. Preserve signed caller alloy kg, supported uncertainty/formulas, foreground ownership and separate emissions. Do not multiply by 0.68 or its reciprocal: neither reference is a kg of contained chromium. Other releases, patches, system models and reverse routes receive no approval. Retain the two source producer entries separately at 0.25 and 0.75 kg, using the complete global native high-carbon 68%-Cr producer for each. This is a screening proxy, replacing the KZ/RoW source production technologies, raw materials, electricity, reductants, alloy-processing emissions, residues, allocation and internal uncertainty. Source producers cite a 2017 BAT assessment applied to Kazakhstan, with RoW copied from Kazakhstan. Native documentation includes ore pretreatment and carbon reduction to high-carbon alloy, with a 1994 worldwide basis and a 50/50 ordinary/newer submerged-arc technology portfolio. Its opening chromite description alone is misleading; the verified full native2026 boundary includes alloy production. No secondary chromium source, recovery credit, invented composition correction or separate smelter is added. Native/source LCI, LCIA and stochastic equivalence are not claimed; score effects remain unquantified. Although source market prose says no transport, its actual inventory contains four delivery entries: 0.1903 rail, 0.0201 barge, 0.2065 road and 0.4409 dry-bulk sea tkm per kg. Retain each original quantity and supported uncertainty through three existing exact source3.9 freight correspondences and the separately inspected dry-bulk-sea proxy. Native regional/worldwide fleet, traction, road class, fuel, geography, emissions and vintage differences remain explicit screening limitations. Do not omit listed freight, normalize producer weights, add a new route, loading/distance multiplier or duplicate internal native raw-material transport. Default target, unrelated source profile entries and three previously approved freight permissions remain unchanged. The on-demand market helper retains six inputs and has no direct biosphere or omission. No runtime Python module, alternative Premise sector engine or validation bypass is added. The complete native producer remains available to normal shared Premise processing.",
+      "reference product": "ferrochromium, high-carbon, 68% Cr",
+      "unit": "kilogram"
+    },
     "ferrosilicon-39-final-0281677fb9d20241": {
       "evidence": [
         "brightpath/data/export/uvek_ferrosilicon_last_supplies_review.json"
@@ -805754,7 +805862,7 @@
     {"confidence": 0.434584, "id": "bp-711b4feda57acd26", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferrite", "reference product": "ferrite", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferrite, at plant", "reference product": "Ferrite, at plant", "unit": "kilogram"}},
     {"confidence": 0.591787, "id": "bp-e2418a0d471f423a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferrochromium, high carbon, 55% Cr", "reference product": "ferrochromium, high carbon, 55% Cr", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferrochromium, high-carbon, 68% Cr, at plant", "reference product": "Ferrochromium, high-carbon, 68% Cr, at plant", "unit": "kilogram"}},
     {"confidence": 0.591787, "id": "bp-0b78784509cea554", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferrochromium, high-carbon, 55% Cr", "reference product": "ferrochromium, high-carbon, 55% Cr", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferrochromium, high-carbon, 68% Cr, at plant", "reference product": "Ferrochromium, high-carbon, 68% Cr, at plant", "unit": "kilogram"}},
-    {"confidence": 0.738316, "id": "bp-20d6cc6fceb46d84", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferrochromium, high-carbon, 68% Cr", "reference product": "ferrochromium, high-carbon, 68% Cr", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferrochromium, high-carbon, 68% Cr, at plant", "reference product": "Ferrochromium, high-carbon, 68% Cr, at plant", "unit": "kilogram"}},
+    {"confidence": 0.738316, "id": "bp-20d6cc6fceb46d84", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ferrochromium_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ferrochromium_39_review.json"], "reason": "New approval covers only the inspected ecoinvent 3.9 cut-off global high-carbon ferrochromium market, positive one kg of 68%-Cr alloy. The native reference is positive one kg of the same named high-carbon 68%-Cr ferrochromium, factor +1. Preserve signed caller alloy kg, supported uncertainty/formulas, foreground ownership and separate emissions. Do not multiply by 0.68 or its reciprocal: neither reference is a kg of contained chromium. Other releases, patches, system models and reverse routes receive no approval. Retain the two source producer entries separately at 0.25 and 0.75 kg, using the complete global native high-carbon 68%-Cr producer for each. This is a screening proxy, replacing the KZ/RoW source production technologies, raw materials, electricity, reductants, alloy-processing emissions, residues, allocation and internal uncertainty. Source producers cite a 2017 BAT assessment applied to Kazakhstan, with RoW copied from Kazakhstan. Native documentation includes ore pretreatment and carbon reduction to high-carbon alloy, with a 1994 worldwide basis and a 50/50 ordinary/newer submerged-arc technology portfolio. Its opening chromite description alone is misleading; the verified full native2026 boundary includes alloy production. No secondary chromium source, recovery credit, invented composition correction or separate smelter is added. Native/source LCI, LCIA and stochastic equivalence are not claimed; score effects remain unquantified. Although source market prose says no transport, its actual inventory contains four delivery entries: 0.1903 rail, 0.0201 barge, 0.2065 road and 0.4409 dry-bulk sea tkm per kg. Retain each original quantity and supported uncertainty through three existing exact source3.9 freight correspondences and the separately inspected dry-bulk-sea proxy. Native regional/worldwide fleet, traction, road class, fuel, geography, emissions and vintage differences remain explicit screening limitations. Do not omit listed freight, normalize producer weights, add a new route, loading/distance multiplier or duplicate internal native raw-material transport. Default target, unrelated source profile entries and three previously approved freight permissions remain unchanged. The on-demand market helper retains six inputs and has no direct biosphere or omission. No runtime Python module, alternative Premise sector engine or validation bypass is added. The complete native producer remains available to normal shared Premise processing.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "ferrochromium-high-carbon-39-retained-supply-and-delivery"}}], "reason": "Only enumerated exact source profiles reviewed.", "status": "unresolved"}, "review_ref": "r-98f073eba6395776", "source": {"location": "GLO", "name": "market for ferrochromium, high-carbon, 68% Cr", "reference product": "ferrochromium, high-carbon, 68% Cr", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferrochromium, high-carbon, 68% Cr, at plant", "reference product": "Ferrochromium, high-carbon, 68% Cr, at plant", "unit": "kilogram"}, "technosphere_information_loss": "New approval covers only the inspected ecoinvent 3.9 cut-off global high-carbon ferrochromium market, positive one kg of 68%-Cr alloy. The native reference is positive one kg of the same named high-carbon 68%-Cr ferrochromium, factor +1. Preserve signed caller alloy kg, supported uncertainty/formulas, foreground ownership and separate emissions. Do not multiply by 0.68 or its reciprocal: neither reference is a kg of contained chromium. Other releases, patches, system models and reverse routes receive no approval. Retain the two source producer entries separately at 0.25 and 0.75 kg, using the complete global native high-carbon 68%-Cr producer for each. This is a screening proxy, replacing the KZ/RoW source production technologies, raw materials, electricity, reductants, alloy-processing emissions, residues, allocation and internal uncertainty. Source producers cite a 2017 BAT assessment applied to Kazakhstan, with RoW copied from Kazakhstan. Native documentation includes ore pretreatment and carbon reduction to high-carbon alloy, with a 1994 worldwide basis and a 50/50 ordinary/newer submerged-arc technology portfolio. Its opening chromite description alone is misleading; the verified full native2026 boundary includes alloy production. No secondary chromium source, recovery credit, invented composition correction or separate smelter is added. Native/source LCI, LCIA and stochastic equivalence are not claimed; score effects remain unquantified. Although source market prose says no transport, its actual inventory contains four delivery entries: 0.1903 rail, 0.0201 barge, 0.2065 road and 0.4409 dry-bulk sea tkm per kg. Retain each original quantity and supported uncertainty through three existing exact source3.9 freight correspondences and the separately inspected dry-bulk-sea proxy. Native regional/worldwide fleet, traction, road class, fuel, geography, emissions and vintage differences remain explicit screening limitations. Do not omit listed freight, normalize producer weights, add a new route, loading/distance multiplier or duplicate internal native raw-material transport. Default target, unrelated source profile entries and three previously approved freight permissions remain unchanged. The on-demand market helper retains six inputs and has no direct biosphere or omission. No runtime Python module, alternative Premise sector engine or validation bypass is added. The complete native producer remains available to normal shared Premise processing."},
     {"confidence": 0.559978, "id": "bp-2016f06332c370d1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferromanganese, high-coal, 74.5% Mn", "reference product": "ferromanganese, high-coal, 74.5% Mn", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ferromanganese, high-coal, 74.5% Mn, at regional storage", "reference product": "Ferromanganese, high-coal, 74.5% Mn, at regional storage", "unit": "kilogram"}},
     {"confidence": 0.394281, "id": "bp-8599277b333713a0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferronickel", "reference product": "ferronickel", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferronickel, 25% Ni, at plant", "reference product": "Ferronickel, 25% Ni, at plant", "unit": "kilogram"}},
     {"confidence": 0.62508, "id": "bp-c2e7e627b536e593", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ferronickel, 25% Ni", "reference product": "ferronickel, 25% Ni", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ferronickel, 25% Ni, at plant", "reference product": "Ferronickel, 25% Ni, at plant", "unit": "kilogram"}},
@@ -828575,6 +828683,18 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of sewage sludge, 97% water, WWT, WW from wafer fabrication, landfarming / RoW / kg external exchange with a warning. All inspected direct service comments for wafer fabrication document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-98f073eba6395776": {
+      "evidence": [
+        "brightpath/data/export/uvek_ferrochromium_39_review.json"
+      ],
+      "limitations": [
+        "New approval covers only the inspected ecoinvent 3.9 cut-off global high-carbon ferrochromium market, positive one kg of 68%-Cr alloy. The native reference is positive one kg of the same named high-carbon 68%-Cr ferrochromium, factor +1. Preserve signed caller alloy kg, supported uncertainty/formulas, foreground ownership and separate emissions. Do not multiply by 0.68 or its reciprocal: neither reference is a kg of contained chromium. Other releases, patches, system models and reverse routes receive no approval.",
+        "Retain the two source producer entries separately at 0.25 and 0.75 kg, using the complete global native high-carbon 68%-Cr producer for each. This is a screening proxy, replacing the KZ/RoW source production technologies, raw materials, electricity, reductants, alloy-processing emissions, residues, allocation and internal uncertainty. Source producers cite a 2017 BAT assessment applied to Kazakhstan, with RoW copied from Kazakhstan. Native documentation includes ore pretreatment and carbon reduction to high-carbon alloy, with a 1994 worldwide basis and a 50/50 ordinary/newer submerged-arc technology portfolio. Its opening chromite description alone is misleading; the verified full native2026 boundary includes alloy production. No secondary chromium source, recovery credit, invented composition correction or separate smelter is added. Native/source LCI, LCIA and stochastic equivalence are not claimed; score effects remain unquantified.",
+        "Although source market prose says no transport, its actual inventory contains four delivery entries: 0.1903 rail, 0.0201 barge, 0.2065 road and 0.4409 dry-bulk sea tkm per kg. Retain each original quantity and supported uncertainty through three existing exact source3.9 freight correspondences and the separately inspected dry-bulk-sea proxy. Native regional/worldwide fleet, traction, road class, fuel, geography, emissions and vintage differences remain explicit screening limitations. Do not omit listed freight, normalize producer weights, add a new route, loading/distance multiplier or duplicate internal native raw-material transport.",
+        "Default target, unrelated source profile entries and three previously approved freight permissions remain unchanged. The on-demand market helper retains six inputs and has no direct biosphere or omission. No runtime Python module, alternative Premise sector engine or validation bypass is added. The complete native producer remains available to normal shared Premise processing."
+      ],
+      "rationale": "New approval covers only the inspected ecoinvent 3.9 cut-off global high-carbon ferrochromium market, positive one kg of 68%-Cr alloy. The native reference is positive one kg of the same named high-carbon 68%-Cr ferrochromium, factor +1. Preserve signed caller alloy kg, supported uncertainty/formulas, foreground ownership and separate emissions. Do not multiply by 0.68 or its reciprocal: neither reference is a kg of contained chromium. Other releases, patches, system models and reverse routes receive no approval. Retain the two source producer entries separately at 0.25 and 0.75 kg, using the complete global native high-carbon 68%-Cr producer for each. This is a screening proxy, replacing the KZ/RoW source production technologies, raw materials, electricity, reductants, alloy-processing emissions, residues, allocation and internal uncertainty. Source producers cite a 2017 BAT assessment applied to Kazakhstan, with RoW copied from Kazakhstan. Native documentation includes ore pretreatment and carbon reduction to high-carbon alloy, with a 1994 worldwide basis and a 50/50 ordinary/newer submerged-arc technology portfolio. Its opening chromite description alone is misleading; the verified full native2026 boundary includes alloy production. No secondary chromium source, recovery credit, invented composition correction or separate smelter is added. Native/source LCI, LCIA and stochastic equivalence are not claimed; score effects remain unquantified. Although source market prose says no transport, its actual inventory contains four delivery entries: 0.1903 rail, 0.0201 barge, 0.2065 road and 0.4409 dry-bulk sea tkm per kg. Retain each original quantity and supported uncertainty through three existing exact source3.9 freight correspondences and the separately inspected dry-bulk-sea proxy. Native regional/worldwide fleet, traction, road class, fuel, geography, emissions and vintage differences remain explicit screening limitations. Do not omit listed freight, normalize producer weights, add a new route, loading/distance multiplier or duplicate internal native raw-material transport. Default target, unrelated source profile entries and three previously approved freight permissions remain unchanged. The on-demand market helper retains six inputs and has no direct biosphere or omission. No runtime Python module, alternative Premise sector engine or validation bypass is added. The complete native producer remains available to normal shared Premise processing."
     },
     "r-98f3c6c428bffbb9": {
       "evidence": [
