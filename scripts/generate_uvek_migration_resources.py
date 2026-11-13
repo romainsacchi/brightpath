@@ -1329,6 +1329,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_eaf_dust_market_39_review(technosphere)
     if __package__:
+        from scripts.review_uvek_eaf_slag_market_39 import apply_eaf_slag_market_39_review
+    else:
+        from review_uvek_eaf_slag_market_39 import apply_eaf_slag_market_39_review
+
+    apply_eaf_slag_market_39_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
