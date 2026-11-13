@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 218,
-      "recipe": 1048,
-      "unclassified": 29209
+      "proxy": 219,
+      "recipe": 1054,
+      "unclassified": 29202
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 260,
       "followup_review": 163,
-      "heuristic_similarity": 26441,
+      "heuristic_similarity": 26434,
       "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -21,6 +21,7 @@
       "reviewed_average_sludge_landfarming_service": 8,
       "reviewed_battery_fluoride_39": 3,
       "reviewed_battery_material_boundary_39": 5,
+      "reviewed_battery_native_material_39": 7,
       "reviewed_bottom_ash_landfill_service": 49,
       "reviewed_bottom_ash_market_service": 42,
       "reviewed_cable_treatment_composition": 1,
@@ -184,7 +185,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.443215,
+    "mean_confidence": 0.443321,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -8412,6 +8413,646 @@
       "rationale": "Only exact ecoinvent 3.9 cut-off is reviewed. Positive source references and target references have matching functional units; caller factor +1 preserves signed amounts, formulas, supported uncertainty and independent foreground emissions. Other versions, patches, system models and reverse routes gain no approval. All source-owned interface rows retained by the recipes keep their signed amounts and supported uncertainty/formulas separately, with no normalization or second reaction-yield, purity, concentration, freight, useful-heat or loss multiplier. Complete native upstream suppliers replace the source upstream inventories; their allocation, geography, vintage, technology, uncertainty, biosphere exclusions and modelling correlations differ. Score differences remain unquantified; neither LCI/LCIA nor stochastic equivalence is established. RoW HF market: retain all five positive original supply entries and all eight freight entries separately. Complete native fluorspar-route HF is the product-function proxy for the principal producer and the four allocated HF co-products from vinyl fluoride, rare-earth oxide and hexafluoroethane manufacture. Those four co-product shares total about 1.15%; their allocated upstream production route and burdens are replaced, not reconstructed. No avoided-product or extra HF recovery credit is added. Native HF name/formula and production route support the kg-HF screening interpretation, but native assay is unverified and its CAS conflicts with the chemical identity; inherit the prior HF review warning. Use no assumed 37% acid, amine reagent or concentration correction. All five rail entries use complete native RER generic rail as an explicit geography/fleet proxy, including Chinese generic freight; do not substitute coal freight. All three heavy-lorry entries use the complete native RER fleet. Preserve hazardous-HF delivery distances as listed, without adding ship transport or undoing the source transport reduction.",
       "reference product": "hydrogen fluoride",
       "unit": "kilogram"
+    },
+    "battery-39-native-material-market-312bd6bf4beef9a9": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete native product replaces this source producer as the documented technology/geography/vintage proxy.",
+          "loc": 1.0,
+          "location": "WEU",
+          "name": "Methylchloride, at plant",
+          "reference product": "Methylchloride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0438,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for methylchloride, native production and retained finished-product delivery",
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Methylchloride: retain the original positive WEU producer share and all three final freight quantities. Native WEU supplies the same CH3Cl kg function, with its complete historical cumulative production inventory; no molecular-mass, density, concentration, yield or energy multiplier is inferred. Source and native cumulative-system coverage, upstream allocation, vintage, regional delivery fleets and internal uncertainty differ. Main-process infrastructure and land-use omissions and absent internal uncertainty assessment remain explicit; no new omissions or invented compensating exchanges are introduced.",
+      "reference product": "methylchloride",
+      "unit": "kilogram"
+    },
+    "battery-39-native-material-market-43b626507103b4e9": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete native product replaces this source producer as the documented technology/geography/vintage proxy.",
+          "loc": 1.0,
+          "location": "CH",
+          "name": "Lime, hydrated, packed, at plant",
+          "reference product": "Lime, hydrated, packed, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.007513945,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -4.890994651527098,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.001513088,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -6.493602683276417,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.075702611,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -2.580942627720075,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for lime, hydrated, packed, native production and retained finished-product delivery",
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Packed hydrated lime is Ca(OH)2, not quicklime/CaO or loose lime. The exact source market has one positive kg of the inspected Swiss packed producer and three final freight entries. Use complete packed native lime once, with its existing loose-lime input, packing and heat. Do not add packing again or convert by CaO/Ca(OH)2 molar mass. Native CH is retained for source CH; regional delivery fleets and upstream releases differ.",
+      "reference product": "lime, hydrated, packed",
+      "unit": "kilogram"
+    },
+    "battery-39-native-material-market-855426f2360906db": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0493720466375044,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete native product replaces this source producer as the documented technology/geography/vintage proxy.",
+          "loc": 0.0493720466375044,
+          "location": "CN",
+          "name": "Phosphorous pentachloride, at plant",
+          "reference product": "Phosphorous pentachloride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.950627953362496,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete native product replaces this source producer as the documented technology/geography/vintage proxy.",
+          "loc": 0.950627953362496,
+          "location": "CN",
+          "name": "Phosphorous pentachloride, at plant",
+          "reference product": "Phosphorous pentachloride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for phosphorus pentachloride, native production and retained finished-product delivery",
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Phosphorus pentachloride: native spelling Phosphorous identifies PCl5, CAS 10026-13-8, not phosphorus trichloride. Both describe the patent-based PCl3/chlorine autoclave route with the same stated conversion. Use native complete PCl5 once for each original CN/RoW producer share, retaining all four freight entries. Native global label represents a European-data proxy; upstream energy, geography, allocation and vintage differ. Do not reapply the stated 93.9% conversion, add PCl3/chlorine inputs, emissions or chemical-plant infrastructure, or infer a purity correction.",
+      "reference product": "phosphorus pentachloride",
+      "unit": "kilogram"
+    },
+    "battery-39-native-material-market-8be404e7d5db36be": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.330592351639303,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete native product replaces this source producer as the documented technology/geography/vintage proxy.",
+          "loc": 0.330592351639303,
+          "location": "RER",
+          "name": "Inverter, 500kW, at plant",
+          "reference product": "Inverter, 500kW, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.669407648360697,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete native product replaces this source producer as the documented technology/geography/vintage proxy.",
+          "loc": 0.669407648360697,
+          "location": "RER",
+          "name": "Inverter, 500kW, at plant",
+          "reference product": "Inverter, 500kW, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for inverter, 500kW, native production and retained finished-product delivery",
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Inverter: source and native both reference one complete 500kW PV grid-connected inverter, about 3000 kg, with the same stated 95.4% efficiency lineage. This is an equipment unit, not a kW, kg or kWh service. Retain both original RER/RoW producer entries using the complete native RER inventory as a geographic/vintage proxy. Source market has no separate freight: add none. Production already includes materials, packaging, manufacture and end-of-life; no second disposal, lifetime/capacity scaling or inverse-efficiency multiplier is introduced.",
+      "reference product": "inverter, 500kW",
+      "unit": "unit"
+    },
+    "battery-39-native-material-market-a03bddee5eee2616": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete native product replaces this source producer as the documented technology/geography/vintage proxy.",
+          "loc": 1.0,
+          "location": "WEU",
+          "name": "Methylchloride, at plant",
+          "reference product": "Methylchloride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0224231473350459,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -3.797661490501636,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08093386943083909,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -2.514122884547314,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0056780093482361425,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -5.171154574536774,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.11165767412994829,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -2.192317569247477,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08840729975593056,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -2.4258007363232306,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0037411136550834123,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -5.588371943141128,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.18116364249000133,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -1.7083545540157898,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.02389524385491526,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -3.7340758417345654,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for methylchloride, native production and retained finished-product delivery",
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Methylchloride is CH3Cl, CAS 74-87-3, per positive kg, not methylene chloride/dichloromethane or another chlorinated chemical. Source and native use the Boustead cumulative-system lineage. Native WEU replaces RoW production as an explicit geographic/historical-technology proxy, with all ten original final freight entries retained separately, including five generic rail entries using complete RER rail rather than Chinese coal freight. Native cumulative production already includes upstream energy/raw-material logistics; add no duplicate source utilities. The cumulative source/native production documentation excludes main-process infrastructure and land-use information and lacks internal uncertainty assessment; IAM updates cannot recreate unlisted internal energy dependencies. Preserve that coverage limitation and caller uncertainty without inventing missing land, plant infrastructure, waste treatment or a recovery credit.",
+      "reference product": "methylchloride",
+      "unit": "kilogram"
+    },
+    "battery-39-native-material-market-f0e4cb1e4047a1ca": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete native product replaces this source producer as the documented technology/geography/vintage proxy.",
+          "loc": 1.0,
+          "location": "GLO",
+          "name": "Cable, data cable in infrastructure, at plant",
+          "reference product": "Cable, data cable in infrastructure, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "meter"
+        },
+        {
+          "amount": 0.0017696,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -6.3370017466362585,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.001106,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -6.807005375881994,
+          "location": "CH",
+          "name": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0357712,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -3.330612178608279,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.087848,
+          "comment": "Retained original producer share or final-delivery quantity and supported uncertainty. Complete same-mode and vehicle-class native transport; no coal-freight, payload or duplicate-infrastructure correction.",
+          "loc": -2.432147230686725,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for cable, data cable in infrastructure, native production and retained finished-product delivery",
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Data cable: retain one metre, not one kg, of the complete average metallic/glass-fibre data cable. Source and native material coefficients for copper, glass fibre, HDPE, extrusion, wire drawing and rolling infrastructure have shared legacy lineage. Native documentation describes a 50:50 mix but also contains contradictory three-conductor boilerplate and historical metre-weight information; no detailed bandwidth, cable-category or weight equivalence is established and no mass-per-metre multiplier is applied. Native production includes estimated manufacture/infrastructure and its own raw-material freight. Keep it once plus all four original final-delivery entries. Light-commercial delivery uses complete native CH 3.5t fleet as an explicit geography/fuel/vehicle proxy; generic heavy freight uses complete native RER fleet. Do not merge light/heavy delivery, select coal freight, add source material/rolling-mill inputs again, or invent missing production air/water/waste inventories.",
+      "reference product": "cable, data cable in infrastructure",
+      "unit": "meter"
     },
     "battery-39-sodium-fluoride-delivered-market": {
       "evidence": [
@@ -795195,7 +795836,7 @@
     {"confidence": 0.500827, "id": "bp-8469e3d4a7948b48", "mapping_method": "heuristic_similarity", "source": {"location": "CA-QC", "name": "lime production, hydrated, loose weight", "reference product": "lime, hydrated, loose weight", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, loose, at plant", "reference product": "Lime, hydrated, loose, at plant", "unit": "kilogram"}},
     {"confidence": 0.580827, "id": "bp-73654e719e829bfc", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "lime production, hydrated, loose weight", "reference product": "lime, hydrated, loose weight", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, loose, at plant", "reference product": "Lime, hydrated, loose, at plant", "unit": "kilogram"}},
     {"confidence": 0.500827, "id": "bp-9a4ba4875b7387ac", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "lime production, hydrated, loose weight", "reference product": "lime, hydrated, loose weight", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, loose, at plant", "reference product": "Lime, hydrated, loose, at plant", "unit": "kilogram"}},
-    {"confidence": 0.653526, "id": "bp-e1e1fd673ebb9025", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "lime production, hydrated, packed", "reference product": "lime, hydrated, packed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, packed, at plant", "reference product": "Lime, hydrated, packed, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-e1e1fd673ebb9025", "mapping_method": "reviewed_battery_native_material_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Packed hydrated lime: source and native describe the same Swiss KFN packing lineage, including one kg loose hydrated lime and one packing service. Source useful packing/administration heat is 0.00141 MJ; native uses 0.0015 MJ of light fuel oil in a boiler service. Those thermal reference boundaries differ; retain the complete native process, without applying a heat ratio to the kg of product or adding source useful heat/packing a second time.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the enumerated exact 3.9 cut-off source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-f59c5fd9d951cfa0", "source": {"location": "CH", "name": "lime production, hydrated, packed", "reference product": "lime, hydrated, packed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, packed, at plant", "reference product": "Lime, hydrated, packed, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Packed hydrated lime: source and native describe the same Swiss KFN packing lineage, including one kg loose hydrated lime and one packing service. Source useful packing/administration heat is 0.00141 MJ; native uses 0.0015 MJ of light fuel oil in a boiler service. Those thermal reference boundaries differ; retain the complete native process, without applying a heat ratio to the kg of product or adding source useful heat/packing a second time."},
     {"confidence": 0.573526, "id": "bp-15f49295229e7e78", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "lime production, hydrated, packed", "reference product": "lime, hydrated, packed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, packed, at plant", "reference product": "Lime, hydrated, packed, at plant", "unit": "kilogram"}},
     {"confidence": 0.586167, "id": "bp-864dc110595b50fd", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "lime production, hydraulic", "reference product": "lime, hydraulic", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydraulic, at plant", "reference product": "Lime, hydraulic, at plant", "unit": "kilogram"}},
     {"confidence": 0.506167, "id": "bp-ab2eec805e455022", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "lime production, hydraulic", "reference product": "lime, hydraulic", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydraulic, at plant", "reference product": "Lime, hydraulic, at plant", "unit": "kilogram"}},
@@ -796682,7 +797323,7 @@
     {"confidence": 0.635362, "id": "bp-41aab117d24b903a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for cable yarder with sled winch", "reference product": "cable yarder with sled winch", "unit": "unit"}, "target": {"location": "RER", "name": "Cable yarder with sled winch, at plant", "reference product": "Cable yarder with sled winch, at plant", "unit": "unit"}},
     {"confidence": 0.101123, "id": "bp-3fd802b814a2af14", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for cable yarding", "reference product": "cable yarding", "unit": "hour"}, "target": {"location": "CH", "name": "Use of cable, fixed IP access network per hour", "reference product": "Use of cable, fixed IP access network per hour", "unit": "hour"}},
     {"confidence": 0.807963, "id": "bp-326c84015746ab10", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for cable, connector for computer, without plugs", "reference product": "cable, connector for computer, without plugs", "unit": "meter"}, "target": {"location": "GLO", "name": "Cable, connector for computer, without plugs, at plant", "reference product": "Cable, connector for computer, without plugs, at plant", "unit": "meter"}},
-    {"confidence": 0.706038, "id": "bp-f0e4cb1e4047a1ca", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for cable, data cable in infrastructure", "reference product": "cable, data cable in infrastructure", "unit": "meter"}, "target": {"location": "GLO", "name": "Cable, data cable in infrastructure, at plant", "reference product": "Cable, data cable in infrastructure, at plant", "unit": "meter"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-f0e4cb1e4047a1ca", "mapping_method": "reviewed_battery_native_material_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Data cable: retain one metre, not one kg, of the complete average metallic/glass-fibre data cable. Source and native material coefficients for copper, glass fibre, HDPE, extrusion, wire drawing and rolling infrastructure have shared legacy lineage. Native documentation describes a 50:50 mix but also contains contradictory three-conductor boilerplate and historical metre-weight information; no detailed bandwidth, cable-category or weight equivalence is established and no mass-per-metre multiplier is applied. Native production includes estimated manufacture/infrastructure and its own raw-material freight. Keep it once plus all four original final-delivery entries. Light-commercial delivery uses complete native CH 3.5t fleet as an explicit geography/fuel/vehicle proxy; generic heavy freight uses complete native RER fleet. Do not merge light/heavy delivery, select coal freight, add source material/rolling-mill inputs again, or invent missing production air/water/waste inventories.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "battery-39-native-material-market-f0e4cb1e4047a1ca"}}], "reason": "Only the enumerated exact 3.9 cut-off source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0702d4050083b2f3", "source": {"location": "GLO", "name": "market for cable, data cable in infrastructure", "reference product": "cable, data cable in infrastructure", "unit": "meter"}, "target": {"recipe_ref": "battery-39-native-material-market-f0e4cb1e4047a1ca"}, "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Data cable: retain one metre, not one kg, of the complete average metallic/glass-fibre data cable. Source and native material coefficients for copper, glass fibre, HDPE, extrusion, wire drawing and rolling infrastructure have shared legacy lineage. Native documentation describes a 50:50 mix but also contains contradictory three-conductor boilerplate and historical metre-weight information; no detailed bandwidth, cable-category or weight equivalence is established and no mass-per-metre multiplier is applied. Native production includes estimated manufacture/infrastructure and its own raw-material freight. Keep it once plus all four original final-delivery entries. Light-commercial delivery uses complete native CH 3.5t fleet as an explicit geography/fuel/vehicle proxy; generic heavy freight uses complete native RER fleet. Do not merge light/heavy delivery, select coal freight, add source material/rolling-mill inputs again, or invent missing production air/water/waste inventories."},
     {"confidence": 0.787917, "id": "bp-db47c51bc1cfb8d5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for cable, network cable, category 5, without plugs", "reference product": "cable, network cable, category 5, without plugs", "unit": "meter"}, "target": {"location": "GLO", "name": "Cable, network cable, category 5, without plugs, at plant", "reference product": "Cable, network cable, category 5, without plugs, at plant", "unit": "meter"}},
     {"confidence": 0.741955, "id": "bp-f9ac0720eab1ad55", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for cable, printer cable, without plugs", "reference product": "cable, printer cable, without plugs", "unit": "meter"}, "target": {"location": "GLO", "name": "Cable, printer cable, without plugs, at plant", "reference product": "Cable, printer cable, without plugs, at plant", "unit": "meter"}},
     {"confidence": 1.0, "id": "bp-4f9f0bb31d6d8487", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for cable, ribbon cable, 20-pin, with plugs", "reference product": "cable, ribbon cable, 20-pin, with plugs", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cable, ribbon cable, 20-pin, with plugs, at plant", "reference product": "Cable, ribbon cable, 20-pin, with plugs, at plant", "unit": "kilogram"}},
@@ -799149,7 +799790,7 @@
     {"confidence": 0.250758, "id": "bp-df5f5e402732b863", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for intral", "reference product": "intral", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Intral, at plant", "reference product": "xx Intral, at plant", "unit": "kilogram"}},
     {"confidence": 0.263275, "id": "bp-1aa17060096590f9", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for inverter, 0.5kW", "reference product": "inverter, 0.5kW", "unit": "unit"}, "target": {"location": "RER", "name": "Inverter, 500kW, at plant", "reference product": "Inverter, 500kW, at plant", "unit": "unit"}},
     {"confidence": 0.281667, "id": "bp-debc8a16dc0741ee", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for inverter, 2.5kW", "reference product": "inverter, 2.5kW", "unit": "unit"}, "target": {"location": "RER", "name": "Inverter, 2.5 kW, average, at plant", "reference product": "Inverter, 2.5 kW, average, at plant", "unit": "unit"}},
-    {"confidence": 0.501167, "id": "bp-8be404e7d5db36be", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for inverter, 500kW", "reference product": "inverter, 500kW", "unit": "unit"}, "target": {"location": "RER", "name": "Inverter, 500kW, at plant", "reference product": "Inverter, 500kW, at plant", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-8be404e7d5db36be", "mapping_method": "reviewed_battery_native_material_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Inverter: source and native both reference one complete 500kW PV grid-connected inverter, about 3000 kg, with the same stated 95.4% efficiency lineage. This is an equipment unit, not a kW, kg or kWh service. Retain both original RER/RoW producer entries using the complete native RER inventory as a geographic/vintage proxy. Source market has no separate freight: add none. Production already includes materials, packaging, manufacture and end-of-life; no second disposal, lifetime/capacity scaling or inverse-efficiency multiplier is introduced.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "battery-39-native-material-market-8be404e7d5db36be"}}], "reason": "Only the enumerated exact 3.9 cut-off source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-6097b6e8de248894", "source": {"location": "GLO", "name": "market for inverter, 500kW", "reference product": "inverter, 500kW", "unit": "unit"}, "target": {"recipe_ref": "battery-39-native-material-market-8be404e7d5db36be"}, "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Inverter: source and native both reference one complete 500kW PV grid-connected inverter, about 3000 kg, with the same stated 95.4% efficiency lineage. This is an equipment unit, not a kW, kg or kWh service. Retain both original RER/RoW producer entries using the complete native RER inventory as a geographic/vintage proxy. Source market has no separate freight: add none. Production already includes materials, packaging, manufacture and end-of-life; no second disposal, lifetime/capacity scaling or inverse-efficiency multiplier is introduced."},
     {"confidence": 0.868333, "id": "bp-c0965066e2c4afc5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for inverter, for electric passenger car", "reference product": "inverter, for electric passenger car", "unit": "kilogram"}, "target": {"location": "RER", "name": "Inverter, for electric passenger car", "reference product": "Inverter, for electric passenger car", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-9995a288c793dd83", "mapping_method": "reviewed_fuels_39_material_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_material_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_material_markets_review.json"], "reason": "Actual source is pure molecular iodine stock, with brine-based producers and positive kg references. Complete native molecular I2 includes its own raw materials, energy, water and air/water emissions. Retain both source producer rows and every delivery mode per kg without a solvent, iodine-atom or purity multiplier. The historical native European production model is a screening proxy for both source geographies; brine/feedstock/process, allocation, energy, emissions, delivery, vintage and internal uncertainty differ. Do not claim source production-route equivalence or add separate source processing emissions.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact cut-off profiles authorize this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-eb6cedd1dd9d5eda", "source": {"location": "GLO", "name": "market for iodine", "reference product": "iodine", "unit": "kilogram"}, "target": {"recipe_ref": "fuels-39-material-market-538acce7985de1044e9e"}, "technosphere_information_loss": "Only independently inspected exact cut-off profiles qualify. Preserve signed caller quantities, uncertainty, formulas, all original producer and finished-product freight rows without renormalization, and separately recorded caller emissions. Complete native historical processes replace source production inventories as explicitly warned functional screening proxies; source process emissions and utilities are not added again. Product grade, purity, formulation, ore/feedstock, production route, allocation, native internal transport and uncertainty, geography, vintage and biosphere exclusions differ with unquantified score effects. No new omission, purity/density/energy/yield/lifetime multiplier, recovery credit, inverse or cross-system-model conversion is inferred."},
     {"confidence": 0.286441, "id": "bp-c59d538efeca6c01", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ion-exchanger for water treatment", "reference product": "ion-exchanger for water treatment", "unit": "unit"}, "target": {"location": "CH", "name": "Water treatment plant, deionisation", "reference product": "Water treatment plant, deionisation", "unit": "unit"}},
@@ -799690,7 +800331,7 @@
     {"confidence": 0.429783, "id": "bp-43a823ce2ef56215", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lime, from liquid packaging board production", "reference product": "lime, from liquid packaging board production", "unit": "kilogram"}, "target": {"location": "RER", "name": "Production of liquid packaging board containers, at plant", "reference product": "Production of liquid packaging board containers, at plant", "unit": "kilogram"}},
     {"confidence": 0.580827, "id": "bp-99a2d97e16b298cf", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for lime, hydrated, loose weight", "reference product": "lime, hydrated, loose weight", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, loose, at plant", "reference product": "Lime, hydrated, loose, at plant", "unit": "kilogram"}},
     {"confidence": 0.500827, "id": "bp-795d4a075e625e8f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for lime, hydrated, loose weight", "reference product": "lime, hydrated, loose weight", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, loose, at plant", "reference product": "Lime, hydrated, loose, at plant", "unit": "kilogram"}},
-    {"confidence": 0.573526, "id": "bp-43b626507103b4e9", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for lime, hydrated, packed", "reference product": "lime, hydrated, packed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, packed, at plant", "reference product": "Lime, hydrated, packed, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-43b626507103b4e9", "mapping_method": "reviewed_battery_native_material_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Packed hydrated lime is Ca(OH)2, not quicklime/CaO or loose lime. The exact source market has one positive kg of the inspected Swiss packed producer and three final freight entries. Use complete packed native lime once, with its existing loose-lime input, packing and heat. Do not add packing again or convert by CaO/Ca(OH)2 molar mass. Native CH is retained for source CH; regional delivery fleets and upstream releases differ.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "battery-39-native-material-market-43b626507103b4e9"}}], "reason": "Only the enumerated exact 3.9 cut-off source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-20a33a2c61e5c27f", "source": {"location": "RER", "name": "market for lime, hydrated, packed", "reference product": "lime, hydrated, packed", "unit": "kilogram"}, "target": {"recipe_ref": "battery-39-native-material-market-43b626507103b4e9"}, "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Packed hydrated lime is Ca(OH)2, not quicklime/CaO or loose lime. The exact source market has one positive kg of the inspected Swiss packed producer and three final freight entries. Use complete packed native lime once, with its existing loose-lime input, packing and heat. Do not add packing again or convert by CaO/Ca(OH)2 molar mass. Native CH is retained for source CH; regional delivery fleets and upstream releases differ."},
     {"confidence": 0.573526, "id": "bp-5eb0b1e7bd2ce0d6", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for lime, hydrated, packed", "reference product": "lime, hydrated, packed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, packed, at plant", "reference product": "Lime, hydrated, packed, at plant", "unit": "kilogram"}},
     {"confidence": 0.506167, "id": "bp-8f11e0782c06e00f", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for lime, hydraulic", "reference product": "lime, hydraulic", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydraulic, at plant", "reference product": "Lime, hydraulic, at plant", "unit": "kilogram"}},
     {"confidence": 0.506167, "id": "bp-49ff9c1c2a744693", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for lime, hydraulic", "reference product": "lime, hydraulic", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydraulic, at plant", "reference product": "Lime, hydraulic, at plant", "unit": "kilogram"}},
@@ -800041,8 +800682,8 @@
     {"confidence": 0.440013, "id": "bp-ded86772db1acce0", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for methylamine", "reference product": "methylamine", "unit": "kilogram"}, "target": {"location": "RER", "name": "Methylamine, at plant", "reference product": "Methylamine, at plant", "unit": "kilogram"}},
     {"confidence": 0.111983, "id": "bp-71943e85e5bcaf03", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methylbutenol", "reference product": "methylbutenol", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Butyrolactone", "reference product": "Butyrolactone", "unit": "kilogram"}},
     {"confidence": 0.135385, "id": "bp-9002c55a75614d16", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methylbutynol", "reference product": "methylbutynol", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Butyrolactone", "reference product": "Butyrolactone", "unit": "kilogram"}},
-    {"confidence": 0.463929, "id": "bp-312bd6bf4beef9a9", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for methylchloride", "reference product": "methylchloride", "unit": "kilogram"}, "target": {"location": "WEU", "name": "Methylchloride, at plant", "reference product": "Methylchloride, at plant", "unit": "kilogram"}},
-    {"confidence": 0.463929, "id": "bp-a03bddee5eee2616", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for methylchloride", "reference product": "methylchloride", "unit": "kilogram"}, "target": {"location": "WEU", "name": "Methylchloride, at plant", "reference product": "Methylchloride, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-312bd6bf4beef9a9", "mapping_method": "reviewed_battery_native_material_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Methylchloride: retain the original positive WEU producer share and all three final freight quantities. Native WEU supplies the same CH3Cl kg function, with its complete historical cumulative production inventory; no molecular-mass, density, concentration, yield or energy multiplier is inferred. Source and native cumulative-system coverage, upstream allocation, vintage, regional delivery fleets and internal uncertainty differ. Main-process infrastructure and land-use omissions and absent internal uncertainty assessment remain explicit; no new omissions or invented compensating exchanges are introduced.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "battery-39-native-material-market-312bd6bf4beef9a9"}}], "reason": "Only the enumerated exact 3.9 cut-off source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-650360fe5d29a08f", "source": {"location": "RER", "name": "market for methylchloride", "reference product": "methylchloride", "unit": "kilogram"}, "target": {"recipe_ref": "battery-39-native-material-market-312bd6bf4beef9a9"}, "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Methylchloride: retain the original positive WEU producer share and all three final freight quantities. Native WEU supplies the same CH3Cl kg function, with its complete historical cumulative production inventory; no molecular-mass, density, concentration, yield or energy multiplier is inferred. Source and native cumulative-system coverage, upstream allocation, vintage, regional delivery fleets and internal uncertainty differ. Main-process infrastructure and land-use omissions and absent internal uncertainty assessment remain explicit; no new omissions or invented compensating exchanges are introduced."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-a03bddee5eee2616", "mapping_method": "reviewed_battery_native_material_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Methylchloride is CH3Cl, CAS 74-87-3, per positive kg, not methylene chloride/dichloromethane or another chlorinated chemical. Source and native use the Boustead cumulative-system lineage. Native WEU replaces RoW production as an explicit geographic/historical-technology proxy, with all ten original final freight entries retained separately, including five generic rail entries using complete RER rail rather than Chinese coal freight. Native cumulative production already includes upstream energy/raw-material logistics; add no duplicate source utilities. The cumulative source/native production documentation excludes main-process infrastructure and land-use information and lacks internal uncertainty assessment; IAM updates cannot recreate unlisted internal energy dependencies. Preserve that coverage limitation and caller uncertainty without inventing missing land, plant infrastructure, waste treatment or a recovery credit.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "battery-39-native-material-market-a03bddee5eee2616"}}], "reason": "Only the enumerated exact 3.9 cut-off source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-a0d7824e05e45c82", "source": {"location": "RoW", "name": "market for methylchloride", "reference product": "methylchloride", "unit": "kilogram"}, "target": {"recipe_ref": "battery-39-native-material-market-a03bddee5eee2616"}, "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Methylchloride is CH3Cl, CAS 74-87-3, per positive kg, not methylene chloride/dichloromethane or another chlorinated chemical. Source and native use the Boustead cumulative-system lineage. Native WEU replaces RoW production as an explicit geographic/historical-technology proxy, with all ten original final freight entries retained separately, including five generic rail entries using complete RER rail rather than Chinese coal freight. Native cumulative production already includes upstream energy/raw-material logistics; add no duplicate source utilities. The cumulative source/native production documentation excludes main-process infrastructure and land-use information and lacks internal uncertainty assessment; IAM updates cannot recreate unlisted internal energy dependencies. Preserve that coverage limitation and caller uncertainty without inventing missing land, plant infrastructure, waste treatment or a recovery credit."},
     {"confidence": 0.413939, "id": "bp-9b93f2d3584ae3c7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methylcyclohexane", "reference product": "methylcyclohexane", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Methylcyclohexane, at plant", "reference product": "xx Methylcyclohexane, at plant", "unit": "kilogram"}},
     {"confidence": 0.318955, "id": "bp-6fdd4c2cfe39cd0c", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for methylcyclopentane", "reference product": "methylcyclopentane", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Methylcyclopentane, from naphtha, at plant", "reference product": "xx Methylcyclopentane, from naphtha, at plant", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-05e536a8f677ffd7", "mapping_method": "reviewed_mdea_native_derived_screening", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_mdea_312_review.json", "https://patents.google.com/patent/US5395973A/en", "https://patents.google.com/patent/US9345988B2/en"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_mdea_312_review.json", "https://patents.google.com/patent/US5395973A/en", "https://patents.google.com/patent/US9345988B2/en"], "reason": "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval. Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor. Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again. Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added. Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence. Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service. The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions. Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses. Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred. Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight. Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "mdea-312-rer-delivered-market"}}], "reason": "Only the enumerated source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-f85b9548989be949", "source": {"location": "RER", "name": "market for methyldiethanolamine", "reference product": "methyldiethanolamine", "unit": "kilogram"}, "target": {"recipe_ref": "mdea-312-rer-delivered-market"}, "technosphere_information_loss": "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval. Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor. Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again. Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added. Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence. Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service. The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions. Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses. Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred. Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight. Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence."},
@@ -800654,7 +801295,7 @@
     {"confidence": 0.551859, "id": "bp-b1ea2caff41bb098", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for phosphorous chloride", "reference product": "phosphorous chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phosphorous chloride, at plant", "reference product": "Phosphorous chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.272856, "id": "bp-d8591d8bd4786a9d", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for phosphorus oxychloride", "reference product": "phosphorus oxychloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phosphorus, white, liquid, at plant", "reference product": "Phosphorus, white, liquid, at plant", "unit": "kilogram"}},
     {"confidence": 0.192856, "id": "bp-ae14f154830ac51f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for phosphorus oxychloride", "reference product": "phosphorus oxychloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phosphorus, white, liquid, at plant", "reference product": "Phosphorus, white, liquid, at plant", "unit": "kilogram"}},
-    {"confidence": 0.419158, "id": "bp-855426f2360906db", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for phosphorus pentachloride", "reference product": "phosphorus pentachloride", "unit": "kilogram"}, "target": {"location": "CN", "name": "Phosphorous pentachloride, at plant", "reference product": "Phosphorous pentachloride, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-855426f2360906db", "mapping_method": "reviewed_battery_native_material_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_native_materials_39_review.json"], "reason": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Phosphorus pentachloride: native spelling Phosphorous identifies PCl5, CAS 10026-13-8, not phosphorus trichloride. Both describe the patent-based PCl3/chlorine autoclave route with the same stated conversion. Use native complete PCl5 once for each original CN/RoW producer share, retaining all four freight entries. Native global label represents a European-data proxy; upstream energy, geography, allocation and vintage differ. Do not reapply the stated 93.9% conversion, add PCl3/chlorine inputs, emissions or chemical-plant infrastructure, or infer a purity correction.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "battery-39-native-material-market-855426f2360906db"}}], "reason": "Only the enumerated exact 3.9 cut-off source profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-27d8595ba83ff413", "source": {"location": "GLO", "name": "market for phosphorus pentachloride", "reference product": "phosphorus pentachloride", "unit": "kilogram"}, "target": {"recipe_ref": "battery-39-native-material-market-855426f2360906db"}, "technosphere_information_loss": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Phosphorus pentachloride: native spelling Phosphorous identifies PCl5, CAS 10026-13-8, not phosphorus trichloride. Both describe the patent-based PCl3/chlorine autoclave route with the same stated conversion. Use native complete PCl5 once for each original CN/RoW producer share, retaining all four freight entries. Native global label represents a European-data proxy; upstream energy, geography, allocation and vintage differ. Do not reapply the stated 93.9% conversion, add PCl3/chlorine inputs, emissions or chemical-plant infrastructure, or infer a purity correction."},
     {"confidence": 0.192856, "id": "bp-596b423b359dd1eb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for phosphorus trichloride", "reference product": "phosphorus trichloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phosphorus, white, liquid, at plant", "reference product": "Phosphorus, white, liquid, at plant", "unit": "kilogram"}},
     {"confidence": 0.592596, "id": "bp-548c151eafe8725b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for phosphorus, white, liquid", "reference product": "phosphorus, white, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phosphorus, white, liquid, at plant", "reference product": "Phosphorus, white, liquid, at plant", "unit": "kilogram"}},
     {"confidence": 0.622905, "id": "bp-e9ea1381de8b53b6", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for phosphoryl chloride", "reference product": "phosphoryl chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phosphoryl chloride, at plant", "reference product": "Phosphoryl chloride, at plant", "unit": "kilogram"}},
@@ -815805,6 +816446,19 @@
       ],
       "rationale": "Auto-approved under the user's unsupported CRT industrial wastewater-residue omission policy and similar-case authorization: omit the exact treatment of sewage sludge, 75% water, WWT, WW from tube collector production, sanitary landfill / GLO / kg external exchange with a warning. Independent inspection confirms the same nonbiogenic industrial-wastewater-residue boundary, with 0% biogenic carbon, for tube collector production. No dedicated complete UVEK counterpart was established. Manufacturing, mechanical screen-recycling residues, pulp/paper or municipal sludge, refinery sludge and isolated landfill-operation components do not establish matching residue treatment. This is a direct industrial residue treatment with active process inputs and releases; separately listed foreground treatment and emissions remain intact. Omitted contributions include treatment operation, metal/leachate emissions, downstream residue handling and any recovered-energy or fertilizer credits; effects on LCIA scores are method-dependent and unquantified."
     },
+    "r-0702d4050083b2f3": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval.",
+        "Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established.",
+        "Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added.",
+        "Data cable: retain one metre, not one kg, of the complete average metallic/glass-fibre data cable. Source and native material coefficients for copper, glass fibre, HDPE, extrusion, wire drawing and rolling infrastructure have shared legacy lineage. Native documentation describes a 50:50 mix but also contains contradictory three-conductor boilerplate and historical metre-weight information; no detailed bandwidth, cable-category or weight equivalence is established and no mass-per-metre multiplier is applied.",
+        "Native production includes estimated manufacture/infrastructure and its own raw-material freight. Keep it once plus all four original final-delivery entries. Light-commercial delivery uses complete native CH 3.5t fleet as an explicit geography/fuel/vehicle proxy; generic heavy freight uses complete native RER fleet. Do not merge light/heavy delivery, select coal freight, add source material/rolling-mill inputs again, or invent missing production air/water/waste inventories."
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Data cable: retain one metre, not one kg, of the complete average metallic/glass-fibre data cable. Source and native material coefficients for copper, glass fibre, HDPE, extrusion, wire drawing and rolling infrastructure have shared legacy lineage. Native documentation describes a 50:50 mix but also contains contradictory three-conductor boilerplate and historical metre-weight information; no detailed bandwidth, cable-category or weight equivalence is established and no mass-per-metre multiplier is applied. Native production includes estimated manufacture/infrastructure and its own raw-material freight. Keep it once plus all four original final-delivery entries. Light-commercial delivery uses complete native CH 3.5t fleet as an explicit geography/fuel/vehicle proxy; generic heavy freight uses complete native RER fleet. Do not merge light/heavy delivery, select coal freight, add source material/rolling-mill inputs again, or invent missing production air/water/waste inventories."
+    },
     "r-085dcc340c3c64ad": {
       "evidence": [
         "brightpath/data/export/uvek_wwt_residue_omission_review.json: exact read-only source/profile fingerprints; negative one-kg production; every installed profile checked. Direct treatment comments explicitly report 0% biogenic carbon; markets contain only technosphere inputs and supply 100% same-residue treatment plus freight. Dedicated UVEK residue service and disposal-boundary candidates were inspected independently.",
@@ -816527,6 +817181,18 @@
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar-CRT-boundary authorization: represent the exact GLO/kg used-CRT-display market by the inspected CH 17-inch screen-disposal mix. Both mixes route 23% of mass to manual dismantling and 77% to mechanical treatment. One proxy unit represents 19.9 kg, so factor -1/19.9 preserves source waste mass and route shares. The mechanical branch retains the separately approved broader manual-plus-mechanical boundary. Additional market-level freight is omitted."
     },
+    "r-20a33a2c61e5c27f": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval.",
+        "Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established.",
+        "Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added.",
+        "Packed hydrated lime is Ca(OH)2, not quicklime/CaO or loose lime. The exact source market has one positive kg of the inspected Swiss packed producer and three final freight entries. Use complete packed native lime once, with its existing loose-lime input, packing and heat. Do not add packing again or convert by CaO/Ca(OH)2 molar mass. Native CH is retained for source CH; regional delivery fleets and upstream releases differ."
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Packed hydrated lime is Ca(OH)2, not quicklime/CaO or loose lime. The exact source market has one positive kg of the inspected Swiss packed producer and three final freight entries. Use complete packed native lime once, with its existing loose-lime input, packing and heat. Do not add packing again or convert by CaO/Ca(OH)2 molar mass. Native CH is retained for source CH; regional delivery fleets and upstream releases differ."
+    },
     "r-20bbf315e17b8d59": {
       "limitations": [
         "Identity-level comparison only; inventory composition and LCIA equivalence are not verified.",
@@ -816795,6 +817461,18 @@
         "Approved generic wastewater composition screening proxy: plastic-processing wastewater with COD 0.213 kg/m3 is represented by generic CH municipal sewage treatment with COD 0.1556 kg/m3. The full wastewater volume is preserved without COD-based scaling. Pollutant concentrations, fossil/biogenic carbon fate, sludge treatment, treatment performance, energy recovery, allocation and background supplies may differ; LCIA equivalence is not established or quantified. The UVEK service adds sewer infrastructure which the source treatment places in its upstream market; sewer burdens may be double-counted where separately represented."
       ],
       "rationale": "Approved on 2026-11-04 for PET-pelletising wastewater and auto-approved for independently inspected similar plastic-recycling cases: replace the exact RER, cubic meter treatment of wastewater from recycling of waste PET, wastewater treatment correspondence with generic CH class-1 sewage treatment and factor -1. Preserve wastewater volume; source COD 0.213 kg/m3 and proxy COD 0.1556 kg/m3 are not equivalent. Market coverage and sewer boundaries are disclosed separately. Textile wastewater, landfill leachate and direct untreated-disposal activities are outside this approval."
+    },
+    "r-27d8595ba83ff413": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval.",
+        "Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established.",
+        "Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added.",
+        "Phosphorus pentachloride: native spelling Phosphorous identifies PCl5, CAS 10026-13-8, not phosphorus trichloride. Both describe the patent-based PCl3/chlorine autoclave route with the same stated conversion. Use native complete PCl5 once for each original CN/RoW producer share, retaining all four freight entries. Native global label represents a European-data proxy; upstream energy, geography, allocation and vintage differ. Do not reapply the stated 93.9% conversion, add PCl3/chlorine inputs, emissions or chemical-plant infrastructure, or infer a purity correction."
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Phosphorus pentachloride: native spelling Phosphorous identifies PCl5, CAS 10026-13-8, not phosphorus trichloride. Both describe the patent-based PCl3/chlorine autoclave route with the same stated conversion. Use native complete PCl5 once for each original CN/RoW producer share, retaining all four freight entries. Native global label represents a European-data proxy; upstream energy, geography, allocation and vintage differ. Do not reapply the stated 93.9% conversion, add PCl3/chlorine inputs, emissions or chemical-plant infrastructure, or infer a purity correction."
     },
     "r-28ac39462acc45fa": {
       "evidence": [
@@ -818913,6 +819591,18 @@
       ],
       "rationale": "User approved four pilot material corrections with warnings and separately approved +1/0.60 wet/dry-basis scaling for water-based paint. Independently inspected source and target references are positive. Only exact inspected ecoinvent cut-off profiles are authorized; no consequential or uninspected patch fallback. User additionally approved correcting the desktop-PC PSU fan from a printed circuit board to the documented native fan and the corrugated box from base paper to complete mixed-fibre single-wall packaging, with their assembly, configuration, market-boundary and vintage warnings. Positive native references were verified for both UVEK releases used by the forward route."
     },
+    "r-6097b6e8de248894": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval.",
+        "Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established.",
+        "Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added.",
+        "Inverter: source and native both reference one complete 500kW PV grid-connected inverter, about 3000 kg, with the same stated 95.4% efficiency lineage. This is an equipment unit, not a kW, kg or kWh service. Retain both original RER/RoW producer entries using the complete native RER inventory as a geographic/vintage proxy. Source market has no separate freight: add none. Production already includes materials, packaging, manufacture and end-of-life; no second disposal, lifetime/capacity scaling or inverse-efficiency multiplier is introduced."
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Inverter: source and native both reference one complete 500kW PV grid-connected inverter, about 3000 kg, with the same stated 95.4% efficiency lineage. This is an equipment unit, not a kW, kg or kWh service. Retain both original RER/RoW producer entries using the complete native RER inventory as a geographic/vintage proxy. Source market has no separate freight: add none. Production already includes materials, packaging, manufacture and end-of-life; no second disposal, lifetime/capacity scaling or inverse-efficiency multiplier is introduced."
+    },
     "r-614520c11079945b": {
       "evidence": [
         "brightpath/data/export/uvek_pulp_heat_energy_review.json"
@@ -819024,6 +819714,18 @@
         "The omitted sludge incineration contributions and any associated credits are absent from the target dataset; effects on scores are method-dependent and unquantified. This is an explicit information loss, not a zero-impact or scientifically equivalent treatment. The complete original exchange, amount, uncertainty, formula and other metadata remain in the loss report. Caller-owned data, production, matching foreground suppliers and separately listed foreground emissions are preserved. This omits an external direct-treatment exchange; separately listed foreground emissions and treatment are preserved. No reverse reconstruction or wider omission by name/keyword is inferred."
       ],
       "rationale": "Auto-approved under the similar unsupported-CRT-wastewater-residue omission authorization on 2026-11-05: omit the exact treatment of sewage sludge, 70% water, WWT, WW from CRT production, municipal incineration FAE / CH / kilogram exchange and continue conversion with a warning. The inspected industrial CRT-production wastewater sludge has 0% biogenic carbon. Its 70%, 75% or 97% water content and composition are not represented by municipal sewage sludge, paper-production sludge, iron-chloride sludge or frit manufacturing. Paper/municipal proxies contain non-fossil carbon flows and unrelated feedstocks; moisture scaling alone would not establish equivalence. No suitable UVEK counterpart was established. Omitted contributions include sludge-incineration burdens, metal/emission releases, ash handling and energy-recovery contributions. Any associated credits are excluded too; score effects are method-dependent and unquantified. This omits an external direct-treatment exchange; separately listed foreground emissions and treatment are preserved."
+    },
+    "r-650360fe5d29a08f": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval.",
+        "Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established.",
+        "Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added.",
+        "Methylchloride: retain the original positive WEU producer share and all three final freight quantities. Native WEU supplies the same CH3Cl kg function, with its complete historical cumulative production inventory; no molecular-mass, density, concentration, yield or energy multiplier is inferred. Source and native cumulative-system coverage, upstream allocation, vintage, regional delivery fleets and internal uncertainty differ. Main-process infrastructure and land-use omissions and absent internal uncertainty assessment remain explicit; no new omissions or invented compensating exchanges are introduced."
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Methylchloride: retain the original positive WEU producer share and all three final freight quantities. Native WEU supplies the same CH3Cl kg function, with its complete historical cumulative production inventory; no molecular-mass, density, concentration, yield or energy multiplier is inferred. Source and native cumulative-system coverage, upstream allocation, vintage, regional delivery fleets and internal uncertainty differ. Main-process infrastructure and land-use omissions and absent internal uncertainty assessment remain explicit; no new omissions or invented compensating exchanges are introduced."
     },
     "r-6516ce492af028ee": {
       "limitations": [
@@ -821165,6 +821867,19 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external soybean meal and crude oil production, mechanical extraction / protein feed, 100% crude / CA-QC / kilogram reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents 100%-crude-protein feed in kg, not an unscaled kilogram of crop, oil or unspecified protein concentrate. No validated nutritional conversion establishes equivalence with the former Protein peas IP, at feed mill / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-a0d7824e05e45c82": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval.",
+        "Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established.",
+        "Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added.",
+        "Methylchloride is CH3Cl, CAS 74-87-3, per positive kg, not methylene chloride/dichloromethane or another chlorinated chemical. Source and native use the Boustead cumulative-system lineage. Native WEU replaces RoW production as an explicit geographic/historical-technology proxy, with all ten original final freight entries retained separately, including five generic rail entries using complete RER rail rather than Chinese coal freight. Native cumulative production already includes upstream energy/raw-material logistics; add no duplicate source utilities.",
+        "The cumulative source/native production documentation excludes main-process infrastructure and land-use information and lacks internal uncertainty assessment; IAM updates cannot recreate unlisted internal energy dependencies. Preserve that coverage limitation and caller uncertainty without inventing missing land, plant infrastructure, waste treatment or a recovery credit."
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Methylchloride is CH3Cl, CAS 74-87-3, per positive kg, not methylene chloride/dichloromethane or another chlorinated chemical. Source and native use the Boustead cumulative-system lineage. Native WEU replaces RoW production as an explicit geographic/historical-technology proxy, with all ten original final freight entries retained separately, including five generic rail entries using complete RER rail rather than Chinese coal freight. Native cumulative production already includes upstream energy/raw-material logistics; add no duplicate source utilities. The cumulative source/native production documentation excludes main-process infrastructure and land-use information and lacks internal uncertainty assessment; IAM updates cannot recreate unlisted internal energy dependencies. Preserve that coverage limitation and caller uncertainty without inventing missing land, plant infrastructure, waste treatment or a recovery credit."
     },
     "r-a11641084ae349e1": {
       "evidence": [
@@ -823866,6 +824581,18 @@
         "Only inspected ecoinvent3.9cutoff is qualified. Other releases, inverse and cross-system-model requests cannot borrow this approval."
       ],
       "rationale": "Standing autonomous modelling approval and prior auto-approval of similar whole-product/service screening proxies; independently inspect exact source/native identities and reference quantities, preserve caller ownership and log material limitations."
+    },
+    "r-f59c5fd9d951cfa0": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_native_materials_39_review.json"
+      ],
+      "limitations": [
+        "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval.",
+        "Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established.",
+        "Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added.",
+        "Packed hydrated lime: source and native describe the same Swiss KFN packing lineage, including one kg loose hydrated lime and one packing service. Source useful packing/administration heat is 0.00141 MJ; native uses 0.0015 MJ of light fuel oil in a boiler service. Those thermal reference boundaries differ; retain the complete native process, without applying a heat ratio to the kg of product or adding source useful heat/packing a second time."
+      ],
+      "rationale": "Only the exact independently inspected ecoinvent 3.9 cut-off profile is reviewed. Source and complete native product references are positive one matching kg, metre or equipment unit as applicable. Factor +1 preserves signed caller quantities, supported uncertainty, formulas, foreground ownership and separate emissions; other versions, patches, system models and reverse routes gain no approval. Use each complete native production inventory once; it replaces the source upstream production model, including its internal uncertainty/formulas. Technology, allocation, regional supply, upstream energy, vintage, native biosphere exclusions and modelling correlations differ. Score differences remain unquantified; no LCI, LCIA or stochastic equivalence is established. Market wrappers retain every original producer entry/share and finished-product freight quantity, with supported exchange uncertainty, separately and without renormalization. Complete native product replaces each original producer. Internal producer distributions are not reconstructed. Whole native freight includes operation and relevant infrastructure; final delivery is distinct from raw-material freight inside native production. No second vehicle, port, infrastructure, product loss, payload, yield, purity, lifetime or efficiency multiplier is added. Packed hydrated lime: source and native describe the same Swiss KFN packing lineage, including one kg loose hydrated lime and one packing service. Source useful packing/administration heat is 0.00141 MJ; native uses 0.0015 MJ of light fuel oil in a boiler service. Those thermal reference boundaries differ; retain the complete native process, without applying a heat ratio to the kg of product or adding source useful heat/packing a second time."
     },
     "r-f5b53e81e75434e5": {
       "evidence": [
