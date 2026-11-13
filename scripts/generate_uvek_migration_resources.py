@@ -635,6 +635,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from scripts.review_uvek_pilot_materials import (
             apply_cogen_heat_exchanger_review,
             apply_cdr_small_biomethane_heat_review,
+            apply_european_delivered_water_review,
             apply_pilot_material_review,
             apply_pilot_paint_market_review,
             apply_pilot_silver_market_review,
@@ -743,6 +744,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_pilot_materials import (
             apply_cogen_heat_exchanger_review,
             apply_cdr_small_biomethane_heat_review,
+            apply_european_delivered_water_review,
             apply_pilot_material_review,
             apply_pilot_paint_market_review,
             apply_pilot_silver_market_review,
@@ -1235,6 +1237,7 @@ def apply_pilot_reviews(technosphere: dict) -> None:
         from review_uvek_mining_38_msw_portfolio import apply_mining_38_msw_portfolio_review
 
     apply_mining_38_msw_portfolio_review(technosphere)
+    apply_european_delivered_water_review(technosphere)
     if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:

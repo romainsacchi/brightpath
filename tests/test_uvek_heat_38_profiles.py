@@ -15,6 +15,7 @@ from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_heat_38_profiles import apply_heat_38_profiles_review, qualified_extended_profile_rule
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_heat_38_profiles_review.json").read_text())
+SUPERSEDING_WATER = json.loads((DATA_DIR / "export/uvek_european_delivered_water_review.json").read_text())["rules"][0]
 
 
 @pytest.fixture(scope="module")
@@ -46,7 +47,8 @@ def test_same_unit_correspondence_keeps_all_caller_quantity_fields(row, amount, 
     assert data == before
     assert len(result.data) == 1
     edge = result.data[0]["exchanges"][1]
-    assert all(edge[k] == v for k, v in row["target"].items())
+    target = SUPERSEDING_WATER["target"] if row["rule_id"] == SUPERSEDING_WATER["rule_id"] else row["target"]
+    assert all(edge[k] == v for k, v in target.items())
     old = before[0]["exchanges"][1]
     factor = row["conversion_factor"]
     assert edge["amount"] == amount * factor
@@ -65,9 +67,17 @@ def test_same_unit_correspondence_keeps_all_caller_quantity_fields(row, amount, 
 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["rule_id"])
-def test_older_effective_profiles_and_methods_are_unchanged(row):
+def test_older_effective_profiles_are_retained_or_explicitly_superseded(row):
     resource = load_uvek_technosphere_resource()
     current = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+    if row["rule_id"] == SUPERSEDING_WATER["rule_id"]:
+        # The independent geographic review explicitly supersedes this historical CH target.
+        assert SUPERSEDING_WATER["previous_rule"] == row["previous_rule"]
+        assert current["source"] == row["source"] and current["target"] == SUPERSEDING_WATER["target"]
+        assert current["target"]["location"] == "RER" and current["conversion_factor"] == 1
+        reviewed = {p["source_profile"]["version"] for p in SUPERSEDING_WATER["profiles"]}
+        assert {s["source"]["version"] for s in row["previous_scopes"]} <= reviewed
+        return
     for scope in row["previous_scopes"]:
         source = TechnosphereProfile(**scope["source"])
         old = select_profile_sign_rules({"replace": [row["previous_rule"]]}, source)["replace"][0]

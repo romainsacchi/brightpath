@@ -60,6 +60,17 @@ def apply_cdr_small_biomethane_heat_review(resource, root=ROOT):
     )
 
 
+def apply_european_delivered_water_review(resource, root=ROOT):
+    """Use complete European delivered water without importing the source supply loop."""
+    _apply_material_review(
+        resource,
+        root,
+        "brightpath/data/export/uvek_european_delivered_water_review.json",
+        "a92711714a1ca5cae9d893172ec239b8c9a98430e0beb7dfccc85fb14397aaec",
+        mapping_method="reviewed_inventory_boundary_correction",
+    )
+
+
 def _apply_material_review(resource, root, review_path, approval_sha256, *, mapping_method="reviewed_pilot_material"):
     raw = (root / review_path).read_bytes()
     if hashlib.sha256(raw).hexdigest() != approval_sha256:

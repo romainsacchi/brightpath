@@ -100,7 +100,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
     assert len(reverse["replace"]) == 1517
     assert len(reverse["delete"]) == reverse["coverage"]["omitted_identities"] == 1
     # Current reviewed additions; frozen historical mapping values are checked below.
-    # The reviewed 50 kW useful-heat service adds one destination; 300 kW remains used elsewhere.
+    # Reviewed 50 kW heat and European delivered water add destinations; earlier suppliers remain used.
     assert (
         len(
             {
@@ -109,7 +109,7 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 4021
+        == 4022
     )
 
 
