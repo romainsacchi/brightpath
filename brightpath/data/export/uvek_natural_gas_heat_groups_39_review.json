@@ -1,0 +1,482 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing user approval for autonomous modelling choices with explicit warnings and logged limitations.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.9",
+    "system_model": "cutoff"
+  },
+  "records": [
+    {
+      "rule_id": "bp-beb4404bd4a00452",
+      "original_rule": {
+        "confidence": 0.451394,
+        "id": "bp-beb4404bd4a00452",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "CH",
+          "name": "market for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "unit": "megajoule"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "id": "bp-beb4404bd4a00452",
+        "mapping_method": "reviewed_natural_gas_heat_region_wrappers_39",
+        "source": {
+          "location": "CH",
+          "name": "market for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "target": {
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "location": "CH",
+          "unit": "megajoule"
+        },
+        "classification": "proxy",
+        "conversion_factor": 1,
+        "review_ref": "r-4352c174217fb9e0",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only the enumerated exact source-3.9 cut-off useful-heat profile is reviewed.",
+          "evidence": [
+            "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+                "evidence": [
+                  "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "location": "CH",
+          "unit": "megajoule"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 4,
+        "metadata_sha256": "26bf1df0aaddf6bb6c5e6e9400f5d8c67c5f541f7c0fe1d8f237e8654e1ac01e",
+        "inventory_sha256": "69e60577c2c9dd9fb9d73fce233af0306d9a87112a992f282016877be5745134",
+        "activity_comment_sha256": "94619dfe72186418f01c211457c1baf30deedd1606916290d98241445c7ba85b",
+        "product_information_sha256": "975a1fbdf49f9f59583ecf59a22132e7838789cf94b4689f2529775826f87ab8"
+      },
+      "source_producer_witnesses": [],
+      "recipe_id": null,
+      "conversion_factor": 1,
+      "limitations": [
+        "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval.",
+        "Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights.",
+        "Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix.",
+        "Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced.",
+        "Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories.",
+        "Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented.",
+        "Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code."
+      ]
+    },
+    {
+      "rule_id": "bp-c4d0ead5727b48e9",
+      "original_rule": {
+        "confidence": 1.0,
+        "id": "bp-c4d0ead5727b48e9",
+        "mapping_method": "curated_legacy",
+        "source": {
+          "location": "RER",
+          "name": "market group for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Heat, natural gas, at boiler condensing modulating >100kW",
+          "reference product": "Heat, natural gas, at boiler condensing modulating >100kW",
+          "unit": "megajoule"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "id": "bp-c4d0ead5727b48e9",
+        "mapping_method": "reviewed_natural_gas_heat_region_wrappers_39",
+        "source": {
+          "location": "RER",
+          "name": "market group for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "target": {
+          "recipe_ref": "gas-heat-39-rer-market-wrapper"
+        },
+        "classification": "proxy",
+        "conversion_factor": 1,
+        "review_ref": "r-4352c174217fb9e0",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only the enumerated exact source-3.9 cut-off useful-heat profile is reviewed.",
+          "evidence": [
+            "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "target": {
+                "recipe_ref": "gas-heat-39-rer-market-wrapper"
+              },
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+                "evidence": [
+                  "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market group for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "location": "RER",
+          "unit": "megajoule"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 2,
+        "metadata_sha256": "8256c3910711400ac1b7dbfa846935357ab9a6875936b9fb5b7de59181519569",
+        "inventory_sha256": "1f1fe34c62ab9e8134e0dc5cd33c490db2f0d2b5e4e99839122dfabf760d4426",
+        "activity_comment_sha256": "e51c496dccfd3e64bc62a59eb2846a72aa90394faf6f0bbd9a93eef74fbdabd5",
+        "product_information_sha256": "975a1fbdf49f9f59583ecf59a22132e7838789cf94b4689f2529775826f87ab8"
+      },
+      "source_producer_witnesses": [],
+      "recipe_id": "gas-heat-39-rer-market-wrapper",
+      "conversion_factor": 1,
+      "limitations": [
+        "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval.",
+        "Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights.",
+        "Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix.",
+        "Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced.",
+        "Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories.",
+        "Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented.",
+        "Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code."
+      ]
+    },
+    {
+      "rule_id": "bp-4387cc32c40a194a",
+      "original_rule": {
+        "confidence": 0.3418,
+        "id": "bp-4387cc32c40a194a",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "GLO",
+          "name": "market group for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "unit": "megajoule"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "id": "bp-4387cc32c40a194a",
+        "mapping_method": "reviewed_natural_gas_heat_region_wrappers_39",
+        "source": {
+          "location": "GLO",
+          "name": "market group for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "target": {
+          "recipe_ref": "gas-heat-39-global-market-wrapper"
+        },
+        "classification": "proxy",
+        "conversion_factor": 1,
+        "review_ref": "r-4352c174217fb9e0",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only the enumerated exact source-3.9 cut-off useful-heat profile is reviewed.",
+          "evidence": [
+            "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "target": {
+                "recipe_ref": "gas-heat-39-global-market-wrapper"
+              },
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+                "evidence": [
+                  "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market group for heat, central or small-scale, natural gas",
+          "reference product": "heat, central or small-scale, natural gas",
+          "location": "GLO",
+          "unit": "megajoule"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 2,
+        "metadata_sha256": "deaeb112bb9c2bcdaa611bb61358016dd2c3730332dc57089f8935c86bd87145",
+        "inventory_sha256": "32db62bac7fb8677b617a86ab59ac45b0e20afb80f719624b039f24d641141c3",
+        "activity_comment_sha256": "dc850f77d544e6c10385832c519c10778b01e5448424b9f9e5d13b9b7e455af4",
+        "product_information_sha256": "975a1fbdf49f9f59583ecf59a22132e7838789cf94b4689f2529775826f87ab8"
+      },
+      "source_producer_witnesses": [],
+      "recipe_id": "gas-heat-39-global-market-wrapper",
+      "conversion_factor": 1,
+      "limitations": [
+        "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval.",
+        "Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights.",
+        "Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix.",
+        "Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced.",
+        "Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories.",
+        "Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented.",
+        "Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code."
+      ]
+    }
+  ],
+  "recipes": {
+    "gas-heat-39-rer-market-wrapper": {
+      "name": "market group for heat, central or small-scale, natural gas, retained regional supplies with reviewed native heat",
+      "reference product": "heat, central or small-scale, natural gas",
+      "location": "RER",
+      "unit": "megajoule",
+      "inputs": [
+        {
+          "amount": 0.0006443656888594714,
+          "uncertainty type": 0,
+          "loc": 0.0006443656888594714,
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "location": "CH",
+          "unit": "megajoule",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.9993556343111405,
+          "uncertainty type": 0,
+          "loc": 0.9993556343111405,
+          "location": "ENTSO-E",
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "unit": "megajoule",
+          "type": "technosphere"
+        }
+      ],
+      "rationale": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+      "evidence": [
+        "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+      ]
+    },
+    "gas-heat-39-global-market-wrapper": {
+      "name": "market group for heat, central or small-scale, natural gas, retained regional supplies with reviewed native heat",
+      "reference product": "heat, central or small-scale, natural gas",
+      "location": "GLO",
+      "unit": "megajoule",
+      "inputs": [
+        {
+          "amount": 0.9998381022867082,
+          "uncertainty type": 0,
+          "loc": 0.9998381022867082,
+          "location": "ENTSO-E",
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "unit": "megajoule",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.00016189771329179467,
+          "uncertainty type": 0,
+          "loc": 0.00016189771329179467,
+          "recipe": "gas-heat-39-rer-market-wrapper"
+        }
+      ],
+      "rationale": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+      "evidence": [
+        "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+      ]
+    }
+  },
+  "recipe_dependencies": {},
+  "reviews": [
+    {
+      "rationale": "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval. Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights. Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix. Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced. Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories. Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented. Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code.",
+      "limitations": [
+        "Only independently inspected ecoinvent 3.9 cut-off natural-gas central/small-scale useful-heat CH market, European group and global group are reviewed. All reference positive one useful MJ. Factor +1 preserves signed caller MJ, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other source releases, patches, system models and reverse routes gain no approval.",
+        "Retain both original wrapper layers and every observed regional coefficient, including source uncertainty. Global group: RoW 0.9998381022867082 and RER 0.00016189771329179467; European group: CH 0.0006443656888594714 and Europe without Switzerland 0.9993556343111405. These are the observed source-3.9 group weights, not a claim about current global heat geography. Both wrappers contain only market supplies with no freight, direct biosphere exchanges or added losses. Do not renormalize or infer replacement country weights.",
+        "Reuse the two existing exact-profile RoW and Europe-without-Switzerland correspondence scopes unchanged, including their complete native ENTSO-E 2022 gas-heat screening proxy and published limitations. ENTSO-E is a broad European proxy for those source markets, not an exact world or Europe-excluding-CH average; it can overlap Switzerland. Retain source wrapper coefficients without subtracting inferred Swiss country fractions or creating a global native mix.",
+        "Use the complete native CH 2022 natural-gas heat mix for the CH source market as an explicit technology/vintage proxy. Source has four small-boiler/micro-CHP routes, with total CHP heat share about 0.1221907267256028; native has 0.198966897647854 CHP power-plant heat and 0.801033102352146 heat-plant heat. Replace that entire internal source technology portfolio and uncertainty with the native mix; do not claim the boiler, CHP size, heat grade, distribution/service boundary, allocation or emission profile is reproduced.",
+        "Native CH and ENTSO-E each supply one useful MJ and have positive technology coefficients summing to one. Their documented 90% representativeness is a data-coverage limitation, not a 0.9 output coefficient or an efficiency. Do not divide by coverage, multiply by gas LHV, infer a fuel/heat efficiency ratio, adjust temperature quality or add an avoided-electricity/extra-heat credit. Complete native allocated supplies already include their relevant inventories.",
+        "Warnings retain original/source group-data quality, regional/CHP/heat-plant portfolio, scale, heat-service and distribution boundaries, allocation, upstream fuel, emissions, vintage, native biosphere exclusions, internal uncertainty/correlations and unquantified score differences. No LCI, LCIA or stochastic equivalence is claimed. Caller emissions remain independent; no caller exchange, source wrapper input, utility loss or credit is omitted or invented.",
+        "Use the existing native heat suppliers so shared Premise transformations can continue updating the background normally. The new recipes preserve source regional wrapper quantities only; they do not create a separate UVEK sector engine, freeze the source boiler-technology shares or change Premise transformation code."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_natural_gas_heat_groups_39_review.json"
+      ]
+    }
+  ],
+  "source_rule_dependency_scopes": [
+    {
+      "rule_id": "bp-a6429485fc43a215",
+      "fingerprint": "4af57ca58a47b549a4c7b37e583bccd491d62cedc805c3a54e8513b2489614b3"
+    },
+    {
+      "rule_id": "bp-ae076e1077dfff2c",
+      "fingerprint": "331d5fba62005e7d64684a82aa65c48fd20b85b8099c6532e1015d49560f17b0"
+    }
+  ],
+  "native_heat_witnesses": {
+    "2025": {
+      "CH": {
+        "identity": {
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "location": "CH",
+          "unit": "megajoule"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "nonproduction_count": 2,
+        "metadata_sha256": "0108c27a8fc97d1cf3bd560458ce7104e569c0331d636d19240a820a853ac0f4",
+        "inventory_sha256": "7ce5b5bc865a5685fa1bbbaf6e924957a09397fe51b1c9197e35055a7d5cf3a5",
+        "activity_comment_sha256": "e9eda0b1a7fd873059b9aadc1bcfb5d4fe2808262408a177e7cd1b90efbd197b",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ENTSO-E": {
+        "identity": {
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "location": "ENTSO-E",
+          "unit": "megajoule"
+        },
+        "reference_amounts": [
+          1
+        ],
+        "nonproduction_count": 2,
+        "metadata_sha256": "fddb383ef997fd85b4c63f923a06b0af924c33a5e9fcda71feeb86132cd12708",
+        "inventory_sha256": "1a5213121925216735e221a09e81107ab4aad166794ef2a1cd5a5b21ef084954",
+        "activity_comment_sha256": "508cc1574b6e73bf1d19847170aa65827c753749084cc5b4532526b78cee9c3d",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    },
+    "2026": {
+      "CH": {
+        "identity": {
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "location": "CH",
+          "unit": "megajoule"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 2,
+        "metadata_sha256": "090076d4eea6f1a66468951a8869e4c54ab48cef55a7012966760fe2cd3a0262",
+        "inventory_sha256": "84d828fed4a4c43ec746bc08967e07cc40a64daf7dbbc73dbc2999ccb234548b",
+        "activity_comment_sha256": "8841946538185b3627c6af3188273e2e18c5604804ebcca55ba0b3d38a43190b",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "ENTSO-E": {
+        "identity": {
+          "name": "Heat, from natural gas",
+          "reference product": "Heat, from natural gas",
+          "location": "ENTSO-E",
+          "unit": "megajoule"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 2,
+        "metadata_sha256": "323019498dd04593e024ef58878f2d3d545b153ec82dd5e273eb1a0c824f7d2d",
+        "inventory_sha256": "c0921dbc02fc2dc84c3de63f8928f8a18ebcf85c8811a5ca0e487688359aba9b",
+        "activity_comment_sha256": "85663a4a1d267ebdce2e6d1fc09c8773a6223067ecf1288433c8a14b0b287b12",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    }
+  },
+  "source_CH_market_internal_rows_replaced": 4,
+  "source_CH_CHP_share": 0.1221907267256028,
+  "native_CH_CHP_share": 0.198966897647854,
+  "native_CH_heat_plant_share": 0.801033102352146,
+  "native_representativeness_percent": 90,
+  "new_source_omissions": [],
+  "new_caller_exchange_omissions": [],
+  "licensing": "Native-facing regional screening wrappers, bounded interface facts and metadata hashes only. Original proprietary records, codes, comments and archives remain private."
+}
