@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import before_nylon6_39_review
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -99,7 +100,7 @@ def test_existing_profile_projections_and_helper_recipes_are_identical():
 
 @pytest.mark.parametrize("drift", [None, "parent", "new_recipe", "old_recipe"])
 def test_replay_is_idempotent_and_refuses_drift_atomically(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = before_nylon6_39_review(deepcopy(load_uvek_technosphere_resource()))
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][0]["rule_id"])["confidence"] = 0.1
     if drift in ("new_recipe", "old_recipe"):

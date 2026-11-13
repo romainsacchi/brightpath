@@ -124,3 +124,18 @@ def before_mining_38_material_profiles(resource):
         actual.clear()
         actual.update(deepcopy(previous))
     return resource
+
+
+def before_nylon6_39_review(resource):
+    """Restore only the frozen nylon parent for earlier authoring replay tests."""
+    import json
+
+    from brightpath import DATA_DIR
+
+    review = json.loads((DATA_DIR / "export/uvek_nylon6_39_review.json").read_text())
+    row = review["records"][0]
+    parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+    assert parent in (row["original_rule"], row["compiled_rule"])
+    parent.clear()
+    parent.update(deepcopy(row["original_rule"]))
+    return resource
