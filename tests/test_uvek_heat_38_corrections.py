@@ -75,6 +75,10 @@ def test_uninspected_profiles_cannot_inherit_corrections(row, version, model, po
 @pytest.mark.parametrize("drift", [False, True])
 def test_authoring_is_atomic_and_idempotent(drift):
     resource = deepcopy(load_uvek_technosphere_resource())
+    # Test this historical authoring stage against its frozen inputs. The live
+    # resource includes later coal sign-review extensions that it must not erase.
+    previous = {row["rule_id"]: row["previous_rule"] for row in REVIEW["records"]}
+    resource["replace"] = [deepcopy(previous.get(rule["id"], rule)) for rule in resource["replace"]]
     apply_heat_38_corrections_review(resource)
     if drift:
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["target"][

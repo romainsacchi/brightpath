@@ -1,10 +1,11 @@
 """An approval covers its exact rule/profile edge, never a whole resource."""
 
+import json
 from copy import deepcopy
 from dataclasses import replace
-import json
 
 import pytest
+from test_uvek_reference_signs import consumer, contexts
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.execution import _audit_compatibility_rule_scope
@@ -12,9 +13,12 @@ from brightpath.background.rule_approvals import compatibility_rule_fingerprint
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource
-from test_uvek_reference_signs import consumer, contexts
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_material_review.json").read_text())
+CORRECTIONS = {
+    row["rule_id"]: row
+    for row in json.loads((DATA_DIR / "export/uvek_heat_38_corrections_review.json").read_text())["records"]
+}
 SOURCE = TechnosphereProfile("ecoinvent", "3.9", "cutoff")
 BRIDGE = TechnosphereProfile("uvek", "2025", "cutoff")
 
@@ -33,6 +37,10 @@ def scope(decision):
 @pytest.mark.parametrize("decision", REVIEW["rules"], ids=lambda d: d["label"])
 @pytest.mark.parametrize("target_version", ["2025", "2026"])
 def test_approved_material_can_migrate_without_global_heuristic_consent(decision, target_version):
+    # The frozen inventory-boundary review supersedes the original lime
+    # correction: this milled product is limestone, not calcined quicklime.
+    expected = CORRECTIONS.get(decision["rule_id"], decision)
+    assert expected["source"] == decision["source"]
     _, _, policy = scope(decision)
     assert policy.on_heuristic_mapping is PolicyAction.ERROR
     data = consumer(decision["source"], -2, uncertainty=2)
@@ -40,8 +48,8 @@ def test_approved_material_can_migrate_without_global_heuristic_consent(decision
     inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", "3.9"))
     result = inventory.migrate_background(contexts("uvek", target_version).background, policy=policy)
     edge = result.data[0]["exchanges"][1]
-    assert edge["amount"] == pytest.approx(-2 * decision["conversion_factor"])
-    assert all(edge[key] == value for key, value in decision["target"].items())
+    assert edge["amount"] == pytest.approx(-2 * expected["conversion_factor"])
+    assert all(edge[key] == value for key, value in expected["target"].items())
     assert inventory.data == data == before
     assert any(i.code == "migration.approved_correspondence" for i in result.last_migration_report.issues)
     assert not any(loss.code == "migration.heuristic_mapping" for loss in result.last_migration_report.losses)
