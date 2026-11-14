@@ -73,7 +73,7 @@ def test_three_separate_producer_shares_and_three_freight_rows_survive():
     assert not delivery["brightpath_conversion"].get("source_input_omissions")
 
 
-@pytest.mark.parametrize("version,model", [("3.9", "cutoff"), ("3.8", "consequential")])
+@pytest.mark.parametrize("version,model", [("3.9.1", "cutoff"), ("3.8", "consequential")])
 def test_uninspected_profiles_refuse(version, model):
     with pytest.raises(MigrationError):
         migrate(version=version, model=model)
@@ -81,6 +81,12 @@ def test_uninspected_profiles_refuse(version, model):
 
 def test_replay_is_idempotent_and_rejects_changed_parent_without_mutation():
     resource = deepcopy(load_uvek_technosphere_resource())
+    # Replay the earlier authoring stage before the independently reviewed3.9 extension.
+    extension = json.loads((DATA_DIR / "export/uvek_lime_delivery_39_review.json").read_text())["records"][0]
+    parent = next(r for r in resource["replace"] if r["id"] == extension["rule_id"])
+    assert parent == extension["compiled_rule"]
+    parent.clear()
+    parent.update(deepcopy(extension["original_rule"]))
     apply_fuels_38_lime_review(resource)
     before = deepcopy(resource)
     apply_fuels_38_lime_review(resource)

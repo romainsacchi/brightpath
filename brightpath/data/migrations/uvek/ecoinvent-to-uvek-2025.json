@@ -135283,6 +135283,121 @@
       "reference product": "hydrogen, liquid",
       "unit": "kilogram"
     },
+    "lime-39-allocated-mining-reviewed-native": {
+      "evidence": [
+        "brightpath/data/export/uvek_lime_delivery_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.1816578947368421,
+          "location": "SE",
+          "name": "Zinc, from combined metal production, at beneficiation",
+          "reference product": "Zinc, from combined metal production, at beneficiation",
+          "type": "technosphere",
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RoW",
+      "name": "Allocated zinc mining burden for lime co-product, source 3.9, reviewed native proxy",
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off RoW generic-lime market is extended. Preserve one signed kg source market demand at factor+1,supported caller uncertainty/formulas and separately listed caller emissions. Retain all three source producer shares and all three delivery freight quantities separately,without renormalization,omission or a CaO/CaCO3,moisture,purity or yield multiplier. Other versions,patches,system models and reverse routes gain no new permission. The source generic product text calls this quicklime,but both inspected milled-loose producer inventories consume crushed limestone without a calcination step. Match those actual milling inventories to complete native Swiss Limestone,milled,loose,at plant,not hydraulic lime,hydrated lime or a speculative additional CaO kiln. This preserves the inspected source inventory definition with an explicit naming inconsistency; it does not establish general chemical equivalence between quicklime and limestone. Native quarry,milling,energy,infrastructure,emissions,geography,allocation,age and uncertainty replace source internals and can change scores. The separate source global zinc-mine lime co-product is represented by allocated mining burdens,not ordinary quarry limestone. Independently checked all264nonproduction source coordinates against the same-version zinc-concentrate inventory: matching provider/flow keys and every nonzero amount ratio equal0.117/0.38. Source documentation states59%Zn in concentrate. Native Swedish beneficiation references contained Zn,so demand is0.59*(0.117/0.38)=0.1816578947368421kg contained-Zn mining burden per kg source co-product. This retains the documented allocation basis while substituting a complete native mine model; ore,co-products,allocation,upstream geography and uncertainty differ. Add no zinc-recovery or avoided-mining credit. The market quantities agree with the earlier3.8case,but upstream source mill and mining inventories changed; this extension follows independent3.9inspection rather than blanket inheritance. Two version-specific recipe definitions use the previously reviewed native suppliers and mean quantities,with independently inspected3.9freight uncertainty to attach accurate3.9 names,evidence and limitations. They replace the two existing helper roles for this source profile; no extra processing layer or duplicate burden is added. The earlier3.8 profile,raw default target,recipe definitions,review authority and physical supplier/factor closure remain unchanged; only its raw-rule approval fingerprint must be refreshed after physical comparison. Native European generic lorry fleet replaces the source ZA,RoW and Brazilian unspecified fleets at each original tonne-km,with supported uncertainty retained up to floating-point serialization precision. These are explicit geography,fleet technology,vintage and internal-uncertainty proxies,not claims of identical routes,payloads or energy. Source market input order is not physically meaningful; entries stay separate in the established helper order. Do not add a delivery stage,merge or redistribute producer shares,or supplement the complete native stocks with source utilities/emissions. Source/native LCI,LCIA and stochastic equivalence are not established; score effects remain unquantified. The three source3.9 freight entries use lognormal scale0.4074309757492673 and source scale-without-pedigree0.5,whereas3.8uses0.45166359162544856and0.34641016151377546. Preserve both supplied uncertainty fields rather than deriving or inheriting a different spread. No stochastic equivalence of source and native internal inventories is claimed.",
+      "reference product": "lime",
+      "unit": "kilogram"
+    },
+    "lime-39-delivery-reviewed-native": {
+      "evidence": [
+        "brightpath/data/export/uvek_lime_delivery_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0133966122939896,
+          "loc": 0.0133966122939896,
+          "recipe": "lime-39-allocated-mining-reviewed-native",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.0011279466037016,
+          "loc": 0.0011279466037016,
+          "location": "CH",
+          "name": "Limestone, milled, loose, at plant",
+          "reference product": "Limestone, milled, loose, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.985475441102309,
+          "loc": 0.985475441102309,
+          "location": "CH",
+          "name": "Limestone, milled, loose, at plant",
+          "reference product": "Limestone, milled, loose, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0022888164611987796,
+          "loc": -6.079720424189058,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0003583442198355759,
+          "loc": -7.934016525595621,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.017352839318965644,
+          "loc": -4.053999136470282,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for lime, source 3.9 limestone and allocated-mining branches, reviewed native delivery",
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off RoW generic-lime market is extended. Preserve one signed kg source market demand at factor+1,supported caller uncertainty/formulas and separately listed caller emissions. Retain all three source producer shares and all three delivery freight quantities separately,without renormalization,omission or a CaO/CaCO3,moisture,purity or yield multiplier. Other versions,patches,system models and reverse routes gain no new permission. The source generic product text calls this quicklime,but both inspected milled-loose producer inventories consume crushed limestone without a calcination step. Match those actual milling inventories to complete native Swiss Limestone,milled,loose,at plant,not hydraulic lime,hydrated lime or a speculative additional CaO kiln. This preserves the inspected source inventory definition with an explicit naming inconsistency; it does not establish general chemical equivalence between quicklime and limestone. Native quarry,milling,energy,infrastructure,emissions,geography,allocation,age and uncertainty replace source internals and can change scores. The separate source global zinc-mine lime co-product is represented by allocated mining burdens,not ordinary quarry limestone. Independently checked all264nonproduction source coordinates against the same-version zinc-concentrate inventory: matching provider/flow keys and every nonzero amount ratio equal0.117/0.38. Source documentation states59%Zn in concentrate. Native Swedish beneficiation references contained Zn,so demand is0.59*(0.117/0.38)=0.1816578947368421kg contained-Zn mining burden per kg source co-product. This retains the documented allocation basis while substituting a complete native mine model; ore,co-products,allocation,upstream geography and uncertainty differ. Add no zinc-recovery or avoided-mining credit. The market quantities agree with the earlier3.8case,but upstream source mill and mining inventories changed; this extension follows independent3.9inspection rather than blanket inheritance. Two version-specific recipe definitions use the previously reviewed native suppliers and mean quantities,with independently inspected3.9freight uncertainty to attach accurate3.9 names,evidence and limitations. They replace the two existing helper roles for this source profile; no extra processing layer or duplicate burden is added. The earlier3.8 profile,raw default target,recipe definitions,review authority and physical supplier/factor closure remain unchanged; only its raw-rule approval fingerprint must be refreshed after physical comparison. Native European generic lorry fleet replaces the source ZA,RoW and Brazilian unspecified fleets at each original tonne-km,with supported uncertainty retained up to floating-point serialization precision. These are explicit geography,fleet technology,vintage and internal-uncertainty proxies,not claims of identical routes,payloads or energy. Source market input order is not physically meaningful; entries stay separate in the established helper order. Do not add a delivery stage,merge or redistribute producer shares,or supplement the complete native stocks with source utilities/emissions. Source/native LCI,LCIA and stochastic equivalence are not established; score effects remain unquantified. The three source3.9 freight entries use lognormal scale0.4074309757492673 and source scale-without-pedigree0.5,whereas3.8uses0.45166359162544856and0.34641016151377546. Preserve both supplied uncertainty fields rather than deriving or inheriting a different spread. No stochastic equivalence of source and native internal inventories is claimed.",
+      "reference product": "lime",
+      "unit": "kilogram"
+    },
     "lmo-cell-39-retained-supply-and-delivery": {
       "evidence": [
         "brightpath/data/export/uvek_lmo_cell_39_review.json"
@@ -813866,7 +813981,7 @@
     {"confidence": 0.322088, "id": "bp-1726fb67dc5f2178", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lignite dust factory", "reference product": "lignite dust factory", "unit": "unit"}, "target": {"location": "RER", "name": "Lignite dust production plant", "reference product": "Lignite dust production plant", "unit": "unit"}},
     {"confidence": 0.816818, "id": "bp-e1b0493faa50b2e8", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lignite power plant", "reference product": "lignite power plant", "unit": "unit"}, "target": {"location": "RER", "name": "Lignite power plant", "reference product": "Lignite power plant", "unit": "unit"}},
     {"confidence": 0.199015, "id": "bp-7cfbc8a9a47a41e4", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for lime", "reference product": "lime", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydraulic, at plant", "reference product": "Lime, hydraulic, at plant", "unit": "kilogram"}},
-    {"classification": "proxy", "confidence": 0.199015, "conversion_factor": 1, "id": "bp-42ca176032e4b754", "mapping_method": "reviewed_inventory_boundary_correction", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_38_lime_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_38_lime_review.json"], "reason": "Exact ecoinvent 3.8 cut-off only. The market description/CAS calls this lime or quicklime, but both inspected mill inventories consume crushed limestone without calcination. Use complete native milled limestone for those two branches, not hydraulic lime, CaO or hydrated lime; retain the source semantic inconsistency in provenance. Native Swiss limestone is a screening proxy with quarry, grinding, energy, infrastructure, geography, allocation, internal uncertainty and vintage differences. For the separate global zinc-mining co-product, preserve allocated mining burdens using native Swedish contained-Zn beneficiation at 0.59*(0.117/0.38) kg per kg source co-product: all 263 nonproduction source coordinates and 262 lognormal uncertainty coordinates support that price ratio; source concentrate contains 59% Zn. Native ore, co-products, allocation and internal uncertainty differ. Add no metal recovery credit or CaCO3/CaO purity/stoichiometric correction. Retain all three original producer shares and all three signed freight entries separately in source order, with original uncertainty and no renormalization or omission. Native European generic lorry fleet is a technology/geographic screening proxy at original tonne-km, without distance/payload correction. Score differences remain unquantified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only independently inspected exact cut-off profile qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-19c323e29a794a2e", "source": {"location": "RoW", "name": "market for lime", "reference product": "lime", "unit": "kilogram"}, "target": {"recipe_ref": "fuels-38-lime-delivery-2a8dca6375cead538321"}, "technosphere_information_loss": "Exact ecoinvent 3.8 cut-off only. The market description/CAS calls this lime or quicklime, but both inspected mill inventories consume crushed limestone without calcination. Use complete native milled limestone for those two branches, not hydraulic lime, CaO or hydrated lime; retain the source semantic inconsistency in provenance. Native Swiss limestone is a screening proxy with quarry, grinding, energy, infrastructure, geography, allocation, internal uncertainty and vintage differences. For the separate global zinc-mining co-product, preserve allocated mining burdens using native Swedish contained-Zn beneficiation at 0.59*(0.117/0.38) kg per kg source co-product: all 263 nonproduction source coordinates and 262 lognormal uncertainty coordinates support that price ratio; source concentrate contains 59% Zn. Native ore, co-products, allocation and internal uncertainty differ. Add no metal recovery credit or CaCO3/CaO purity/stoichiometric correction. Retain all three original producer shares and all three signed freight entries separately in source order, with original uncertainty and no renormalization or omission. Native European generic lorry fleet is a technology/geographic screening proxy at original tonne-km, without distance/payload correction. Score differences remain unquantified."},
+    {"classification": "proxy", "confidence": 0.199015, "conversion_factor": 1, "id": "bp-42ca176032e4b754", "mapping_method": "reviewed_inventory_boundary_correction", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_38_lime_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_38_lime_review.json"], "reason": "Exact ecoinvent 3.8 cut-off only. The market description/CAS calls this lime or quicklime, but both inspected mill inventories consume crushed limestone without calcination. Use complete native milled limestone for those two branches, not hydraulic lime, CaO or hydrated lime; retain the source semantic inconsistency in provenance. Native Swiss limestone is a screening proxy with quarry, grinding, energy, infrastructure, geography, allocation, internal uncertainty and vintage differences. For the separate global zinc-mining co-product, preserve allocated mining burdens using native Swedish contained-Zn beneficiation at 0.59*(0.117/0.38) kg per kg source co-product: all 263 nonproduction source coordinates and 262 lognormal uncertainty coordinates support that price ratio; source concentrate contains 59% Zn. Native ore, co-products, allocation and internal uncertainty differ. Add no metal recovery credit or CaCO3/CaO purity/stoichiometric correction. Retain all three original producer shares and all three signed freight entries separately in source order, with original uncertainty and no renormalization or omission. Native European generic lorry fleet is a technology/geographic screening proxy at original tonne-km, without distance/payload correction. Score differences remain unquantified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_lime_delivery_39_review.json"], "reason": "Only the independently inspected exact ecoinvent3.9 cut-off RoW generic-lime market is extended. Preserve one signed kg source market demand at factor+1,supported caller uncertainty/formulas and separately listed caller emissions. Retain all three source producer shares and all three delivery freight quantities separately,without renormalization,omission or a CaO/CaCO3,moisture,purity or yield multiplier. Other versions,patches,system models and reverse routes gain no new permission. The source generic product text calls this quicklime,but both inspected milled-loose producer inventories consume crushed limestone without a calcination step. Match those actual milling inventories to complete native Swiss Limestone,milled,loose,at plant,not hydraulic lime,hydrated lime or a speculative additional CaO kiln. This preserves the inspected source inventory definition with an explicit naming inconsistency; it does not establish general chemical equivalence between quicklime and limestone. Native quarry,milling,energy,infrastructure,emissions,geography,allocation,age and uncertainty replace source internals and can change scores. The separate source global zinc-mine lime co-product is represented by allocated mining burdens,not ordinary quarry limestone. Independently checked all264nonproduction source coordinates against the same-version zinc-concentrate inventory: matching provider/flow keys and every nonzero amount ratio equal0.117/0.38. Source documentation states59%Zn in concentrate. Native Swedish beneficiation references contained Zn,so demand is0.59*(0.117/0.38)=0.1816578947368421kg contained-Zn mining burden per kg source co-product. This retains the documented allocation basis while substituting a complete native mine model; ore,co-products,allocation,upstream geography and uncertainty differ. Add no zinc-recovery or avoided-mining credit. The market quantities agree with the earlier3.8case,but upstream source mill and mining inventories changed; this extension follows independent3.9inspection rather than blanket inheritance. Two version-specific recipe definitions use the previously reviewed native suppliers and mean quantities,with independently inspected3.9freight uncertainty to attach accurate3.9 names,evidence and limitations. They replace the two existing helper roles for this source profile; no extra processing layer or duplicate burden is added. The earlier3.8 profile,raw default target,recipe definitions,review authority and physical supplier/factor closure remain unchanged; only its raw-rule approval fingerprint must be refreshed after physical comparison. Native European generic lorry fleet replaces the source ZA,RoW and Brazilian unspecified fleets at each original tonne-km,with supported uncertainty retained up to floating-point serialization precision. These are explicit geography,fleet technology,vintage and internal-uncertainty proxies,not claims of identical routes,payloads or energy. Source market input order is not physically meaningful; entries stay separate in the established helper order. Do not add a delivery stage,merge or redistribute producer shares,or supplement the complete native stocks with source utilities/emissions. Source/native LCI,LCIA and stochastic equivalence are not established; score effects remain unquantified. The three source3.9 freight entries use lognormal scale0.4074309757492673 and source scale-without-pedigree0.5,whereas3.8uses0.45166359162544856and0.34641016151377546. Preserve both supplied uncertainty fields rather than deriving or inheriting a different spread. No stochastic equivalence of source and native internal inventories is claimed.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "lime-39-delivery-reviewed-native"}}], "reason": "Only independently inspected exact cut-off profile qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-19c323e29a794a2e", "source": {"location": "RoW", "name": "market for lime", "reference product": "lime", "unit": "kilogram"}, "target": {"recipe_ref": "fuels-38-lime-delivery-2a8dca6375cead538321"}, "technosphere_information_loss": "Exact ecoinvent 3.8 cut-off only. The market description/CAS calls this lime or quicklime, but both inspected mill inventories consume crushed limestone without calcination. Use complete native milled limestone for those two branches, not hydraulic lime, CaO or hydrated lime; retain the source semantic inconsistency in provenance. Native Swiss limestone is a screening proxy with quarry, grinding, energy, infrastructure, geography, allocation, internal uncertainty and vintage differences. For the separate global zinc-mining co-product, preserve allocated mining burdens using native Swedish contained-Zn beneficiation at 0.59*(0.117/0.38) kg per kg source co-product: all 263 nonproduction source coordinates and 262 lognormal uncertainty coordinates support that price ratio; source concentrate contains 59% Zn. Native ore, co-products, allocation and internal uncertainty differ. Add no metal recovery credit or CaCO3/CaO purity/stoichiometric correction. Retain all three original producer shares and all three signed freight entries separately in source order, with original uncertainty and no renormalization or omission. Native European generic lorry fleet is a technology/geographic screening proxy at original tonne-km, without distance/payload correction. Score differences remain unquantified."},
     {"confidence": 0.377953, "id": "bp-4d643232a7fe20fd", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lime mortar", "reference product": "lime mortar", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Lime mortar, at plant", "reference product": "xx Lime mortar, at plant", "unit": "kilogram"}},
     {"confidence": 0.429783, "id": "bp-43a823ce2ef56215", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lime, from liquid packaging board production", "reference product": "lime, from liquid packaging board production", "unit": "kilogram"}, "target": {"location": "RER", "name": "Production of liquid packaging board containers, at plant", "reference product": "Production of liquid packaging board containers, at plant", "unit": "kilogram"}},
     {"confidence": 0.580827, "id": "bp-99a2d97e16b298cf", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for lime, hydrated, loose weight", "reference product": "lime, hydrated, loose weight", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydrated, loose, at plant", "reference product": "Lime, hydrated, loose, at plant", "unit": "kilogram"}},
