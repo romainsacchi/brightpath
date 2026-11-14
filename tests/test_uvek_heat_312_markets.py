@@ -5,7 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
-from uvek_review_helpers import before_plastic_processing_39_review
+from uvek_review_helpers import before_pet_market_39_review, before_plastic_processing_39_review
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -93,7 +93,9 @@ def test_closure_approval_cannot_escape_exact_profile(row, version, model, polic
 
 @pytest.mark.parametrize("drift", ["none", "rule", "recipe"])
 def test_authoring_batch_is_atomic_and_existing_helpers_cannot_drift(drift):
-    resource = before_plastic_processing_39_review(deepcopy(load_uvek_technosphere_resource()))
+    resource = before_plastic_processing_39_review(
+        before_pet_market_39_review(deepcopy(load_uvek_technosphere_resource()))
+    )
     apply_heat_312_markets_review(resource)
     if drift == "rule":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["source"][

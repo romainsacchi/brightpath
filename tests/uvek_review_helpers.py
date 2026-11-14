@@ -161,3 +161,25 @@ def before_converter_steel_39_review(resource):
     parent.clear()
     parent.update(deepcopy(row["original_rule"]))
     return resource
+
+
+def before_pet_market_39_review(resource):
+    """Restore the exact old PET-market parent/card for historical authoring tests."""
+    import json
+
+    from brightpath import DATA_DIR
+
+    review = json.loads((DATA_DIR / "export/uvek_pet_market_39_review.json").read_text())
+    row = review["records"][0]
+    parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+    assert parent in (row["original_rule"], row["compiled_rule"])
+    new_ref = row["compiled_rule"]["review_ref"]
+    assert resource["reviews"][new_ref] == review["reviews"][0]
+    assert not any(r.get("review_ref") == new_ref and r["id"] != row["rule_id"] for r in resource["replace"])
+    resource["reviews"].pop(new_ref)
+    for ref, expected in review["retired_review_cards"].items():
+        assert ref not in resource["reviews"] or resource["reviews"][ref] == expected
+        resource["reviews"][ref] = deepcopy(expected)
+    parent.clear()
+    parent.update(deepcopy(row["original_rule"]))
+    return resource
