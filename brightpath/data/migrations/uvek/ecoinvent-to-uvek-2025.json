@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 251,
-      "recipe": 1078,
-      "unclassified": 29146
+      "recipe": 1079,
+      "unclassified": 29145
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 256,
       "followup_review": 163,
-      "heuristic_similarity": 26391,
+      "heuristic_similarity": 26390,
       "pairwise_review": 2209,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -54,6 +54,7 @@
       "reviewed_deferred_waste_markets": 3,
       "reviewed_deferred_xanthate": 1,
       "reviewed_delivered_low_voltage_proxy": 46,
+      "reviewed_dmc_39_retained_source_manufacturing": 1,
       "reviewed_ether_ethanol_rer": 1,
       "reviewed_ethyl_acetate_39_market_composition": 1,
       "reviewed_euro_v_conditional_fleet_39": 1,
@@ -209,7 +210,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444117,
+    "mean_confidence": 0.444141,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -107488,6 +107489,1264 @@
       "name": "Final disposal of used refrigerant isobutane",
       "rationale": "User-approved disposal service per kg of isobutane: 0.999 kg of CH average hazardous-waste incineration plus the source assumption of 0.001 kg direct isobutane air release. Approved refrigerant-disposal proxy: CH average hazardous-waste incineration at 25% water replaces the source regional hazardous-waste treatment mix for 0.999 kg per kg accepted. Preserve the separately modelled 0.001 kg refrigerant air release, without claiming that it establishes destruction efficiency. Geography, average waste composition, plant operation, emissions control, residues, energy recovery, allocation and background supplies may differ. No moisture or heating-value scaling is inferred. Refrigerant-specific destruction performance, fluorine/chlorine balances and LCIA-score equivalence are not established or quantified. Collection, reclamation and treatment-market freight are outside this direct-service approval.",
       "reference product": "disposal service for used refrigerant isobutane",
+      "unit": "kilogram"
+    },
+    "dmc-39-global-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_dmc_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.174,
+          "loc": 0.174,
+          "recipe": "dmc-39-production-rer",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.826,
+          "loc": 0.826,
+          "recipe": "dmc-39-production-row",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4626013402488151,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4626013402488151,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4626013402488151,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4626013402488151,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for dimethyl carbonate, source3.9 retained manufacturing and delivery",
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off global dimethyl-carbonate market is reviewed,per positive1kg DMC. Lithium carbonate is a different substance and is not a DMC product proxy. No exact native DMC stock was found by the inspected name/synonym/CAS616-38-6 search. Reconstruct the two source producer inventories using already reviewed native input/treatment routes and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,supported uncertainty/formulas and separate caller emissions with factor+1; no solution,molar-mass,yield,allocation,energy or balance multiplier is invented. Keep both source RER/RoW manufacturing inventories with all25and37nonproduction exchanges respectively:32technosphere entries and15directbiosphere entries per producer. These are allocated source inventory coefficients,not a newly balanced reaction model. Source prose mentions phosgene/methanol while inspected vectors use ethylene carbonate and methanol; retain the actual vectors and document that inconsistency rather than substituting phosgene,changing stoichiometry or adding coproduct/recovery credits. Source utility/site-data,allocation,estimated releases and internal uncertainty remain inherited limitations. Thirty exact3.9source technosphere dependency rules and their26existing recipe definitions were independently checked and remain unchanged. Their whole-stock/geographic/fuel/grid/heat,water,wastewater,treatment,allocation,technology,age and internal-uncertainty limitations carry through this reconstruction. Native inventories replace each upstream source supplier once; do not overlay source utilities/emissions on those complete native inputs. Negative source wastewater demand is converted once using its existing verified reference-sign factor,and positive collection/treatment components stay as reviewed. No literal inherited recipe omission or new source/caller omission is present in this26recipe closure. Preserve all15direct source resource/emission exchanges per producer,receiving compartments,units,signed amounts and supplied uncertainty. The source water emission named1,3-Dioxolan-2-one becomes canonical3.10Ethylene carbonate: both installed definitions have CAS96-49-1,water compartment andkg reference,so this is a synonym without a mass/speciation factor. All other direct identities remain canonical matches. Keep process emissions separate from upstream utility/treatment releases; do not add a second carbon/water balance or interpret BOD/COD/DOC/TOC as extra independent carbon emissions. Keep the two original market producer shares and four final rail,barge,road and container-sea delivery entries separately,in source order and with supplied uncertainty. Reuse the existing exact3.9freight correspondences at original tonne-km,without renormalizing supply shares or changing distances,payloads or fleet weights. Final DMC delivery is distinct from native input/feedstock delivery. The two manufacturing definitions and their market are the only new recipe definitions;existing helpers are reused without duplicate copies or added processing stages. Only target UVEK technosphere with canonical ecoinvent3.10biosphere is verified here. The supplied3.9manufacturing model is reconstructed through native inputs rather than replaced by an experimentally measured native DMC plant. Source/native precursor production,geography,technology,allocation,water,emission coverage,vintage and uncertainty can materially change scores. Finite LCIs and independent native-demand consistency do not establish source/native LCIA or stochastic equivalence,complete industrial coverage,other source releases,patches,system models,reverse conversion or whole battery/export qualification.",
+      "reference product": "dimethyl carbonate",
+      "unit": "kilogram"
+    },
+    "dmc-39-production-rer": {
+      "evidence": [
+        "brightpath/data/export/uvek_dmc_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 3.6112240748271664e-10,
+          "loc": -21.741804136170433,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5560800302114796,
+          "scale without pedigree": 0.5644909210961678,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.3755673037820253,
+          "loc": -0.9793175860707409,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.9330870757714343,
+          "loc": -0.06925675368854621,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "chemical-markets-39-365d5afb2cddee67",
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.9410329402196018,
+          "loc": 0.6632202747897041,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "reviewed-rer-gas-production-heat-39",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.1805612037413583,
+          "loc": -1.7116854797839676,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.3395085218098544,
+          "loc": -1.0802562312384585,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "solvent-supply-markets-39-cac4eeaf7215b33d",
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.01715331435542904,
+          "loc": -4.065563867165563,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02347295648637658,
+          "loc": -3.7519063083105224,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-16a71bec35bd067a4660",
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 5.975808977533599e-08,
+          "loc": -16.632961261570223,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-eff76270716fb3e521c0",
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.09912113800799505,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 2.3778181607330013e-06,
+          "loc": -12.949327229931065,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-bd88b9549e9e5edabb3e",
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.09912113800799505,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.020662698601069503,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.8794252042141806,
+          "name": "Carbon dioxide, fossil",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.003918344569874121,
+          "categories": [
+            "air"
+          ],
+          "loc": -5.542086017978586,
+          "name": "Dimethyl carbonate",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.008414961219144253,
+          "categories": [
+            "air"
+          ],
+          "loc": -4.777744059888994,
+          "name": "Methanol",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01715331435542904,
+          "categories": [
+            "air"
+          ],
+          "loc": -4.065563867165563,
+          "name": "Nitrogen",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0012639284261895083,
+          "categories": [
+            "air"
+          ],
+          "loc": -6.673530609710792,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.040322691488694044,
+          "categories": [
+            "water"
+          ],
+          "loc": -3.2108409042551025,
+          "name": "Ethylene carbonate",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0006155424935019015,
+          "categories": [
+            "water"
+          ],
+          "loc": -7.393006575727069,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0006155424935019015,
+          "categories": [
+            "water"
+          ],
+          "loc": -7.393006575727069,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00016029752434945353,
+          "categories": [
+            "water"
+          ],
+          "loc": -8.738478942326704,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00042802324356742413,
+          "categories": [
+            "water"
+          ],
+          "loc": -7.756333056456547,
+          "name": "Methanol",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00016029752434945353,
+          "categories": [
+            "water"
+          ],
+          "loc": -8.738478942326704,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01507686051240342,
+          "categories": [
+            "water"
+          ],
+          "loc": -4.194594126909295,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.014806018706791383,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -4.212721511501852,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0007764131760878407,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.160825736066588,
+          "name": "Water, river",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.000749328995526637,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.196332424523498,
+          "name": "Water, well, in ground",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 2,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.09912113800799505,
+          "scale without pedigree": 0.1387443692551161,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "dimethyl carbonate production, retained source3.9 RER inventory",
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off global dimethyl-carbonate market is reviewed,per positive1kg DMC. Lithium carbonate is a different substance and is not a DMC product proxy. No exact native DMC stock was found by the inspected name/synonym/CAS616-38-6 search. Reconstruct the two source producer inventories using already reviewed native input/treatment routes and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,supported uncertainty/formulas and separate caller emissions with factor+1; no solution,molar-mass,yield,allocation,energy or balance multiplier is invented. Keep both source RER/RoW manufacturing inventories with all25and37nonproduction exchanges respectively:32technosphere entries and15directbiosphere entries per producer. These are allocated source inventory coefficients,not a newly balanced reaction model. Source prose mentions phosgene/methanol while inspected vectors use ethylene carbonate and methanol; retain the actual vectors and document that inconsistency rather than substituting phosgene,changing stoichiometry or adding coproduct/recovery credits. Source utility/site-data,allocation,estimated releases and internal uncertainty remain inherited limitations. Thirty exact3.9source technosphere dependency rules and their26existing recipe definitions were independently checked and remain unchanged. Their whole-stock/geographic/fuel/grid/heat,water,wastewater,treatment,allocation,technology,age and internal-uncertainty limitations carry through this reconstruction. Native inventories replace each upstream source supplier once; do not overlay source utilities/emissions on those complete native inputs. Negative source wastewater demand is converted once using its existing verified reference-sign factor,and positive collection/treatment components stay as reviewed. No literal inherited recipe omission or new source/caller omission is present in this26recipe closure. Preserve all15direct source resource/emission exchanges per producer,receiving compartments,units,signed amounts and supplied uncertainty. The source water emission named1,3-Dioxolan-2-one becomes canonical3.10Ethylene carbonate: both installed definitions have CAS96-49-1,water compartment andkg reference,so this is a synonym without a mass/speciation factor. All other direct identities remain canonical matches. Keep process emissions separate from upstream utility/treatment releases; do not add a second carbon/water balance or interpret BOD/COD/DOC/TOC as extra independent carbon emissions. Keep the two original market producer shares and four final rail,barge,road and container-sea delivery entries separately,in source order and with supplied uncertainty. Reuse the existing exact3.9freight correspondences at original tonne-km,without renormalizing supply shares or changing distances,payloads or fleet weights. Final DMC delivery is distinct from native input/feedstock delivery. The two manufacturing definitions and their market are the only new recipe definitions;existing helpers are reused without duplicate copies or added processing stages. Only target UVEK technosphere with canonical ecoinvent3.10biosphere is verified here. The supplied3.9manufacturing model is reconstructed through native inputs rather than replaced by an experimentally measured native DMC plant. Source/native precursor production,geography,technology,allocation,water,emission coverage,vintage and uncertainty can materially change scores. Finite LCIs and independent native-demand consistency do not establish source/native LCIA or stochastic equivalence,complete industrial coverage,other source releases,patches,system models,reverse conversion or whole battery/export qualification.",
+      "reference product": "dimethyl carbonate",
+      "unit": "kilogram"
+    },
+    "dmc-39-production-row": {
+      "evidence": [
+        "brightpath/data/export/uvek_dmc_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 3.6112240748271664e-10,
+          "loc": -21.741804136170433,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5565968020030299,
+          "scale without pedigree": 0.5655086206239476,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.026705161706063848,
+          "loc": -3.622898409935797,
+          "location": "RLA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.013402354130882348,
+          "loc": -4.312324906046313,
+          "location": "RAF",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.24502203419421434,
+          "loc": -1.4064071369947744,
+          "location": "RAS",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.004057841275966379,
+          "loc": -5.507104152200953,
+          "location": "AU",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0007952790705070165,
+          "loc": -7.136817472822992,
+          "location": "NZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.08558463340439137,
+          "loc": -2.45824952825326,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pcc-39-rna-mv-ca-us-market",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.9330870757714343,
+          "loc": -0.06925675368854621,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "chemical-markets-39-365d5afb2cddee67",
+          "scale": 0.099498743710662,
+          "scale without pedigree": 0.1392838827718412,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.9096524489295457,
+          "loc": 0.6469212615898647,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-ng-heat-market-38d5f92829d188b38bb8",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.03138049129005602,
+          "loc": -3.4615688756476075,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pcc-39-quebec-gas-production-heat-market",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.1805612037413583,
+          "loc": -1.7116854797839676,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pcc-39-chemical-heat-retained-water-uncertainty",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.3395085218098544,
+          "loc": -1.0802562312384585,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 3,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "solvent-supply-markets-39-cac4eeaf7215b33d",
+          "scale": 0.099498743710662,
+          "scale without pedigree": 0.1392838827718412,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.01715331435542904,
+          "loc": -4.065563867165563,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0018328909684644855,
+          "loc": -6.301860794455382,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-0da9b8586a87f75b6039",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.00013563120225300245,
+          "loc": -8.905571103817461,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-d9d587baa173b811a254",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.020974702126681937,
+          "loc": -3.8644382280797935,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Tap water, at user",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0003653805091336894,
+          "loc": -7.914571256620701,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-5e8d9a613361e3b63996",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 4.398200029092487e-05,
+          "loc": -10.031730092040982,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-bb5245dfa484b4d04713",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 7.268748187020233e-05,
+          "loc": -9.529341377106542,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-6c559b0e4af6dc43c99e",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 4.768219768233896e-05,
+          "loc": -9.950952443938464,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-nitrate-water-b136619e560fb256f3d8",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 2.428928340179791e-06,
+          "loc": -12.92806041015802,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-d842e2a4b036631ca64a",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 8.647910328546385e-09,
+          "loc": -18.565948125702764,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-wastewater-routes-39cbd83822dc810e03e3",
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.1019803902718557,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.020662698601069503,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.8794252042141806,
+          "name": "Carbon dioxide, fossil",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.003918344569874121,
+          "categories": [
+            "air"
+          ],
+          "loc": -5.542086017978586,
+          "name": "Dimethyl carbonate",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.008414961219144253,
+          "categories": [
+            "air"
+          ],
+          "loc": -4.777744059888994,
+          "name": "Methanol",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01715331435542904,
+          "categories": [
+            "air"
+          ],
+          "loc": -4.065563867165563,
+          "name": "Nitrogen",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0012639284261895083,
+          "categories": [
+            "air"
+          ],
+          "loc": -6.673530609710792,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.040322691488694044,
+          "categories": [
+            "water"
+          ],
+          "loc": -3.2108409042551025,
+          "name": "Ethylene carbonate",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0006155424935019015,
+          "categories": [
+            "water"
+          ],
+          "loc": -7.393006575727069,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0006155424935019015,
+          "categories": [
+            "water"
+          ],
+          "loc": -7.393006575727069,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00016029752434945353,
+          "categories": [
+            "water"
+          ],
+          "loc": -8.738478942326704,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00042802324356742413,
+          "categories": [
+            "water"
+          ],
+          "loc": -7.756333056456547,
+          "name": "Methanol",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00016029752434945353,
+          "categories": [
+            "water"
+          ],
+          "loc": -8.738478942326704,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.01507686051240342,
+          "categories": [
+            "water"
+          ],
+          "loc": -4.194594126909295,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.014806018706791383,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -4.212721511501852,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0007764131760878407,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.160825736066588,
+          "name": "Water, river",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.000749328995526637,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.196332424523498,
+          "name": "Water, well, in ground",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.1019803902718557,
+          "scale without pedigree": 0.14282856857085702,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RoW",
+      "name": "dimethyl carbonate production, retained source3.9 RoW inventory",
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off global dimethyl-carbonate market is reviewed,per positive1kg DMC. Lithium carbonate is a different substance and is not a DMC product proxy. No exact native DMC stock was found by the inspected name/synonym/CAS616-38-6 search. Reconstruct the two source producer inventories using already reviewed native input/treatment routes and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,supported uncertainty/formulas and separate caller emissions with factor+1; no solution,molar-mass,yield,allocation,energy or balance multiplier is invented. Keep both source RER/RoW manufacturing inventories with all25and37nonproduction exchanges respectively:32technosphere entries and15directbiosphere entries per producer. These are allocated source inventory coefficients,not a newly balanced reaction model. Source prose mentions phosgene/methanol while inspected vectors use ethylene carbonate and methanol; retain the actual vectors and document that inconsistency rather than substituting phosgene,changing stoichiometry or adding coproduct/recovery credits. Source utility/site-data,allocation,estimated releases and internal uncertainty remain inherited limitations. Thirty exact3.9source technosphere dependency rules and their26existing recipe definitions were independently checked and remain unchanged. Their whole-stock/geographic/fuel/grid/heat,water,wastewater,treatment,allocation,technology,age and internal-uncertainty limitations carry through this reconstruction. Native inventories replace each upstream source supplier once; do not overlay source utilities/emissions on those complete native inputs. Negative source wastewater demand is converted once using its existing verified reference-sign factor,and positive collection/treatment components stay as reviewed. No literal inherited recipe omission or new source/caller omission is present in this26recipe closure. Preserve all15direct source resource/emission exchanges per producer,receiving compartments,units,signed amounts and supplied uncertainty. The source water emission named1,3-Dioxolan-2-one becomes canonical3.10Ethylene carbonate: both installed definitions have CAS96-49-1,water compartment andkg reference,so this is a synonym without a mass/speciation factor. All other direct identities remain canonical matches. Keep process emissions separate from upstream utility/treatment releases; do not add a second carbon/water balance or interpret BOD/COD/DOC/TOC as extra independent carbon emissions. Keep the two original market producer shares and four final rail,barge,road and container-sea delivery entries separately,in source order and with supplied uncertainty. Reuse the existing exact3.9freight correspondences at original tonne-km,without renormalizing supply shares or changing distances,payloads or fleet weights. Final DMC delivery is distinct from native input/feedstock delivery. The two manufacturing definitions and their market are the only new recipe definitions;existing helpers are reused without duplicate copies or added processing stages. Only target UVEK technosphere with canonical ecoinvent3.10biosphere is verified here. The supplied3.9manufacturing model is reconstructed through native inputs rather than replaced by an experimentally measured native DMC plant. Source/native precursor production,geography,technology,allocation,water,emission coverage,vintage and uncertainty can materially change scores. Finite LCIs and independent native-demand consistency do not establish source/native LCIA or stochastic equivalence,complete industrial coverage,other source releases,patches,system models,reverse conversion or whole battery/export qualification.",
+      "reference product": "dimethyl carbonate",
       "unit": "kilogram"
     },
     "eaf-dust-39-row-retained-landfill-collection": {
@@ -812403,7 +813662,7 @@
     {"confidence": 0.312879, "id": "bp-0510fdacc5db0ed4", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for diisopropyl ether", "reference product": "diisopropyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "Diethyl ether, at plant", "reference product": "Diethyl ether, at plant", "unit": "kilogram"}},
     {"confidence": 0.232879, "id": "bp-d11b8b16e394bb37", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for diisopropyl ether", "reference product": "diisopropyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "Diethyl ether, at plant", "reference product": "Diethyl ether, at plant", "unit": "kilogram"}},
     {"confidence": 0.299769, "id": "bp-a67b5546e33fb921", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for dimethenamide", "reference product": "dimethenamide", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Dimethenamide, at regional storage", "reference product": "xx Dimethenamide, at regional storage", "unit": "kilogram"}},
-    {"confidence": 0.290923, "id": "bp-30a490e8e65d619a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for dimethyl carbonate", "reference product": "dimethyl carbonate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium carbonate, at plant", "reference product": "Lithium carbonate, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-30a490e8e65d619a", "mapping_method": "reviewed_dmc_39_retained_source_manufacturing", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_dmc_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_dmc_39_review.json"], "reason": "Only the independently inspected exact ecoinvent3.9 cut-off global dimethyl-carbonate market is reviewed,per positive1kg DMC. Lithium carbonate is a different substance and is not a DMC product proxy. No exact native DMC stock was found by the inspected name/synonym/CAS616-38-6 search. Reconstruct the two source producer inventories using already reviewed native input/treatment routes and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,supported uncertainty/formulas and separate caller emissions with factor+1; no solution,molar-mass,yield,allocation,energy or balance multiplier is invented. Keep both source RER/RoW manufacturing inventories with all25and37nonproduction exchanges respectively:32technosphere entries and15directbiosphere entries per producer. These are allocated source inventory coefficients,not a newly balanced reaction model. Source prose mentions phosgene/methanol while inspected vectors use ethylene carbonate and methanol; retain the actual vectors and document that inconsistency rather than substituting phosgene,changing stoichiometry or adding coproduct/recovery credits. Source utility/site-data,allocation,estimated releases and internal uncertainty remain inherited limitations. Thirty exact3.9source technosphere dependency rules and their26existing recipe definitions were independently checked and remain unchanged. Their whole-stock/geographic/fuel/grid/heat,water,wastewater,treatment,allocation,technology,age and internal-uncertainty limitations carry through this reconstruction. Native inventories replace each upstream source supplier once; do not overlay source utilities/emissions on those complete native inputs. Negative source wastewater demand is converted once using its existing verified reference-sign factor,and positive collection/treatment components stay as reviewed. No literal inherited recipe omission or new source/caller omission is present in this26recipe closure. Preserve all15direct source resource/emission exchanges per producer,receiving compartments,units,signed amounts and supplied uncertainty. The source water emission named1,3-Dioxolan-2-one becomes canonical3.10Ethylene carbonate: both installed definitions have CAS96-49-1,water compartment andkg reference,so this is a synonym without a mass/speciation factor. All other direct identities remain canonical matches. Keep process emissions separate from upstream utility/treatment releases; do not add a second carbon/water balance or interpret BOD/COD/DOC/TOC as extra independent carbon emissions. Keep the two original market producer shares and four final rail,barge,road and container-sea delivery entries separately,in source order and with supplied uncertainty. Reuse the existing exact3.9freight correspondences at original tonne-km,without renormalizing supply shares or changing distances,payloads or fleet weights. Final DMC delivery is distinct from native input/feedstock delivery. The two manufacturing definitions and their market are the only new recipe definitions;existing helpers are reused without duplicate copies or added processing stages. Only target UVEK technosphere with canonical ecoinvent3.10biosphere is verified here. The supplied3.9manufacturing model is reconstructed through native inputs rather than replaced by an experimentally measured native DMC plant. Source/native precursor production,geography,technology,allocation,water,emission coverage,vintage and uncertainty can materially change scores. Finite LCIs and independent native-demand consistency do not establish source/native LCIA or stochastic equivalence,complete industrial coverage,other source releases,patches,system models,reverse conversion or whole battery/export qualification.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact source3.9cutoff manufacturing and market qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-31bcfe0553382772", "source": {"location": "GLO", "name": "market for dimethyl carbonate", "reference product": "dimethyl carbonate", "unit": "kilogram"}, "target": {"recipe_ref": "dmc-39-global-market"}, "technosphere_information_loss": "Only the independently inspected exact ecoinvent3.9 cut-off global dimethyl-carbonate market is reviewed,per positive1kg DMC. Lithium carbonate is a different substance and is not a DMC product proxy. No exact native DMC stock was found by the inspected name/synonym/CAS616-38-6 search. Reconstruct the two source producer inventories using already reviewed native input/treatment routes and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,supported uncertainty/formulas and separate caller emissions with factor+1; no solution,molar-mass,yield,allocation,energy or balance multiplier is invented. Keep both source RER/RoW manufacturing inventories with all25and37nonproduction exchanges respectively:32technosphere entries and15directbiosphere entries per producer. These are allocated source inventory coefficients,not a newly balanced reaction model. Source prose mentions phosgene/methanol while inspected vectors use ethylene carbonate and methanol; retain the actual vectors and document that inconsistency rather than substituting phosgene,changing stoichiometry or adding coproduct/recovery credits. Source utility/site-data,allocation,estimated releases and internal uncertainty remain inherited limitations. Thirty exact3.9source technosphere dependency rules and their26existing recipe definitions were independently checked and remain unchanged. Their whole-stock/geographic/fuel/grid/heat,water,wastewater,treatment,allocation,technology,age and internal-uncertainty limitations carry through this reconstruction. Native inventories replace each upstream source supplier once; do not overlay source utilities/emissions on those complete native inputs. Negative source wastewater demand is converted once using its existing verified reference-sign factor,and positive collection/treatment components stay as reviewed. No literal inherited recipe omission or new source/caller omission is present in this26recipe closure. Preserve all15direct source resource/emission exchanges per producer,receiving compartments,units,signed amounts and supplied uncertainty. The source water emission named1,3-Dioxolan-2-one becomes canonical3.10Ethylene carbonate: both installed definitions have CAS96-49-1,water compartment andkg reference,so this is a synonym without a mass/speciation factor. All other direct identities remain canonical matches. Keep process emissions separate from upstream utility/treatment releases; do not add a second carbon/water balance or interpret BOD/COD/DOC/TOC as extra independent carbon emissions. Keep the two original market producer shares and four final rail,barge,road and container-sea delivery entries separately,in source order and with supplied uncertainty. Reuse the existing exact3.9freight correspondences at original tonne-km,without renormalizing supply shares or changing distances,payloads or fleet weights. Final DMC delivery is distinct from native input/feedstock delivery. The two manufacturing definitions and their market are the only new recipe definitions;existing helpers are reused without duplicate copies or added processing stages. Only target UVEK technosphere with canonical ecoinvent3.10biosphere is verified here. The supplied3.9manufacturing model is reconstructed through native inputs rather than replaced by an experimentally measured native DMC plant. Source/native precursor production,geography,technology,allocation,water,emission coverage,vintage and uncertainty can materially change scores. Finite LCIs and independent native-demand consistency do not establish source/native LCIA or stochastic equivalence,complete industrial coverage,other source releases,patches,system models,reverse conversion or whole battery/export qualification."},
     {"confidence": 0.488939, "id": "bp-a0a34ec376ca2a5f", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for dimethyl ether", "reference product": "dimethyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dimethyl ether, at plant", "reference product": "Dimethyl ether, at plant", "unit": "kilogram"}},
     {"confidence": 0.568939, "id": "bp-33990b4b844b2242", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for dimethyl ether", "reference product": "dimethyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dimethyl ether, at plant", "reference product": "Dimethyl ether, at plant", "unit": "kilogram"}},
     {"confidence": 0.488939, "id": "bp-89352e0aa394a78f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for dimethyl ether", "reference product": "dimethyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dimethyl ether, at plant", "reference product": "Dimethyl ether, at plant", "unit": "kilogram"}},
@@ -832291,6 +833550,20 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of sewage sludge, 75% water, WWT, WW from black chrome coating, sanitary landfill / GLO / kg external exchange with a warning. All inspected direct service comments for black chrome coating document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-31bcfe0553382772": {
+      "evidence": [
+        "brightpath/data/export/uvek_dmc_39_review.json"
+      ],
+      "limitations": [
+        "Only the independently inspected exact ecoinvent3.9 cut-off global dimethyl-carbonate market is reviewed,per positive1kg DMC. Lithium carbonate is a different substance and is not a DMC product proxy. No exact native DMC stock was found by the inspected name/synonym/CAS616-38-6 search. Reconstruct the two source producer inventories using already reviewed native input/treatment routes and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,supported uncertainty/formulas and separate caller emissions with factor+1; no solution,molar-mass,yield,allocation,energy or balance multiplier is invented.",
+        "Keep both source RER/RoW manufacturing inventories with all25and37nonproduction exchanges respectively:32technosphere entries and15directbiosphere entries per producer. These are allocated source inventory coefficients,not a newly balanced reaction model. Source prose mentions phosgene/methanol while inspected vectors use ethylene carbonate and methanol; retain the actual vectors and document that inconsistency rather than substituting phosgene,changing stoichiometry or adding coproduct/recovery credits. Source utility/site-data,allocation,estimated releases and internal uncertainty remain inherited limitations.",
+        "Thirty exact3.9source technosphere dependency rules and their26existing recipe definitions were independently checked and remain unchanged. Their whole-stock/geographic/fuel/grid/heat,water,wastewater,treatment,allocation,technology,age and internal-uncertainty limitations carry through this reconstruction. Native inventories replace each upstream source supplier once; do not overlay source utilities/emissions on those complete native inputs. Negative source wastewater demand is converted once using its existing verified reference-sign factor,and positive collection/treatment components stay as reviewed. No literal inherited recipe omission or new source/caller omission is present in this26recipe closure.",
+        "Preserve all15direct source resource/emission exchanges per producer,receiving compartments,units,signed amounts and supplied uncertainty. The source water emission named1,3-Dioxolan-2-one becomes canonical3.10Ethylene carbonate: both installed definitions have CAS96-49-1,water compartment andkg reference,so this is a synonym without a mass/speciation factor. All other direct identities remain canonical matches. Keep process emissions separate from upstream utility/treatment releases; do not add a second carbon/water balance or interpret BOD/COD/DOC/TOC as extra independent carbon emissions.",
+        "Keep the two original market producer shares and four final rail,barge,road and container-sea delivery entries separately,in source order and with supplied uncertainty. Reuse the existing exact3.9freight correspondences at original tonne-km,without renormalizing supply shares or changing distances,payloads or fleet weights. Final DMC delivery is distinct from native input/feedstock delivery. The two manufacturing definitions and their market are the only new recipe definitions;existing helpers are reused without duplicate copies or added processing stages.",
+        "Only target UVEK technosphere with canonical ecoinvent3.10biosphere is verified here. The supplied3.9manufacturing model is reconstructed through native inputs rather than replaced by an experimentally measured native DMC plant. Source/native precursor production,geography,technology,allocation,water,emission coverage,vintage and uncertainty can materially change scores. Finite LCIs and independent native-demand consistency do not establish source/native LCIA or stochastic equivalence,complete industrial coverage,other source releases,patches,system models,reverse conversion or whole battery/export qualification."
+      ],
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off global dimethyl-carbonate market is reviewed,per positive1kg DMC. Lithium carbonate is a different substance and is not a DMC product proxy. No exact native DMC stock was found by the inspected name/synonym/CAS616-38-6 search. Reconstruct the two source producer inventories using already reviewed native input/treatment routes and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,supported uncertainty/formulas and separate caller emissions with factor+1; no solution,molar-mass,yield,allocation,energy or balance multiplier is invented. Keep both source RER/RoW manufacturing inventories with all25and37nonproduction exchanges respectively:32technosphere entries and15directbiosphere entries per producer. These are allocated source inventory coefficients,not a newly balanced reaction model. Source prose mentions phosgene/methanol while inspected vectors use ethylene carbonate and methanol; retain the actual vectors and document that inconsistency rather than substituting phosgene,changing stoichiometry or adding coproduct/recovery credits. Source utility/site-data,allocation,estimated releases and internal uncertainty remain inherited limitations. Thirty exact3.9source technosphere dependency rules and their26existing recipe definitions were independently checked and remain unchanged. Their whole-stock/geographic/fuel/grid/heat,water,wastewater,treatment,allocation,technology,age and internal-uncertainty limitations carry through this reconstruction. Native inventories replace each upstream source supplier once; do not overlay source utilities/emissions on those complete native inputs. Negative source wastewater demand is converted once using its existing verified reference-sign factor,and positive collection/treatment components stay as reviewed. No literal inherited recipe omission or new source/caller omission is present in this26recipe closure. Preserve all15direct source resource/emission exchanges per producer,receiving compartments,units,signed amounts and supplied uncertainty. The source water emission named1,3-Dioxolan-2-one becomes canonical3.10Ethylene carbonate: both installed definitions have CAS96-49-1,water compartment andkg reference,so this is a synonym without a mass/speciation factor. All other direct identities remain canonical matches. Keep process emissions separate from upstream utility/treatment releases; do not add a second carbon/water balance or interpret BOD/COD/DOC/TOC as extra independent carbon emissions. Keep the two original market producer shares and four final rail,barge,road and container-sea delivery entries separately,in source order and with supplied uncertainty. Reuse the existing exact3.9freight correspondences at original tonne-km,without renormalizing supply shares or changing distances,payloads or fleet weights. Final DMC delivery is distinct from native input/feedstock delivery. The two manufacturing definitions and their market are the only new recipe definitions;existing helpers are reused without duplicate copies or added processing stages. Only target UVEK technosphere with canonical ecoinvent3.10biosphere is verified here. The supplied3.9manufacturing model is reconstructed through native inputs rather than replaced by an experimentally measured native DMC plant. Source/native precursor production,geography,technology,allocation,water,emission coverage,vintage and uncertainty can materially change scores. Finite LCIs and independent native-demand consistency do not establish source/native LCIA or stochastic equivalence,complete industrial coverage,other source releases,patches,system models,reverse conversion or whole battery/export qualification."
     },
     "r-3238aba8bda316fd": {
       "evidence": [
