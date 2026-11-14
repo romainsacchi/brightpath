@@ -49,7 +49,6 @@ from scripts.review_uvek_reference_signs import (
     BATTERY_SOURCE,
     BATTERY_TARGET,
     COAL_TAR_SOURCE,
-    COAL_TAR_TARGET,
     CONCRETE_GRADE_SOURCE,
     GENERIC_WASTEWATER_TARGET,
     LI_ION_MARKET_SOURCE,
@@ -597,59 +596,88 @@ def test_inventory_reinspection_preserves_independent_profile_approval():
         model_specific_review(observations, ["Synthetic evidence"], reviews)
 
 
+def coal_tar_rule_and_policy(version, *, accept_information_loss=True):
+    from brightpath.background.rule_approvals import compatibility_rule_fingerprint
+
+    resource = load_uvek_technosphere_resource()
+    rule = next(r for r in resource["replace"] if tuple(r["source"][field] for field in FIELDS) == COAL_TAR_SOURCE)
+    fingerprint = compatibility_rule_fingerprint(
+        resource,
+        "replace",
+        rule,
+        TechnosphereProfile("ecoinvent", version, "cutoff"),
+        TechnosphereProfile("uvek", "2025", "cutoff"),
+    )
+    return (
+        resource,
+        rule,
+        MigrationPolicy(
+            on_heuristic_mapping=PolicyAction.WARN,
+            on_information_loss=PolicyAction.WARN if accept_information_loss else PolicyAction.ERROR,
+            approved_compatibility_rules=(fingerprint,),
+        ),
+    )
+
+
 @pytest.mark.parametrize("version", ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12"])
-@pytest.mark.parametrize("model", ["cutoff"])
 @pytest.mark.parametrize("amount", [-10, 10])
 @pytest.mark.parametrize("uncertainty", [2, 3])
-def test_coal_tar_proxy_respects_approved_versions_and_preserves_credits(version, model, amount, uncertainty):
+def test_coal_tar_current_review_preserves_credits_without_reviving_older_scopes(version, amount, uncertainty):
+    resource, rule, policy = coal_tar_rule_and_policy(version)
     supplier = dict(zip(FIELDS, COAL_TAR_SOURCE, strict=True))
     data = consumer(supplier, amount, uncertainty)
     before = deepcopy(data)
-    inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version, model))
-    target = contexts("uvek", "2025").background
-    if model == "consequential" and version in {"3.6", "3.7", "3.8", "3.9"}:
-        converted = inventory.migrate_background(target, policy=MigrationPolicy.permissive())
-        assert converted.data[0]["exchanges"] == [before[0]["exchanges"][0]]
-        warnings = [i for i in converted.last_migration_report.issues if i.code == "migration.technosphere_omission"]
-        assert len(warnings) == 1 and "26.6 MJ" in warnings[0].message
+    inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
+    if version != "3.9":
+        # The later ferrosilicon review replaced the historical seven-version
+        # direct proxy with an independently inspected source3.9 helper only.
+        # Even an explicit compatibility fingerprint must not supply a missing
+        # physical reference-flow decision for another source version.
+        with pytest.raises(MigrationError) as caught:
+            inventory.migrate_background(contexts("uvek", "2025").background, policy=policy)
+        assert "migration.reference_flow_sign_unresolved" in {issue.code for issue in caught.value.report.issues}
     else:
-        converted = inventory.migrate_background(target, policy=MigrationPolicy.permissive())
+        converted = inventory.migrate_background(contexts("uvek", "2025").background, policy=policy)
         exchange = converted.data[0]["exchanges"][1]
-        assert tuple(exchange[field] for field in FIELDS) == COAL_TAR_TARGET
-        assert {key: exchange[key] for key in before[0]["exchanges"][1] if key not in FIELDS} == {
-            key: value for key, value in before[0]["exchanges"][1].items() if key not in FIELDS
-        }
-        warnings = [
-            issue
-            for issue in converted.last_migration_report.issues
-            if issue.code == "migration.technosphere_information_loss"
-        ]
-        assert len(warnings) == 1
-        assert "energy allocation" in warnings[0].message
+        for key in ("amount", "uncertainty type", "loc", "scale", "negative", "formula", "minimum", "maximum"):
+            if key in before[0]["exchanges"][1]:
+                assert exchange[key] == before[0]["exchanges"][1][key]
+        assert len(converted.data) == 2
+        helper = converted.data[1]
+        key = rule["target"]["recipe_ref"]
+        assert helper["brightpath_conversion"]["recipe_id"] == key
+        actual = [e for e in helper["exchanges"] if e["type"] != "production"]
+        expected = resource["recipes"][key]["inputs"]
+        assert len(actual) == len(expected)
+        for edge, original in zip(actual, expected, strict=True):
+            assert all(edge[k] == value for k, value in original.items())
+        assert "migration.technosphere_information_loss" in {i.code for i in converted.last_migration_report.issues}
     assert inventory.data == data == before
 
 
 def test_coal_tar_proxy_requires_explicit_information_loss_acceptance():
+    _, _, policy = coal_tar_rule_and_policy("3.9", accept_information_loss=False)
     data = consumer(dict(zip(FIELDS, COAL_TAR_SOURCE, strict=True)), 10)
-    inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", "3.12"))
+    inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", "3.9"))
     with pytest.raises(MigrationError) as caught:
-        inventory.migrate_background(
-            contexts("uvek", "2025").background, policy=MigrationPolicy(on_heuristic_mapping=PolicyAction.WARN)
-        )
+        inventory.migrate_background(contexts("uvek", "2025").background, policy=policy)
     assert "migration.technosphere_information_loss" in {issue.code for issue in caught.value.report.issues}
     assert inventory.data == data
 
 
-def test_coal_tar_has_seven_cutoff_production_profiles_and_no_cross_model_omissions():
-    resource = load_uvek_technosphere_resource()
-    rule = next(
-        rule for rule in resource["replace"] if tuple(rule["source"][field] for field in FIELDS) == COAL_TAR_SOURCE
-    )
+def test_coal_tar_has_only_reviewed_39_helper_and_no_cross_model_omissions():
+    resource, rule, _ = coal_tar_rule_and_policy("3.9")
     entries = rule["reference_flow_sign_review"]["profiles"]
-    assert all(entry["review"]["status"] == "verified" for entry in entries)
-    assert len([entry for entry in entries if "conversion_factor" in entry]) == 7
+    assert [entry["source_profile"] for entry in entries] == [
+        {"family": "ecoinvent", "version": "3.9", "system_model": "cutoff"}
+    ]
+    assert entries[0]["review"]["status"] == "verified"
+    assert entries[0]["conversion_factor"] == 1
+    assert rule["target"] == {"recipe_ref": "ferrosilicon-39-final-0281677fb9d20241"}
+    assert resource["recipes"][rule["target"]["recipe_ref"]]["inputs"]
     assert not any(entry.get("operation") == "delete" for entry in entries)
-    assert "4.1%" in resource["reviews"][rule["review_ref"]]["limitations"][0]
+    # These numbers describe the retained historical authoring ledger, not
+    # current executable source-profile coverage.
     ledger = json.loads((ROOT / REVIEW_PATH).read_text(encoding="utf-8"))
     assert ledger["summary"]["ecoinvent-to-uvek-2025.json"]["approved_with_profile_omissions"] == 118
     assert ledger["summary"]["ecoinvent-to-uvek-2025.json"].get("partially_approved_with_profile_omissions", 0) == 0
