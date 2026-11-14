@@ -77,8 +77,10 @@ def test_uvek_resources_cover_every_packaged_ecoinvent_identity_with_targets_or_
     assert mapped_technosphere_targets <= target_technosphere
     assert mapped_biosphere_sources | unresolved_biosphere_sources == source_biosphere
     assert mapped_biosphere_sources.isdisjoint(unresolved_biosphere_sources)
-    assert len(mapped_biosphere_sources) == 5390
-    assert len(unresolved_biosphere_sources) == 6080
+    # The reviewed same-CAS quizalofop synonym moves one exact source identity
+    # from unresolved to mapped; the total catalogue coverage stays unchanged.
+    assert len(mapped_biosphere_sources) == 5391
+    assert len(unresolved_biosphere_sources) == 6079
     assert mapped_biosphere_targets <= target_biosphere
     assert all(0 <= rule["confidence"] <= 1 for rule in (*technosphere["replace"], *biosphere["replace"]))
     assert all(
@@ -196,9 +198,13 @@ def test_every_executable_forward_rule_runs_from_a_real_supported_source_catalog
             and all(entry["review"]["status"] == "verified" for entry in rule["reference_flow_sign_review"]["profiles"])
         )
     ]
-    assert len(blocked) == 208
+    # Reviewed source-3.9 hard-coal-ash and EAF-dust market recipes resolve
+    # two formerly blocked identities; every remaining executable rule is run.
+    assert len(blocked) == 206
     blocked_ids = {rule["id"] for rule in blocked}
-    assert not {"bp-7e9a1ca32be10996", "bp-3a513f3458239f8b"} & blocked_ids
+    assert (
+        not {"bp-7e9a1ca32be10996", "bp-3a513f3458239f8b", "bp-daed85adc1fa3b47", "bp-4c4b28fe5a79d86b"} & blocked_ids
+    )
     remaining = {
         _technosphere_rule_identity(rule["source"]): rule
         for rule in resource["replace"]
@@ -290,7 +296,7 @@ def test_every_executable_forward_rule_runs_from_a_real_supported_source_catalog
         assert result.report.stages[-1].metrics["biosphere"]["coverage"] == 1
         checked += len(inputs)
     assert not remaining
-    assert checked == 30267
+    assert checked == 30269
     assert checked + len(blocked) + len(resource["delete"]) == resource["coverage"]["mapped_identities"] == 30732
 
 
