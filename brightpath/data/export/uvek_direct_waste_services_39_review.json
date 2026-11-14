@@ -1,0 +1,1543 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing user auto-approval of coming decisions and similar reviewed disposal cases;review exact references and full native service boundaries,retain verified signs and log composition/geography/transport limits.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.9",
+    "system_model": "cutoff"
+  },
+  "target_rule_profile": {
+    "family": "uvek",
+    "system_model": "cutoff",
+    "version": "2025"
+  },
+  "records": [
+    {
+      "rule_id": "bp-6ebc0285d15772a7",
+      "rule": {
+        "confidence": 0.624286,
+        "conversion_factor": -1,
+        "id": "bp-6ebc0285d15772a7",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-6ebc0285d15772a7"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "GLO",
+          "name": "market for non-sulfidic tailing, off-site",
+          "reference product": "non-sulfidic tailing, off-site",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "GLO",
+          "name": "Disposal, non-sulfidic tailings, off-site",
+          "reference product": "Disposal, non-sulfidic tailings, off-site",
+          "unit": "kilogram"
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for non-sulfidic tailing, off-site",
+          "reference product": "non-sulfidic tailing, off-site",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 1,
+        "metadata_sha256": "d84c4c8754277a501bcb985defbd683dfc2328b6b004d86b698db2c9e7972418",
+        "inventory_sha256": "0e19dade92a82b4b9cf71e153537cd6341ded86ecc7acf0960305387173867d1",
+        "activity_comment_sha256": "722c74f9a22ada20aba9342d4e489cdc774117339f469ce0082854acc9611de8",
+        "product_information_sha256": "a866ca991d74465455afd73d9f324bff5860d21facbea62b1c30a11290fa829f"
+      },
+      "source_provider_witnesses": [
+        {
+          "identity": {
+            "name": "treatment of non-sulfidic tailing, off-site",
+            "reference product": "non-sulfidic tailing, off-site",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 3,
+          "metadata_sha256": "12534790c5cec2a7de5c27d5c78742240753fbc79c6a0a0fccbc810a5e63f901",
+          "inventory_sha256": "247896f21c5176514046915b0b003be7595a964b76e551ec9c46fe841a7a1d6b",
+          "activity_comment_sha256": "632703062265d171a1971b19240dbc5468eccaab97db46b1a4454fb587080091",
+          "product_information_sha256": "a866ca991d74465455afd73d9f324bff5860d21facbea62b1c30a11290fa829f"
+        }
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, non-sulfidic tailings, off-site",
+            "reference product": "Disposal, non-sulfidic tailings, off-site",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 3,
+          "metadata_sha256": "32131d137e6c7e377fb82af19c25b7e467028da804bd8064c75dae1be16665f1",
+          "inventory_sha256": "be0b4c4308ce53095b069f08dcf6f05ace9238408eb298036b57b9d2c61ed7ec",
+          "activity_comment_sha256": "f92c26734bf1cf567f1e83b33740aa8566861d0a29737786052fb8af58d31e2f",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, non-sulfidic tailings, off-site",
+            "reference product": "Disposal, non-sulfidic tailings, off-site",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 3,
+          "metadata_sha256": "aece932b7f3cad7f1115b01884706480cfa7401bc870ffd641994a6cb0f6b8f3",
+          "inventory_sha256": "c721764ed718fa0215f97111d447beffe0c430309bafbf0430cd4601263528ae",
+          "activity_comment_sha256": "da6d13a26a92cc88038490adb438f27856ab7b084d0a5cad80e20914b57375e1",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "conversion_factor": -1,
+      "scope_fingerprint": "9800d00181b1816c1b42395d11dc2ac87b029e58e766ed820527825df311d583",
+      "limitations": [
+        "Permission-only review of the independently inspected exact ecoinvent3.9 cut-off source service and its existing native counterpart. Source reference is-1kg waste and native reference is+1kg disposal service in both releases. Existing verified conversion factor-1 is correct and remains byte-for-byte unchanged: negative incoming waste demand becomes positive disposal demand,while positive avoided-treatment demand becomes negative native demand. Preserve source amount/reference service units, supported uncertainty,formulas and separate caller exchanges; never use absolute amounts or flip twice. Other source versions,patches,system models and reverse directions gain no new permission.",
+        "Use the complete native service per kg waste as a documented screening proxy. Its own waste composition,technology,collection/transport,energy,flue-gas treatment,solidification,landfill,land occupation,leachate,emission timing,allocation and uncertainty replace source internals. Do not overlay source utilities,water,plant,cement or emissions on top,add an energy/recovery credit,renormalize an unrelated waste mix,or derive an LHV,dry-matter,moisture,ore-grade or efficiency multiplier from names. Native historical geography/model boundaries can differ; source/native LCI,LCIA and stochastic equivalence are not established and score effects remain unquantified.",
+        "No caller exchange is omitted,no empty supplier/helper is created,and no source/caller inventory is mutated. This packet does not change any migration rule,recipe,resource manifest,runtime Python,sector engine or source/target validation. It grants only exact-profile compatibility permission after primary source/native inspection. Existing older approvals and fingerprints remain unchanged; multi-destination/recovery markets are outside this packet.",
+        "Source non-sulfidic-tailings market calls one matching disposal provider at-1kg,with no extra freight or direct biosphere input. Both its provider and the native non-sulfidic stock contain only three land-use flows with the same occupation/transformation quantities; the unspecified-versus-unknown origin label remains a classification limitation. The native comment misleadingly says sulphidic,but the inspected stock is the land-use-only non-sulfidic model,not the separate77-flow sulfide-leachate model. Do not add that other model or infer that pollution is physically absent. Source waste properties represent1kg wet tailings with0.7kg dry matter; equal inherited land-use coefficients do not certify every ore/moisture/geology. No extra0.7or1/0.7 scaling or rehabilitation model is inferred."
+      ],
+      "boundary_checks": {
+        "source_reference_amount": -1,
+        "native_reference_amount": 1,
+        "existing_verified_factor_unchanged": -1,
+        "new_helper": false,
+        "source_internal_inventory_reproduced": false,
+        "new_recovery_credit": false,
+        "caller_exchange_omitted": false
+      },
+      "prior_approvals_unchanged": []
+    },
+    {
+      "rule_id": "bp-d79552cf92e20874",
+      "rule": {
+        "confidence": 0.236951,
+        "conversion_factor": -1,
+        "id": "bp-d79552cf92e20874",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-d79552cf92e20874"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "ZM",
+          "name": "market for sulfidic tailings, from copper mine operation",
+          "reference product": "sulfidic tailings, from copper mine operation",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "GLO",
+          "name": "Disposal, sulfidic tailings, off-site",
+          "reference product": "Disposal, sulfidic tailings, off-site",
+          "unit": "kilogram"
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for sulfidic tailings, from copper mine operation",
+          "reference product": "sulfidic tailings, from copper mine operation",
+          "location": "ZM",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 1,
+        "metadata_sha256": "22937a9d9b91fab902aca5e5ed4e3d6f32d7dc41584eb90cd61b7d0b7fdbfd68",
+        "inventory_sha256": "cfd03b77afbd8a816e932d57c82bbde99a164e1fa86b28acab3823adf15fda27",
+        "activity_comment_sha256": "d85f3cd2078304ec282909690c4c4f2aeed6e976ef5a470fb9ae969bca6fc100",
+        "product_information_sha256": "712e0fedb27c4a20b4d9d7392f90ffc78bbb61acb3765d772ad782d43cf6e760"
+      },
+      "source_provider_witnesses": [
+        {
+          "identity": {
+            "name": "treatment of sulfidic tailings, from copper mine operation, tailings impoundment",
+            "reference product": "sulfidic tailings, from copper mine operation",
+            "location": "ZM",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 89,
+          "metadata_sha256": "47a4ec546629db945286676283c26364787914e2f34873d6a6d1599145f63a2c",
+          "inventory_sha256": "e83e0322ab4bf95ed53c59f61ed7fea168499d8901b8cb0abd36d5e453711483",
+          "activity_comment_sha256": "c317a5515a14056df718709265e0fd62102b3c41087bba31bd50e081f0468be6",
+          "product_information_sha256": "712e0fedb27c4a20b4d9d7392f90ffc78bbb61acb3765d772ad782d43cf6e760"
+        }
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, sulfidic tailings, off-site",
+            "reference product": "Disposal, sulfidic tailings, off-site",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 77,
+          "metadata_sha256": "a1f581a4f647aa9807c48eb6a17e44708638582aa50ccf5eb6b5e1b622dee9a5",
+          "inventory_sha256": "59fbf34182ed51b79774799d1b1aa280e6adaa18db6c0a198df90396e1aa0a72",
+          "activity_comment_sha256": "308aa6121080f568608e369e7d4cd118e698f5fe8050656bb4da4d21d6345d22",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, sulfidic tailings, off-site",
+            "reference product": "Disposal, sulfidic tailings, off-site",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 77,
+          "metadata_sha256": "07034427658b184e4f9d49388d758ad831cf947b19251f9c1fe5f7c644f8d5ce",
+          "inventory_sha256": "5e029fe78cb4030947a41b6c0a5f24de0b6ead4ac2837e12f1c8af64e02d40fa",
+          "activity_comment_sha256": "aad7783f5c130868987cfae0ec76bbefee41181e3580eca033043c291dfcf59d",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "conversion_factor": -1,
+      "scope_fingerprint": "c8632e9965bb16e9a645cfd7cd4692b409e966339cdee6adce405a9c49309837",
+      "limitations": [
+        "Permission-only review of the independently inspected exact ecoinvent3.9 cut-off source service and its existing native counterpart. Source reference is-1kg waste and native reference is+1kg disposal service in both releases. Existing verified conversion factor-1 is correct and remains byte-for-byte unchanged: negative incoming waste demand becomes positive disposal demand,while positive avoided-treatment demand becomes negative native demand. Preserve source amount/reference service units, supported uncertainty,formulas and separate caller exchanges; never use absolute amounts or flip twice. Other source versions,patches,system models and reverse directions gain no new permission.",
+        "Use the complete native service per kg waste as a documented screening proxy. Its own waste composition,technology,collection/transport,energy,flue-gas treatment,solidification,landfill,land occupation,leachate,emission timing,allocation and uncertainty replace source internals. Do not overlay source utilities,water,plant,cement or emissions on top,add an energy/recovery credit,renormalize an unrelated waste mix,or derive an LHV,dry-matter,moisture,ore-grade or efficiency multiplier from names. Native historical geography/model boundaries can differ; source/native LCI,LCIA and stochastic equivalence are not established and score effects remain unquantified.",
+        "No caller exchange is omitted,no empty supplier/helper is created,and no source/caller inventory is mutated. This packet does not change any migration rule,recipe,resource manifest,runtime Python,sector engine or source/target validation. It grants only exact-profile compatibility permission after primary source/native inspection. Existing older approvals and fingerprints remain unchanged; multi-destination/recovery markets are outside this packet.",
+        "Source Zambian copper-tailings market calls one impoundment provider at-1kg with no extra freight or direct biosphere input. Use the complete generic native sulfide-tailings impoundment,not the land-use-only non-sulfidic stock. Its generic ore composition,mechanically stable impoundment,renaturation and60000-year leachate model replace the source regional composition/release model. Source waste properties are1kg wet tailings with0.7kg dry matter; native generic composition and moisture are not certified identical. No speculative wet/dry correction,metal-recovery credit or reconstructed drainage flow is added."
+      ],
+      "boundary_checks": {
+        "source_reference_amount": -1,
+        "native_reference_amount": 1,
+        "existing_verified_factor_unchanged": -1,
+        "new_helper": false,
+        "source_internal_inventory_reproduced": false,
+        "new_recovery_credit": false,
+        "caller_exchange_omitted": false
+      },
+      "prior_approvals_unchanged": []
+    },
+    {
+      "rule_id": "bp-62496b8cba81ceaf",
+      "rule": {
+        "confidence": 0.458134,
+        "conversion_factor": -1,
+        "id": "bp-62496b8cba81ceaf",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-62496b8cba81ceaf"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "treatment of hazardous waste, hazardous waste incineration",
+          "reference product": "hazardous waste, for incineration",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, hazardous waste, 25% water, to hazardous waste incineration",
+          "reference product": "Disposal, hazardous waste, 25% water, to hazardous waste incineration",
+          "unit": "kilogram"
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "treatment of hazardous waste, hazardous waste incineration",
+          "reference product": "hazardous waste, for incineration",
+          "location": "Europe without Switzerland",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 77,
+        "metadata_sha256": "16b97edab116bf37178f08a19e80e8b9a4bab927b475538cb5f283c53ed94b50",
+        "inventory_sha256": "cd19e8dbc2657a24816fca5bfc57fcf11336ab205dcfb3c5bd1568bcfa3529b2",
+        "activity_comment_sha256": "168a8b4562ad1f8e43331382630aeabb82b5c092ce9f18add91457aed0cb28bf",
+        "product_information_sha256": "4764cbd2a496c8be1cd0f9d3998a7255f13178d7785c9aa2c2f755e1c5b1869a"
+      },
+      "source_provider_witnesses": [
+        {
+          "identity": {
+            "name": "market for ammonia, anhydrous, liquid",
+            "reference product": "ammonia, anhydrous, liquid",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 6,
+          "metadata_sha256": "f1167424e70ad9ca9b3f15370d01f514c51623e1502102ac3e005d2f2854be73",
+          "inventory_sha256": "38c491c339ef7e7ae8da13b2bac0be8d571540ebee8cb8b497620804959e6afe",
+          "activity_comment_sha256": "0cd310c7c1b2009badd33330f8ee5564fde65f826440ad365fd2db643231398e",
+          "product_information_sha256": "c50a4d721cb0227fd2261a4644c4a5ef119f78149b26670b26e5e1379c4fb583"
+        },
+        {
+          "identity": {
+            "name": "market for calcium chloride",
+            "reference product": "calcium chloride",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 5,
+          "metadata_sha256": "a9713fe6e2f775f1332a808c9d167f6fd05ec01685bef25588ffe058a943f85e",
+          "inventory_sha256": "dd68e9a3c08aa8095f731e29cdee029ba37d8818efb8e32ac07490f81418c4f4",
+          "activity_comment_sha256": "02f84e6e65b63c188e4b289f68a4802e233a30b8a403c2bfd19624b9c641366b",
+          "product_information_sha256": "13d68183d12a74254ae071b780504e62bacaf20448daf00ae0f4910ce767fde1"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "62f0bd64e1076b0e03f929267e889d66bdfb2c00f7686cd1621c3ff3d298ddda",
+          "inventory_sha256": "fb1cce60c98ab93418c2649a6aebbb4fc1a91f7d55517c86c97bebf54b356956",
+          "activity_comment_sha256": "7bf65082c38946464c64038990172db02fefe951e17e3ca6dbb16366bb66c586",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for chemical, inorganic",
+            "reference product": "chemical, inorganic",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "4cef4fa303aa15d5fc1d1e59a29ea371cdfe071bcc787548170d861f890aa906",
+          "inventory_sha256": "0004ff935602bea0353aec53bcdef3e1ee86dd729a4a3dc370e5e81d92388ee4",
+          "activity_comment_sha256": "35e2fc7def3afd31ed89c528ad384e17e4056bbb8a69fa089d5a6f57c3630474",
+          "product_information_sha256": "bc3af7f8c9a3504681870fca7c58bae81fc9d8b47059979f216d0318d2841b3e"
+        },
+        {
+          "identity": {
+            "name": "market for chemical, organic",
+            "reference product": "chemical, organic",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 5,
+          "metadata_sha256": "e44f6458e26afbf0b223dc551b47fcf0b8b0c7de17542117afd8b01aa6b72b88",
+          "inventory_sha256": "5681df2181bcd261ba94e5c349feb436a2940dac1b41e965ac76c4336ffaa8c2",
+          "activity_comment_sha256": "94a4b1576ce27117e04d82342ce9f6c5cf453b2ca5df032c0b6f3048fa9772bb",
+          "product_information_sha256": "e973d608dcc9d2daa2f9e78ab8297b0aa31150a59b8fc5df871d9106d999fd84"
+        },
+        {
+          "identity": {
+            "name": "market for chromium",
+            "reference product": "chromium",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 5,
+          "metadata_sha256": "ae02e0ff074999df776e155bac30c53e05d04342c2eb79191cc66d6cca807ce9",
+          "inventory_sha256": "e2b1168c498e0f23422e89bbd122d60d3a194bd49fe6f40a105a3990e5bbf20e",
+          "activity_comment_sha256": "3d5583134c59c5c60eabce60aa76ddacd67f3c364ed88533ba5c59cd25f6bea5",
+          "product_information_sha256": "6d88ddb183a3932c16b095aa2048cf85d7113ed4eeeb004a41f2e327fb9b93cd"
+        },
+        {
+          "identity": {
+            "name": "market for hazardous waste incineration facility",
+            "reference product": "hazardous waste incineration facility",
+            "location": "GLO",
+            "unit": "unit"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "1fd5d6fa9c93b6ef9d216cc279eec05d7005010ceb25f18f19a6949c6d8208c4",
+          "inventory_sha256": "19e6c6d80230758e0ec703c94e704c12bb5ce1bca2ec57e7448d9edd7eda3e19",
+          "activity_comment_sha256": "54ef484b3d7c71ba4a0c4f419cc7942c6211be796bd7ec4985cfea6aa3c75dac",
+          "product_information_sha256": "d3701103f866894b0caf2a6517e8623cbfc6db494ab91b4fcd3fe205f9a37158"
+        },
+        {
+          "identity": {
+            "name": "heat production, light fuel oil, at boiler 100kW, non-modulating",
+            "reference product": "heat, central or small-scale, other than natural gas",
+            "location": "Europe without Switzerland",
+            "unit": "megajoule"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 37,
+          "metadata_sha256": "6450c48132a19ed0b3d8a40d03cd2ebb3facc6d3193dcc164a531eaff879a7d2",
+          "inventory_sha256": "d6f8af49db0a25f246e5513efc5222ee89b0e586cabf8de75ba0eb2fa7385167",
+          "activity_comment_sha256": "c6ea7b42be0041d479e80343a87b6d9b19c637d9f82e1125650290110f789bbf",
+          "product_information_sha256": "e73ba5ba3222dd5fdffb36c397969525b70ebdbc790b03e01b03200910c76ea5"
+        },
+        {
+          "identity": {
+            "name": "market for heat, district or industrial, natural gas",
+            "reference product": "heat, district or industrial, natural gas",
+            "location": "Europe without Switzerland",
+            "unit": "megajoule"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 54,
+          "metadata_sha256": "1d4df2bf6b0a2148f413a92fe542743e66b2176b200887b4cbbf413f9e327678",
+          "inventory_sha256": "081afb10796e809dd553b23cdd0cc8c8bfd93e707690175fbb86a53401493e82",
+          "activity_comment_sha256": "404570bd95f5e3767fc8ee64655ad35ad5761dd15365f81e2e04202c396b382c",
+          "product_information_sha256": "918cd375020761234dc80365c0f133b383b7af9b3bb4832f513485c1bd3b48c8"
+        },
+        {
+          "identity": {
+            "name": "market for hydrochloric acid, without water, in 30% solution state",
+            "reference product": "hydrochloric acid, without water, in 30% solution state",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 11,
+          "metadata_sha256": "66746b53c37676e3d476cfa145f43248e2a74158d3b4aa16093eb79c11d5e5b2",
+          "inventory_sha256": "5ace83ac8449372afa729e5007bc67b74306b6c7e935c843dc628bcca3b941d0",
+          "activity_comment_sha256": "f415ec5e9554bbaf03fc0a7026aeb3b99e0800ac92b2bd3c09f545ba65c522b2",
+          "product_information_sha256": "2dcb518e67fb68cfb5a71e43ceca47156e4714fdeffe1611526019bf81885831"
+        },
+        {
+          "identity": {
+            "name": "market for hydrogen peroxide, without water, in 50% solution state",
+            "reference product": "hydrogen peroxide, without water, in 50% solution state",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "ee68af739dd103d4695796b8bc5cfe9763b7d43b1a138d760ac50cd67f4d1309",
+          "inventory_sha256": "d7ed57ea7edde9cfc581a0e5e15c1d9041a38bd5f587cca1d2b0874af6b36979",
+          "activity_comment_sha256": "32f41e10cd330f4cd362290b493c121e9becb01f45543613548cdcb399ef7769",
+          "product_information_sha256": "d0903a3d319aa17fa8f036721a212418345551238296bfe3d0a59b161f5a4586"
+        },
+        {
+          "identity": {
+            "name": "market for iron(III) chloride, without water, in 40% solution state",
+            "reference product": "iron (III) chloride, without water, in 40% solution state",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 6,
+          "metadata_sha256": "ce92a5fe3dd8451c73017a28eedf40a4af2a3ed6cff70d9250b373a3905085a7",
+          "inventory_sha256": "465060b1dcf48eb8e58700eface1b0da4346e916518c904de324c098b5bdf400",
+          "activity_comment_sha256": "81d97561897723c726834459e166826b059c489db2d426a1e6a907ea026799c1",
+          "product_information_sha256": "247d3027052a7f4b3177d947599540d10cecbc5c17661487cbae42de13ffc3fc"
+        },
+        {
+          "identity": {
+            "name": "market for process-specific burdens, hazardous waste incineration plant",
+            "reference product": "process-specific burdens, hazardous waste incineration plant",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "ca1a0a64c6f25a4adf21cf18e9302e5cf5da731ec70bea0514cb11c16e342bea",
+          "inventory_sha256": "d65c90399eddf0967430b6afb44390c043bf5e96f752d40f223f858eae53227c",
+          "activity_comment_sha256": "98c57c54d98b0e2316eb60170037419fbe811f91939bfff8350c8cb6cc85deaa",
+          "product_information_sha256": "015b3ca59eb25073ddb56210032924808697a973a46f84b1e590a1a896f4d664"
+        },
+        {
+          "identity": {
+            "name": "process-specific burdens, residual material landfill",
+            "reference product": "process-specific burdens, residual material landfill",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 12,
+          "metadata_sha256": "5c03cb5cc672360f90cf8a62e6ad50fbf590cbf0e6a9a0295ac5ddf173972819",
+          "inventory_sha256": "3e98d51af413621636b04744c9fbd7c29d3e0be024a26a0bb616e1f05a69c664",
+          "activity_comment_sha256": "608462182fd6b9957a09579fa5c42e7c7e8dd581c76c8889074deec1dea42ed5",
+          "product_information_sha256": "3e0da740b54d1542080db5d1972bebcdfb3582686b871d1ee3ccaaee379a68a2"
+        },
+        {
+          "identity": {
+            "name": "market for quicklime, milled, packed",
+            "reference product": "quicklime, milled, packed",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "7c78b7ee24b24507a293e260f64d2dd0c06b97bbb0bd36e5bb4adbd070e5440c",
+          "inventory_sha256": "dea404f10ee34d77b4a750f040fc6506bdd5cc6ce94ec3b2e97dbc93748af25b",
+          "activity_comment_sha256": "29d4c9b8b768c65280f064b3750f343ea4a73240b0fc4bf945826b0430c7dce2",
+          "product_information_sha256": "e35d77b314009538c419878e62dc27551bbe018168dc5a74ce1dcd4a8ed85fa8"
+        },
+        {
+          "identity": {
+            "name": "market for residual material landfill",
+            "reference product": "residual material landfill",
+            "location": "GLO",
+            "unit": "unit"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 2,
+          "metadata_sha256": "fb3fe8c3670798c22b64ab8a48ad1a79f9e494696c16461538f4ff62877b41a2",
+          "inventory_sha256": "d62fb778d43cb42a6b2f7048b29199b8afb064dadda0e12496e743bc65a35db6",
+          "activity_comment_sha256": "d2e0c4aaea26dd4c462c6c9b4561a758a76982fe2f3a7f1848820ea1e3648544",
+          "product_information_sha256": "e04105e30924121c88deb59e454ac43b2cd57b59bb7b2678af3c23ff376c0c1e"
+        },
+        {
+          "identity": {
+            "name": "market for sodium hydroxide, without water, in 50% solution state",
+            "reference product": "sodium hydroxide, without water, in 50% solution state",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 11,
+          "metadata_sha256": "4e4c5da6393561e9ba00ba3f1a7b3ea57a5ee6058f777cd8f3b357af447b02a1",
+          "inventory_sha256": "9d9991610c42e99186f8af8d7375798774d8047622462fe263f14350b9f9cf86",
+          "activity_comment_sha256": "a4722b6bf7660aac2cfad1e95074f476b6022d64e9d586b21b25a7cc06dbf1f9",
+          "product_information_sha256": "8a4a14cddb2e15f7380b40250a2bc0be4c34b0e38fbe3fa0ea5d818c00146179"
+        },
+        {
+          "identity": {
+            "name": "market for titanium dioxide",
+            "reference product": "titanium dioxide",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 5,
+          "metadata_sha256": "8ef157890d8c8e02bfe67fea80cfbe2f3c93213d2aea8086e3424f44bf9f6b3a",
+          "inventory_sha256": "5a1e0d9afd3e9b5b6ebfbb3bb5cb8af513f2d569406ee514fda9f5fd21e3fbe5",
+          "activity_comment_sha256": "65f0e484d3700ec6a9e65dfa7ab1aa6bdf0c677272e247d09a5bf352c8e0d732",
+          "product_information_sha256": "9f19e13758d33edc74c8400119f15f1dd38f85265be208eaa9f1356a6308d756"
+        },
+        {
+          "identity": {
+            "name": "market for waste cement, hydrated",
+            "reference product": "waste cement, hydrated",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 3,
+          "metadata_sha256": "86321452f9b40d51dd7595bb1909a9f78bd74c36ab98cb578d43eae8cae1b0d7",
+          "inventory_sha256": "b01630c1f5b59bcf8873b50af73acb557333e7958351dca68e7dd36f9cd52c82",
+          "activity_comment_sha256": "31411fb50f10c7b181547b835a576d2386880e9dd813ac371cdb082cf9016f50",
+          "product_information_sha256": "ac720f4c2494f7a9f9891c0e559ea0b9ad914bfafc98e4592629c49af8bf9705"
+        }
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, hazardous waste, 25% water, to hazardous waste incineration",
+            "reference product": "Disposal, hazardous waste, 25% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 79,
+          "metadata_sha256": "c1ac950e93ef5993de72f0eeaad38d9747bae9190d4cda43ede02522ac623bf2",
+          "inventory_sha256": "922dfd4770ecc72fba41e4782de0657e48f3a3103175254d36290f2df1a9dfe5",
+          "activity_comment_sha256": "a2435f06f1a80f4adb7bdb31f7b421bf8eed6b74f54df86cbdd12281c1eb0f48",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, hazardous waste, 25% water, to hazardous waste incineration",
+            "reference product": "Disposal, hazardous waste, 25% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 80,
+          "metadata_sha256": "13da750365011b0f6d064abb2ad8cefe8db14562bc6097383261df2b20ba0e1a",
+          "inventory_sha256": "6d976ec7e33cbc9566c528e659c1de96928dcada831792c615287bd7b535a159",
+          "activity_comment_sha256": "67ea03b0a654205c23ea321e3878f17ab79c5d4f79ea84ab323734414728b9d5",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "conversion_factor": -1,
+      "scope_fingerprint": "67db6b29a14a4f72545bc23c3340d15b7bacd9e7c5b922a7d8dfc0de12ead25f",
+      "limitations": [
+        "Permission-only review of the independently inspected exact ecoinvent3.9 cut-off source service and its existing native counterpart. Source reference is-1kg waste and native reference is+1kg disposal service in both releases. Existing verified conversion factor-1 is correct and remains byte-for-byte unchanged: negative incoming waste demand becomes positive disposal demand,while positive avoided-treatment demand becomes negative native demand. Preserve source amount/reference service units, supported uncertainty,formulas and separate caller exchanges; never use absolute amounts or flip twice. Other source versions,patches,system models and reverse directions gain no new permission.",
+        "Use the complete native service per kg waste as a documented screening proxy. Its own waste composition,technology,collection/transport,energy,flue-gas treatment,solidification,landfill,land occupation,leachate,emission timing,allocation and uncertainty replace source internals. Do not overlay source utilities,water,plant,cement or emissions on top,add an energy/recovery credit,renormalize an unrelated waste mix,or derive an LHV,dry-matter,moisture,ore-grade or efficiency multiplier from names. Native historical geography/model boundaries can differ; source/native LCI,LCIA and stochastic equivalence are not established and score effects remain unquantified.",
+        "No caller exchange is omitted,no empty supplier/helper is created,and no source/caller inventory is mutated. This packet does not change any migration rule,recipe,resource manifest,runtime Python,sector engine or source/target validation. It grants only exact-profile compatibility permission after primary source/native inspection. Existing older approvals and fingerprints remain unchanged; multi-destination/recovery markets are outside this packet.",
+        "Both source hazardous-waste properties and native waste definition specify25%water on an as-received basis. The native complete Swiss hazardous-waste incinerator models flue-gas cleanup,auxiliary energy,ash landfill and solidification,with100%burdens allocated to disposal rather than energy substitution. Source and native generic hazardous-waste mix,LHV,chemistry,stack emissions,technology/vintage and residue treatment can differ. Keep one signed kg-service conversion; do not divide by0.75,scale by energy content or add a power/heat credit."
+      ],
+      "boundary_checks": {
+        "source_reference_amount": -1,
+        "native_reference_amount": 1,
+        "existing_verified_factor_unchanged": -1,
+        "new_helper": false,
+        "source_internal_inventory_reproduced": false,
+        "new_recovery_credit": false,
+        "caller_exchange_omitted": false
+      },
+      "prior_approvals_unchanged": []
+    },
+    {
+      "rule_id": "bp-39a70123944bbc3e",
+      "rule": {
+        "confidence": 0.34914,
+        "conversion_factor": -1,
+        "id": "bp-39a70123944bbc3e",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-39a70123944bbc3e"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "treatment of waste mineral wool, collection for final disposal",
+          "reference product": "waste mineral wool",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, building, mineral wool, to final disposal",
+          "reference product": "Disposal, building, mineral wool, to final disposal",
+          "unit": "kilogram"
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "treatment of waste mineral wool, collection for final disposal",
+          "reference product": "waste mineral wool",
+          "location": "Europe without Switzerland",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 4,
+        "metadata_sha256": "16b365cf364098b824ebd3d10cfccee0032f2ca6cd60360e5d5645dc76a00c8b",
+        "inventory_sha256": "e660bf3c06dbe8c16dff2354831766d6b05aef4b6089fac64e82b79eaa8a1921",
+        "activity_comment_sha256": "84f4085e6999eab031b3bd2178e5e5269084500bb7e87605ad30141c917d402c",
+        "product_information_sha256": "69b6c9bd5c0e7ca6476f1185821da99ecb323e0bbed11c8ea77360bcf6dc640f"
+      },
+      "source_provider_witnesses": [
+        {
+          "identity": {
+            "name": "market for waste mineral wool, for final disposal",
+            "reference product": "waste mineral wool, for final disposal",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "10128cfa69c08bfef9358b4cef6079a6113d4687a5c519d379352fb0eba5a0a8",
+          "inventory_sha256": "7bca713fad59bcd74627ae804353d30ecb4aa9c4d0c408ae1fcbdfa70a85dd73",
+          "activity_comment_sha256": "b457a63513ede855f262f9a985a845c0be050de021afad63796faf9bd44ac60e",
+          "product_information_sha256": "80fb4968bc0c2065aa33a5372d33ca6d18c170de193a8d68ff810a7a41599866"
+        }
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, building, mineral wool, to final disposal",
+            "reference product": "Disposal, building, mineral wool, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 5,
+          "metadata_sha256": "988df6aa8bdc5f13ad689642d53a2751ab7c6ecb2b4ff796162f2a7df0f30b36",
+          "inventory_sha256": "4772d1bb86271e923d0c8d11c4a0382fbb3439438de43ea5c4c14643d1c24732",
+          "activity_comment_sha256": "ffa14014413c704404fe91369a7c55a7fe60004cf70238c6b9a21cfd244b72a2",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, building, mineral wool, to final disposal",
+            "reference product": "Disposal, building, mineral wool, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 5,
+          "metadata_sha256": "80d1d8f95e40b93db9db81684d323e6ec3036ee16c5d7bf011d02fc8fb5b5e68",
+          "inventory_sha256": "7543cdcedbe37b7a1fc1f96fb2f2aacb0228598cf0c13ab5ba8f88f04bded3c5",
+          "activity_comment_sha256": "756a836325de45944fd09e500a3d48c1dfe56eb85307d8383fd4f2e331c497cd",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "conversion_factor": -1,
+      "scope_fingerprint": "abacfdf44548c2b7aa91a5d24561c94c6113a78f6437b0228d82d35684cf4b27",
+      "limitations": [
+        "Permission-only review of the independently inspected exact ecoinvent3.9 cut-off source service and its existing native counterpart. Source reference is-1kg waste and native reference is+1kg disposal service in both releases. Existing verified conversion factor-1 is correct and remains byte-for-byte unchanged: negative incoming waste demand becomes positive disposal demand,while positive avoided-treatment demand becomes negative native demand. Preserve source amount/reference service units, supported uncertainty,formulas and separate caller exchanges; never use absolute amounts or flip twice. Other source versions,patches,system models and reverse directions gain no new permission.",
+        "Use the complete native service per kg waste as a documented screening proxy. Its own waste composition,technology,collection/transport,energy,flue-gas treatment,solidification,landfill,land occupation,leachate,emission timing,allocation and uncertainty replace source internals. Do not overlay source utilities,water,plant,cement or emissions on top,add an energy/recovery credit,renormalize an unrelated waste mix,or derive an LHV,dry-matter,moisture,ore-grade or efficiency multiplier from names. Native historical geography/model boundaries can differ; source/native LCI,LCIA and stochastic equivalence are not established and score effects remain unquantified.",
+        "No caller exchange is omitted,no empty supplier/helper is created,and no source/caller inventory is mutated. This packet does not change any migration rule,recipe,resource manifest,runtime Python,sector engine or source/target validation. It grants only exact-profile compatibility permission after primary source/native inspection. Existing older approvals and fingerprints remain unchanged; multi-destination/recovery markets are outside this packet.",
+        "The source is dry mineral-wool collection with a final-landfill input and three particulate-emission coordinates. Native building-mineral-wool collection includes dry mineral-wool landfill,the native particulate model and0.015tkm of its historical road transport per kg. That road input is not explicitly listed in the source collection record: it is a native boundary difference,not copied source delivery or proof of physically zero source transport. Keep the complete native collection service once; do not add caller demolition/freight a second time or claim identical dust/density/transport performance. European source geography becomes the native historical Swiss collection/landfill model."
+      ],
+      "boundary_checks": {
+        "source_reference_amount": -1,
+        "native_reference_amount": 1,
+        "existing_verified_factor_unchanged": -1,
+        "new_helper": false,
+        "source_internal_inventory_reproduced": false,
+        "new_recovery_credit": false,
+        "caller_exchange_omitted": false
+      },
+      "prior_approvals_unchanged": []
+    },
+    {
+      "rule_id": "bp-b73d5db62046c9cf",
+      "rule": {
+        "confidence": 0.509958,
+        "conversion_factor": -1,
+        "id": "bp-b73d5db62046c9cf",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-b73d5db62046c9cf"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "RoW",
+          "name": "treatment of average incineration residue, residual material landfill",
+          "reference product": "average incineration residue",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, average incineration residue, 0% water, to residual material landfill",
+          "reference product": "Disposal, average incineration residue, 0% water, to residual material landfill",
+          "unit": "kilogram"
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "treatment of average incineration residue, residual material landfill",
+          "reference product": "average incineration residue",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 84,
+        "metadata_sha256": "1a7b05517b3e2ccccf955ca8aa8e7b224ab310c8ee2e01e3cf7b747cdc039591",
+        "inventory_sha256": "b23a293d37b77b598c1c39aac88f98634a2d7a76f7906ca1046c5bc30dcb7bfe",
+        "activity_comment_sha256": "f124bab64de8eb32c63ad847367b717330a1688c0c020bc72b0b9c3c40ff8cc0",
+        "product_information_sha256": "ab57a42fb0c423abe2620bec72d1c8921abc0a2d5bc18a9362d4bc4fe5a4d9e0"
+      },
+      "source_provider_witnesses": [
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "9668b7b3a3e6e87e5ae72f07f411d3a682ebf1427fcfed8b5514b6bff9e042c7",
+          "inventory_sha256": "c99dea974e9c69136109cc1a8a157ad42c20cc2c6dfdaae98bd2ec4795eaffd1",
+          "activity_comment_sha256": "b2b819f5debe8f16eb3bf63d40dc826023adad7fc009910fdfd757ced75a3f8c",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "PE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "34c57cc836f1fc5a175a98c1e9ae02d45f0330f15fd511c55975c2887e97346c",
+          "inventory_sha256": "05cd1c5bc67bd493de9b53b91f83faee526105ca3dc708680eacbd19221d2b81",
+          "activity_comment_sha256": "7c229bf80372c7ef37fa395b31986c28958855c88743dc17a0304a53031c3c6b",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "US",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "b33acf472c1c6207ea0bcbcd6f26dd1bdadf3091e9578e1b06aabf1260b988c4",
+          "inventory_sha256": "f29ba53439cf6c145359cb02d13669874489fae232604fd553f6caf563e64381",
+          "activity_comment_sha256": "c2213a4ee5c5de6891743163936bdaec48ba49eea0184445592479569800d762",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "62f0bd64e1076b0e03f929267e889d66bdfb2c00f7686cd1621c3ff3d298ddda",
+          "inventory_sha256": "fb1cce60c98ab93418c2649a6aebbb4fc1a91f7d55517c86c97bebf54b356956",
+          "activity_comment_sha256": "7bf65082c38946464c64038990172db02fefe951e17e3ca6dbb16366bb66c586",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "CA-QC",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "d204fac091f0719dd418e99387ee13ec533579d0bfd96e67c7df893b08230cef",
+          "inventory_sha256": "4b92438c0aa8b8a6489c655f7d4574bb5da8a1fde54e2c2b563e3ea77726456a",
+          "activity_comment_sha256": "e71339348a2a2f8aa8c15e5cd2ca2f0bbb3d5add30ba856a4f48e8f4dd426181",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "IN",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "36d45ba5a8da29bc8fa7e67903e0c7003e3099c9b3e668e06e628e78353e39dc",
+          "inventory_sha256": "0acb3a10aae01bab75721f8db9f19cfe08e68553c6b1cfaab118de3ba0dd9980",
+          "activity_comment_sha256": "d71bd3e6a7f9a411184e3f8bf43bcc16b79e98d27396e7ce5f16729963b25809",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "CO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "e4066b41a289c08f6508b10c5d77e70f6e6ecf44d9c25f7754f0975e8d0f8f05",
+          "inventory_sha256": "129aab13692eec8252883da8382b903c23d0e46cafe1a1b870e5f15c5e90c95d",
+          "activity_comment_sha256": "abd74ebe14874f5f7c063f04c37803879b38df2df134f27ef83d46f4fe37353c",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "ZA",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "7f265a1c0234974828bdec6c937b36ad96f008583ea930d5cc0b0f51c0cc8cb3",
+          "inventory_sha256": "d562a38fc459736763bbe537604046c704b97f2899b535fbffea4b8b49d80e8d",
+          "activity_comment_sha256": "900c414a994801db272f529f9f7a841617ea9b2d191c78c9315ab53bc6258931",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "BR",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "89ada203291b45e595743e43dfb146c82c11a3dfb1ca57086826cd23d7ace332",
+          "inventory_sha256": "90fee8db765baffd9ab38088631e3337f731adf29f56984d886c29c1c04ab7ea",
+          "activity_comment_sha256": "a44f592646737119dacea9679b3d4eed6326bcc11269451dc8d6b701bbc72c90",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for process-specific burdens, residual material landfill",
+            "reference product": "process-specific burdens, residual material landfill",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "8eb894f97797e0fb6d91243e4a79fc6631e8edbf5f1b698d8a5aded148e9904e",
+          "inventory_sha256": "eedd4f30ee426965959f34b998358d103d37d338d4a97af7a8681f78edf36898",
+          "activity_comment_sha256": "cbbd91ccc3d04989259ccc9a826f638ededbc0b3cef5a12bf38ec65a43b3b4aa",
+          "product_information_sha256": "3e0da740b54d1542080db5d1972bebcdfb3582686b871d1ee3ccaaee379a68a2"
+        },
+        {
+          "identity": {
+            "name": "market for process-specific burdens, residual material landfill",
+            "reference product": "process-specific burdens, residual material landfill",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "3d6b68edeb54bfa3d3f32cd4d2fbb1e464536ef3b783382aa3fe228d3f78ab57",
+          "inventory_sha256": "3139f44c65bf8fa69c2d4b6efa5b7084730b91be8a2576485d2cd09cdca64563",
+          "activity_comment_sha256": "946f5f8c9933be7deb1ca4f9960b0878f4c4c2ab9efe0b16ace40319c2a96b53",
+          "product_information_sha256": "3e0da740b54d1542080db5d1972bebcdfb3582686b871d1ee3ccaaee379a68a2"
+        },
+        {
+          "identity": {
+            "name": "market for residual material landfill",
+            "reference product": "residual material landfill",
+            "location": "GLO",
+            "unit": "unit"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 2,
+          "metadata_sha256": "fb3fe8c3670798c22b64ab8a48ad1a79f9e494696c16461538f4ff62877b41a2",
+          "inventory_sha256": "d62fb778d43cb42a6b2f7048b29199b8afb064dadda0e12496e743bc65a35db6",
+          "activity_comment_sha256": "d2e0c4aaea26dd4c462c6c9b4561a758a76982fe2f3a7f1848820ea1e3648544",
+          "product_information_sha256": "e04105e30924121c88deb59e454ac43b2cd57b59bb7b2678af3c23ff376c0c1e"
+        },
+        {
+          "identity": {
+            "name": "market for waste cement, hydrated",
+            "reference product": "waste cement, hydrated",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 3,
+          "metadata_sha256": "86321452f9b40d51dd7595bb1909a9f78bd74c36ab98cb578d43eae8cae1b0d7",
+          "inventory_sha256": "b01630c1f5b59bcf8873b50af73acb557333e7958351dca68e7dd36f9cd52c82",
+          "activity_comment_sha256": "31411fb50f10c7b181547b835a576d2386880e9dd813ac371cdb082cf9016f50",
+          "product_information_sha256": "ac720f4c2494f7a9f9891c0e559ea0b9ad914bfafc98e4592629c49af8bf9705"
+        },
+        {
+          "identity": {
+            "name": "market for waste cement, hydrated",
+            "reference product": "waste cement, hydrated",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 9,
+          "metadata_sha256": "5cd039eb6fc5be05899ecbbac7b44ebd0a7f72ecdb585bfe01d0fbee3cd8ec90",
+          "inventory_sha256": "32a04be4b175063782ba7b1f6adc53e91313c96c5975638d69397df7ba9b3463",
+          "activity_comment_sha256": "2fa284d52108e1ec5c637666c229f95fac46571bcbcbed2cc664736a5b21dcad",
+          "product_information_sha256": "ac720f4c2494f7a9f9891c0e559ea0b9ad914bfafc98e4592629c49af8bf9705"
+        }
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, average incineration residue, 0% water, to residual material landfill",
+            "reference product": "Disposal, average incineration residue, 0% water, to residual material landfill",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 75,
+          "metadata_sha256": "74dbb851f909d3c2e9aafb257e6e9614e74a94ee11ddefcc8bceb17adb163f37",
+          "inventory_sha256": "9cdb42549fbeb30964a47e34eb540b57ff4ec3b4dacfbb36edc8917fb880f955",
+          "activity_comment_sha256": "343e9c7db42cb0c7c3d703d1e2aa04279d63776fbfe0f629804256ed0cae9ef6",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, average incineration residue, 0% water, to residual material landfill",
+            "reference product": "Disposal, average incineration residue, 0% water, to residual material landfill",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 76,
+          "metadata_sha256": "4019b1ee684aead5a0c6ed90acdbc3fc772d89bedda8c8e94560cdf4e3eef2b2",
+          "inventory_sha256": "b8fc8cb6f19b28cf0803bb937659d3d80d5479c665bb09d43defadd63b17f9f5",
+          "activity_comment_sha256": "3fc4a56b12d57cc6d0ebe4acffb00bf5cff36d5da22fdf27788b49e31da645ed",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "conversion_factor": -1,
+      "scope_fingerprint": "c90fd262d53645cd034849e9d2191a9d56c042e4c9dd01507389f0117522f76a",
+      "limitations": [
+        "Permission-only review of the independently inspected exact ecoinvent3.9 cut-off source service and its existing native counterpart. Source reference is-1kg waste and native reference is+1kg disposal service in both releases. Existing verified conversion factor-1 is correct and remains byte-for-byte unchanged: negative incoming waste demand becomes positive disposal demand,while positive avoided-treatment demand becomes negative native demand. Preserve source amount/reference service units, supported uncertainty,formulas and separate caller exchanges; never use absolute amounts or flip twice. Other source versions,patches,system models and reverse directions gain no new permission.",
+        "Use the complete native service per kg waste as a documented screening proxy. Its own waste composition,technology,collection/transport,energy,flue-gas treatment,solidification,landfill,land occupation,leachate,emission timing,allocation and uncertainty replace source internals. Do not overlay source utilities,water,plant,cement or emissions on top,add an energy/recovery credit,renormalize an unrelated waste mix,or derive an LHV,dry-matter,moisture,ore-grade or efficiency multiplier from names. Native historical geography/model boundaries can differ; source/native LCI,LCIA and stochastic equivalence are not established and score effects remain unquantified.",
+        "No caller exchange is omitted,no empty supplier/helper is created,and no source/caller inventory is mutated. This packet does not change any migration rule,recipe,resource manifest,runtime Python,sector engine or source/target validation. It grants only exact-profile compatibility permission after primary source/native inspection. Existing older approvals and fingerprints remain unchanged; multi-destination/recovery markets are outside this packet.",
+        "Source residual-landfill waste is dry average incineration residue; native definition also states0%water and0.4kg cement solidification per kg waste. Source cement inputs sum to0.4kg,so no second cement/landfill service,wet-mass factor or normalization of the waste-plus-binder mass is added. The complete native Swiss residual landfill replaces source RoW/country-specific cement,liner,leachate,composition and long-term release models. Its61.1%biogenic-carbon share and metal-content assumptions are not universal residue measurements. The earlier3.6 permission retains its exact raw rule,authority and fingerprint unchanged."
+      ],
+      "boundary_checks": {
+        "source_reference_amount": -1,
+        "native_reference_amount": 1,
+        "existing_verified_factor_unchanged": -1,
+        "new_helper": false,
+        "source_internal_inventory_reproduced": false,
+        "new_recovery_credit": false,
+        "caller_exchange_omitted": false
+      },
+      "prior_approvals_unchanged": [
+        {
+          "operation_index": 162,
+          "review_path": "export/uvek_pilot_matching_wet_waste_review.json",
+          "review_sha256": "707e89fc151f685e2b9ca6f0cca7031236bc0f2b7d010ceed1ee7291c30249c2",
+          "scopes": [
+            {
+              "source": {
+                "family": "ecoinvent",
+                "version": "3.6",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "family": "uvek",
+                "version": "2025",
+                "system_model": "cutoff"
+              },
+              "fingerprint": "8bc7de6a5f32eb65db4fac7ca00d677aa587d6a71117277178449566d4c4c912"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-ca8d5024f84eef23",
+      "rule": {
+        "confidence": 0.576829,
+        "conversion_factor": -1,
+        "id": "bp-ca8d5024f84eef23",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-ca8d5024f84eef23"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "CH",
+          "name": "treatment of residue from shredder fraction from manual dismantling, municipal waste incineration",
+          "reference product": "residue from shredder fraction from manual dismantling",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, residues, shredder fraction from manual dismantling, in MSWI",
+          "reference product": "Disposal, residues, shredder fraction from manual dismantling, in MSWI",
+          "unit": "kilogram"
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "treatment of residue from shredder fraction from manual dismantling, municipal waste incineration",
+          "reference product": "residue from shredder fraction from manual dismantling",
+          "location": "CH",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 131,
+        "metadata_sha256": "9b5bc05e2526a9ad084f7d93d6f9ebdf88e33f91503f29d5b76406bd7afad1ce",
+        "inventory_sha256": "adc5848a5f6ee4b53ed476cad09c5f49d39c4c25c689a1afee73f06476208c56",
+        "activity_comment_sha256": "033e06ed7a83141d2f94f10c40ca2b77e1edad053156f0a659bfe239d7820624",
+        "product_information_sha256": "ec53cee216335b0ece5a828f281689ce1278287f7b5eac7ebc79e0bb53344740"
+      },
+      "source_provider_witnesses": [
+        {
+          "identity": {
+            "name": "market for ammonia, anhydrous, liquid",
+            "reference product": "ammonia, anhydrous, liquid",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 6,
+          "metadata_sha256": "f1167424e70ad9ca9b3f15370d01f514c51623e1502102ac3e005d2f2854be73",
+          "inventory_sha256": "38c491c339ef7e7ae8da13b2bac0be8d571540ebee8cb8b497620804959e6afe",
+          "activity_comment_sha256": "0cd310c7c1b2009badd33330f8ee5564fde65f826440ad365fd2db643231398e",
+          "product_information_sha256": "c50a4d721cb0227fd2261a4644c4a5ef119f78149b26670b26e5e1379c4fb583"
+        },
+        {
+          "identity": {
+            "name": "market for cement, unspecified",
+            "reference product": "cement, unspecified",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 2,
+          "metadata_sha256": "3969e63807f61567d8c27c00ad7900de376ea5bf7cc63f0078bd2dfa3398d663",
+          "inventory_sha256": "8692e619dfe458ec51af1cbf580984d220dc7603bf3e4cd20d9718050bfc8ddc",
+          "activity_comment_sha256": "06e20d19cdb529913c250b129ad2acbb062cbf7e6ed47e026c71f3b02a2ae2cd",
+          "product_information_sha256": "83b53c2e3902426b0cfcf18f5df6c8a2a132020c171cb43a88609ed2660ff0aa"
+        },
+        {
+          "identity": {
+            "name": "market for chemical, inorganic",
+            "reference product": "chemical, inorganic",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 1,
+          "metadata_sha256": "4cef4fa303aa15d5fc1d1e59a29ea371cdfe071bcc787548170d861f890aa906",
+          "inventory_sha256": "0004ff935602bea0353aec53bcdef3e1ee86dd729a4a3dc370e5e81d92388ee4",
+          "activity_comment_sha256": "35e2fc7def3afd31ed89c528ad384e17e4056bbb8a69fa089d5a6f57c3630474",
+          "product_information_sha256": "bc3af7f8c9a3504681870fca7c58bae81fc9d8b47059979f216d0318d2841b3e"
+        },
+        {
+          "identity": {
+            "name": "market for chemical, organic",
+            "reference product": "chemical, organic",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 5,
+          "metadata_sha256": "e44f6458e26afbf0b223dc551b47fcf0b8b0c7de17542117afd8b01aa6b72b88",
+          "inventory_sha256": "5681df2181bcd261ba94e5c349feb436a2940dac1b41e965ac76c4336ffaa8c2",
+          "activity_comment_sha256": "94a4b1576ce27117e04d82342ce9f6c5cf453b2ca5df032c0b6f3048fa9772bb",
+          "product_information_sha256": "e973d608dcc9d2daa2f9e78ab8297b0aa31150a59b8fc5df871d9106d999fd84"
+        },
+        {
+          "identity": {
+            "name": "market for chromium oxide, flakes",
+            "reference product": "chromium oxide, flakes",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 6,
+          "metadata_sha256": "9b1f33fccac2e8f1ec588d2a2b5a76f6b158c4d91c897334c7f07033b674f3b5",
+          "inventory_sha256": "74db024f721a64f07cb18b35df958c94068109053db526c3a48905b8b59e7fb9",
+          "activity_comment_sha256": "7a01847a39ad290ea37f9e5e26b8895d9f03c2a11e273d3a05c04372cc5653c7",
+          "product_information_sha256": "c779b7efd3fe2ae8ee159c434c8316784f4160af3b7060a254706e66cacdf36e"
+        },
+        {
+          "identity": {
+            "name": "market for heat, district or industrial, natural gas",
+            "reference product": "heat, district or industrial, natural gas",
+            "location": "CH",
+            "unit": "megajoule"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 3,
+          "metadata_sha256": "406a59a6d06aa7242d502220c432118eefae14f5e023fe8954284b5865ad2138",
+          "inventory_sha256": "1ecf53aa68825c041f2b4ef08719c0dcd638943740f5722c83273f1c62624778",
+          "activity_comment_sha256": "5e214fe5dfe84f0d532b2f1dde6a5fc04f21dbbf435e8a42d0b0a12911d321f1",
+          "product_information_sha256": "918cd375020761234dc80365c0f133b383b7af9b3bb4832f513485c1bd3b48c8"
+        },
+        {
+          "identity": {
+            "name": "market for hydrochloric acid, without water, in 30% solution state",
+            "reference product": "hydrochloric acid, without water, in 30% solution state",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 11,
+          "metadata_sha256": "66746b53c37676e3d476cfa145f43248e2a74158d3b4aa16093eb79c11d5e5b2",
+          "inventory_sha256": "5ace83ac8449372afa729e5007bc67b74306b6c7e935c843dc628bcca3b941d0",
+          "activity_comment_sha256": "f415ec5e9554bbaf03fc0a7026aeb3b99e0800ac92b2bd3c09f545ba65c522b2",
+          "product_information_sha256": "2dcb518e67fb68cfb5a71e43ceca47156e4714fdeffe1611526019bf81885831"
+        },
+        {
+          "identity": {
+            "name": "market for iron(III) chloride, without water, in 40% solution state",
+            "reference product": "iron (III) chloride, without water, in 40% solution state",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 6,
+          "metadata_sha256": "ce92a5fe3dd8451c73017a28eedf40a4af2a3ed6cff70d9250b373a3905085a7",
+          "inventory_sha256": "465060b1dcf48eb8e58700eface1b0da4346e916518c904de324c098b5bdf400",
+          "activity_comment_sha256": "81d97561897723c726834459e166826b059c489db2d426a1e6a907ea026799c1",
+          "product_information_sha256": "247d3027052a7f4b3177d947599540d10cecbc5c17661487cbae42de13ffc3fc"
+        },
+        {
+          "identity": {
+            "name": "municipal waste incineration facility construction",
+            "reference product": "municipal waste incineration facility",
+            "location": "CH",
+            "unit": "unit"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 13,
+          "metadata_sha256": "a0b95cb7a52a421dc0c02f0cded0a24d321ac786fba1b8d55687462b6f4f23c1",
+          "inventory_sha256": "0e3a91516d1947379b1b98d96d01c9f592ef86a2be721c944c0c8cd439bc36e5",
+          "activity_comment_sha256": "90922763c4b7de007633de154a7daf3ee0e0af1459bba2d0eb379ca28b91dc1e",
+          "product_information_sha256": "04a14da04f3cf4324826a4c8bf3d53938d2e40d4f610ebdded921fbdcb73003e"
+        },
+        {
+          "identity": {
+            "name": "process-specific burdens, municipal waste incineration",
+            "reference product": "process-specific burdens, municipal waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 19,
+          "metadata_sha256": "a6ed233e18c57d80acb66653dd5b3616b5cba77cc64c779c2b502ad73395803d",
+          "inventory_sha256": "da476cff9da36522d16539ddbad4f02ba1500a6377ad15398a8e6f66c5ea6e1a",
+          "activity_comment_sha256": "6c7a812923785e0a347739242964dfb99f08a4cc9b49d4494a444bac1fc39fb7",
+          "product_information_sha256": "4fe67748dc63cfa5481faf1bdd76fa255c0a576caaec35151a44f13dfd20d232"
+        },
+        {
+          "identity": {
+            "name": "process-specific burdens, residual material landfill",
+            "reference product": "process-specific burdens, residual material landfill",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 12,
+          "metadata_sha256": "23cf611e0e0db4e2055b7cd139bbb107c0bf0443df742bc5a1cda0a29c6038e9",
+          "inventory_sha256": "0988d86c4ec266f1e8e89e3a821cd5ca8354949313bf4aedb9dc3f7012f9cca5",
+          "activity_comment_sha256": "bfbc7b3b6bc36c3e0dfb3f47dfde7e9afed8268c61cfd187335e7ffff30c2377",
+          "product_information_sha256": "3e0da740b54d1542080db5d1972bebcdfb3582686b871d1ee3ccaaee379a68a2"
+        },
+        {
+          "identity": {
+            "name": "process-specific burdens, slag landfill",
+            "reference product": "process-specific burdens, slag landfill",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 12,
+          "metadata_sha256": "4d78ca46be0f0871c8c9634d027cc1283c49cea153566e070a260cc869fda0b9",
+          "inventory_sha256": "2e714057233f5eb2d1b3d3c9965ace90e6f7885aa11fb0311d0f06f10a693fda",
+          "activity_comment_sha256": "7c5f357716015b5c9089e0d2fe95ab3c188dc604c81e6b2a36a2c5658b036577",
+          "product_information_sha256": "70c5c64f03cfa39e33eeb73a953e27dc8897381b09fad0de4ce079c9aa17362e"
+        },
+        {
+          "identity": {
+            "name": "market for quicklime, milled, packed",
+            "reference product": "quicklime, milled, packed",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "7c78b7ee24b24507a293e260f64d2dd0c06b97bbb0bd36e5bb4adbd070e5440c",
+          "inventory_sha256": "dea404f10ee34d77b4a750f040fc6506bdd5cc6ce94ec3b2e97dbc93748af25b",
+          "activity_comment_sha256": "29d4c9b8b768c65280f064b3750f343ea4a73240b0fc4bf945826b0430c7dce2",
+          "product_information_sha256": "e35d77b314009538c419878e62dc27551bbe018168dc5a74ce1dcd4a8ed85fa8"
+        },
+        {
+          "identity": {
+            "name": "residual material landfill construction",
+            "reference product": "residual material landfill",
+            "location": "CH",
+            "unit": "unit"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 11,
+          "metadata_sha256": "51aa8d86f3a3ab2dd65a1851f51a2bef6257c2a7cea14c4d67284be566e77c1e",
+          "inventory_sha256": "6be4a3c1a3d50dcb8e4ce3ee61a6f2eb994f914eae6a0ec2a3dc64b773b145df",
+          "activity_comment_sha256": "144dab4c43071efe23754c5cda97f8590b26f65b3c8de06254ee260e4c93af9d",
+          "product_information_sha256": "e04105e30924121c88deb59e454ac43b2cd57b59bb7b2678af3c23ff376c0c1e"
+        },
+        {
+          "identity": {
+            "name": "slag landfill construction",
+            "reference product": "slag landfill",
+            "location": "CH",
+            "unit": "unit"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 22,
+          "metadata_sha256": "fec8637e8b949d3e01772fb5ab3503426bea667259aa4919859d3e8c46bb5f33",
+          "inventory_sha256": "822c2898e83cd57966bfd8bf73c82d0ae4996423518e73112117952bdce4bf12",
+          "activity_comment_sha256": "1d3fdd76b827ed473df603bf2d8afc3fcfd53e0a2a55c7d4352f16452a0f1f98",
+          "product_information_sha256": "9681785f66a0a510065c68e71ee04aedb5af8c1fe6346905df1a58a8dd0c8bf6"
+        },
+        {
+          "identity": {
+            "name": "market for sodium hydroxide, without water, in 50% solution state",
+            "reference product": "sodium hydroxide, without water, in 50% solution state",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 11,
+          "metadata_sha256": "4e4c5da6393561e9ba00ba3f1a7b3ea57a5ee6058f777cd8f3b357af447b02a1",
+          "inventory_sha256": "9d9991610c42e99186f8af8d7375798774d8047622462fe263f14350b9f9cf86",
+          "activity_comment_sha256": "a4722b6bf7660aac2cfad1e95074f476b6022d64e9d586b21b25a7cc06dbf1f9",
+          "product_information_sha256": "8a4a14cddb2e15f7380b40250a2bc0be4c34b0e38fbe3fa0ea5d818c00146179"
+        },
+        {
+          "identity": {
+            "name": "market for titanium dioxide",
+            "reference product": "titanium dioxide",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 5,
+          "metadata_sha256": "8ef157890d8c8e02bfe67fea80cfbe2f3c93213d2aea8086e3424f44bf9f6b3a",
+          "inventory_sha256": "5a1e0d9afd3e9b5b6ebfbb3bb5cb8af513f2d569406ee514fda9f5fd21e3fbe5",
+          "activity_comment_sha256": "65f0e484d3700ec6a9e65dfa7ab1aa6bdf0c677272e247d09a5bf352c8e0d732",
+          "product_information_sha256": "9f19e13758d33edc74c8400119f15f1dd38f85265be208eaa9f1356a6308d756"
+        },
+        {
+          "identity": {
+            "name": "market for waste cement, hydrated",
+            "reference product": "waste cement, hydrated",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 3,
+          "metadata_sha256": "c577de76267343e3308085631e5af2eee02c7efbd92575a93984c0aa78d22126",
+          "inventory_sha256": "34d6679292cb486062fa1d0d885031ae62c47803d1ed2aebba5a717b8866519c",
+          "activity_comment_sha256": "a4d13fb209557b3b2eb1a8f67e2d9bd293467190272038bcf5b1cd0a342a4c63",
+          "product_information_sha256": "ac720f4c2494f7a9f9891c0e559ea0b9ad914bfafc98e4592629c49af8bf9705"
+        }
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, residues, shredder fraction from manual dismantling, in MSWI",
+            "reference product": "Disposal, residues, shredder fraction from manual dismantling, in MSWI",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 142,
+          "metadata_sha256": "d066bf522cb9131d18bc0a61996b4a0abc877a13217d3fb6ac3e03f71dc51e85",
+          "inventory_sha256": "7eab63a1bb3f26ccea94f936bc49d6979edb808a582294315984f2900ab128ca",
+          "activity_comment_sha256": "5e74e1a3ef19369ef94048ebc55c83b7c4955c28aa3507e710e1cf35c3bd14a0",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, residues, shredder fraction from manual dismantling, in MSWI",
+            "reference product": "Disposal, residues, shredder fraction from manual dismantling, in MSWI",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 144,
+          "metadata_sha256": "01e9a185d0e6366e4ae5657148d1436b38dd144e35970211e83e77c6855b49f9",
+          "inventory_sha256": "16b43582f3bf0ee186ff63f9d8b2c0c4bc312b39cd61cc98d3b48d74816823b5",
+          "activity_comment_sha256": "6d313d7d39040ac8212bb7063a0cb0e0e50d1dcb735f705dff2347f3c398a314",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "conversion_factor": -1,
+      "scope_fingerprint": "a35af79da36c0dc1afeb51122e6dcf9484e0b6b701cacd034bfab487420e9c53",
+      "limitations": [
+        "Permission-only review of the independently inspected exact ecoinvent3.9 cut-off source service and its existing native counterpart. Source reference is-1kg waste and native reference is+1kg disposal service in both releases. Existing verified conversion factor-1 is correct and remains byte-for-byte unchanged: negative incoming waste demand becomes positive disposal demand,while positive avoided-treatment demand becomes negative native demand. Preserve source amount/reference service units, supported uncertainty,formulas and separate caller exchanges; never use absolute amounts or flip twice. Other source versions,patches,system models and reverse directions gain no new permission.",
+        "Use the complete native service per kg waste as a documented screening proxy. Its own waste composition,technology,collection/transport,energy,flue-gas treatment,solidification,landfill,land occupation,leachate,emission timing,allocation and uncertainty replace source internals. Do not overlay source utilities,water,plant,cement or emissions on top,add an energy/recovery credit,renormalize an unrelated waste mix,or derive an LHV,dry-matter,moisture,ore-grade or efficiency multiplier from names. Native historical geography/model boundaries can differ; source/native LCI,LCIA and stochastic equivalence are not established and score effects remain unquantified.",
+        "No caller exchange is omitted,no empty supplier/helper is created,and no source/caller inventory is mutated. This packet does not change any migration rule,recipe,resource manifest,runtime Python,sector engine or source/target validation. It grants only exact-profile compatibility permission after primary source/native inspection. Existing older approvals and fingerprints remain unchanged; multi-destination/recovery markets are outside this packet.",
+        "Use the native MSWI service specifically for shredder residues from manual dismantling of electronic waste,not vehicle shredder residue or arbitrary mixed industrial waste. Source and native detailed waste definitions use the same named electronic-residue category but have different calculated composition and heating values: source LHV32.89MJ/kg versus native27.77MJ/kg. Their detailed water contents are8744.7and8610.5ppm respectively; a generic source product property says zero water and must not be mistaken for the detailed incinerator composition. These are explicitly different waste-model assumptions. Retain mass-based service factor-1 without an LHV or nominal-dryness ratio; native energy/metal recovery,slag,fly-ash/solidification,allocation and emissions remain in its complete historical model. No new recovery credit is introduced."
+      ],
+      "boundary_checks": {
+        "source_reference_amount": -1,
+        "native_reference_amount": 1,
+        "existing_verified_factor_unchanged": -1,
+        "new_helper": false,
+        "source_internal_inventory_reproduced": false,
+        "new_recovery_credit": false,
+        "caller_exchange_omitted": false
+      },
+      "prior_approvals_unchanged": []
+    }
+  ],
+  "new_helpers": 0,
+  "new_source_omissions": [],
+  "migration_resource_changes": [],
+  "runtime_python_changes": [],
+  "unreviewed_portfolio_cases": [
+    "European municipal solid waste",
+    "scrap-steel market",
+    "spent-solvent markets CH/Europe",
+    "waste-mineral-oil market",
+    "PVC final-disposal portfolio"
+  ],
+  "licensing": "Bounded reference,basis and model-boundary facts plus primary hashes only;complete licensed source/native inventories and comments remain private."
+}
