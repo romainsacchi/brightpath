@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 242,
+      "proxy": 248,
       "recipe": 1073,
-      "unclassified": 29160
+      "unclassified": 29154
     },
     "mapped_identities": 30732,
     "mapping_methods": {
-      "curated_legacy": 257,
+      "curated_legacy": 256,
       "followup_review": 163,
-      "heuristic_similarity": 26403,
+      "heuristic_similarity": 26398,
       "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -32,6 +32,7 @@
       "reviewed_cement_concrete_inert_service": 1,
       "reviewed_cement_ng_heat_market": 1,
       "reviewed_chemical_heat_with_retained_water": 4,
+      "reviewed_chemical_markets_39_retained_delivery": 6,
       "reviewed_complete_fossil_petrol_delivery_39": 1,
       "reviewed_complete_packed_wool_market": 1,
       "reviewed_complete_service_proxy": 4,
@@ -204,7 +205,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.443891,
+    "mean_confidence": 0.443964,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -92319,6 +92320,760 @@
       "rationale": "Reviewed chemical-plant heat service per MJ, with retained source make-up water and physical water releases. The native original XML explicitly defines one MJ of heat for chemical-process steam and excludes its water input because steam is often used in closed systems. Use that complete positive-reference MJ heat service once, then retain every inspected source tap-water coefficient and both direct water releases separately. Do not use the kg-based fresh-steam process, the old rounded 0.36 kg/MJ factor, or 1 MJ per kg. The two exact markets have only one local unit share of the inspected energy producer; flatten that unit share without adding a second heat service. The target approximates the source regional fuel and electricity mix, combustion efficiencies, technology, vintage, allocation and infrastructure; their LCIA equivalence is not established. Water uses complete native water supply as a geography/vintage proxy, preserving each source provider share separately without normalization. Do not add the original source fuel/electricity inputs to the complete native heat service or count water twice. Canonical water identity, receiving compartment, unit and signed amount remain exact; unsupported native physical water definitions must remain unresolved, never omitted. Factor +1 preserves caller signed MJ, supported uncertainty, formulas, metadata, foreground suppliers and separately listed emissions. Internal source uncertainty/formulas are not reconstructed. Only the 36 enumerated cut-off source profiles are reviewed. Physical kg-steam, allocated chemical co-product steam, individual steam transport, consequential inventories and missing profiles cannot inherit this review. The reverse native heat service has a different water boundary and remains unsupported until separately reviewed; no inverse or water cancellation is inferred.",
       "reference product": "heat, from steam, in chemical industry",
       "unit": "megajoule"
+    },
+    "chemical-markets-39-15cba0ab8cf2223b": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Polyester resin, unsaturated, at plant",
+          "reference product": "Polyester resin, unsaturated, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for polyester resin, unsaturated, retained source3.9 supply and delivery [UVEK screening]",
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Both records model one kg of unsaturated polyester resin using the inherited mixture of anhydrides, glycols and acids. This is not PET, a cured GFRP article or permission to invent a styrene-rich formulation. Native precursors remain inside the complete resin inventory; do not add source glycols/anhydrides, styrene, curing agents or extra polymerization. Process energy/releases are estimated by analogy, transport/infrastructure estimated, and further inputs/solid wastes omitted in the underlying documentation. Those gaps are not measured zero. Actual grade/formulation and reaction-water/yield equivalence are not independently established.",
+      "reference product": "polyester resin, unsaturated",
+      "unit": "kilogram"
+    },
+    "chemical-markets-39-365d5afb2cddee67": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.600999999999999,
+          "loc": 0.600999999999999,
+          "location": "CN",
+          "name": "Ethylene carbonate, at plant",
+          "reference product": "Ethylene carbonate, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.399000000000001,
+          "loc": 0.399000000000001,
+          "location": "CN",
+          "name": "Ethylene carbonate, at plant",
+          "reference product": "Ethylene carbonate, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for ethylene carbonate, retained source3.9 supply and delivery [UVEK screening]",
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Use cyclic ethylene carbonate, CAS96-49-1/C3H4O3, not dimethyl carbonate, an inorganic carbonate or a mixed electrolyte. Preserve the two source CN/RoW producer entries; both use the complete native CN-labelled product, which itself uses Swiss/European background proxies. The native patent model reacts EO and CO2 with an assumed silver catalyst under pressure. Its stated99.95% conversion is internal to the product inventory, not a demand multiplier or independently verified battery-grade assay. Add no further CO2 feedstock, avoided-emission/sequestration credit, catalyst, heating, melting or pressure correction. Foreground use-phase releases remain separate.",
+      "reference product": "ethylene carbonate",
+      "unit": "kilogram"
+    },
+    "chemical-markets-39-3d257e55be3541c6": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.230769230769231,
+          "loc": 0.230769230769231,
+          "location": "RER",
+          "name": "Acetonitrile, at plant",
+          "reference product": "Acetonitrile, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.769230769230769,
+          "loc": 0.769230769230769,
+          "location": "RER",
+          "name": "Acetonitrile, at plant",
+          "reference product": "Acetonitrile, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for acetonitrile, retained source3.9 supply and delivery [UVEK screening]",
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Map the acetonitrile product, CAS75-05-8/C2H3N, from the two allocated source Sohio producers to complete native European Sohio acetonitrile. The source activity name is a multioutput reaction description; its actual allocated reference is one kg acetonitrile, not one kg propylene or acrylonitrile. Keep native allocation once; add no acrylonitrile/HCN displacement credit, propylene-to-product yield or allocation multiplier. Preserve RER/RoW shares separately; RoW uses European native supply explicitly. Source/native utility and reagent quantities differ, with no claim of score equality.",
+      "reference product": "acetonitrile",
+      "unit": "kilogram"
+    },
+    "chemical-markets-39-3d4f6646db9a7399": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.005720866795041944,
+          "loc": 0.005720866795041944,
+          "location": "RER",
+          "name": "xx Acetone from butane, at plant",
+          "reference product": "xx Acetone from butane, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.912120781250234,
+          "loc": 0.912120781250234,
+          "location": "RER",
+          "name": "Acetone, liquid, at plant",
+          "reference product": "Acetone, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.004712562279557649,
+          "loc": 0.004712562279557649,
+          "location": "RER",
+          "name": "Acetone, liquid, at plant",
+          "reference product": "Acetone, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02944718591490746,
+          "loc": 0.02944718591490746,
+          "location": "RER",
+          "name": "Acetone, liquid, at plant",
+          "reference product": "Acetone, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.047998603760259,
+          "loc": 0.047998603760259,
+          "location": "RER",
+          "name": "Acetone, liquid, at plant",
+          "reference product": "Acetone, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0224231473350459,
+          "loc": -3.797661490501636,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08093386943083909,
+          "loc": -2.514122884547314,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0056780093482361425,
+          "loc": -5.171154574536774,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.11165767412994829,
+          "loc": -2.192317569247477,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.08840729975593056,
+          "loc": -2.4258007363232306,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0037411136550834123,
+          "loc": -5.588371943141128,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.18116364249000133,
+          "loc": -1.7083545540157898,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.02389524385491526,
+          "loc": -3.7340758417345654,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "market for acetone, liquid, retained source3.9 supply and delivery [UVEK screening]",
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Match liquid acetone, CAS67-64-1/C3H6O, at product kg rather than the gross phenol/propylene/butane process basis. Preserve every original producer contribution separately. Cumene/phenol coproduct acetone uses the complete native European cumene-oxidation aggregate; source butane-oxidation coproduct uses the distinct complete native allocated butane-oxidation acetone process. Native has no corresponding isopropanol, resorcinol-coproduct or coal/Fischer-Tropsch acetone supplier among its inspected acetone products, so those source contributions use native cumene acetone as explicit technology/allocation/geographic proxies. They are not omitted or assigned zero; this does not approve their parent fuels/phenol/resorcinol processes as acetone manufacture outside the inspected market. Native cumene acetone is an aggregated three-European-plant PlasticsEurope study; native butane acetone retains its own mass-allocation model and full upstream inventory. Differences in process energy, coproduct allocation, source regions, vintage, precursor and release coverage remain material and unquantified. Add no source producer internals, phenol/other coproduct credits, allocation/yield/phase factors or guessed acetone dehydrogenation reactor. Inherited PlasticsEurope exclusions for recyclable wastes, unspecified metals/air/N2/O2, mercaptans, unspecified CFC/HCFC and dioxin remain data gaps. Hidden upstream energy in its aggregate cannot be fully IAM-updated by ordinary supplier relinking; do not invent an energy overlay.",
+      "reference product": "acetone, liquid",
+      "unit": "kilogram"
+    },
+    "chemical-markets-39-92c2120012f2e193": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.9454619411177198,
+          "loc": 0.9454619411177198,
+          "location": "RER",
+          "name": "Acetone, liquid, at plant",
+          "reference product": "Acetone, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.004715050942920272,
+          "loc": 0.004715050942920272,
+          "location": "RER",
+          "name": "xx Acetone from butane, at plant",
+          "reference product": "xx Acetone from butane, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.04982300793935997,
+          "loc": 0.04982300793935997,
+          "location": "RER",
+          "name": "Acetone, liquid, at plant",
+          "reference product": "Acetone, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for acetone, liquid, retained source3.9 supply and delivery [UVEK screening]",
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Match liquid acetone, CAS67-64-1/C3H6O, at product kg rather than the gross phenol/propylene/butane process basis. Preserve every original producer contribution separately. Cumene/phenol coproduct acetone uses the complete native European cumene-oxidation aggregate; source butane-oxidation coproduct uses the distinct complete native allocated butane-oxidation acetone process. Native has no corresponding isopropanol, resorcinol-coproduct or coal/Fischer-Tropsch acetone supplier among its inspected acetone products, so those source contributions use native cumene acetone as explicit technology/allocation/geographic proxies. They are not omitted or assigned zero; this does not approve their parent fuels/phenol/resorcinol processes as acetone manufacture outside the inspected market. Native cumene acetone is an aggregated three-European-plant PlasticsEurope study; native butane acetone retains its own mass-allocation model and full upstream inventory. Differences in process energy, coproduct allocation, source regions, vintage, precursor and release coverage remain material and unquantified. Add no source producer internals, phenol/other coproduct credits, allocation/yield/phase factors or guessed acetone dehydrogenation reactor. Inherited PlasticsEurope exclusions for recyclable wastes, unspecified metals/air/N2/O2, mercaptans, unspecified CFC/HCFC and dioxin remain data gaps. Hidden upstream energy in its aggregate cannot be fully IAM-updated by ordinary supplier relinking; do not invent an energy overlay.",
+      "reference product": "acetone, liquid",
+      "unit": "kilogram"
+    },
+    "chemical-markets-39-b34986b27d859725": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.669407648360697,
+          "loc": 0.669407648360697,
+          "location": "RER",
+          "name": "xx Ethylene glycol dimethyl ether, at plant",
+          "reference product": "xx Ethylene glycol dimethyl ether, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.330592351639303,
+          "loc": 0.330592351639303,
+          "location": "RER",
+          "name": "xx Ethylene glycol dimethyl ether, at plant",
+          "reference product": "xx Ethylene glycol dimethyl ether, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for ethylene glycol dimethyl ether, retained source3.9 supply and delivery [UVEK screening]",
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Use pure named ethylene glycol dimethyl ether/1,2-dimethoxyethane, CAS110-71-4/C4H10O2, not monoethylene glycol, another glycol ether, a polymer or an aqueous solution. Source and native inherit the same EO/dimethyl-ether reaction model with estimated stoichiometry and standard energy/releases/infrastructure. Keep the native complete product once, including its existing EO and dimethyl ether; no extra reaction or source utilities, dilution or solvent-removal factor. The native xx label identifies its legacy process; it does not imply zero inventory. RoW uses the available European model, with vintage, estimation and assay limitations. Only the market needs a delivery helper; the production link remains a direct product match.",
+      "reference product": "ethylene glycol dimethyl ether",
+      "unit": "kilogram"
     },
     "copper-ash-service-0570ce842fa30ceb3f46": {
       "evidence": [
@@ -807285,9 +808040,9 @@
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-19970a05738136f6", "mapping_method": "reviewed_acetoacetic_39_source_reconstruction", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_acetoacetic_acid_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_acetoacetic_acid_39_review.json"], "reason": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-38826954756eeeba", "source": {"location": "GLO", "name": "market for acetoacetic acid", "reference product": "acetoacetic acid", "unit": "kilogram"}, "target": {"recipe_ref": "acetoacetic-acid-39-global-market"}, "technosphere_information_loss": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects."},
     {"confidence": 0.546913, "id": "bp-fd139fe23e532e93", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for acetone cyanohydrin", "reference product": "acetone cyanohydrin", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Acetone cyanohydrin, at plant", "reference product": "xx Acetone cyanohydrin, at plant", "unit": "kilogram"}},
     {"confidence": 0.466913, "id": "bp-0f53a9b051d9138c", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for acetone cyanohydrin", "reference product": "acetone cyanohydrin", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Acetone cyanohydrin, at plant", "reference product": "xx Acetone cyanohydrin, at plant", "unit": "kilogram"}},
-    {"confidence": 0.581167, "id": "bp-92c2120012f2e193", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for acetone, liquid", "reference product": "acetone, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetone, liquid, at plant", "reference product": "Acetone, liquid, at plant", "unit": "kilogram"}},
-    {"confidence": 0.501167, "id": "bp-3d4f6646db9a7399", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for acetone, liquid", "reference product": "acetone, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetone, liquid, at plant", "reference product": "Acetone, liquid, at plant", "unit": "kilogram"}},
-    {"confidence": 0.4425, "id": "bp-3d257e55be3541c6", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for acetonitrile", "reference product": "acetonitrile", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetonitrile, at plant", "reference product": "Acetonitrile, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-92c2120012f2e193", "mapping_method": "reviewed_chemical_markets_39_retained_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "reason": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Match liquid acetone, CAS67-64-1/C3H6O, at product kg rather than the gross phenol/propylene/butane process basis. Preserve every original producer contribution separately. Cumene/phenol coproduct acetone uses the complete native European cumene-oxidation aggregate; source butane-oxidation coproduct uses the distinct complete native allocated butane-oxidation acetone process. Native has no corresponding isopropanol, resorcinol-coproduct or coal/Fischer-Tropsch acetone supplier among its inspected acetone products, so those source contributions use native cumene acetone as explicit technology/allocation/geographic proxies. They are not omitted or assigned zero; this does not approve their parent fuels/phenol/resorcinol processes as acetone manufacture outside the inspected market. Native cumene acetone is an aggregated three-European-plant PlasticsEurope study; native butane acetone retains its own mass-allocation model and full upstream inventory. Differences in process energy, coproduct allocation, source regions, vintage, precursor and release coverage remain material and unquantified. Add no source producer internals, phenol/other coproduct credits, allocation/yield/phase factors or guessed acetone dehydrogenation reactor. Inherited PlasticsEurope exclusions for recyclable wastes, unspecified metals/air/N2/O2, mercaptans, unspecified CFC/HCFC and dioxin remain data gaps. Hidden upstream energy in its aggregate cannot be fully IAM-updated by ordinary supplier relinking; do not invent an energy overlay.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "chemical-markets-39-92c2120012f2e193"}}], "reason": "Only independently inspected exact source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1f04ef72cab393c3", "source": {"location": "RER", "name": "market for acetone, liquid", "reference product": "acetone, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetone, liquid, at plant", "reference product": "Acetone, liquid, at plant", "unit": "kilogram"}, "technosphere_information_loss": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Match liquid acetone, CAS67-64-1/C3H6O, at product kg rather than the gross phenol/propylene/butane process basis. Preserve every original producer contribution separately. Cumene/phenol coproduct acetone uses the complete native European cumene-oxidation aggregate; source butane-oxidation coproduct uses the distinct complete native allocated butane-oxidation acetone process. Native has no corresponding isopropanol, resorcinol-coproduct or coal/Fischer-Tropsch acetone supplier among its inspected acetone products, so those source contributions use native cumene acetone as explicit technology/allocation/geographic proxies. They are not omitted or assigned zero; this does not approve their parent fuels/phenol/resorcinol processes as acetone manufacture outside the inspected market. Native cumene acetone is an aggregated three-European-plant PlasticsEurope study; native butane acetone retains its own mass-allocation model and full upstream inventory. Differences in process energy, coproduct allocation, source regions, vintage, precursor and release coverage remain material and unquantified. Add no source producer internals, phenol/other coproduct credits, allocation/yield/phase factors or guessed acetone dehydrogenation reactor. Inherited PlasticsEurope exclusions for recyclable wastes, unspecified metals/air/N2/O2, mercaptans, unspecified CFC/HCFC and dioxin remain data gaps. Hidden upstream energy in its aggregate cannot be fully IAM-updated by ordinary supplier relinking; do not invent an energy overlay."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-3d4f6646db9a7399", "mapping_method": "reviewed_chemical_markets_39_retained_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "reason": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Match liquid acetone, CAS67-64-1/C3H6O, at product kg rather than the gross phenol/propylene/butane process basis. Preserve every original producer contribution separately. Cumene/phenol coproduct acetone uses the complete native European cumene-oxidation aggregate; source butane-oxidation coproduct uses the distinct complete native allocated butane-oxidation acetone process. Native has no corresponding isopropanol, resorcinol-coproduct or coal/Fischer-Tropsch acetone supplier among its inspected acetone products, so those source contributions use native cumene acetone as explicit technology/allocation/geographic proxies. They are not omitted or assigned zero; this does not approve their parent fuels/phenol/resorcinol processes as acetone manufacture outside the inspected market. Native cumene acetone is an aggregated three-European-plant PlasticsEurope study; native butane acetone retains its own mass-allocation model and full upstream inventory. Differences in process energy, coproduct allocation, source regions, vintage, precursor and release coverage remain material and unquantified. Add no source producer internals, phenol/other coproduct credits, allocation/yield/phase factors or guessed acetone dehydrogenation reactor. Inherited PlasticsEurope exclusions for recyclable wastes, unspecified metals/air/N2/O2, mercaptans, unspecified CFC/HCFC and dioxin remain data gaps. Hidden upstream energy in its aggregate cannot be fully IAM-updated by ordinary supplier relinking; do not invent an energy overlay.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "chemical-markets-39-3d4f6646db9a7399"}}], "reason": "Only independently inspected exact source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-1f04ef72cab393c3", "source": {"location": "RoW", "name": "market for acetone, liquid", "reference product": "acetone, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetone, liquid, at plant", "reference product": "Acetone, liquid, at plant", "unit": "kilogram"}, "technosphere_information_loss": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Match liquid acetone, CAS67-64-1/C3H6O, at product kg rather than the gross phenol/propylene/butane process basis. Preserve every original producer contribution separately. Cumene/phenol coproduct acetone uses the complete native European cumene-oxidation aggregate; source butane-oxidation coproduct uses the distinct complete native allocated butane-oxidation acetone process. Native has no corresponding isopropanol, resorcinol-coproduct or coal/Fischer-Tropsch acetone supplier among its inspected acetone products, so those source contributions use native cumene acetone as explicit technology/allocation/geographic proxies. They are not omitted or assigned zero; this does not approve their parent fuels/phenol/resorcinol processes as acetone manufacture outside the inspected market. Native cumene acetone is an aggregated three-European-plant PlasticsEurope study; native butane acetone retains its own mass-allocation model and full upstream inventory. Differences in process energy, coproduct allocation, source regions, vintage, precursor and release coverage remain material and unquantified. Add no source producer internals, phenol/other coproduct credits, allocation/yield/phase factors or guessed acetone dehydrogenation reactor. Inherited PlasticsEurope exclusions for recyclable wastes, unspecified metals/air/N2/O2, mercaptans, unspecified CFC/HCFC and dioxin remain data gaps. Hidden upstream energy in its aggregate cannot be fully IAM-updated by ordinary supplier relinking; do not invent an energy overlay."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-3d257e55be3541c6", "mapping_method": "reviewed_chemical_markets_39_retained_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "reason": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Map the acetonitrile product, CAS75-05-8/C2H3N, from the two allocated source Sohio producers to complete native European Sohio acetonitrile. The source activity name is a multioutput reaction description; its actual allocated reference is one kg acetonitrile, not one kg propylene or acrylonitrile. Keep native allocation once; add no acrylonitrile/HCN displacement credit, propylene-to-product yield or allocation multiplier. Preserve RER/RoW shares separately; RoW uses European native supply explicitly. Source/native utility and reagent quantities differ, with no claim of score equality.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "chemical-markets-39-3d257e55be3541c6"}}], "reason": "Only independently inspected exact source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-11cba260e683c968", "source": {"location": "GLO", "name": "market for acetonitrile", "reference product": "acetonitrile", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetonitrile, at plant", "reference product": "Acetonitrile, at plant", "unit": "kilogram"}, "technosphere_information_loss": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Map the acetonitrile product, CAS75-05-8/C2H3N, from the two allocated source Sohio producers to complete native European Sohio acetonitrile. The source activity name is a multioutput reaction description; its actual allocated reference is one kg acetonitrile, not one kg propylene or acrylonitrile. Keep native allocation once; add no acrylonitrile/HCN displacement credit, propylene-to-product yield or allocation multiplier. Preserve RER/RoW shares separately; RoW uses European native supply explicitly. Source/native utility and reagent quantities differ, with no claim of score equality."},
     {"confidence": 0.295, "id": "bp-d24c894ddf86914c", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for acetyl chloride", "reference product": "acetyl chloride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ammonium chloride, at plant", "reference product": "Ammonium chloride, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-8c6775e26e569761", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for acetylene", "reference product": "acetylene", "unit": "kilogram"}, "target": {"location": "CH", "name": "Acetylene, at regional storehouse", "reference product": "Acetylene, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.287766, "id": "bp-7be54ee0a78ede98", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for acetylene", "reference product": "acetylene", "unit": "kilogram"}, "target": {"location": "CH", "name": "Acetylene, at regional storehouse", "reference product": "Acetylene, at regional storehouse", "unit": "kilogram"}},
@@ -809755,7 +810510,7 @@
     {"confidence": 0.290209, "id": "bp-67b285e53c495325", "mapping_method": "heuristic_similarity", "source": {"location": "ZA", "name": "market for ethylene", "reference product": "ethylene", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene oxide, at plant", "reference product": "Ethylene oxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.603333, "id": "bp-7ddb3e140cf241b1", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ethylene bromide", "reference product": "ethylene bromide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene bromide, at plant", "reference product": "Ethylene bromide, at plant", "unit": "kilogram"}},
     {"confidence": 0.523333, "id": "bp-75980f1b7908366c", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethylene bromide", "reference product": "ethylene bromide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene bromide, at plant", "reference product": "Ethylene bromide, at plant", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-365d5afb2cddee67", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for ethylene carbonate", "reference product": "ethylene carbonate", "unit": "kilogram"}, "target": {"location": "CN", "name": "Ethylene carbonate, at plant", "reference product": "Ethylene carbonate, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-365d5afb2cddee67", "mapping_method": "reviewed_chemical_markets_39_retained_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "reason": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Use cyclic ethylene carbonate, CAS96-49-1/C3H4O3, not dimethyl carbonate, an inorganic carbonate or a mixed electrolyte. Preserve the two source CN/RoW producer entries; both use the complete native CN-labelled product, which itself uses Swiss/European background proxies. The native patent model reacts EO and CO2 with an assumed silver catalyst under pressure. Its stated99.95% conversion is internal to the product inventory, not a demand multiplier or independently verified battery-grade assay. Add no further CO2 feedstock, avoided-emission/sequestration credit, catalyst, heating, melting or pressure correction. Foreground use-phase releases remain separate.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "chemical-markets-39-365d5afb2cddee67"}}], "reason": "Only independently inspected exact source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-966088f99d70cea9", "source": {"location": "GLO", "name": "market for ethylene carbonate", "reference product": "ethylene carbonate", "unit": "kilogram"}, "target": {"location": "CN", "name": "Ethylene carbonate, at plant", "reference product": "Ethylene carbonate, at plant", "unit": "kilogram"}, "technosphere_information_loss": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Use cyclic ethylene carbonate, CAS96-49-1/C3H4O3, not dimethyl carbonate, an inorganic carbonate or a mixed electrolyte. Preserve the two source CN/RoW producer entries; both use the complete native CN-labelled product, which itself uses Swiss/European background proxies. The native patent model reacts EO and CO2 with an assumed silver catalyst under pressure. Its stated99.95% conversion is internal to the product inventory, not a demand multiplier or independently verified battery-grade assay. Add no further CO2 feedstock, avoided-emission/sequestration credit, catalyst, heating, melting or pressure correction. Foreground use-phase releases remain separate."},
     {"confidence": 0.335833, "id": "bp-911a6e40c2b692c1", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ethylene diamine", "reference product": "ethylene diamine", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene dichloride, at plant", "reference product": "Ethylene dichloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.255833, "id": "bp-0d7549f828cab922", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethylene diamine", "reference product": "ethylene diamine", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene dichloride, at plant", "reference product": "Ethylene dichloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.631859, "id": "bp-2e7b0183104a8751", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ethylene dichloride", "reference product": "ethylene dichloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene dichloride, at plant", "reference product": "Ethylene dichloride, at plant", "unit": "kilogram"}},
@@ -809764,7 +810519,7 @@
     {"confidence": 0.592607, "id": "bp-94f9ffb79fa50fa3", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ethylene glycol", "reference product": "ethylene glycol", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene glycol, at plant", "reference product": "Ethylene glycol, at plant", "unit": "kilogram"}},
     {"confidence": 0.512607, "id": "bp-4b160d7ecc5a6a8c", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethylene glycol", "reference product": "ethylene glycol", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene glycol, at plant", "reference product": "Ethylene glycol, at plant", "unit": "kilogram"}},
     {"confidence": 0.54151, "id": "bp-ed529c868d7cc352", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ethylene glycol diethyl ether", "reference product": "ethylene glycol diethyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Ethylene glycol diethyl ether, at plant", "reference product": "xx Ethylene glycol diethyl ether, at plant", "unit": "kilogram"}},
-    {"confidence": 0.548662, "id": "bp-b34986b27d859725", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ethylene glycol dimethyl ether", "reference product": "ethylene glycol dimethyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Ethylene glycol dimethyl ether, at plant", "reference product": "xx Ethylene glycol dimethyl ether, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-b34986b27d859725", "mapping_method": "reviewed_chemical_markets_39_retained_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "reason": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Use pure named ethylene glycol dimethyl ether/1,2-dimethoxyethane, CAS110-71-4/C4H10O2, not monoethylene glycol, another glycol ether, a polymer or an aqueous solution. Source and native inherit the same EO/dimethyl-ether reaction model with estimated stoichiometry and standard energy/releases/infrastructure. Keep the native complete product once, including its existing EO and dimethyl ether; no extra reaction or source utilities, dilution or solvent-removal factor. The native xx label identifies its legacy process; it does not imply zero inventory. RoW uses the available European model, with vintage, estimation and assay limitations. Only the market needs a delivery helper; the production link remains a direct product match.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "chemical-markets-39-b34986b27d859725"}}], "reason": "Only independently inspected exact source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-cb8e1eab074f18c7", "source": {"location": "GLO", "name": "market for ethylene glycol dimethyl ether", "reference product": "ethylene glycol dimethyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Ethylene glycol dimethyl ether, at plant", "reference product": "xx Ethylene glycol dimethyl ether, at plant", "unit": "kilogram"}, "technosphere_information_loss": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Use pure named ethylene glycol dimethyl ether/1,2-dimethoxyethane, CAS110-71-4/C4H10O2, not monoethylene glycol, another glycol ether, a polymer or an aqueous solution. Source and native inherit the same EO/dimethyl-ether reaction model with estimated stoichiometry and standard energy/releases/infrastructure. Keep the native complete product once, including its existing EO and dimethyl ether; no extra reaction or source utilities, dilution or solvent-removal factor. The native xx label identifies its legacy process; it does not imply zero inventory. RoW uses the available European model, with vintage, estimation and assay limitations. Only the market needs a delivery helper; the production link remains a direct product match."},
     {"confidence": 0.709421, "id": "bp-912f658a46d3bd22", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ethylene glycol monoethyl ether", "reference product": "ethylene glycol monoethyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene glycol monoethyl ether, at plant", "reference product": "Ethylene glycol monoethyl ether, at plant", "unit": "kilogram"}},
     {"confidence": 0.629421, "id": "bp-70044fb0d4e91246", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethylene glycol monoethyl ether", "reference product": "ethylene glycol monoethyl ether", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene glycol monoethyl ether, at plant", "reference product": "Ethylene glycol monoethyl ether, at plant", "unit": "kilogram"}},
     {"confidence": 0.501167, "id": "bp-c095327e6af161ff", "mapping_method": "heuristic_similarity", "source": {"location": "CA", "name": "market for ethylene oxide", "reference product": "ethylene oxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethylene oxide, at plant", "reference product": "Ethylene oxide, at plant", "unit": "kilogram"}},
@@ -812315,7 +813070,7 @@
     {"confidence": 0.4, "id": "bp-73a44d2ae714ce06", "mapping_method": "pairwise_review", "review_ref": "r-36a16cb01d5e258d", "source": {"location": "GLO", "name": "market for polydimethylsiloxane", "reference product": "polydimethylsiloxane", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
     {"confidence": 0.152574, "id": "bp-2e777745688d7892", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for polydimethylsiloxane", "reference product": "polydimethylsiloxane", "unit": "kilogram"}, "target": {"location": "RER", "name": "2-methyl-2-butanol, at plant", "reference product": "2-methyl-2-butanol, at plant", "unit": "kilogram"}},
     {"confidence": 0.072574, "id": "bp-025b429045a629e0", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for polydimethylsiloxane", "reference product": "polydimethylsiloxane", "unit": "kilogram"}, "target": {"location": "RER", "name": "2-methyl-2-butanol, at plant", "reference product": "2-methyl-2-butanol, at plant", "unit": "kilogram"}},
-    {"confidence": 0.705362, "id": "bp-15cba0ab8cf2223b", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for polyester resin, unsaturated", "reference product": "polyester resin, unsaturated", "unit": "kilogram"}, "target": {"location": "RER", "name": "Polyester resin, unsaturated, at plant", "reference product": "Polyester resin, unsaturated, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-15cba0ab8cf2223b", "mapping_method": "reviewed_chemical_markets_39_retained_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_chemical_markets_39_review.json"], "reason": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Both records model one kg of unsaturated polyester resin using the inherited mixture of anhydrides, glycols and acids. This is not PET, a cured GFRP article or permission to invent a styrene-rich formulation. Native precursors remain inside the complete resin inventory; do not add source glycols/anhydrides, styrene, curing agents or extra polymerization. Process energy/releases are estimated by analogy, transport/infrastructure estimated, and further inputs/solid wastes omitted in the underlying documentation. Those gaps are not measured zero. Actual grade/formulation and reaction-water/yield equivalence are not independently established.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "chemical-markets-39-15cba0ab8cf2223b"}}], "reason": "Only independently inspected exact source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-3d566096d3dd6f9b", "source": {"location": "RER", "name": "market for polyester resin, unsaturated", "reference product": "polyester resin, unsaturated", "unit": "kilogram"}, "target": {"location": "RER", "name": "Polyester resin, unsaturated, at plant", "reference product": "Polyester resin, unsaturated, at plant", "unit": "kilogram"}, "technosphere_information_loss": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Both records model one kg of unsaturated polyester resin using the inherited mixture of anhydrides, glycols and acids. This is not PET, a cured GFRP article or permission to invent a styrene-rich formulation. Native precursors remain inside the complete resin inventory; do not add source glycols/anhydrides, styrene, curing agents or extra polymerization. Process energy/releases are estimated by analogy, transport/infrastructure estimated, and further inputs/solid wastes omitted in the underlying documentation. Those gaps are not measured zero. Actual grade/formulation and reaction-water/yield equivalence are not independently established."},
     {"confidence": 0.625362, "id": "bp-19d1d6c3a031c81d", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for polyester resin, unsaturated", "reference product": "polyester resin, unsaturated", "unit": "kilogram"}, "target": {"location": "RER", "name": "Polyester resin, unsaturated, at plant", "reference product": "Polyester resin, unsaturated, at plant", "unit": "kilogram"}},
     {"confidence": 0.156905, "id": "bp-9344e4aa2ca4f7c4", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for polyester-complexed starch biopolymer", "reference product": "polyester-complexed starch biopolymer", "unit": "kilogram"}, "target": {"location": "RER", "name": "Polyester resin, unsaturated, at plant", "reference product": "Polyester resin, unsaturated, at plant", "unit": "kilogram"}},
     {"confidence": 0.269561, "id": "bp-903a26e68845f1ff", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for polyether polyols, long chain", "reference product": "polyether polyols, long chain", "unit": "kilogram"}, "target": {"location": "RER", "name": "Polyols, at plant", "reference product": "Polyols, at plant", "unit": "kilogram"}},
@@ -827677,6 +828432,19 @@
       ],
       "rationale": "Auto-approved under the user's unsupported CRT industrial wastewater-residue omission policy and similar-case authorization: omit the exact treatment of bottom ash, MSWI-WWT, WW from LCD backlight production, slag compartment / GLO / kg external exchange with a warning. Independent inspection confirms the same nonbiogenic industrial-wastewater-residue boundary, with 0% biogenic carbon, for LCD backlight production. No dedicated complete UVEK counterpart was established. Manufacturing, mechanical screen-recycling residues, pulp/paper or municipal sludge, refinery sludge and isolated landfill-operation components do not establish matching residue treatment. This is a direct industrial residue treatment with active process inputs and releases; separately listed foreground treatment and emissions remain intact. Omitted contributions include treatment operation, metal/leachate emissions, downstream residue handling and any recovered-energy or fertilizer credits; effects on LCIA scores are method-dependent and unquantified."
     },
+    "r-11cba260e683c968": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "limitations": [
+        "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority.",
+        "Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified.",
+        "Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented.",
+        "No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules.",
+        "Map the acetonitrile product, CAS75-05-8/C2H3N, from the two allocated source Sohio producers to complete native European Sohio acetonitrile. The source activity name is a multioutput reaction description; its actual allocated reference is one kg acetonitrile, not one kg propylene or acrylonitrile. Keep native allocation once; add no acrylonitrile/HCN displacement credit, propylene-to-product yield or allocation multiplier. Preserve RER/RoW shares separately; RoW uses European native supply explicitly. Source/native utility and reagent quantities differ, with no claim of score equality."
+      ],
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Map the acetonitrile product, CAS75-05-8/C2H3N, from the two allocated source Sohio producers to complete native European Sohio acetonitrile. The source activity name is a multioutput reaction description; its actual allocated reference is one kg acetonitrile, not one kg propylene or acrylonitrile. Keep native allocation once; add no acrylonitrile/HCN displacement credit, propylene-to-product yield or allocation multiplier. Preserve RER/RoW shares separately; RoW uses European native supply explicitly. Source/native utility and reagent quantities differ, with no claim of score equality."
+    },
     "r-1246b5e54d35a90a": {
       "evidence": [
         "brightpath/data/export/uvek_wwt_residue_omission_review.json: exact read-only source/profile fingerprints; negative one-kg production; every installed profile checked. Direct treatment comments explicitly report 0% biogenic carbon; markets contain only technosphere inputs and supply 100% same-residue treatment plus freight. Dedicated UVEK residue service and disposal-boundary candidates were inspected independently.",
@@ -828136,6 +828904,20 @@
         "Only the exact source3.9 profile target and its supporting review metadata change. Existing verified modern-profile targets/coefficients and other pending profile decisions remain unchanged. New omission approval is tied to this exact parent/profile/recipe and does not authorize omissions elsewhere. Use existing recipe-loss reporting and Premise approval checks; no runtime Python module, alternative conversion engine or validation bypass is introduced."
       ],
       "rationale": "Version-specific EAF-dust waste-market conversion. Only the independently inspected ecoinvent 3.9 cut-off RoW electric-arc-furnace-dust market is newly reviewed. Source references -1kg waste; target helper references +1kg treatment service. Factor -1 turns negative source waste demand into positive target service demand. Normalize each negative-reference landfill supplier separately; keep original positive collection freight positive. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership, separate emissions and credits. Other unreviewed source releases, patches, system models and reverse routes gain no approval. Retain both landfill branches at their original source masses: RoW 0.932628099547659 and CH 0.000999466371545205 kg/kg waste, without renormalization. Both full current source vectors match the prior independently approved source3.9 landfill witnesses using the same canonical JSON hash method. Reuse those exact waste-specific helpers, their direct releases, stabilization, operation, construction, uncertainty and native2026 biosphere bindings unchanged; the parent default modern-version landfill-only recipe is not used for source3.9. The BR and RoW clinker co-processing branches are observed production-only negative-reference waste functions. Both share publisher activity and location with nonempty positive clinker-output inventories. Omit only these two explicit allocated waste interfaces, respectively 0.0177308318136209 and 0.0486416022671752 kg/kg, with literal source-exchange, profile, index and allocation audit. Their original allocated source LCI contribution is zero for every demand because they have no nonproduction exchanges. The physical 6.637243408% co-processing share is not represented by a target supplier; no claim that real co-processing has zero impact is made. No nonempty/unknown route is assigned zero, no avoided-mineral credit or clinker manufacturing burden is invented, and positive cut-off-stock rules are not weakened. Retain all eight collection entries separately with original signed quantities and supported source uncertainty: four rail, one inland barge and three unspecified heavy-road entries. Generic collection rail uses complete native RER rail, not coal-specific freight; barge and road use complete RER same-mode services. Source countries, steam/electric/diesel history, gauge, payload, fleet classes, fuel, vintage and native internal uncertainty differ. The whole generic-rail market is a geographic/traction screening proxy; no exact steam traction is claimed or separately modelled. Do not convert tkm to fuel, adjust distance/payload/capacity, omit steam-era source freight or duplicate vehicles, infrastructure or operation. Reused landfill components retain their previous Swiss-operation/facility, cement blend and disposal moisture, geographic, allocation, long-term-water/land, speciation and uncertainty limitations. Keep the exact source-specific releases and quantities through their existing reviewed bindings; no new water balance, dilution, moisture, area, metal recovery or aftercare multiplier is introduced. Source/native scores remain unquantified; no full LCI, LCIA or stochastic equivalence is claimed beyond the observed zero inventories of the two audited co-products. Only the exact source3.9 profile target and its supporting review metadata change. Existing verified modern-profile targets/coefficients and other pending profile decisions remain unchanged. New omission approval is tied to this exact parent/profile/recipe and does not authorize omissions elsewhere. Use existing recipe-loss reporting and Premise approval checks; no runtime Python module, alternative conversion engine or validation bypass is introduced."
+    },
+    "r-1f04ef72cab393c3": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "limitations": [
+        "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority.",
+        "Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified.",
+        "Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented.",
+        "No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules.",
+        "Match liquid acetone, CAS67-64-1/C3H6O, at product kg rather than the gross phenol/propylene/butane process basis. Preserve every original producer contribution separately. Cumene/phenol coproduct acetone uses the complete native European cumene-oxidation aggregate; source butane-oxidation coproduct uses the distinct complete native allocated butane-oxidation acetone process. Native has no corresponding isopropanol, resorcinol-coproduct or coal/Fischer-Tropsch acetone supplier among its inspected acetone products, so those source contributions use native cumene acetone as explicit technology/allocation/geographic proxies. They are not omitted or assigned zero; this does not approve their parent fuels/phenol/resorcinol processes as acetone manufacture outside the inspected market.",
+        "Native cumene acetone is an aggregated three-European-plant PlasticsEurope study; native butane acetone retains its own mass-allocation model and full upstream inventory. Differences in process energy, coproduct allocation, source regions, vintage, precursor and release coverage remain material and unquantified. Add no source producer internals, phenol/other coproduct credits, allocation/yield/phase factors or guessed acetone dehydrogenation reactor. Inherited PlasticsEurope exclusions for recyclable wastes, unspecified metals/air/N2/O2, mercaptans, unspecified CFC/HCFC and dioxin remain data gaps. Hidden upstream energy in its aggregate cannot be fully IAM-updated by ordinary supplier relinking; do not invent an energy overlay."
+      ],
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Match liquid acetone, CAS67-64-1/C3H6O, at product kg rather than the gross phenol/propylene/butane process basis. Preserve every original producer contribution separately. Cumene/phenol coproduct acetone uses the complete native European cumene-oxidation aggregate; source butane-oxidation coproduct uses the distinct complete native allocated butane-oxidation acetone process. Native has no corresponding isopropanol, resorcinol-coproduct or coal/Fischer-Tropsch acetone supplier among its inspected acetone products, so those source contributions use native cumene acetone as explicit technology/allocation/geographic proxies. They are not omitted or assigned zero; this does not approve their parent fuels/phenol/resorcinol processes as acetone manufacture outside the inspected market. Native cumene acetone is an aggregated three-European-plant PlasticsEurope study; native butane acetone retains its own mass-allocation model and full upstream inventory. Differences in process energy, coproduct allocation, source regions, vintage, precursor and release coverage remain material and unquantified. Add no source producer internals, phenol/other coproduct credits, allocation/yield/phase factors or guessed acetone dehydrogenation reactor. Inherited PlasticsEurope exclusions for recyclable wastes, unspecified metals/air/N2/O2, mercaptans, unspecified CFC/HCFC and dioxin remain data gaps. Hidden upstream energy in its aggregate cannot be fully IAM-updated by ordinary supplier relinking; do not invent an energy overlay."
     },
     "r-1fae78a28c7cf00d": {
       "evidence": [
@@ -829374,6 +830156,19 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external protein concentrate, 8% in water, from whey to generic market for protein feed / energy feed, gross / CH / megajoule reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents gross nutritional feed energy in MJ, not industrial heat or fuel energy. No validated nutritional conversion establishes equivalence with the former Heat, at heat pump 30kW, allocation energy / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-3d566096d3dd6f9b": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "limitations": [
+        "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority.",
+        "Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified.",
+        "Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented.",
+        "No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules.",
+        "Both records model one kg of unsaturated polyester resin using the inherited mixture of anhydrides, glycols and acids. This is not PET, a cured GFRP article or permission to invent a styrene-rich formulation. Native precursors remain inside the complete resin inventory; do not add source glycols/anhydrides, styrene, curing agents or extra polymerization. Process energy/releases are estimated by analogy, transport/infrastructure estimated, and further inputs/solid wastes omitted in the underlying documentation. Those gaps are not measured zero. Actual grade/formulation and reaction-water/yield equivalence are not independently established."
+      ],
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Both records model one kg of unsaturated polyester resin using the inherited mixture of anhydrides, glycols and acids. This is not PET, a cured GFRP article or permission to invent a styrene-rich formulation. Native precursors remain inside the complete resin inventory; do not add source glycols/anhydrides, styrene, curing agents or extra polymerization. Process energy/releases are estimated by analogy, transport/infrastructure estimated, and further inputs/solid wastes omitted in the underlying documentation. Those gaps are not measured zero. Actual grade/formulation and reaction-water/yield equivalence are not independently established."
     },
     "r-3d8d204f51c34792": {
       "evidence": [
@@ -832750,6 +833545,19 @@
       ],
       "rationale": "Standing independently inspected same whole-waste/function/unit and geographic service-proxy approval, including correction to a closer existing native supplier. Exact waste composition and the primary sanitary-landfill fate are retained. This introduces no new waste grade, fate substitution, unit conversion, helper primitive, omitted source/caller exchange or recovery model. Only the actual CH3.6 and European3.9 cut-off service profiles qualify."
     },
+    "r-966088f99d70cea9": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "limitations": [
+        "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority.",
+        "Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified.",
+        "Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented.",
+        "No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules.",
+        "Use cyclic ethylene carbonate, CAS96-49-1/C3H4O3, not dimethyl carbonate, an inorganic carbonate or a mixed electrolyte. Preserve the two source CN/RoW producer entries; both use the complete native CN-labelled product, which itself uses Swiss/European background proxies. The native patent model reacts EO and CO2 with an assumed silver catalyst under pressure. Its stated99.95% conversion is internal to the product inventory, not a demand multiplier or independently verified battery-grade assay. Add no further CO2 feedstock, avoided-emission/sequestration credit, catalyst, heating, melting or pressure correction. Foreground use-phase releases remain separate."
+      ],
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Use cyclic ethylene carbonate, CAS96-49-1/C3H4O3, not dimethyl carbonate, an inorganic carbonate or a mixed electrolyte. Preserve the two source CN/RoW producer entries; both use the complete native CN-labelled product, which itself uses Swiss/European background proxies. The native patent model reacts EO and CO2 with an assumed silver catalyst under pressure. Its stated99.95% conversion is internal to the product inventory, not a demand multiplier or independently verified battery-grade assay. Add no further CO2 feedstock, avoided-emission/sequestration credit, catalyst, heating, melting or pressure correction. Foreground use-phase releases remain separate."
+    },
     "r-969d7faccbec244b": {
       "evidence": [
         "brightpath/data/export/uvek_wwt_residue_omission_review.json: exact inspected source/profile fingerprints. Source references are -1 kg; all direct service comments document 0% biogenic carbon, and markets supply 100% treatment of their own residue plus freight. The target catalogs and candidate inventories were inspected for the relevant industrial function and disposal boundary.",
@@ -834516,6 +835324,19 @@
         "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved."
       ],
       "rationale": "Reconstruct only the inspected 3.6 Swiss bare inert-landfill service from the previously reviewed complete generic operation and facility components. Retain one kg of native operation and the original 1.48e-9 facility units per kg of waste, with no collection wrapper. Source and native facility document the same 450000 m3 capacity; do not infer density, capacity, moisture or lifetime scaling. Source steel/glass records deliberately contain no direct leachate emissions; retain that source-data gap and do not introduce the composition-specific emissions of the old native steel/glass endpoints. This is not a conclusion that leachate is physically zero or that all glass/steel compositions are safe. Native complete operation retains its different oil-heat supply and additional waste heat; native facility retains its complete material/freight/background inventory. Native use/aftercare durations are not explicitly documented. These inherited technology, allocation, delivery and vintage differences remain screening limitations; inventory and score effects are unquantified. Preserve signed caller quantities, supported uncertainty, formulas, ownership, separate emissions and existing collection exchanges. Source negative waste reference and positive helper service require factor -1. No recovery credit, new waste fate, empty treatment, physical-emission deletion or inverse mapping is introduced. Other source profiles remain unresolved."
+    },
+    "r-cb8e1eab074f18c7": {
+      "evidence": [
+        "brightpath/data/export/uvek_chemical_markets_39_review.json"
+      ],
+      "limitations": [
+        "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority.",
+        "Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified.",
+        "Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented.",
+        "No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules.",
+        "Use pure named ethylene glycol dimethyl ether/1,2-dimethoxyethane, CAS110-71-4/C4H10O2, not monoethylene glycol, another glycol ether, a polymer or an aqueous solution. Source and native inherit the same EO/dimethyl-ether reaction model with estimated stoichiometry and standard energy/releases/infrastructure. Keep the native complete product once, including its existing EO and dimethyl ether; no extra reaction or source utilities, dilution or solvent-removal factor. The native xx label identifies its legacy process; it does not imply zero inventory. RoW uses the available European model, with vintage, estimation and assay limitations. Only the market needs a delivery helper; the production link remains a direct product match."
+      ],
+      "rationale": "New approval covers only the independently inspected exact ecoinvent3.9 cut-off named chemical reference. Source/native references are positive one kg of the stated product or process module. Factor+1 preserves signed caller product kg, supported uncertainty/formulas, foreground ownership and separate caller inputs/emissions. Other source releases, patches, system models and reverse routes gain no new authority. Complete native producer inventories replace source producer internals once, with their own allocation, feedstock, water, energy, infrastructure, releases and waste treatment. Do not add source producer inputs, direct releases, reaction-yield, economic/mass-allocation, purity, concentration, density, LHV or molecular-weight factors on top. Chemical name/reference matching is not proof of identical grade, assay, allocation, process performance, LCI, LCIA or stochastic equivalence. Geography, vintage, water/emission coverage and internal uncertainty differ; score effects remain unquantified. Where source markets contain delivery, keep every producer and final-freight entry separately at its original quantity and supported uncertainty, without normalization or omitted modes. Source final freight is additional to raw-material transport inside native production. Complete native European rail and heavy-road fleet, European barge and native ocean-container services are geographic/traction/fuel/fleet/loading/infrastructure/vintage proxies. Five separate national rail and three national road contributions in the RoW acetone market remain separate despite sharing native mode suppliers. No extra distance, payload, loss or fleet-share multiplier is invented. No literal caller/source omission, zero-burden supplier, new recovery credit, runtime Python change, validation bypass or alternative Premise sector engine. Existing literal default targets, unrelated raw rules, recipe contents, shared review cards and earlier approvals remain unchanged. Only exact3.9 market profiles with actual delivery select new helpers. The dimethyl-ether production link and the single-producer/no-delivery PVF-dispersion and ethylene-oxide markets use unchanged direct native-product rules. Use pure named ethylene glycol dimethyl ether/1,2-dimethoxyethane, CAS110-71-4/C4H10O2, not monoethylene glycol, another glycol ether, a polymer or an aqueous solution. Source and native inherit the same EO/dimethyl-ether reaction model with estimated stoichiometry and standard energy/releases/infrastructure. Keep the native complete product once, including its existing EO and dimethyl ether; no extra reaction or source utilities, dilution or solvent-removal factor. The native xx label identifies its legacy process; it does not imply zero inventory. RoW uses the available European model, with vintage, estimation and assay limitations. Only the market needs a delivery helper; the production link remains a direct product match."
     },
     "r-cbdaf5aec9b0c4db": {
       "evidence": [
