@@ -175713,6 +175713,141 @@
       "reference product": "methane sulfonic acid",
       "unit": "kilogram"
     },
+    "neutralising-soda-39-delivered-light-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_neutralising_soda_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.7763011797364658,
+          "loc": 0.7763011797364658,
+          "location": "RER",
+          "name": "Soda, powder, at plant",
+          "reference product": "Soda, powder, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.223698820263534,
+          "loc": 0.223698820263534,
+          "location": "RER",
+          "name": "Soda, powder, at plant",
+          "reference product": "Soda, powder, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.1546,
+          "loc": -1.8669141428288156,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1044,
+          "loc": -2.2595256035335987,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for light soda, retained source3.9 delivery [UVEK screening]",
+      "rationale": "Exact ecoinvent3.9 cut-off only. Correct two unsafe heuristic products: global light-soda market must not purchase an LED, and the soda-based NaOH-equivalent neutralising service must not purchase lithium hydroxide. Use complete native RER Soda, powder, at plant: its inspected2026 description specifies1kg100% light soda, excludes densification and final-product transport/storage. Native2025 and2026 both have positive one-kg references. Other source versions, patches, system models and reverse directions gain no permission. The neutralising reference is1kg sodium-hydroxide-equivalent capacity, not1kg soda or actual NaOH. Preserve the measured internal demand of1.325kg delivered light soda and its original lognormal uncertainty, pedigree and supported statistical fields inside a dedicated helper; keep caller quantity, sign, uncertainty, formulas and separate exchanges at factor+1. Do not substitute actual caustic soda, lithium hydroxide or bicarbonate. Preserve1.325 only once, without multiplying caller and helper both. Source titles say crystalline heptahydrate, but the inspected actual input is light soda with zero water-content property; the product metadata declares pure Na2CO3,CAS497-19-8,CNa2O3 and explicitly defines1.325kg per NaOH-equivalent. Do not infer seven waters, dissolution, density, extra solvent, neutralisation emissions or reaction yield from that inconsistent title. This follows the actual source functional reference, not a claim that every soda hydrate or solution is interchangeable. The delivered market retains both original source producer coefficients0.7763011797364658 and0.223698820263534 as separate entries, each supplied by complete native European light soda. Preserve all four final freight amounts and supported uncertainty separately:0.1546rail,0.0246barge,0.1044road,0.599container-sea tonne-km per marketkg. Native production includes its own raw-input transport but excludes final delivery. Add final freight once, with existing complete native geographic/fleet/traction screening proxies; no guessed losses, distance or storage burden. Native Solvay soda retains its own complete feedstocks, heat, electricity, plant, wastes, direct emissions and economic coproduct allocation. Its33% soda/67% calcium-chloride allocation replaces the source allocation and bicarbonate/coproduction model; no allocation ratio, calcium-chloride or bicarbonate recovery credit, source-energy overlay or score-calibration factor is added. Global/RoW supply uses the European inventory. Geography, process vintage, allocation, technology, internal uncertainty, exact assay documentation and LCI/LCIA differences remain explicit unquantified screening limitations. No source/caller exchange omission, native empty handoff, alternate sector engine, runtime Python change or source/target validation bypass. Functional equivalence does not establish identical inventories, stochastic distributions or environmental scores. This scoped correction uses the standing user authorization for coming modelling decisions and records the product, quantity and allocation differences for review.",
+      "reference product": "soda ash, light",
+      "unit": "kilogram"
+    },
+    "neutralising-soda-39-naoh-equivalent-service": {
+      "evidence": [
+        "brightpath/data/export/uvek_neutralising_soda_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.325,
+          "loc": 0.2814124594381855,
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 1,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "recipe": "neutralising-soda-39-delivered-light-market",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.24617067250182342,
+          "uncertainty type": 2
+        }
+      ],
+      "location": "GLO",
+      "name": "neutralising agent from light soda, NaOH-equivalent [UVEK screening]",
+      "rationale": "Exact ecoinvent3.9 cut-off only. Correct two unsafe heuristic products: global light-soda market must not purchase an LED, and the soda-based NaOH-equivalent neutralising service must not purchase lithium hydroxide. Use complete native RER Soda, powder, at plant: its inspected2026 description specifies1kg100% light soda, excludes densification and final-product transport/storage. Native2025 and2026 both have positive one-kg references. Other source versions, patches, system models and reverse directions gain no permission. The neutralising reference is1kg sodium-hydroxide-equivalent capacity, not1kg soda or actual NaOH. Preserve the measured internal demand of1.325kg delivered light soda and its original lognormal uncertainty, pedigree and supported statistical fields inside a dedicated helper; keep caller quantity, sign, uncertainty, formulas and separate exchanges at factor+1. Do not substitute actual caustic soda, lithium hydroxide or bicarbonate. Preserve1.325 only once, without multiplying caller and helper both. Source titles say crystalline heptahydrate, but the inspected actual input is light soda with zero water-content property; the product metadata declares pure Na2CO3,CAS497-19-8,CNa2O3 and explicitly defines1.325kg per NaOH-equivalent. Do not infer seven waters, dissolution, density, extra solvent, neutralisation emissions or reaction yield from that inconsistent title. This follows the actual source functional reference, not a claim that every soda hydrate or solution is interchangeable. The delivered market retains both original source producer coefficients0.7763011797364658 and0.223698820263534 as separate entries, each supplied by complete native European light soda. Preserve all four final freight amounts and supported uncertainty separately:0.1546rail,0.0246barge,0.1044road,0.599container-sea tonne-km per marketkg. Native production includes its own raw-input transport but excludes final delivery. Add final freight once, with existing complete native geographic/fleet/traction screening proxies; no guessed losses, distance or storage burden. Native Solvay soda retains its own complete feedstocks, heat, electricity, plant, wastes, direct emissions and economic coproduct allocation. Its33% soda/67% calcium-chloride allocation replaces the source allocation and bicarbonate/coproduction model; no allocation ratio, calcium-chloride or bicarbonate recovery credit, source-energy overlay or score-calibration factor is added. Global/RoW supply uses the European inventory. Geography, process vintage, allocation, technology, internal uncertainty, exact assay documentation and LCI/LCIA differences remain explicit unquantified screening limitations. No source/caller exchange omission, native empty handoff, alternate sector engine, runtime Python change or source/target validation bypass. Functional equivalence does not establish identical inventories, stochastic distributions or environmental scores. This scoped correction uses the standing user authorization for coming modelling decisions and records the product, quantity and allocation differences for review.",
+      "reference product": "neutralising agent, sodium hydroxide-equivalent",
+      "unit": "kilogram"
+    },
     "new-aluminium-scrap-39-stock-and-delivery": {
       "evidence": [
         "brightpath/data/export/uvek_scrap_delivery_39_review.json"
@@ -815512,7 +815647,7 @@
     {"confidence": 0.154432, "id": "bp-a0642a56405e452d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for small pelagic fish, fresh", "reference product": "small pelagic fish, fresh", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Transistor, wired, small size, through-hole mounting, at plant", "reference product": "Transistor, wired, small size, through-hole mounting, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-2616df26f7611a3a", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for soap", "reference product": "soap", "unit": "kilogram"}, "target": {"location": "RER", "name": "Soap, at plant", "reference product": "Soap, at plant", "unit": "kilogram"}},
     {"confidence": 0.145303, "id": "bp-e1e1fd1c04f327da", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for soda ash, dense", "reference product": "soda ash, dense", "unit": "kilogram"}, "target": {"location": "RER", "name": "Soda, powder, at plant", "reference product": "Soda, powder, at plant", "unit": "kilogram"}},
-    {"confidence": 0.206714, "id": "bp-a9797fdfc7109d86", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for soda ash, light", "reference product": "soda ash, light", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Light emitting diode, LED, at plant", "reference product": "Light emitting diode, LED, at plant", "unit": "kilogram"}},
+    {"confidence": 0.206714, "id": "bp-a9797fdfc7109d86", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_neutralising_soda_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_neutralising_soda_39_review.json"], "reason": "Exact ecoinvent3.9 cut-off only. Correct two unsafe heuristic products: global light-soda market must not purchase an LED, and the soda-based NaOH-equivalent neutralising service must not purchase lithium hydroxide. Use complete native RER Soda, powder, at plant: its inspected2026 description specifies1kg100% light soda, excludes densification and final-product transport/storage. Native2025 and2026 both have positive one-kg references. Other source versions, patches, system models and reverse directions gain no permission. The neutralising reference is1kg sodium-hydroxide-equivalent capacity, not1kg soda or actual NaOH. Preserve the measured internal demand of1.325kg delivered light soda and its original lognormal uncertainty, pedigree and supported statistical fields inside a dedicated helper; keep caller quantity, sign, uncertainty, formulas and separate exchanges at factor+1. Do not substitute actual caustic soda, lithium hydroxide or bicarbonate. Preserve1.325 only once, without multiplying caller and helper both. Source titles say crystalline heptahydrate, but the inspected actual input is light soda with zero water-content property; the product metadata declares pure Na2CO3,CAS497-19-8,CNa2O3 and explicitly defines1.325kg per NaOH-equivalent. Do not infer seven waters, dissolution, density, extra solvent, neutralisation emissions or reaction yield from that inconsistent title. This follows the actual source functional reference, not a claim that every soda hydrate or solution is interchangeable. The delivered market retains both original source producer coefficients0.7763011797364658 and0.223698820263534 as separate entries, each supplied by complete native European light soda. Preserve all four final freight amounts and supported uncertainty separately:0.1546rail,0.0246barge,0.1044road,0.599container-sea tonne-km per marketkg. Native production includes its own raw-input transport but excludes final delivery. Add final freight once, with existing complete native geographic/fleet/traction screening proxies; no guessed losses, distance or storage burden. Native Solvay soda retains its own complete feedstocks, heat, electricity, plant, wastes, direct emissions and economic coproduct allocation. Its33% soda/67% calcium-chloride allocation replaces the source allocation and bicarbonate/coproduction model; no allocation ratio, calcium-chloride or bicarbonate recovery credit, source-energy overlay or score-calibration factor is added. Global/RoW supply uses the European inventory. Geography, process vintage, allocation, technology, internal uncertainty, exact assay documentation and LCI/LCIA differences remain explicit unquantified screening limitations. No source/caller exchange omission, native empty handoff, alternate sector engine, runtime Python change or source/target validation bypass. Functional equivalence does not establish identical inventories, stochastic distributions or environmental scores. This scoped correction uses the standing user authorization for coming modelling decisions and records the product, quantity and allocation differences for review.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "neutralising-soda-39-delivered-light-market"}}], "reason": "Only the independently checked exact source profile is qualified.", "status": "unresolved"}, "review_ref": "r-c0f6e77b05b4c00e", "source": {"location": "GLO", "name": "market for soda ash, light", "reference product": "soda ash, light", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Light emitting diode, LED, at plant", "reference product": "Light emitting diode, LED, at plant", "unit": "kilogram"}},
     {"confidence": 0.247841, "id": "bp-b5f918f3f46c2bf1", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for soda ash, light", "reference product": "soda ash, light", "unit": "kilogram"}, "target": {"location": "RER", "name": "Soda, powder, at plant", "reference product": "Soda, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.167841, "id": "bp-bdd23386b11f2233", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for soda ash, light", "reference product": "soda ash, light", "unit": "kilogram"}, "target": {"location": "RER", "name": "Soda, powder, at plant", "reference product": "Soda, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.160092, "id": "bp-7a43861ae0ccad22", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for soda ash, light, crystalline, heptahydrate", "reference product": "soda ash, light, crystalline, heptahydrate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Light emitting diode, LED, at plant", "reference product": "Light emitting diode, LED, at plant", "unit": "kilogram"}},
@@ -821698,7 +821833,7 @@
     {"confidence": 0.407833, "id": "bp-6011be64f76c4c32", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "soda ash production, dense, Hou's process", "reference product": "ammonium chloride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ammonium chloride, at plant", "reference product": "Ammonium chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.138755, "id": "bp-dcae5ed875d56036", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "soda ash production, dense, Hou's process", "reference product": "soda ash, dense", "unit": "kilogram"}, "target": {"location": "RER", "name": "Soda, powder, at plant", "reference product": "Soda, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.213499, "id": "bp-f239c9ef1b7d89e2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "soda ash, dense, to generic market for neutralising agent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium hydroxide, at plant", "reference product": "Lithium hydroxide, at plant", "unit": "kilogram"}},
-    {"confidence": 0.217808, "id": "bp-1f8f01358cc4d9ba", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "soda ash, light, crystalline, heptahydrate, to generic market for neutralising agent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium hydroxide, at plant", "reference product": "Lithium hydroxide, at plant", "unit": "kilogram"}},
+    {"confidence": 0.217808, "id": "bp-1f8f01358cc4d9ba", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_neutralising_soda_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_neutralising_soda_39_review.json"], "reason": "Exact ecoinvent3.9 cut-off only. Correct two unsafe heuristic products: global light-soda market must not purchase an LED, and the soda-based NaOH-equivalent neutralising service must not purchase lithium hydroxide. Use complete native RER Soda, powder, at plant: its inspected2026 description specifies1kg100% light soda, excludes densification and final-product transport/storage. Native2025 and2026 both have positive one-kg references. Other source versions, patches, system models and reverse directions gain no permission. The neutralising reference is1kg sodium-hydroxide-equivalent capacity, not1kg soda or actual NaOH. Preserve the measured internal demand of1.325kg delivered light soda and its original lognormal uncertainty, pedigree and supported statistical fields inside a dedicated helper; keep caller quantity, sign, uncertainty, formulas and separate exchanges at factor+1. Do not substitute actual caustic soda, lithium hydroxide or bicarbonate. Preserve1.325 only once, without multiplying caller and helper both. Source titles say crystalline heptahydrate, but the inspected actual input is light soda with zero water-content property; the product metadata declares pure Na2CO3,CAS497-19-8,CNa2O3 and explicitly defines1.325kg per NaOH-equivalent. Do not infer seven waters, dissolution, density, extra solvent, neutralisation emissions or reaction yield from that inconsistent title. This follows the actual source functional reference, not a claim that every soda hydrate or solution is interchangeable. The delivered market retains both original source producer coefficients0.7763011797364658 and0.223698820263534 as separate entries, each supplied by complete native European light soda. Preserve all four final freight amounts and supported uncertainty separately:0.1546rail,0.0246barge,0.1044road,0.599container-sea tonne-km per marketkg. Native production includes its own raw-input transport but excludes final delivery. Add final freight once, with existing complete native geographic/fleet/traction screening proxies; no guessed losses, distance or storage burden. Native Solvay soda retains its own complete feedstocks, heat, electricity, plant, wastes, direct emissions and economic coproduct allocation. Its33% soda/67% calcium-chloride allocation replaces the source allocation and bicarbonate/coproduction model; no allocation ratio, calcium-chloride or bicarbonate recovery credit, source-energy overlay or score-calibration factor is added. Global/RoW supply uses the European inventory. Geography, process vintage, allocation, technology, internal uncertainty, exact assay documentation and LCI/LCIA differences remain explicit unquantified screening limitations. No source/caller exchange omission, native empty handoff, alternate sector engine, runtime Python change or source/target validation bypass. Functional equivalence does not establish identical inventories, stochastic distributions or environmental scores. This scoped correction uses the standing user authorization for coming modelling decisions and records the product, quantity and allocation differences for review.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "neutralising-soda-39-naoh-equivalent-service"}}], "reason": "Only the independently checked exact source profile is qualified.", "status": "unresolved"}, "review_ref": "r-c0f6e77b05b4c00e", "source": {"location": "GLO", "name": "soda ash, light, crystalline, heptahydrate, to generic market for neutralising agent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium hydroxide, at plant", "reference product": "Lithium hydroxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.235051, "id": "bp-c0c6ae8881712f37", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "soda ash, light, crystalline, heptahydrate, to generic market for neutralising agent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hydroxide, 50% in H2O, membrane cell, at plant", "reference product": "Sodium hydroxide, 50% in H2O, membrane cell, at plant", "unit": "kilogram"}},
     {"confidence": 0.155051, "id": "bp-7c27ffa9177e6568", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "soda ash, light, crystalline, heptahydrate, to generic market for neutralising agent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hydroxide, 50% in H2O, membrane cell, at plant", "reference product": "Sodium hydroxide, 50% in H2O, membrane cell, at plant", "unit": "kilogram"}},
     {"confidence": 0.37803, "id": "bp-ee0a493697c7eb3a", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "soda production, solvay process", "reference product": "calcium chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Calcium chloride, CaCl2, at plant", "reference product": "Calcium chloride, CaCl2, at plant", "unit": "kilogram"}},
@@ -836047,6 +836182,20 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for bottom ash, MSWI-WWT, WW from liquid crystal production / GLO / kg external exchange with a warning. All inspected direct service comments for liquid crystal production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-c0f6e77b05b4c00e": {
+      "evidence": [
+        "brightpath/data/export/uvek_neutralising_soda_39_review.json"
+      ],
+      "limitations": [
+        "Exact ecoinvent3.9 cut-off only. Correct two unsafe heuristic products: global light-soda market must not purchase an LED, and the soda-based NaOH-equivalent neutralising service must not purchase lithium hydroxide. Use complete native RER Soda, powder, at plant: its inspected2026 description specifies1kg100% light soda, excludes densification and final-product transport/storage. Native2025 and2026 both have positive one-kg references. Other source versions, patches, system models and reverse directions gain no permission.",
+        "The neutralising reference is1kg sodium-hydroxide-equivalent capacity, not1kg soda or actual NaOH. Preserve the measured internal demand of1.325kg delivered light soda and its original lognormal uncertainty, pedigree and supported statistical fields inside a dedicated helper; keep caller quantity, sign, uncertainty, formulas and separate exchanges at factor+1. Do not substitute actual caustic soda, lithium hydroxide or bicarbonate. Preserve1.325 only once, without multiplying caller and helper both.",
+        "Source titles say crystalline heptahydrate, but the inspected actual input is light soda with zero water-content property; the product metadata declares pure Na2CO3,CAS497-19-8,CNa2O3 and explicitly defines1.325kg per NaOH-equivalent. Do not infer seven waters, dissolution, density, extra solvent, neutralisation emissions or reaction yield from that inconsistent title. This follows the actual source functional reference, not a claim that every soda hydrate or solution is interchangeable.",
+        "The delivered market retains both original source producer coefficients0.7763011797364658 and0.223698820263534 as separate entries, each supplied by complete native European light soda. Preserve all four final freight amounts and supported uncertainty separately:0.1546rail,0.0246barge,0.1044road,0.599container-sea tonne-km per marketkg. Native production includes its own raw-input transport but excludes final delivery. Add final freight once, with existing complete native geographic/fleet/traction screening proxies; no guessed losses, distance or storage burden.",
+        "Native Solvay soda retains its own complete feedstocks, heat, electricity, plant, wastes, direct emissions and economic coproduct allocation. Its33% soda/67% calcium-chloride allocation replaces the source allocation and bicarbonate/coproduction model; no allocation ratio, calcium-chloride or bicarbonate recovery credit, source-energy overlay or score-calibration factor is added. Global/RoW supply uses the European inventory. Geography, process vintage, allocation, technology, internal uncertainty, exact assay documentation and LCI/LCIA differences remain explicit unquantified screening limitations.",
+        "No source/caller exchange omission, native empty handoff, alternate sector engine, runtime Python change or source/target validation bypass. Functional equivalence does not establish identical inventories, stochastic distributions or environmental scores. This scoped correction uses the standing user authorization for coming modelling decisions and records the product, quantity and allocation differences for review."
+      ],
+      "rationale": "Correct the inspected source3.9 light-soda product and NaOH-equivalent basis, retain complete native supply, final delivery and source internal uncertainty."
     },
     "r-c104fab7dd510727": {
       "evidence": [
