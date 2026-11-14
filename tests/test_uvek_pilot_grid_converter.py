@@ -31,8 +31,16 @@ def test_complete_native_boundary_and_exact_source_profile(rule_id, version, nam
         assert limitation in rule["technosphere_information_loss"]
 
 
-def test_authoring_replay_changes_only_the_two_reviewed_suppliers():
+def test_original_authoring_replay_changes_only_the_two_reviewed_suppliers():
     resource = before_converter_steel_39_review(deepcopy(load_uvek_technosphere_resource()))
+    # Replay this historical stage before the later exact3.9 grid extension.
+    extension = json.loads((DATA_DIR / "export/uvek_remaining_electricity_grids_39_review.json").read_text())[
+        "records"
+    ][1]
+    current = next(r for r in resource["replace"] if r["id"] == extension["rule_id"])
+    assert current == extension["compiled_rule"]
+    current.clear()
+    current.update(deepcopy(extension["original_rule"]))
     expected = deepcopy(resource)
     review = json.loads((DATA_DIR / "export/uvek_pilot_grid_converter_review.json").read_text())
     for decision in review["rules"]:

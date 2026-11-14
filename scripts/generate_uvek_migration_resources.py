@@ -1509,6 +1509,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_acid_surfactant_salts_39_review(technosphere)
     if __package__:
+        from scripts.review_uvek_remaining_electricity_grids_39 import apply_remaining_electricity_grids_39_review
+    else:
+        from review_uvek_remaining_electricity_grids_39 import apply_remaining_electricity_grids_39_review
+
+    apply_remaining_electricity_grids_39_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
