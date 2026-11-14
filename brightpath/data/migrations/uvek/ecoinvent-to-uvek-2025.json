@@ -4,16 +4,17 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 228,
-      "recipe": 1070,
-      "unclassified": 29177
+      "recipe": 1072,
+      "unclassified": 29175
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 258,
       "followup_review": 163,
-      "heuristic_similarity": 26411,
+      "heuristic_similarity": 26409,
       "pairwise_review": 2210,
       "product_checked": 35,
+      "reviewed_acetoacetic_39_source_reconstruction": 1,
       "reviewed_additional_cutoff_waste_market_service": 14,
       "reviewed_allocated_compost_delivery": 7,
       "reviewed_allocated_ph_agent_delivery": 4,
@@ -51,6 +52,7 @@
       "reviewed_deferred_xanthate": 1,
       "reviewed_delivered_low_voltage_proxy": 46,
       "reviewed_ether_ethanol_rer": 1,
+      "reviewed_ethyl_acetate_39_market_composition": 1,
       "reviewed_euro_v_conditional_fleet_39": 1,
       "reviewed_european_high_voltage_grid_proxy": 1,
       "reviewed_explicit_limestone_recultivation_proxy_39": 2,
@@ -198,7 +200,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.443778,
+    "mean_confidence": 0.443819,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -468,6 +470,1167 @@
   "name": "ecoinvent-3.x-to-uvek-2025-technosphere",
   "quality": "heuristic",
   "recipes": {
+    "acetoacetic-acid-39-global-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_acetoacetic_acid_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.33,
+          "loc": 0.33,
+          "recipe": "acetoacetic-acid-39-production-rer",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.67,
+          "loc": 0.67,
+          "recipe": "acetoacetic-acid-39-production-row",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for acetoacetic acid, source3.9 retained chemistry and delivery",
+      "rationale": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects.",
+      "reference product": "acetoacetic acid",
+      "unit": "kilogram"
+    },
+    "acetoacetic-acid-39-production-rer": {
+      "evidence": [
+        "brightpath/data/export/uvek_acetoacetic_acid_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 9.3664e-10,
+          "loc": -20.788722112425027,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.77975,
+          "loc": -0.24878192349422434,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.9119,
+          "loc": 0.648097512006221,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "recipe": "acetoacetic-feedstock-39-ethyl-acetate-market",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 4.6832,
+          "loc": 1.5439816369554844,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.061512600067424025,
+          "loc": -2.7885132460094244,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.018707117429112016,
+          "loc": -3.9788512163531977,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0033958598741525617,
+          "loc": -5.68519827341244,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09279550033308762,
+          "loc": -2.377357128155557,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.8922296223770356e-05,
+          "loc": -9.739290995239033,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.8952,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": 0.6393243738624387,
+          "name": "Carbon dioxide, fossil",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0038238,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -5.566510586415971,
+          "name": "Ethyl acetate",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.021845107125,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.8237783127225997,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.30335622624235026,
+          "scale without pedigree": 0.4266731770336636,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.20112,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -1.6038535341401998,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.20112,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -1.6038535341401998,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.053273,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.9323256427626743,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09257,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.3797901639030172,
+          "name": "Ethanol",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0091771,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -4.691044028397395,
+          "name": "Ethyl acetate",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.053273,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.9323256427626743,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4669047011971501,
+          "scale without pedigree": 0.4669047011971501,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.034529362875,
+          "categories": [
+            "water"
+          ],
+          "loc": -3.3659452190971195,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.30335622624235026,
+          "scale without pedigree": 0.4266731770336636,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.056198,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -2.8788741099043427,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RER",
+      "name": "acetoacetic acid production, retained source3.9 RER inventory",
+      "rationale": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects.",
+      "reference product": "acetoacetic acid",
+      "unit": "kilogram"
+    },
+    "acetoacetic-acid-39-production-row": {
+      "evidence": [
+        "brightpath/data/export/uvek_acetoacetic_acid_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 9.3664e-10,
+          "loc": -20.788722112425027,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.05544505506898147,
+          "loc": -2.8923627473592806,
+          "location": "RLA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.027825866438098795,
+          "loc": -3.581789243469796,
+          "location": "RAF",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.5087128970998636,
+          "loc": -0.6758714744182578,
+          "location": "RAS",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.008424859414202866,
+          "loc": -4.776568489624436,
+          "location": "AU",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0016511524006034232,
+          "loc": -6.406281810246475,
+          "location": "NZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.17769016957824993,
+          "loc": -1.7277138656767435,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "recipe": "pcc-39-rna-mv-ca-us-market",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.9119,
+          "loc": 0.648097512006221,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "recipe": "acetoacetic-feedstock-39-ethyl-acetate-market",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 4.6832,
+          "loc": 1.5439816369554844,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "recipe": "pcc-39-chemical-heat-retained-water-uncertainty",
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.00456477518435845,
+          "loc": -5.389386013824046,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.06669942092909639,
+          "loc": -2.707559007820938,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.035846911006579586,
+          "loc": -3.3284978800399574,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.008887885800133215,
+          "loc": -4.723066075497244,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.003415794418836696,
+          "loc": -5.679345186706188,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.056618873856608444,
+          "loc": -2.8714128889944437,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "recipe": "pcc-39-decarbonised-water-row-market",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0004363388043872047,
+          "loc": -7.737091542098561,
+          "location": "RER",
+          "name": "Water, decarbonised, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Water, decarbonised, at plant",
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.8952,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": 0.6393243738624387,
+          "name": "Carbon dioxide, fossil",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0038238,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -5.566510586415971,
+          "name": "Ethyl acetate",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.021845107125,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.8237783127225997,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.30335622624235026,
+          "scale without pedigree": 0.4266731770336636,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.20112,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -1.6038535341401998,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.20112,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -1.6038535341401998,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.053273,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.9323256427626743,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09257,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.3797901639030172,
+          "name": "Ethanol",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0091771,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -4.691044028397395,
+          "name": "Ethyl acetate",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.5642694391866354,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.053273,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -2.9323256427626743,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.4226109321823088,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.034529362875,
+          "categories": [
+            "water"
+          ],
+          "loc": -3.3659452190971195,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.30335622624235026,
+          "scale without pedigree": 0.4266731770336636,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.056198,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -2.8788741099043427,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "scale": 0.15968719422671313,
+          "scale without pedigree": 0.2224859546128699,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "RoW",
+      "name": "acetoacetic acid production, retained source3.9 RoW inventory",
+      "rationale": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects.",
+      "reference product": "acetoacetic acid",
+      "unit": "kilogram"
+    },
+    "acetoacetic-feedstock-39-ethyl-acetate-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_acetoacetic_acid_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0775046864366799,
+          "loc": 0.0775046864366799,
+          "location": "RER",
+          "name": "Ethyl acetate from butane, at plant",
+          "reference product": "Ethyl acetate from butane, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.678316306294646,
+          "loc": 0.678316306294646,
+          "location": "RER",
+          "name": "Ethyl acetate, at plant",
+          "reference product": "Ethyl acetate, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0197560965426831,
+          "loc": 0.0197560965426831,
+          "location": "RER",
+          "name": "Ethyl acetate from butane, at plant",
+          "reference product": "Ethyl acetate from butane, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.224422910725991,
+          "loc": 0.224422910725991,
+          "location": "RER",
+          "name": "Ethyl acetate, at plant",
+          "reference product": "Ethyl acetate, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for ethyl acetate, source3.9 retained esterification and allocated butane supply",
+      "rationale": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects.",
+      "reference product": "ethyl acetate",
+      "unit": "kilogram"
+    },
     "additional-cutoff-waste-market-0388a881f6971897d3e3": {
       "evidence": [
         "brightpath/data/export/uvek_additional_cutoff_waste_market_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
@@ -804779,7 +805942,7 @@
     {"confidence": 0.307557, "id": "bp-13fe1162d0e820bf", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for acetic acid", "reference product": "acetic acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetic acid, 98% in H2O, at plant", "reference product": "Acetic acid, 98% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.240036, "id": "bp-0711512096a029ed", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for acetic acid, without water, in 98% solution state", "reference product": "acetic acid, without water, in 98% solution state", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetic acid, 98% in H2O, at plant", "reference product": "Acetic acid, 98% in H2O, at plant", "unit": "kilogram"}},
     {"confidence": 0.523333, "id": "bp-b202158ad6b5a7ee", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for acetic anhydride", "reference product": "acetic anhydride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetic anhydride, at plant", "reference product": "Acetic anhydride, at plant", "unit": "kilogram"}},
-    {"confidence": 0.258739, "id": "bp-19970a05738136f6", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for acetoacetic acid", "reference product": "acetoacetic acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Chloroacetic acid, at plant", "reference product": "xx Chloroacetic acid, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-19970a05738136f6", "mapping_method": "reviewed_acetoacetic_39_source_reconstruction", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_acetoacetic_acid_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_acetoacetic_acid_39_review.json"], "reason": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-38826954756eeeba", "source": {"location": "GLO", "name": "market for acetoacetic acid", "reference product": "acetoacetic acid", "unit": "kilogram"}, "target": {"recipe_ref": "acetoacetic-acid-39-global-market"}, "technosphere_information_loss": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects."},
     {"confidence": 0.546913, "id": "bp-fd139fe23e532e93", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for acetone cyanohydrin", "reference product": "acetone cyanohydrin", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Acetone cyanohydrin, at plant", "reference product": "xx Acetone cyanohydrin, at plant", "unit": "kilogram"}},
     {"confidence": 0.466913, "id": "bp-0f53a9b051d9138c", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for acetone cyanohydrin", "reference product": "acetone cyanohydrin", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Acetone cyanohydrin, at plant", "reference product": "xx Acetone cyanohydrin, at plant", "unit": "kilogram"}},
     {"confidence": 0.581167, "id": "bp-92c2120012f2e193", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for acetone, liquid", "reference product": "acetone, liquid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Acetone, liquid, at plant", "reference product": "Acetone, liquid, at plant", "unit": "kilogram"}},
@@ -807213,7 +808376,7 @@
     {"classification": "proxy", "confidence": 0.457482, "id": "bp-92c5d186d8e2543e", "mapping_method": "reviewed_fuels_312_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_312_dependencies_review.json"], "reason": "Retain the actual 3.12 European AE7 market's separate coconut-oil, palm-kernel-oil and petrochemical production shares using the corresponding complete native AE7 inventories, not AE3/AE11, unspecified surfactant or coconut-only supply. All have positive one-kg references. Retain the three original barge, unspecified-heavy-lorry and train freight quantities through their already reviewed complete native freight correspondences. No producer-share renormalization, feedstock or resin addition, allocation repeat or hidden transport omission. Source/native feedstock, processing, freight-fleet class, internal uncertainty, allocation, geography and vintage differences remain explicit; no LCIA equivalence is claimed.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "fuels-312-48faa7f5cabbc76427b4"}}], "reason": "Only the individually inspected exact source profiles authorize their selected targets and reference bases.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-419ad5b53ff5a69e", "source": {"location": "RER", "name": "market for ethoxylated alcohol (AE7)", "reference product": "ethoxylated alcohol (AE7)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE7), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE7), coconut oil, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only separately inspected source profiles qualify. Use the selected profile target and its documented quantity basis; historical default targets/calibrations do not authorize another release. Native geography, technology, allocation, vintage, internal uncertainty and biosphere coverage differ; score effects remain unquantified. Preserve caller signs, formulas, uncertainty, ownership, separate water, freight and emissions. No unreviewed release, consequential or inverse route is inferred."},
     {"confidence": 0.377482, "id": "bp-ec88710374651f3c", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethoxylated alcohol (AE7)", "reference product": "ethoxylated alcohol (AE7)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE7), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE7), coconut oil, at plant", "unit": "kilogram"}},
     {"confidence": 0.295945, "id": "bp-d9aed37a6d25789d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ethoxylated alcohol (AE>20)", "reference product": "ethoxylated alcohol (AE>20)", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethoxylated alcohols (AE3), coconut oil, at plant", "reference product": "Ethoxylated alcohols (AE3), coconut oil, at plant", "unit": "kilogram"}},
-    {"confidence": 0.488939, "id": "bp-0d337819eb8b4ccb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ethyl acetate", "reference product": "ethyl acetate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethyl acetate, at plant", "reference product": "Ethyl acetate, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-0d337819eb8b4ccb", "mapping_method": "reviewed_ethyl_acetate_39_market_composition", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_acetoacetic_acid_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_acetoacetic_acid_39_review.json"], "reason": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected source3.9 cut-off profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-38826954756eeeba", "source": {"location": "GLO", "name": "market for ethyl acetate", "reference product": "ethyl acetate", "unit": "kilogram"}, "target": {"recipe_ref": "acetoacetic-feedstock-39-ethyl-acetate-market"}, "technosphere_information_loss": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects."},
     {"confidence": 0.355968, "id": "bp-bceb5d8ebacd2702", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ethyl acrylate", "reference product": "ethyl acrylate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Methyl acrylate, at plant", "reference product": "Methyl acrylate, at plant", "unit": "kilogram"}},
     {"confidence": 0.355968, "id": "bp-4a672256f5baa1b2", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ethyl acrylate", "reference product": "ethyl acrylate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Methyl acrylate, at plant", "reference product": "Methyl acrylate, at plant", "unit": "kilogram"}},
     {"confidence": 0.488939, "id": "bp-04574327bd79f77a", "mapping_method": "heuristic_similarity", "source": {"location": "JP", "name": "market for ethyl benzene", "reference product": "ethyl benzene", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ethyl benzene, at plant", "reference product": "Ethyl benzene, at plant", "unit": "kilogram"}},
@@ -826575,6 +827738,23 @@
         "Independently inspected physical cut-off beet-pulp/whey-yeast coproduct proxy: preserve one wet-basis kg and its incoming sign using the existing corresponding UVEK allocated coproduct supplier. Whey-fermentation legacy metadata explicitly identifies the fodder-yeast coproduct as yeast paste, alongside ethanol and protein concentrate. Sugar-refinery pulp documents 25.6% dry matter in source and target. Beet-ethanol pulp uses the existing Swiss sugar-refinery pulp correspondence as an explicit same-product allocation/technology proxy: the source separates pulp during beet extraction, but its primary fermentation process differs and identical moisture is not independently quantified. Target economic allocation, old Swiss background, process energy, whey collection, infrastructure, water/emissions and regional representation differ. Yeast-paste dry matter/nutrient equivalence is not independently quantified. Do not infer a dry-matter, energy or protein conversion, equal insulation/feed performance or LCIA equivalence. Preserve caller signed quantities, supported uncertainty/formulas, foreground suppliers, production and separate emissions. Only the observed exact cut-off profiles are approved; consequential physical coproduct counterparts are absent and no patch fallback is inferred. The original consequential nutritional omissions remain separately approved and unchanged."
       ],
       "rationale": "Standing independently inspected matching-product and physical-quantity approval: beet sugar production / sugar beet pulp / CH. Independently inspected physical cut-off beet-pulp/whey-yeast coproduct proxy: preserve one wet-basis kg and its incoming sign using the existing corresponding UVEK allocated coproduct supplier. Whey-fermentation legacy metadata explicitly identifies the fodder-yeast coproduct as yeast paste, alongside ethanol and protein concentrate. Sugar-refinery pulp documents 25.6% dry matter in source and target. Beet-ethanol pulp uses the existing Swiss sugar-refinery pulp correspondence as an explicit same-product allocation/technology proxy: the source separates pulp during beet extraction, but its primary fermentation process differs and identical moisture is not independently quantified. Target economic allocation, old Swiss background, process energy, whey collection, infrastructure, water/emissions and regional representation differ. Yeast-paste dry matter/nutrient equivalence is not independently quantified. Do not infer a dry-matter, energy or protein conversion, equal insulation/feed performance or LCIA equivalence. Preserve caller signed quantities, supported uncertainty/formulas, foreground suppliers, production and separate emissions. Only the observed exact cut-off profiles are approved; consequential physical coproduct counterparts are absent and no patch fallback is inferred. The original consequential nutritional omissions remain separately approved and unchanged."
+    },
+    "r-38826954756eeeba": {
+      "evidence": [
+        "brightpath/data/export/uvek_acetoacetic_acid_39_review.json"
+      ],
+      "limitations": [
+        "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority.",
+        "Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit.",
+        "All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once.",
+        "Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects.",
+        "Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product.",
+        "Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence.",
+        "Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories.",
+        "Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added.",
+        "No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects."
+      ],
+      "rationale": "Only independently inspected exact ecoinvent3.9 cut-off positive-kg inputs are qualified. Reconstruct acetoacetic acid from its actual ethyl-acetate route, not from the unrelated chloroacetic-acid suggestion. Preserve signed caller quantities, supported uncertainty/formulas, independent caller processes and emissions. No molecular-weight, acid-strength, solution, density, yield, water-balance, carbon-balance or allocation multiplier is invented. Other versions, patches, system models and reverse routes receive no new authority. Reuse the exact previously reviewed chemical-heat, electricity, factory and Rest-of-World water mappings and their twelve recipe dependencies unchanged. Their country/grid/fuel/heat-efficiency, upstream supply, allocation, internal-uncertainty and imported biosphere limitations remain. The parent fingerprint binds their full frozen recipe closure. Forty-six literal previously approved production-only allocated cut-off-handover omissions remain audited in those inherited recipes; no new source omission, nonempty waste loss or burden-free treatment is approved. The caller owns separate emissions and any independently listed credit; add no new recovery credit. All retained final freight uses complete native European rail, Rhine barge, lorry fleet and ocean-container services per original tonne-km. Preserve every source entry, quantity and supported uncertainty separately, without normalization or distance/payload/fleet/fuel corrections. Geographic, steam/electric/diesel traction, loading, infrastructure, fleet-age and allocation differences remain explicit whole-service screening limits; final product delivery is additional to native upstream production transport once. Complete native esterification and mass-allocated butane-oxidation ethyl-acetate supplies replace the corresponding source process inventories, per their positive1kg product references. Keep both technologies and all four original regional producer shares in the feedstock market, with its four delivery entries. Native butane supply is already allocated per kg ethyl-acetate co-product: no second mass/economic allocation, avoided co-product credit or recovered-product factor is added. Native ethanol feedstock, raw materials, processing energy, emission/effluent coverage, allocation, geography, vintage and uncertainty differ from source and retain unquantified score effects. Native esterification reference is named ethyl acetate, has formulaC4H8O2 and explicitly consumes ethanol plus acetic acid, but its CAS metadata000123-86-4 differs from source ethyl-acetate CAS141-78-6. Functional selection uses the independently inspected product name, formula, reaction technology, inputs and positive reference, not the conflicting CAS field alone. Preserve the original native metadata and log this identifier inconsistency; do not silently correct it or claim equal purity/grade/LCIA. Do not use methyl acetate, chloroacetic acid or the ester itself as the finished acetoacetic-acid product. Source acetoacetic-acid model is stoichiometric/literature based with estimated releases and standard utility/infrastructure assumptions, not a measured complete plant. It labels the output pure C4H6O3/CAS541-50-4 and notes its instability. Preserve that source-defined nominalkg without an invented stabilizer, ester-to-acid mass factor, reaction yield, ethanol co-product credit, decomposition stage or use-phase CO2. Reconstruct both RER and RoW source production vectors rather than replacing acid by a different chemical. Source uncertainties and model omissions remain limitations; a finite LCI does not establish industrial completeness or source/native LCIA equivalence. Keep all eleven direct source resource/emission exchanges in each producer, with exact canonical ecoinvent3.10 name/compartment/unit identity and unchanged signed amount and supported uncertainty. This includes fossilCO2, ethyl acetate and ethanol, BOD5/COD/DOC/TOC, water returns and cooling-water withdrawal. Keep separate water compartments; do not aggregate oxygen-demand/carbon metrics as independent extra carbon, reconstruct missing carbon, overlay these releases a second time or add wastewater treatment absent from the original source process. Existing heat/water helper releases remain their own independent utility inventories. Five additional FR/ES/GB/DE/CH decarbonised-water markets are positive1kg wet-water references, with one positive1kg same-product supplier and no market freight/direct biosphere. Use complete native European decarbonised water per signedkg once, not drykg, deionised/drinking water or a cooling service. Source treatment descriptions include bicarbonate/CO2 removal while native describes carbonate precipitation for power-plant cooling water. Raw-water origin, hardness, chemical/energy use, degassing/precipitation, residues, water returns, geography/vintage and internal uncertainty differ; no purity, density, salt, loss or balance correction is inferred. Their source3.6 authorities and raw rule fingerprints stay unchanged; only independent3.9 scope is added. No runtime Python or alternative sector engine changes. New native-facing helpers retain all source acetoacetic production inputs, both market producer portfolios and final freight; earlier source graphs and utility recipes remain immutable. All imported/native inventory coverage and methodological approximations remain warnings with unquantified score effects."
     },
     "r-38acb36ff7358670": {
       "limitations": [
