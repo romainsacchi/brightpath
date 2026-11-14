@@ -1,9 +1,10 @@
 """Closer native suppliers preserve process stages and exact profile gates."""
 
-from copy import deepcopy
 import json
+from copy import deepcopy
 
 import pytest
+from uvek_review_helpers import before_converter_steel_39_review
 
 from brightpath import DATA_DIR
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -31,7 +32,7 @@ def test_complete_native_boundary_and_exact_source_profile(rule_id, version, nam
 
 
 def test_authoring_replay_changes_only_the_two_reviewed_suppliers():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = before_converter_steel_39_review(deepcopy(load_uvek_technosphere_resource()))
     expected = deepcopy(resource)
     review = json.loads((DATA_DIR / "export/uvek_pilot_grid_converter_review.json").read_text())
     for decision in review["rules"]:
