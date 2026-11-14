@@ -183,3 +183,20 @@ def before_pet_market_39_review(resource):
     parent.clear()
     parent.update(deepcopy(row["original_rule"]))
     return resource
+
+
+def before_polymer_carton_39_review(resource):
+    """Restore frozen inputs for older authoring tests, never runtime routes."""
+    import json
+
+    from brightpath import DATA_DIR
+
+    review = json.loads((DATA_DIR / "export/uvek_polymer_carton_39_review.json").read_text())
+    for row in review["records"]:
+        parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+        if parent not in (row["original_rule"], row["compiled_rule"]):
+            raise ValueError("Polymer-carton parent changed; repeat review.")
+        parent.clear()
+        parent.update(deepcopy(row["original_rule"]))
+    resource["reviews"].update(deepcopy(review["previous_shared_reviews"]))
+    return resource

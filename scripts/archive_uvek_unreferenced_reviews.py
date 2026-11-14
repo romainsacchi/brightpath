@@ -6,7 +6,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 ARCHIVE_PATH = "brightpath/data/export/uvek_archived_unreferenced_reviews.json"
-ARCHIVE_SHA256 = "861a0dd9b871a2dd5502ceff8c6570f906c304dce3c8a3b9d60df06477c150da"
+ARCHIVE_SHA256 = "572ca2038b3bce62ca3d9741abd5727e281c575c52b8c3bf137b7c501d4547f4"
 
 
 def archive_unreferenced_reviews(resource, root=ROOT):

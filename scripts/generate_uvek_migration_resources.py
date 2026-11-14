@@ -1449,6 +1449,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_material_markets_39_review(technosphere)
     if __package__:
+        from scripts.review_uvek_polymer_carton_39 import apply_polymer_carton_39_review
+    else:
+        from review_uvek_polymer_carton_39 import apply_polymer_carton_39_review
+
+    apply_polymer_carton_39_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews

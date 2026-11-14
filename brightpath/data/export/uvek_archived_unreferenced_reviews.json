@@ -110,6 +110,15 @@
         "Exact inspected ecoinvent3.12cut-off profile only. Preserve signed caller quantities, formulas, supported uncertainty, foreground ownership and separate caller emissions. Retain every original market producer share and freight entry separately with its amount and supported uncertainty; do not renormalize. Complete native production/services remain unchanged once, replacing source internal inventories as explicitly qualified screening proxies. Native biosphere exclusions, background/geography, vintage, internal uncertainty and unquantified score differences remain warnings. No inverse, cross-system-model, other-profile, LCIA-equivalence or impact-completeness approval is inferred."
       ],
       "rationale": "Reconstruct the global amorphousPETgranulate market with its three originalRER/Quebec/RoWvirgin-production shares and all three road/ocean/rail finished-resin delivery entries unchanged. Use complete native European amorphousPETgranulate fromPTAandethylene glycol per source kg. Do not substitute crystallinePET, recycledPET, sheet/film or extrusion service; do not add native conversion processing to a resin market."
+    },
+    "r-24c3f1321c024c09": {
+      "evidence": [
+        "brightpath/data/export/uvek_fuels_38_delivered_materials_review.json#bp-1b65914b2f33ba7b"
+      ],
+      "limitations": [
+        "Same finished LDPE packaging film per kg, not raw resin, a battery module or a forming-only service. Complete native film already includes LDPE feedstock, its transport to converting and film extrusion; add no second resin or extrusion process, scrap-yield correction, thickness or density multiplier. Exact inspected ecoinvent 3.8 cut-off only. Preserve signed caller kg, uncertainty, formula and properties; retain all two original producer entries and four separate final-freight entries in source order, with original amounts and supported marginal statistics, without aggregation, omission or normalization. Native European production replaces both RER and RoW inventories; RoW is an explicit geographic screening proxy. Complete native production and internal feedstock transport remain once; final market freight is additional and distinct. Four final freight legs retain tonne-km using native European generic road, European 3.5-tonne gross-weight fleet, European rail and ocean container services. Source global fleet mix, payload, empty return, size and technology are not reconstructed; the 3.5-tonne service is an explicit light-commercial fleet proxy. No payload or distance multiplier is invented. Native production inputs, allocation, geography, internal uncertainty, vintage and upstream biosphere exclusions differ; inventory and score differences remain unquantified. Separate caller processing and emissions remain unchanged."
+      ],
+      "rationale": "Exact 3.8 delivered-material helper, with two complete producer proxies and four retained freight legs. Only the enumerated 3.8 profile uses this helper; the separately approved 3.9 zeolite retains its original direct at-plant proxy."
     }
   },
   "additional_sources": {
@@ -120,6 +129,10 @@
     "r-213ad056a9b720d9": {
       "source_commit": "042b5907dd2f9b672dc98632ff90a48cdb9b29f9",
       "retirement_review": "brightpath/data/export/uvek_pet_market_39_review.json"
+    },
+    "r-24c3f1321c024c09": {
+      "source_commit": "24d910702a94e301e633d6791dcc67d0d3d5b515",
+      "retirement_review": "brightpath/data/export/uvek_polymer_carton_39_review.json"
     }
   }
 }

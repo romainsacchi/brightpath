@@ -66,7 +66,9 @@ def test_uninspected_311_is_not_given_the_38_helper(rid):
 
 
 def test_replay_is_idempotent_and_rejects_changed_delivery():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    from uvek_review_helpers import before_polymer_carton_39_review
+
+    resource = before_polymer_carton_39_review(deepcopy(load_uvek_technosphere_resource()))
     before = deepcopy(resource)
     apply_fuels_38_delivered_materials_review(resource)
     assert resource == before
