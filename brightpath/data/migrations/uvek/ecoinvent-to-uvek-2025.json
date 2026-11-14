@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 251,
-      "recipe": 1076,
-      "unclassified": 29148
+      "recipe": 1078,
+      "unclassified": 29146
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 256,
       "followup_review": 163,
-      "heuristic_similarity": 26393,
+      "heuristic_similarity": 26391,
       "pairwise_review": 2209,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -172,6 +172,7 @@
       "reviewed_pulp_heat_limestone_residue": 2,
       "reviewed_pulp_heat_route_markets": 3,
       "reviewed_pulp_heat_so2_sulfite": 5,
+      "reviewed_pure_salt_and_delivery_39": 2,
       "reviewed_pvf_treatment_39": 2,
       "reviewed_r134a_cutoff_product_recipe": 2,
       "reviewed_r134a_reclamation_recipe": 1,
@@ -208,7 +209,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444092,
+    "mean_confidence": 0.444117,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -592757,6 +592758,202 @@
       "reference product": "heat, district or industrial, natural gas",
       "unit": "megajoule"
     },
+    "salts-39-lithium-chloride-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_salts_generic_facility_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "GLO",
+          "name": "Lithium chloride, at plant",
+          "reference product": "Lithium chloride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for lithium chloride, source 3.9, reviewed native production and delivery",
+      "rationale": "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission. Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes. Source lithium chloride is explicitly100%LiCl,CAS7447-41-8;native documentation identifies LiCl with the same CAS and positive1kg reference,not a hydrated salt or solution. Both production models use lithium carbonate and acid/chlorination inputs; the native summary calls the route chlorination,while actual native inputs include hydrochloric acid. Preserve this documentation/model distinction without substituting a chlorine-gas input or inventing a reaction. Native purchases0.92732kg lithium carbonate and0.90226kg of its acid reference per kg LiCl;the historical acid label contains30%H2O wording,but no new acid/dilution correction belongs at this caller boundary. Keep its complete native production,waste,energy and precursor freight model. Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. These are final product delivery,distinct from native precursor freight. Previously reviewed exact3.9freight correspondences are reused without changing quantities,distances,payloads or fleet shares; native fleet/geography/technology limitations remain explicit.",
+      "reference product": "lithium chloride",
+      "unit": "kilogram"
+    },
+    "salts-39-sodium-perchlorate-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_salts_generic_facility_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "GLO",
+          "name": "Sodium perchlorate, at plant",
+          "reference product": "Sodium perchlorate, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for sodium perchlorate, source 3.9, reviewed native production and delivery",
+      "rationale": "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission. Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes. Source sodium perchlorate is explicitly100%NaClO4,CAS7601-89-0;native documentation gives the same anhydrous formula/CAS and positive1kg reference,not the monohydrate or a solution. Both describe anodic oxidation of sodium chlorate. Native lists0.91458kg sodium chlorate and2.74kWh electricity per kg product,along with platinum,water,infrastructure and precursor delivery. Preserve its complete model; do not add a hydration,molar,conversion-yield,electrical-efficiency or source-utility correction. Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. Native precursor rail/road demand is not a replacement for those final-delivery entries. Reuse reviewed exact3.9freight suppliers with existing geographic,fleet,technology,age and uncertainty limitations,not a claim of identical transport models.",
+      "reference product": "sodium perchlorate",
+      "unit": "kilogram"
+    },
     "secondary-metallurgy-slag-39-retained-landfill-collection": {
       "evidence": [
         "brightpath/data/export/uvek_secondary_metallurgy_slag_39_review.json"
@@ -814553,7 +814750,7 @@
     {"confidence": 0.35724, "id": "bp-270b6a6206eb83da", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lithium aluminium hydride", "reference product": "lithium aluminium hydride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium hydroxide, at plant", "reference product": "Lithium hydroxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.489119, "id": "bp-47166a564f819be1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lithium brine, 6.7 % Li", "reference product": "lithium brine, 6.7 % Li", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Concentrated lithium brine (6.7 %  Li), at plant", "reference product": "Concentrated lithium brine (6.7 %  Li), at plant", "unit": "kilogram"}},
     {"confidence": 0.608413, "id": "bp-a9d3eaa7a7b04898", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lithium carbonate", "reference product": "lithium carbonate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium carbonate, at plant", "reference product": "Lithium carbonate, at plant", "unit": "kilogram"}},
-    {"confidence": 0.598333, "id": "bp-345cb199eea27b3e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lithium chloride", "reference product": "lithium chloride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium chloride, at plant", "reference product": "Lithium chloride, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-345cb199eea27b3e", "mapping_method": "reviewed_pure_salt_and_delivery_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_salts_generic_facility_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_salts_generic_facility_39_review.json"], "reason": "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission. Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes. Source lithium chloride is explicitly100%LiCl,CAS7447-41-8;native documentation identifies LiCl with the same CAS and positive1kg reference,not a hydrated salt or solution. Both production models use lithium carbonate and acid/chlorination inputs; the native summary calls the route chlorination,while actual native inputs include hydrochloric acid. Preserve this documentation/model distinction without substituting a chlorine-gas input or inventing a reaction. Native purchases0.92732kg lithium carbonate and0.90226kg of its acid reference per kg LiCl;the historical acid label contains30%H2O wording,but no new acid/dilution correction belongs at this caller boundary. Keep its complete native production,waste,energy and precursor freight model. Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. These are final product delivery,distinct from native precursor freight. Previously reviewed exact3.9freight correspondences are reused without changing quantities,distances,payloads or fleet shares; native fleet/geography/technology limitations remain explicit.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected source3.9cutoff profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-78dd83f892603063", "source": {"location": "GLO", "name": "market for lithium chloride", "reference product": "lithium chloride", "unit": "kilogram"}, "target": {"recipe_ref": "salts-39-lithium-chloride-delivery"}, "technosphere_information_loss": "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission. Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes. Source lithium chloride is explicitly100%LiCl,CAS7447-41-8;native documentation identifies LiCl with the same CAS and positive1kg reference,not a hydrated salt or solution. Both production models use lithium carbonate and acid/chlorination inputs; the native summary calls the route chlorination,while actual native inputs include hydrochloric acid. Preserve this documentation/model distinction without substituting a chlorine-gas input or inventing a reaction. Native purchases0.92732kg lithium carbonate and0.90226kg of its acid reference per kg LiCl;the historical acid label contains30%H2O wording,but no new acid/dilution correction belongs at this caller boundary. Keep its complete native production,waste,energy and precursor freight model. Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. These are final product delivery,distinct from native precursor freight. Previously reviewed exact3.9freight correspondences are reused without changing quantities,distances,payloads or fleet shares; native fleet/geography/technology limitations remain explicit."},
     {"confidence": 0.508333, "id": "bp-680f554896d8478c", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lithium fluoride", "reference product": "lithium fluoride", "unit": "kilogram"}, "target": {"location": "CN", "name": "Lithium fluoride, at plant", "reference product": "Lithium fluoride, at plant", "unit": "kilogram"}},
     {"confidence": 0.673695, "id": "bp-3f812af11b538e63", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for lithium hexafluorophosphate", "reference product": "lithium hexafluorophosphate", "unit": "kilogram"}, "target": {"location": "CN", "name": "Lithium hexafluorophosphate, at plant", "reference product": "Lithium hexafluorophosphate, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-b5509df47e225bda", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for lithium hexafluorophosphate", "reference product": "lithium hexafluorophosphate", "unit": "kilogram"}, "target": {"location": "CN", "name": "Lithium hexafluorophosphate, at plant", "reference product": "Lithium hexafluorophosphate, at plant", "unit": "kilogram"}},
@@ -817114,7 +817311,7 @@
     {"confidence": 0.666018, "id": "bp-9304af0f52662f5a", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium perborate, tetrahydrate, powder", "reference product": "sodium perborate, tetrahydrate, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium perborate, tetrahydrate, powder, at plant", "reference product": "Sodium perborate, tetrahydrate, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.699421, "id": "bp-27f59d66734b82d8", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium percarbonate, powder", "reference product": "sodium percarbonate, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium percarbonate, powder, at plant", "reference product": "Sodium percarbonate, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.619421, "id": "bp-83f45ac9911bd095", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium percarbonate, powder", "reference product": "sodium percarbonate, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium percarbonate, powder, at plant", "reference product": "Sodium percarbonate, powder, at plant", "unit": "kilogram"}},
-    {"confidence": 0.617905, "id": "bp-775f06316be9f220", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium perchlorate", "reference product": "sodium perchlorate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium perchlorate, at plant", "reference product": "Sodium perchlorate, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-775f06316be9f220", "mapping_method": "reviewed_pure_salt_and_delivery_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_salts_generic_facility_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_salts_generic_facility_39_review.json"], "reason": "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission. Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes. Source sodium perchlorate is explicitly100%NaClO4,CAS7601-89-0;native documentation gives the same anhydrous formula/CAS and positive1kg reference,not the monohydrate or a solution. Both describe anodic oxidation of sodium chlorate. Native lists0.91458kg sodium chlorate and2.74kWh electricity per kg product,along with platinum,water,infrastructure and precursor delivery. Preserve its complete model; do not add a hydration,molar,conversion-yield,electrical-efficiency or source-utility correction. Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. Native precursor rail/road demand is not a replacement for those final-delivery entries. Reuse reviewed exact3.9freight suppliers with existing geographic,fleet,technology,age and uncertainty limitations,not a claim of identical transport models.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected source3.9cutoff profile is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-561f8dc2de022833", "source": {"location": "GLO", "name": "market for sodium perchlorate", "reference product": "sodium perchlorate", "unit": "kilogram"}, "target": {"recipe_ref": "salts-39-sodium-perchlorate-delivery"}, "technosphere_information_loss": "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission. Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes. Source sodium perchlorate is explicitly100%NaClO4,CAS7601-89-0;native documentation gives the same anhydrous formula/CAS and positive1kg reference,not the monohydrate or a solution. Both describe anodic oxidation of sodium chlorate. Native lists0.91458kg sodium chlorate and2.74kWh electricity per kg product,along with platinum,water,infrastructure and precursor delivery. Preserve its complete model; do not add a hydration,molar,conversion-yield,electrical-efficiency or source-utility correction. Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. Native precursor rail/road demand is not a replacement for those final-delivery entries. Reuse reviewed exact3.9freight suppliers with existing geographic,fleet,technology,age and uncertainty limitations,not a claim of identical transport models."},
     {"confidence": 1.0, "id": "bp-76088d56a8b87431", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for sodium persulfate", "reference product": "sodium persulfate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium persulfate, at plant", "reference product": "Sodium persulfate, at plant", "unit": "kilogram"}},
     {"confidence": 0.312917, "id": "bp-be550142af468567", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium phenolate", "reference product": "sodium phenolate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium persulfate, at plant", "reference product": "Sodium persulfate, at plant", "unit": "kilogram"}},
     {"confidence": 0.603333, "id": "bp-606f76acf685b311", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium phosphate", "reference product": "sodium phosphate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium phosphate, at plant", "reference product": "Sodium phosphate, at plant", "unit": "kilogram"}},
@@ -833588,6 +833785,18 @@
       ],
       "rationale": "Exact-profile delivered-water correspondence. The explicitly approved3.9cutoff South-African screening proxy uses complete nativeRER water; its original signedkg and calleruncertainty remain. The separately approved3.12cutoff correspondence retains complete nativeSwiss water atfactor+1, without generatedhelpers. Refer to each exact profile inspection for its own scientific boundary and limitations; no assumption or approval is transferred across source versions."
     },
+    "r-561f8dc2de022833": {
+      "evidence": [
+        "brightpath/data/export/uvek_salts_generic_facility_39_review.json"
+      ],
+      "limitations": [
+        "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission.",
+        "Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes.",
+        "Source sodium perchlorate is explicitly100%NaClO4,CAS7601-89-0;native documentation gives the same anhydrous formula/CAS and positive1kg reference,not the monohydrate or a solution. Both describe anodic oxidation of sodium chlorate. Native lists0.91458kg sodium chlorate and2.74kWh electricity per kg product,along with platinum,water,infrastructure and precursor delivery. Preserve its complete model; do not add a hydration,molar,conversion-yield,electrical-efficiency or source-utility correction.",
+        "Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. Native precursor rail/road demand is not a replacement for those final-delivery entries. Reuse reviewed exact3.9freight suppliers with existing geographic,fleet,technology,age and uncertainty limitations,not a claim of identical transport models."
+      ],
+      "rationale": "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission. Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes. Source sodium perchlorate is explicitly100%NaClO4,CAS7601-89-0;native documentation gives the same anhydrous formula/CAS and positive1kg reference,not the monohydrate or a solution. Both describe anodic oxidation of sodium chlorate. Native lists0.91458kg sodium chlorate and2.74kWh electricity per kg product,along with platinum,water,infrastructure and precursor delivery. Preserve its complete model; do not add a hydration,molar,conversion-yield,electrical-efficiency or source-utility correction. Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. Native precursor rail/road demand is not a replacement for those final-delivery entries. Reuse reviewed exact3.9freight suppliers with existing geographic,fleet,technology,age and uncertainty limitations,not a claim of identical transport models."
+    },
     "r-56202ff4711e8f2e": {
       "evidence": [
         "brightpath/data/export/uvek_wwt_residue_omission_review.json: exact inspected source/profile fingerprints. Source references are -1 kg; all direct service comments document 0% biogenic carbon, and markets supply 100% treatment of their own residue plus freight. The target catalogs and candidate inventories were inspected for the relevant industrial function and disposal boundary.",
@@ -834995,6 +835204,18 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external citric acid production / protein feed, 100% crude / CN / kilogram reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents 100%-crude-protein feed in kg, not an unscaled kilogram of crop, oil or unspecified protein concentrate. No validated nutritional conversion establishes equivalence with the former Crude oil, at production / CN provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-78dd83f892603063": {
+      "evidence": [
+        "brightpath/data/export/uvek_salts_generic_facility_39_review.json"
+      ],
+      "limitations": [
+        "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission.",
+        "Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes.",
+        "Source lithium chloride is explicitly100%LiCl,CAS7447-41-8;native documentation identifies LiCl with the same CAS and positive1kg reference,not a hydrated salt or solution. Both production models use lithium carbonate and acid/chlorination inputs; the native summary calls the route chlorination,while actual native inputs include hydrochloric acid. Preserve this documentation/model distinction without substituting a chlorine-gas input or inventing a reaction. Native purchases0.92732kg lithium carbonate and0.90226kg of its acid reference per kg LiCl;the historical acid label contains30%H2O wording,but no new acid/dilution correction belongs at this caller boundary. Keep its complete native production,waste,energy and precursor freight model.",
+        "Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. These are final product delivery,distinct from native precursor freight. Previously reviewed exact3.9freight correspondences are reused without changing quantities,distances,payloads or fleet shares; native fleet/geography/technology limitations remain explicit."
+      ],
+      "rationale": "Exact independently inspected ecoinvent3.9 cut-off profile only. Source and selected native positive references are1kg of the declared material or1unit of refinery construction. Preserve signed caller amount,supported uncertainty/formulas and separate caller emissions at factor+1. No hydrate,solution,molecular-weight,density,yield,capacity,lifetime or allocation multiplier is introduced. Other versions,patches,system models and reverse routes gain no new permission. Use complete native inventories once,without overlaying source manufacturing,utilities,water,waste,emission,infrastructure or credit inventories. Native technology,geography,age,precursors,allocation and internal uncertainty can differ; matching functions and reference units do not establish source/native LCI,LCIA,chemical-grade or stochastic equivalence. Score effects remain unquantified. No caller exchange is omitted and no runtime module,sector engine or validation behavior changes. Source lithium chloride is explicitly100%LiCl,CAS7447-41-8;native documentation identifies LiCl with the same CAS and positive1kg reference,not a hydrated salt or solution. Both production models use lithium carbonate and acid/chlorination inputs; the native summary calls the route chlorination,while actual native inputs include hydrochloric acid. Preserve this documentation/model distinction without substituting a chlorine-gas input or inventing a reaction. Native purchases0.92732kg lithium carbonate and0.90226kg of its acid reference per kg LiCl;the historical acid label contains30%H2O wording,but no new acid/dilution correction belongs at this caller boundary. Keep its complete native production,waste,energy and precursor freight model. Retain the single source producer and all four final market rail,barge,road and container-sea freight entries separately,in original order with supplied uncertainty. These are final product delivery,distinct from native precursor freight. Previously reviewed exact3.9freight correspondences are reused without changing quantities,distances,payloads or fleet shares; native fleet/geography/technology limitations remain explicit."
     },
     "r-78f1a8b43f51c9a3": {
       "evidence": [
