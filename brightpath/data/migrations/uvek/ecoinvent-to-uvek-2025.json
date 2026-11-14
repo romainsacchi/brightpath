@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 228,
-      "recipe": 1069,
-      "unclassified": 29178
+      "recipe": 1070,
+      "unclassified": 29177
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 258,
       "followup_review": 163,
-      "heuristic_similarity": 26412,
+      "heuristic_similarity": 26411,
       "pairwise_review": 2210,
       "product_checked": 35,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -86,6 +86,7 @@
       "reviewed_industrial_landfarming_service": 7,
       "reviewed_industrial_waste_market_service": 14,
       "reviewed_inventory_boundary_correction": 9,
+      "reviewed_latex_39_market_with_delivery": 1,
       "reviewed_lcd_module_39": 2,
       "reviewed_low_pressure_delivered_gas_energy": 13,
       "reviewed_market_composition": 366,
@@ -197,7 +198,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.443758,
+    "mean_confidence": 0.443778,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -88955,6 +88956,114 @@
       "name": "Complete market for waste wire plastic, inspected source composition, CH",
       "rationale": "Inspected source-faithful cable/wire-plastic composition. Preserve every fixed signed source quantity through complete treatment/freight/electricity/facility services. Manual-facility hall and road dimensions match; do not rescale capacity/lifetime. The exact native wire-plastic3.55%-water service replaces building deconstruction/conduit sorting and empty copper-stock mistakes. Swiss FAE uses the user-approved whole-incinerator screening proxy with explicit ash treatment, recovered-metal, emissions and allocation limitations and no added recovery credit. Geographic, fleet/vintage and source/target inventory approximations remain. Preserve caller uncertainty/formulas/foreground ownership/separate emissions; source internal uncertainty/formulas are not reconstructed. No consequential conversion or inferred reverse.",
       "reference product": "waste wire plastic",
+      "unit": "kilogram"
+    },
+    "carboxymethyl-cellulose-powder-39-retained-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_cmc_latex_markets_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.669407648360697,
+          "loc": 0.669407648360697,
+          "location": "RER",
+          "name": "Carboxymethyl cellulose, powder, at plant",
+          "reference product": "Carboxymethyl cellulose, powder, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.330592351639303,
+          "loc": 0.330592351639303,
+          "location": "RER",
+          "name": "Carboxymethyl cellulose, powder, at plant",
+          "reference product": "Carboxymethyl cellulose, powder, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for carboxymethyl cellulose, powder, retained source3.9 delivery [UVEK screening]",
+      "rationale": "Only exact independently inspected ecoinvent3.9 cut-off GLO delivered carboxymethyl cellulose, powder is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission. Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects. Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode. The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged. The product is carboxymethyl cellulose powder, source CAS9000-11-7, not an aqueous solution, neat cellulose, free acetic/chloroacetic acid or a formulation. Source and native describe the same historical alkaline-cellulose process and the same limited European-producer evidence. Source treats the reference as pure powder and requires separately supplied solvent for a solution; native powder has no stated solution fraction. Exact substitution degree, sodium content, moisture, assay and application grade are not established. Use the labelled powder kg without a guessed salt, stoichiometric, molecular-weight, dry-matter, purity or solvent multiplier. Single-company mid1990s technology, estimated transport/infrastructure and incomplete source detail remain limitations. Earlier source3.12 approval retains its existing complete at-plant screening proxy and +1 physical supplier, rather than inheriting this new3.9 delivered recipe. That older whole-market proxy does not separately preserve its source final freight; its pre-existing boundary limitation is now explicit. Its current source and native2025 metadata/inventory hashes match the earlier authority. Native2026 metadata/inventory hashes differ in the current reimport while its documentation hash matches; do not claim identical imported inventories. Independently re-review the current2026 named powder/CAS, positive1kg reference, nonempty complete elementary-flow inventory and declared biosphere coverage before retaining this whole-process screening supplier. The changed import and unquantified inventory/impact differences remain explicit. Adding a new source3.9 profile requires an explicit old fingerprint refinement, with frozen original authority; no blind refresh or claim that older delivered freight was repaired is made.",
+      "reference product": "carboxymethyl cellulose, powder",
       "unit": "kilogram"
     },
     "cement-concrete-inert-0f52eacf815af60f6591": {
@@ -647151,6 +647260,85 @@
       "reference product": "rail freight service",
       "unit": "ton kilometer"
     },
+    "styrene-butadiene-latex-39-retained-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_cmc_latex_markets_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Latex, at plant",
+          "reference product": "Latex, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for latex, retained source3.9 delivery [UVEK screening]",
+      "rationale": "Only exact independently inspected ecoinvent3.9 cut-off RER delivered latex is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission. Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects. Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode. The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged. This is synthetic styrene-butadiene latex/dispersion from emulsion polymerization, based on the same APME survey of17 European plants. It is not natural-rubber latex, raw styrene/butadiene, dry rubber or a curing service. Native explicitly names styrene-butadiene dispersion; source technology identifies the same monomers, despite broad generic application/product descriptions. Exact latex solids fraction, viscosity, monomer ratio and identical commercial grade are not independently established. Use the corresponding labelled nominal kg; do not invent a wet-to-dry, water, monomer, density, purity or solution multiplier or add water/solvent. Both inventories explicitly inherit APME exclusions, including recyclable wastes, consumed air/N2/O2, unspecified metal releases, mercaptans and unspecified CFC/HCFC emissions; bonded sulfur is assumed included in oil. Missing detail is not physically zero. Retain the complete native aggregate with those declared data limitations; add no guessed emissions, avoided-waste credits or feedstock/combustion reconstruction. Source and native biosphere coverage/counts differ and do not prove equivalent LCIA.",
+      "reference product": "latex",
+      "unit": "kilogram"
+    },
     "swiss-cement-delivery-003952cf7f0afec36e06": {
       "evidence": [
         "brightpath/data/export/uvek_swiss_cement_market_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
@@ -805572,7 +805760,7 @@
     {"confidence": 0.446143, "id": "bp-e380b6fdb2ffce26", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "market for carbon monoxide", "reference product": "carbon monoxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Carbon monoxide, CO, at plant", "reference product": "Carbon monoxide, CO, at plant", "unit": "kilogram"}},
     {"confidence": 0.640322, "id": "bp-e61a86c7c912a1e8", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for carbon tetrachloride", "reference product": "carbon tetrachloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Carbon tetrachloride, at plant", "reference product": "Carbon tetrachloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.560322, "id": "bp-834c23e40a485310", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for carbon tetrachloride", "reference product": "carbon tetrachloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Carbon tetrachloride, at plant", "reference product": "Carbon tetrachloride, at plant", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-c63a1747fd444679", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for carboxymethyl cellulose, powder", "reference product": "carboxymethyl cellulose, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Carboxymethyl cellulose, powder, at plant", "reference product": "Carboxymethyl cellulose, powder, at plant", "unit": "kilogram"}},
+    {"confidence": 1.0, "id": "bp-c63a1747fd444679", "mapping_method": "curated_legacy", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_cmc_latex_markets_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cmc_latex_markets_39_review.json"], "reason": "Retain earlier positive-kg complete at-plant screening supplier. Source and native2025 primary hashes match prior authority; current native2026 import hashes differ and its powder/CAS/positive-kg/complete-biosphere basis is independently re-reviewed with explicit import/coverage limitations. Source3.12 delivered-market freight is not separately reconstructed. New3.9 delivery recipe does not apply.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cmc_latex_markets_39_review.json"], "reason": "Only exact independently inspected ecoinvent3.9 cut-off GLO delivered carboxymethyl cellulose, powder is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission. Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects. Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode. The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged. The product is carboxymethyl cellulose powder, source CAS9000-11-7, not an aqueous solution, neat cellulose, free acetic/chloroacetic acid or a formulation. Source and native describe the same historical alkaline-cellulose process and the same limited European-producer evidence. Source treats the reference as pure powder and requires separately supplied solvent for a solution; native powder has no stated solution fraction. Exact substitution degree, sodium content, moisture, assay and application grade are not established. Use the labelled powder kg without a guessed salt, stoichiometric, molecular-weight, dry-matter, purity or solvent multiplier. Single-company mid1990s technology, estimated transport/infrastructure and incomplete source detail remain limitations. Earlier source3.12 approval retains its existing complete at-plant screening proxy and +1 physical supplier, rather than inheriting this new3.9 delivered recipe. That older whole-market proxy does not separately preserve its source final freight; its pre-existing boundary limitation is now explicit. Its current source and native2025 metadata/inventory hashes match the earlier authority. Native2026 metadata/inventory hashes differ in the current reimport while its documentation hash matches; do not claim identical imported inventories. Independently re-review the current2026 named powder/CAS, positive1kg reference, nonempty complete elementary-flow inventory and declared biosphere coverage before retaining this whole-process screening supplier. The changed import and unquantified inventory/impact differences remain explicit. Adding a new source3.9 profile requires an explicit old fingerprint refinement, with frozen original authority; no blind refresh or claim that older delivered freight was repaired is made.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "carboxymethyl-cellulose-powder-39-retained-delivery"}}], "reason": "Only independently inspected exact cut-off source profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-ca7b639dc02a8085", "source": {"location": "GLO", "name": "market for carboxymethyl cellulose, powder", "reference product": "carboxymethyl cellulose, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Carboxymethyl cellulose, powder, at plant", "reference product": "Carboxymethyl cellulose, powder, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only exact independently inspected ecoinvent3.9 cut-off GLO delivered carboxymethyl cellulose, powder is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission. Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects. Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode. The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged. The product is carboxymethyl cellulose powder, source CAS9000-11-7, not an aqueous solution, neat cellulose, free acetic/chloroacetic acid or a formulation. Source and native describe the same historical alkaline-cellulose process and the same limited European-producer evidence. Source treats the reference as pure powder and requires separately supplied solvent for a solution; native powder has no stated solution fraction. Exact substitution degree, sodium content, moisture, assay and application grade are not established. Use the labelled powder kg without a guessed salt, stoichiometric, molecular-weight, dry-matter, purity or solvent multiplier. Single-company mid1990s technology, estimated transport/infrastructure and incomplete source detail remain limitations. Earlier source3.12 approval retains its existing complete at-plant screening proxy and +1 physical supplier, rather than inheriting this new3.9 delivered recipe. That older whole-market proxy does not separately preserve its source final freight; its pre-existing boundary limitation is now explicit. Its current source and native2025 metadata/inventory hashes match the earlier authority. Native2026 metadata/inventory hashes differ in the current reimport while its documentation hash matches; do not claim identical imported inventories. Independently re-review the current2026 named powder/CAS, positive1kg reference, nonempty complete elementary-flow inventory and declared biosphere coverage before retaining this whole-process screening supplier. The changed import and unquantified inventory/impact differences remain explicit. Adding a new source3.9 profile requires an explicit old fingerprint refinement, with frozen original authority; no blind refresh or claim that older delivered freight was repaired is made."},
     {"confidence": 0.210248, "id": "bp-4528ebc1fa22935f", "mapping_method": "heuristic_similarity", "source": {"location": "FR", "name": "market for carding waste, hemp", "reference product": "carding waste, hemp", "unit": "kilogram"}, "target": {"location": "FR", "name": "Hemp culture, hemp seeds", "reference product": "Hemp culture, hemp seeds", "unit": "kilogram"}},
     {"confidence": 0.123568, "id": "bp-2ee6dc0ee877624f", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for carrot", "reference product": "carrot", "unit": "kilogram"}, "target": {"location": "CH", "name": "Aluminium, production mix for aluminium profiles, SZFF 2014, at plant", "reference product": "Aluminium, production mix for aluminium profiles, SZFF 2014, at plant", "unit": "kilogram"}},
     {"confidence": 0.175299, "id": "bp-867f4ae02482a730", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for carrot", "reference product": "carrot", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Carbon black, at plant", "reference product": "Carbon black, at plant", "unit": "kilogram"}},
@@ -808372,7 +808560,7 @@
     {"confidence": 0.169855, "id": "bp-068f13de0aa27bc6", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for laterite", "reference product": "laterite, mineral", "unit": "kilogram"}, "target": {"location": "CH", "name": "Adhesive, mineral, matured", "reference product": "Adhesive, mineral, matured", "unit": "kilogram"}},
     {"confidence": 0.222029, "id": "bp-d6ad0297e73f6e77", "mapping_method": "heuristic_similarity", "source": {"location": "IN", "name": "market for laterite, mineral", "reference product": "laterite, mineral", "unit": "kilogram"}, "target": {"location": "CH", "name": "Adhesive, mineral, matured", "reference product": "Adhesive, mineral, matured", "unit": "kilogram"}},
     {"confidence": 0.222029, "id": "bp-1bfe8ca0a4ba13a1", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for laterite, mineral", "reference product": "laterite, mineral", "unit": "kilogram"}, "target": {"location": "CH", "name": "Adhesive, mineral, matured", "reference product": "Adhesive, mineral, matured", "unit": "kilogram"}},
-    {"confidence": 0.394959, "id": "bp-97562a7b00a80fa8", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for latex", "reference product": "latex", "unit": "kilogram"}, "target": {"location": "RER", "name": "Latex, at plant", "reference product": "Latex, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-97562a7b00a80fa8", "mapping_method": "reviewed_latex_39_market_with_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_cmc_latex_markets_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_cmc_latex_markets_39_review.json"], "reason": "Only exact independently inspected ecoinvent3.9 cut-off RER delivered latex is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission. Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects. Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode. The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged. This is synthetic styrene-butadiene latex/dispersion from emulsion polymerization, based on the same APME survey of17 European plants. It is not natural-rubber latex, raw styrene/butadiene, dry rubber or a curing service. Native explicitly names styrene-butadiene dispersion; source technology identifies the same monomers, despite broad generic application/product descriptions. Exact latex solids fraction, viscosity, monomer ratio and identical commercial grade are not independently established. Use the corresponding labelled nominal kg; do not invent a wet-to-dry, water, monomer, density, purity or solution multiplier or add water/solvent. Both inventories explicitly inherit APME exclusions, including recyclable wastes, consumed air/N2/O2, unspecified metal releases, mercaptans and unspecified CFC/HCFC emissions; bonded sulfur is assumed included in oil. Missing detail is not physically zero. Retain the complete native aggregate with those declared data limitations; add no guessed emissions, avoided-waste credits or feedstock/combustion reconstruction. Source and native biosphere coverage/counts differ and do not prove equivalent LCIA.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "styrene-butadiene-latex-39-retained-delivery"}}], "reason": "Only independently inspected exact cut-off source profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-89089e4bc96a663d", "source": {"location": "RER", "name": "market for latex", "reference product": "latex", "unit": "kilogram"}, "target": {"recipe_ref": "styrene-butadiene-latex-39-retained-delivery"}, "technosphere_information_loss": "Only exact independently inspected ecoinvent3.9 cut-off RER delivered latex is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission. Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects. Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode. The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged. This is synthetic styrene-butadiene latex/dispersion from emulsion polymerization, based on the same APME survey of17 European plants. It is not natural-rubber latex, raw styrene/butadiene, dry rubber or a curing service. Native explicitly names styrene-butadiene dispersion; source technology identifies the same monomers, despite broad generic application/product descriptions. Exact latex solids fraction, viscosity, monomer ratio and identical commercial grade are not independently established. Use the corresponding labelled nominal kg; do not invent a wet-to-dry, water, monomer, density, purity or solution multiplier or add water/solvent. Both inventories explicitly inherit APME exclusions, including recyclable wastes, consumed air/N2/O2, unspecified metal releases, mercaptans and unspecified CFC/HCFC emissions; bonded sulfur is assumed included in oil. Missing detail is not physically zero. Retain the complete native aggregate with those declared data limitations; add no guessed emissions, avoided-waste credits or feedstock/combustion reconstruction. Source and native biosphere coverage/counts differ and do not prove equivalent LCIA."},
     {"confidence": 0.314959, "id": "bp-e1534916663b141b", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for latex", "reference product": "latex", "unit": "kilogram"}, "target": {"location": "RER", "name": "Latex, at plant", "reference product": "Latex, at plant", "unit": "kilogram"}},
     {"confidence": 0.4, "id": "bp-8d1233ff4d1e1e18", "mapping_method": "pairwise_review", "review_ref": "r-36a16cb01d5e258d", "source": {"location": "GLO", "name": "market for lauric diethanolamide", "reference product": "lauric diethanolamide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
     {"confidence": 0.620055, "id": "bp-cb1aec02114acf5f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for layered sodium silicate, SKS-6, powder", "reference product": "layered sodium silicate, SKS-6, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Layered sodium silicate, SKS-6, powder, at plant", "reference product": "xx Layered sodium silicate, SKS-6, powder, at plant", "unit": "kilogram"}},
@@ -829456,6 +829644,20 @@
       ],
       "rationale": "The actual source is cast secondary low-alloyed steel from an electric arc furnace, before downstream rolling. Native electric un/low-alloyed steel documents scrap as its only iron-bearing input and includes steelmaking and casting. Replace the previous37%electric/63%converter mix plus hot-rolling candidate with this complete native EAFsteel per kg. Do not include converter iron, another casting process or hot rolling."
     },
+    "r-89089e4bc96a663d": {
+      "evidence": [
+        "brightpath/data/export/uvek_cmc_latex_markets_39_review.json"
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9 cut-off RER delivered latex is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission.",
+        "Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects.",
+        "Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode.",
+        "The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged.",
+        "This is synthetic styrene-butadiene latex/dispersion from emulsion polymerization, based on the same APME survey of17 European plants. It is not natural-rubber latex, raw styrene/butadiene, dry rubber or a curing service. Native explicitly names styrene-butadiene dispersion; source technology identifies the same monomers, despite broad generic application/product descriptions. Exact latex solids fraction, viscosity, monomer ratio and identical commercial grade are not independently established. Use the corresponding labelled nominal kg; do not invent a wet-to-dry, water, monomer, density, purity or solution multiplier or add water/solvent.",
+        "Both inventories explicitly inherit APME exclusions, including recyclable wastes, consumed air/N2/O2, unspecified metal releases, mercaptans and unspecified CFC/HCFC emissions; bonded sulfur is assumed included in oil. Missing detail is not physically zero. Retain the complete native aggregate with those declared data limitations; add no guessed emissions, avoided-waste credits or feedstock/combustion reconstruction. Source and native biosphere coverage/counts differ and do not prove equivalent LCIA."
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9 cut-off RER delivered latex is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission. Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects. Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode. The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged. This is synthetic styrene-butadiene latex/dispersion from emulsion polymerization, based on the same APME survey of17 European plants. It is not natural-rubber latex, raw styrene/butadiene, dry rubber or a curing service. Native explicitly names styrene-butadiene dispersion; source technology identifies the same monomers, despite broad generic application/product descriptions. Exact latex solids fraction, viscosity, monomer ratio and identical commercial grade are not independently established. Use the corresponding labelled nominal kg; do not invent a wet-to-dry, water, monomer, density, purity or solution multiplier or add water/solvent. Both inventories explicitly inherit APME exclusions, including recyclable wastes, consumed air/N2/O2, unspecified metal releases, mercaptans and unspecified CFC/HCFC emissions; bonded sulfur is assumed included in oil. Missing detail is not physically zero. Retain the complete native aggregate with those declared data limitations; add no guessed emissions, avoided-waste credits or feedstock/combustion reconstruction. Source and native biosphere coverage/counts differ and do not prove equivalent LCIA."
+    },
     "r-899801f9abb5ba9a": {
       "evidence": [
         "Exact approved source/prior-target/profile whitelist in brightpath/data/export/uvek_feed_nutrient_omission_review.json: 95 normalized nutrient identities, 692 inspected positive-reference source/profile pairs, 45 gross-energy MJ references and 50 100%-crude-protein kg references. Existing heuristic factors are all 1 and do not document nutritional equivalence. Prior targets supply thermal/fuel energy, crop mass, crude oil or an unspecified protein concentrate, not a validated generic nutritional market.",
@@ -831593,6 +831795,20 @@
         "The omitted exchange's untreated-discharge impacts are absent from the target dataset and may understate its score. Separately listed foreground emissions are preserved. The source exchange is retained in the migration loss report; no reverse reconstruction is inferred."
       ],
       "rationale": "Approved omission: market for wastewater from textile production / GLO / cubic meter represents fully untreated wastewater discharge. The inspected source has no wastewater-treatment process; its market supplies only direct disposal. Omit the exchange instead of substituting NF3 or municipal wastewater treatment, and continue conversion with a warning."
+    },
+    "r-ca7b639dc02a8085": {
+      "evidence": [
+        "brightpath/data/export/uvek_cmc_latex_markets_39_review.json"
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9 cut-off GLO delivered carboxymethyl cellulose, powder is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission.",
+        "Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects.",
+        "Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode.",
+        "The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged.",
+        "The product is carboxymethyl cellulose powder, source CAS9000-11-7, not an aqueous solution, neat cellulose, free acetic/chloroacetic acid or a formulation. Source and native describe the same historical alkaline-cellulose process and the same limited European-producer evidence. Source treats the reference as pure powder and requires separately supplied solvent for a solution; native powder has no stated solution fraction. Exact substitution degree, sodium content, moisture, assay and application grade are not established. Use the labelled powder kg without a guessed salt, stoichiometric, molecular-weight, dry-matter, purity or solvent multiplier. Single-company mid1990s technology, estimated transport/infrastructure and incomplete source detail remain limitations.",
+        "Earlier source3.12 approval retains its existing complete at-plant screening proxy and +1 physical supplier, rather than inheriting this new3.9 delivered recipe. That older whole-market proxy does not separately preserve its source final freight; its pre-existing boundary limitation is now explicit. Its current source and native2025 metadata/inventory hashes match the earlier authority. Native2026 metadata/inventory hashes differ in the current reimport while its documentation hash matches; do not claim identical imported inventories. Independently re-review the current2026 named powder/CAS, positive1kg reference, nonempty complete elementary-flow inventory and declared biosphere coverage before retaining this whole-process screening supplier. The changed import and unquantified inventory/impact differences remain explicit. Adding a new source3.9 profile requires an explicit old fingerprint refinement, with frozen original authority; no blind refresh or claim that older delivered freight was repaired is made."
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9 cut-off GLO delivered carboxymethyl cellulose, powder is newly reviewed, per positive one kg. Use complete native European same-named product with factor +1 and retain each source producer share and final-delivery exchange separately in an exact-profile helper. Preserve signed caller kg, supported uncertainty/formulas, foreground ownership and separately listed operations/emissions. Other versions, patches, system models, materials and reverse routes gain no permission. Native product has a complete nonempty aggregated elementary-flow inventory and no direct technosphere inputs. Zero technosphere coordinates do not mean zero burden or missing precursor processes. Retain its complete biosphere inventory once; do not add a second raw-material, fuel, electricity, manufacturing, water-treatment or infrastructure model. Native aggregation does not expose embedded utility suppliers for subsequent relinking; it cannot be presented as a fully IAM-updated upstream process. Native biosphere exclusions/coverage, inherited upstream data, allocation, regional/vintage representativeness and internal uncertainty remain limitations with unquantified score effects. Retain all source final freight as additional to production-at-plant, including amount, uncertainty type, location parameter, spread, pedigree and scale-without-pedigree where present. Use complete native RER rail, Rhine-barge and lorry-fleet and OCE ocean-container services as explicit geographic/technology proxies. Source country/traction/fleet/payload/infrastructure/load/fuel and native vintage/allocation/uncertainty differ; no exact steam-traction reconstruction is claimed. Do not adjust distance, payload, fleet shares, fuel or loss factors, add native internal transport twice, copy source producer emissions, renormalize shares or omit a delivery mode. The source3.9 helper corrects an at-plant-only match for a delivered-market function. Existing unreviewed contexts do not inherit this approval. No physical source exchange is omitted and no zero-burden stock or invented recovery credit is added. Runtime Python and shared Premise sector transformations remain unchanged. The product is carboxymethyl cellulose powder, source CAS9000-11-7, not an aqueous solution, neat cellulose, free acetic/chloroacetic acid or a formulation. Source and native describe the same historical alkaline-cellulose process and the same limited European-producer evidence. Source treats the reference as pure powder and requires separately supplied solvent for a solution; native powder has no stated solution fraction. Exact substitution degree, sodium content, moisture, assay and application grade are not established. Use the labelled powder kg without a guessed salt, stoichiometric, molecular-weight, dry-matter, purity or solvent multiplier. Single-company mid1990s technology, estimated transport/infrastructure and incomplete source detail remain limitations. Earlier source3.12 approval retains its existing complete at-plant screening proxy and +1 physical supplier, rather than inheriting this new3.9 delivered recipe. That older whole-market proxy does not separately preserve its source final freight; its pre-existing boundary limitation is now explicit. Its current source and native2025 metadata/inventory hashes match the earlier authority. Native2026 metadata/inventory hashes differ in the current reimport while its documentation hash matches; do not claim identical imported inventories. Independently re-review the current2026 named powder/CAS, positive1kg reference, nonempty complete elementary-flow inventory and declared biosphere coverage before retaining this whole-process screening supplier. The changed import and unquantified inventory/impact differences remain explicit. Adding a new source3.9 profile requires an explicit old fingerprint refinement, with frozen original authority; no blind refresh or claim that older delivered freight was repaired is made."
     },
     "r-cb0269cc9761142f": {
       "evidence": [
