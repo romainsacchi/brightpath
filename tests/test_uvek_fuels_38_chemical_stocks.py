@@ -58,6 +58,7 @@ def test_reviews_keep_the_seven_existing_physical_suppliers_and_product_bases():
             for path in (
                 "export/uvek_solvent_supply_markets_39_review.json",
                 "export/uvek_sodium_methoxide_market_39_review.json",
+                "export/uvek_acid_surfactant_salts_39_review.json",
             )
         ]
         extended = next((r for packet in extensions for r in packet["records"] if r["rule_id"] == rid), None)

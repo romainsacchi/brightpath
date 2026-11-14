@@ -1503,6 +1503,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_cobalt_molybdenum_co_39_review(technosphere)
     if __package__:
+        from scripts.review_uvek_acid_surfactant_salts_39 import apply_acid_surfactant_salts_39_review
+    else:
+        from review_uvek_acid_surfactant_salts_39 import apply_acid_surfactant_salts_39_review
+
+    apply_acid_surfactant_salts_39_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
