@@ -8,7 +8,8 @@ import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
 
-from brightpath import DATA_DIR, BrightwayInventory
+from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
+from brightpath.background.reference_signs import select_profile_sign_rules
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.migrations.resources import load_uvek_technosphere_resource
 
@@ -47,11 +48,28 @@ def test_complete_native_stock_keeps_signed_caller_statistics(rid, amount, uncer
         assert edge["loc"] == amount
 
 
-def test_reviews_do_not_change_any_of_the_seven_existing_rules():
+def test_reviews_keep_the_seven_existing_physical_suppliers_and_product_bases():
     assert len(RECORDS) == 7
     resource = load_uvek_technosphere_resource()
     for rid, row in RECORDS.items():
-        assert next(r for r in resource["replace"] if r["id"] == rid) == row["rule"]
+        current = next(r for r in resource["replace"] if r["id"] == rid)
+        extension = json.loads((DATA_DIR / "export/uvek_solvent_supply_markets_39_review.json").read_text())
+        extended = next((r for r in extension["records"] if r["rule_id"] == rid), None)
+        if extended:
+            assert extended["original_rule"] == row["rule"]
+            assert current == extended["compiled_rule"]
+            selected = next(
+                r
+                for r in select_profile_sign_rules(resource, TechnosphereProfile("ecoinvent", "3.8", "cutoff"))[
+                    "replace"
+                ]
+                if r["id"] == rid
+            )
+            assert selected["source"] == row["rule"]["source"]
+            assert selected["target"] == row["rule"]["target"]
+            assert selected.get("conversion_factor", 1) == row["rule"].get("conversion_factor", 1)
+        else:
+            assert current == row["rule"]
         assert row["source_witness"]["reference_amounts"] == [1]
         assert row["native_2026_witness"]["reference_amount"] == 1
         assert not row["source_market_internal_shares_and_freight_reproduced"]
