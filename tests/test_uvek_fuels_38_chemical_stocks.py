@@ -53,8 +53,14 @@ def test_reviews_keep_the_seven_existing_physical_suppliers_and_product_bases():
     resource = load_uvek_technosphere_resource()
     for rid, row in RECORDS.items():
         current = next(r for r in resource["replace"] if r["id"] == rid)
-        extension = json.loads((DATA_DIR / "export/uvek_solvent_supply_markets_39_review.json").read_text())
-        extended = next((r for r in extension["records"] if r["rule_id"] == rid), None)
+        extensions = [
+            json.loads((DATA_DIR / path).read_text())
+            for path in (
+                "export/uvek_solvent_supply_markets_39_review.json",
+                "export/uvek_sodium_methoxide_market_39_review.json",
+            )
+        ]
+        extended = next((r for packet in extensions for r in packet["records"] if r["rule_id"] == rid), None)
         if extended:
             assert extended["original_rule"] == row["rule"]
             assert current == extended["compiled_rule"]

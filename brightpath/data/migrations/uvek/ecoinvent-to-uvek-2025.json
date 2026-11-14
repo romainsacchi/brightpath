@@ -607201,6 +607201,114 @@
       "reference product": "sodium tetrahydridoborate",
       "unit": "kilogram"
     },
+    "sodium-methoxide-market-39-retained-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_sodium_methoxide_market_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.2,
+          "loc": 0.2,
+          "location": "GLO",
+          "name": "Sodium methoxide, at plant",
+          "reference product": "Sodium methoxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.8,
+          "loc": 0.8,
+          "location": "GLO",
+          "name": "Sodium methoxide, at plant",
+          "reference product": "Sodium methoxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for sodium methoxide, retained source3.9 delivery [UVEK screening]",
+      "rationale": "New permission covers only the independently inspected exact ecoinvent3.9 cut-off global sodium-methoxide market. Source market, both allocated source producers and native stock have positive one-kg named-product references. Source declares pure sodium methoxide, CAS124-41-4/CH3NaO; the native reference has no solution qualifier. Keep signed caller product kg, supported uncertainty/formulas and separate foreground exchanges at factor+1. Native exact assay is not independently certified here; infer no water/solids concentration or purity conversion. Other source versions, patches, models and reverse routes gain no new permission. Reuse the exact technology-proxy category already explicitly approved for source3.8: complete native Brown-Schlesinger sodium methoxide replaces the source20% allocated Brown-Schlesinger and80% separate methanol/alkali production. Their positive reference/product basis and20/80 route structure are independently checked for3.9. Keep both original producer coefficients separately, but both now purchase the same complete native product; source manufacturing routes, coproduct allocation, feedstocks, energy, wastewater, emissions and internal uncertainty are not reproduced. Substantial score effects remain unquantified. This is the already approved same-product screening proxy, not evidence of reaction or allocated-inventory equivalence. The source Brown-Schlesinger comment mentions a trimethyl-borate functional unit, but its actual allocated output reference is1kg sodium methoxide. Do not replace that measured reference with the generic reaction prose or infer another allocation factor from selected upstream coefficients. Do not scale caller mass by20/80, reaction yield, purity or molecular weight, add a borohydride/hydrogen credit, or overlay source direct-route heat, alkali, methanol, plant, water or emissions onto the complete native coproduct inventory. The native keeps its own allocation and reagent solution bases once. The new3.9 helper additionally retains all four source final-delivery entries at their original amounts/statistics: rail0.3091, barge0.0246, road0.2088 and ocean-container0.599tkm per marketkg. Native at-plant production already contains its own upstream input transport; that is not final delivery to the chemical consumer. Keep the two boundaries separate and add no guessed distance, payload, loss or storage factor. Complete native European rail/road/barge and ocean-container services are explicit geographic, traction/fleet/loading, fuel, infrastructure and vintage proxies. They do not establish identical logistics or scores. The earlier3.8 permission retains its direct factory-gate stock and the earlier explicit delivery/route limitations; it does not silently acquire the new3.9 delivery helper. Original authority bytes, source versions, default target and mapping method remain unchanged. Its content-bound fingerprint is rebound only after proving identical source identity, selected target, factor and recipe closure. No literal source/caller omission, empty supplier, runtime Python change, alternate sector engine, validation bypass or claim of LCI/LCIA/stochastic equivalence.",
+      "reference product": "sodium methoxide",
+      "unit": "kilogram"
+    },
     "sodium-sulfate-39-retained-production-and-delivery": {
       "evidence": [
         "brightpath/data/export/uvek_sodium_sulfate_39_review.json"
@@ -815449,7 +815557,7 @@
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-172446e59949fefa", "mapping_method": "reviewed_pulp_heat_active_solution_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_solution_markets_review.json", "https://support.ecoinvent.org/hubfs/Knowledge%20Base/Database/Fundamentals/dataqualityguideline_ecoinvent_3_20130506.pdf"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pulp_heat_solution_markets_review.json", "https://support.ecoinvent.org/hubfs/Knowledge%20Base/Database/Fundamentals/dataqualityguideline_ecoinvent_3_20130506.pdf"], "reason": "Exact3.9cutoff solution-state chemical market screening reconstructions for hydrogen peroxide50%, sodium hypochlorite15% and industrial phosphoric acid85%, per signedkg active chemical. The ecoinvent2013methodology section9.3 identifies active-substance quantity conventions and explains the older v1/v2solution naming; percentages describe supplied concentration rather than an automatic mixture-quantity multiplier. Source positive1kg without-water references have1kg dry active mass. Original native archive references retain the legacy names, positive1kg references and matching chemical identities. Native active-mass phosphoric/caustic conventions were independently inspected in the earlier active-chemical review; equal hydrogen0.0656kg and phosphoric-feed1.02kg/sulphuric-acid0.129kg inputs corroborate the peroxide/phosphoric nominal basis. Apply factor+1, not1/0.50,1/0.15or1/0.85. Keep every original producer share, freight row, signedquantity and supported uncertainty separately, without renormalization; native plants include upstream precursor transport and only original final-product market freight is added. Complete native RER production replaces source regional producer inventories. The hypochlorite correspondence is explicitly a supply-boundary/reagent screening proxy: both descriptions refer to chlorine-emission capture, but source producers record0.952447874110337kg primary chlorine and1.07441948482084kg active NaOH perkg; native records no primary chlorine input and0.56kg active NaOH. Native chemical-plant heat/electricity, allocation, emissions and internal uncertainty also differ. Do not rescale the reference quantity to force a reagent match, invent primary-chlorine/caustic compensation, or introduce an avoided-emission credit. Missing native primary-chlorine burdens can affect scores and the effect is unquantified. Complete RER rail/barge/heavy-lorry and OCE container-shipping services retain originaltonne-km; country/traction/fleet/load/technology, geography, allocation, grade, vintage, biosphere exclusions and internal uncertainty differ. No extra water, density, loss, purity, carbon or concentration multiplier is introduced. Separate caller emissions and carbon-resource exchanges remain unchanged. Only exact independently inspected3.9cutoff is newly approved. The older3.8phosphoric target and factor remain unchanged; its positive active basis is made explicit without changing its delivered data. No new physical source-exchange omission or other-version/consequential/reverse approval is introduced. This batch does not complete pulp heat or steel transformation/export.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only exact inspected3.9cutoff source qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-2172532036c35589", "source": {"location": "RoW", "name": "market for sodium hypochlorite, without water, in 15% solution state", "reference product": "sodium hypochlorite, without water, in 15% solution state", "unit": "kilogram"}, "target": {"recipe_ref": "pulp-heat-39-solution-market-172446e59949fefa"}, "technosphere_information_loss": "Exact3.9cutoff solution-state chemical market screening reconstructions for hydrogen peroxide50%, sodium hypochlorite15% and industrial phosphoric acid85%, per signedkg active chemical. The ecoinvent2013methodology section9.3 identifies active-substance quantity conventions and explains the older v1/v2solution naming; percentages describe supplied concentration rather than an automatic mixture-quantity multiplier. Source positive1kg without-water references have1kg dry active mass. Original native archive references retain the legacy names, positive1kg references and matching chemical identities. Native active-mass phosphoric/caustic conventions were independently inspected in the earlier active-chemical review; equal hydrogen0.0656kg and phosphoric-feed1.02kg/sulphuric-acid0.129kg inputs corroborate the peroxide/phosphoric nominal basis. Apply factor+1, not1/0.50,1/0.15or1/0.85. Keep every original producer share, freight row, signedquantity and supported uncertainty separately, without renormalization; native plants include upstream precursor transport and only original final-product market freight is added. Complete native RER production replaces source regional producer inventories. The hypochlorite correspondence is explicitly a supply-boundary/reagent screening proxy: both descriptions refer to chlorine-emission capture, but source producers record0.952447874110337kg primary chlorine and1.07441948482084kg active NaOH perkg; native records no primary chlorine input and0.56kg active NaOH. Native chemical-plant heat/electricity, allocation, emissions and internal uncertainty also differ. Do not rescale the reference quantity to force a reagent match, invent primary-chlorine/caustic compensation, or introduce an avoided-emission credit. Missing native primary-chlorine burdens can affect scores and the effect is unquantified. Complete RER rail/barge/heavy-lorry and OCE container-shipping services retain originaltonne-km; country/traction/fleet/load/technology, geography, allocation, grade, vintage, biosphere exclusions and internal uncertainty differ. No extra water, density, loss, purity, carbon or concentration multiplier is introduced. Separate caller emissions and carbon-resource exchanges remain unchanged. Only exact independently inspected3.9cutoff is newly approved. The older3.8phosphoric target and factor remain unchanged; its positive active basis is made explicit without changing its delivered data. No new physical source-exchange omission or other-version/consequential/reverse approval is introduced. This batch does not complete pulp heat or steel transformation/export."},
     {"confidence": 0.607923, "id": "bp-bc15874db11d1177", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium metasilicate pentahydrate, 58% active substance, powder", "reference product": "sodium metasilicate pentahydrate, 58% active substance, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium metasilicate pentahydrate, 58%, powder, at plant", "reference product": "Sodium metasilicate pentahydrate, 58%, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.527923, "id": "bp-ad78e742db0946aa", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sodium metasilicate pentahydrate, 58% active substance, powder", "reference product": "sodium metasilicate pentahydrate, 58% active substance, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium metasilicate pentahydrate, 58%, powder, at plant", "reference product": "Sodium metasilicate pentahydrate, 58%, powder, at plant", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-6fb142ff07a96aed", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for sodium methoxide", "reference product": "sodium methoxide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium methoxide, at plant", "reference product": "Sodium methoxide, at plant", "unit": "kilogram"}},
+    {"confidence": 1.0, "id": "bp-6fb142ff07a96aed", "mapping_method": "curated_legacy", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_sodium_methoxide_market_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_38_additional_chemicals_review.json"], "reason": "Preserve the independently approved3.8 direct-stock product basis, supplier and quantity factor.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_sodium_methoxide_market_39_review.json"], "reason": "New permission covers only the independently inspected exact ecoinvent3.9 cut-off global sodium-methoxide market. Source market, both allocated source producers and native stock have positive one-kg named-product references. Source declares pure sodium methoxide, CAS124-41-4/CH3NaO; the native reference has no solution qualifier. Keep signed caller product kg, supported uncertainty/formulas and separate foreground exchanges at factor+1. Native exact assay is not independently certified here; infer no water/solids concentration or purity conversion. Other source versions, patches, models and reverse routes gain no new permission. Reuse the exact technology-proxy category already explicitly approved for source3.8: complete native Brown-Schlesinger sodium methoxide replaces the source20% allocated Brown-Schlesinger and80% separate methanol/alkali production. Their positive reference/product basis and20/80 route structure are independently checked for3.9. Keep both original producer coefficients separately, but both now purchase the same complete native product; source manufacturing routes, coproduct allocation, feedstocks, energy, wastewater, emissions and internal uncertainty are not reproduced. Substantial score effects remain unquantified. This is the already approved same-product screening proxy, not evidence of reaction or allocated-inventory equivalence. The source Brown-Schlesinger comment mentions a trimethyl-borate functional unit, but its actual allocated output reference is1kg sodium methoxide. Do not replace that measured reference with the generic reaction prose or infer another allocation factor from selected upstream coefficients. Do not scale caller mass by20/80, reaction yield, purity or molecular weight, add a borohydride/hydrogen credit, or overlay source direct-route heat, alkali, methanol, plant, water or emissions onto the complete native coproduct inventory. The native keeps its own allocation and reagent solution bases once. The new3.9 helper additionally retains all four source final-delivery entries at their original amounts/statistics: rail0.3091, barge0.0246, road0.2088 and ocean-container0.599tkm per marketkg. Native at-plant production already contains its own upstream input transport; that is not final delivery to the chemical consumer. Keep the two boundaries separate and add no guessed distance, payload, loss or storage factor. Complete native European rail/road/barge and ocean-container services are explicit geographic, traction/fleet/loading, fuel, infrastructure and vintage proxies. They do not establish identical logistics or scores. The earlier3.8 permission retains its direct factory-gate stock and the earlier explicit delivery/route limitations; it does not silently acquire the new3.9 delivery helper. Original authority bytes, source versions, default target and mapping method remain unchanged. Its content-bound fingerprint is rebound only after proving identical source identity, selected target, factor and recipe closure. No literal source/caller omission, empty supplier, runtime Python change, alternate sector engine, validation bypass or claim of LCI/LCIA/stochastic equivalence.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "sodium-methoxide-market-39-retained-delivery"}}], "reason": "Only independently approved exact source profiles are qualified.", "status": "unresolved"}, "review_ref": "r-b8064b394d75463b", "source": {"location": "GLO", "name": "market for sodium methoxide", "reference product": "sodium methoxide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium methoxide, at plant", "reference product": "Sodium methoxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.317447, "id": "bp-22e7a85c9e3cd2a2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium nitrate", "reference product": "sodium nitrate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium perchlorate, at plant", "reference product": "Sodium perchlorate, at plant", "unit": "kilogram"}},
     {"confidence": 0.299159, "id": "bp-40ae005dee0cfdd0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium nitrate, technical grade", "reference product": "sodium nitrate, technical grade", "unit": "kilogram"}, "target": {"location": "RER", "name": "Calcium carbide, technical grade, at plant", "reference product": "Calcium carbide, technical grade, at plant", "unit": "kilogram"}},
     {"confidence": 0.4, "id": "bp-fa87d9a9074b9b52", "mapping_method": "pairwise_review", "review_ref": "r-2f90c108e290ea23", "source": {"location": "CL", "name": "market for sodium nitrate, unrefined", "reference product": "sodium nitrate, unrefined", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals inorganic, at plant", "reference product": "Chemicals inorganic, at plant", "unit": "kilogram"}},
@@ -835592,6 +835700,19 @@
         "Approved CRT-cullet landfill screening proxy: glass cullet, lead containing, from used cathode ray tube is represented by ordinary construction-waste glass in CH at the same kilogram basis. The ecoinvent direct landfill model explicitly excludes direct leachate emissions as negligible; UVEK includes generic-glass metal releases, including chromium, copper, lead and zinc. These are proxy metal releases, not a reconstruction of this cullet's lead or other metal content. Composition, leaching, metal speciation, landfill design, hydrology, infrastructure, energy, allocation and background supplies may differ. LCIA equivalence, including toxicity impacts, is not established or quantified; the proxy may introduce direct metal-emission contributions absent from the source landfill inventory. Preserve the original waste mass without composition or leaching-based scaling. The source market supplies 100% landfill of the same cullet. Additional market-level freight is omitted: four suppliers through 3.9 and one from 3.10. Foreground freight is preserved. Production, separately listed foreground emissions/treatment and recovered-glass references are preserved."
       ],
       "rationale": "Approved on 2026-11-05: replace screen manufacturing for the exact GLO/kg market for glass cullet, lead containing, from used cathode ray tube waste reference with the CH ordinary-glass construction-waste landfill service and factor -1. Preserve waste mass. The source explicitly excludes direct leachate emissions as negligible, while the proxy includes generic-glass metal releases. Composition, geography and this broader emission model are disclosed screening approximations. The source market supplies 100% landfill of the same cullet. Additional market-level freight is omitted: four suppliers through 3.9 and one from 3.10. Foreground freight is preserved."
+    },
+    "r-b8064b394d75463b": {
+      "evidence": [
+        "brightpath/data/export/uvek_sodium_methoxide_market_39_review.json"
+      ],
+      "limitations": [
+        "New permission covers only the independently inspected exact ecoinvent3.9 cut-off global sodium-methoxide market. Source market, both allocated source producers and native stock have positive one-kg named-product references. Source declares pure sodium methoxide, CAS124-41-4/CH3NaO; the native reference has no solution qualifier. Keep signed caller product kg, supported uncertainty/formulas and separate foreground exchanges at factor+1. Native exact assay is not independently certified here; infer no water/solids concentration or purity conversion. Other source versions, patches, models and reverse routes gain no new permission.",
+        "Reuse the exact technology-proxy category already explicitly approved for source3.8: complete native Brown-Schlesinger sodium methoxide replaces the source20% allocated Brown-Schlesinger and80% separate methanol/alkali production. Their positive reference/product basis and20/80 route structure are independently checked for3.9. Keep both original producer coefficients separately, but both now purchase the same complete native product; source manufacturing routes, coproduct allocation, feedstocks, energy, wastewater, emissions and internal uncertainty are not reproduced. Substantial score effects remain unquantified. This is the already approved same-product screening proxy, not evidence of reaction or allocated-inventory equivalence.",
+        "The source Brown-Schlesinger comment mentions a trimethyl-borate functional unit, but its actual allocated output reference is1kg sodium methoxide. Do not replace that measured reference with the generic reaction prose or infer another allocation factor from selected upstream coefficients. Do not scale caller mass by20/80, reaction yield, purity or molecular weight, add a borohydride/hydrogen credit, or overlay source direct-route heat, alkali, methanol, plant, water or emissions onto the complete native coproduct inventory. The native keeps its own allocation and reagent solution bases once.",
+        "The new3.9 helper additionally retains all four source final-delivery entries at their original amounts/statistics: rail0.3091, barge0.0246, road0.2088 and ocean-container0.599tkm per marketkg. Native at-plant production already contains its own upstream input transport; that is not final delivery to the chemical consumer. Keep the two boundaries separate and add no guessed distance, payload, loss or storage factor. Complete native European rail/road/barge and ocean-container services are explicit geographic, traction/fleet/loading, fuel, infrastructure and vintage proxies. They do not establish identical logistics or scores.",
+        "The earlier3.8 permission retains its direct factory-gate stock and the earlier explicit delivery/route limitations; it does not silently acquire the new3.9 delivery helper. Original authority bytes, source versions, default target and mapping method remain unchanged. Its content-bound fingerprint is rebound only after proving identical source identity, selected target, factor and recipe closure. No literal source/caller omission, empty supplier, runtime Python change, alternate sector engine, validation bypass or claim of LCI/LCIA/stochastic equivalence."
+      ],
+      "rationale": "For exact source3.9, reuse the explicitly approved same-product sodium-methoxide technology proxy and retain original final delivery. Older3.8 keeps its own direct-stock decision."
     },
     "r-b83bdd97e10d54e4": {
       "limitations": [

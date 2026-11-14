@@ -1,0 +1,704 @@
+{
+  "schema_version": 1,
+  "authorization": "Standing user auto-approval of similar already approved cases and coming modelling decisions, with explicit reference checks, retained delivery and technology/allocation/score warnings.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.9",
+    "system_model": "cutoff"
+  },
+  "records": [
+    {
+      "rule_id": "bp-6fb142ff07a96aed",
+      "original_rule": {
+        "confidence": 1.0,
+        "id": "bp-6fb142ff07a96aed",
+        "mapping_method": "curated_legacy",
+        "source": {
+          "location": "GLO",
+          "name": "market for sodium methoxide",
+          "reference product": "sodium methoxide",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "GLO",
+          "name": "Sodium methoxide, at plant",
+          "reference product": "Sodium methoxide, at plant",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1.0,
+        "id": "bp-6fb142ff07a96aed",
+        "mapping_method": "curated_legacy",
+        "source": {
+          "location": "GLO",
+          "name": "market for sodium methoxide",
+          "reference product": "sodium methoxide",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "GLO",
+          "name": "Sodium methoxide, at plant",
+          "reference product": "Sodium methoxide, at plant",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-b8064b394d75463b",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only independently approved exact source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_sodium_methoxide_market_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.8",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Preserve the independently approved3.8 direct-stock product basis, supplier and quantity factor.",
+                "evidence": [
+                  "brightpath/data/export/uvek_fuels_38_additional_chemicals_review.json"
+                ]
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "sodium-methoxide-market-39-retained-delivery"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "New permission covers only the independently inspected exact ecoinvent3.9 cut-off global sodium-methoxide market. Source market, both allocated source producers and native stock have positive one-kg named-product references. Source declares pure sodium methoxide, CAS124-41-4/CH3NaO; the native reference has no solution qualifier. Keep signed caller product kg, supported uncertainty/formulas and separate foreground exchanges at factor+1. Native exact assay is not independently certified here; infer no water/solids concentration or purity conversion. Other source versions, patches, models and reverse routes gain no new permission. Reuse the exact technology-proxy category already explicitly approved for source3.8: complete native Brown-Schlesinger sodium methoxide replaces the source20% allocated Brown-Schlesinger and80% separate methanol/alkali production. Their positive reference/product basis and20/80 route structure are independently checked for3.9. Keep both original producer coefficients separately, but both now purchase the same complete native product; source manufacturing routes, coproduct allocation, feedstocks, energy, wastewater, emissions and internal uncertainty are not reproduced. Substantial score effects remain unquantified. This is the already approved same-product screening proxy, not evidence of reaction or allocated-inventory equivalence. The source Brown-Schlesinger comment mentions a trimethyl-borate functional unit, but its actual allocated output reference is1kg sodium methoxide. Do not replace that measured reference with the generic reaction prose or infer another allocation factor from selected upstream coefficients. Do not scale caller mass by20/80, reaction yield, purity or molecular weight, add a borohydride/hydrogen credit, or overlay source direct-route heat, alkali, methanol, plant, water or emissions onto the complete native coproduct inventory. The native keeps its own allocation and reagent solution bases once. The new3.9 helper additionally retains all four source final-delivery entries at their original amounts/statistics: rail0.3091, barge0.0246, road0.2088 and ocean-container0.599tkm per marketkg. Native at-plant production already contains its own upstream input transport; that is not final delivery to the chemical consumer. Keep the two boundaries separate and add no guessed distance, payload, loss or storage factor. Complete native European rail/road/barge and ocean-container services are explicit geographic, traction/fleet/loading, fuel, infrastructure and vintage proxies. They do not establish identical logistics or scores. The earlier3.8 permission retains its direct factory-gate stock and the earlier explicit delivery/route limitations; it does not silently acquire the new3.9 delivery helper. Original authority bytes, source versions, default target and mapping method remain unchanged. Its content-bound fingerprint is rebound only after proving identical source identity, selected target, factor and recipe closure. No literal source/caller omission, empty supplier, runtime Python change, alternate sector engine, validation bypass or claim of LCI/LCIA/stochastic equivalence.",
+                "evidence": [
+                  "brightpath/data/export/uvek_sodium_methoxide_market_39_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for sodium methoxide",
+          "reference product": "sodium methoxide",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          1.0
+        ],
+        "nonproduction_count": 6,
+        "metadata_sha256": "56bbc5df6ed65908eb1fca3b74aaf15c0eb72bdb210798aa8f6fad4095becebd",
+        "inventory_sha256": "cc598128743891bd7f531efbb32232b524ab3526cdd308ffc7458eb60e3ac5c5",
+        "activity_comment_sha256": "fe3ec342439922efba8841feeb819a8d0612868b0b5307b2a23035b82f257ba7",
+        "product_information_sha256": "92e02f0e2d3d795eb1dbda2b4b94b5938addcf12d167c7c2858ffe8e46fb432a"
+      },
+      "source_producer_witnesses": [
+        {
+          "identity": {
+            "name": "Brown-Schlesinger process",
+            "reference product": "sodium methoxide",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 17,
+          "metadata_sha256": "2a3ec1d3e230c6dbbf062b3e6aa2a1507b1410ec0f7619a8d4b3253bc6c81229",
+          "inventory_sha256": "863a44e0aa9e36d97add527cacfd8a47545466e47ce34a4c73efa6a465daac12",
+          "activity_comment_sha256": "b6360918bdc576c33e57ac24d78d7ecbbe9d42ae65a185a699046582071f0e7a",
+          "product_information_sha256": "92e02f0e2d3d795eb1dbda2b4b94b5938addcf12d167c7c2858ffe8e46fb432a"
+        },
+        {
+          "identity": {
+            "name": "sodium methoxide production",
+            "reference product": "sodium methoxide",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 17,
+          "metadata_sha256": "e45f673272ec29288383787a0a4666a578bf2672f1540ba283f21c8962712224",
+          "inventory_sha256": "80b1578fb784fdf34aece12979234fc379884cf89b4980a781a60634c222116b",
+          "activity_comment_sha256": "7d3304be54de37f1d56a22a3b3acc57731ebdb82ca68b4899356945f4f100b6a",
+          "product_information_sha256": "92e02f0e2d3d795eb1dbda2b4b94b5938addcf12d167c7c2858ffe8e46fb432a"
+        }
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Sodium methoxide, at plant",
+            "reference product": "Sodium methoxide, at plant",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 18,
+          "metadata_sha256": "45b7a8e502cb6656f5804a711277f8a1d102bcf52390f64047953d70dc2c2cf0",
+          "inventory_sha256": "02563286bc34f09ff8f94fb68746061be2481bf9b478bc63f1ef0641735f3fff",
+          "activity_comment_sha256": "ecae1dbd2e00b2db4d4614227807448c8690768deef7e7c7291ade600ab1c2f9",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Sodium methoxide, at plant",
+            "reference product": "Sodium methoxide, at plant",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 19,
+          "metadata_sha256": "c66be604f400d33454c482a6a7fe067657e560f30f4b8459369eeffbb5147b27",
+          "inventory_sha256": "acd99bcaa083cd9438ac98f8c753435541dd8d7233d291a39d2b2a65117af3ab",
+          "activity_comment_sha256": "a5b920633b13bea9681285c57907492df8125eee5b05ea52dfec72ad6497e915",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "selected_native_producer_witnesses": {
+        "same_product_sodium_methoxide": {
+          "2025": {
+            "identity": {
+              "name": "Sodium methoxide, at plant",
+              "reference product": "Sodium methoxide, at plant",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "reference_amounts": [
+              1
+            ],
+            "nonproduction_count": 18,
+            "metadata_sha256": "45b7a8e502cb6656f5804a711277f8a1d102bcf52390f64047953d70dc2c2cf0",
+            "inventory_sha256": "02563286bc34f09ff8f94fb68746061be2481bf9b478bc63f1ef0641735f3fff",
+            "activity_comment_sha256": "ecae1dbd2e00b2db4d4614227807448c8690768deef7e7c7291ade600ab1c2f9",
+            "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          },
+          "2026": {
+            "identity": {
+              "name": "Sodium methoxide, at plant",
+              "reference product": "Sodium methoxide, at plant",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "reference_amounts": [
+              1.0
+            ],
+            "nonproduction_count": 19,
+            "metadata_sha256": "c66be604f400d33454c482a6a7fe067657e560f30f4b8459369eeffbb5147b27",
+            "inventory_sha256": "acd99bcaa083cd9438ac98f8c753435541dd8d7233d291a39d2b2a65117af3ab",
+            "activity_comment_sha256": "a5b920633b13bea9681285c57907492df8125eee5b05ea52dfec72ad6497e915",
+            "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+          }
+        }
+      },
+      "recipe_id": "sodium-methoxide-market-39-retained-delivery",
+      "conversion_factor": 1,
+      "limitations": [
+        "New permission covers only the independently inspected exact ecoinvent3.9 cut-off global sodium-methoxide market. Source market, both allocated source producers and native stock have positive one-kg named-product references. Source declares pure sodium methoxide, CAS124-41-4/CH3NaO; the native reference has no solution qualifier. Keep signed caller product kg, supported uncertainty/formulas and separate foreground exchanges at factor+1. Native exact assay is not independently certified here; infer no water/solids concentration or purity conversion. Other source versions, patches, models and reverse routes gain no new permission.",
+        "Reuse the exact technology-proxy category already explicitly approved for source3.8: complete native Brown-Schlesinger sodium methoxide replaces the source20% allocated Brown-Schlesinger and80% separate methanol/alkali production. Their positive reference/product basis and20/80 route structure are independently checked for3.9. Keep both original producer coefficients separately, but both now purchase the same complete native product; source manufacturing routes, coproduct allocation, feedstocks, energy, wastewater, emissions and internal uncertainty are not reproduced. Substantial score effects remain unquantified. This is the already approved same-product screening proxy, not evidence of reaction or allocated-inventory equivalence.",
+        "The source Brown-Schlesinger comment mentions a trimethyl-borate functional unit, but its actual allocated output reference is1kg sodium methoxide. Do not replace that measured reference with the generic reaction prose or infer another allocation factor from selected upstream coefficients. Do not scale caller mass by20/80, reaction yield, purity or molecular weight, add a borohydride/hydrogen credit, or overlay source direct-route heat, alkali, methanol, plant, water or emissions onto the complete native coproduct inventory. The native keeps its own allocation and reagent solution bases once.",
+        "The new3.9 helper additionally retains all four source final-delivery entries at their original amounts/statistics: rail0.3091, barge0.0246, road0.2088 and ocean-container0.599tkm per marketkg. Native at-plant production already contains its own upstream input transport; that is not final delivery to the chemical consumer. Keep the two boundaries separate and add no guessed distance, payload, loss or storage factor. Complete native European rail/road/barge and ocean-container services are explicit geographic, traction/fleet/loading, fuel, infrastructure and vintage proxies. They do not establish identical logistics or scores.",
+        "The earlier3.8 permission retains its direct factory-gate stock and the earlier explicit delivery/route limitations; it does not silently acquire the new3.9 delivery helper. Original authority bytes, source versions, default target and mapping method remain unchanged. Its content-bound fingerprint is rebound only after proving identical source identity, selected target, factor and recipe closure. No literal source/caller omission, empty supplier, runtime Python change, alternate sector engine, validation bypass or claim of LCI/LCIA/stochastic equivalence."
+      ],
+      "boundary_checks": {
+        "source_CAS": "124-41-4",
+        "source_formula": "CH3NaO",
+        "source_pure_substance": true,
+        "source_producer_coefficients": [
+          0.2,
+          0.8
+        ],
+        "source_route_technology_and_allocation_reproduced": false,
+        "prior_explicit_38_same_proxy_reused": true,
+        "native_exact_assay_independently_certified": false,
+        "new_allocation_yield_or_concentration_factor": false,
+        "source_producer_internals_overlaid": false,
+        "four_final_delivery_entries_retained": true,
+        "new_source_omission": false
+      },
+      "retained_source_market_bindings": [
+        {
+          "source_position": 0,
+          "source_supplier": {
+            "name": "Brown-Schlesinger process",
+            "reference product": "sodium methoxide",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "source_amount": 0.2,
+          "target": {
+            "location": "GLO",
+            "name": "Sodium methoxide, at plant",
+            "reference product": "Sodium methoxide, at plant",
+            "unit": "kilogram"
+          },
+          "role": "same_product_Brown_Schlesinger_proxy"
+        },
+        {
+          "source_position": 1,
+          "source_supplier": {
+            "name": "sodium methoxide production",
+            "reference product": "sodium methoxide",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "source_amount": 0.8,
+          "target": {
+            "location": "GLO",
+            "name": "Sodium methoxide, at plant",
+            "reference product": "Sodium methoxide, at plant",
+            "unit": "kilogram"
+          },
+          "role": "same_product_Brown_Schlesinger_proxy"
+        },
+        {
+          "source_position": 2,
+          "source_supplier": {
+            "name": "market group for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "GLO",
+            "unit": "ton kilometer"
+          },
+          "source_amount": 0.3091,
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "role": "rail"
+        },
+        {
+          "source_position": 3,
+          "source_supplier": {
+            "name": "market group for transport, freight, inland waterways, barge",
+            "reference product": "transport, freight, inland waterways, barge",
+            "location": "GLO",
+            "unit": "ton kilometer"
+          },
+          "source_amount": 0.0246,
+          "target": {
+            "name": "Transport, barge",
+            "reference product": "Transport, barge",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "role": "barge"
+        },
+        {
+          "source_position": 4,
+          "source_supplier": {
+            "name": "market group for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "GLO",
+            "unit": "ton kilometer"
+          },
+          "source_amount": 0.2088,
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "role": "lorry"
+        },
+        {
+          "source_position": 5,
+          "source_supplier": {
+            "name": "market for transport, freight, sea, container ship",
+            "reference product": "transport, freight, sea, container ship",
+            "location": "GLO",
+            "unit": "ton kilometer"
+          },
+          "source_amount": 0.599,
+          "target": {
+            "name": "Transport, transoceanic container ship",
+            "reference product": "Transport, transoceanic container ship",
+            "location": "OCE",
+            "unit": "ton kilometer"
+          },
+          "role": "sea"
+        }
+      ]
+    }
+  ],
+  "recipes": {
+    "sodium-methoxide-market-39-retained-delivery": {
+      "name": "market for sodium methoxide, retained source3.9 delivery [UVEK screening]",
+      "reference product": "sodium methoxide",
+      "location": "GLO",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "amount": 0.2,
+          "uncertainty type": 0,
+          "loc": 0.2,
+          "location": "GLO",
+          "name": "Sodium methoxide, at plant",
+          "reference product": "Sodium methoxide, at plant",
+          "unit": "kilogram",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.8,
+          "uncertainty type": 0,
+          "loc": 0.8,
+          "location": "GLO",
+          "name": "Sodium methoxide, at plant",
+          "reference product": "Sodium methoxide, at plant",
+          "unit": "kilogram",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.3091,
+          "uncertainty type": 2,
+          "loc": -1.1740904298440664,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.0246,
+          "uncertainty type": 2,
+          "loc": -3.70500883604382,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.2088,
+          "uncertainty type": 2,
+          "loc": -1.5663784229736533,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        },
+        {
+          "amount": 0.599,
+          "uncertainty type": 2,
+          "loc": -0.5124936808666878,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898,
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "location": "OCE",
+          "unit": "ton kilometer",
+          "type": "technosphere"
+        }
+      ],
+      "rationale": "New permission covers only the independently inspected exact ecoinvent3.9 cut-off global sodium-methoxide market. Source market, both allocated source producers and native stock have positive one-kg named-product references. Source declares pure sodium methoxide, CAS124-41-4/CH3NaO; the native reference has no solution qualifier. Keep signed caller product kg, supported uncertainty/formulas and separate foreground exchanges at factor+1. Native exact assay is not independently certified here; infer no water/solids concentration or purity conversion. Other source versions, patches, models and reverse routes gain no new permission. Reuse the exact technology-proxy category already explicitly approved for source3.8: complete native Brown-Schlesinger sodium methoxide replaces the source20% allocated Brown-Schlesinger and80% separate methanol/alkali production. Their positive reference/product basis and20/80 route structure are independently checked for3.9. Keep both original producer coefficients separately, but both now purchase the same complete native product; source manufacturing routes, coproduct allocation, feedstocks, energy, wastewater, emissions and internal uncertainty are not reproduced. Substantial score effects remain unquantified. This is the already approved same-product screening proxy, not evidence of reaction or allocated-inventory equivalence. The source Brown-Schlesinger comment mentions a trimethyl-borate functional unit, but its actual allocated output reference is1kg sodium methoxide. Do not replace that measured reference with the generic reaction prose or infer another allocation factor from selected upstream coefficients. Do not scale caller mass by20/80, reaction yield, purity or molecular weight, add a borohydride/hydrogen credit, or overlay source direct-route heat, alkali, methanol, plant, water or emissions onto the complete native coproduct inventory. The native keeps its own allocation and reagent solution bases once. The new3.9 helper additionally retains all four source final-delivery entries at their original amounts/statistics: rail0.3091, barge0.0246, road0.2088 and ocean-container0.599tkm per marketkg. Native at-plant production already contains its own upstream input transport; that is not final delivery to the chemical consumer. Keep the two boundaries separate and add no guessed distance, payload, loss or storage factor. Complete native European rail/road/barge and ocean-container services are explicit geographic, traction/fleet/loading, fuel, infrastructure and vintage proxies. They do not establish identical logistics or scores. The earlier3.8 permission retains its direct factory-gate stock and the earlier explicit delivery/route limitations; it does not silently acquire the new3.9 delivery helper. Original authority bytes, source versions, default target and mapping method remain unchanged. Its content-bound fingerprint is rebound only after proving identical source identity, selected target, factor and recipe closure. No literal source/caller omission, empty supplier, runtime Python change, alternate sector engine, validation bypass or claim of LCI/LCIA/stochastic equivalence.",
+      "evidence": [
+        "brightpath/data/export/uvek_sodium_methoxide_market_39_review.json"
+      ]
+    }
+  },
+  "recipe_dependencies": {},
+  "source_rule_dependency_scopes": [],
+  "reviews": [
+    {
+      "rationale": "For exact source3.9, reuse the explicitly approved same-product sodium-methoxide technology proxy and retain original final delivery. Older3.8 keeps its own direct-stock decision.",
+      "limitations": [
+        "New permission covers only the independently inspected exact ecoinvent3.9 cut-off global sodium-methoxide market. Source market, both allocated source producers and native stock have positive one-kg named-product references. Source declares pure sodium methoxide, CAS124-41-4/CH3NaO; the native reference has no solution qualifier. Keep signed caller product kg, supported uncertainty/formulas and separate foreground exchanges at factor+1. Native exact assay is not independently certified here; infer no water/solids concentration or purity conversion. Other source versions, patches, models and reverse routes gain no new permission.",
+        "Reuse the exact technology-proxy category already explicitly approved for source3.8: complete native Brown-Schlesinger sodium methoxide replaces the source20% allocated Brown-Schlesinger and80% separate methanol/alkali production. Their positive reference/product basis and20/80 route structure are independently checked for3.9. Keep both original producer coefficients separately, but both now purchase the same complete native product; source manufacturing routes, coproduct allocation, feedstocks, energy, wastewater, emissions and internal uncertainty are not reproduced. Substantial score effects remain unquantified. This is the already approved same-product screening proxy, not evidence of reaction or allocated-inventory equivalence.",
+        "The source Brown-Schlesinger comment mentions a trimethyl-borate functional unit, but its actual allocated output reference is1kg sodium methoxide. Do not replace that measured reference with the generic reaction prose or infer another allocation factor from selected upstream coefficients. Do not scale caller mass by20/80, reaction yield, purity or molecular weight, add a borohydride/hydrogen credit, or overlay source direct-route heat, alkali, methanol, plant, water or emissions onto the complete native coproduct inventory. The native keeps its own allocation and reagent solution bases once.",
+        "The new3.9 helper additionally retains all four source final-delivery entries at their original amounts/statistics: rail0.3091, barge0.0246, road0.2088 and ocean-container0.599tkm per marketkg. Native at-plant production already contains its own upstream input transport; that is not final delivery to the chemical consumer. Keep the two boundaries separate and add no guessed distance, payload, loss or storage factor. Complete native European rail/road/barge and ocean-container services are explicit geographic, traction/fleet/loading, fuel, infrastructure and vintage proxies. They do not establish identical logistics or scores.",
+        "The earlier3.8 permission retains its direct factory-gate stock and the earlier explicit delivery/route limitations; it does not silently acquire the new3.9 delivery helper. Original authority bytes, source versions, default target and mapping method remain unchanged. Its content-bound fingerprint is rebound only after proving identical source identity, selected target, factor and recipe closure. No literal source/caller omission, empty supplier, runtime Python change, alternate sector engine, validation bypass or claim of LCI/LCIA/stochastic equivalence."
+      ],
+      "evidence": [
+        "brightpath/data/export/uvek_sodium_methoxide_market_39_review.json"
+      ]
+    }
+  ],
+  "native_freight_witnesses": {
+    "rail": {
+      "identity": {
+        "name": "Transport, freight, rail",
+        "reference product": "Transport, freight, rail",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 66,
+          "metadata_sha256": "bf0b92330f5550e4ff8ca6fb8c07a5e36f231d0ece20aeda1672d032024f8d92",
+          "inventory_sha256": "4af095b1c680e50755cc7969de9c7b096ce871af491062204697dd4d3c617400",
+          "activity_comment_sha256": "1df979a6bc0882b7d94bc3904a8832568a6c5463344665f169125ea352d9d7a5",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 66,
+          "metadata_sha256": "a086e7cd14dc8078d57f5caaa5dc4fa25a8cd4b4dcac023249504ba59e713476",
+          "inventory_sha256": "d21630645414a88763748d1e1cae72eaa78561f67bae72f1dfa2024d292bad81",
+          "activity_comment_sha256": "da69ddf1a7bd9c6a5875566456db36cee98d7997affe7edfd22d55ac7241aee3",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "barge": {
+      "identity": {
+        "name": "Transport, barge",
+        "reference product": "Transport, barge",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, barge",
+            "reference product": "Transport, barge",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 43,
+          "metadata_sha256": "8c795eea4f351dabbfc92de69dc20492da53a616acb47ae1319acec310385b08",
+          "inventory_sha256": "8496871de053ce8a70b39531f4eda4f8532a235e4881aaf8a6f393b149c6efb0",
+          "activity_comment_sha256": "551fedfee8fd1f2e20a9a5f1d03171ed5f1403a9172e36632ccd39b4a846edc0",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, barge",
+            "reference product": "Transport, barge",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 43,
+          "metadata_sha256": "22ea7909644698e64590db4af0a206286fd10a828f7fe381e5cc2f53db6991c3",
+          "inventory_sha256": "8dfd99174434709ec317338ef637fa8e6841898accea4770d7910de7c89fa7b0",
+          "activity_comment_sha256": "58658e919fef368c9d5fce181878b4f23da633ba13b04226cebd77ee7a6377e0",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "lorry": {
+      "identity": {
+        "name": "Transport, freight, lorry, fleet average",
+        "reference product": "Transport, freight, lorry, fleet average",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "1712dcc1e47789fd051de828c7fa8576057a018e81bae15590c87e3285c8eae6",
+          "inventory_sha256": "22d4f5fe504956cb8774ee629f64ea5799f0eba27e825034f8a6ad6e2076e32c",
+          "activity_comment_sha256": "0716216989810c286263da289b407ae09aa4a17e1c375b712652b6590cfd6b6d",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 4,
+          "metadata_sha256": "2e25c36bfe498c028ee90845bf35d49ed777fb811dc4c2353e70e567f87d5c35",
+          "inventory_sha256": "1dce512cce0f49d845545ea0ed7d0a6e9f64ed59e5583c9ad0185f0fd4d6c0fd",
+          "activity_comment_sha256": "f40ff5cc0336e900ff57b6126375b05b5a17f7212403cff0f8a08f32f35c4e5c",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "sea": {
+      "identity": {
+        "name": "Transport, transoceanic container ship",
+        "reference product": "Transport, transoceanic container ship",
+        "location": "OCE",
+        "unit": "ton kilometer"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Transport, transoceanic container ship",
+            "reference product": "Transport, transoceanic container ship",
+            "location": "OCE",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 35,
+          "metadata_sha256": "03407e29c161b23e19c2f7a40a63ccb0c6af3ae75e1b15a8411f63a9094c58ed",
+          "inventory_sha256": "bfc7d9e7e4cf300178df599162a669f5cf889b3409d343999efc6753bc484459",
+          "activity_comment_sha256": "1fa4cf7ddcadc6f3a56dc9cb83c870172228b0b7d1989127432a61f431bb4453",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, transoceanic container ship",
+            "reference product": "Transport, transoceanic container ship",
+            "location": "OCE",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 36,
+          "metadata_sha256": "2bb3d84c656e7c5472dbea11260c1e0c451d2dcdc94dabd28b55aca2165a51ce",
+          "inventory_sha256": "6a8e016af6d8fbbff8b883f346e2b5367df5253ee6338761be535dee06f96a44",
+          "activity_comment_sha256": "65b0638873b516d7f1c26a90f91c06e2f13927db4ca5bdc60d66c3be9b2bfe2e",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    }
+  },
+  "preserved_existing_scopes": [
+    {
+      "operation_index": 558,
+      "rule_id": "bp-6fb142ff07a96aed",
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.8",
+        "system_model": "cutoff"
+      },
+      "target_profile": {
+        "family": "uvek",
+        "version": "2025",
+        "system_model": "cutoff"
+      },
+      "previous_fingerprint": "573dda7a19b0d4f9c62dfbb3de68f54e22625af70a0058f303fe232b7c56eab5",
+      "previous_review_path": "export/uvek_fuels_38_additional_chemicals_review.json",
+      "previous_review_sha256": "01a5255dbc1312b892235597891c7098f77236d28cb7544387656a928867d2b0",
+      "rebound_fingerprint": "9d6ad6f95678c8b82c17ad797206041a05a9e44c84ad451137e11e2109c65d53",
+      "unchanged_physical_binding": {
+        "source": {
+          "location": "GLO",
+          "name": "market for sodium methoxide",
+          "reference product": "sodium methoxide",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "GLO",
+          "name": "Sodium methoxide, at plant",
+          "reference product": "Sodium methoxide, at plant",
+          "unit": "kilogram"
+        },
+        "conversion_factor": 1,
+        "recipes": {}
+      },
+      "unchanged_physical_binding_sha256": "0c506e00ffab9454e0b9de6f1a93176a5b3a80502ae589a383420ff3937a7842"
+    }
+  ],
+  "prior_explicit_same_proxy_authority": {
+    "path": "export/uvek_fuels_38_additional_chemicals_review.json",
+    "sha256": "01a5255dbc1312b892235597891c7098f77236d28cb7544387656a928867d2b0",
+    "source_profile": {
+      "family": "ecoinvent",
+      "version": "3.8",
+      "system_model": "cutoff"
+    },
+    "source_reference_amounts": [
+      1.0
+    ],
+    "resolution": "Previously pending technology difference now separately reviewed as a complete same-product Brown-Schlesinger screening proxy, with explicit 20/80 source-route replacement and unquantified score warnings. No assertion of route equivalence.",
+    "limitations": [
+      "Use complete native sodium methoxide per signed kg declared product as a same-product screening proxy. This deliberately substitutes technology: source market is 20% allocated Brown-Schlesinger co-product and 80% direct methanol/alkali production, while native stock represents Brown-Schlesinger only. Source and native route-specific feedstocks, co-products, allocation, electricity, heat, wastewater, emissions and infrastructure are not equivalent. Retain the complete native inventory once; do not construct a hybrid by adding source direct-route energy or emissions to native Brown-Schlesinger, scale caller mass by 0.20/0.80, or add a borohydride recovery credit. The original source market freight, production shares and internal uncertainty are replaced, not reproduced; native process input transport does not establish final delivery. No solution concentration, purity or reaction-yield adjustment is inferred from the name. Both declare a positive one-kg sodium-methoxide reference. Source route documentation has wording inconsistencies; this is not an exact reaction reconstruction. Geographic and vintage differences and substantial unquantified score effects remain. This separately reviewed technology proxy resolves the pending case explicitly excluded from the earlier chemical-stock packet."
+    ]
+  },
+  "new_helpers": 1,
+  "retained_original_producer_entries": 2,
+  "retained_original_final_freight_entries": 4,
+  "new_source_omissions": [],
+  "licensing": "Native-facing recipe, bounded product/reference/route facts and hashes only; original complete source/native inventories and comments remain private."
+}
