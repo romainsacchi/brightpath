@@ -79,8 +79,14 @@ def test_39_scope_does_not_expand_to_other_profiles(version, model):
 
 
 def test_complete_kerosene_delivery_boundary_is_not_refinery_only():
+    from brightpath.background.reference_signs import select_profile_sign_rules
+
     resource = load_uvek_technosphere_resource()
-    assert next(x for x in resource["replace"] if x["id"] == ROW["rule_id"]) == ROW["compiled_rule"]
+    selected = select_profile_sign_rules(resource, TechnosphereProfile("ecoinvent", "3.9", "cutoff"))
+    historical = select_profile_sign_rules(
+        {"replace": [ROW["compiled_rule"]]}, TechnosphereProfile("ecoinvent", "3.9", "cutoff")
+    )
+    assert next(x for x in selected["replace"] if x["id"] == ROW["rule_id"]) == historical["replace"][0]
     target = ROW["compiled_rule"]["target"]
     assert (target["name"], target["location"], target["unit"]) == ("Kerosene, at regional storage", "RER", "kilogram")
     assert ROW["source_witness"]["reference_amounts"] == [1]
@@ -104,6 +110,14 @@ def test_replay_is_atomic_and_does_not_inherit_changed_fuel_boundaries(drift):
 
     r = deepcopy(load_uvek_technosphere_resource())
     rule = next(a for a in r["replace"] if a["id"] == ROW["rule_id"])
+    later = json.loads((DATA_DIR / "export/uvek_metals_38_native_services_review.json").read_text())
+    overlay = next(x for x in later["records"] if x["rule_id"] == ROW["rule_id"])
+    assert rule == overlay["rule"] and overlay["original_rule"] == ROW["compiled_rule"]
+    # The earlier authoring step must still refuse a later reviewed parent.
+    with pytest.raises(ValueError):
+        apply_kerosene_delivery_39_review(r)
+    rule.clear()
+    rule.update(deepcopy(overlay["original_rule"]))
     if drift == "parent":
         rule["confidence"] = 0.01
     elif drift == "target":
