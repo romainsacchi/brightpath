@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 275,
-      "recipe": 1100,
-      "unclassified": 29100
+      "proxy": 276,
+      "recipe": 1104,
+      "unclassified": 29095
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 253,
       "followup_review": 163,
-      "heuristic_similarity": 26350,
+      "heuristic_similarity": 26346,
       "pairwise_review": 2207,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -193,6 +193,7 @@
       "reviewed_sewage_sludge_market_alias": 2,
       "reviewed_sewer_throughput_service": 4,
       "reviewed_ships_312_native_boundaries": 7,
+      "reviewed_ships_38_native_market": 4,
       "reviewed_ships_39_market_boundaries": 3,
       "reviewed_slf_landfarming_service": 22,
       "reviewed_source_gas_flare_service": 4,
@@ -219,7 +220,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444733,
+    "mean_confidence": 0.444796,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -605008,6 +605009,580 @@
       "reference product": "port facilities",
       "unit": "unit"
     },
+    "ships-38-acid-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 2
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41255302689472534,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 2
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41255302689472534,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 2
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41255302689472534,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.971855803411925,
+          "loc": 0.971855803411925,
+          "location": "RER",
+          "name": "Sulphuric acid, liquid, at plant",
+          "reference product": "Sulphuric acid, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0281441965880748,
+          "loc": 0.0281441965880748,
+          "location": "RER",
+          "name": "Sulphuric acid, liquid, at plant",
+          "reference product": "Sulphuric acid, liquid, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RER",
+      "name": "Reviewed source3.8 shipping acid supply and delivery",
+      "rationale": "Use complete native sulfuric-acid production per kg active H2SO4, while retaining both source producer weights and all three final freight entries. Native explicitly refers to100%acid, so no solution-concentration or water multiplier is applied. Its35%zero-attributed-burden smelter-gas assumption is already embedded by multiplying the remaining inventory by0.65; do not apply that allocation twice or add an independent smelter-gas credit. Source sulfur-burning/zinc-sulfide co-product allocation differs and is not reconstructed. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.",
+      "reference product": "sulfuric acid",
+      "unit": "kilogram"
+    },
+    "ships-38-dolomite-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.047,
+          "loc": -3.0576076772720784,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Dolomite, at plant",
+          "reference product": "Dolomite, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.016937241812871,
+          "loc": -4.078240423978932,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00265174722678326,
+          "loc": -5.932536525385498,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.128411010960346,
+          "loc": -2.0525191362601567,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0722670590841526,
+          "loc": -2.627386867968236,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0200219626802739,
+          "loc": -3.910925473922558,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0789401964821638,
+          "loc": -2.5390647197441516,
+          "location": "US",
+          "name": "Transport, freight, rail, diesel",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail, diesel",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00506997923038879,
+          "loc": -5.284418557957695,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0997008025230209,
+          "loc": -2.3055815526683965,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "Reviewed source3.8 shipping dolomite supply and delivery",
+      "rationale": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.",
+      "reference product": "dolomite",
+      "unit": "kilogram"
+    },
+    "ships-38-furnace-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.330592351639303,
+          "loc": 0.330592351639303,
+          "location": "RER",
+          "name": "Industrial furnace, 1MW, natural gas",
+          "reference product": "Industrial furnace, 1MW, natural gas",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.669407648360697,
+          "loc": 0.669407648360697,
+          "location": "RER",
+          "name": "Industrial furnace, 1MW, natural gas",
+          "reference product": "Industrial furnace, 1MW, natural gas",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.8 shipping furnace supply and delivery",
+      "rationale": "Use the complete native industrial natural-gas-furnace infrastructure per source unit, preserving both source regional supplier shares. Source documentation says about100kW gas input but explicitly says its production inventory is identical to a1MW oil furnace. Native is labelled1MW with20year life and includes equipment, manufacturing energy and disposal. This is an ambiguous source-size/infrastructure screening proxy, not a capacity-equivalence claim. Do not invent a0.1 or10 size/lifetime multiplier, add fuel-operation energy, or count a second furnace; manufacturing materials, geography, disposal, allocation and vintage differences have unquantified score effects. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.",
+      "reference product": "industrial furnace, natural gas",
+      "unit": "unit"
+    },
+    "ships-38-silica-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0727,
+          "loc": -2.6214138944426635,
+          "location": "OCE",
+          "name": "Transport, transoceanic freight ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic freight ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0121,
+          "loc": -4.414549826379441,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0021,
+          "loc": -6.16581793425276,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.001,
+          "loc": -6.907755278982137,
+          "location": "CH",
+          "name": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0323,
+          "loc": -3.4326880487535263,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 8.585049541838547e-06,
+          "loc": 8.585049541838547e-06,
+          "location": "RER",
+          "name": "Cryolite, at plant",
+          "reference product": "Cryolite, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0661972972575346,
+          "loc": 0.0661972972575346,
+          "location": "DE",
+          "name": "Silica sand, at plant",
+          "reference product": "Silica sand, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.933527540898176,
+          "loc": 0.933527540898176,
+          "location": "DE",
+          "name": "Silica sand, at plant",
+          "reference product": "Silica sand, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.8 shipping silica supply and delivery",
+      "rationale": "Retain two ordinary dried-silica producers using complete native dried silica sand, plus the chemical co-product branch and five original final freight entries. Independent source3.8 inspection confirms all12 nonproduction flows of co-product silica equal0.0312 times the paired cryolite inventory. Represent that branch by0.0312kg complete native cryolite per source co-product kg as an allocated-production-burden proxy, not physical cryolite in sand. Native hydrogen-fluoride production differs from source fluosilicic-acid chemistry; feedstocks, allocation, recovery, energy and emissions differ. Add neither ordinary quarry burden nor recovered-sand credit to that branch. Source3.8 and3.9 share supplier identities but not all coefficients/statistics, so3.8 receives its own retained-delivery helper. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.",
+      "reference product": "silica sand",
+      "unit": "kilogram"
+    },
+    "ships-38-syngas-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.00756406316342409,
+          "loc": 0.00756406316342409,
+          "location": "CH",
+          "name": "Synthetic gas plant",
+          "reference product": "Synthetic gas plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.992435936836576,
+          "loc": 0.992435936836576,
+          "location": "CH",
+          "name": "Synthetic gas plant",
+          "reference product": "Synthetic gas plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.8 shipping syngas supply and delivery",
+      "rationale": "Use complete native Swiss synthetic-gas-plant construction per unit, preserving both source regional supplier shares. Source and native describe a5MWth-output gasifier with50year life; native includes dryer, comminution, gasifier, gas conditioning, buildings, land use and dismantling. Retain that complete infrastructure once, without capacity, throughput, wood-drying or lifetime scaling. Geographic construction supplies, material/energy quantities, allocation, age and internal uncertainty can differ; score effects remain unquantified. This is plant construction, not gas production or gasifier operation. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.",
+      "reference product": "synthetic gas factory",
+      "unit": "unit"
+    },
+    "ships-38-wood-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.07,
+          "loc": -2.659260036932778,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 3,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.3847076812334269,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0744912074216922,
+          "loc": 0.0744912074216922,
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0748564203897618,
+          "loc": 0.0748564203897618,
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.137402534881435,
+          "loc": 0.137402534881435,
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.100148334342728,
+          "loc": 0.100148334342728,
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.109616380203693,
+          "loc": 0.109616380203693,
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.503485122760689,
+          "loc": 0.503485122760689,
+          "location": "RER",
+          "name": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "reference product": "Wood chips, production mix, wet, measured as dry mass, at forest road & at sawmill",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RER",
+      "name": "Reviewed source3.8 shipping wood supply and delivery",
+      "rationale": "Replace the hardwood-only wet-sawmill heuristic with the complete native RER production mix of wet wood chips measured as kg dry mass. Source dry chips are co-products of six timber-manufacturing activities; native replaces those allocated producer inventories with its historical forest/sawmill/species mixture. Both reference1kg dry wood, so caller dry mass remains unchanged despite the wet native product. Retain every source co-product quantity and final delivery separately. This is a moisture and supply-boundary screening proxy, not a dry-chip-equivalent product: native moisture, allocated timber-drying burdens, species, forest/co-product split and transport differ. Any missing allocated drying burden and gasification implications have unquantified score effects. Do not invent an extra dryer, water exchange, dry-to-wet mass correction, wood yield, carbon content or heating-value multiplier. Retain separately modelled caller processing, water, fuel and emissions. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.",
+      "reference product": "wood chips, dry, measured as dry mass",
+      "unit": "kilogram"
+    },
     "ships-39-lime-delivered-market": {
       "evidence": [
         "brightpath/data/export/uvek_ships_39_market_boundaries_review.json: independently inspected source market and native-function witnesses; derived native-facing demands only."
@@ -816841,7 +817416,7 @@
     {"confidence": 0.361659, "id": "bp-f241056fab62d2f5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for dithiocarbamate-compound", "reference product": "dithiocarbamate-compound", "unit": "kilogram"}, "target": {"location": "CH", "name": "Dithiocarbamate-compounds, at regional storehouse", "reference product": "Dithiocarbamate-compounds, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.164722, "id": "bp-3eb67dbea29bc212", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for dodecanol", "reference product": "dodecanol", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Anode", "reference product": "Anode", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-10b3c68ea03a4684", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for dolomite", "reference product": "dolomite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dolomite, at plant", "reference product": "Dolomite, at plant", "unit": "kilogram"}},
-    {"confidence": 0.379, "id": "bp-5943576bea71c0de", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for dolomite", "reference product": "dolomite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dolomite, at plant", "reference product": "Dolomite, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-5943576bea71c0de", "mapping_method": "reviewed_ships_38_native_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "reason": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "ships-38-dolomite-market"}}], "reason": "Only independently inspected exact profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-08d2b3055a1c88e4", "source": {"location": "RoW", "name": "market for dolomite", "reference product": "dolomite", "unit": "kilogram"}, "target": {"recipe_ref": "ships-38-dolomite-market"}, "technosphere_information_loss": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."},
     {"confidence": 0.294906, "id": "bp-9857490d274fd89b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for dolomite quarry infrastructure", "reference product": "dolomite quarry infrastructure", "unit": "unit"}, "target": {"location": "CH", "name": "Cable car infrastructure", "reference product": "Cable car infrastructure", "unit": "unit"}},
     {"confidence": 0.511689, "id": "bp-d1fa79153f6a2211", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for door, inner, glass-wood", "reference product": "door, inner, glass-wood", "unit": "square meter"}, "target": {"location": "RER", "name": "xxx Door, inner, glass-wood, at plant", "reference product": "xxx Door, inner, glass-wood, at plant", "unit": "square meter"}},
     {"confidence": 0.439018, "id": "bp-d359a33101bb17cc", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for door, inner, wood", "reference product": "door, inner, wood", "unit": "square meter"}, "target": {"location": "RER", "name": "xxx Door, inner, wood, at plant", "reference product": "xxx Door, inner, wood, at plant", "unit": "square meter"}},
@@ -818327,7 +818902,7 @@
     {"confidence": 0.731291, "id": "bp-caa0d550d47e54ec", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for inductor, ring core choke type", "reference product": "inductor, ring core choke type", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Inductor, ring core choke type, at plant", "reference product": "Inductor, ring core choke type, at plant", "unit": "kilogram"}},
     {"confidence": 0.8425, "id": "bp-b72aef4b86ed390a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for industrial furnace, 1MW, oil", "reference product": "industrial furnace, 1MW, oil", "unit": "unit"}, "target": {"location": "CH", "name": "Industrial furnace 1MW, oil", "reference product": "Industrial furnace 1MW, oil", "unit": "unit"}},
     {"confidence": 0.655844, "id": "bp-ca021cc7f4111f2d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for industrial furnace, coal, 1-10MW", "reference product": "industrial furnace, coal, 1-10MW", "unit": "unit"}, "target": {"location": "RER", "name": "Industrial furnace, coal, 1-10 MW", "reference product": "Industrial furnace, coal, 1-10 MW", "unit": "unit"}},
-    {"confidence": 0.70625, "id": "bp-521cdbc6ec8f1e0d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for industrial furnace, natural gas", "reference product": "industrial furnace, natural gas", "unit": "unit"}, "target": {"location": "RER", "name": "Industrial furnace, 1MW, natural gas", "reference product": "Industrial furnace, 1MW, natural gas", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-521cdbc6ec8f1e0d", "mapping_method": "reviewed_ships_38_native_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "reason": "Use the complete native industrial natural-gas-furnace infrastructure per source unit, preserving both source regional supplier shares. Source documentation says about100kW gas input but explicitly says its production inventory is identical to a1MW oil furnace. Native is labelled1MW with20year life and includes equipment, manufacturing energy and disposal. This is an ambiguous source-size/infrastructure screening proxy, not a capacity-equivalence claim. Do not invent a0.1 or10 size/lifetime multiplier, add fuel-operation energy, or count a second furnace; manufacturing materials, geography, disposal, allocation and vintage differences have unquantified score effects. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "ships-38-furnace-market"}}], "reason": "Only independently inspected exact profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-d34690bdaf822f4e", "source": {"location": "GLO", "name": "market for industrial furnace, natural gas", "reference product": "industrial furnace, natural gas", "unit": "unit"}, "target": {"recipe_ref": "ships-38-furnace-market"}, "technosphere_information_loss": "Use the complete native industrial natural-gas-furnace infrastructure per source unit, preserving both source regional supplier shares. Source documentation says about100kW gas input but explicitly says its production inventory is identical to a1MW oil furnace. Native is labelled1MW with20year life and includes equipment, manufacturing energy and disposal. This is an ambiguous source-size/infrastructure screening proxy, not a capacity-equivalence claim. Do not invent a0.1 or10 size/lifetime multiplier, add fuel-operation energy, or count a second furnace; manufacturing materials, geography, disposal, allocation and vintage differences have unquantified score effects. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."},
     {"confidence": 0.761801, "id": "bp-482cd181e255915e", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for industrial machine, heavy, unspecified", "reference product": "industrial machine, heavy, unspecified", "unit": "kilogram"}, "target": {"location": "RER", "name": "Industrial machine, heavy, unspecified, at plant", "reference product": "Industrial machine, heavy, unspecified, at plant", "unit": "kilogram"}},
     {"confidence": 0.681801, "id": "bp-158077bc2cebae56", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for industrial machine, heavy, unspecified", "reference product": "industrial machine, heavy, unspecified", "unit": "kilogram"}, "target": {"location": "RER", "name": "Industrial machine, heavy, unspecified, at plant", "reference product": "Industrial machine, heavy, unspecified, at plant", "unit": "kilogram"}},
     {"confidence": 0.218428, "id": "bp-c0d29ea64f27b6d8", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-c0d29ea64f27b6d8"], "reason": "Both imported reference production amounts are positive; preserve their quantity direction despite differing native flow classifications. This does not establish scientific equivalence.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source": {"location": "GLO", "name": "market for inert filler", "reference product": "inert filler", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Disposal, concrete, 5% water, to inert material landfill", "reference product": "Disposal, concrete, 5% water, to inert material landfill", "unit": "kilogram"}},
@@ -821569,7 +822144,7 @@
     {"confidence": 0.9, "id": "bp-d824f2965ac29709", "mapping_method": "product_checked", "review_ref": "r-3b7bd2b7a95302cc", "source": {"location": "GLO", "name": "market for silencer, steel, DN 125", "reference product": "silencer, steel, DN 125", "unit": "unit"}, "target": {"location": "CH", "name": "Silencer, steel, DN 125, at plant", "reference product": "Silencer, steel, DN 125, at plant", "unit": "unit"}},
     {"confidence": 0.9, "id": "bp-24a04d4e262bec64", "mapping_method": "product_checked", "review_ref": "r-3b7bd2b7a95302cc", "source": {"location": "GLO", "name": "market for silencer, steel, DN 315, 50 mm", "reference product": "silencer, steel, DN 315, 50 mm", "unit": "unit"}, "target": {"location": "CH", "name": "Silencer, steel, DN 315, 50 mm, at plant", "reference product": "Silencer, steel, DN 315, 50 mm, at plant", "unit": "unit"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1.0, "id": "bp-9fa7ec96864535e2", "mapping_method": "reviewed_market_composition", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.10-cutoff/969525ae71aa39a4b8de240e74d8dd96ce30e8bb96a7f36c21824bbf8c03e91c"], "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}, "target": {"recipe_ref": "whole-freight-market-composition-64f6cdf0ed5c265bd198"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.11-cutoff/241208da6e3f70e17b983a377661dfc8dee5a204a33ca1cc59f0bb6641563332"], "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.11"}, "target": {"recipe_ref": "whole-freight-market-composition-542bc277ee5073dca11e"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.12-cutoff/3ea37bfd3d613e42c17b432bce7062411d39e471340232b66e297641e7fcfca1"], "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}, "target": {"recipe_ref": "whole-freight-market-composition-83d5c78173b0f39c0814"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.6-cutoff/bb233aefa9d4cad681acf027e47ba17d87ee0ed0956c5033c5414326dca6a16e"], "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}, "target": {"recipe_ref": "whole-freight-market-composition-d6bfb8256b5336e0689e"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.7-cutoff/12b7930592a62a607305b9002cee2be7b9543c12db100736d2560abea7deacde"], "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.7"}, "target": {"recipe_ref": "whole-freight-market-composition-82a80340ed77e9ca69bb"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.8-cutoff/9a468648d7e8eb238cf29b225771feffbbc45f5df48c641e73a13717c345a4d5"], "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "whole-freight-market-composition-6ea61dcaf4598a2dcb7d"}}, {"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_market_composition_review.json#ecoinvent-3.9-cutoff/8ac142b3097730edcce13da3ac35aa5d219e9cafd20047f4152f0bbdba997242"], "reason": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "whole-freight-market-composition-60a8af1692593e1bd46f"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-3f9cf771e85f79b9", "source": {"location": "GLO", "name": "market for silica fume, densified", "reference product": "silica fume, densified", "unit": "kilogram"}, "target": {"recipe_ref": "whole-freight-market-composition-64f6cdf0ed5c265bd198"}, "technosphere_information_loss": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json."},
-    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-dbd744f486420f56", "mapping_method": "reviewed_fuels_39_final_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_final_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_final_markets_review.json"], "reason": "Retain two ordinary dried-silica producers with complete native dried silica sand, not unprocessed mine sand. The chemical co-product has every one of twelve nonproduction flows exactly 0.0312 times its paired cryolite product. Represent only its allocated chemical-production burden with 0.0312 kg complete native cryolite per kg co-product sand; this is an allocated-burden screening proxy, not physical cryolite consumption. Native uses hydrogen fluoride whereas source uses fluosilicic acid: chemistry, allocation, feedstocks, recovery, emissions and geography differ. No ordinary quarry burden or sand-recovery credit is added to this co-product. Keep source producer shares and five freight rows.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact cut-off profiles authorize this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-df33b3625a62d0ea", "source": {"location": "GLO", "name": "market for silica sand", "reference product": "silica sand", "unit": "kilogram"}, "target": {"recipe_ref": "fuels-39-final-market-5135e054986e0de8eda4"}, "technosphere_information_loss": "Exact inspected ecoinvent 3.9 cut-off only. Preserve all original producer shares and freight rows, signed caller amounts, formulas and uncertainty without renormalization. Complete native inventories replace production technology, allocation, geography, vintage and internal uncertainty, with unquantified score effects. No omitted source rows, invented recovery credit, concentration, yield or density correction. Native internal upstream transport remains part of its complete production boundary; retained source market delivery is separate and boundary differences must be reviewed if transport dominates."},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-dbd744f486420f56", "mapping_method": "reviewed_fuels_39_final_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_final_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_final_markets_review.json"], "reason": "Retain two ordinary dried-silica producers with complete native dried silica sand, not unprocessed mine sand. The chemical co-product has every one of twelve nonproduction flows exactly 0.0312 times its paired cryolite product. Represent only its allocated chemical-production burden with 0.0312 kg complete native cryolite per kg co-product sand; this is an allocated-burden screening proxy, not physical cryolite consumption. Native uses hydrogen fluoride whereas source uses fluosilicic acid: chemistry, allocation, feedstocks, recovery, emissions and geography differ. No ordinary quarry burden or sand-recovery credit is added to this co-product. Keep source producer shares and five freight rows.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "reason": "Retain two ordinary dried-silica producers using complete native dried silica sand, plus the chemical co-product branch and five original final freight entries. Independent source3.8 inspection confirms all12 nonproduction flows of co-product silica equal0.0312 times the paired cryolite inventory. Represent that branch by0.0312kg complete native cryolite per source co-product kg as an allocated-production-burden proxy, not physical cryolite in sand. Native hydrogen-fluoride production differs from source fluosilicic-acid chemistry; feedstocks, allocation, recovery, energy and emissions differ. Add neither ordinary quarry burden nor recovered-sand credit to that branch. Source3.8 and3.9 share supplier identities but not all coefficients/statistics, so3.8 receives its own retained-delivery helper. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "ships-38-silica-market"}}], "reason": "Only independently inspected exact cut-off profiles authorize this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-df33b3625a62d0ea", "source": {"location": "GLO", "name": "market for silica sand", "reference product": "silica sand", "unit": "kilogram"}, "target": {"recipe_ref": "fuels-39-final-market-5135e054986e0de8eda4"}, "technosphere_information_loss": "Exact inspected ecoinvent 3.9 cut-off only. Preserve all original producer shares and freight rows, signed caller amounts, formulas and uncertainty without renormalization. Complete native inventories replace production technology, allocation, geography, vintage and internal uncertainty, with unquantified score effects. No omitted source rows, invented recovery credit, concentration, yield or density correction. Native internal upstream transport remains part of its complete production boundary; retained source market delivery is separate and boundary differences must be reviewed if transport dominates."},
     {"confidence": 0.512607, "id": "bp-1f0fa3bbee140c45", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for silicon carbide", "reference product": "silicon carbide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Silicon carbide, at plant", "reference product": "Silicon carbide, at plant", "unit": "kilogram"}},
     {"confidence": 0.633333, "id": "bp-4eed486087e42987", "mapping_method": "heuristic_similarity", "source": {"location": "DE", "name": "market for silicon tetrachloride", "reference product": "silicon tetrachloride", "unit": "kilogram"}, "target": {"location": "DE", "name": "Silicon tetrachloride, at plant", "reference product": "Silicon tetrachloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.553333, "id": "bp-325c741dcd89c1fa", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for silicon tetrachloride", "reference product": "silicon tetrachloride", "unit": "kilogram"}, "target": {"location": "DE", "name": "Silicon tetrachloride, at plant", "reference product": "Silicon tetrachloride, at plant", "unit": "kilogram"}},
@@ -821995,7 +822570,7 @@
     {"confidence": 0.149112, "id": "bp-9e9958f0ccb410e2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sulfur stockpiling", "reference product": "sulfur stockpiling", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cobalt sulfate", "reference product": "Cobalt sulfate", "unit": "kilogram"}},
     {"confidence": 0.40485, "id": "bp-6a97c5362cbe7587", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sulfur trioxide", "reference product": "sulfur trioxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphur trioxide, at plant", "reference product": "Sulphur trioxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.32485, "id": "bp-cfdaecfa011b0980", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for sulfur trioxide", "reference product": "sulfur trioxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphur trioxide, at plant", "reference product": "Sulphur trioxide, at plant", "unit": "kilogram"}},
-    {"confidence": 1.0, "id": "bp-7740a48a01851669", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for sulfuric acid", "reference product": "sulfuric acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphuric acid, liquid, at plant", "reference product": "Sulphuric acid, liquid, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "id": "bp-7740a48a01851669", "mapping_method": "curated_legacy", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_bulk_chemical_ceramic_review.json"], "reason": "Retain the previously inspected complete native active-H2SO4 stock at factor+1; no change to its production/market-delivery proxy boundary. Only exact3.8 gains a separate final-delivery helper.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.6"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pilot_bulk_chemical_ceramic_review.json"], "reason": "Retain the previously inspected complete native active-H2SO4 stock at factor+1; no change to its production/market-delivery proxy boundary. Only exact3.8 gains a separate final-delivery helper.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "reason": "Use complete native sulfuric-acid production per kg active H2SO4, while retaining both source producer weights and all three final freight entries. Native explicitly refers to100%acid, so no solution-concentration or water multiplier is applied. Its35%zero-attributed-burden smelter-gas assumption is already embedded by multiplying the remaining inventory by0.65; do not apply that allocation twice or add an independent smelter-gas credit. Source sulfur-burning/zinc-sulfide co-product allocation differs and is not reconstructed. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "ships-38-acid-market"}}], "reason": "Only independently inspected exact profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-34470dda618ae147", "source": {"location": "RER", "name": "market for sulfuric acid", "reference product": "sulfuric acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphuric acid, liquid, at plant", "reference product": "Sulphuric acid, liquid, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Native stock is100%activeH2SO4 and embeds its35%zero-attributed-burden smelter-gas assumption; apply neither a solution multiplier nor the0.65allocation a second time. Source production, co-product allocation, geography, age and scores differ, with effects unquantified. Previously qualified3.6/3.9 profiles retain their complete native at-plant market proxy; source market delivery is not reconstructed in those older decisions. Only source3.8 now uses its explicitly retained-delivery helper. Signed caller quantities, formulas, uncertainty and separately listed emissions remain unchanged."},
     {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-7532c17fac15ff33", "mapping_method": "reviewed_fuels_39_silica_dependency", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_39_silica_review.json"], "reason": "Sulfuric acid per kg pure/100% active substance. Actual source product information explicitly models the pure substance and native documentation explicitly references 1 kg 100% sulphuric acid, despite the liquid title. Retain factor +1 without solution, water, hydrate or concentration scaling. Complete native European stable-operation acid production replaces the RoW market portfolio, including its recovered viscose-fibre/co-product supplies; feedstocks, allocation, recovery, energy, delivery, geography, vintage and native emission coverage differ. No recovered-material credit, repeated allocation, extra solvent or correction to separate caller emissions is inferred.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the individually inspected exact cut-off profile authorizes this target and reference basis.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0a3736bb7ebdf795", "source": {"location": "RoW", "name": "market for sulfuric acid", "reference product": "sulfuric acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sulphuric acid, liquid, at plant", "reference product": "Sulphuric acid, liquid, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Only the independently inspected ecoinvent 3.9 cut-off identity qualifies. Preserve signed caller quantities, uncertainty, formulas, separate emissions/freight and the complete recorded helper closure. Native technology, geography, allocation, vintage, delivery, internal uncertainty and biosphere coverage differ with unquantified score effects. No hidden omission, recovery credit, release extrapolation, cross-system-model or inverse mapping is approved."},
     {"confidence": 0.277401, "id": "bp-f8b5075e2170b5e7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sulfuryl chloride", "reference product": "sulfuryl chloride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium chloride, at plant", "reference product": "Lithium chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.437511, "id": "bp-f0879b30947d576a", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for sunflower", "reference product": "sunflower", "unit": "kilogram"}, "target": {"location": "CH", "name": "Sunflower IP, at farm", "reference product": "Sunflower IP, at farm", "unit": "kilogram"}},
@@ -822033,7 +822608,7 @@
     {"confidence": 0.168164, "id": "bp-0b86f19fc5f530e6", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "market for synthesis gas, 3 to 1", "reference product": "synthesis gas, 3 to 1", "unit": "kilogram"}, "target": {"location": "CH", "name": "Methanol, from synthetic gas, at plant", "reference product": "Methanol, from synthetic gas, at plant", "unit": "kilogram"}},
     {"confidence": 0.422, "id": "bp-0d6e4c8aadfc8083", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for synthetic gas", "reference product": "synthetic gas", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Synthetic gas, production mix, at plant", "reference product": "Synthetic gas, production mix, at plant", "unit": "cubic meter"}},
     {"confidence": 0.342, "id": "bp-ff669e971a727086", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for synthetic gas", "reference product": "synthetic gas", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Synthetic gas, production mix, at plant", "reference product": "Synthetic gas, production mix, at plant", "unit": "cubic meter"}},
-    {"confidence": 0.408857, "id": "bp-46b87a43a45c92f8", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for synthetic gas factory", "reference product": "synthetic gas factory", "unit": "unit"}, "target": {"location": "CH", "name": "Synthetic gas plant", "reference product": "Synthetic gas plant", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-46b87a43a45c92f8", "mapping_method": "reviewed_ships_38_native_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "reason": "Use complete native Swiss synthetic-gas-plant construction per unit, preserving both source regional supplier shares. Source and native describe a5MWth-output gasifier with50year life; native includes dryer, comminution, gasifier, gas conditioning, buildings, land use and dismantling. Retain that complete infrastructure once, without capacity, throughput, wood-drying or lifetime scaling. Geographic construction supplies, material/energy quantities, allocation, age and internal uncertainty can differ; score effects remain unquantified. This is plant construction, not gas production or gasifier operation. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "ships-38-syngas-market"}}], "reason": "Only independently inspected exact profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-b8ed32490c0bdac3", "source": {"location": "GLO", "name": "market for synthetic gas factory", "reference product": "synthetic gas factory", "unit": "unit"}, "target": {"recipe_ref": "ships-38-syngas-market"}, "technosphere_information_loss": "Use complete native Swiss synthetic-gas-plant construction per unit, preserving both source regional supplier shares. Source and native describe a5MWth-output gasifier with50year life; native includes dryer, comminution, gasifier, gas conditioning, buildings, land use and dismantling. Retain that complete infrastructure once, without capacity, throughput, wood-drying or lifetime scaling. Geographic construction supplies, material/energy quantities, allocation, age and internal uncertainty can differ; score effects remain unquantified. This is plant construction, not gas production or gasifier operation. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."},
     {"confidence": 0.50646, "id": "bp-82479bd5f6b8b893", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for synthetic graphite, battery grade", "reference product": "synthetic graphite, battery grade", "unit": "kilogram"}, "target": {"location": "CN", "name": "Graphite, battery grade, at plant", "reference product": "Graphite, battery grade, at plant", "unit": "kilogram"}},
     {"confidence": 0.42646, "id": "bp-6738809955ecd4d5", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for synthetic graphite, battery grade", "reference product": "synthetic graphite, battery grade", "unit": "kilogram"}, "target": {"location": "CN", "name": "Graphite, battery grade, at plant", "reference product": "Graphite, battery grade, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-82cb48b8f46820d5", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for synthetic rubber", "reference product": "synthetic rubber", "unit": "kilogram"}, "target": {"location": "RER", "name": "Synthetic rubber, at plant", "reference product": "Synthetic rubber, at plant", "unit": "kilogram"}},
@@ -823810,7 +824385,7 @@
     {"confidence": 0.183784, "id": "bp-46f9e877bd521569", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for wood chips and particles, willow", "reference product": "wood chips and particles, willow", "unit": "kilogram"}, "target": {"location": "CH", "name": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
     {"confidence": 0.496271, "id": "bp-070747500b6e5514", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for wood chips and particles, willow, dry, measured as dry mass", "reference product": "wood chips and particles, willow, dry, measured as dry mass", "unit": "kilogram"}, "target": {"location": "RER", "name": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
     {"confidence": 0.421271, "id": "bp-0e7e747c87c5b813", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for wood chips and particles, willow, dry, measured as dry mass", "reference product": "wood chips and particles, willow, dry, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
-    {"confidence": 0.599804, "id": "bp-22fb05598c337210", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for wood chips, dry, measured as dry mass", "reference product": "wood chips, dry, measured as dry mass", "unit": "kilogram"}, "target": {"location": "RER", "name": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-22fb05598c337210", "mapping_method": "reviewed_ships_38_native_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "reason": "Replace the hardwood-only wet-sawmill heuristic with the complete native RER production mix of wet wood chips measured as kg dry mass. Source dry chips are co-products of six timber-manufacturing activities; native replaces those allocated producer inventories with its historical forest/sawmill/species mixture. Both reference1kg dry wood, so caller dry mass remains unchanged despite the wet native product. Retain every source co-product quantity and final delivery separately. This is a moisture and supply-boundary screening proxy, not a dry-chip-equivalent product: native moisture, allocated timber-drying burdens, species, forest/co-product split and transport differ. Any missing allocated drying burden and gasification implications have unquantified score effects. Do not invent an extra dryer, water exchange, dry-to-wet mass correction, wood yield, carbon content or heating-value multiplier. Retain separately modelled caller processing, water, fuel and emissions. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "ships-38-wood-market"}}], "reason": "Only independently inspected exact profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-509e2c48a8d4a6da", "source": {"location": "RER", "name": "market for wood chips, dry, measured as dry mass", "reference product": "wood chips, dry, measured as dry mass", "unit": "kilogram"}, "target": {"recipe_ref": "ships-38-wood-market"}, "technosphere_information_loss": "Replace the hardwood-only wet-sawmill heuristic with the complete native RER production mix of wet wood chips measured as kg dry mass. Source dry chips are co-products of six timber-manufacturing activities; native replaces those allocated producer inventories with its historical forest/sawmill/species mixture. Both reference1kg dry wood, so caller dry mass remains unchanged despite the wet native product. Retain every source co-product quantity and final delivery separately. This is a moisture and supply-boundary screening proxy, not a dry-chip-equivalent product: native moisture, allocated timber-drying burdens, species, forest/co-product split and transport differ. Any missing allocated drying burden and gasification implications have unquantified score effects. Do not invent an extra dryer, water exchange, dry-to-wet mass correction, wood yield, carbon content or heating-value multiplier. Retain separately modelled caller processing, water, fuel and emissions. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."},
     {"confidence": 0.524804, "id": "bp-497963b34c009612", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for wood chips, dry, measured as dry mass", "reference product": "wood chips, dry, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
     {"confidence": 0.475728, "id": "bp-0461c1407670af7d", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for wood chips, from post-consumer wood, dry, measured as dry mass", "reference product": "wood chips, from post-consumer wood, dry, measured as dry mass", "unit": "kilogram"}, "target": {"location": "RER", "name": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
     {"confidence": 0.400728, "id": "bp-d86bd30117f24636", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for wood chips, from post-consumer wood, dry, measured as dry mass", "reference product": "wood chips, from post-consumer wood, dry, measured as dry mass", "unit": "kilogram"}, "target": {"location": "CH", "name": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "reference product": "Wood chips, hardwood, wet, measured as dry mass, at sawmill", "unit": "kilogram"}},
@@ -835343,6 +835918,18 @@
       ],
       "rationale": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json."
     },
+    "r-08d2b3055a1c88e4": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "limitations": [
+        "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step.",
+        "Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases.",
+        "Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted.",
+        "Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."
+      ],
+      "rationale": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step."
+    },
     "r-099783a59cd9d806": {
       "evidence": [
         "Exact approved source/prior-target/profile whitelist in brightpath/data/export/uvek_feed_nutrient_omission_review.json: 95 normalized nutrient identities, 692 inspected positive-reference source/profile pairs, 45 gross-energy MJ references and 50 100%-crude-protein kg references. Existing heuristic factors are all 1 and do not document nutritional equivalence. Prior targets supply thermal/fuel energy, crop mass, crude oil or an unspecified protein concentrate, not a validated generic nutritional market.",
@@ -836919,6 +837506,17 @@
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for sewage sludge, 70% water, WWT, WW from ammonium paratungstate production / RoW / kg external exchange with a warning. All inspected direct service comments for ammonium paratungstate production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
     },
+    "r-34470dda618ae147": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json",
+        "brightpath/data/export/uvek_pilot_bulk_chemical_ceramic_review.json"
+      ],
+      "limitations": [
+        "Native stock is100%activeH2SO4 and embeds its35%zero-attributed-burden smelter-gas assumption; apply neither a solution multiplier nor the0.65allocation a second time. Source production, co-product allocation, geography, age and scores differ, with effects unquantified.",
+        "Previously qualified3.6/3.9 profiles retain their complete native at-plant market proxy; source market delivery is not reconstructed in those older decisions. Only source3.8 now uses its explicitly retained-delivery helper. Signed caller quantities, formulas, uncertainty and separately listed emissions remain unchanged."
+      ],
+      "rationale": "Complete native sulfuric-acid production per kg active H2SO4, with independently scoped market-delivery boundaries."
+    },
     "r-3451a352da098a2e": {
       "evidence": [
         "brightpath/data/export/uvek_cutoff_slag_product_review.json"
@@ -838056,6 +838654,19 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external citric acid production / energy feed, gross / RER / megajoule reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents gross nutritional feed energy in MJ, not industrial heat or fuel energy. No validated nutritional conversion establishes equivalence with the former xx Heat, at cogen 1MWe lean burn, allocation energy / RER provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-509e2c48a8d4a6da": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "limitations": [
+        "Replace the hardwood-only wet-sawmill heuristic with the complete native RER production mix of wet wood chips measured as kg dry mass. Source dry chips are co-products of six timber-manufacturing activities; native replaces those allocated producer inventories with its historical forest/sawmill/species mixture. Both reference1kg dry wood, so caller dry mass remains unchanged despite the wet native product. Retain every source co-product quantity and final delivery separately.",
+        "This is a moisture and supply-boundary screening proxy, not a dry-chip-equivalent product: native moisture, allocated timber-drying burdens, species, forest/co-product split and transport differ. Any missing allocated drying burden and gasification implications have unquantified score effects. Do not invent an extra dryer, water exchange, dry-to-wet mass correction, wood yield, carbon content or heating-value multiplier. Retain separately modelled caller processing, water, fuel and emissions.",
+        "Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases.",
+        "Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted.",
+        "Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."
+      ],
+      "rationale": "Replace the hardwood-only wet-sawmill heuristic with the complete native RER production mix of wet wood chips measured as kg dry mass. Source dry chips are co-products of six timber-manufacturing activities; native replaces those allocated producer inventories with its historical forest/sawmill/species mixture. Both reference1kg dry wood, so caller dry mass remains unchanged despite the wet native product. Retain every source co-product quantity and final delivery separately."
     },
     "r-50a5e94e6e3a09f4": {
       "evidence": [
@@ -842412,6 +843023,18 @@
       ],
       "rationale": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished."
     },
+    "r-b8ed32490c0bdac3": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "limitations": [
+        "Use complete native Swiss synthetic-gas-plant construction per unit, preserving both source regional supplier shares. Source and native describe a5MWth-output gasifier with50year life; native includes dryer, comminution, gasifier, gas conditioning, buildings, land use and dismantling. Retain that complete infrastructure once, without capacity, throughput, wood-drying or lifetime scaling. Geographic construction supplies, material/energy quantities, allocation, age and internal uncertainty can differ; score effects remain unquantified. This is plant construction, not gas production or gasifier operation.",
+        "Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases.",
+        "Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted.",
+        "Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."
+      ],
+      "rationale": "Use complete native Swiss synthetic-gas-plant construction per unit, preserving both source regional supplier shares. Source and native describe a5MWth-output gasifier with50year life; native includes dryer, comminution, gasifier, gas conditioning, buildings, land use and dismantling. Retain that complete infrastructure once, without capacity, throughput, wood-drying or lifetime scaling. Geographic construction supplies, material/energy quantities, allocation, age and internal uncertainty can differ; score effects remain unquantified. This is plant construction, not gas production or gasifier operation."
+    },
     "r-b95d77464666d191": {
       "evidence": [
         "brightpath/data/export/uvek_modal_transport_review.json: exact source/target inventory and positive-reference evidence."
@@ -843428,6 +844051,18 @@
         "Approved matching-material Swiss residual-material-landfill screening proxy: replace the former allocated slag-production supplier with the dedicated disposal service for this exact waste type. Apply factor -1 to preserve incoming waste mass against the positive UVEK treatment reference. Source dust documents H2O 105410 ppm (10.541%); UVEK names specify 15.4% water. Preserve the original kg without moisture or dry-mass scaling; equal composition is not established. The proxy substitutes its own landfill operation and infrastructure inventory. Metal concentrations, speciation, leaching, short- and long-term water releases, cement handling, background supplies and allocation models can differ; toxicity and other LCIA equivalence are not established or quantified. No recovered-material production or substitution credit is inferred. Preserve caller uncertainty, formulas, production, foreground suppliers and separate emissions. Only the enumerated exact ecoinvent 3.6 profiles are approved. Other versions, patch profiles, alloy grades, waste types, markets and reverse routes require independent review."
       ],
       "rationale": "Auto-approved under the independently inspected matching-material/function/unit disposal-service proxy authorization: use the corresponding CH/kg UVEK landfill service for the exact legacy EAF dust or slag treatment, preserving incoming wet waste mass with factor -1. No helper is needed. Approved matching-material Swiss residual-material-landfill screening proxy: replace the former allocated slag-production supplier with the dedicated disposal service for this exact waste type. Apply factor -1 to preserve incoming waste mass against the positive UVEK treatment reference. Source dust documents H2O 105410 ppm (10.541%); UVEK names specify 15.4% water. Preserve the original kg without moisture or dry-mass scaling; equal composition is not established. The proxy substitutes its own landfill operation and infrastructure inventory. Metal concentrations, speciation, leaching, short- and long-term water releases, cement handling, background supplies and allocation models can differ; toxicity and other LCIA equivalence are not established or quantified. No recovered-material production or substitution credit is inferred. Preserve caller uncertainty, formulas, production, foreground suppliers and separate emissions. Only the enumerated exact ecoinvent 3.6 profiles are approved. Other versions, patch profiles, alloy grades, waste types, markets and reverse routes require independent review."
+    },
+    "r-d34690bdaf822f4e": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "limitations": [
+        "Use the complete native industrial natural-gas-furnace infrastructure per source unit, preserving both source regional supplier shares. Source documentation says about100kW gas input but explicitly says its production inventory is identical to a1MW oil furnace. Native is labelled1MW with20year life and includes equipment, manufacturing energy and disposal. This is an ambiguous source-size/infrastructure screening proxy, not a capacity-equivalence claim. Do not invent a0.1 or10 size/lifetime multiplier, add fuel-operation energy, or count a second furnace; manufacturing materials, geography, disposal, allocation and vintage differences have unquantified score effects.",
+        "Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases.",
+        "Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted.",
+        "Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."
+      ],
+      "rationale": "Use the complete native industrial natural-gas-furnace infrastructure per source unit, preserving both source regional supplier shares. Source documentation says about100kW gas input but explicitly says its production inventory is identical to a1MW oil furnace. Native is labelled1MW with20year life and includes equipment, manufacturing energy and disposal. This is an ambiguous source-size/infrastructure screening proxy, not a capacity-equivalence claim. Do not invent a0.1 or10 size/lifetime multiplier, add fuel-operation energy, or count a second furnace; manufacturing materials, geography, disposal, allocation and vintage differences have unquantified score effects."
     },
     "r-d3954a1a61c78293": {
       "evidence": [

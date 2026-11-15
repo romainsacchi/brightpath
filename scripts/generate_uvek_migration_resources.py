@@ -1599,6 +1599,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_ships_312_remaining_review(technosphere)
     if __package__:
+        from scripts.review_uvek_ships_38_remaining import apply_ships_38_remaining_review
+    else:
+        from review_uvek_ships_38_remaining import apply_ships_38_remaining_review
+
+    apply_ships_38_remaining_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
