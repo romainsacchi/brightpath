@@ -110,6 +110,9 @@ def test_review_matches_exact_packaged_rules_and_reference_bases():
         assert rules[row["rule_id"]] == row["rule"]
         assert row["conversion_factor"] == 1
         assert row["source_witness"]["reference_amounts"] == [1]
+        assert row["source_witness"]["source_database"] == "ecoinvent-3.8-cutoff"
+        assert row["source_witness"]["source_project"] == "ecoinvent-3.8-cutoff"
+        assert row["source_witness"]["activity_code"]
         assert row["source_witness"]["identity"] == row["rule"]["source"]
         assert set(row["native_witnesses"]) == {"2025", "2026"}
         for witness in row["native_witnesses"].values():

@@ -7,7 +7,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = "brightpath/data/export/uvek_metals_38_native_services_review.json"
-REVIEW_SHA256 = "0001aa92533c1f456fb1efea1368b8fbbf7314d0c8531e26751233cdf2764487"
+REVIEW_SHA256 = "75af2c313241dc22d4d99e7ff12abd30ff2bb49046c8b9ee9cca3126d5b91ed9"
 
 
 def apply_metals_38_native_services_review(resource, root=ROOT):
