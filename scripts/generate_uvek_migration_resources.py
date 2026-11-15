@@ -1617,6 +1617,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_metals_38_operating_services_review(technosphere)
     if __package__:
+        from scripts.review_uvek_metals_38_chemical_markets import apply_metals_38_chemical_markets_review
+    else:
+        from review_uvek_metals_38_chemical_markets import apply_metals_38_chemical_markets_review
+
+    apply_metals_38_chemical_markets_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews

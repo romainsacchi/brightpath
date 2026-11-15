@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 281,
-      "recipe": 1104,
-      "unclassified": 29090
+      "proxy": 282,
+      "recipe": 1108,
+      "unclassified": 29085
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 253,
       "followup_review": 163,
-      "heuristic_similarity": 26344,
+      "heuristic_similarity": 26339,
       "pairwise_review": 2205,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -103,6 +103,7 @@
       "reviewed_market_composition": 366,
       "reviewed_material_markets_39_retained_delivery": 4,
       "reviewed_mdea_native_derived_screening": 1,
+      "reviewed_metals_38_chemical_market": 5,
       "reviewed_metals_38_operating_service": 4,
       "reviewed_methane_sulfonic_acid_inventory_39": 3,
       "reviewed_mining_38_high_slag": 2,
@@ -221,7 +222,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444879,
+    "mean_confidence": 0.444975,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -152984,6 +152985,714 @@
       "name": "Methyldiethanolamine market, native-derived production and retained delivery",
       "rationale": "Screening reconstruction, not a measured MDEA plant or LCIA-equivalent replacement. Only exact ecoinvent 3.12 cut-off is reviewed; no other version, patch, reverse or cross-system-model approval. Product basis is 1 kg of pure methyldiethanolamine (CAS 105-59-9, C5H13NO2), not 2-methyl-2-butanol, diethanolamine or a diluted solution. Preserve the audited methylamine and ethylene-oxide feed quantities, without correcting their implied approximately 94.06% stoichiometric yield to the documented stated 95% estimate; apply no second yield or concentration factor. Retain the audited 0.358 kWh electricity, 3.72 MJ chemical-process heat and 4e-10 chemical-factory units once. Reuse the already-reviewed complete native chemical-plant MJ heat service with its retained water exchanges. Never convert MJ to kg of fresh steam without an established enthalpy basis or add native diethanolamine heat/electricity again. Remaining overhead and direct emissions are derived from native diethanolamine processing, whose historical estimated inventory and mass-allocated ethanolamine co-production do not describe MDEA selectivity, recycling, distillation or purification. No co-product or recovered-amine credit is added. Replace native ammonia feed by methylamine. For estimated air releases use the native documented 0.2% raw-reactant rule for methylamine and ethylene oxide. Scale native ethylene-oxide water release by EO input, nitrogen-species releases by reactant nitrogen and carbon indicators/CO2 by reactant carbon. These are explicit screening assumptions, not measured MDEA emissions or a toxicity equivalence. Scale native raw-material road/rail freight by total reactant mass to retain its implied transport distances. Keep native process/cooling water quantities and returns per kg of product; scale native waste heat by the electricity ratio. These utilities, water and wastewater assumptions replace the source internal water and wastewater model, without adding a second wastewater treatment service. The source-specific Methydiethanolamine water release (0.00025 kg/kg) has no established ecoinvent 3.10 biosphere definition and is not represented by this processing proxy. No other substance is silently substituted and no flow is invented. Source VOC, COD, DOC, nutrient, treatment and residue coverage differ; toxicity and score effects are unquantified. This is an internal model difference, not permission to omit foreground emissions. Carbon and nitrogen screening checks only bound represented elemental releases below feed-minus-product excess. Unrepresented loss fates remain unresolved; this is not complete atom balance. DOC and TOC describe overlapping carbon, while COD/BOD are oxygen-demand indicators; do not add them as independent carbon masses. Use complete native methylamine and ethylene-oxide production on their verified positive kg references. Native upstream allocation, technology, energy, geography, vintage, biosphere exclusions and internal uncertainty replace the source backgrounds. No purity multiplier or new fuel-production burden is inferred. Preserve all three original finished-product delivery entries separately at their original signed tkm quantities and uncertainty; native barge, fleet-average lorry and rail are technology/geography proxies. Do not renormalize or double count delivery and raw-material freight. Preserve caller signed kg, supported uncertainty, formulas and separately listed emissions. Native/source exchange distributions are retained or scaled consistently where used, but added modelling uncertainty and correlations are not quantified. The model is not suitable for asserting comparative toxicity or exact score equivalence.",
       "reference product": "methyldiethanolamine",
+      "unit": "kilogram"
+    },
+    "metals-38-ammonium_chloride-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00415939200985931,
+          "loc": 0.00415939200985931,
+          "location": "GLO",
+          "name": "xx Ammonium chloride from chlorosilane, at plant",
+          "reference product": "xx Ammonium chloride from chlorosilane, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0905309643627401,
+          "loc": 0.0905309643627401,
+          "location": "GLO",
+          "name": "Ammonium chloride, at plant",
+          "reference product": "Ammonium chloride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.905309643627401,
+          "loc": 0.905309643627401,
+          "location": "GLO",
+          "name": "Ammonium chloride, at plant",
+          "reference product": "Ammonium chloride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.8 ammonium_chloride supply and delivery",
+      "rationale": "Retain all three original producer weights and all four final freight entries for the pure-NH4Cl market. The chlorosilane co-product uses complete native ammonium chloride from chlorosilane; the Hou/Solvay branch uses complete native modified-Solvay ammonium chloride. The source direct ammonia/HCl synthesis branch uses that same complete native ammonium-chloride stock as an explicit production-route screening proxy. Source95%yield and its ammonia/HCl inventory are replaced by the native route, not preserved or rescaled. Coproduct allocation, reaction route, input specification, energy, waste and vintage differ. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained.",
+      "reference product": "ammonium chloride",
+      "unit": "kilogram"
+    },
+    "metals-38-calcium_chloride-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0136689779044733,
+          "loc": 0.0136689779044733,
+          "location": "RER",
+          "name": "xx Calcium chloride, from hypochlorination of allyl chloride, at plant",
+          "reference product": "xx Calcium chloride, from hypochlorination of allyl chloride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.986196036070729,
+          "loc": 0.986196036070729,
+          "location": "RER",
+          "name": "Calcium chloride, CaCl2, at plant",
+          "reference product": "Calcium chloride, CaCl2, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00013498602479743,
+          "loc": 0.00013498602479743,
+          "location": "RER",
+          "name": "Calcium chloride, CaCl2, at plant",
+          "reference product": "Calcium chloride, CaCl2, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0238952438549153,
+          "loc": -3.734075841734564,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00374111365508341,
+          "loc": -5.588371943141129,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.181163642490001,
+          "loc": -1.7083545540157918,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0809338694308391,
+          "loc": -2.514122884547314,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0224231473350459,
+          "loc": -3.797661490501636,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0884072997559305,
+          "loc": -2.4258007363232315,
+          "location": "US",
+          "name": "Transport, freight, rail, diesel",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail, diesel",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00567800934823614,
+          "loc": -5.171154574536774,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.111657674129948,
+          "loc": -2.1923175692474794,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "Reviewed source3.8 calcium_chloride supply and delivery",
+      "rationale": "Retain all three pure-CaCl2 producer entries and ten final freight entries. Use complete native allocated Solvay calcium chloride for the Solvay branch and complete native allyl-chloride hypochlorination CaCl2 for its epichlorohydrin co-product branch. The rare-earth co-product branch uses the complete native Solvay CaCl2 stock as an explicit production/allocation proxy; do not add a rare-earth or calcium recovery credit. Native co-product economics and process boundaries differ. Source declares pure CaCl2; no factor based on generic text mentioning77%de-icing flakes is applied. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained.",
+      "reference product": "calcium chloride",
+      "unit": "kilogram"
+    },
+    "metals-38-light_soda_implemented_reference_basis-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1044,
+          "loc": -2.2595256035335987,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1546,
+          "loc": -1.8669141428288156,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.223698820263534,
+          "loc": 0.223698820263534,
+          "location": "RER",
+          "name": "Soda, powder, at plant",
+          "reference product": "Soda, powder, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.776301179736466,
+          "loc": 0.776301179736466,
+          "location": "RER",
+          "name": "Soda, powder, at plant",
+          "reference product": "Soda, powder, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.8 light_soda_implemented_reference_basis supply and delivery",
+      "rationale": "Correct the unrelated LED heuristic using complete native light-soda powder for each of the two Solvay producer entries, retaining all four final freight entries. The source market label says crystalline heptahydrate, while its Solvay documentation describes Na2CO3 and its own neutralizer converter uses1.325kg of this product per kgNaOH-equivalent, the same coefficient as dry dense soda. Preserve that implemented carbonate-function basis at factor+1 per source kg; this is not independently verified physical heptahydrate equivalence. The source hydration/label inconsistency and unknown score effect remain explicit. Do not infer seven waters of crystallization, add water/heat, or apply an invented dry-to-hydrate multiplier. Native light soda excludes densification; source carbonate/bicarbonate/calcium-chloride co-product allocation and native33%/67%soda/CaCl2 allocation differ. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained.",
+      "reference product": "soda ash, light, crystalline, heptahydrate",
+      "unit": "kilogram"
+    },
+    "metals-38-packed_quicklime-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.4422,
+          "loc": -0.8159930105587911,
+          "location": "OCE",
+          "name": "Transport, transoceanic freight ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic freight ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "CH",
+          "name": "Quicklime, milled, packed, at plant",
+          "reference product": "Quicklime, milled, packed, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00016277894503545,
+          "loc": -8.72311744300879,
+          "location": "CH",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.000343762843723866,
+          "loc": -7.975558546121156,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00279345821124068,
+          "loc": -5.880474948460771,
+          "location": "CH",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0122337239851075,
+          "loc": -4.4035588797120475,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00191534985502115,
+          "loc": -6.257854981118614,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0927509261598714,
+          "loc": -2.3778375919932735,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0065459292648689,
+          "loc": -5.028911908817184,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00181358357611177,
+          "loc": -6.312450514771505,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00715038011613803,
+          "loc": -4.9405897605931,
+          "location": "US",
+          "name": "Transport, freight, rail, diesel",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail, diesel",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.000459237249129419,
+          "loc": -7.685943598806644,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.00903086979375189,
+          "loc": -4.707106593517346,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "Reviewed source3.8 packed_quicklime supply and delivery",
+      "rationale": "Retain the original positive1kg producer and twelve final freight entries, using complete native packed milled quicklime per kg. The exact original source chain explicitly mills quicklime in pieces and packs it; it is not the separate limestone-milling ambiguity. Native quicklime includes upstream calcination, milling and packing. Do not add a second kiln, bag, packing service, heat or CO2 release. Source/native kiln fuel, dust control, geography, packing and vintage differ. Generic native CAS/synonym inconsistencies do not justify changing CaO to hydrated lime or adding a stoichiometric mass correction; the documented process and formula are the chosen basis. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained.",
+      "reference product": "quicklime, milled, packed",
       "unit": "kilogram"
     },
     "mining-38-european-portland-cement-delivery": {
@@ -815917,7 +816626,7 @@
     {"confidence": 0.560322, "id": "bp-f787c27b6e7dbfde", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_acid_surfactant_salts_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_acid_surfactant_salts_39_review.json"], "reason": "New permission covers only the four independently inspected exact ecoinvent3.9 cut-off chemical markets. All source markets,product providers and selected native processes have positive1kg references. Keep signed caller chemical quantities,uncertainty,formulas and separate inputs/emissions at factor+1. Hydrochloric acid and nitric acid refer to kg100% active acid despite30%/50%solution-state names. Reuse the earlier explicitly reviewed HCl active basis, independently check current native two0.5kg active-acid branches and hydrogen/chlorine inputs. Nitric-acid documentation explicitly states1kg100%acid. Do not apply0.30,1/0.30,0.50 or2 multipliers,add dilution water or infer a new purity/solution factor. Other source versions,patches,system models and reverse routes gain no new permission. Retain all source producer and final-freight entries separately with their original amounts and supported statistical fields. Native raw-material transport remains inside production; final source market delivery is additional and included once. Do not normalize source shares,aggregate away national entries,guess distances,loading,storage or losses,or add a second plant/vehicle/port burden. Global/RoW production and unavailable national freight use explicitly recorded native European screening proxies; the source US rail branch instead uses the available complete native US diesel-rail service, matching its inspected single-diesel-supplier market. Hydrochloric acid: retain all eight source producer coefficients and three delivery legs. Match the source Mannheim and hydrogen/chlorine production branches to their corresponding native active-acid processes. Six other byproduct branches use the previously reviewed complete native50/50 primary-acid mix as a screening proxy. This replaces approximately25.73% source byproduct supply and its source TDI,MDI,fluorocarbon/chlorination/allyl-chloride allocation,not a reconstruction of those coproduct systems. Keep native Mannheim economic/stoichiometric allocation and uncertainty; add no coproduct burden,chlorine,sodium-sulfate or avoided-HCl credit. The two primary source coefficients are equal,so the deterministic native net output mix remains50/50 without a new allocation factor. Earlier3.6and3.8 direct-stock suppliers,factors,source scopes and frozen authority bytes remain unchanged; they do not acquire the new3.9 delivery helper. AE3: preserve the source petrochemical,coconut-oil and palm-kernel-oil shares separately,using the corresponding complete native AE3 supplier for each. Do not replace the petrochemical majority or palm-kernel branch with coconut production,substitute AE7/AE11/ethanol,or add separate fatty alcohol/ethylene oxide. Source and native refer to one kg AE3 with three average ethoxy units; this does not establish exact chain-length distribution,grade,purity or stochastic equivalence. Native ECOSOL mid1990s technology,mass allocation,energy/emission assumptions and absent water-consumption data remain limitations. No biogenic-carbon,molecular-weight or ethoxylation-yield factor is invented. Ammonium bicarbonate: source and native refer to1kg100%NH4HCO3,CAS1066-33-7. Native raw inputs already embody its95%yield estimate; add no extra1/0.95 factor,CO2 uptake/recovery credit,ammonia or water. The European manufacturer-based historical model replaces source RoW production; native documentation explicitly lacks auxiliaries,solid waste and air/water emissions except waste heat. These inherited missing-data limits remain unquantified rather than invented from unrelated producers. Retain its one producer and all ten final freight entries; only US rail has a matching native national service,while IN/CN/ZA/RoW rail and other unavailable freight geographies use the reviewed complete native proxies. Nitric acid: use the complete native European weak-acid process per kgactiveHNO3,keeping the source RoW producer coefficient and both freight entries. Retain native ammonia oxidation,absorption,dilution,N2O/other emissions,energy and infrastructure once. Native historical production and its N2O/vintage/abatement model replace the source process; do not overlay source emissions,assume modern abatement,or multiply demand for the50%solution label. Final source transport and native internal precursor/waste transport remain separate. All four use whole native production models: feedstock,water/energy,waste,emissions,allocation,geographic/temporal coverage,grade and internal uncertainty can differ. Source/native LCI,LCIA and stochastic equivalence are not established; potentially substantial score effects remain unquantified. No source/caller exchange omission,empty handoff,runtime Python change,alternative sector engine or source/target validation bypass. Native explicit suppliers remain eligible for ordinary shared Premise transformations without claiming identical regional future performance.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "acid-surfactant-salts-39-ammonium-bicarbonate-market"}}], "reason": "Only independently reviewed exact source profiles are qualified.", "status": "unresolved"}, "review_ref": "r-7ccb944ebb591b6f", "source": {"location": "RoW", "name": "market for ammonium bicarbonate", "reference product": "ammonium bicarbonate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ammonium bicarbonate, at plant", "reference product": "Ammonium bicarbonate, at plant", "unit": "kilogram"}},
     {"confidence": 0.622905, "id": "bp-4c36ad8aa71acca8", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ammonium carbonate", "reference product": "ammonium carbonate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ammonium carbonate, at plant", "reference product": "Ammonium carbonate, at plant", "unit": "kilogram"}},
     {"confidence": 0.542905, "id": "bp-ccbe87e452a5b87e", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for ammonium carbonate", "reference product": "ammonium carbonate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ammonium carbonate, at plant", "reference product": "Ammonium carbonate, at plant", "unit": "kilogram"}},
-    {"confidence": 0.608413, "id": "bp-4d3399f22574aeb4", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for ammonium chloride", "reference product": "ammonium chloride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Ammonium chloride, at plant", "reference product": "Ammonium chloride, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-4d3399f22574aeb4", "mapping_method": "reviewed_metals_38_chemical_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "reason": "Retain all three original producer weights and all four final freight entries for the pure-NH4Cl market. The chlorosilane co-product uses complete native ammonium chloride from chlorosilane; the Hou/Solvay branch uses complete native modified-Solvay ammonium chloride. The source direct ammonia/HCl synthesis branch uses that same complete native ammonium-chloride stock as an explicit production-route screening proxy. Source95%yield and its ammonia/HCl inventory are replaced by the native route, not preserved or rescaled. Coproduct allocation, reaction route, input specification, energy, waste and vintage differ. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only independently inspected exact source profiles are reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-278415faf5667f6a", "source": {"location": "GLO", "name": "market for ammonium chloride", "reference product": "ammonium chloride", "unit": "kilogram"}, "target": {"recipe_ref": "metals-38-ammonium_chloride-market"}, "technosphere_information_loss": "Retain all three original producer weights and all four final freight entries for the pure-NH4Cl market. The chlorosilane co-product uses complete native ammonium chloride from chlorosilane; the Hou/Solvay branch uses complete native modified-Solvay ammonium chloride. The source direct ammonia/HCl synthesis branch uses that same complete native ammonium-chloride stock as an explicit production-route screening proxy. Source95%yield and its ammonia/HCl inventory are replaced by the native route, not preserved or rescaled. Coproduct allocation, reaction route, input specification, energy, waste and vintage differ. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained."},
     {"confidence": 0.367279, "id": "bp-9d5e0495acadf7af", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for ammonium nitrate", "reference product": "ammonium nitrate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ammonium nitrate, as N, at regional storehouse", "reference product": "Ammonium nitrate, as N, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.447279, "id": "bp-3d66dc0eab54ab0e", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for ammonium nitrate", "reference product": "ammonium nitrate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ammonium nitrate, as N, at regional storehouse", "reference product": "Ammonium nitrate, as N, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.367279, "id": "bp-aa66901ef30e2b8e", "mapping_method": "heuristic_similarity", "source": {"location": "RNA", "name": "market for ammonium nitrate", "reference product": "ammonium nitrate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Ammonium nitrate, as N, at regional storehouse", "reference product": "Ammonium nitrate, as N, at regional storehouse", "unit": "kilogram"}},
@@ -816694,7 +817403,7 @@
     {"confidence": 0.4, "id": "bp-9c5fc38656c5bb31", "mapping_method": "pairwise_review", "review_ref": "r-2f90c108e290ea23", "source": {"location": "RER", "name": "market for calcium carbonate, precipitated", "reference product": "calcium carbonate, precipitated", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals inorganic, at plant", "reference product": "Chemicals inorganic, at plant", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-391c1f3aaffca472", "mapping_method": "reviewed_pcc_complete_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_pcc_market_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_pcc_market_review.json"], "reason": "Exact ecoinvent3.9cutoff RoW precipitated-calcium-carbonate market reconstruction. Reject the prior generic-inorganic-chemical target: retain source product PCC and all three original producer shares,0.990336071944508dedicatedprecipitation,0.00934612515441106allocatedcobalt-productionco-productand0.000317802901081526allocatedrare-earth-oxideco-product. Reconstruct all43nonproduction rows of the dedicated producer through the now-individually reviewed native backgrounds and canonical ecoinvent3.10biosphere, preserving all source signed amounts,uncertainty,pedigree,scale-without-pedigree andformulas. Retain the lime-cycle precipitation technology, original limestone/gas/chemicalsteam/electricity/water/machinery inputs and all14direct sourcebiosphere rows; do not substitute quarried limestone,quicklime or a generic carbonate/inorganic blend. Source inventory estimates do not establish an independently closed elemental carbon/water balance; add no invented carbon,stoichiometric,moisture,purity,allocation or energy correction. Reuse the two separately source-proven relative-allocation helpers over complete native cobalt andlanthanumoxide once per market-share-weightedkgPCC. Their allocated-burden ratios0.01704144503403511and0.12852314449326874are already inside those helpers: do not multiply again by allocation or metal-content factors, omit the minor branches, or add metal-recovery credits. Those complete native metal backgrounds remain explicit technology/ore/allocation/geography/vintage/internal-uncertainty screening proxies, not exact source-score equivalence. Keep all ten original final-product freight rows(5rail,1barge,3heavy-road,1container-ship) separately with exact original tonne-km and uncertainty, without normalization or aggregation. Whole-service RERrail/barge/heavy-lorry andOCEcontainer services retain native internal operation/infrastructure once; source final delivery is distinct and added once. Reuse29existing recipe dependencies unchanged, including both corrected ethanol routes, allocated ether-water, complete RoWwatermarket, source-country MVshares, production-level Quebecgas-heat shares without districtloss and source3.9chemicalsteamwateruncertainty. Explicitly carry the46previously approved production-only zero-burden cut-off receiver omissions into this root approval with literal audit. No new source omission or nonempty waste loss is approved. Native energy/material/waste-treatment technologies, resource origins, country substitutions, freight fleets/loading/traction, grid losses, equipment, emissions, allocation, vintage, internal uncertainty and imported biosphere exclusions remain screening differences with unquantified score effects. Preserve caller signedkg,uncertainty,formulas,ownership andseparateemissions with factor+1perpositive1kgPCCreference. Only exact3.9cutoff qualifies; other versions,reverse andconsequential remain unapproved. This background reconstruction alone does not certify complete pulp heat, industrial heat or steel transformation/export.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact3.9cutoff qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-16906c169c094c1a", "source": {"location": "RoW", "name": "market for calcium carbonate, precipitated", "reference product": "calcium carbonate, precipitated", "unit": "kilogram"}, "target": {"recipe_ref": "pcc-39-precipitated-carbonate-row-market"}, "technosphere_information_loss": "Exact ecoinvent3.9cutoff RoW precipitated-calcium-carbonate market reconstruction. Reject the prior generic-inorganic-chemical target: retain source product PCC and all three original producer shares,0.990336071944508dedicatedprecipitation,0.00934612515441106allocatedcobalt-productionco-productand0.000317802901081526allocatedrare-earth-oxideco-product. Reconstruct all43nonproduction rows of the dedicated producer through the now-individually reviewed native backgrounds and canonical ecoinvent3.10biosphere, preserving all source signed amounts,uncertainty,pedigree,scale-without-pedigree andformulas. Retain the lime-cycle precipitation technology, original limestone/gas/chemicalsteam/electricity/water/machinery inputs and all14direct sourcebiosphere rows; do not substitute quarried limestone,quicklime or a generic carbonate/inorganic blend. Source inventory estimates do not establish an independently closed elemental carbon/water balance; add no invented carbon,stoichiometric,moisture,purity,allocation or energy correction. Reuse the two separately source-proven relative-allocation helpers over complete native cobalt andlanthanumoxide once per market-share-weightedkgPCC. Their allocated-burden ratios0.01704144503403511and0.12852314449326874are already inside those helpers: do not multiply again by allocation or metal-content factors, omit the minor branches, or add metal-recovery credits. Those complete native metal backgrounds remain explicit technology/ore/allocation/geography/vintage/internal-uncertainty screening proxies, not exact source-score equivalence. Keep all ten original final-product freight rows(5rail,1barge,3heavy-road,1container-ship) separately with exact original tonne-km and uncertainty, without normalization or aggregation. Whole-service RERrail/barge/heavy-lorry andOCEcontainer services retain native internal operation/infrastructure once; source final delivery is distinct and added once. Reuse29existing recipe dependencies unchanged, including both corrected ethanol routes, allocated ether-water, complete RoWwatermarket, source-country MVshares, production-level Quebecgas-heat shares without districtloss and source3.9chemicalsteamwateruncertainty. Explicitly carry the46previously approved production-only zero-burden cut-off receiver omissions into this root approval with literal audit. No new source omission or nonempty waste loss is approved. Native energy/material/waste-treatment technologies, resource origins, country substitutions, freight fleets/loading/traction, grid losses, equipment, emissions, allocation, vintage, internal uncertainty and imported biosphere exclusions remain screening differences with unquantified score effects. Preserve caller signedkg,uncertainty,formulas,ownership andseparateemissions with factor+1perpositive1kgPCCreference. Only exact3.9cutoff qualifies; other versions,reverse andconsequential remain unapproved. This background reconstruction alone does not certify complete pulp heat, industrial heat or steel transformation/export."},
     {"confidence": 1.0, "id": "bp-995a85c7009a9601", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for calcium chloride", "reference product": "calcium chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Calcium chloride, CaCl2, at plant", "reference product": "Calcium chloride, CaCl2, at plant", "unit": "kilogram"}},
-    {"confidence": 0.43803, "id": "bp-0cbbd373574b3465", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for calcium chloride", "reference product": "calcium chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Calcium chloride, CaCl2, at plant", "reference product": "Calcium chloride, CaCl2, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-0cbbd373574b3465", "mapping_method": "reviewed_metals_38_chemical_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "reason": "Retain all three pure-CaCl2 producer entries and ten final freight entries. Use complete native allocated Solvay calcium chloride for the Solvay branch and complete native allyl-chloride hypochlorination CaCl2 for its epichlorohydrin co-product branch. The rare-earth co-product branch uses the complete native Solvay CaCl2 stock as an explicit production/allocation proxy; do not add a rare-earth or calcium recovery credit. Native co-product economics and process boundaries differ. Source declares pure CaCl2; no factor based on generic text mentioning77%de-icing flakes is applied. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only independently inspected exact source profiles are reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-4a897530e4b7d76b", "source": {"location": "RoW", "name": "market for calcium chloride", "reference product": "calcium chloride", "unit": "kilogram"}, "target": {"recipe_ref": "metals-38-calcium_chloride-market"}, "technosphere_information_loss": "Retain all three pure-CaCl2 producer entries and ten final freight entries. Use complete native allocated Solvay calcium chloride for the Solvay branch and complete native allyl-chloride hypochlorination CaCl2 for its epichlorohydrin co-product branch. The rare-earth co-product branch uses the complete native Solvay CaCl2 stock as an explicit production/allocation proxy; do not add a rare-earth or calcium recovery credit. Native co-product economics and process boundaries differ. Source declares pure CaCl2; no factor based on generic text mentioning77%de-icing flakes is applied. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained."},
     {"confidence": 0.357877, "id": "bp-672bf1f4aadbc893", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for calcium nitrate", "reference product": "calcium nitrate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Calcium nitrate, as N, at regional storehouse", "reference product": "Calcium nitrate, as N, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.437877, "id": "bp-3791123404491680", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for calcium nitrate", "reference product": "calcium nitrate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Calcium nitrate, as N, at regional storehouse", "reference product": "Calcium nitrate, as N, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.357877, "id": "bp-3d80494ede1a9c5f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for calcium nitrate", "reference product": "calcium nitrate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Calcium nitrate, as N, at regional storehouse", "reference product": "Calcium nitrate, as N, at regional storehouse", "unit": "kilogram"}},
@@ -820279,7 +820988,7 @@
     {"confidence": 0.497607, "id": "bp-d8074f637b4b54f4", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for neodymium oxide", "reference product": "neodymium oxide", "unit": "kilogram"}, "target": {"location": "CN", "name": "Neodymium oxide, at plant", "reference product": "Neodymium oxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.425292, "id": "bp-6445b1721ca596d0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for network connection, turbine 2MW, onshore", "reference product": "wind turbine network connection, 2MW, onshore", "unit": "unit"}, "target": {"location": "RER", "name": "Wind turbine 6.2MW, onshore, foundation", "reference product": "Wind turbine 6.2MW, onshore, foundation", "unit": "unit"}},
     {"confidence": 0.45491, "id": "bp-9ffdbe646630cb27", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for network connection, turbine 4.5MW, onshore", "reference product": "wind turbine network connection, 4.5MW, onshore", "unit": "unit"}, "target": {"location": "RER", "name": "Wind turbine 4.5MW, onshore, foundation", "reference product": "Wind turbine 4.5MW, onshore, foundation", "unit": "unit"}},
-    {"confidence": 0.275726, "id": "bp-f5fcdac403308760", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for neutralising agent, sodium hydroxide-equivalent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium hydroxide, at plant", "reference product": "Lithium hydroxide, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-f5fcdac403308760", "mapping_method": "reviewed_metals_38_chemical_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "reason": "Correct the chemically unrelated lithium-hydroxide heuristic with complete native European caustic-soda production per kg active NaOH, used here as an alkalinity screening proxy per kg source NaOH-equivalent. The source generic market contains carbonate, bicarbonate and caustic soda, all already measured in NaOH-equivalent units; its NaOH converter purchases1kg active NaOH per equivalent. Its original reagent portfolio and upstream delivery are replaced, not reconstructed. The previously reviewed native50%solution stocks have an active-NaOH reference, so apply no factor2 or0.5, dilution water or extra chlorine/coproduct credit. Neutralization capacity is the matched function; reagent-specific pH, reaction products, use-phase CO2 and source portfolio are not claimed equivalent. Preserve separately modelled caller emissions without adding a reaction credit or invented use-phase emission. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only independently inspected exact source profiles are reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-b8e2c7ac6a915473", "source": {"location": "GLO", "name": "market for neutralising agent, sodium hydroxide-equivalent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hydroxide, 50% in H2O, production mix, at plant", "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Correct the chemically unrelated lithium-hydroxide heuristic with complete native European caustic-soda production per kg active NaOH, used here as an alkalinity screening proxy per kg source NaOH-equivalent. The source generic market contains carbonate, bicarbonate and caustic soda, all already measured in NaOH-equivalent units; its NaOH converter purchases1kg active NaOH per equivalent. Its original reagent portfolio and upstream delivery are replaced, not reconstructed. The previously reviewed native50%solution stocks have an active-NaOH reference, so apply no factor2 or0.5, dilution water or extra chlorine/coproduct credit. Neutralization capacity is the matched function; reagent-specific pH, reaction products, use-phase CO2 and source portfolio are not claimed equivalent. Preserve separately modelled caller emissions without adding a reaction credit or invented use-phase emission. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented."},
     {"confidence": 0.293285, "id": "bp-ed48fb5bb01803ff", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for neutralising agent, sodium hydroxide-equivalent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hydroxide, 50% in H2O, production mix, at plant", "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant", "unit": "kilogram"}},
     {"confidence": 0.213285, "id": "bp-a7eac76090d17135", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for neutralising agent, sodium hydroxide-equivalent", "reference product": "neutralising agent, sodium hydroxide-equivalent", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium hydroxide, 50% in H2O, production mix, at plant", "reference product": "Sodium hydroxide, 50% in H2O, production mix, at plant", "unit": "kilogram"}},
     {"confidence": 0.27416, "id": "bp-f071bdb88d5e3a4e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for nickel concentrate, 16% Ni", "reference product": "nickel concentrate, 16% Ni", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Molybdenum concentrate, main product", "reference product": "Molybdenum concentrate, main product", "unit": "kilogram"}},
@@ -821137,7 +821846,7 @@
     {"confidence": 0.677596, "id": "bp-92143887c6ef4f3e", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for quicklime, milled, loose", "reference product": "quicklime, milled, loose", "unit": "kilogram"}, "target": {"location": "CH", "name": "Quicklime, milled, loose, at plant", "reference product": "Quicklime, milled, loose, at plant", "unit": "kilogram"}},
     {"confidence": 0.597596, "id": "bp-a8ee5a92b554b3db", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for quicklime, milled, loose", "reference product": "quicklime, milled, loose", "unit": "kilogram"}, "target": {"location": "CH", "name": "Quicklime, milled, loose, at plant", "reference product": "Quicklime, milled, loose, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-bb4f40528bc8819a", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for quicklime, milled, packed", "reference product": "quicklime, milled, packed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Quicklime, milled, packed, at plant", "reference product": "Quicklime, milled, packed, at plant", "unit": "kilogram"}},
-    {"confidence": 0.597596, "id": "bp-39c85a579d30850c", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for quicklime, milled, packed", "reference product": "quicklime, milled, packed", "unit": "kilogram"}, "target": {"location": "CH", "name": "Quicklime, milled, packed, at plant", "reference product": "Quicklime, milled, packed, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-39c85a579d30850c", "mapping_method": "reviewed_metals_38_chemical_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "reason": "Retain the original positive1kg producer and twelve final freight entries, using complete native packed milled quicklime per kg. The exact original source chain explicitly mills quicklime in pieces and packs it; it is not the separate limestone-milling ambiguity. Native quicklime includes upstream calcination, milling and packing. Do not add a second kiln, bag, packing service, heat or CO2 release. Source/native kiln fuel, dust control, geography, packing and vintage differ. Generic native CAS/synonym inconsistencies do not justify changing CaO to hydrated lime or adding a stoichiometric mass correction; the documented process and formula are the chosen basis. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only independently inspected exact source profiles are reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-f08d15b5477d7fbb", "source": {"location": "RoW", "name": "market for quicklime, milled, packed", "reference product": "quicklime, milled, packed", "unit": "kilogram"}, "target": {"recipe_ref": "metals-38-packed_quicklime-market"}, "technosphere_information_loss": "Retain the original positive1kg producer and twelve final freight entries, using complete native packed milled quicklime per kg. The exact original source chain explicitly mills quicklime in pieces and packs it; it is not the separate limestone-milling ambiguity. Native quicklime includes upstream calcination, milling and packing. Do not add a second kiln, bag, packing service, heat or CO2 release. Source/native kiln fuel, dust control, geography, packing and vintage differ. Generic native CAS/synonym inconsistencies do not justify changing CaO to hydrated lime or adding a stoichiometric mass correction; the documented process and formula are the chosen basis. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained."},
     {"confidence": 0.10902, "id": "bp-2f8363b73e18ead1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for radish", "reference product": "radish", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Carbon disulfide, at plant", "reference product": "Carbon disulfide, at plant", "unit": "kilogram"}},
     {"confidence": 0.168214, "id": "bp-a004dfcc9aaca2cc", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for raffinate", "reference product": "raffinate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cobalt sulfate", "reference product": "Cobalt sulfate", "unit": "kilogram"}},
     {"confidence": 0.795556, "id": "bp-11b03a904a2b8cdd", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for railway track", "reference product": "railway track", "unit": "meter-year"}, "target": {"location": "CH", "name": "Railway track", "reference product": "Railway track", "unit": "meter-year"}},
@@ -822226,7 +822935,7 @@
     {"confidence": 0.206714, "id": "bp-a9797fdfc7109d86", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_neutralising_soda_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_neutralising_soda_39_review.json"], "reason": "Exact ecoinvent3.9 cut-off only. Correct two unsafe heuristic products: global light-soda market must not purchase an LED, and the soda-based NaOH-equivalent neutralising service must not purchase lithium hydroxide. Use complete native RER Soda, powder, at plant: its inspected2026 description specifies1kg100% light soda, excludes densification and final-product transport/storage. Native2025 and2026 both have positive one-kg references. Other source versions, patches, system models and reverse directions gain no permission. The neutralising reference is1kg sodium-hydroxide-equivalent capacity, not1kg soda or actual NaOH. Preserve the measured internal demand of1.325kg delivered light soda and its original lognormal uncertainty, pedigree and supported statistical fields inside a dedicated helper; keep caller quantity, sign, uncertainty, formulas and separate exchanges at factor+1. Do not substitute actual caustic soda, lithium hydroxide or bicarbonate. Preserve1.325 only once, without multiplying caller and helper both. Source titles say crystalline heptahydrate, but the inspected actual input is light soda with zero water-content property; the product metadata declares pure Na2CO3,CAS497-19-8,CNa2O3 and explicitly defines1.325kg per NaOH-equivalent. Do not infer seven waters, dissolution, density, extra solvent, neutralisation emissions or reaction yield from that inconsistent title. This follows the actual source functional reference, not a claim that every soda hydrate or solution is interchangeable. The delivered market retains both original source producer coefficients0.7763011797364658 and0.223698820263534 as separate entries, each supplied by complete native European light soda. Preserve all four final freight amounts and supported uncertainty separately:0.1546rail,0.0246barge,0.1044road,0.599container-sea tonne-km per marketkg. Native production includes its own raw-input transport but excludes final delivery. Add final freight once, with existing complete native geographic/fleet/traction screening proxies; no guessed losses, distance or storage burden. Native Solvay soda retains its own complete feedstocks, heat, electricity, plant, wastes, direct emissions and economic coproduct allocation. Its33% soda/67% calcium-chloride allocation replaces the source allocation and bicarbonate/coproduction model; no allocation ratio, calcium-chloride or bicarbonate recovery credit, source-energy overlay or score-calibration factor is added. Global/RoW supply uses the European inventory. Geography, process vintage, allocation, technology, internal uncertainty, exact assay documentation and LCI/LCIA differences remain explicit unquantified screening limitations. No source/caller exchange omission, native empty handoff, alternate sector engine, runtime Python change or source/target validation bypass. Functional equivalence does not establish identical inventories, stochastic distributions or environmental scores. This scoped correction uses the standing user authorization for coming modelling decisions and records the product, quantity and allocation differences for review.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "neutralising-soda-39-delivered-light-market"}}], "reason": "Only the independently checked exact source profile is qualified.", "status": "unresolved"}, "review_ref": "r-c0f6e77b05b4c00e", "source": {"location": "GLO", "name": "market for soda ash, light", "reference product": "soda ash, light", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Light emitting diode, LED, at plant", "reference product": "Light emitting diode, LED, at plant", "unit": "kilogram"}},
     {"confidence": 0.247841, "id": "bp-b5f918f3f46c2bf1", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for soda ash, light", "reference product": "soda ash, light", "unit": "kilogram"}, "target": {"location": "RER", "name": "Soda, powder, at plant", "reference product": "Soda, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.167841, "id": "bp-bdd23386b11f2233", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for soda ash, light", "reference product": "soda ash, light", "unit": "kilogram"}, "target": {"location": "RER", "name": "Soda, powder, at plant", "reference product": "Soda, powder, at plant", "unit": "kilogram"}},
-    {"confidence": 0.160092, "id": "bp-7a43861ae0ccad22", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for soda ash, light, crystalline, heptahydrate", "reference product": "soda ash, light, crystalline, heptahydrate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Light emitting diode, LED, at plant", "reference product": "Light emitting diode, LED, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-7a43861ae0ccad22", "mapping_method": "reviewed_metals_38_chemical_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_metals_38_chemical_markets_review.json"], "reason": "Correct the unrelated LED heuristic using complete native light-soda powder for each of the two Solvay producer entries, retaining all four final freight entries. The source market label says crystalline heptahydrate, while its Solvay documentation describes Na2CO3 and its own neutralizer converter uses1.325kg of this product per kgNaOH-equivalent, the same coefficient as dry dense soda. Preserve that implemented carbonate-function basis at factor+1 per source kg; this is not independently verified physical heptahydrate equivalence. The source hydration/label inconsistency and unknown score effect remain explicit. Do not infer seven waters of crystallization, add water/heat, or apply an invented dry-to-hydrate multiplier. Native light soda excludes densification; source carbonate/bicarbonate/calcium-chloride co-product allocation and native33%/67%soda/CaCl2 allocation differ. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only independently inspected exact source profiles are reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-49c853a7ef9cfbc8", "source": {"location": "GLO", "name": "market for soda ash, light, crystalline, heptahydrate", "reference product": "soda ash, light, crystalline, heptahydrate", "unit": "kilogram"}, "target": {"recipe_ref": "metals-38-light_soda_implemented_reference_basis-market"}, "technosphere_information_loss": "Correct the unrelated LED heuristic using complete native light-soda powder for each of the two Solvay producer entries, retaining all four final freight entries. The source market label says crystalline heptahydrate, while its Solvay documentation describes Na2CO3 and its own neutralizer converter uses1.325kg of this product per kgNaOH-equivalent, the same coefficient as dry dense soda. Preserve that implemented carbonate-function basis at factor+1 per source kg; this is not independently verified physical heptahydrate equivalence. The source hydration/label inconsistency and unknown score effect remain explicit. Do not infer seven waters of crystallization, add water/heat, or apply an invented dry-to-hydrate multiplier. Native light soda excludes densification; source carbonate/bicarbonate/calcium-chloride co-product allocation and native33%/67%soda/CaCl2 allocation differ. Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1. Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented. Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained."},
     {"confidence": 0.311709, "id": "bp-13ebb9a329ffeae6", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium", "reference product": "sodium", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium arsenide, at plant", "reference product": "Sodium arsenide, at plant", "unit": "kilogram"}},
     {"confidence": 0.338333, "id": "bp-5d0a80acad2a1d1a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for sodium aluminate, powder", "reference product": "sodium aluminate, powder", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium chlorate, powder, at plant", "reference product": "Sodium chlorate, powder, at plant", "unit": "kilogram"}},
     {"confidence": 0.328143, "id": "bp-71b75b1001ae9552", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for sodium amide", "reference product": "sodium amide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Sodium cyanide, at plant", "reference product": "Sodium cyanide, at plant", "unit": "kilogram"}},
@@ -837092,6 +837801,18 @@
       ],
       "rationale": "Approved on 2026-11-04 for PET-pelletising wastewater and auto-approved for independently inspected similar plastic-recycling cases: replace the exact RER, cubic meter treatment of wastewater from recycling of waste PET, wastewater treatment correspondence with generic CH class-1 sewage treatment and factor -1. Preserve wastewater volume; source COD 0.213 kg/m3 and proxy COD 0.1556 kg/m3 are not equivalent. Market coverage and sewer boundaries are disclosed separately. Textile wastewater, landfill leachate and direct untreated-disposal activities are outside this approval."
     },
+    "r-278415faf5667f6a": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "limitations": [
+        "Retain all three original producer weights and all four final freight entries for the pure-NH4Cl market. The chlorosilane co-product uses complete native ammonium chloride from chlorosilane; the Hou/Solvay branch uses complete native modified-Solvay ammonium chloride. The source direct ammonia/HCl synthesis branch uses that same complete native ammonium-chloride stock as an explicit production-route screening proxy. Source95%yield and its ammonia/HCl inventory are replaced by the native route, not preserved or rescaled. Coproduct allocation, reaction route, input specification, energy, waste and vintage differ.",
+        "Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1.",
+        "Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented.",
+        "Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained."
+      ],
+      "rationale": "Retain all three original producer weights and all four final freight entries for the pure-NH4Cl market. The chlorosilane co-product uses complete native ammonium chloride from chlorosilane; the Hou/Solvay branch uses complete native modified-Solvay ammonium chloride. The source direct ammonia/HCl synthesis branch uses that same complete native ammonium-chloride stock as an explicit production-route screening proxy. Source95%yield and its ammonia/HCl inventory are replaced by the native route, not preserved or rescaled. Coproduct allocation, reaction route, input specification, energy, waste and vintage differ."
+    },
     "r-27d8595ba83ff413": {
       "evidence": [
         "brightpath/data/export/uvek_battery_native_materials_39_review.json"
@@ -838420,6 +839141,18 @@
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external citric acid production / protein feed, 100% crude / RoW / kilogram reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents 100%-crude-protein feed in kg, not an unscaled kilogram of crop, oil or unspecified protein concentrate. No validated nutritional conversion establishes equivalence with the former Protein peas IP, at feed mill / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
     },
+    "r-49c853a7ef9cfbc8": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "limitations": [
+        "Correct the unrelated LED heuristic using complete native light-soda powder for each of the two Solvay producer entries, retaining all four final freight entries. The source market label says crystalline heptahydrate, while its Solvay documentation describes Na2CO3 and its own neutralizer converter uses1.325kg of this product per kgNaOH-equivalent, the same coefficient as dry dense soda. Preserve that implemented carbonate-function basis at factor+1 per source kg; this is not independently verified physical heptahydrate equivalence. The source hydration/label inconsistency and unknown score effect remain explicit. Do not infer seven waters of crystallization, add water/heat, or apply an invented dry-to-hydrate multiplier. Native light soda excludes densification; source carbonate/bicarbonate/calcium-chloride co-product allocation and native33%/67%soda/CaCl2 allocation differ.",
+        "Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1.",
+        "Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented.",
+        "Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained."
+      ],
+      "rationale": "Correct the unrelated LED heuristic using complete native light-soda powder for each of the two Solvay producer entries, retaining all four final freight entries. The source market label says crystalline heptahydrate, while its Solvay documentation describes Na2CO3 and its own neutralizer converter uses1.325kg of this product per kgNaOH-equivalent, the same coefficient as dry dense soda. Preserve that implemented carbonate-function basis at factor+1 per source kg; this is not independently verified physical heptahydrate equivalence. The source hydration/label inconsistency and unknown score effect remain explicit. Do not infer seven waters of crystallization, add water/heat, or apply an invented dry-to-hydrate multiplier. Native light soda excludes densification; source carbonate/bicarbonate/calcium-chloride co-product allocation and native33%/67%soda/CaCl2 allocation differ."
+    },
     "r-4a26f834d548ad9b": {
       "evidence": [
         "brightpath/data/export/uvek_heat_profile_extension_review.json#bp-745c517f85a78ba7"
@@ -838437,6 +839170,18 @@
         "Geographic proxy."
       ],
       "rationale": "Generic organic-chemical proxy replaces a wrong named compound (butane is not butane-1,4-diol). More specific catalog candidates still merit review."
+    },
+    "r-4a897530e4b7d76b": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "limitations": [
+        "Retain all three pure-CaCl2 producer entries and ten final freight entries. Use complete native allocated Solvay calcium chloride for the Solvay branch and complete native allyl-chloride hypochlorination CaCl2 for its epichlorohydrin co-product branch. The rare-earth co-product branch uses the complete native Solvay CaCl2 stock as an explicit production/allocation proxy; do not add a rare-earth or calcium recovery credit. Native co-product economics and process boundaries differ. Source declares pure CaCl2; no factor based on generic text mentioning77%de-icing flakes is applied.",
+        "Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1.",
+        "Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented.",
+        "Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained."
+      ],
+      "rationale": "Retain all three pure-CaCl2 producer entries and ten final freight entries. Use complete native allocated Solvay calcium chloride for the Solvay branch and complete native allyl-chloride hypochlorination CaCl2 for its epichlorohydrin co-product branch. The rare-earth co-product branch uses the complete native Solvay CaCl2 stock as an explicit production/allocation proxy; do not add a rare-earth or calcium recovery credit. Native co-product economics and process boundaries differ. Source declares pure CaCl2; no factor based on generic text mentioning77%de-icing flakes is applied."
     },
     "r-4ac0588449bfd8f5": {
       "evidence": [
@@ -843057,6 +843802,17 @@
       ],
       "rationale": "Exact3.9cutoff source sodiumsulfite market and producer retain their positive1kgNa2SO3,CAS7757-83-7reference. Native Sulphite has an SO3(2-)reference and is not a justified salt-basis counterpart. Reconstruct the complete source market and producer through individually reviewed native suppliers,canonicalecoinvent3.10biosphere andexisting helpers, preserving signed quantities,formulas,supporteduncertainty,pedigree,scale-without-pedigree andparameters. Every direct source exchange is retained; source reference output is positive1kg,callerconversionfactor+1. The SO2supply deliberately uses the complete native functional production proxy with retained original outer market coefficients and delivery. It replaces source zinc/TCPco-product technologies,upstream allocation and internaluncertainty; it does not reproduce their chemical feedback or establish impact equivalence. Keep the complete native SO2secondarysulfur,energy,infrastructure once; add no doubleallocation,purity/stoichiometric/ionic-mass factor,avoidedSO2emission,recoverycredit or flattened-feedback coefficient. The CNrail correspondence uses complete RERgeneral freight with explicit geographic/traction proxy limitations; original source market freight quantities remain unchanged. Existing water,wastewater,chemicalsteam,Quebecproductiongasheat andRNAelectricity helper inventories and biosphere decisions remain unchanged. Native process/energy,geography,vintage,water/emissions,allocation and internaluncertainty differences and imported native biosphere gaps remain screening limitations with unquantified score effects. No new source omission,other-version,reverse or consequential approval. Complete pulp heat andsteel export remain unfinished."
     },
+    "r-b8e2c7ac6a915473": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "limitations": [
+        "Correct the chemically unrelated lithium-hydroxide heuristic with complete native European caustic-soda production per kg active NaOH, used here as an alkalinity screening proxy per kg source NaOH-equivalent. The source generic market contains carbonate, bicarbonate and caustic soda, all already measured in NaOH-equivalent units; its NaOH converter purchases1kg active NaOH per equivalent. Its original reagent portfolio and upstream delivery are replaced, not reconstructed. The previously reviewed native50%solution stocks have an active-NaOH reference, so apply no factor2 or0.5, dilution water or extra chlorine/coproduct credit. Neutralization capacity is the matched function; reagent-specific pH, reaction products, use-phase CO2 and source portfolio are not claimed equivalent. Preserve separately modelled caller emissions without adding a reaction credit or invented use-phase emission.",
+        "Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1.",
+        "Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented."
+      ],
+      "rationale": "Correct the chemically unrelated lithium-hydroxide heuristic with complete native European caustic-soda production per kg active NaOH, used here as an alkalinity screening proxy per kg source NaOH-equivalent. The source generic market contains carbonate, bicarbonate and caustic soda, all already measured in NaOH-equivalent units; its NaOH converter purchases1kg active NaOH per equivalent. Its original reagent portfolio and upstream delivery are replaced, not reconstructed. The previously reviewed native50%solution stocks have an active-NaOH reference, so apply no factor2 or0.5, dilution water or extra chlorine/coproduct credit. Neutralization capacity is the matched function; reagent-specific pH, reaction products, use-phase CO2 and source portfolio are not claimed equivalent. Preserve separately modelled caller emissions without adding a reaction credit or invented use-phase emission."
+    },
     "r-b8ed32490c0bdac3": {
       "evidence": [
         "brightpath/data/export/uvek_ships_38_remaining_review.json"
@@ -845323,6 +846079,18 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of bottom ash, MSWI[F]-WWT, WW from concrete production, slag compartment / CH / kg external exchange with a warning. All inspected direct service comments for concrete production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-f08d15b5477d7fbb": {
+      "evidence": [
+        "brightpath/data/export/uvek_metals_38_chemical_markets_review.json"
+      ],
+      "limitations": [
+        "Retain the original positive1kg producer and twelve final freight entries, using complete native packed milled quicklime per kg. The exact original source chain explicitly mills quicklime in pieces and packs it; it is not the separate limestone-milling ambiguity. Native quicklime includes upstream calcination, milling and packing. Do not add a second kiln, bag, packing service, heat or CO2 release. Source/native kiln fuel, dust control, geography, packing and vintage differ. Generic native CAS/synonym inconsistencies do not justify changing CaO to hydrated lime or adding a stoichiometric mass correction; the documented process and formula are the chosen basis.",
+        "Only the exact independently inspected source3.8 cut-off profile is added; other source versions and system models gain no permission. Keep signed caller quantities, supported uncertainty/formulas and separately listed emissions at factor+1.",
+        "Complete native production models replace source process inventories with explicit route, allocation, geography, vintage, emissions and uncertainty differences. Source/native score and stochastic equivalence are not asserted; effects remain unquantified. No purity, hydrate, solution, density, yield or efficiency multiplier is invented.",
+        "Retain every final-market producer share and freight amount separately, without renormalization. Complete native same-mode freight includes vehicle/vessel/port/rail/road operation and infrastructure; country, fleet, fuel mix, emission standard, load, empty trips and vintage differ. Generic global or unavailable national rail mixes use reviewed complete native rail proxies; US rail uses its complete native US diesel fleet. No payload, distance, mode-substitution or second infrastructure factor is added. Source background formulas/parameter graphs and correlations are not transplanted without context; nominal quantities and supported marginal statistics are retained."
+      ],
+      "rationale": "Retain the original positive1kg producer and twelve final freight entries, using complete native packed milled quicklime per kg. The exact original source chain explicitly mills quicklime in pieces and packs it; it is not the separate limestone-milling ambiguity. Native quicklime includes upstream calcination, milling and packing. Do not add a second kiln, bag, packing service, heat or CO2 release. Source/native kiln fuel, dust control, geography, packing and vintage differ. Generic native CAS/synonym inconsistencies do not justify changing CaO to hydrated lime or adding a stoichiometric mass correction; the documented process and formula are the chosen basis."
     },
     "r-f14406e298c64197": {
       "evidence": [
