@@ -4,15 +4,15 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 273,
-      "recipe": 1084,
-      "unclassified": 29118
+      "recipe": 1085,
+      "unclassified": 29117
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 254,
       "followup_review": 163,
       "heuristic_similarity": 26366,
-      "pairwise_review": 2208,
+      "pairwise_review": 2207,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
       "reviewed_additional_cutoff_waste_market_service": 14,
@@ -185,6 +185,7 @@
       "reviewed_residual_landfill_service": 25,
       "reviewed_resolved_child_market_service": 11,
       "reviewed_separator_chemical_supply_39": 2,
+      "reviewed_separator_wet_pe_39_retained_source_manufacturing": 1,
       "reviewed_sewage_digestion_service": 2,
       "reviewed_sewage_sludge_market_alias": 2,
       "reviewed_sewer_throughput_service": 4,
@@ -213,7 +214,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444458,
+    "mean_confidence": 0.444466,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -594867,6 +594868,1384 @@
       "reference product": "paraffin",
       "unit": "kilogram"
     },
+    "separator-wet-pe-39-global-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_separator_wet_pe_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.4,
+          "loc": 0.4,
+          "recipe": "separator-wet-pe-39-production-row",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.6,
+          "loc": 0.6,
+          "recipe": "separator-wet-pe-39-production-cn",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.02,
+          "loc": -3.912023005428146,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.02,
+          "loc": -3.912023005428146,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for battery separator, source3.9 retained wet-PE manufacturing and delivery",
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off global battery-separator market is reviewed,per positive1kg of wet-process polyethylene microporous membrane. Native coated-silica/PVF/plasticizer andPP/PEalternative separator datasets represent different technology or composition and are deliberately not substituted. Retain the two actual source manufacturing inventories through reviewed native input suppliers and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,uncertainty,formulas and separate caller emissions with factor+1;do not add thickness,area,density,yield,allocation or energy multipliers. Retain all58RoW and12CN nonproduction exchanges:53and7technosphere inputs plus five direct air emissions each. Source producer inventories inherit Chinese manufacturing data and their wet-process technical model,including36.2kWh electricity and40.703MJ gas heat perkg. Retain each source country electricity coefficient,extrusion service,HDPE input,paraffin,dichloromethane andfactory quantity separately with its supplied uncertainty. Manufacturing process steps include mixing,melting,film extrusion,stretching andsolvent extraction;these descriptions do not authorize adding a second processing/energy burden on top of the inspected vector. All55 exact3.9 manufacturing dependency mappings and their eight existing recipe definitions are frozen. Whole native chemical,polymer,extrusion,grid,heat,factory andtransport inventories replace their upstream source models once. Country grid mappings retain17national andone regional native grid anduse explicit global delivered-MVgrid proxies for22unsupported locations. The actual source electricity amounts survive;source national generation technologies,geography,losses andfuture decarbonization are not reproduced by global proxies. Native grids carry their own generation,losses,network infrastructure andSF6 once;do not overlay source losses or rescale the caller demand. Preserve the five direct source air emissions in each producer,including0.0203kg dichloromethane,with signed amounts,units,compartments anduncertainty unchanged. Source Methane,dichloro-,HCC-30 becomes canonical3.10Dichloromethane:installed definitions shareCAS75-09-2,air compartment andkg reference. This is a synonym without a chemical-mass factor. Keep direct process emissions separate from upstream chemicals,heat andgrid emissions;do not infer solvent recovery,closed mass balance or an avoided-emission credit from the purchase/release amounts. Existing HDPE supply helper retains its four literal,previously user-approved positive trace-recyclate omissions,total1.173141240030732e-13kg perkgHDPE. Their nonempty recycling burdens are omitted with unquantified score effect;retain the existing signed virgin shares andfreight without renormalization. These four inherited omission entries remain in the exact helper definition and audit. No new source or caller exchange is omitted by the separator reconstruction. Retain the original market0.4RoW and0.6CN manufacturing shares plus0.02tkmrail and0.02tkmroad final delivery separately,in source order with supplied uncertainty. Keep native precursor/chemical delivery inside each supplier andfinal separator delivery once. The two manufacturing definitions andmarket are the only new recipe definitions;reuse all eight existing helper definitions without copies. The HDPE,gas heat,dichloromethane andparaffin screening limitations,including nativeparaffin0.402tkmroad boundary ambiguity,carry through. TargetUVEKtechnosphere withcanonical ecoinvent3.10biosphere only. This is a reconstruction of the inspected source manufacturing model through native inputs,not an independently measured BAFU wet-PEplant. Source-specific process data,regional representativeness,chemical grade,upstream production technology,allocation,vintage,uncertainty andenergy aggregation remain limitations with unquantified score effects. Finite signed LCIs/native-demand agreement do not establish source/native LCIA or stochastic equivalence,other source releases,patches,system models,reverse conversion or complete battery/export qualification.",
+      "reference product": "battery separator",
+      "unit": "kilogram"
+    },
+    "separator-wet-pe-39-production-cn": {
+      "evidence": [
+        "brightpath/data/export/uvek_separator_wet_pe_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.726636084983398,
+          "scale without pedigree": 0.726636084983398,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.0203,
+          "loc": -3.8971343929343956,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "solvent-supply-markets-39-ce1c94b4a3defb29",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 36.2,
+          "loc": 3.5890591188317256,
+          "location": "CN",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.09,
+          "loc": 0.08617769624105241,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "heat-312-market-a968a6156ac00871f1d3",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 40.703,
+          "loc": 3.7063017998058054,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-ng-heat-market-38d5f92829d188b38bb8",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.00293,
+          "loc": -5.832752855953161,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "separator-39-paraffin-GLO-delivery",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.09,
+          "loc": 0.08617769624105241,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-nitrate-hdpe-dfcfe7b3600a00f94f69",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0203,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.8971343929343956,
+          "name": "Dichloromethane",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.36055512754639896,
+          "scale without pedigree": 0.36055512754639896,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00038,
+          "categories": [
+            "air"
+          ],
+          "loc": -7.875339305243843,
+          "name": "NMVOC, non-methane volatile organic compounds",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.22360679774997896,
+          "scale without pedigree": 0.22360679774997896,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00196,
+          "categories": [
+            "air"
+          ],
+          "loc": -6.234810805739711,
+          "name": "Nitrogen oxides",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.22360679774997896,
+          "scale without pedigree": 0.22360679774997896,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000261,
+          "categories": [
+            "air"
+          ],
+          "loc": -8.25099015064158,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.36055512754639896,
+          "scale without pedigree": 0.36055512754639896,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000417,
+          "categories": [
+            "air"
+          ],
+          "loc": -7.782424336165473,
+          "name": "Sulfur dioxide",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "CN",
+      "name": "battery separator production, retained source3.9 wet-PE CN inventory",
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off global battery-separator market is reviewed,per positive1kg of wet-process polyethylene microporous membrane. Native coated-silica/PVF/plasticizer andPP/PEalternative separator datasets represent different technology or composition and are deliberately not substituted. Retain the two actual source manufacturing inventories through reviewed native input suppliers and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,uncertainty,formulas and separate caller emissions with factor+1;do not add thickness,area,density,yield,allocation or energy multipliers. Retain all58RoW and12CN nonproduction exchanges:53and7technosphere inputs plus five direct air emissions each. Source producer inventories inherit Chinese manufacturing data and their wet-process technical model,including36.2kWh electricity and40.703MJ gas heat perkg. Retain each source country electricity coefficient,extrusion service,HDPE input,paraffin,dichloromethane andfactory quantity separately with its supplied uncertainty. Manufacturing process steps include mixing,melting,film extrusion,stretching andsolvent extraction;these descriptions do not authorize adding a second processing/energy burden on top of the inspected vector. All55 exact3.9 manufacturing dependency mappings and their eight existing recipe definitions are frozen. Whole native chemical,polymer,extrusion,grid,heat,factory andtransport inventories replace their upstream source models once. Country grid mappings retain17national andone regional native grid anduse explicit global delivered-MVgrid proxies for22unsupported locations. The actual source electricity amounts survive;source national generation technologies,geography,losses andfuture decarbonization are not reproduced by global proxies. Native grids carry their own generation,losses,network infrastructure andSF6 once;do not overlay source losses or rescale the caller demand. Preserve the five direct source air emissions in each producer,including0.0203kg dichloromethane,with signed amounts,units,compartments anduncertainty unchanged. Source Methane,dichloro-,HCC-30 becomes canonical3.10Dichloromethane:installed definitions shareCAS75-09-2,air compartment andkg reference. This is a synonym without a chemical-mass factor. Keep direct process emissions separate from upstream chemicals,heat andgrid emissions;do not infer solvent recovery,closed mass balance or an avoided-emission credit from the purchase/release amounts. Existing HDPE supply helper retains its four literal,previously user-approved positive trace-recyclate omissions,total1.173141240030732e-13kg perkgHDPE. Their nonempty recycling burdens are omitted with unquantified score effect;retain the existing signed virgin shares andfreight without renormalization. These four inherited omission entries remain in the exact helper definition and audit. No new source or caller exchange is omitted by the separator reconstruction. Retain the original market0.4RoW and0.6CN manufacturing shares plus0.02tkmrail and0.02tkmroad final delivery separately,in source order with supplied uncertainty. Keep native precursor/chemical delivery inside each supplier andfinal separator delivery once. The two manufacturing definitions andmarket are the only new recipe definitions;reuse all eight existing helper definitions without copies. The HDPE,gas heat,dichloromethane andparaffin screening limitations,including nativeparaffin0.402tkmroad boundary ambiguity,carry through. TargetUVEKtechnosphere withcanonical ecoinvent3.10biosphere only. This is a reconstruction of the inspected source manufacturing model through native inputs,not an independently measured BAFU wet-PEplant. Source-specific process data,regional representativeness,chemical grade,upstream production technology,allocation,vintage,uncertainty andenergy aggregation remain limitations with unquantified score effects. Finite signed LCIs/native-demand agreement do not establish source/native LCIA or stochastic equivalence,other source releases,patches,system models,reverse conversion or complete battery/export qualification.",
+      "reference product": "battery separator",
+      "unit": "kilogram"
+    },
+    "separator-wet-pe-39-production-row": {
+      "evidence": [
+        "brightpath/data/export/uvek_separator_wet_pe_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.726636084983398,
+          "scale without pedigree": 0.726636084983398,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.00671102473827784,
+          "loc": -5.0040036215845705,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "separator-39-dichloromethane-RER-delivery",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.01358897526172216,
+          "loc": -4.298496457508885,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "solvent-supply-markets-39-ce1c94b4a3defb29",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.031699774797309364,
+          "loc": -3.4514457023099614,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.013796895439764261,
+          "loc": -4.283311680261129,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.8432776417324142,
+          "loc": 0.6115453139680004,
+          "location": "JP",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 2.8563799174306017,
+          "loc": 1.0495550599408237,
+          "location": "IN",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.030009111306118542,
+          "loc": -3.506254233226638,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.04593325881296966,
+          "loc": -3.0805658314311555,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 2.1109567163614056,
+          "loc": 0.74714126480065,
+          "location": "RU",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.017518199006646355,
+          "loc": -4.044514995182101,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 6.902677710069821,
+          "loc": 1.931909410245167,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.48687588243511065,
+          "loc": -0.719746049911813,
+          "location": "TW",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.046954286534519885,
+          "loc": -3.0585807775056817,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.5631472885773111,
+          "loc": -0.5742140712433216,
+          "location": "TR",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.005255057271179334,
+          "loc": -5.248564376295991,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 3.1037408026664752,
+          "loc": 1.1326080945387003,
+          "location": "RLA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.7602680191032087,
+          "loc": 0.5654660810374614,
+          "location": "RME",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.2427443300571994,
+          "loc": -1.4157465292113967,
+          "location": "TH",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.031469627565716536,
+          "loc": -3.458732402557467,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.03886638915740121,
+          "loc": -3.247625433791904,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.031174213253176722,
+          "loc": -3.4681640242003446,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.008123736558014105,
+          "loc": -4.81296506340991,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.037558991687310625,
+          "loc": -3.281842470388185,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.09955203879881817,
+          "loc": -2.3070747685327957,
+          "location": "SG",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.5576551763908528,
+          "loc": 0.44318159842818483,
+          "location": "RAF",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.21418444120146912,
+          "loc": -1.5409177603878572,
+          "location": "KZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.38626328187647024,
+          "loc": -0.951236064626194,
+          "location": "ID",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.1261294486241952,
+          "loc": -2.0704465293807752,
+          "location": "IL",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.1507580176529827,
+          "loc": -1.8920792596947067,
+          "location": "BD",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.4716124799237316,
+          "loc": -0.7515976477264555,
+          "location": "AU",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.09242932612831994,
+          "loc": -2.3813109683484948,
+          "location": "NZ",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.07763346274445466,
+          "loc": -2.5557567238082965,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.10482488235312569,
+          "loc": -2.2554641082428906,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.02474692533406111,
+          "loc": -3.699054026611314,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.01040981994932753,
+          "loc": -4.565005692438791,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.2690933740157061,
+          "loc": -1.3126968443108535,
+          "location": "PK",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.213019096501256,
+          "loc": -1.5463734623560013,
+          "location": "PH",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.037278973925658675,
+          "loc": -3.2893258129968856,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.027974252926139448,
+          "loc": -3.5764707301938374,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.13353381969305314,
+          "loc": -2.013400502190615,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.1515004927325736,
+          "loc": 0.14106586818348185,
+          "location": "KR",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.003994120600500208,
+          "loc": -5.5229318490262065,
+          "location": "QA",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.024518328215102813,
+          "loc": -3.7083343506992534,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.0160440380501084,
+          "loc": -4.132417959467295,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.035349877826142406,
+          "loc": -3.342460342765969,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 9.946860524650761,
+          "loc": 2.297256976221237,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "pcc-39-rna-mv-ca-us-market",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.3457768914428841,
+          "loc": -1.0619615343312139,
+          "location": "MY",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.4704290586186382,
+          "loc": -0.7541101100313559,
+          "location": "VN",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 1.09,
+          "loc": 0.08617769624105241,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "heat-312-market-a968a6156ac00871f1d3",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 40.702999999999996,
+          "loc": 3.7063017998058054,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "steel-39-global-natural-gas-production-heat-mix",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.00293,
+          "loc": -5.832752855953161,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "separator-39-paraffin-GLO-delivery",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.09,
+          "loc": 0.08617769624105241,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "recipe": "pilot-nitrate-hdpe-dfcfe7b3600a00f94f69",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0203,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.8971343929343956,
+          "name": "Dichloromethane",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.36055512754639896,
+          "scale without pedigree": 0.36055512754639896,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00038,
+          "categories": [
+            "air"
+          ],
+          "loc": -7.875339305243843,
+          "name": "NMVOC, non-methane volatile organic compounds",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.22360679774997896,
+          "scale without pedigree": 0.22360679774997896,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00196,
+          "categories": [
+            "air"
+          ],
+          "loc": -6.234810805739711,
+          "name": "Nitrogen oxides",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.22360679774997896,
+          "scale without pedigree": 0.22360679774997896,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000261,
+          "categories": [
+            "air"
+          ],
+          "loc": -8.25099015064158,
+          "name": "Particulate Matter, > 2.5 um and < 10um",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.36055512754639896,
+          "scale without pedigree": 0.36055512754639896,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000417,
+          "categories": [
+            "air"
+          ],
+          "loc": -7.782424336165473,
+          "name": "Sulfur dioxide",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 1
+          },
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.10295630140987,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RoW",
+      "name": "battery separator production, retained source3.9 wet-PE RoW inventory",
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off global battery-separator market is reviewed,per positive1kg of wet-process polyethylene microporous membrane. Native coated-silica/PVF/plasticizer andPP/PEalternative separator datasets represent different technology or composition and are deliberately not substituted. Retain the two actual source manufacturing inventories through reviewed native input suppliers and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,uncertainty,formulas and separate caller emissions with factor+1;do not add thickness,area,density,yield,allocation or energy multipliers. Retain all58RoW and12CN nonproduction exchanges:53and7technosphere inputs plus five direct air emissions each. Source producer inventories inherit Chinese manufacturing data and their wet-process technical model,including36.2kWh electricity and40.703MJ gas heat perkg. Retain each source country electricity coefficient,extrusion service,HDPE input,paraffin,dichloromethane andfactory quantity separately with its supplied uncertainty. Manufacturing process steps include mixing,melting,film extrusion,stretching andsolvent extraction;these descriptions do not authorize adding a second processing/energy burden on top of the inspected vector. All55 exact3.9 manufacturing dependency mappings and their eight existing recipe definitions are frozen. Whole native chemical,polymer,extrusion,grid,heat,factory andtransport inventories replace their upstream source models once. Country grid mappings retain17national andone regional native grid anduse explicit global delivered-MVgrid proxies for22unsupported locations. The actual source electricity amounts survive;source national generation technologies,geography,losses andfuture decarbonization are not reproduced by global proxies. Native grids carry their own generation,losses,network infrastructure andSF6 once;do not overlay source losses or rescale the caller demand. Preserve the five direct source air emissions in each producer,including0.0203kg dichloromethane,with signed amounts,units,compartments anduncertainty unchanged. Source Methane,dichloro-,HCC-30 becomes canonical3.10Dichloromethane:installed definitions shareCAS75-09-2,air compartment andkg reference. This is a synonym without a chemical-mass factor. Keep direct process emissions separate from upstream chemicals,heat andgrid emissions;do not infer solvent recovery,closed mass balance or an avoided-emission credit from the purchase/release amounts. Existing HDPE supply helper retains its four literal,previously user-approved positive trace-recyclate omissions,total1.173141240030732e-13kg perkgHDPE. Their nonempty recycling burdens are omitted with unquantified score effect;retain the existing signed virgin shares andfreight without renormalization. These four inherited omission entries remain in the exact helper definition and audit. No new source or caller exchange is omitted by the separator reconstruction. Retain the original market0.4RoW and0.6CN manufacturing shares plus0.02tkmrail and0.02tkmroad final delivery separately,in source order with supplied uncertainty. Keep native precursor/chemical delivery inside each supplier andfinal separator delivery once. The two manufacturing definitions andmarket are the only new recipe definitions;reuse all eight existing helper definitions without copies. The HDPE,gas heat,dichloromethane andparaffin screening limitations,including nativeparaffin0.402tkmroad boundary ambiguity,carry through. TargetUVEKtechnosphere withcanonical ecoinvent3.10biosphere only. This is a reconstruction of the inspected source manufacturing model through native inputs,not an independently measured BAFU wet-PEplant. Source-specific process data,regional representativeness,chemical grade,upstream production technology,allocation,vintage,uncertainty andenergy aggregation remain limitations with unquantified score effects. Finite signed LCIs/native-demand agreement do not establish source/native LCIA or stochastic equivalence,other source releases,patches,system models,reverse conversion or complete battery/export qualification.",
+      "reference product": "battery separator",
+      "unit": "kilogram"
+    },
     "sewage-digestion-0f41e62911cdc5f2ffba": {
       "evidence": [
         "brightpath/data/export/uvek_sewage_digestion_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
@@ -812805,7 +814184,7 @@
     {"confidence": 0.729485, "id": "bp-1083a30344f2d1f3", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery cell, Li-ion, NMC811", "reference product": "battery cell, Li-ion, NMC811", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery cell, Li-ion, NMC111", "reference product": "Battery cell, Li-ion, NMC111", "unit": "kilogram"}},
     {"confidence": 0.63925, "id": "bp-1025bf562a45b1ee", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery management system, for Li-ion battery", "reference product": "battery management system, for Li-ion battery", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery management system", "reference product": "Battery management system", "unit": "kilogram"}},
     {"confidence": 0.923333, "id": "bp-a770388f8dc9114f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery module packaging, Li-ion", "reference product": "battery module packaging, Li-ion", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery module packaging, Li-ion", "reference product": "Battery module packaging, Li-ion", "unit": "kilogram"}},
-    {"confidence": 0.75, "id": "bp-487660780788dc2f", "mapping_method": "pairwise_review", "review_ref": "r-bb4ee8647785ad0d", "source": {"location": "GLO", "name": "market for battery separator", "reference product": "battery separator", "unit": "kilogram"}, "target": {"location": "CN", "name": "Separator, lithium-ion battery, at plant", "reference product": "Separator, lithium-ion battery, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-487660780788dc2f", "mapping_method": "reviewed_separator_wet_pe_39_retained_source_manufacturing", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_separator_wet_pe_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_separator_wet_pe_39_review.json"], "reason": "Only the independently inspected exact ecoinvent3.9 cut-off global battery-separator market is reviewed,per positive1kg of wet-process polyethylene microporous membrane. Native coated-silica/PVF/plasticizer andPP/PEalternative separator datasets represent different technology or composition and are deliberately not substituted. Retain the two actual source manufacturing inventories through reviewed native input suppliers and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,uncertainty,formulas and separate caller emissions with factor+1;do not add thickness,area,density,yield,allocation or energy multipliers. Retain all58RoW and12CN nonproduction exchanges:53and7technosphere inputs plus five direct air emissions each. Source producer inventories inherit Chinese manufacturing data and their wet-process technical model,including36.2kWh electricity and40.703MJ gas heat perkg. Retain each source country electricity coefficient,extrusion service,HDPE input,paraffin,dichloromethane andfactory quantity separately with its supplied uncertainty. Manufacturing process steps include mixing,melting,film extrusion,stretching andsolvent extraction;these descriptions do not authorize adding a second processing/energy burden on top of the inspected vector. All55 exact3.9 manufacturing dependency mappings and their eight existing recipe definitions are frozen. Whole native chemical,polymer,extrusion,grid,heat,factory andtransport inventories replace their upstream source models once. Country grid mappings retain17national andone regional native grid anduse explicit global delivered-MVgrid proxies for22unsupported locations. The actual source electricity amounts survive;source national generation technologies,geography,losses andfuture decarbonization are not reproduced by global proxies. Native grids carry their own generation,losses,network infrastructure andSF6 once;do not overlay source losses or rescale the caller demand. Preserve the five direct source air emissions in each producer,including0.0203kg dichloromethane,with signed amounts,units,compartments anduncertainty unchanged. Source Methane,dichloro-,HCC-30 becomes canonical3.10Dichloromethane:installed definitions shareCAS75-09-2,air compartment andkg reference. This is a synonym without a chemical-mass factor. Keep direct process emissions separate from upstream chemicals,heat andgrid emissions;do not infer solvent recovery,closed mass balance or an avoided-emission credit from the purchase/release amounts. Existing HDPE supply helper retains its four literal,previously user-approved positive trace-recyclate omissions,total1.173141240030732e-13kg perkgHDPE. Their nonempty recycling burdens are omitted with unquantified score effect;retain the existing signed virgin shares andfreight without renormalization. These four inherited omission entries remain in the exact helper definition and audit. No new source or caller exchange is omitted by the separator reconstruction. Retain the original market0.4RoW and0.6CN manufacturing shares plus0.02tkmrail and0.02tkmroad final delivery separately,in source order with supplied uncertainty. Keep native precursor/chemical delivery inside each supplier andfinal separator delivery once. The two manufacturing definitions andmarket are the only new recipe definitions;reuse all eight existing helper definitions without copies. The HDPE,gas heat,dichloromethane andparaffin screening limitations,including nativeparaffin0.402tkmroad boundary ambiguity,carry through. TargetUVEKtechnosphere withcanonical ecoinvent3.10biosphere only. This is a reconstruction of the inspected source manufacturing model through native inputs,not an independently measured BAFU wet-PEplant. Source-specific process data,regional representativeness,chemical grade,upstream production technology,allocation,vintage,uncertainty andenergy aggregation remain limitations with unquantified score effects. Finite signed LCIs/native-demand agreement do not establish source/native LCIA or stochastic equivalence,other source releases,patches,system models,reverse conversion or complete battery/export qualification.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact source3.9cutoff manufacturing and market qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-664f426f0d40a0fe", "source": {"location": "GLO", "name": "market for battery separator", "reference product": "battery separator", "unit": "kilogram"}, "target": {"recipe_ref": "separator-wet-pe-39-global-market"}, "technosphere_information_loss": "Only the independently inspected exact ecoinvent3.9 cut-off global battery-separator market is reviewed,per positive1kg of wet-process polyethylene microporous membrane. Native coated-silica/PVF/plasticizer andPP/PEalternative separator datasets represent different technology or composition and are deliberately not substituted. Retain the two actual source manufacturing inventories through reviewed native input suppliers and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,uncertainty,formulas and separate caller emissions with factor+1;do not add thickness,area,density,yield,allocation or energy multipliers. Retain all58RoW and12CN nonproduction exchanges:53and7technosphere inputs plus five direct air emissions each. Source producer inventories inherit Chinese manufacturing data and their wet-process technical model,including36.2kWh electricity and40.703MJ gas heat perkg. Retain each source country electricity coefficient,extrusion service,HDPE input,paraffin,dichloromethane andfactory quantity separately with its supplied uncertainty. Manufacturing process steps include mixing,melting,film extrusion,stretching andsolvent extraction;these descriptions do not authorize adding a second processing/energy burden on top of the inspected vector. All55 exact3.9 manufacturing dependency mappings and their eight existing recipe definitions are frozen. Whole native chemical,polymer,extrusion,grid,heat,factory andtransport inventories replace their upstream source models once. Country grid mappings retain17national andone regional native grid anduse explicit global delivered-MVgrid proxies for22unsupported locations. The actual source electricity amounts survive;source national generation technologies,geography,losses andfuture decarbonization are not reproduced by global proxies. Native grids carry their own generation,losses,network infrastructure andSF6 once;do not overlay source losses or rescale the caller demand. Preserve the five direct source air emissions in each producer,including0.0203kg dichloromethane,with signed amounts,units,compartments anduncertainty unchanged. Source Methane,dichloro-,HCC-30 becomes canonical3.10Dichloromethane:installed definitions shareCAS75-09-2,air compartment andkg reference. This is a synonym without a chemical-mass factor. Keep direct process emissions separate from upstream chemicals,heat andgrid emissions;do not infer solvent recovery,closed mass balance or an avoided-emission credit from the purchase/release amounts. Existing HDPE supply helper retains its four literal,previously user-approved positive trace-recyclate omissions,total1.173141240030732e-13kg perkgHDPE. Their nonempty recycling burdens are omitted with unquantified score effect;retain the existing signed virgin shares andfreight without renormalization. These four inherited omission entries remain in the exact helper definition and audit. No new source or caller exchange is omitted by the separator reconstruction. Retain the original market0.4RoW and0.6CN manufacturing shares plus0.02tkmrail and0.02tkmroad final delivery separately,in source order with supplied uncertainty. Keep native precursor/chemical delivery inside each supplier andfinal separator delivery once. The two manufacturing definitions andmarket are the only new recipe definitions;reuse all eight existing helper definitions without copies. The HDPE,gas heat,dichloromethane andparaffin screening limitations,including nativeparaffin0.402tkmroad boundary ambiguity,carry through. TargetUVEKtechnosphere withcanonical ecoinvent3.10biosphere only. This is a reconstruction of the inspected source manufacturing model through native inputs,not an independently measured BAFU wet-PEplant. Source-specific process data,regional representativeness,chemical grade,upstream production technology,allocation,vintage,uncertainty andenergy aggregation remain limitations with unquantified score effects. Finite signed LCIs/native-demand agreement do not establish source/native LCIA or stochastic equivalence,other source releases,patches,system models,reverse conversion or complete battery/export qualification."},
     {"confidence": 0.544238, "id": "bp-4b5ffb9631a00fd6", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, LFP, rechargeable", "reference product": "battery, Li-ion, LFP, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.721989, "id": "bp-0e8b50be59d70db7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, LFP, rechargeable, prismatic", "reference product": "battery, Li-ion, LFP, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.526885, "id": "bp-5148f65d8d339826", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, LiMn2O4, rechargeable", "reference product": "battery, Li-ion, LiMn2O4, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
@@ -836308,6 +837687,21 @@
         "Independently inspected cut-off physical coproduct screening proxy: preserve one kg and its incoming sign through the matching DDGS feedstock, grass-fibre digestion/fermentation technology, or sweet-sorghum grain product. Both source and target have positive one-kg product references; these are allocated physical coproducts, not ethanol output, waste treatment or a normalized nutritional substitution. Target economic allocation, geography, agricultural inputs, process energy, infrastructure, water/emissions and backgrounds differ. Ecoinvent DDGS describes 90% dry matter, while UVEK reports a wet-basis kg without independently quantified identical moisture; preserve kg without inferring a dry-matter or nutritional conversion. Both sorghum inventories document 9.1% grain moisture. No equivalent feed energy/protein, insulation performance or LCIA score is claimed. Preserve caller signed quantities, supported uncertainty/formulas, foreground suppliers, production and separate emissions. Only the seven inspected exact cut-off versions are approved; no consequential or patch-profile fallback. Nutritional consequential market omissions remain independently approved and unchanged. Six reverse physical-product correspondences have their own independent source/target inventory and reference review; no inverse of a market mixture or nutritional omission is inferred."
       ],
       "rationale": "Standing independently inspected matching-product and physical-quantity approval: ethanol production from maize / Distiller's Dried Grains with Solubles / RoW. Independently inspected cut-off physical coproduct screening proxy: preserve one kg and its incoming sign through the matching DDGS feedstock, grass-fibre digestion/fermentation technology, or sweet-sorghum grain product. Both source and target have positive one-kg product references; these are allocated physical coproducts, not ethanol output, waste treatment or a normalized nutritional substitution. Target economic allocation, geography, agricultural inputs, process energy, infrastructure, water/emissions and backgrounds differ. Ecoinvent DDGS describes 90% dry matter, while UVEK reports a wet-basis kg without independently quantified identical moisture; preserve kg without inferring a dry-matter or nutritional conversion. Both sorghum inventories document 9.1% grain moisture. No equivalent feed energy/protein, insulation performance or LCIA score is claimed. Preserve caller signed quantities, supported uncertainty/formulas, foreground suppliers, production and separate emissions. Only the seven inspected exact cut-off versions are approved; no consequential or patch-profile fallback. Nutritional consequential market omissions remain independently approved and unchanged. Six reverse physical-product correspondences have their own independent source/target inventory and reference review; no inverse of a market mixture or nutritional omission is inferred."
+    },
+    "r-664f426f0d40a0fe": {
+      "evidence": [
+        "brightpath/data/export/uvek_separator_wet_pe_39_review.json"
+      ],
+      "limitations": [
+        "Only the independently inspected exact ecoinvent3.9 cut-off global battery-separator market is reviewed,per positive1kg of wet-process polyethylene microporous membrane. Native coated-silica/PVF/plasticizer andPP/PEalternative separator datasets represent different technology or composition and are deliberately not substituted. Retain the two actual source manufacturing inventories through reviewed native input suppliers and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,uncertainty,formulas and separate caller emissions with factor+1;do not add thickness,area,density,yield,allocation or energy multipliers.",
+        "Retain all58RoW and12CN nonproduction exchanges:53and7technosphere inputs plus five direct air emissions each. Source producer inventories inherit Chinese manufacturing data and their wet-process technical model,including36.2kWh electricity and40.703MJ gas heat perkg. Retain each source country electricity coefficient,extrusion service,HDPE input,paraffin,dichloromethane andfactory quantity separately with its supplied uncertainty. Manufacturing process steps include mixing,melting,film extrusion,stretching andsolvent extraction;these descriptions do not authorize adding a second processing/energy burden on top of the inspected vector.",
+        "All55 exact3.9 manufacturing dependency mappings and their eight existing recipe definitions are frozen. Whole native chemical,polymer,extrusion,grid,heat,factory andtransport inventories replace their upstream source models once. Country grid mappings retain17national andone regional native grid anduse explicit global delivered-MVgrid proxies for22unsupported locations. The actual source electricity amounts survive;source national generation technologies,geography,losses andfuture decarbonization are not reproduced by global proxies. Native grids carry their own generation,losses,network infrastructure andSF6 once;do not overlay source losses or rescale the caller demand.",
+        "Preserve the five direct source air emissions in each producer,including0.0203kg dichloromethane,with signed amounts,units,compartments anduncertainty unchanged. Source Methane,dichloro-,HCC-30 becomes canonical3.10Dichloromethane:installed definitions shareCAS75-09-2,air compartment andkg reference. This is a synonym without a chemical-mass factor. Keep direct process emissions separate from upstream chemicals,heat andgrid emissions;do not infer solvent recovery,closed mass balance or an avoided-emission credit from the purchase/release amounts.",
+        "Existing HDPE supply helper retains its four literal,previously user-approved positive trace-recyclate omissions,total1.173141240030732e-13kg perkgHDPE. Their nonempty recycling burdens are omitted with unquantified score effect;retain the existing signed virgin shares andfreight without renormalization. These four inherited omission entries remain in the exact helper definition and audit. No new source or caller exchange is omitted by the separator reconstruction.",
+        "Retain the original market0.4RoW and0.6CN manufacturing shares plus0.02tkmrail and0.02tkmroad final delivery separately,in source order with supplied uncertainty. Keep native precursor/chemical delivery inside each supplier andfinal separator delivery once. The two manufacturing definitions andmarket are the only new recipe definitions;reuse all eight existing helper definitions without copies. The HDPE,gas heat,dichloromethane andparaffin screening limitations,including nativeparaffin0.402tkmroad boundary ambiguity,carry through.",
+        "TargetUVEKtechnosphere withcanonical ecoinvent3.10biosphere only. This is a reconstruction of the inspected source manufacturing model through native inputs,not an independently measured BAFU wet-PEplant. Source-specific process data,regional representativeness,chemical grade,upstream production technology,allocation,vintage,uncertainty andenergy aggregation remain limitations with unquantified score effects. Finite signed LCIs/native-demand agreement do not establish source/native LCIA or stochastic equivalence,other source releases,patches,system models,reverse conversion or complete battery/export qualification."
+      ],
+      "rationale": "Only the independently inspected exact ecoinvent3.9 cut-off global battery-separator market is reviewed,per positive1kg of wet-process polyethylene microporous membrane. Native coated-silica/PVF/plasticizer andPP/PEalternative separator datasets represent different technology or composition and are deliberately not substituted. Retain the two actual source manufacturing inventories through reviewed native input suppliers and canonical ecoinvent3.10 biosphere definitions. Preserve signed caller mass,uncertainty,formulas and separate caller emissions with factor+1;do not add thickness,area,density,yield,allocation or energy multipliers. Retain all58RoW and12CN nonproduction exchanges:53and7technosphere inputs plus five direct air emissions each. Source producer inventories inherit Chinese manufacturing data and their wet-process technical model,including36.2kWh electricity and40.703MJ gas heat perkg. Retain each source country electricity coefficient,extrusion service,HDPE input,paraffin,dichloromethane andfactory quantity separately with its supplied uncertainty. Manufacturing process steps include mixing,melting,film extrusion,stretching andsolvent extraction;these descriptions do not authorize adding a second processing/energy burden on top of the inspected vector. All55 exact3.9 manufacturing dependency mappings and their eight existing recipe definitions are frozen. Whole native chemical,polymer,extrusion,grid,heat,factory andtransport inventories replace their upstream source models once. Country grid mappings retain17national andone regional native grid anduse explicit global delivered-MVgrid proxies for22unsupported locations. The actual source electricity amounts survive;source national generation technologies,geography,losses andfuture decarbonization are not reproduced by global proxies. Native grids carry their own generation,losses,network infrastructure andSF6 once;do not overlay source losses or rescale the caller demand. Preserve the five direct source air emissions in each producer,including0.0203kg dichloromethane,with signed amounts,units,compartments anduncertainty unchanged. Source Methane,dichloro-,HCC-30 becomes canonical3.10Dichloromethane:installed definitions shareCAS75-09-2,air compartment andkg reference. This is a synonym without a chemical-mass factor. Keep direct process emissions separate from upstream chemicals,heat andgrid emissions;do not infer solvent recovery,closed mass balance or an avoided-emission credit from the purchase/release amounts. Existing HDPE supply helper retains its four literal,previously user-approved positive trace-recyclate omissions,total1.173141240030732e-13kg perkgHDPE. Their nonempty recycling burdens are omitted with unquantified score effect;retain the existing signed virgin shares andfreight without renormalization. These four inherited omission entries remain in the exact helper definition and audit. No new source or caller exchange is omitted by the separator reconstruction. Retain the original market0.4RoW and0.6CN manufacturing shares plus0.02tkmrail and0.02tkmroad final delivery separately,in source order with supplied uncertainty. Keep native precursor/chemical delivery inside each supplier andfinal separator delivery once. The two manufacturing definitions andmarket are the only new recipe definitions;reuse all eight existing helper definitions without copies. The HDPE,gas heat,dichloromethane andparaffin screening limitations,including nativeparaffin0.402tkmroad boundary ambiguity,carry through. TargetUVEKtechnosphere withcanonical ecoinvent3.10biosphere only. This is a reconstruction of the inspected source manufacturing model through native inputs,not an independently measured BAFU wet-PEplant. Source-specific process data,regional representativeness,chemical grade,upstream production technology,allocation,vintage,uncertainty andenergy aggregation remain limitations with unquantified score effects. Finite signed LCIs/native-demand agreement do not establish source/native LCIA or stochastic equivalence,other source releases,patches,system models,reverse conversion or complete battery/export qualification."
     },
     "r-66ef6411105b3eb6": {
       "evidence": [
