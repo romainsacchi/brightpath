@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 273,
-      "recipe": 1094,
-      "unclassified": 29108
+      "recipe": 1095,
+      "unclassified": 29107
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 253,
       "followup_review": 163,
-      "heuristic_similarity": 26358,
+      "heuristic_similarity": 26357,
       "pairwise_review": 2207,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -113,6 +113,7 @@
       "reviewed_named_product_and_market_boundary_39": 4,
       "reviewed_native_nongas_industrial_heat_proxy": 1,
       "reviewed_natural_gas_heat_region_wrappers_39": 3,
+      "reviewed_nmc532_battery_312": 1,
       "reviewed_older_pet_whole_freight": 1,
       "reviewed_older_swiss_rail": 1,
       "reviewed_packaging_38_complete_service": 2,
@@ -217,7 +218,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444612,
+    "mean_confidence": 0.444626,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -179577,6 +179578,114 @@
       "name": "market for aluminium scrap, new, source3.9 retained supplies and delivery",
       "rationale": "Only the inspected ecoinvent 3.9 cut-off market is newly reviewed. Keep positive one kg reference and factor +1, signed caller mass, supported uncertainty/formulas, foreground ownership and separately listed emissions. Other versions, patches, system models and reverse routes receive no approval. Do not renormalize source producer shares or delivery quantities. Retain every market supply/delivery entry separately with its original coefficient and supported uncertainty. Complete native RER generic rail, inland barge, heavy-lorry fleet and OCE container ship are whole-service geographic, traction/fleet, fuel, vintage and allocation screening proxies. Generic freight must not use coal-specific rail. Preserve source tkm without payload, distance, loss or capacity multipliers and without adding another operation or vehicle inventory. Historical steam traction is not claimed equivalent; native internal uncertainty and emissions differ. No full source/native LCI, LCIA or stochastic equivalence is claimed; score effects remain unquantified. Only the source3.9 profile target and supporting review metadata change; default target and all other existing profile entries remain unchanged. No source exchange omission, recovery credit, runtime Python module, alternative sector engine or validation bypass is introduced. Reuse the exact existing positive-reference empty new-aluminium Recycled Content cut-off stock and its direct-supplier binding. Current source stock and market hashes match frozen earlier witnesses. This preserves an observed source allocation boundary, not a statement that recycling is impact-free. No unreviewed or nonempty process receives zero burden, and no native aluminium-recycling or primary-metal process is added. Correct the older source3.9 recipe that used coal-specific rail for a generic CN freight entry and dropped internal uncertainty fields. Preserve one kg stock and all ten market delivery entries, including five rail country entries, inland barge, three road entries and container shipping. Use complete same-mode generic supplies with explicit geographic/traction/fleet warnings; the source stock and every delivery coefficient remain unchanged.",
       "reference product": "aluminium scrap, new",
+      "unit": "kilogram"
+    },
+    "nmc532-312-native-pack-screening-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_nmc532_battery_312_review.json: independently inspected complete pack/cell/cathode and source market witnesses; derived native-facing demands only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.2674999999999973,
+          "loc": 0.2674999999999973,
+          "location": "GLO",
+          "name": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.7325000000000027,
+          "loc": 0.7325000000000027,
+          "location": "GLO",
+          "name": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.06231,
+          "loc": -2.7756333524260066,
+          "location": "RER",
+          "name": "Transport, aircraft, freight",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, aircraft, freight",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3196,
+          "loc": -1.1406850650900175,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 1.112,
+          "loc": 0.10616019582839072,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01533,
+          "loc": -4.177943586098414,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "NMC532 battery pack market, native NMC111 screening proxy and retained delivery",
+      "rationale": "Use the complete native NMC111 battery pack as an explicitly approximate background hardware proxy for the required source3.12cutoff NMC532 market. Both are complete prismatic rechargeable lithium-ion packs per positive1kg. Native2025/2026 have no inspected NMC532 complete pack; the NMC622 candidate is cell-only and cannot replace a complete pack. This is not a chemistry-equivalent match: nominal cathode Ni:Mn:Co changes from5:3:2 to1:1:1. No independent cathode, metal-demand, LCIA, capacity or lifetime equivalence is asserted. Native inventory retains NMC111 cells, module packaging, battery management, casing, cooling materials, assembly energy and infrastructure. Source Winjobi2020/Dai2019 NMC532 designs and CN/RoW manufacturing are replaced by the native global Dai2019/Crenna2021 design. Cathode metal ratios, material quantities, cell/pack fraction, manufacturing energy, allocation, internal uncertainty, supply geography and vintage differ; their score effect is unquantified. Do not rescale or blend native cells by metal fractions without a separately reviewed inventory. Retain both original market producer quantities separately and all four final-delivery quantities and statistics. Preserve signed caller kg quantities, formulas, supported uncertainty, foreground ownership and separate emissions. No physical exchange is omitted, no capacity/lifetime multiplier is invented and no extra cell, module packaging, BMS, cooling or plant is added to the complete pack. Preserve original final-market air, diesel-lorry, heavy-fuel-oil container and rail services through complete native freight per unchanged signed tonne-km. Native manufacturing/component freight stays internal. Geography, cargo allocation, fleet, traction, loading, vessel, fuel, emissions, age and uncertainty are screening differences; add no distance, payload or infrastructure multipliers. Approval is restricted to the exact independently inspected ecoinvent3.12cutoff source and existing UVEK2025-to2026 route. No permission for uninspected source releases, inverse routes or different system models is inferred. No native alias or IAM technology classifier is changed to treat NMC532 and NMC111 as equivalent.",
+      "reference product": "battery, Li-ion, NMC532, rechargeable",
       "unit": "kilogram"
     },
     "nylon6-39-retained-polymer-and-delivery": {
@@ -814976,7 +815085,7 @@
     {"confidence": 0.744328, "id": "bp-ff066884b716f9ec", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NCA, rechargeable, prismatic", "reference product": "battery, Li-ion, NCA, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.742314, "id": "bp-a767fd67cfa20893", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC111, rechargeable", "reference product": "battery, Li-ion, NMC111, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.942759, "id": "bp-b4591f9dfda21857", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
-    {"confidence": 0.582531, "id": "bp-3f2bdc14588c01de", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC532, rechargeable", "reference product": "battery, Li-ion, NMC532, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-3f2bdc14588c01de", "mapping_method": "reviewed_nmc532_battery_312", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_nmc532_battery_312_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_nmc532_battery_312_review.json"], "reason": "Use the complete native NMC111 battery pack as an explicitly approximate background hardware proxy for the required source3.12cutoff NMC532 market. Both are complete prismatic rechargeable lithium-ion packs per positive1kg. Native2025/2026 have no inspected NMC532 complete pack; the NMC622 candidate is cell-only and cannot replace a complete pack. This is not a chemistry-equivalent match: nominal cathode Ni:Mn:Co changes from5:3:2 to1:1:1. No independent cathode, metal-demand, LCIA, capacity or lifetime equivalence is asserted. Native inventory retains NMC111 cells, module packaging, battery management, casing, cooling materials, assembly energy and infrastructure. Source Winjobi2020/Dai2019 NMC532 designs and CN/RoW manufacturing are replaced by the native global Dai2019/Crenna2021 design. Cathode metal ratios, material quantities, cell/pack fraction, manufacturing energy, allocation, internal uncertainty, supply geography and vintage differ; their score effect is unquantified. Do not rescale or blend native cells by metal fractions without a separately reviewed inventory. Retain both original market producer quantities separately and all four final-delivery quantities and statistics. Preserve signed caller kg quantities, formulas, supported uncertainty, foreground ownership and separate emissions. No physical exchange is omitted, no capacity/lifetime multiplier is invented and no extra cell, module packaging, BMS, cooling or plant is added to the complete pack. Preserve original final-market air, diesel-lorry, heavy-fuel-oil container and rail services through complete native freight per unchanged signed tonne-km. Native manufacturing/component freight stays internal. Geography, cargo allocation, fleet, traction, loading, vessel, fuel, emissions, age and uncertainty are screening differences; add no distance, payload or infrastructure multipliers. Approval is restricted to the exact independently inspected ecoinvent3.12cutoff source and existing UVEK2025-to2026 route. No permission for uninspected source releases, inverse routes or different system models is inferred. No native alias or IAM technology classifier is changed to treat NMC532 and NMC111 as equivalent.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-ab03e7021101baac", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC532, rechargeable", "reference product": "battery, Li-ion, NMC532, rechargeable", "unit": "kilogram"}, "target": {"recipe_ref": "nmc532-312-native-pack-screening-market"}, "technosphere_information_loss": "Use the complete native NMC111 battery pack as an explicitly approximate background hardware proxy for the required source3.12cutoff NMC532 market. Both are complete prismatic rechargeable lithium-ion packs per positive1kg. Native2025/2026 have no inspected NMC532 complete pack; the NMC622 candidate is cell-only and cannot replace a complete pack. This is not a chemistry-equivalent match: nominal cathode Ni:Mn:Co changes from5:3:2 to1:1:1. No independent cathode, metal-demand, LCIA, capacity or lifetime equivalence is asserted. Native inventory retains NMC111 cells, module packaging, battery management, casing, cooling materials, assembly energy and infrastructure. Source Winjobi2020/Dai2019 NMC532 designs and CN/RoW manufacturing are replaced by the native global Dai2019/Crenna2021 design. Cathode metal ratios, material quantities, cell/pack fraction, manufacturing energy, allocation, internal uncertainty, supply geography and vintage differ; their score effect is unquantified. Do not rescale or blend native cells by metal fractions without a separately reviewed inventory. Retain both original market producer quantities separately and all four final-delivery quantities and statistics. Preserve signed caller kg quantities, formulas, supported uncertainty, foreground ownership and separate emissions. No physical exchange is omitted, no capacity/lifetime multiplier is invented and no extra cell, module packaging, BMS, cooling or plant is added to the complete pack. Preserve original final-market air, diesel-lorry, heavy-fuel-oil container and rail services through complete native freight per unchanged signed tonne-km. Native manufacturing/component freight stays internal. Geography, cargo allocation, fleet, traction, loading, vessel, fuel, emissions, age and uncertainty are screening differences; add no distance, payload or infrastructure multipliers. Approval is restricted to the exact independently inspected ecoinvent3.12cutoff source and existing UVEK2025-to2026 route. No permission for uninspected source releases, inverse routes or different system models is inferred. No native alias or IAM technology classifier is changed to treat NMC532 and NMC111 as equivalent."},
     {"confidence": 0.582531, "id": "bp-8c81d7f44cf4e235", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC622, rechargeable", "reference product": "battery, Li-ion, NMC622, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.623086, "id": "bp-47a1834bbd65636b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC811, rechargeable", "reference product": "battery, Li-ion, NMC811, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.807986, "id": "bp-a310b0e1a45bb3e0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC811, rechargeable, prismatic", "reference product": "battery, Li-ion, NMC811, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
@@ -841280,6 +841389,19 @@
         "European EAA2013/2010 primary-metal data and native historical freight replace source regional production/logistics. Grade/assay,industry sample,vintage,fuel/traction,emissions,allocation and internal uncertainty differences remain explicit screening limitations. Native explicit electricity/fuel suppliers remain eligible for shared Premise transformations; this proxy does not establish identical regional future performance, LCI,LCIA or stochastic distributions. No source/caller omission,empty handoff,runtime Python change,alternative sector engine or validation bypass."
       ],
       "rationale": "For independently inspected3.9, retain delivered European primary-ingot mass and both freight services; preserve the separately approved earlier3.10 direct-stock binding. Use complete native tanker-barge per original signed tonne-km."
+    },
+    "r-ab03e7021101baac": {
+      "evidence": [
+        "brightpath/data/export/uvek_nmc532_battery_312_review.json"
+      ],
+      "limitations": [
+        "Use the complete native NMC111 battery pack as an explicitly approximate background hardware proxy for the required source3.12cutoff NMC532 market. Both are complete prismatic rechargeable lithium-ion packs per positive1kg. Native2025/2026 have no inspected NMC532 complete pack; the NMC622 candidate is cell-only and cannot replace a complete pack. This is not a chemistry-equivalent match: nominal cathode Ni:Mn:Co changes from5:3:2 to1:1:1. No independent cathode, metal-demand, LCIA, capacity or lifetime equivalence is asserted.",
+        "Native inventory retains NMC111 cells, module packaging, battery management, casing, cooling materials, assembly energy and infrastructure. Source Winjobi2020/Dai2019 NMC532 designs and CN/RoW manufacturing are replaced by the native global Dai2019/Crenna2021 design. Cathode metal ratios, material quantities, cell/pack fraction, manufacturing energy, allocation, internal uncertainty, supply geography and vintage differ; their score effect is unquantified. Do not rescale or blend native cells by metal fractions without a separately reviewed inventory.",
+        "Retain both original market producer quantities separately and all four final-delivery quantities and statistics. Preserve signed caller kg quantities, formulas, supported uncertainty, foreground ownership and separate emissions. No physical exchange is omitted, no capacity/lifetime multiplier is invented and no extra cell, module packaging, BMS, cooling or plant is added to the complete pack.",
+        "Preserve original final-market air, diesel-lorry, heavy-fuel-oil container and rail services through complete native freight per unchanged signed tonne-km. Native manufacturing/component freight stays internal. Geography, cargo allocation, fleet, traction, loading, vessel, fuel, emissions, age and uncertainty are screening differences; add no distance, payload or infrastructure multipliers.",
+        "Approval is restricted to the exact independently inspected ecoinvent3.12cutoff source and existing UVEK2025-to2026 route. No permission for uninspected source releases, inverse routes or different system models is inferred. No native alias or IAM technology classifier is changed to treat NMC532 and NMC111 as equivalent."
+      ],
+      "rationale": "Use the complete native NMC111 battery pack as an explicitly approximate background hardware proxy for the required source3.12cutoff NMC532 market. Both are complete prismatic rechargeable lithium-ion packs per positive1kg. Native2025/2026 have no inspected NMC532 complete pack; the NMC622 candidate is cell-only and cannot replace a complete pack. This is not a chemistry-equivalent match: nominal cathode Ni:Mn:Co changes from5:3:2 to1:1:1. No independent cathode, metal-demand, LCIA, capacity or lifetime equivalence is asserted."
     },
     "r-ab2f681cd39a0110": {
       "limitations": [
