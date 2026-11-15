@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 273,
-      "recipe": 1085,
-      "unclassified": 29117
+      "recipe": 1090,
+      "unclassified": 29112
     },
     "mapped_identities": 30732,
     "mapping_methods": {
-      "curated_legacy": 254,
+      "curated_legacy": 253,
       "followup_review": 163,
-      "heuristic_similarity": 26366,
+      "heuristic_similarity": 26362,
       "pairwise_review": 2207,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -21,6 +21,7 @@
       "reviewed_allocated_sewage_gas": 2,
       "reviewed_ammonium_sulfate_nitrogen_basis": 2,
       "reviewed_average_sludge_landfarming_service": 8,
+      "reviewed_battery_chemical_supply_39": 5,
       "reviewed_battery_fluoride_39": 3,
       "reviewed_battery_material_boundary_39": 5,
       "reviewed_battery_native_material_39": 7,
@@ -214,7 +215,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444466,
+    "mean_confidence": 0.444532,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -11564,6 +11565,518 @@
       "name": "market for trichloroethylene, native production and retained finished-product delivery",
       "rationale": "Only exact ecoinvent 3.9 cut-off is reviewed. Source and native product references are positive one kg; caller factor +1 preserves signed kg, supported uncertainty, formulas and separately listed foreground emissions. Other versions, patches, system models and reverse routes gain no approval. Use each complete available native product inventory once on its stated reference basis. Geography, technology, allocation, vintage, native biosphere exclusions and internal uncertainty differ; no source/native LCI or LCIA equivalence is claimed and score effects remain unquantified. Caller uncertainty is retained; native internal distributions replace source production distributions without quantifying modelling uncertainty or correlations. TCE: both product identities specify trichloroethylene C2HCl3, CAS 79-01-6, per positive kg. Source 3.9 uses a modern ethylene/chlorination model with hydrochloric-acid co-production; native WEU is a historical cumulative European system inventory covering averaged production routes. Use that complete available native system inventory for each original producer share, keeping the two source shares separate. Do not add source upstream energy, feedstocks, infrastructure or an extra hydrochloric-acid credit. TCE: native documentation explicitly lacks main-process infrastructure and land-use information and cannot assess internal uncertainty. Its cumulative elementary-resource/emission representation limits subsequent IAM updating of internal energy and upstream routes. Source and native emissions, allocation, coproducts, technology, coverage and vintage differ; the WEU inventory is a geographic proxy for both original RER and RoW producers, not their measured global blend. For these market wrappers, retain every original source producer entry and finished-product freight quantity and its supported uncertainty separately. The available native product replaces the source production model; internal source producer distributions are not reconstructed. No source market loss or self-input is present. Add no renormalization or delivery-loss factor. Retain source rail, lorry, barge and container-ship tkm as applicable, using complete native services at positive one tkm. Native RER/Swiss fleet, traction, fuel/technology, geography, emissions, infrastructure and vintage are screening proxies for the original regional/global transport mixes. Native container transport already includes vessel operation and two-port infrastructure; add no second port, ship or infrastructure burden. Finished-product delivery is distinct from raw-material logistics already inside the complete native production process.",
       "reference product": "trichloroethylene",
+      "unit": "kilogram"
+    },
+    "battery-chemicals-39-benzaldehyde-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "xx Benzaldehyde, at plant",
+          "reference product": "xx Benzaldehyde, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0438,
+          "loc": -3.128121461599737,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0219,
+          "loc": -3.8212686421596818,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1713,
+          "loc": -1.7643388736520629,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 1,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.4711687595755899,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for benzaldehyde, source3.9 reviewed native production and retained delivery",
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Source and native identify benzaldehyde, CAS 100-52-7, C7H6O, produced from benzal chloride. Retain the native name \"xx Benzaldehyde, at plant\" as supplied; the prefix is not interpreted as proof of quality or equivalence. Both models rely on stoichiometric feedstock estimates, literature energy, estimated emissions and default infrastructure. Use the complete European native plant and keep the source producer plus rail, barge and road delivery separately. Native exact assay, process efficiency, upstream supply and uncertainty are not independently equivalent; do not impose a second stoichiometric or purity correction.",
+      "reference product": "benzaldehyde",
+      "unit": "kilogram"
+    },
+    "battery-chemicals-39-lanthanum-oxide-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.180455014078217,
+          "loc": 0.180455014078217,
+          "location": "CN",
+          "name": "Lanthanum oxide, at plant",
+          "reference product": "Lanthanum oxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.468144058675414,
+          "loc": 0.468144058675414,
+          "location": "CN",
+          "name": "Lanthanum oxide, at plant",
+          "reference product": "Lanthanum oxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.211875907964707,
+          "loc": 0.211875907964707,
+          "location": "CN",
+          "name": "Lanthanum oxide, at plant",
+          "reference product": "Lanthanum oxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.139525019281661,
+          "loc": 0.139525019281661,
+          "location": "CN",
+          "name": "Lanthanum oxide, at plant",
+          "reference product": "Lanthanum oxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for lanthanum oxide, source3.9 reviewed native production and retained delivery",
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Retain all four source lanthanum-oxide producer shares and all four final-delivery entries. Use complete Chinese native bastnasite/sulphuric-acid separation for each producer as an explicit ore-route and geographic screening proxy. This does not reproduce the source carbonate/ion-adsorption-clay versus oxide-concentrate route mix. Native roasting/cracking, solvent extraction, auxiliary estimates and revenue allocation differ; source rare-earth co-products receive no added recovery credit. The source 85.27% lanthanum content is the element fraction of the oxide, not a one-kg elemental-metal reference or a dilution factor. Native documentation states rare-earth-oxide purity up to 99.9%; exact delivered assay and regional representativeness are not independently established.",
+      "reference product": "lanthanum oxide",
+      "unit": "kilogram"
+    },
+    "battery-chemicals-39-phthalic-anhydride-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.70884900990099,
+          "loc": 0.70884900990099,
+          "location": "RER",
+          "name": "Phthalic anhydride, at plant",
+          "reference product": "Phthalic anhydride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.29115099009901,
+          "loc": 0.29115099009901,
+          "location": "RER",
+          "name": "Phthalic anhydride, at plant",
+          "reference product": "Phthalic anhydride, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for phthalic anhydride, source3.9 reviewed native production and retained delivery",
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Use complete native European phthalic-anhydride production per signed kg for both source regional producers, keeping both original shares and all four final-delivery entries. Source declares pure phthalic anhydride, CAS 85-44-9; native explicitly references one kg of that product. Native mid-1990s literature model uses xylene, estimated energy, transport, infrastructure and analogical air emissions, and omits further inputs/solid wastes. These are inherited data limitations, not permission to omit caller exchanges or invent missing waste treatment. Exact xylene grade, plant performance, regional background, age and uncertainty are not equivalent.",
+      "reference product": "phthalic anhydride",
+      "unit": "kilogram"
+    },
+    "battery-chemicals-39-titanium-dioxide-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.241059602649006,
+          "loc": 0.241059602649006,
+          "location": "RER",
+          "name": "Titanium dioxide, chloride process, at plant",
+          "reference product": "Titanium dioxide, chloride process, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.758940397350994,
+          "loc": 0.758940397350994,
+          "location": "RER",
+          "name": "Titanium dioxide at plant, sulphate process, at plant",
+          "reference product": "Titanium dioxide at plant, sulphate process, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.3861,
+          "loc": -0.9516588757119464,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3272,
+          "loc": -1.117183674253545,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1739,
+          "loc": -1.7492748576218997,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "market for titanium dioxide, source3.9 reviewed native production and retained delivery",
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Preserve the original European titanium-dioxide production-route shares: 0.241059602649006 chloride process and 0.758940397350994 sulfate process. Map each to its separately verified native process, not to the generic native 50/50 production mix. Both deliver one kg TiO2; this is an oxide product, not elemental titanium despite the source generic metal classification. Preserve each share and the three final-delivery entries. Specific plant technology, mineral feedstocks, pigment/crystal grade, reagents, effluent treatment, allocation, age and uncertainty may differ within each route. No chloride/sulfate, elemental-content or pigment-performance factor is added.",
+      "reference product": "titanium dioxide",
+      "unit": "kilogram"
+    },
+    "battery-chemicals-39-zirconium-oxide-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.389396709323583,
+          "loc": 0.389396709323583,
+          "location": "AU",
+          "name": "Zirconium oxide, at plant",
+          "reference product": "Zirconium oxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.610603290676417,
+          "loc": 0.610603290676417,
+          "location": "AU",
+          "name": "Zirconium oxide, at plant",
+          "reference product": "Zirconium oxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for zirconium oxide, source3.9 reviewed native production and retained delivery",
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Source and native intend zirconium dioxide, zirconia, ZrO2. Source CAS 12036-23-6 and native CAS 1314-23-4 are both listed under PubChem CID 62395; NITE also identifies 12036-23-6 as zirconium dioxide, baddeleyite. Native prose formula \"ZiO2\" is a typographical inconsistency; its named zirconia product, CAS and caustic-fusion/calcination process support the intended oxide. Identifier agreement does not establish grade equivalence: the source declares nanomaterial whereas native nano-specific processing, particle size, phase, stabilizers and assay are not independently documented. Use complete native Australian zirconia as a screening proxy for both source producer regions, retaining both shares and all four original final-delivery entries in source order. Native energy and emission data are weak approximations and omit allocation to sodium-silicate by-product. Add no invented nanosizing, calcination, performance or co-product correction.",
+      "reference product": "zirconium oxide",
       "unit": "kilogram"
     },
     "battery-graphite-39-retained-supply-and-delivery": {
@@ -814220,7 +814733,7 @@
     {"confidence": 0.7, "id": "bp-d8c92d0fb704c6ad", "mapping_method": "pairwise_review", "review_ref": "r-6fa52976a662fea6", "source": {"location": "GLO", "name": "market for bentonite quarry infrastructure", "reference product": "bentonite quarry infrastructure", "unit": "unit"}, "target": {"location": "DE", "name": "Mine, bentonite", "reference product": "Mine, bentonite", "unit": "unit"}},
     {"confidence": 0.592607, "id": "bp-665522563a2f24d2", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for benzal chloride", "reference product": "benzal chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Benzal chloride, at plant", "reference product": "Benzal chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.512607, "id": "bp-65c80b9d82d02d75", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for benzal chloride", "reference product": "benzal chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Benzal chloride, at plant", "reference product": "Benzal chloride, at plant", "unit": "kilogram"}},
-    {"confidence": 0.433974, "id": "bp-f67674df84fdfefc", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for benzaldehyde", "reference product": "benzaldehyde", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Benzaldehyde, at plant", "reference product": "xx Benzaldehyde, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-f67674df84fdfefc", "mapping_method": "reviewed_battery_chemical_supply_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "reason": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Source and native identify benzaldehyde, CAS 100-52-7, C7H6O, produced from benzal chloride. Retain the native name \"xx Benzaldehyde, at plant\" as supplied; the prefix is not interpreted as proof of quality or equivalence. Both models rely on stoichiometric feedstock estimates, literature energy, estimated emissions and default infrastructure. Use the complete European native plant and keep the source producer plus rail, barge and road delivery separately. Native exact assay, process efficiency, upstream supply and uncertainty are not independently equivalent; do not impose a second stoichiometric or purity correction.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact source3.9cutoff interface is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-0c19862bea954516", "source": {"location": "RER", "name": "market for benzaldehyde", "reference product": "benzaldehyde", "unit": "kilogram"}, "target": {"recipe_ref": "battery-chemicals-39-benzaldehyde-delivery"}, "technosphere_information_loss": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Source and native identify benzaldehyde, CAS 100-52-7, C7H6O, produced from benzal chloride. Retain the native name \"xx Benzaldehyde, at plant\" as supplied; the prefix is not interpreted as proof of quality or equivalence. Both models rely on stoichiometric feedstock estimates, literature energy, estimated emissions and default infrastructure. Use the complete European native plant and keep the source producer plus rail, barge and road delivery separately. Native exact assay, process efficiency, upstream supply and uncertainty are not independently equivalent; do not impose a second stoichiometric or purity correction."},
     {"confidence": 0.353974, "id": "bp-0af534cf1ea6bd5d", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for benzaldehyde", "reference product": "benzaldehyde", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Benzaldehyde, at plant", "reference product": "xx Benzaldehyde, at plant", "unit": "kilogram"}},
     {"confidence": 0.235, "id": "bp-5d30a102dac55319", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for benzaldehyde-2-sulfonic acid", "reference product": "benzaldehyde-2-sulfonic acid", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Benzaldehyde, at plant", "reference product": "xx Benzaldehyde, at plant", "unit": "kilogram"}},
     {"confidence": 0.359584, "id": "bp-2c0ad0e73aed9ee7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for benzene", "reference product": "benzene", "unit": "kilogram"}, "target": {"location": "RER", "name": "Benzene, at plant", "reference product": "Benzene, at plant", "unit": "kilogram"}},
@@ -817583,7 +818096,7 @@
     {"confidence": 0.108859, "id": "bp-df5f7e503ff3cca6", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for landed anchovy, fresh", "reference product": "landed anchovy, fresh", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Corrugated board, fresh fibre, single wall, at plant", "reference product": "xx Corrugated board, fresh fibre, single wall, at plant", "unit": "kilogram"}},
     {"confidence": 0.111818, "id": "bp-11b269c3eedaa0b0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for landed hake, fresh", "reference product": "landed hake, fresh", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Corrugated board, fresh fibre, single wall, at plant", "reference product": "xx Corrugated board, fresh fibre, single wall, at plant", "unit": "kilogram"}},
     {"confidence": 0.124213, "id": "bp-880e2bb83565abd5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for landed tuna, frozen, EPO", "reference product": "landed tuna, frozen, EPO", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cathode-ray tube, CRT screen, at plant", "reference product": "Cathode-ray tube, CRT screen, at plant", "unit": "kilogram"}},
-    {"confidence": 0.523755, "id": "bp-282e917963656877", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lanthanum oxide", "reference product": "lanthanum oxide", "unit": "kilogram"}, "target": {"location": "CN", "name": "Lanthanum oxide, at plant", "reference product": "Lanthanum oxide, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-282e917963656877", "mapping_method": "reviewed_battery_chemical_supply_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "reason": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Retain all four source lanthanum-oxide producer shares and all four final-delivery entries. Use complete Chinese native bastnasite/sulphuric-acid separation for each producer as an explicit ore-route and geographic screening proxy. This does not reproduce the source carbonate/ion-adsorption-clay versus oxide-concentrate route mix. Native roasting/cracking, solvent extraction, auxiliary estimates and revenue allocation differ; source rare-earth co-products receive no added recovery credit. The source 85.27% lanthanum content is the element fraction of the oxide, not a one-kg elemental-metal reference or a dilution factor. Native documentation states rare-earth-oxide purity up to 99.9%; exact delivered assay and regional representativeness are not independently established.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact source3.9cutoff interface is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-526fd7a3486052a5", "source": {"location": "GLO", "name": "market for lanthanum oxide", "reference product": "lanthanum oxide", "unit": "kilogram"}, "target": {"recipe_ref": "battery-chemicals-39-lanthanum-oxide-delivery"}, "technosphere_information_loss": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Retain all four source lanthanum-oxide producer shares and all four final-delivery entries. Use complete Chinese native bastnasite/sulphuric-acid separation for each producer as an explicit ore-route and geographic screening proxy. This does not reproduce the source carbonate/ion-adsorption-clay versus oxide-concentrate route mix. Native roasting/cracking, solvent extraction, auxiliary estimates and revenue allocation differ; source rare-earth co-products receive no added recovery credit. The source 85.27% lanthanum content is the element fraction of the oxide, not a one-kg elemental-metal reference or a dilution factor. Native documentation states rare-earth-oxide purity up to 99.9%; exact delivered assay and regional representativeness are not independently established."},
     {"confidence": 0.421425, "id": "bp-3052fd1eff0b8ab2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lanthanum-cerium oxide", "reference product": "lanthanum-cerium oxide", "unit": "kilogram"}, "target": {"location": "CN", "name": "Lanthanum oxide, at plant", "reference product": "Lanthanum oxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.055175, "id": "bp-613c9c601af134f1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for laser machining, metal, with CO2-laser, 2000W power", "reference product": "laser machining, metal, with CO2-laser, 2000W power", "unit": "hour"}, "target": {"location": "CH", "name": "Use, laptop, medium intensity per hour", "reference product": "Use, laptop, medium intensity per hour", "unit": "hour"}},
     {"confidence": 0.055175, "id": "bp-516c10184368c2a4", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for laser machining, metal, with CO2-laser, 2700W power", "reference product": "laser machining, metal, with CO2-laser, 2700W power", "unit": "hour"}, "target": {"location": "CH", "name": "Use, laptop, medium intensity per hour", "reference product": "Use, laptop, medium intensity per hour", "unit": "hour"}},
@@ -818765,7 +819278,7 @@
     {"confidence": 0.4, "id": "bp-67b8d6e1ecb481f7", "mapping_method": "followup_review", "review_ref": "r-9e40b7b0ae2d1a62", "source": {"location": "GLO", "name": "market for photovoltaics, electric installation for 3kWp module, at building", "reference product": "photovoltaics, electric installation for 3kWp module, at building", "unit": "unit"}, "target": {"location": "CH", "name": "Electric installation, photovoltaic plant, at plant", "reference product": "Electric installation, photovoltaic plant, at plant", "unit": "unit"}},
     {"confidence": 0.422595, "id": "bp-d31b639306c2644e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for photovoltaics, electric installation for 570kWp module, open ground", "reference product": "photovoltaic plant, electric installation for 570kWp open ground module", "unit": "unit"}, "target": {"location": "CH", "name": "Electric installation, photovoltaic plant, at plant", "reference product": "Electric installation, photovoltaic plant, at plant", "unit": "unit"}},
     {"confidence": 0.341535, "id": "bp-42ba128fdc24701f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for photovoltaics, electric installation for 570kWp module, open ground", "reference product": "photovoltaics, electric installation for 570kWp module, open ground", "unit": "unit"}, "target": {"location": "CH", "name": "Electric installation, photovoltaic plant, at plant", "reference product": "Electric installation, photovoltaic plant, at plant", "unit": "unit"}},
-    {"confidence": 0.542905, "id": "bp-af2ed16481887db4", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for phthalic anhydride", "reference product": "phthalic anhydride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phthalic anhydride, at plant", "reference product": "Phthalic anhydride, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-af2ed16481887db4", "mapping_method": "reviewed_battery_chemical_supply_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "reason": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Use complete native European phthalic-anhydride production per signed kg for both source regional producers, keeping both original shares and all four final-delivery entries. Source declares pure phthalic anhydride, CAS 85-44-9; native explicitly references one kg of that product. Native mid-1990s literature model uses xylene, estimated energy, transport, infrastructure and analogical air emissions, and omits further inputs/solid wastes. These are inherited data limitations, not permission to omit caller exchanges or invent missing waste treatment. Exact xylene grade, plant performance, regional background, age and uncertainty are not equivalent.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact source3.9cutoff interface is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-41bb55eb68570beb", "source": {"location": "GLO", "name": "market for phthalic anhydride", "reference product": "phthalic anhydride", "unit": "kilogram"}, "target": {"recipe_ref": "battery-chemicals-39-phthalic-anhydride-delivery"}, "technosphere_information_loss": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Use complete native European phthalic-anhydride production per signed kg for both source regional producers, keeping both original shares and all four final-delivery entries. Source declares pure phthalic anhydride, CAS 85-44-9; native explicitly references one kg of that product. Native mid-1990s literature model uses xylene, estimated energy, transport, infrastructure and analogical air emissions, and omits further inputs/solid wastes. These are inherited data limitations, not permission to omit caller exchanges or invent missing waste treatment. Exact xylene grade, plant performance, regional background, age and uncertainty are not equivalent."},
     {"confidence": 0.622905, "id": "bp-d1fcee46665a3300", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for phthalic anhydride", "reference product": "phthalic anhydride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phthalic anhydride, at plant", "reference product": "Phthalic anhydride, at plant", "unit": "kilogram"}},
     {"confidence": 0.542905, "id": "bp-500df45ef781bb58", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for phthalic anhydride", "reference product": "phthalic anhydride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Phthalic anhydride, at plant", "reference product": "Phthalic anhydride, at plant", "unit": "kilogram"}},
     {"confidence": 0.4, "id": "bp-465d21d5b20c00a7", "mapping_method": "pairwise_review", "review_ref": "r-36a16cb01d5e258d", "source": {"location": "GLO", "name": "market for phthalimide", "reference product": "phthalimide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Chemicals organic, at plant", "reference product": "Chemicals organic, at plant", "unit": "kilogram"}},
@@ -820809,7 +821322,7 @@
     {"confidence": 0.280714, "id": "bp-a87ee97b4022cb75", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for titania slag, 85% titanium dioxide", "reference product": "titania slag, 85% titanium dioxide", "unit": "kilogram"}, "target": {"location": "AU", "name": "Rutile, 95% titanium dioxide, at plant", "reference product": "Rutile, 95% titanium dioxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.277092, "id": "bp-0a616b7f064cfd59", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for titania slag, 94% titanium dioxide", "reference product": "titania slag, 94% titanium dioxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Titanium dioxide, chloride process, at plant", "reference product": "Titanium dioxide, chloride process, at plant", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-49e229b952f6983c", "mapping_method": "reviewed_deferred_titanium", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_deferred_titanium_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_deferred_titanium_review.json#ecoinvent-3.9-cutoff/ac988344c43383b642e34b5446abb40e4a1fce88406c13865127bfef456a4092"], "reason": "Autonomously reviewed exactecoinvent3.9cut-off titanium metal source-chain reconstruction for the pinned528kgcaller. Preserve actual +1kgmetal/sponge/TiCl4references and the original sponge-country shares CN0.425/RoW0.33/JP0.245, freight layers and distinct country electricity legs. Keep separately allocated Mg-product and Cl-product electrolysis inventories by full identity and actual +1kgproduct, despite stale comments about1kgMgCl2. Virgin Mg/Cl remain separate from recovered streams. The MgCl2recovered stock has a verified +1kgpositive production-only reference; its negative sponge coefficient remains a zero-allocated stock output, not negative treatment demand, primary MgCl2burdens or an invented recovery credit. Preserve original source process chemicals, utilities, heat-market geography shares, direct emissions and supported uncertainty. Use complete native95%rutile(AU) as a screening feedstock proxy for source95%natural/synthetic rutile routes; warn about mineral-sand versus Becher/Benelite/smelting technologies and iron/vanadium co-product allocation. Only the CN94%slag feed uses94/95native95%rutile kg, supported by actual paired CN/RoW/JP TiCl4charge evidence; retain original slag-market freight without rescaling. This is a scoped synthesis-feed proxy, not metal-to-oxide substitution or a global slag mapping; reactor impurities/yields and score effects remain uncertain. Retain RoW inert-waste landfill fraction/freight; four verified production-only negative-reference clinker handovers are literal allocation audits, never replaced by landfill or a fabricated credit. Reuse exact-profile reviewed waste and heat helpers and inherited audits. Complete native pig-iron effluent treatment per original signedm3 is an explicit whole-service screening proxy: source sewer infrastructure, treated/untreated shares, direct releases, composition and internal uncertainty are replaced by native class3treatment+sewer model, not preserved or proven equivalent. No source market untreated-release vector is additionally added, and no extra sewer/avoided-emission credit is invented. Native grids use the matching voltage/country where present, otherwise explicit complete GLOgrid proxies per original quantity. The GLO other-than-NG heat group retains its geographical shares, using the existing reviewed RoW mixed-fuel closure and an explicit complete heavy-fuel-oil furnace proxy for its RER/CA-QC branches; the former natural-gas matches are rejected, and those source fuel/technology portfolios are replaced with a stated limitation. Other native chemical/factory/fuel/freight technologies, route mixes, delivery boundaries, allocation, geography, vintage and internal uncertainty differ; no unverified solution/lifetime/distance multiplier. Preserve caller signedkg/formulas/supported uncertainty at+1. Canonical3.10biosphere uses matching UUID/role/unit/compartment. Missing2991upstream native biosphere exchanges and all proxy/allocation limitations remain visible with unquantified score effects. Other releases, inverse and cross-system-model routes are not qualified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "deferred-titanium-d1bb4dca871159c1e5a4"}}], "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-3edb1d1796fe49c7", "source": {"location": "GLO", "name": "market for titanium", "reference product": "titanium", "unit": "kilogram"}, "target": {"recipe_ref": "deferred-titanium-d1bb4dca871159c1e5a4"}, "technosphere_information_loss": "Autonomously reviewed exactecoinvent3.9cut-off titanium metal source-chain reconstruction for the pinned528kgcaller. Preserve actual +1kgmetal/sponge/TiCl4references and the original sponge-country shares CN0.425/RoW0.33/JP0.245, freight layers and distinct country electricity legs. Keep separately allocated Mg-product and Cl-product electrolysis inventories by full identity and actual +1kgproduct, despite stale comments about1kgMgCl2. Virgin Mg/Cl remain separate from recovered streams. The MgCl2recovered stock has a verified +1kgpositive production-only reference; its negative sponge coefficient remains a zero-allocated stock output, not negative treatment demand, primary MgCl2burdens or an invented recovery credit. Preserve original source process chemicals, utilities, heat-market geography shares, direct emissions and supported uncertainty. Use complete native95%rutile(AU) as a screening feedstock proxy for source95%natural/synthetic rutile routes; warn about mineral-sand versus Becher/Benelite/smelting technologies and iron/vanadium co-product allocation. Only the CN94%slag feed uses94/95native95%rutile kg, supported by actual paired CN/RoW/JP TiCl4charge evidence; retain original slag-market freight without rescaling. This is a scoped synthesis-feed proxy, not metal-to-oxide substitution or a global slag mapping; reactor impurities/yields and score effects remain uncertain. Retain RoW inert-waste landfill fraction/freight; four verified production-only negative-reference clinker handovers are literal allocation audits, never replaced by landfill or a fabricated credit. Reuse exact-profile reviewed waste and heat helpers and inherited audits. Complete native pig-iron effluent treatment per original signedm3 is an explicit whole-service screening proxy: source sewer infrastructure, treated/untreated shares, direct releases, composition and internal uncertainty are replaced by native class3treatment+sewer model, not preserved or proven equivalent. No source market untreated-release vector is additionally added, and no extra sewer/avoided-emission credit is invented. Native grids use the matching voltage/country where present, otherwise explicit complete GLOgrid proxies per original quantity. The GLO other-than-NG heat group retains its geographical shares, using the existing reviewed RoW mixed-fuel closure and an explicit complete heavy-fuel-oil furnace proxy for its RER/CA-QC branches; the former natural-gas matches are rejected, and those source fuel/technology portfolios are replaced with a stated limitation. Other native chemical/factory/fuel/freight technologies, route mixes, delivery boundaries, allocation, geography, vintage and internal uncertainty differ; no unverified solution/lifetime/distance multiplier. Preserve caller signedkg/formulas/supported uncertainty at+1. Canonical3.10biosphere uses matching UUID/role/unit/compartment. Missing2991upstream native biosphere exchanges and all proxy/allocation limitations remain visible with unquantified score effects. Other releases, inverse and cross-system-model routes are not qualified."},
-    {"confidence": 1.0, "id": "bp-011b0c14ef8a369d", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for titanium dioxide", "reference product": "titanium dioxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Titanium dioxide, production mix, at plant", "reference product": "Titanium dioxide, production mix, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-011b0c14ef8a369d", "mapping_method": "reviewed_battery_chemical_supply_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "reason": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Preserve the original European titanium-dioxide production-route shares: 0.241059602649006 chloride process and 0.758940397350994 sulfate process. Map each to its separately verified native process, not to the generic native 50/50 production mix. Both deliver one kg TiO2; this is an oxide product, not elemental titanium despite the source generic metal classification. Preserve each share and the three final-delivery entries. Specific plant technology, mineral feedstocks, pigment/crystal grade, reagents, effluent treatment, allocation, age and uncertainty may differ within each route. No chloride/sulfate, elemental-content or pigment-performance factor is added.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact source3.9cutoff interface is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-b23ceb268c2b26d3", "source": {"location": "RER", "name": "market for titanium dioxide", "reference product": "titanium dioxide", "unit": "kilogram"}, "target": {"recipe_ref": "battery-chemicals-39-titanium-dioxide-delivery"}, "technosphere_information_loss": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Preserve the original European titanium-dioxide production-route shares: 0.241059602649006 chloride process and 0.758940397350994 sulfate process. Map each to its separately verified native process, not to the generic native 50/50 production mix. Both deliver one kg TiO2; this is an oxide product, not elemental titanium despite the source generic metal classification. Preserve each share and the three final-delivery entries. Specific plant technology, mineral feedstocks, pigment/crystal grade, reagents, effluent treatment, allocation, age and uncertainty may differ within each route. No chloride/sulfate, elemental-content or pigment-performance factor is added."},
     {"confidence": 1.0, "id": "bp-c97e0ad679099caa", "mapping_method": "curated_legacy", "source": {"location": "RoW", "name": "market for titanium dioxide", "reference product": "titanium dioxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Titanium dioxide, production mix, at plant", "reference product": "Titanium dioxide, production mix, at plant", "unit": "kilogram"}},
     {"confidence": 0.286, "id": "bp-1311de4f8e742465", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for titanium primary, triple-melt", "reference product": "titanium primary, triple-melt", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cadmium, primary, at plant", "reference product": "Cadmium, primary, at plant", "unit": "kilogram"}},
     {"confidence": 0.16931, "id": "bp-2630c669351ef4da", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for titanium sponge", "reference product": "titanium sponge", "unit": "kilogram"}, "target": {"location": "RER", "name": "Titanium dioxide, chloride process, at plant", "reference product": "Titanium dioxide, chloride process, at plant", "unit": "kilogram"}},
@@ -822575,7 +823088,7 @@
     {"confidence": 0.118182, "id": "bp-e64620ae56617cbd", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zineb", "reference product": "zineb", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cell container", "reference product": "Cell container", "unit": "kilogram"}},
     {"confidence": 0.210445, "id": "bp-ea3aedf71e1949d6", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zircon", "reference product": "zircon", "unit": "kilogram"}, "target": {"location": "AU", "name": "Zircon, 50% zirconium, at plant", "reference product": "Zircon, 50% zirconium, at plant", "unit": "kilogram"}},
     {"confidence": 0.502834, "id": "bp-c07aed4f180d7c77", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zircon, 50% zirconium", "reference product": "zircon, 50% zirconium", "unit": "kilogram"}, "target": {"location": "AU", "name": "Zircon, 50% zirconium, at plant", "reference product": "Zircon, 50% zirconium, at plant", "unit": "kilogram"}},
-    {"confidence": 0.497607, "id": "bp-746b4e34afee8858", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zirconium oxide", "reference product": "zirconium oxide", "unit": "kilogram"}, "target": {"location": "AU", "name": "Zirconium oxide, at plant", "reference product": "Zirconium oxide, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-746b4e34afee8858", "mapping_method": "reviewed_battery_chemical_supply_39", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_chemicals_39_review.json"], "reason": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Source and native intend zirconium dioxide, zirconia, ZrO2. Source CAS 12036-23-6 and native CAS 1314-23-4 are both listed under PubChem CID 62395; NITE also identifies 12036-23-6 as zirconium dioxide, baddeleyite. Native prose formula \"ZiO2\" is a typographical inconsistency; its named zirconia product, CAS and caustic-fusion/calcination process support the intended oxide. Identifier agreement does not establish grade equivalence: the source declares nanomaterial whereas native nano-specific processing, particle size, phase, stabilizers and assay are not independently documented. Use complete native Australian zirconia as a screening proxy for both source producer regions, retaining both shares and all four original final-delivery entries in source order. Native energy and emission data are weak approximations and omit allocation to sodium-silicate by-product. Add no invented nanosizing, calcination, performance or co-product correction.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only independently inspected exact source3.9cutoff interface is reviewed.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-b3a562cac32704bf", "source": {"location": "GLO", "name": "market for zirconium oxide", "reference product": "zirconium oxide", "unit": "kilogram"}, "target": {"recipe_ref": "battery-chemicals-39-zirconium-oxide-delivery"}, "technosphere_information_loss": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Source and native intend zirconium dioxide, zirconia, ZrO2. Source CAS 12036-23-6 and native CAS 1314-23-4 are both listed under PubChem CID 62395; NITE also identifies 12036-23-6 as zirconium dioxide, baddeleyite. Native prose formula \"ZiO2\" is a typographical inconsistency; its named zirconia product, CAS and caustic-fusion/calcination process support the intended oxide. Identifier agreement does not establish grade equivalence: the source declares nanomaterial whereas native nano-specific processing, particle size, phase, stabilizers and assay are not independently documented. Use complete native Australian zirconia as a screening proxy for both source producer regions, retaining both shares and all four original final-delivery entries in source order. Native energy and emission data are weak approximations and omit allocation to sodium-silicate by-product. Add no invented nanosizing, calcination, performance or co-product correction."},
     {"confidence": 0.235714, "id": "bp-a8da93328b311e8a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zirconium sponge, nuclear-grade", "reference product": "zirconium sponge, nuclear-grade", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Gallium, semiconductor-grade, at plant", "reference product": "Gallium, semiconductor-grade, at plant", "unit": "kilogram"}},
     {"confidence": 0.264522, "id": "bp-4a3e139b20d212da", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for zirconium tetrachloride", "reference product": "zirconium tetrachloride", "unit": "kilogram"}, "target": {"location": "DE", "name": "Silicon tetrachloride, at plant", "reference product": "Silicon tetrachloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.133017, "id": "bp-49eb4032ca7df8f9", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for zucchini", "reference product": "zucchini", "unit": "kilogram"}, "target": {"location": "CH", "name": "Agricultural machinery, general, production", "reference product": "Agricultural machinery, general, production", "unit": "kilogram"}},
@@ -834140,6 +834653,17 @@
       ],
       "rationale": "Auto-approved under the user's unsupported CRT industrial wastewater-residue omission policy and similar-case authorization: omit the exact market for sewage sludge, 70% water, WWT, WW from tube collector production / CH / kg external exchange with a warning. Independent inspection confirms the same nonbiogenic industrial-wastewater-residue boundary, with 0% biogenic carbon, for tube collector production. No dedicated complete UVEK counterpart was established. Manufacturing, mechanical screen-recycling residues, pulp/paper or municipal sludge, refinery sludge and isolated landfill-operation components do not establish matching residue treatment. The market supplies 100% treatment of its own industrial residue plus freight; that market freight is omitted too. Omitted contributions include treatment operation, metal/leachate emissions, downstream residue handling and any recovered-energy or fertilizer credits; effects on LCIA scores are method-dependent and unquantified."
     },
+    "r-0c19862bea954516": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "limitations": [
+        "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission.",
+        "Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence.",
+        "Source and native identify benzaldehyde, CAS 100-52-7, C7H6O, produced from benzal chloride. Retain the native name \"xx Benzaldehyde, at plant\" as supplied; the prefix is not interpreted as proof of quality or equivalence. Both models rely on stoichiometric feedstock estimates, literature energy, estimated emissions and default infrastructure. Use the complete European native plant and keep the source producer plus rail, barge and road delivery separately. Native exact assay, process efficiency, upstream supply and uncertainty are not independently equivalent; do not impose a second stoichiometric or purity correction."
+      ],
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Source and native identify benzaldehyde, CAS 100-52-7, C7H6O, produced from benzal chloride. Retain the native name \"xx Benzaldehyde, at plant\" as supplied; the prefix is not interpreted as proof of quality or equivalence. Both models rely on stoichiometric feedstock estimates, literature energy, estimated emissions and default infrastructure. Use the complete European native plant and keep the source producer plus rail, barge and road delivery separately. Native exact assay, process efficiency, upstream supply and uncertainty are not independently equivalent; do not impose a second stoichiometric or purity correction."
+    },
     "r-0c4f6a12c02aee81": {
       "evidence": [
         "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-818f13b72ade5602",
@@ -836214,6 +836738,17 @@
       ],
       "rationale": "Independently inspected profile-specific supplies for the shared Premise fuel workflow."
     },
+    "r-41bb55eb68570beb": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "limitations": [
+        "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission.",
+        "Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence.",
+        "Use complete native European phthalic-anhydride production per signed kg for both source regional producers, keeping both original shares and all four final-delivery entries. Source declares pure phthalic anhydride, CAS 85-44-9; native explicitly references one kg of that product. Native mid-1990s literature model uses xylene, estimated energy, transport, infrastructure and analogical air emissions, and omits further inputs/solid wastes. These are inherited data limitations, not permission to omit caller exchanges or invent missing waste treatment. Exact xylene grade, plant performance, regional background, age and uncertainty are not equivalent."
+      ],
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Use complete native European phthalic-anhydride production per signed kg for both source regional producers, keeping both original shares and all four final-delivery entries. Source declares pure phthalic anhydride, CAS 85-44-9; native explicitly references one kg of that product. Native mid-1990s literature model uses xylene, estimated energy, transport, infrastructure and analogical air emissions, and omits further inputs/solid wastes. These are inherited data limitations, not permission to omit caller exchanges or invent missing waste treatment. Exact xylene grade, plant performance, regional background, age and uncertainty are not equivalent."
+    },
     "r-41d74935b8cb7bbf": {
       "evidence": [
         "brightpath/data/export/uvek_ferrosilicon_gas_review.json"
@@ -836757,6 +837292,17 @@
         "Nutritional reference-unit contributions and credits are excluded until a validated nutritional substitution model is available. Equal dimensional units do not establish equivalent nutrient function. No arbitrary crop/protein-content scaling or substitution of industrial heat for nutritional energy is inferred. This does not establish zero impact for feed production or the foreground inventory. Ordinary coproduct-mass references are outside this approval. Missing exact profiles remain blocked; no reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external wheat grain processing, dry milling / energy feed, gross / ZA / megajoule reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents gross nutritional feed energy in MJ, not industrial heat or fuel energy. No validated nutritional conversion establishes equivalence with the former Heat, at heat pump 30kW, allocation energy / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
+    },
+    "r-526fd7a3486052a5": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "limitations": [
+        "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission.",
+        "Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence.",
+        "Retain all four source lanthanum-oxide producer shares and all four final-delivery entries. Use complete Chinese native bastnasite/sulphuric-acid separation for each producer as an explicit ore-route and geographic screening proxy. This does not reproduce the source carbonate/ion-adsorption-clay versus oxide-concentrate route mix. Native roasting/cracking, solvent extraction, auxiliary estimates and revenue allocation differ; source rare-earth co-products receive no added recovery credit. The source 85.27% lanthanum content is the element fraction of the oxide, not a one-kg elemental-metal reference or a dilution factor. Native documentation states rare-earth-oxide purity up to 99.9%; exact delivered assay and regional representativeness are not independently established."
+      ],
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Retain all four source lanthanum-oxide producer shares and all four final-delivery entries. Use complete Chinese native bastnasite/sulphuric-acid separation for each producer as an explicit ore-route and geographic screening proxy. This does not reproduce the source carbonate/ion-adsorption-clay versus oxide-concentrate route mix. Native roasting/cracking, solvent extraction, auxiliary estimates and revenue allocation differ; source rare-earth co-products receive no added recovery credit. The source 85.27% lanthanum content is the element fraction of the oxide, not a one-kg elemental-metal reference or a dilution factor. Native documentation states rare-earth-oxide purity up to 99.9%; exact delivered assay and regional representativeness are not independently established."
     },
     "r-52a7d3c29506940f": {
       "evidence": [
@@ -840710,6 +841256,17 @@
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for sewage sludge, 70% water, WWT, WW from glass production / RoW / kg external exchange with a warning. All inspected direct service comments for glass production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
     },
+    "r-b23ceb268c2b26d3": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "limitations": [
+        "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission.",
+        "Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence.",
+        "Preserve the original European titanium-dioxide production-route shares: 0.241059602649006 chloride process and 0.758940397350994 sulfate process. Map each to its separately verified native process, not to the generic native 50/50 production mix. Both deliver one kg TiO2; this is an oxide product, not elemental titanium despite the source generic metal classification. Preserve each share and the three final-delivery entries. Specific plant technology, mineral feedstocks, pigment/crystal grade, reagents, effluent treatment, allocation, age and uncertainty may differ within each route. No chloride/sulfate, elemental-content or pigment-performance factor is added."
+      ],
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Preserve the original European titanium-dioxide production-route shares: 0.241059602649006 chloride process and 0.758940397350994 sulfate process. Map each to its separately verified native process, not to the generic native 50/50 production mix. Both deliver one kg TiO2; this is an oxide product, not elemental titanium despite the source generic metal classification. Preserve each share and the three final-delivery entries. Specific plant technology, mineral feedstocks, pigment/crystal grade, reagents, effluent treatment, allocation, age and uncertainty may differ within each route. No chloride/sulfate, elemental-content or pigment-performance factor is added."
+    },
     "r-b26d6a6be89d9eb6": {
       "evidence": [
         "brightpath/data/export/uvek_separator_grids_39_review.json"
@@ -840764,6 +841321,17 @@
         "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers."
       ],
       "rationale": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers."
+    },
+    "r-b3a562cac32704bf": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_chemicals_39_review.json"
+      ],
+      "limitations": [
+        "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission.",
+        "Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence.",
+        "Source and native intend zirconium dioxide, zirconia, ZrO2. Source CAS 12036-23-6 and native CAS 1314-23-4 are both listed under PubChem CID 62395; NITE also identifies 12036-23-6 as zirconium dioxide, baddeleyite. Native prose formula \"ZiO2\" is a typographical inconsistency; its named zirconia product, CAS and caustic-fusion/calcination process support the intended oxide. Identifier agreement does not establish grade equivalence: the source declares nanomaterial whereas native nano-specific processing, particle size, phase, stabilizers and assay are not independently documented. Use complete native Australian zirconia as a screening proxy for both source producer regions, retaining both shares and all four original final-delivery entries in source order. Native energy and emission data are weak approximations and omit allocation to sodium-silicate by-product. Add no invented nanosizing, calcination, performance or co-product correction."
+      ],
+      "rationale": "Only the inspected exact ecoinvent 3.9 cut-off chemical interfaces are reviewed. Source and native products each have positive one-kg references. Keep signed caller mass, supported uncertainty, formulas and separate caller exchanges at factor +1. No dilution, density, chemical-element, purity, process-yield, allocation or energy multiplier is added. Other source releases, patches, system models and reverse routes gain no new permission. Use the complete selected native production inventory once. It replaces source production internals with its own precursor supply, energy, transport, infrastructure, wastes, emissions, allocation and uncertainty. Keep each explicit source final-market freight entry separately where a delivery helper is used; native raw-material delivery remains part of manufacturing. No source production overlay, recovery credit, omission, new runtime module or alternative sector engine is introduced. Technology, grade, geography, age, internal uncertainty and scores may differ; finite LCIs do not establish source/native LCIA or stochastic equivalence. Source and native intend zirconium dioxide, zirconia, ZrO2. Source CAS 12036-23-6 and native CAS 1314-23-4 are both listed under PubChem CID 62395; NITE also identifies 12036-23-6 as zirconium dioxide, baddeleyite. Native prose formula \"ZiO2\" is a typographical inconsistency; its named zirconia product, CAS and caustic-fusion/calcination process support the intended oxide. Identifier agreement does not establish grade equivalence: the source declares nanomaterial whereas native nano-specific processing, particle size, phase, stabilizers and assay are not independently documented. Use complete native Australian zirconia as a screening proxy for both source producer regions, retaining both shares and all four original final-delivery entries in source order. Native energy and emission data are weak approximations and omit allocation to sodium-silicate by-product. Add no invented nanosizing, calcination, performance or co-product correction."
     },
     "r-b3be4248474ea3a2": {
       "evidence": [
