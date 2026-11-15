@@ -1,18 +1,18 @@
 """Final-disposal helpers retain source components and every collection term."""
 
-from copy import deepcopy
 import hashlib
 import json
+from copy import deepcopy
 
 import pytest
+from test_uvek_reference_signs import consumer, contexts
+from test_uvek_refrigerant_disposal import target_context
 
-from brightpath import BrightwayInventory, DATA_DIR
+from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_nitrate_inert39 import apply_pilot_nitrate_inert39_review
-from test_uvek_reference_signs import consumer, contexts
-from test_uvek_refrigerant_disposal import target_context
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_inert39_review.json").read_text())
 
@@ -79,6 +79,18 @@ def test_inert39_helpers_refuse_uninspected_source_versions(row, version):
 @pytest.mark.parametrize("change", ["none", "late_parent", "helper", "component_binding", "retained_recipe"])
 def test_inert39_authoring_replay_validates_every_parent_before_mutating(change):
     resource = deepcopy(load_uvek_technosphere_resource())
+    # Replay this intermediate stage before the later rail and direct-treatment
+    # corrections. Keep both later approvals and the earlier binding guard intact.
+    for path, rid in [
+        ("uvek_pulp_heat_so2_sulfite_review.json", "bp-46ffc4892be8fcb1"),
+        ("uvek_ships_39_market_boundaries_review.json", "bp-044d46746cc73c41"),
+    ]:
+        later = json.loads((DATA_DIR / "export" / path).read_text())
+        row = next(r for r in later["records"] if r["rule_id"] == rid)
+        component = next(r for r in resource["replace"] if r["id"] == rid)
+        assert component == row["compiled_rule"]
+        component.clear()
+        component.update(deepcopy(row["original_rule"]))
     if change == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif change == "helper":
@@ -97,6 +109,14 @@ def test_inert39_authoring_replay_validates_every_parent_before_mutating(change)
         with pytest.raises(ValueError):
             apply_pilot_nitrate_inert39_review(resource)
         assert resource == before
+
+
+def test_earlier_inert_authoring_stage_refuses_later_component_overlay():
+    resource = deepcopy(load_uvek_technosphere_resource())
+    before = deepcopy(resource)
+    with pytest.raises(ValueError, match="component binding changed"):
+        apply_pilot_nitrate_inert39_review(resource)
+    assert resource == before
 
 
 def test_inert39_retains_the_312_recipe_and_exact_selected_profile_entry():

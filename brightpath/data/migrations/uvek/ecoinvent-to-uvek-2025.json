@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 273,
-      "recipe": 1090,
-      "unclassified": 29112
+      "recipe": 1093,
+      "unclassified": 29109
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 253,
       "followup_review": 163,
-      "heuristic_similarity": 26362,
+      "heuristic_similarity": 26359,
       "pairwise_review": 2207,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -190,6 +190,7 @@
       "reviewed_sewage_digestion_service": 2,
       "reviewed_sewage_sludge_market_alias": 2,
       "reviewed_sewer_throughput_service": 4,
+      "reviewed_ships_39_market_boundaries": 3,
       "reviewed_slf_landfarming_service": 22,
       "reviewed_source_gas_flare_service": 4,
       "reviewed_spent_solvent_market_39_retained_collection": 1,
@@ -215,7 +216,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444532,
+    "mean_confidence": 0.444597,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -604351,6 +604352,175 @@
       "reference product": "waste polyethylene",
       "unit": "kilogram"
     },
+    "ships-39-lime-delivered-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_39_market_boundaries_review.json: independently inspected source market and native-function witnesses; derived native-facing demands only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.998562070619577,
+          "loc": 0.998562070619577,
+          "location": "CH",
+          "name": "Limestone, milled, loose, at plant",
+          "reference product": "Limestone, milled, loose, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00119827448480687,
+          "loc": 0.00119827448480687,
+          "location": "CH",
+          "name": "xx Lime, algae, at regional storehouse",
+          "reference product": "xx Lime, algae, at regional storehouse",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00023965489561661,
+          "loc": 0.00023965489561661,
+          "location": "CH",
+          "name": "Limestone, milled, loose, at plant",
+          "reference product": "Limestone, milled, loose, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02,
+          "loc": -3.912023005428146,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4074309757492673,
+          "scale without pedigree": 0.5,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RER",
+      "name": "ground limestone and algae lime, retained source3.9 market composition and delivery",
+      "rationale": "Retain all three original producer entries and the original road-delivery quantity separately. The two loose-milled lime producers consume1kg crushed limestone with milling energy and no calcination. Use the complete native loose-milled limestone, not hydraulic lime or quicklime. Legacy source product text says quicklime despite these actual inventories; retain that inconsistency and infer no CaO/CaCO3 equivalence or purity factor. Retain the algae route with the complete native algae-lime process, including its inherited drying/milling and regional-storehouse boundary. Source and native describe25%initial and2.5%final water; no drying or moisture factor is added. Swiss native milled limestone is a geography/electricity-mix proxy for the European non-Swiss producer; its full energy/quarry/milling inventory replaces producer internals once. Source final market freight remains additional, as in its original model. Keep original signed tonne-km and uncertainty through complete native heavy-diesel fleet,3.5t light-commercial fleet,European rail and transoceanic-container services as applicable. Source fleet/traction/fuel/load/geography/vintage mixtures are screening proxies; add no payload, distance, vehicle, road, rail or vessel infrastructure multiplier. Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred. Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed.",
+      "reference product": "lime",
+      "unit": "kilogram"
+    },
+    "ships-39-magnetite-delivered-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_39_market_boundaries_review.json: independently inspected source market and native-function witnesses; derived native-facing demands only."
+      ],
+      "inputs": [
+        {
+          "amount": 0.0283386367882951,
+          "loc": 0.0283386367882951,
+          "location": "GLO",
+          "name": "Magnetite, at plant",
+          "reference product": "Magnetite, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.971661363211705,
+          "loc": 0.971661363211705,
+          "location": "GLO",
+          "name": "Magnetite, at plant",
+          "reference product": "Magnetite, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0534,
+          "loc": -2.9299445330159877,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0067,
+          "loc": -5.005647752585217,
+          "location": "CH",
+          "name": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2154,
+          "loc": -1.5352585142598487,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2503,
+          "loc": -1.3850950805444084,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.4049691346263318,
+          "scale without pedigree": 0.4959838707054898,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "magnetite, retained source3.9 market composition and delivery",
+      "rationale": "Retain both original producer entries and all four road/light-commercial/rail/container-ship delivery quantities separately, with source statistics. Use complete native Fe3O4magnetite for the chemical producer; both inventories describe the same estimated toner-carrier precipitation/filtration/drying process and warn against use where magnetite dominates inventory mass. The source2.83386367882951%mined co-product branch uses complete native chemically produced magnetite as a screening route proxy. Retain that branch quantity separately; mining/co-product allocation, ore, precursor supply, solution-basis, energy and freight differences have unquantified effects. Do not invent a mining allocation or stoichiometric correction. Native upstream precursor freight remains internal; retain only original final-market freight additionally. Keep original signed tonne-km and uncertainty through complete native heavy-diesel fleet,3.5t light-commercial fleet,European rail and transoceanic-container services as applicable. Source fleet/traction/fuel/load/geography/vintage mixtures are screening proxies; add no payload, distance, vehicle, road, rail or vessel infrastructure multiplier. Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred. Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed.",
+      "reference product": "magnetite",
+      "unit": "kilogram"
+    },
     "slf-landfarming-0081c155d24f48eaeb35": {
       "evidence": [
         "brightpath/data/export/uvek_slf_landfarming_review.json: exact source inventory and component-mapping fingerprints; derived target coefficients only."
@@ -818260,7 +818430,7 @@
     {"confidence": 0.381582, "id": "bp-a1223d33cff3048c", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lignite briquettes factory", "reference product": "lignite briquettes factory", "unit": "unit"}, "target": {"location": "RER", "name": "Lignite briquettes production plant", "reference product": "Lignite briquettes production plant", "unit": "unit"}},
     {"confidence": 0.322088, "id": "bp-1726fb67dc5f2178", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lignite dust factory", "reference product": "lignite dust factory", "unit": "unit"}, "target": {"location": "RER", "name": "Lignite dust production plant", "reference product": "Lignite dust production plant", "unit": "unit"}},
     {"confidence": 0.816818, "id": "bp-e1b0493faa50b2e8", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lignite power plant", "reference product": "lignite power plant", "unit": "unit"}, "target": {"location": "RER", "name": "Lignite power plant", "reference product": "Lignite power plant", "unit": "unit"}},
-    {"confidence": 0.199015, "id": "bp-7cfbc8a9a47a41e4", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for lime", "reference product": "lime", "unit": "kilogram"}, "target": {"location": "CH", "name": "Lime, hydraulic, at plant", "reference product": "Lime, hydraulic, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1.0, "id": "bp-7cfbc8a9a47a41e4", "mapping_method": "reviewed_ships_39_market_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_39_market_boundaries_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_ships_39_market_boundaries_review.json"], "reason": "Retain all three original producer entries and the original road-delivery quantity separately. The two loose-milled lime producers consume1kg crushed limestone with milling energy and no calcination. Use the complete native loose-milled limestone, not hydraulic lime or quicklime. Legacy source product text says quicklime despite these actual inventories; retain that inconsistency and infer no CaO/CaCO3 equivalence or purity factor. Retain the algae route with the complete native algae-lime process, including its inherited drying/milling and regional-storehouse boundary. Source and native describe25%initial and2.5%final water; no drying or moisture factor is added. Swiss native milled limestone is a geography/electricity-mix proxy for the European non-Swiss producer; its full energy/quarry/milling inventory replaces producer internals once. Source final market freight remains additional, as in its original model. Keep original signed tonne-km and uncertainty through complete native heavy-diesel fleet,3.5t light-commercial fleet,European rail and transoceanic-container services as applicable. Source fleet/traction/fuel/load/geography/vintage mixtures are screening proxies; add no payload, distance, vehicle, road, rail or vessel infrastructure multiplier. Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred. Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected3.9cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-10183ed7176ba54f", "source": {"location": "RER", "name": "market for lime", "reference product": "lime", "unit": "kilogram"}, "target": {"recipe_ref": "ships-39-lime-delivered-market"}, "technosphere_information_loss": "Retain all three original producer entries and the original road-delivery quantity separately. The two loose-milled lime producers consume1kg crushed limestone with milling energy and no calcination. Use the complete native loose-milled limestone, not hydraulic lime or quicklime. Legacy source product text says quicklime despite these actual inventories; retain that inconsistency and infer no CaO/CaCO3 equivalence or purity factor. Retain the algae route with the complete native algae-lime process, including its inherited drying/milling and regional-storehouse boundary. Source and native describe25%initial and2.5%final water; no drying or moisture factor is added. Swiss native milled limestone is a geography/electricity-mix proxy for the European non-Swiss producer; its full energy/quarry/milling inventory replaces producer internals once. Source final market freight remains additional, as in its original model. Keep original signed tonne-km and uncertainty through complete native heavy-diesel fleet,3.5t light-commercial fleet,European rail and transoceanic-container services as applicable. Source fleet/traction/fuel/load/geography/vintage mixtures are screening proxies; add no payload, distance, vehicle, road, rail or vessel infrastructure multiplier. Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred. Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed."},
     {"classification": "proxy", "confidence": 0.199015, "conversion_factor": 1, "id": "bp-42ca176032e4b754", "mapping_method": "reviewed_inventory_boundary_correction", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_fuels_38_lime_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_fuels_38_lime_review.json"], "reason": "Exact ecoinvent 3.8 cut-off only. The market description/CAS calls this lime or quicklime, but both inspected mill inventories consume crushed limestone without calcination. Use complete native milled limestone for those two branches, not hydraulic lime, CaO or hydrated lime; retain the source semantic inconsistency in provenance. Native Swiss limestone is a screening proxy with quarry, grinding, energy, infrastructure, geography, allocation, internal uncertainty and vintage differences. For the separate global zinc-mining co-product, preserve allocated mining burdens using native Swedish contained-Zn beneficiation at 0.59*(0.117/0.38) kg per kg source co-product: all 263 nonproduction source coordinates and 262 lognormal uncertainty coordinates support that price ratio; source concentrate contains 59% Zn. Native ore, co-products, allocation and internal uncertainty differ. Add no metal recovery credit or CaCO3/CaO purity/stoichiometric correction. Retain all three original producer shares and all three signed freight entries separately in source order, with original uncertainty and no renormalization or omission. Native European generic lorry fleet is a technology/geographic screening proxy at original tonne-km, without distance/payload correction. Score differences remain unquantified.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_lime_delivery_39_review.json"], "reason": "Only the independently inspected exact ecoinvent3.9 cut-off RoW generic-lime market is extended. Preserve one signed kg source market demand at factor+1,supported caller uncertainty/formulas and separately listed caller emissions. Retain all three source producer shares and all three delivery freight quantities separately,without renormalization,omission or a CaO/CaCO3,moisture,purity or yield multiplier. Other versions,patches,system models and reverse routes gain no new permission. The source generic product text calls this quicklime,but both inspected milled-loose producer inventories consume crushed limestone without a calcination step. Match those actual milling inventories to complete native Swiss Limestone,milled,loose,at plant,not hydraulic lime,hydrated lime or a speculative additional CaO kiln. This preserves the inspected source inventory definition with an explicit naming inconsistency; it does not establish general chemical equivalence between quicklime and limestone. Native quarry,milling,energy,infrastructure,emissions,geography,allocation,age and uncertainty replace source internals and can change scores. The separate source global zinc-mine lime co-product is represented by allocated mining burdens,not ordinary quarry limestone. Independently checked all264nonproduction source coordinates against the same-version zinc-concentrate inventory: matching provider/flow keys and every nonzero amount ratio equal0.117/0.38. Source documentation states59%Zn in concentrate. Native Swedish beneficiation references contained Zn,so demand is0.59*(0.117/0.38)=0.1816578947368421kg contained-Zn mining burden per kg source co-product. This retains the documented allocation basis while substituting a complete native mine model; ore,co-products,allocation,upstream geography and uncertainty differ. Add no zinc-recovery or avoided-mining credit. The market quantities agree with the earlier3.8case,but upstream source mill and mining inventories changed; this extension follows independent3.9inspection rather than blanket inheritance. Two version-specific recipe definitions use the previously reviewed native suppliers and mean quantities,with independently inspected3.9freight uncertainty to attach accurate3.9 names,evidence and limitations. They replace the two existing helper roles for this source profile; no extra processing layer or duplicate burden is added. The earlier3.8 profile,raw default target,recipe definitions,review authority and physical supplier/factor closure remain unchanged; only its raw-rule approval fingerprint must be refreshed after physical comparison. Native European generic lorry fleet replaces the source ZA,RoW and Brazilian unspecified fleets at each original tonne-km,with supported uncertainty retained up to floating-point serialization precision. These are explicit geography,fleet technology,vintage and internal-uncertainty proxies,not claims of identical routes,payloads or energy. Source market input order is not physically meaningful; entries stay separate in the established helper order. Do not add a delivery stage,merge or redistribute producer shares,or supplement the complete native stocks with source utilities/emissions. Source/native LCI,LCIA and stochastic equivalence are not established; score effects remain unquantified. The three source3.9 freight entries use lognormal scale0.4074309757492673 and source scale-without-pedigree0.5,whereas3.8uses0.45166359162544856and0.34641016151377546. Preserve both supplied uncertainty fields rather than deriving or inheriting a different spread. No stochastic equivalence of source and native internal inventories is claimed.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "lime-39-delivery-reviewed-native"}}], "reason": "Only independently inspected exact cut-off profile qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-19c323e29a794a2e", "source": {"location": "RoW", "name": "market for lime", "reference product": "lime", "unit": "kilogram"}, "target": {"recipe_ref": "fuels-38-lime-delivery-2a8dca6375cead538321"}, "technosphere_information_loss": "Exact ecoinvent 3.8 cut-off only. The market description/CAS calls this lime or quicklime, but both inspected mill inventories consume crushed limestone without calcination. Use complete native milled limestone for those two branches, not hydraulic lime, CaO or hydrated lime; retain the source semantic inconsistency in provenance. Native Swiss limestone is a screening proxy with quarry, grinding, energy, infrastructure, geography, allocation, internal uncertainty and vintage differences. For the separate global zinc-mining co-product, preserve allocated mining burdens using native Swedish contained-Zn beneficiation at 0.59*(0.117/0.38) kg per kg source co-product: all 263 nonproduction source coordinates and 262 lognormal uncertainty coordinates support that price ratio; source concentrate contains 59% Zn. Native ore, co-products, allocation and internal uncertainty differ. Add no metal recovery credit or CaCO3/CaO purity/stoichiometric correction. Retain all three original producer shares and all three signed freight entries separately in source order, with original uncertainty and no renormalization or omission. Native European generic lorry fleet is a technology/geographic screening proxy at original tonne-km, without distance/payload correction. Score differences remain unquantified."},
     {"confidence": 0.377953, "id": "bp-4d643232a7fe20fd", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lime mortar", "reference product": "lime mortar", "unit": "kilogram"}, "target": {"location": "CH", "name": "xx Lime mortar, at plant", "reference product": "xx Lime mortar, at plant", "unit": "kilogram"}},
     {"confidence": 0.429783, "id": "bp-43a823ce2ef56215", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lime, from liquid packaging board production", "reference product": "lime, from liquid packaging board production", "unit": "kilogram"}, "target": {"location": "RER", "name": "Production of liquid packaging board containers, at plant", "reference product": "Production of liquid packaging board containers, at plant", "unit": "kilogram"}},
@@ -818392,7 +818562,7 @@
     {"confidence": 0.169776, "id": "bp-690c800bab11e4e8", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "market for magnesium, for reuse in zirconium sponge production", "reference product": "magnesium, for reuse in zirconium sponge production", "unit": "kilogram"}, "target": {"location": "RER", "name": "Magnesium, at plant", "reference product": "Magnesium, at plant", "unit": "kilogram"}},
     {"confidence": 0.590625, "id": "bp-20d1279c4fa891d8", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for magnesium-alloy, AZ91", "reference product": "magnesium-alloy, AZ91", "unit": "kilogram"}, "target": {"location": "RER", "name": "Magnesium-alloy, AZ91, at plant", "reference product": "Magnesium-alloy, AZ91, at plant", "unit": "kilogram"}},
     {"confidence": 0.562407, "id": "bp-c4048c132a408542", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for magnesium-alloy, AZ91, diecast", "reference product": "magnesium-alloy, AZ91, diecast", "unit": "kilogram"}, "target": {"location": "RER", "name": "Magnesium-alloy, AZ91, diecasting, at plant", "reference product": "Magnesium-alloy, AZ91, diecasting, at plant", "unit": "kilogram"}},
-    {"confidence": 0.486774, "id": "bp-a756bfb30d94e11d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for magnetite", "reference product": "magnetite", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Magnetite, at plant", "reference product": "Magnetite, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1.0, "id": "bp-a756bfb30d94e11d", "mapping_method": "reviewed_ships_39_market_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_39_market_boundaries_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_ships_39_market_boundaries_review.json"], "reason": "Retain both original producer entries and all four road/light-commercial/rail/container-ship delivery quantities separately, with source statistics. Use complete native Fe3O4magnetite for the chemical producer; both inventories describe the same estimated toner-carrier precipitation/filtration/drying process and warn against use where magnetite dominates inventory mass. The source2.83386367882951%mined co-product branch uses complete native chemically produced magnetite as a screening route proxy. Retain that branch quantity separately; mining/co-product allocation, ore, precursor supply, solution-basis, energy and freight differences have unquantified effects. Do not invent a mining allocation or stoichiometric correction. Native upstream precursor freight remains internal; retain only original final-market freight additionally. Keep original signed tonne-km and uncertainty through complete native heavy-diesel fleet,3.5t light-commercial fleet,European rail and transoceanic-container services as applicable. Source fleet/traction/fuel/load/geography/vintage mixtures are screening proxies; add no payload, distance, vehicle, road, rail or vessel infrastructure multiplier. Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred. Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed.", "source_sign": 1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected3.9cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-86c401fee1874b43", "source": {"location": "GLO", "name": "market for magnetite", "reference product": "magnetite", "unit": "kilogram"}, "target": {"recipe_ref": "ships-39-magnetite-delivered-market"}, "technosphere_information_loss": "Retain both original producer entries and all four road/light-commercial/rail/container-ship delivery quantities separately, with source statistics. Use complete native Fe3O4magnetite for the chemical producer; both inventories describe the same estimated toner-carrier precipitation/filtration/drying process and warn against use where magnetite dominates inventory mass. The source2.83386367882951%mined co-product branch uses complete native chemically produced magnetite as a screening route proxy. Retain that branch quantity separately; mining/co-product allocation, ore, precursor supply, solution-basis, energy and freight differences have unquantified effects. Do not invent a mining allocation or stoichiometric correction. Native upstream precursor freight remains internal; retain only original final-market freight additionally. Keep original signed tonne-km and uncertainty through complete native heavy-diesel fleet,3.5t light-commercial fleet,European rail and transoceanic-container services as applicable. Source fleet/traction/fuel/load/geography/vintage mixtures are screening proxies; add no payload, distance, vehicle, road, rail or vessel infrastructure multiplier. Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred. Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed."},
     {"confidence": 0.425273, "id": "bp-b0b86adb62506029", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, aircraft, long haul, airframe", "reference product": "maintenance, aircraft, long haul, airframe", "unit": "unit"}, "target": {"location": "RER", "name": "Aircraft, long haul", "reference product": "Aircraft, long haul", "unit": "unit"}},
     {"confidence": 0.425273, "id": "bp-7f1d9de22cc008b3", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, aircraft, long haul, engine", "reference product": "maintenance, aircraft, long haul, engine", "unit": "unit"}, "target": {"location": "RER", "name": "Aircraft, long haul", "reference product": "Aircraft, long haul", "unit": "unit"}},
     {"confidence": 0.443556, "id": "bp-6fbac31395d86b1b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, aircraft, medium haul, airframe", "reference product": "maintenance, aircraft, medium haul, airframe", "unit": "unit"}, "target": {"location": "RER", "name": "Aircraft, medium haul", "reference product": "Aircraft, medium haul", "unit": "unit"}},
@@ -829668,7 +829838,7 @@
     {"confidence": 0.54612, "conversion_factor": -1, "id": "bp-f44ac3f8058f8bc7", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-f44ac3f8058f8bc7"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "treatment of high level radioactive waste for final repository", "reference product": "high level radioactive waste for final repository", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Radioactive waste, in final repository for nuclear waste LLW", "reference product": "Radioactive waste, in final repository for nuclear waste LLW", "unit": "cubic meter"}},
     {"confidence": 0.46612, "conversion_factor": -1, "id": "bp-1e143bec947d41fc", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-1e143bec947d41fc"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "treatment of high level radioactive waste for final repository", "reference product": "high level radioactive waste for final repository", "unit": "cubic meter"}, "target": {"location": "CH", "name": "Radioactive waste, in final repository for nuclear waste LLW", "reference product": "Radioactive waste, in final repository for nuclear waste LLW", "unit": "cubic meter"}},
     {"confidence": 0.416883, "conversion_factor": -1, "id": "bp-3aedb5762ff23e68", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-3aedb5762ff23e68"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "treatment of inert waste, inert material landfill", "reference product": "inert waste, for final disposal", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, inert waste, 5% water, to construction waste landfill", "reference product": "Disposal, inert waste, 5% water, to construction waste landfill", "unit": "kilogram"}},
-    {"confidence": 0.336883, "conversion_factor": -1, "id": "bp-044d46746cc73c41", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-044d46746cc73c41"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "treatment of inert waste, inert material landfill", "reference product": "inert waste, for final disposal", "unit": "kilogram"}, "target": {"location": "CH", "name": "Disposal, inert waste, 5% water, to construction waste landfill", "reference product": "Disposal, inert waste, 5% water, to construction waste landfill", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": -1.0, "id": "bp-044d46746cc73c41", "mapping_method": "reviewed_ships_39_market_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_39_market_boundaries_review.json"], "profiles": [{"conversion_factor": -1.0, "review": {"evidence": ["brightpath/data/export/uvek_ships_39_market_boundaries_review.json"], "reason": "Reuse the existing exact generic inert-landfill helper:1kg native operation plus1.48e-9 native facility units per as-receivedkg, preserving both inspected source uncertainty distributions. Negative source waste reference maps to positive service with factor-1 exactly once. Source has no direct biosphere exchange, nonphysical waste indicator or collection freight: add none. Source explicitly omits leachate as considered negligible; preserve that inherited data gap, not a claim that physical leachate is zero. Do not import the composition-specific5%-water construction-disposal emissions. Native Swiss energy, land-use, infrastructure, recultivation/aftercare, waste heat and vintage differ. No moisture, dry-mass, density, capacity, lifetime or recovery multiplier is introduced. Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred. Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed.", "source_sign": -1.0, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the exact independently inspected3.9cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-9d314e3a217d8890", "source": {"location": "RoW", "name": "treatment of inert waste, inert material landfill", "reference product": "inert waste, for final disposal", "unit": "kilogram"}, "target": {"recipe_ref": "pilot-inert39-treatment-22bf873e8a547af043e0"}, "technosphere_information_loss": "Reuse the existing exact generic inert-landfill helper:1kg native operation plus1.48e-9 native facility units per as-receivedkg, preserving both inspected source uncertainty distributions. Negative source waste reference maps to positive service with factor-1 exactly once. Source has no direct biosphere exchange, nonphysical waste indicator or collection freight: add none. Source explicitly omits leachate as considered negligible; preserve that inherited data gap, not a claim that physical leachate is zero. Do not import the composition-specific5%-water construction-disposal emissions. Native Swiss energy, land-use, infrastructure, recultivation/aftercare, waste heat and vintage differ. No moisture, dry-mass, density, capacity, lifetime or recovery multiplier is introduced. Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred. Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed."},
     {"confidence": 0.476486, "id": "bp-c83d4eab3324a277", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "treatment of inert waste, sanitary landfill", "reference product": "electricity, medium voltage", "unit": "kilowatt hour"}, "target": {"location": "RER", "name": "Electricity, medium voltage, at grid", "reference product": "Electricity, medium voltage, at grid", "unit": "kilowatt hour"}},
     {"confidence": 0.401486, "id": "bp-d12378a87110ca80", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "treatment of inert waste, sanitary landfill", "reference product": "electricity, medium voltage", "unit": "kilowatt hour"}, "target": {"location": "CH", "name": "Electricity, medium voltage, at grid", "reference product": "Electricity, medium voltage, at grid", "unit": "kilowatt hour"}},
     {"confidence": 0.275567, "id": "bp-f5ebedbce4f710d7", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "treatment of inert waste, sanitary landfill", "reference product": "heat, district or industrial, other than natural gas", "unit": "megajoule"}, "target": {"location": "RER", "name": "xxx Heat, natural gas, at industrial furnace low-NOx >100kW", "reference product": "xxx Heat, natural gas, at industrial furnace low-NOx >100kW", "unit": "megajoule"}},
@@ -834738,6 +834908,19 @@
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for bottom ash, MSWI-WWT, WW from black chrome coating / GLO / kg external exchange with a warning. All inspected direct service comments for black chrome coating document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
     },
+    "r-10183ed7176ba54f": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_39_market_boundaries_review.json"
+      ],
+      "limitations": [
+        "Retain all three original producer entries and the original road-delivery quantity separately. The two loose-milled lime producers consume1kg crushed limestone with milling energy and no calcination. Use the complete native loose-milled limestone, not hydraulic lime or quicklime. Legacy source product text says quicklime despite these actual inventories; retain that inconsistency and infer no CaO/CaCO3 equivalence or purity factor.",
+        "Retain the algae route with the complete native algae-lime process, including its inherited drying/milling and regional-storehouse boundary. Source and native describe25%initial and2.5%final water; no drying or moisture factor is added. Swiss native milled limestone is a geography/electricity-mix proxy for the European non-Swiss producer; its full energy/quarry/milling inventory replaces producer internals once. Source final market freight remains additional, as in its original model.",
+        "Keep original signed tonne-km and uncertainty through complete native heavy-diesel fleet,3.5t light-commercial fleet,European rail and transoceanic-container services as applicable. Source fleet/traction/fuel/load/geography/vintage mixtures are screening proxies; add no payload, distance, vehicle, road, rail or vessel infrastructure multiplier.",
+        "Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred.",
+        "Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed."
+      ],
+      "rationale": "Retain all three original producer entries and the original road-delivery quantity separately. The two loose-milled lime producers consume1kg crushed limestone with milling energy and no calcination. Use the complete native loose-milled limestone, not hydraulic lime or quicklime. Legacy source product text says quicklime despite these actual inventories; retain that inconsistency and infer no CaO/CaCO3 equivalence or purity factor."
+    },
     "r-1027feb545fa6a09": {
       "evidence": [
         "brightpath/data/export/uvek_wwt_residue_omission_review.json: exact read-only source/profile fingerprints; negative one-kg production; every installed profile checked. Direct treatment comments explicitly report 0% biogenic carbon; markets contain only technosphere inputs and supply 100% same-residue treatment plus freight. Dedicated UVEK residue service and disposal-boundary candidates were inspected independently.",
@@ -839671,6 +839854,19 @@
       ],
       "rationale": "The earlier nativeQuicklime,milled,loosematch was wrong. All five inspected sourceCHinventories consume1kgcrushed limestone plus grinding energy/infrastructure and no calcination step. Native milled loose limestone shares the characteristic1kgcrushed-limestone,0.016kWhgrid,0.016kWhhydro,0.000225machine and0.0898MJindustrial-oil-heat coordinates; it supplies the complete grinding product without a kiln. Ecoinvent3.12explicitly identifies this same grinding inventory as limestone and separately models quicklime with an upstream calcination process."
     },
+    "r-86c401fee1874b43": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_39_market_boundaries_review.json"
+      ],
+      "limitations": [
+        "Retain both original producer entries and all four road/light-commercial/rail/container-ship delivery quantities separately, with source statistics. Use complete native Fe3O4magnetite for the chemical producer; both inventories describe the same estimated toner-carrier precipitation/filtration/drying process and warn against use where magnetite dominates inventory mass.",
+        "The source2.83386367882951%mined co-product branch uses complete native chemically produced magnetite as a screening route proxy. Retain that branch quantity separately; mining/co-product allocation, ore, precursor supply, solution-basis, energy and freight differences have unquantified effects. Do not invent a mining allocation or stoichiometric correction. Native upstream precursor freight remains internal; retain only original final-market freight additionally.",
+        "Keep original signed tonne-km and uncertainty through complete native heavy-diesel fleet,3.5t light-commercial fleet,European rail and transoceanic-container services as applicable. Source fleet/traction/fuel/load/geography/vintage mixtures are screening proxies; add no payload, distance, vehicle, road, rail or vessel infrastructure multiplier.",
+        "Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred.",
+        "Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed."
+      ],
+      "rationale": "Retain both original producer entries and all four road/light-commercial/rail/container-ship delivery quantities separately, with source statistics. Use complete native Fe3O4magnetite for the chemical producer; both inventories describe the same estimated toner-carrier precipitation/filtration/drying process and warn against use where magnetite dominates inventory mass."
+    },
     "r-86cfe752f14de9df": {
       "evidence": [
         "brightpath/data/export/uvek_wwt_residue_omission_review.json: exact inspected source/profile fingerprints. Source references are -1 kg; all direct service comments document 0% biogenic carbon, and markets supply 100% treatment of their own residue plus freight. The target catalogs and candidate inventories were inspected for the relevant industrial function and disposal boundary.",
@@ -840551,6 +840747,18 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact market for sewage sludge, 70% water, WWT, WW from concrete production / RoW / kg external exchange with a warning. All inspected direct service comments for concrete production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. The market supplies 100% treatment of its own industrial residue plus freight; omit that market freight too. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-9d314e3a217d8890": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_39_market_boundaries_review.json"
+      ],
+      "limitations": [
+        "Reuse the existing exact generic inert-landfill helper:1kg native operation plus1.48e-9 native facility units per as-receivedkg, preserving both inspected source uncertainty distributions. Negative source waste reference maps to positive service with factor-1 exactly once. Source has no direct biosphere exchange, nonphysical waste indicator or collection freight: add none.",
+        "Source explicitly omits leachate as considered negligible; preserve that inherited data gap, not a claim that physical leachate is zero. Do not import the composition-specific5%-water construction-disposal emissions. Native Swiss energy, land-use, infrastructure, recultivation/aftercare, waste heat and vintage differ. No moisture, dry-mass, density, capacity, lifetime or recovery multiplier is introduced.",
+        "Only the independently inspected ecoinvent3.9cutoff profile is admitted, through the existing UVEK2025-to2026 route. Preserve signed caller quantities, reference units, formulas, supported uncertainty, separate emissions and foreground ownership. No inverse or cross-system-model permission is inferred.",
+        "Retain complete native inventories once. Geographic, technology, allocation, age, internal uncertainty and native biosphere-exclusion differences remain screening limitations with unquantified score effects; no LCIA equivalence is claimed."
+      ],
+      "rationale": "Reuse the existing exact generic inert-landfill helper:1kg native operation plus1.48e-9 native facility units per as-receivedkg, preserving both inspected source uncertainty distributions. Negative source waste reference maps to positive service with factor-1 exactly once. Source has no direct biosphere exchange, nonphysical waste indicator or collection freight: add none."
     },
     "r-9d88ccfb5033c3a7": {
       "evidence": [
