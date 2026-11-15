@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 273,
-      "recipe": 1095,
-      "unclassified": 29107
+      "proxy": 275,
+      "recipe": 1100,
+      "unclassified": 29100
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 253,
       "followup_review": 163,
-      "heuristic_similarity": 26357,
+      "heuristic_similarity": 26350,
       "pairwise_review": 2207,
       "product_checked": 35,
       "reviewed_acetoacetic_39_source_reconstruction": 1,
@@ -192,6 +192,7 @@
       "reviewed_sewage_digestion_service": 2,
       "reviewed_sewage_sludge_market_alias": 2,
       "reviewed_sewer_throughput_service": 4,
+      "reviewed_ships_312_native_boundaries": 7,
       "reviewed_ships_39_market_boundaries": 3,
       "reviewed_slf_landfarming_service": 22,
       "reviewed_source_gas_flare_service": 4,
@@ -218,7 +219,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.444626,
+    "mean_confidence": 0.444733,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -604561,6 +604562,452 @@
       "reference product": "waste polyethylene",
       "unit": "kilogram"
     },
+    "ships-312-11eb77f35655db2a-native-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.0199,
+          "loc": -3.9170355472516905,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.1932,
+          "loc": -1.6440293572037195,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2115,
+          "loc": -1.5535302804958044,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.112,
+          "loc": -2.1892564076870427,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.5,
+          "loc": 0.5,
+          "location": "GLO",
+          "name": "Disposal, Li-ions batteries, pyrometallurgical",
+          "reference product": "Disposal, Li-ions batteries, pyrometallurgical",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.5,
+          "loc": 0.5,
+          "location": "GLO",
+          "name": "Disposal, Li-ions batteries, hydrometallurgical",
+          "reference product": "Disposal, Li-ions batteries, hydrometallurgical",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.12 shipping used supply 11eb77f35655db2a",
+      "rationale": "Correct the treatment convention exactly once: source used-Li-ion-battery market references negative1kg; the helper supplies positive1kg treatment. Apply caller factor−1 without absolute values. Preserve the source50:50 pyro/hydrometallurgical mix using the corresponding complete native processes at positive0.5kg each, and retain all four positive final transport quantities. Negative source treatment-provider entries represent receiving waste, not avoided disposal. Genuine signed caller credits remain signed. Native pyro/hydrometallurgical service inventories and allocation replace source3.12 recovery models. Lithium/cobalt/nickel recovery, recovered-product quality and credits, slag treatment, emissions, energy, geography, vintage and internal uncertainty can differ; score effects are unquantified. Retain all native internal recovery/allocation exchanges as recorded. Add no independent recovered-metal credit, virgin-metal substitution, extra collection operation or omission. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.",
+      "reference product": "used Li-ion battery",
+      "unit": "kilogram"
+    },
+    "ships-312-47a1834bbd65636b-native-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.145616357359636,
+          "loc": 0.145616357359636,
+          "location": "GLO",
+          "name": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.854383642640364,
+          "loc": 0.854383642640364,
+          "location": "GLO",
+          "name": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.06231,
+          "loc": 0.06231,
+          "location": "RER",
+          "name": "Transport, aircraft, freight",
+          "reference product": "Transport, aircraft, freight",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3196,
+          "loc": -1.1406850650900175,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 1.112,
+          "loc": 0.10616019582839072,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01533,
+          "loc": -4.177943586098414,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.12 shipping battery supply 47a1834bbd65636b",
+      "rationale": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC811. Both inspected native releases lack a complete NMC811 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NMC811 cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.",
+      "reference product": "battery, Li-ion, NMC811, rechargeable",
+      "unit": "kilogram"
+    },
+    "ships-312-8c81d7f44cf4e235-native-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.7325000000000027,
+          "loc": 0.7325000000000027,
+          "location": "GLO",
+          "name": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.2674999999999973,
+          "loc": 0.2674999999999973,
+          "location": "GLO",
+          "name": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.06231,
+          "loc": -2.7756333524260066,
+          "location": "RER",
+          "name": "Transport, aircraft, freight",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, aircraft, freight",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3196,
+          "loc": -1.1406850650900175,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 1.112,
+          "loc": 0.10616019582839072,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01533,
+          "loc": -4.177943586098414,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.12 shipping battery supply 8c81d7f44cf4e235",
+      "rationale": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC622. Both inspected native releases lack a complete NMC622 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NMC622 cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.",
+      "reference product": "battery, Li-ion, NMC622, rechargeable",
+      "unit": "kilogram"
+    },
+    "ships-312-d77c499a4733bd9a-native-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.2674999999999998,
+          "loc": 0.2674999999999998,
+          "location": "GLO",
+          "name": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.7325000000000003,
+          "loc": 0.7325000000000003,
+          "location": "GLO",
+          "name": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.06231,
+          "loc": 0.06231,
+          "location": "RER",
+          "name": "Transport, aircraft, freight",
+          "reference product": "Transport, aircraft, freight",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3196,
+          "loc": -1.1406850650900175,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 1.112,
+          "loc": 0.10616019582839072,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.01533,
+          "loc": -4.177943586098414,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.12 shipping battery supply d77c499a4733bd9a",
+      "rationale": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NCA. Both inspected native releases lack a complete NCA pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NCA cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.",
+      "reference product": "battery, Li-ion, NCA, rechargeable",
+      "unit": "kilogram"
+    },
+    "ships-312-ea131e9abe8941ab-native-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.330592351639294,
+          "loc": 0.330592351639294,
+          "location": "RER",
+          "name": "Port facilities",
+          "reference product": "Port facilities",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.669407648360706,
+          "loc": 0.669407648360706,
+          "location": "RER",
+          "name": "Port facilities",
+          "reference product": "Port facilities",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "unit"
+        }
+      ],
+      "location": "GLO",
+      "name": "Reviewed source3.12 shipping port supply ea131e9abe8941ab",
+      "rationale": "Use the complete native RER Port facilities inventory for both original port-construction producer shares, retaining each source quantity and supported statistics separately. Both source and native describe the construction/use/disposal boundary of one port with Rotterdam-based modelling; native documentation uses100years. Do not confuse the copied word airport in native free text with the actual port inventory and supplier topology. Native whole-port model replaces the source regional producer inventories. Civil materials, maintenance, excavation/disposal, land occupation, infrastructure scale, regional supplies, vintage, allocation and internal uncertainty differ. Preserve the caller per-port-unit demand without invented capacity, utilisation or lifetime scaling. Do not add a second port construction, disposal or land inventory; score effects remain unquantified. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.",
+      "reference product": "port facilities",
+      "unit": "unit"
+    },
     "ships-39-lime-delivered-market": {
       "evidence": [
         "brightpath/data/export/uvek_ships_39_market_boundaries_review.json: independently inspected source market and native-function witnesses; derived native-facing demands only."
@@ -815081,13 +815528,13 @@
     {"confidence": 0.721989, "id": "bp-0e8b50be59d70db7", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, LFP, rechargeable, prismatic", "reference product": "battery, Li-ion, LFP, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.526885, "id": "bp-5148f65d8d339826", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, LiMn2O4, rechargeable", "reference product": "battery, Li-ion, LiMn2O4, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.696595, "id": "bp-77083557070c9f24", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, LiMn2O4, rechargeable, prismatic", "reference product": "battery, Li-ion, LiMn2O4, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
-    {"confidence": 0.563445, "id": "bp-d77c499a4733bd9a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NCA, rechargeable", "reference product": "battery, Li-ion, NCA, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-d77c499a4733bd9a", "mapping_method": "reviewed_ships_312_native_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "reason": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NCA. Both inspected native releases lack a complete NCA pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NCA cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-2983ea6777c351fd", "source": {"location": "GLO", "name": "market for battery, Li-ion, NCA, rechargeable", "reference product": "battery, Li-ion, NCA, rechargeable", "unit": "kilogram"}, "target": {"recipe_ref": "ships-312-d77c499a4733bd9a-native-market"}, "technosphere_information_loss": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NCA. Both inspected native releases lack a complete NCA pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NCA cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."},
     {"confidence": 0.744328, "id": "bp-ff066884b716f9ec", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NCA, rechargeable, prismatic", "reference product": "battery, Li-ion, NCA, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.742314, "id": "bp-a767fd67cfa20893", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC111, rechargeable", "reference product": "battery, Li-ion, NMC111, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.942759, "id": "bp-b4591f9dfda21857", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-3f2bdc14588c01de", "mapping_method": "reviewed_nmc532_battery_312", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_nmc532_battery_312_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_nmc532_battery_312_review.json"], "reason": "Use the complete native NMC111 battery pack as an explicitly approximate background hardware proxy for the required source3.12cutoff NMC532 market. Both are complete prismatic rechargeable lithium-ion packs per positive1kg. Native2025/2026 have no inspected NMC532 complete pack; the NMC622 candidate is cell-only and cannot replace a complete pack. This is not a chemistry-equivalent match: nominal cathode Ni:Mn:Co changes from5:3:2 to1:1:1. No independent cathode, metal-demand, LCIA, capacity or lifetime equivalence is asserted. Native inventory retains NMC111 cells, module packaging, battery management, casing, cooling materials, assembly energy and infrastructure. Source Winjobi2020/Dai2019 NMC532 designs and CN/RoW manufacturing are replaced by the native global Dai2019/Crenna2021 design. Cathode metal ratios, material quantities, cell/pack fraction, manufacturing energy, allocation, internal uncertainty, supply geography and vintage differ; their score effect is unquantified. Do not rescale or blend native cells by metal fractions without a separately reviewed inventory. Retain both original market producer quantities separately and all four final-delivery quantities and statistics. Preserve signed caller kg quantities, formulas, supported uncertainty, foreground ownership and separate emissions. No physical exchange is omitted, no capacity/lifetime multiplier is invented and no extra cell, module packaging, BMS, cooling or plant is added to the complete pack. Preserve original final-market air, diesel-lorry, heavy-fuel-oil container and rail services through complete native freight per unchanged signed tonne-km. Native manufacturing/component freight stays internal. Geography, cargo allocation, fleet, traction, loading, vessel, fuel, emissions, age and uncertainty are screening differences; add no distance, payload or infrastructure multipliers. Approval is restricted to the exact independently inspected ecoinvent3.12cutoff source and existing UVEK2025-to2026 route. No permission for uninspected source releases, inverse routes or different system models is inferred. No native alias or IAM technology classifier is changed to treat NMC532 and NMC111 as equivalent.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-ab03e7021101baac", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC532, rechargeable", "reference product": "battery, Li-ion, NMC532, rechargeable", "unit": "kilogram"}, "target": {"recipe_ref": "nmc532-312-native-pack-screening-market"}, "technosphere_information_loss": "Use the complete native NMC111 battery pack as an explicitly approximate background hardware proxy for the required source3.12cutoff NMC532 market. Both are complete prismatic rechargeable lithium-ion packs per positive1kg. Native2025/2026 have no inspected NMC532 complete pack; the NMC622 candidate is cell-only and cannot replace a complete pack. This is not a chemistry-equivalent match: nominal cathode Ni:Mn:Co changes from5:3:2 to1:1:1. No independent cathode, metal-demand, LCIA, capacity or lifetime equivalence is asserted. Native inventory retains NMC111 cells, module packaging, battery management, casing, cooling materials, assembly energy and infrastructure. Source Winjobi2020/Dai2019 NMC532 designs and CN/RoW manufacturing are replaced by the native global Dai2019/Crenna2021 design. Cathode metal ratios, material quantities, cell/pack fraction, manufacturing energy, allocation, internal uncertainty, supply geography and vintage differ; their score effect is unquantified. Do not rescale or blend native cells by metal fractions without a separately reviewed inventory. Retain both original market producer quantities separately and all four final-delivery quantities and statistics. Preserve signed caller kg quantities, formulas, supported uncertainty, foreground ownership and separate emissions. No physical exchange is omitted, no capacity/lifetime multiplier is invented and no extra cell, module packaging, BMS, cooling or plant is added to the complete pack. Preserve original final-market air, diesel-lorry, heavy-fuel-oil container and rail services through complete native freight per unchanged signed tonne-km. Native manufacturing/component freight stays internal. Geography, cargo allocation, fleet, traction, loading, vessel, fuel, emissions, age and uncertainty are screening differences; add no distance, payload or infrastructure multipliers. Approval is restricted to the exact independently inspected ecoinvent3.12cutoff source and existing UVEK2025-to2026 route. No permission for uninspected source releases, inverse routes or different system models is inferred. No native alias or IAM technology classifier is changed to treat NMC532 and NMC111 as equivalent."},
-    {"confidence": 0.582531, "id": "bp-8c81d7f44cf4e235", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC622, rechargeable", "reference product": "battery, Li-ion, NMC622, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
-    {"confidence": 0.623086, "id": "bp-47a1834bbd65636b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC811, rechargeable", "reference product": "battery, Li-ion, NMC811, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-8c81d7f44cf4e235", "mapping_method": "reviewed_ships_312_native_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "reason": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC622. Both inspected native releases lack a complete NMC622 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NMC622 cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-85ebdd748f9d6d8e", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC622, rechargeable", "reference product": "battery, Li-ion, NMC622, rechargeable", "unit": "kilogram"}, "target": {"recipe_ref": "ships-312-8c81d7f44cf4e235-native-market"}, "technosphere_information_loss": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC622. Both inspected native releases lack a complete NMC622 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NMC622 cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-47a1834bbd65636b", "mapping_method": "reviewed_ships_312_native_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "reason": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC811. Both inspected native releases lack a complete NMC811 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NMC811 cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-2bfdb15349e42ee4", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC811, rechargeable", "reference product": "battery, Li-ion, NMC811, rechargeable", "unit": "kilogram"}, "target": {"recipe_ref": "ships-312-47a1834bbd65636b-native-market"}, "technosphere_information_loss": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC811. Both inspected native releases lack a complete NMC811 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice. The NMC811 cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."},
     {"confidence": 0.807986, "id": "bp-a310b0e1a45bb3e0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC811, rechargeable, prismatic", "reference product": "battery, Li-ion, NMC811, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.784377, "id": "bp-11e2cf83e35e7756", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, rechargeable, prismatic", "reference product": "battery, Li-ion, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.413709, "id": "bp-7a38e8a58e458e09", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Na-NiCl, rechargeable", "reference product": "battery, Na-NiCl, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, NiMH, rechargeable, prismatic, at plant", "reference product": "Battery, NiMH, rechargeable, prismatic, at plant", "unit": "kilogram"}},
@@ -816172,7 +816619,7 @@
     {"confidence": 0.336395, "id": "bp-7c69b138888c1dde", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for construction work, heat and power co-generation unit, 160kW electrical", "reference product": "construction work, heat and power co-generation unit, 160kW electrical", "unit": "unit"}, "target": {"location": "RER", "name": "Construction work, cogen unit 160kWe", "reference product": "Construction work, cogen unit 160kWe", "unit": "unit"}},
     {"confidence": 0.247952, "id": "bp-484998bd45459c68", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for consumer electronics, mobile device, smartphone", "reference product": "consumer electronics, mobile device, smartphone", "unit": "unit"}, "target": {"location": "GLO", "name": "Charger, for smartphone, at plant", "reference product": "Charger, for smartphone, at plant", "unit": "unit"}},
     {"confidence": 0.228824, "id": "bp-4d3e2b596822e2c1", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for consumer electronics, mobile device, tablet", "reference product": "consumer electronics, mobile device, tablet", "unit": "unit"}, "target": {"location": "GLO", "name": "Mouse device, optical, with cable, at plant", "reference product": "Mouse device, optical, with cable, at plant", "unit": "unit"}},
-    {"confidence": 0.36402, "id": "bp-b70ddddeca802ef5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for container ship", "reference product": "container ship", "unit": "unit"}, "target": {"location": "IN", "name": "Wrecking, transocean container ship", "reference product": "Wrecking, transocean container ship", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-b70ddddeca802ef5", "mapping_method": "reviewed_ships_312_native_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "reason": "Replace the physically wrong ship-wrecking heuristic with the complete native Transoceanic freight ship manufacturing process per positive1unit. The source market has exactly one deterministic1unit container-ship producer and no final transport or losses, so a redundant market helper is unnecessary. Native documentation identifies container-ship technology, material production, manufacturing energy, material freight and non-metal component disposal. Do not add a separate wrecking process or use a wrecking service as ship production. Source documentation reports conflicting43000/59600t load capacities; native manufacturing represents51500t. Ship size, design, material quantities, manufacturing energy, geography, end-of-life coverage, age and allocation differ. Use a complete per-vessel screening proxy without a guessed DWT or lifetime multiplier; score effects remain unquantified. Separate caller maintenance, port and operating fuel inputs remain unchanged. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-bd5245d7524cdfe6", "source": {"location": "GLO", "name": "market for container ship", "reference product": "container ship", "unit": "unit"}, "target": {"location": "OCE", "name": "Transoceanic freight ship", "reference product": "Transoceanic freight ship", "unit": "unit"}, "technosphere_information_loss": "Replace the physically wrong ship-wrecking heuristic with the complete native Transoceanic freight ship manufacturing process per positive1unit. The source market has exactly one deterministic1unit container-ship producer and no final transport or losses, so a redundant market helper is unnecessary. Native documentation identifies container-ship technology, material production, manufacturing energy, material freight and non-metal component disposal. Do not add a separate wrecking process or use a wrecking service as ship production. Source documentation reports conflicting43000/59600t load capacities; native manufacturing represents51500t. Ship size, design, material quantities, manufacturing energy, geography, end-of-life coverage, age and allocation differ. Use a complete per-vessel screening proxy without a guessed DWT or lifetime multiplier; score effects remain unquantified. Separate caller maintenance, port and operating fuel inputs remain unchanged. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."},
     {"confidence": 0.296117, "id": "bp-89fd719d2dd5c106", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "market for container, for collection of post-consumer waste plastic for recycling", "reference product": "container, for collection of post-consumer waste plastic for recycling", "unit": "unit"}, "target": {"location": "CH", "name": "Sorting plant for construction waste", "reference product": "Sorting plant for construction waste", "unit": "unit"}},
     {"confidence": 0.216117, "id": "bp-b934575ab0cd5a6f", "mapping_method": "heuristic_similarity", "source": {"location": "Europe without Switzerland", "name": "market for container, for collection of post-consumer waste plastic for recycling", "reference product": "container, for collection of post-consumer waste plastic for recycling", "unit": "unit"}, "target": {"location": "CH", "name": "Sorting plant for construction waste", "reference product": "Sorting plant for construction waste", "unit": "unit"}},
     {"confidence": 0.216117, "id": "bp-6cd4327b50a33c83", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for container, for collection of post-consumer waste plastic for recycling", "reference product": "container, for collection of post-consumer waste plastic for recycling", "unit": "unit"}, "target": {"location": "CH", "name": "Sorting plant for construction waste", "reference product": "Sorting plant for construction waste", "unit": "unit"}},
@@ -818784,7 +819231,7 @@
     {"confidence": 0.843226, "id": "bp-592c05c4c44030cf", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, bicycle", "reference product": "maintenance, bicycle", "unit": "unit"}, "target": {"location": "CH", "name": "Maintenance, bicycle", "reference product": "Maintenance, bicycle", "unit": "unit"}},
     {"confidence": 0.323144, "id": "bp-3c84dc774bbafc09", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, bulk carrier, for dry goods", "reference product": "maintenance, bulk carrier, for dry goods", "unit": "unit"}, "target": {"location": "RER", "name": "Maintenance, goods wagon", "reference product": "Maintenance, goods wagon", "unit": "unit"}},
     {"confidence": 0.828889, "id": "bp-63674b2ae4be71d6", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, bus", "reference product": "maintenance, bus", "unit": "unit"}, "target": {"location": "CH", "name": "Maintenance, bus", "reference product": "Maintenance, bus", "unit": "unit"}},
-    {"confidence": 0.327155, "id": "bp-5190369e8ee0e087", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, container ship", "reference product": "maintenance, container ship", "unit": "unit"}, "target": {"location": "RER", "name": "Maintenance, transoceanic freight ship", "reference product": "Maintenance, transoceanic freight ship", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-5190369e8ee0e087", "mapping_method": "reviewed_ships_312_native_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "reason": "Use complete native transoceanic-freight-ship maintenance per positive1unit for the single deterministic source1unit maintenance supplier. Native documents six repaintings over25years; retain that complete service once, without a guessed repainting, ship-size or lifetime factor. A separate one-input market helper is unnecessary. Source container-ship maintenance includes paint, steel, sand, diesel sandblasting, waste and painting/abrasive emissions. Native maintenance models paint and solvent emissions with different material and operating coverage. Those boundary, size, lifetime, geography, allocation, vintage and uncertainty differences are explicit whole-service screening limitations; score effects are unquantified. Do not add an arbitrary sandblasting or missing-material inventory, and keep separately listed caller fuel and emissions. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-9b5d65a4d1f4b9f5", "source": {"location": "GLO", "name": "market for maintenance, container ship", "reference product": "maintenance, container ship", "unit": "unit"}, "target": {"location": "RER", "name": "Maintenance, transoceanic freight ship", "reference product": "Maintenance, transoceanic freight ship", "unit": "unit"}, "technosphere_information_loss": "Use complete native transoceanic-freight-ship maintenance per positive1unit for the single deterministic source1unit maintenance supplier. Native documents six repaintings over25years; retain that complete service once, without a guessed repainting, ship-size or lifetime factor. A separate one-input market helper is unnecessary. Source container-ship maintenance includes paint, steel, sand, diesel sandblasting, waste and painting/abrasive emissions. Native maintenance models paint and solvent emissions with different material and operating coverage. Those boundary, size, lifetime, geography, allocation, vintage and uncertainty differences are explicit whole-service screening limitations; score effects are unquantified. Do not add an arbitrary sandblasting or missing-material inventory, and keep separately listed caller fuel and emissions. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."},
     {"confidence": 0.865, "id": "bp-29e672787f309f4e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, electric bicycle", "reference product": "maintenance, electric bicycle", "unit": "unit"}, "target": {"location": "CH", "name": "Maintenance, electric bicycle", "reference product": "Maintenance, electric bicycle", "unit": "unit"}},
     {"confidence": 0.885455, "id": "bp-e235ec08e7729377", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, electric scooter, without battery", "reference product": "maintenance, electric scooter, without battery", "unit": "unit"}, "target": {"location": "CH", "name": "Maintenance, electric scooter, without battery", "reference product": "Maintenance, electric scooter, without battery", "unit": "unit"}},
     {"confidence": 0.402549, "id": "bp-742a464d64cfb845", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for maintenance, ferry", "reference product": "maintenance, ferry", "unit": "unit"}, "target": {"location": "CH", "name": "Maintenance, bus", "reference product": "Maintenance, bus", "unit": "unit"}},
@@ -819879,7 +820326,7 @@
     {"confidence": 0.625, "id": "bp-e4bc68ac17f9f2e0", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for polyvinylidenchloride, granulate", "reference product": "polyvinylidenchloride, granulate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Polyvinylidenchloride, granulate, at plant", "reference product": "Polyvinylidenchloride, granulate, at plant", "unit": "kilogram"}},
     {"confidence": 0.26, "id": "bp-3e11dbba3332ecb2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for polyvinylidene fluoride", "reference product": "polyvinylidene fluoride", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Hydrogen fluoride, at plant", "reference product": "Hydrogen fluoride, at plant", "unit": "kilogram"}},
     {"confidence": 0.162786, "id": "bp-ea1b957f9b44c49b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for pomegranate", "reference product": "pomegranate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cobalt sulfate", "reference product": "Cobalt sulfate", "unit": "kilogram"}},
-    {"confidence": 0.806429, "id": "bp-ea131e9abe8941ab", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for port facilities", "reference product": "port facilities", "unit": "unit"}, "target": {"location": "RER", "name": "Port facilities", "reference product": "Port facilities", "unit": "unit"}},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-ea131e9abe8941ab", "mapping_method": "reviewed_ships_312_native_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "reason": "Use the complete native RER Port facilities inventory for both original port-construction producer shares, retaining each source quantity and supported statistics separately. Both source and native describe the construction/use/disposal boundary of one port with Rotterdam-based modelling; native documentation uses100years. Do not confuse the copied word airport in native free text with the actual port inventory and supplier topology. Native whole-port model replaces the source regional producer inventories. Civil materials, maintenance, excavation/disposal, land occupation, infrastructure scale, regional supplies, vintage, allocation and internal uncertainty differ. Preserve the caller per-port-unit demand without invented capacity, utilisation or lifetime scaling. Do not add a second port construction, disposal or land inventory; score effects remain unquantified. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-ea24d49daec8acbd", "source": {"location": "GLO", "name": "market for port facilities", "reference product": "port facilities", "unit": "unit"}, "target": {"recipe_ref": "ships-312-ea131e9abe8941ab-native-market"}, "technosphere_information_loss": "Use the complete native RER Port facilities inventory for both original port-construction producer shares, retaining each source quantity and supported statistics separately. Both source and native describe the construction/use/disposal boundary of one port with Rotterdam-based modelling; native documentation uses100years. Do not confuse the copied word airport in native free text with the actual port inventory and supplier topology. Native whole-port model replaces the source regional producer inventories. Civil materials, maintenance, excavation/disposal, land occupation, infrastructure scale, regional supplies, vintage, allocation and internal uncertainty differ. Preserve the caller per-port-unit demand without invented capacity, utilisation or lifetime scaling. Do not add a second port construction, disposal or land inventory; score effects remain unquantified. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."},
     {"confidence": 0.413235, "id": "bp-81970d02813591de", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for portachrom", "reference product": "portachrom", "unit": "kilogram"}, "target": {"location": "RER", "name": "Portachrom, at plant", "reference product": "Portachrom, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-39c96c652df31373", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for portafer", "reference product": "portafer", "unit": "kilogram"}, "target": {"location": "RER", "name": "Portafer, at plant", "reference product": "Portafer, at plant", "unit": "kilogram"}},
     {"confidence": 0.178901, "id": "bp-2518bea49384c93f", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for potash salt", "reference product": "potash salt", "unit": "kilogram"}, "target": {"location": "RER", "name": "Wood preservative, organic salt, Cr-free, at plant", "reference product": "Wood preservative, organic salt, Cr-free, at plant", "unit": "kilogram"}},
@@ -822245,7 +822692,7 @@
     {"confidence": 0.606333, "id": "bp-0afd036ac989a079", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for urea formaldehyde resin", "reference product": "urea formaldehyde resin", "unit": "kilogram"}, "target": {"location": "RER", "name": "Urea formaldehyde resin, at plant", "reference product": "Urea formaldehyde resin, at plant", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-e8a6f50948a350f7", "mapping_method": "curated_legacy", "source": {"location": "GLO", "name": "market for urea, as N", "reference product": "urea, as N", "unit": "kilogram"}, "target": {"location": "RER", "name": "Urea, as N, at regional storehouse", "reference product": "Urea, as N, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.200755, "conversion_factor": -1, "id": "bp-a3bd17e8d0663991", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-a3bd17e8d0663991"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "GLO", "name": "market for used IT accessory", "reference product": "used IT accessory", "unit": "kilogram"}, "target": {"location": "GLO", "name": "xx Al fraction, mechanical treatment, IT accessoires, at plant", "reference product": "xx Al fraction, mechanical treatment, IT accessoires, at plant", "unit": "kilogram"}},
-    {"confidence": 0.453863, "conversion_factor": -1, "id": "bp-11eb77f35655db2a", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-11eb77f35655db2a"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-6d5e9aa74d0c6cf5", "source": {"location": "GLO", "name": "market for used Li-ion battery", "reference product": "used Li-ion battery", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Disposal, Li-ions batteries, mixed technology", "reference product": "Disposal, Li-ions batteries, mixed technology", "unit": "kilogram"}, "technosphere_information_loss": "Approved 50% hydrometallurgical / 50% pyrometallurgical screening proxy: the UVEK mix omits the four source-market freight inputs. Additional market-level transport burdens are not represented. Recovery, allocation, background and consequential credits may differ; LCIA equivalence is not established."},
+    {"classification": "proxy", "confidence": 1.0, "conversion_factor": -1, "id": "bp-11eb77f35655db2a", "mapping_method": "reviewed_ships_312_native_boundaries", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "profiles": [{"conversion_factor": -1, "review": {"evidence": ["brightpath/data/export/uvek_ships_312_remaining_review.json"], "reason": "Correct the treatment convention exactly once: source used-Li-ion-battery market references negative1kg; the helper supplies positive1kg treatment. Apply caller factor−1 without absolute values. Preserve the source50:50 pyro/hydrometallurgical mix using the corresponding complete native processes at positive0.5kg each, and retain all four positive final transport quantities. Negative source treatment-provider entries represent receiving waste, not avoided disposal. Genuine signed caller credits remain signed. Native pyro/hydrometallurgical service inventories and allocation replace source3.12 recovery models. Lithium/cobalt/nickel recovery, recovered-product quality and credits, slag treatment, emissions, energy, geography, vintage and internal uncertainty can differ; score effects are unquantified. Retain all native internal recovery/allocation exchanges as recorded. Add no independent recovered-metal credit, virgin-metal substitution, extra collection operation or omission. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected source3.12cutoff profile is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-c5e7ccf410157d74", "source": {"location": "GLO", "name": "market for used Li-ion battery", "reference product": "used Li-ion battery", "unit": "kilogram"}, "target": {"recipe_ref": "ships-312-11eb77f35655db2a-native-market"}, "technosphere_information_loss": "Correct the treatment convention exactly once: source used-Li-ion-battery market references negative1kg; the helper supplies positive1kg treatment. Apply caller factor−1 without absolute values. Preserve the source50:50 pyro/hydrometallurgical mix using the corresponding complete native processes at positive0.5kg each, and retain all four positive final transport quantities. Negative source treatment-provider entries represent receiving waste, not avoided disposal. Genuine signed caller credits remain signed. Native pyro/hydrometallurgical service inventories and allocation replace source3.12 recovery models. Lithium/cobalt/nickel recovery, recovered-product quality and credits, slag treatment, emissions, energy, geography, vintage and internal uncertainty can differ; score effects are unquantified. Retain all native internal recovery/allocation exchanges as recorded. Add no independent recovered-metal credit, virgin-metal substitution, extra collection operation or omission. Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed. Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."},
     {"confidence": 0.287685, "conversion_factor": -1, "id": "bp-0999433aa42e0a46", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-0999433aa42e0a46"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "review_ref": "r-11af8026a9ccd3d0", "source": {"location": "GLO", "name": "market for used Ni-metal hydride battery", "reference product": "used Ni-metal hydride battery", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Disposal, NiMH batteries", "reference product": "Disposal, NiMH batteries", "unit": "kilogram"}, "technosphere_information_loss": "Approved 100% pyrometallurgical NiMH market proxy: the UVEK disposal service omits the four source-market freight inputs. Additional market-level transport burdens are not represented. Recovery, allocation, background and consequential credits may differ; LCIA equivalence is not established."},
     {"confidence": 0.519166, "conversion_factor": -1, "id": "bp-ae85c0c787996a7d", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-ae85c0c787996a7d"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "CH", "name": "market for used air distribution terminal panel steel, 120 m3/h", "reference product": "used air distribution terminal panel steel, 120 m3/h", "unit": "unit"}, "target": {"location": "CH", "name": "Disposal, air distribution housing, steel, 120 m3/h", "reference product": "Disposal, air distribution housing, steel, 120 m3/h", "unit": "unit"}},
     {"confidence": 0.439166, "conversion_factor": -1, "id": "bp-adc03ef70d2375a0", "mapping_method": "heuristic_similarity", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-adc03ef70d2375a0"], "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.", "source_sign": -1, "status": "verified", "target_sign": 1}, "source": {"location": "RoW", "name": "market for used air distribution terminal panel steel, 120 m3/h", "reference product": "used air distribution terminal panel steel, 120 m3/h", "unit": "unit"}, "target": {"location": "CH", "name": "Disposal, air distribution housing, steel, 120 m3/h", "reference product": "Disposal, air distribution housing, steel, 120 m3/h", "unit": "unit"}},
@@ -836078,6 +836525,18 @@
       ],
       "rationale": "Auto-approved on 2026-11-05 under the similar unvalidated nutritional-basis omission authorization: omit the external buttermilk, from cow milk to generic market for protein feed / protein feed, 100% crude / GLO / kilogram reference only in its enumerated inspected profiles and continue conversion with a warning. This reference represents 100%-crude-protein feed in kg, not an unscaled kilogram of crop, oil or unspecified protein concentrate. No validated nutritional conversion establishes equivalence with the former Protein peas IP, at feed mill / CH provider. Its nutritional supply contributions and any associated substitution credits are excluded from the target dataset; score effects are method-dependent and unquantified. The complete original exchange remains in the loss report. Production, matching foreground suppliers and other foreground inputs/emissions are preserved."
     },
+    "r-2983ea6777c351fd": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "limitations": [
+        "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NCA. Both inspected native releases lack a complete NCA pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice.",
+        "The NCA cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries.",
+        "Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed.",
+        "Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."
+      ],
+      "rationale": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NCA. Both inspected native releases lack a complete NCA pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice."
+    },
     "r-29850a7a108ef83c": {
       "evidence": [
         "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-7869e2bbbd825379",
@@ -836157,6 +836616,18 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of bottom ash, MSWI[F]-WWT, WW from PV cell production, slag compartment / CH / kg external exchange with a warning. All inspected direct service comments for PV cell production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-2bfdb15349e42ee4": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "limitations": [
+        "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC811. Both inspected native releases lack a complete NMC811 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice.",
+        "The NMC811 cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries.",
+        "Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed.",
+        "Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."
+      ],
+      "rationale": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC811. Both inspected native releases lack a complete NMC811 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice."
     },
     "r-2d1394c343ce25d1": {
       "evidence": [
@@ -838981,16 +839452,6 @@
       ],
       "rationale": "Complete PET market-group composition at original geographic shares. These groups contain markets only: preserve every regional child and its complete reviewed treatment/freight graph, including the separately approved nine Swiss FLUWA-profile proxies with all ash/recovery/emission/allocation warnings and no added credit. Group profiles add no transport, loss, treatment, energy, material-recovery or allocation operation. Do not flatten to fleece production, a generic incinerator or an average waste service; do not renormalize or round shares. Source parent and children each reference -1kg; each original negative child input becomes positive demand for its +1kg reviewed helper. Preserve all caller signs, uncertainty, bounds, formulas, metadata, foreground suppliers, production and separate emissions/transport. Retain the nested Europe-without-Switzerland group and the original Swiss share in RER. Existing child geographic/technology/biosphere coverage limitations remain independent; native physical gaps retain existing default refusal or explicit permissive manual-mapping warnings. Score/export all returned helpers. Internal source uncertainty/parameter formulas are not reconstructed. No new physical proxy, omitted exchange, FAE material scope, recovery credit, energy/mineral allocation, patch inheritance, consequential route or inverse treatment correspondence is approved. Only eighteen enumerated exact cut-off group profiles apply."
     },
-    "r-6d5e9aa74d0c6cf5": {
-      "evidence": [
-        "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-11eb77f35655db2a",
-        "Inspected ecoinvent market 809a4e0018b2e9537c1e60908266285d and UVEK bafu-523176: GLO, kilogram, reference production -1/+1, 50% hydro / 50% pyro. The same treatment shares and four freight supplier functions were inspected in all 14 source profiles."
-      ],
-      "limitations": [
-        "Approved 50% hydrometallurgical / 50% pyrometallurgical screening proxy: the UVEK mix omits the four source-market freight inputs. Additional market-level transport burdens are not represented. Recovery, allocation, background and consequential credits may differ; LCIA equivalence is not established."
-      ],
-      "rationale": "Approved on 2026-11-04: replace the anode-manufacturing proxy for the GLO, kilogram used-Li-ion-battery market with the inspected UVEK 50% hydrometallurgical / 50% pyrometallurgical treatment mix, with factor -1. The additional source-market freight inputs are explicitly omitted."
-    },
     "r-6d73aa44d3e79a08": {
       "evidence": [
         "Exact approved source/prior-target/profile whitelist in brightpath/data/export/uvek_feed_nutrient_omission_review.json: 95 normalized nutrient identities, 692 inspected positive-reference source/profile pairs, 45 gross-energy MJ references and 50 100%-crude-protein kg references. Existing heuristic factors are all 1 and do not document nutritional equivalence. Prior targets supply thermal/fuel energy, crop mass, crude oil or an unspecified protein concentrate, not a validated generic nutritional market.",
@@ -840064,6 +840525,18 @@
       ],
       "rationale": "Approved on 2026-11-05: represent the exact CH, kilogram waste-packaging paper municipal incineration reference with its inspected CH UVEK disposal service. Apply factor +1 only in ecoinvent 3.9 cut-off and factor -1 only in the inspected consequential profiles. Source-profile signs are selected independently; no global sign or missing-profile fallback is approved."
     },
+    "r-85ebdd748f9d6d8e": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "limitations": [
+        "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC622. Both inspected native releases lack a complete NMC622 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice.",
+        "The NMC622 cathode is not chemically equivalent to NMC111. NMC622 and NMC811 have different Ni:Mn:Co ratios from1:1:1; NCA uses nickel-cobalt-aluminium oxide rather than nickel-manganese-cobalt oxide. Source Winjobi/Dai pack designs and regional production are replaced by the complete native Dai/Crenna NMC111 design. Metal demand, cell fraction, manufacturing energy, allocation, geography, vintage, internal uncertainty and environmental scores differ; effects are unquantified. No cathode-metal correction, capacity, kWh/kg, lifetime or performance multiplier is inferred. Do not change IAM technology aliases to merge these chemistries.",
+        "Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed.",
+        "Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."
+      ],
+      "rationale": "Use a complete native NMC111 prismatic rechargeable Li-ion pack per signed kg as a background screening proxy for source NMC622. Both inspected native releases lack a complete NMC622 pack. Native NMC622 exists as a cell only and cannot replace a complete pack. Preserve both source producer entries separately and all four final deliveries. Do not add cells, BMS, cooling, module packaging, casing or infrastructure twice."
+    },
     "r-868f64b095f0911d": {
       "evidence": [
         "brightpath/data/export/uvek_heat_38_corrections_review.json"
@@ -840896,6 +841369,18 @@
         "Only the exact ecoinvent3.9cutoff RoW scrap-aluminium and scrap-copper markets: preserve their sole ordinary-incineration demand and all eight original collection entries each, retaining amounts, normal/lognormal uncertainty, bounds, pedigree and exchange order. Both source market/treatment references are-1kg; callers map at factor-1 to positive one-kg helpers and the negative treatment coefficient independently becomes positive complete native treatment. Reuse the standing same-waste/unit ordinary-MSWI whole-function screening correspondence and documented-composition rule: all42 wet-composition coordinates, including unknowns, match each specific native0%-water metal incinerator. Native documentation also matches source recovery308.48gAl or310gCu perkg; source recovered-stock links point only to positive production-only RecycledContentcutoff handovers. Preserve that burden-free boundary without inventing avoided-primary-production credits, charged remelting or separate empty-stock demand; do not replace any nonempty recovery supplier. The complete native treatment retains its own residue disposal, operations, internal energy and infrastructure once. Historical geography, background supplier mixes, slag/emission accounting, allocation, internal uncertainty, native upstream biosphere exclusions and vintage differences remain explicit warnings with unquantified score effects; full inventory or LCIA equivalence is not established. Preserve source market collection separately from native treatment-internal residue transport. Complete generic RER rail and heavy-road services follow the existing exact whole-freight witnesses, not coal-only CN rail or diesel-only US rail; retain all individual entries and their original signed tkm, without aggregation, normalization, traction/distance/payload factors or duplicate vehicle infrastructure. Restore the original freight uncertainty missing from the earlier aluminium composition. The existing aluminium default target and every non3.9profile entry and recipe remain unchanged. No SwissFAE correspondence, fly-ash extraction, new recovery technology, moisture/density factor, standalone scrap recovery/freight approval, reverse or cross-model route is admitted. Preserve caller signed quantities, uncertainty, formulas, ownership, separate emissions and purchases. Only the two inspected3.9cutoff profiles receive new Premise approvals; old aluminium raw-profile availability does not admit unapproved CLIC scopes."
       ],
       "rationale": "Only the exact ecoinvent3.9cutoff RoW scrap-aluminium and scrap-copper markets: preserve their sole ordinary-incineration demand and all eight original collection entries each, retaining amounts, normal/lognormal uncertainty, bounds, pedigree and exchange order. Both source market/treatment references are-1kg; callers map at factor-1 to positive one-kg helpers and the negative treatment coefficient independently becomes positive complete native treatment. Reuse the standing same-waste/unit ordinary-MSWI whole-function screening correspondence and documented-composition rule: all42 wet-composition coordinates, including unknowns, match each specific native0%-water metal incinerator. Native documentation also matches source recovery308.48gAl or310gCu perkg; source recovered-stock links point only to positive production-only RecycledContentcutoff handovers. Preserve that burden-free boundary without inventing avoided-primary-production credits, charged remelting or separate empty-stock demand; do not replace any nonempty recovery supplier. The complete native treatment retains its own residue disposal, operations, internal energy and infrastructure once. Historical geography, background supplier mixes, slag/emission accounting, allocation, internal uncertainty, native upstream biosphere exclusions and vintage differences remain explicit warnings with unquantified score effects; full inventory or LCIA equivalence is not established. Preserve source market collection separately from native treatment-internal residue transport. Complete generic RER rail and heavy-road services follow the existing exact whole-freight witnesses, not coal-only CN rail or diesel-only US rail; retain all individual entries and their original signed tkm, without aggregation, normalization, traction/distance/payload factors or duplicate vehicle infrastructure. Restore the original freight uncertainty missing from the earlier aluminium composition. The existing aluminium default target and every non3.9profile entry and recipe remain unchanged. No SwissFAE correspondence, fly-ash extraction, new recovery technology, moisture/density factor, standalone scrap recovery/freight approval, reverse or cross-model route is admitted. Preserve caller signed quantities, uncertainty, formulas, ownership, separate emissions and purchases. Only the two inspected3.9cutoff profiles receive new Premise approvals; old aluminium raw-profile availability does not admit unapproved CLIC scopes."
+    },
+    "r-9b5d65a4d1f4b9f5": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "limitations": [
+        "Use complete native transoceanic-freight-ship maintenance per positive1unit for the single deterministic source1unit maintenance supplier. Native documents six repaintings over25years; retain that complete service once, without a guessed repainting, ship-size or lifetime factor. A separate one-input market helper is unnecessary.",
+        "Source container-ship maintenance includes paint, steel, sand, diesel sandblasting, waste and painting/abrasive emissions. Native maintenance models paint and solvent emissions with different material and operating coverage. Those boundary, size, lifetime, geography, allocation, vintage and uncertainty differences are explicit whole-service screening limitations; score effects are unquantified. Do not add an arbitrary sandblasting or missing-material inventory, and keep separately listed caller fuel and emissions.",
+        "Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed.",
+        "Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."
+      ],
+      "rationale": "Use complete native transoceanic-freight-ship maintenance per positive1unit for the single deterministic source1unit maintenance supplier. Native documents six repaintings over25years; retain that complete service once, without a guessed repainting, ship-size or lifetime factor. A separate one-input market helper is unnecessary."
     },
     "r-9bb7ae5715d56848": {
       "evidence": [
@@ -842089,6 +842574,18 @@
       ],
       "rationale": "Only independently inspected ecoinvent 3.9 cut-off liquid-argon producer and market identities are newly reviewed. Source and native references are positive one kg liquid argon, factor +1. Preserve caller signed kg, supported uncertainty/formulas, foreground ownership and separate emissions. No gas-volume/density, normal-condition, purity or cryogenic-loss multiplier. Source product boilerplate about normal conditions does not redefine this explicit liquid-production mass basis. Other releases, patches, system models and inverse routes need independent review. Same compound CAS007440-37-1 and catalytic hydrogen purification of crude liquid argon. Both source producers and native process use 1.03 kg crude liquid argon, 0.004 kg liquid hydrogen, 0.0464 kWh electricity and 2e-10 air-separation-plant units per kg product. Source RoW splits electricity among six regional suppliers; native uses complete ENTSO-E supply. Retain the complete native producer, including its upstream cryogenic air separation/allocation, hydrogen, energy and infrastructure, without adding another purification plant, electricity, 3% loss or emissions correction. Source producer describes 99.999% purity and neglected small waste-gas releases. Native exact purity is not established; native literature/process/infrastructure uncertainty remains. Both source producer inventories have no direct biosphere exchanges, whereas native2026 adds 0.167 MJ waste heat. Keep native complete inventory with explicit electricity geography, raw-material/allocation, purity, emissions, vintage and internal-uncertainty warnings. Matching nominal core inputs is not source/native LCI, LCIA or stochastic equivalence; score effects remain unquantified. Market wrappers retain original product supply and final delivery separately, without renormalization. Complete native RER generic rail and heavy-lorry fleet are same-mode geographic/traction/fleet proxies. Generic rail is not coal-specific transport; historical steam/electric/diesel traction, gauge, loading, fleet, fuel and age differ. No extra distances, payload/capacity corrections, vehicles or infrastructure. Source delivery is outside native at-plant supply and is retained once. Other previously frozen industrial inventories are not silently re-expanded. No new source omissions, recovery credits, biosphere proxy, runtime Python module, alternative sector engine or validation bypass. Two market helpers represent actual final-delivery boundaries; the native producer remains shared and unchanged. Existing European market approval is explicitly superseded by this retained-delivery review, with the old operation and matching source/native witnesses recorded. All other approval operations remain unchanged. This RER market retains 2 original freight entries and one kg product. The RER wrapper keeps 0.0044 rail and 0.0171 road tkm; RoW keeps its five rail and three road country entries independently. These are actual source coefficients, not updated transport estimates."
     },
+    "r-bd5245d7524cdfe6": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "limitations": [
+        "Replace the physically wrong ship-wrecking heuristic with the complete native Transoceanic freight ship manufacturing process per positive1unit. The source market has exactly one deterministic1unit container-ship producer and no final transport or losses, so a redundant market helper is unnecessary. Native documentation identifies container-ship technology, material production, manufacturing energy, material freight and non-metal component disposal. Do not add a separate wrecking process or use a wrecking service as ship production.",
+        "Source documentation reports conflicting43000/59600t load capacities; native manufacturing represents51500t. Ship size, design, material quantities, manufacturing energy, geography, end-of-life coverage, age and allocation differ. Use a complete per-vessel screening proxy without a guessed DWT or lifetime multiplier; score effects remain unquantified. Separate caller maintenance, port and operating fuel inputs remain unchanged.",
+        "Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed.",
+        "Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."
+      ],
+      "rationale": "Replace the physically wrong ship-wrecking heuristic with the complete native Transoceanic freight ship manufacturing process per positive1unit. The source market has exactly one deterministic1unit container-ship producer and no final transport or losses, so a redundant market helper is unnecessary. Native documentation identifies container-ship technology, material production, manufacturing energy, material freight and non-metal component disposal. Do not add a separate wrecking process or use a wrecking service as ship production."
+    },
     "r-be083d1cbca81e98": {
       "evidence": [
         "brightpath/data/export/uvek_mining_38_high_slag_review.json"
@@ -842467,6 +842964,18 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of bottom ash, MSWI-WWT, WW from polyester recycling, slag compartment / CN-ZJ / kg external exchange with a warning. All inspected direct service comments for polyester recycling document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-c5e7ccf410157d74": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "limitations": [
+        "Correct the treatment convention exactly once: source used-Li-ion-battery market references negative1kg; the helper supplies positive1kg treatment. Apply caller factor−1 without absolute values. Preserve the source50:50 pyro/hydrometallurgical mix using the corresponding complete native processes at positive0.5kg each, and retain all four positive final transport quantities. Negative source treatment-provider entries represent receiving waste, not avoided disposal. Genuine signed caller credits remain signed.",
+        "Native pyro/hydrometallurgical service inventories and allocation replace source3.12 recovery models. Lithium/cobalt/nickel recovery, recovered-product quality and credits, slag treatment, emissions, energy, geography, vintage and internal uncertainty can differ; score effects are unquantified. Retain all native internal recovery/allocation exchanges as recorded. Add no independent recovered-metal credit, virgin-metal substitution, extra collection operation or omission.",
+        "Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed.",
+        "Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."
+      ],
+      "rationale": "Correct the treatment convention exactly once: source used-Li-ion-battery market references negative1kg; the helper supplies positive1kg treatment. Apply caller factor−1 without absolute values. Preserve the source50:50 pyro/hydrometallurgical mix using the corresponding complete native processes at positive0.5kg each, and retain all four positive final transport quantities. Negative source treatment-provider entries represent receiving waste, not avoided disposal. Genuine signed caller credits remain signed."
     },
     "r-c63b52d4b95a44e0": {
       "evidence": [
@@ -843880,6 +844389,18 @@
         "Geographic proxy."
       ],
       "rationale": "Branch has stronger reference-product token coverage under the same normalization, without losing a checked process distinction."
+    },
+    "r-ea24d49daec8acbd": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_312_remaining_review.json"
+      ],
+      "limitations": [
+        "Use the complete native RER Port facilities inventory for both original port-construction producer shares, retaining each source quantity and supported statistics separately. Both source and native describe the construction/use/disposal boundary of one port with Rotterdam-based modelling; native documentation uses100years. Do not confuse the copied word airport in native free text with the actual port inventory and supplier topology.",
+        "Native whole-port model replaces the source regional producer inventories. Civil materials, maintenance, excavation/disposal, land occupation, infrastructure scale, regional supplies, vintage, allocation and internal uncertainty differ. Preserve the caller per-port-unit demand without invented capacity, utilisation or lifetime scaling. Do not add a second port construction, disposal or land inventory; score effects remain unquantified.",
+        "Approve only the exact inspected ecoinvent3.12cutoff source through the existing native UVEK2025-to2026 route. Preserve signed caller amounts, formulas, supported uncertainty and separate emissions. No inverse, cross-system-model or uninspected source-release permission is inferred. No physical exchange is omitted and no LCIA equivalence is claimed.",
+        "Keep complete native supplier inventories and internal freight. Retain original final-market delivery entries separately through whole native modal freight per signed tonne-km, without distance, payload, loading or infrastructure multipliers. Geography, fleet, cargo allocation, traction, fuel, emissions, vintage and internal uncertainty are screening differences with unquantified score effects."
+      ],
+      "rationale": "Use the complete native RER Port facilities inventory for both original port-construction producer shares, retaining each source quantity and supported statistics separately. Both source and native describe the construction/use/disposal boundary of one port with Rotterdam-based modelling; native documentation uses100years. Do not confuse the copied word airport in native free text with the actual port inventory and supplier topology."
     },
     "r-ea3fce983341ad23": {
       "evidence": [
