@@ -121,6 +121,29 @@ def test_ethanol_preserves_eleven_entries_and_country_specific_suppliers():
 
 def test_frozen_replay_is_idempotent_and_rejects_changed_parent():
     resource = deepcopy(load_uvek_technosphere_resource())
+    later = json.loads((DATA_DIR / "export/uvek_ships_38_remaining_review.json").read_text())
+    extension = next(r for r in later["records"] if r["rule_id"] == "bp-dbd744f486420f56")
+    parent = next(r for r in resource["replace"] if r["id"] == extension["rule_id"])
+    assert parent == extension["compiled_rule"]
+    # This earlier authoring stage must reject the later, independently reviewed
+    # 3.8 extension. Replay it on its actual preceding rule, not the final overlay.
+    with pytest.raises(ValueError, match="parent"):
+        apply_fuels_39_final_markets_review(resource)
+    # Acid is also one of this stage's frozen utility bindings. Restore the
+    # complete later overlay to its recorded predecessor for chronological replay.
+    for row in later["records"]:
+        current = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+        assert current == row["compiled_rule"]
+        current.clear()
+        current.update(deepcopy(row["original_rule"]))
+    # The subsequent pulp-heat correction also refined the frozen CN rail
+    # binding; its current approval stays intact outside this earlier-stage fixture.
+    rail_review = json.loads((DATA_DIR / "export/uvek_pulp_heat_so2_sulfite_review.json").read_text())
+    rail = next(r for r in rail_review["records"] if r["rule_id"] == "bp-46ffc4892be8fcb1")
+    current = next(r for r in resource["replace"] if r["id"] == rail["rule_id"])
+    assert current == rail["compiled_rule"]
+    current.clear()
+    current.update(deepcopy(rail["original_rule"]))
     apply_fuels_39_final_markets_review(resource)
     once = deepcopy(resource)
     apply_fuels_39_final_markets_review(resource)
