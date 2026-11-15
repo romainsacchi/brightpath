@@ -52,7 +52,6 @@ from scripts.review_uvek_reference_signs import (
     CONCRETE_GRADE_SOURCE,
     GENERIC_WASTEWATER_TARGET,
     LI_ION_MARKET_SOURCE,
-    LI_ION_MARKET_TARGET,
     NIMH_MARKET_SOURCE,
     NIMH_SOURCE,
     NIMH_TARGET,
@@ -708,7 +707,6 @@ def test_changed_coal_tar_observations_require_reapproval():
     [
         (BATTERY_SOURCE, BATTERY_TARGET),
         (PYRO_BATTERY_SOURCE, PYRO_BATTERY_TARGET),
-        (LI_ION_MARKET_SOURCE, LI_ION_MARKET_TARGET),
         (NIMH_SOURCE, NIMH_TARGET),
         (NIMH_MARKET_SOURCE, NIMH_TARGET),
     ],
@@ -742,6 +740,53 @@ def test_approved_battery_treatment_converts_waste_and_avoided_treatment_consist
         assert "transport burdens are not represented" in warnings[0].message
     else:
         assert "100%" in warnings[0].message
+    assert inventory.data == data == before
+
+
+@pytest.mark.parametrize("version", ["3.6", "3.7", "3.8", "3.9", "3.10", "3.11", "3.12"])
+@pytest.mark.parametrize("amount", [-10, 10])
+@pytest.mark.parametrize("uncertainty", [2, 3])
+def test_used_li_ion_market_keeps_exact_reviewed_profile_treatment_mix_and_delivery(version, amount, uncertainty):
+    data = consumer(dict(zip(FIELDS, LI_ION_MARKET_SOURCE, strict=True)), amount, uncertainty)
+    before = deepcopy(data)
+    inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
+    if version != "3.12":
+        with pytest.raises(MigrationError) as caught:
+            inventory.migrate_background(contexts("uvek", "2025").background, policy=MigrationPolicy.permissive())
+        assert "migration.reference_flow_sign_unresolved" in {issue.code for issue in caught.value.report.issues}
+        assert inventory.data == data == before
+        return
+    converted = inventory.migrate_background(contexts("uvek", "2025").background, policy=MigrationPolicy.permissive())
+    exchange = converted.data[0]["exchanges"][1]
+    assert exchange["amount"] == -amount
+    assert exchange["formula"] == "(dose) * (-1.0)"
+    assert exchange["scale"] == 0.2
+    if uncertainty == 2:
+        assert exchange["negative"] is (amount > 0)
+        assert exchange["loc"] == pytest.approx(math.log(abs(amount)))
+    else:
+        assert exchange["loc"] == -amount
+        assert exchange["minimum"] == -amount - 1
+        assert exchange["maximum"] == -amount + 1
+    helpers = [a for a in converted.data[1:] if a["name"] == exchange["name"]]
+    assert len(helpers) == 1
+    helper = helpers[0]
+    production = [e for e in helper["exchanges"] if e["type"] == "production"]
+    assert len(production) == 1 and production[0]["amount"] == 1
+    inputs = [e for e in helper["exchanges"] if e["type"] == "technosphere"]
+    assert len(inputs) == 6
+    actual = {e["name"]: e["amount"] for e in inputs}
+    assert actual == {
+        "Disposal, Li-ions batteries, pyrometallurgical": 0.5,
+        "Disposal, Li-ions batteries, hydrometallurgical": 0.5,
+        "Transport, barge": 0.0199,
+        "Transport, freight, lorry, fleet average": 0.1932,
+        "Transport, transoceanic container ship": 0.2115,
+        "Transport, freight, rail": 0.112,
+    }
+    assert any(
+        issue.code == "migration.technosphere_information_loss" for issue in converted.last_migration_report.issues
+    )
     assert inventory.data == data == before
 
 

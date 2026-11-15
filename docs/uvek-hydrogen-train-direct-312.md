@@ -22,6 +22,15 @@ a stale direct-destination count (expected 4,024, actual 4,027). Representative
 old-release and source-3.12 battery cases plus the destination-count test also
 fail when loading the unchanged preceding published resource, commit
 `a945340170a4314aabfee9497dee4c1cb0193ecd`. Only the two unrelated supplier
-rules changed in this review. These outstanding regression expectations must
-be reconciled separately; this document does not report the broad suite as
-passing. The new replay/idempotence/non-mutation tests and manifest checks pass.
+rules changed in this review. The new replay/idempotence/non-mutation tests and
+manifest checks passed in that initial run.
+
+A separate test-maintenance change now checks the actually reviewed used-battery
+market: older releases explicitly refuse an unreviewed sign decision; source
+3.12 preserves its half-pyrometallurgical/half-hydrometallurgical treatment mix,
+four delivery entries and signed uncertainty. No production mapping was changed
+to satisfy the older test. The destination count is aligned with the already
+published resource. The same complete selected group now passes **746 tests**.
+Clean maintainer regeneration also reproduces all three active forward
+resources byte for byte; redundant private generated copies were removed after
+recording their hashes.
