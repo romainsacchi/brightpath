@@ -1,19 +1,19 @@
 """Nitrate material markets retain producer shares, delivery and reference bases."""
 
-from collections import Counter
-from copy import deepcopy
 import hashlib
 import json
+from collections import Counter
+from copy import deepcopy
 
 import pytest
+from test_uvek_reference_signs import consumer, contexts
+from test_uvek_refrigerant_disposal import target_context
 
-from brightpath import BrightwayInventory, DATA_DIR
+from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_nitrate_goods import apply_pilot_nitrate_goods_review
-from test_uvek_reference_signs import consumer, contexts
-from test_uvek_refrigerant_disposal import target_context
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_goods_review.json").read_text())
 ROWS = REVIEW["records"] + REVIEW["direct_records"]
@@ -91,8 +91,50 @@ def test_material_compositions_refuse_uninspected_releases(version, row):
     assert inventory.data == before
 
 
-def test_composition_authoring_is_atomic_and_idempotent():
+def goods_stage_resource():
+    """Restore frozen parents superseded by independently reviewed later stages."""
     resource = deepcopy(load_uvek_technosphere_resource())
+    later = json.loads((DATA_DIR / "export/uvek_metals_38_operating_services_review.json").read_text())
+    indexed = {r["id"]: r for r in resource["replace"]}
+    with pytest.raises(ValueError, match="generator basis changed"):
+        apply_pilot_nitrate_goods_review(resource)
+    for overlay in later["records"]:
+        rule = indexed[overlay["rule_id"]]
+        assert rule == overlay["compiled_rule"]
+        if overlay["kind"] == "burned_diesel_generator_service":
+            digest = hashlib.sha256(json.dumps(overlay["original_rule"], sort_keys=True).encode()).hexdigest()
+            assert digest == REVIEW["direct_records"][0]["raw_rule_sha256"]
+        rule.clear()
+        rule.update(deepcopy(overlay["original_rule"]))
+    for filename, rule_id in (
+        ("uvek_pulp_heat_so2_sulfite_review.json", "bp-46ffc4892be8fcb1"),
+        ("uvek_steel_39_product_corrections_review.json", "bp-8e691fdb86f7b1c6"),
+    ):
+        authority = json.loads((DATA_DIR / "export" / filename).read_text())
+        row = next(r for r in authority["records"] if r["rule_id"] == rule_id)
+        rule = indexed[rule_id]
+        assert rule == row["compiled_rule"]
+        rule.clear()
+        rule.update(deepcopy(row["original_rule"]))
+    resource["coverage"]["mapping_methods"] = dict(
+        sorted(Counter(r["mapping_method"] for r in resource["replace"]).items())
+    )
+    resource["coverage"]["mean_confidence"] = round(
+        sum(r["confidence"] for r in resource["replace"]) / len(resource["replace"]), 6
+    )
+    dispositions = Counter(
+        "recipe" if "recipe_ref" in r["target"] else r.get("classification", "unclassified")
+        for r in resource["replace"]
+    )
+    dispositions["omitted"] = len(resource["delete"])
+    if resource["coverage"].get("unresolved_identities"):
+        dispositions["unresolved"] = resource["coverage"]["unresolved_identities"]
+    resource["coverage"]["dispositions"] = dict(dispositions)
+    return resource
+
+
+def test_composition_authoring_is_atomic_and_idempotent():
+    resource = goods_stage_resource()
     expected = deepcopy(resource)
     byid = {r["id"]: r for r in resource["replace"]}
     for row in REVIEW["records"]:
@@ -106,7 +148,7 @@ def test_composition_authoring_is_atomic_and_idempotent():
 
 @pytest.mark.parametrize("change", ["last_parent", "delivery", "freight_rule", "generator"])
 def test_drift_refuses_before_mutating_any_market(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = goods_stage_resource()
     byid = {r["id"]: r for r in resource["replace"]}
     if change == "last_parent":
         byid[REVIEW["records"][-1]["rule_id"]]["source"]["unit"] = "unit"
