@@ -1623,6 +1623,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_metals_38_chemical_markets_review(technosphere)
     if __package__:
+        from scripts.review_uvek_hydrogen_train_direct_312 import apply_hydrogen_train_direct_312_review
+    else:
+        from review_uvek_hydrogen_train_direct_312 import apply_hydrogen_train_direct_312_review
+
+    apply_hydrogen_train_direct_312_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
