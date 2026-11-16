@@ -7,6 +7,7 @@ from dataclasses import replace
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import before_train_three_markets_312_review
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy, PolicyAction
@@ -120,7 +121,7 @@ def test_ethanol_preserves_eleven_entries_and_country_specific_suppliers():
 
 
 def test_frozen_replay_is_idempotent_and_rejects_changed_parent():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = before_train_three_markets_312_review(deepcopy(load_uvek_technosphere_resource()))
     later = json.loads((DATA_DIR / "export/uvek_ships_38_remaining_review.json").read_text())
     extension = next(r for r in later["records"] if r["rule_id"] == "bp-dbd744f486420f56")
     parent = next(r for r in resource["replace"] if r["id"] == extension["rule_id"])

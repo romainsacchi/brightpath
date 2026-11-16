@@ -32,3 +32,9 @@ migration cases continue to exercise the final resource. Older authoring-stage
 tests require their recorded predecessors; the hazardous-paint test now captures
 its actual normal-generator stage rather than reconstructing it from modern
 component bindings. No runtime Python is changed.
+
+The complete selected source-3.9 migration, new source-3.12 review, resource
+storage and manifest group now passes 142 tests. This includes positive coverage
+for the newly reviewed hazardous-waste version; other unreviewed versions still
+refuse conversion. The earlier-stage replay checks keep their original frozen
+component hashes rather than accepting today's different bindings.

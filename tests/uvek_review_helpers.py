@@ -23,6 +23,82 @@ def historical_forward_resource():
     return deepcopy(_historical_forward())
 
 
+@lru_cache(maxsize=1)
+def _hazardous_paint_authoring_stage():
+    """Capture the real generator stage instead of guessing later predecessors."""
+    from scripts import review_uvek_pilot_hazardous_paint as stage
+    from scripts.generate_uvek_migration_resources import build_resources
+
+    class StageCaptured(Exception):
+        pass
+
+    captured = {}
+
+    def capture(resource):
+        captured["resource"] = deepcopy(resource)
+        raise StageCaptured
+
+    root = Path(__file__).resolve().parents[1]
+    original = stage.apply_pilot_hazardous_paint_review
+    try:
+        stage.apply_pilot_hazardous_paint_review = capture
+        try:
+            build_resources(
+                root / "brightpath/data/export/reference_catalogs",
+                root / "brightpath/data/export/ecoinvent_to_uvek_mapping.csv",
+                root / "brightpath/data/export/uvek_conversion_factors.yaml",
+            )
+        except StageCaptured:
+            pass
+    finally:
+        stage.apply_pilot_hazardous_paint_review = original
+    if not captured:
+        raise AssertionError("The normal generator did not reach the hazardous-paint authoring stage.")
+    original(captured["resource"])
+    return captured["resource"]
+
+
+def hazardous_paint_authoring_stage_resource():
+    """Return the actually compiled historical stage for replay/drift tests."""
+    return deepcopy(_hazardous_paint_authoring_stage())
+
+
+def before_train_three_markets_312_review(resource):
+    """Restore frozen predecessors only for earlier authoring-stage tests."""
+    import json
+
+    from brightpath import DATA_DIR
+
+    review = json.loads((DATA_DIR / "export/uvek_hydrogen_train_three_markets_312_review.json").read_text())
+    pending = []
+    for row in review["records"]:
+        parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
+        if parent not in (row["original_rule"], row["compiled_rule"]):
+            raise ValueError("Later train-market parent changed; repeat review.")
+        pending.append((parent, row["original_rule"]))
+    for key, expected in review["recipes"].items():
+        if key in resource.get("recipes", {}) and resource["recipes"][key] != expected:
+            raise ValueError("Later train-market recipe changed; repeat review.")
+    for parent, original in pending:
+        parent.clear()
+        parent.update(deepcopy(original))
+    resource["reviews"].update(deepcopy(review["retired_reviews"]))
+    referenced = {
+        entry["review_ref"]
+        for op in ("replace", "disaggregate", "delete")
+        for rule in resource.get(op, ())
+        for entry in [rule, *rule.get("reference_flow_sign_review", {}).get("profiles", ())]
+        if "review_ref" in entry
+    }
+    for row in review["records"]:
+        key = row["compiled_rule"]["review_ref"]
+        if key not in referenced:
+            resource["reviews"].pop(key, None)
+    for key in review["recipes"]:
+        resource.get("recipes", {}).pop(key, None)
+    return resource
+
+
 def before_plastic_processing_39_review(resource):
     """Restore frozen parents for testing the earlier 3.12 authoring stage."""
     import json

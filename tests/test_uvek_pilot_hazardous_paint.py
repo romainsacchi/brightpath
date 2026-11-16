@@ -2,12 +2,12 @@
 
 import hashlib
 import json
-from collections import Counter
 from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import hazardous_paint_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -16,58 +16,6 @@ from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_hazardous_paint import apply_pilot_hazardous_paint_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_hazardous_paint_review.json").read_text())
-
-
-def hazardous_paint_authoring_stage_resource():
-    """Restore the two frozen heat bindings superseded later in generator order.
-
-    Actual migration tests use the final resource. This authoring-stage fixture
-    uses the exact earlier rules recorded by the later independently reviewed
-    heat corrections; it does not relax the earlier component fingerprint guard.
-    """
-    resource = deepcopy(load_uvek_technosphere_resource())
-    expected = {
-        tuple(b["source"]): b["binding_sha256"]
-        for row in REVIEW["records"]
-        for profile in row["profiles"]
-        for b in profile["bindings"]
-    }
-    fields = ("name", "reference product", "location", "unit")
-    restored = set()
-    for name, sha in [
-        ("uvek_pilot_ng_heat_market_review.json", "af702c55886c65cf6f3ef1341d0dbfd29088df2e166cecf41eee64adf060f170"),
-        (
-            "uvek_pilot_mixed_heat_market_review.json",
-            "f48a6fc0038e40bfad7c71d620281d0da77d4588f20422d7e5f82b0396019986",
-        ),
-    ]:
-        raw = (DATA_DIR / "export" / name).read_bytes()
-        assert hashlib.sha256(raw).hexdigest() == sha
-        for row in json.loads(raw)["records"]:
-            previous = row["previous_rule"]
-            key = tuple(previous["source"][f] for f in fields)
-            if previous["source"]["location"] != "RoW" or key not in expected:
-                continue
-            assert hashlib.sha256(json.dumps(previous, sort_keys=True).encode()).hexdigest() == expected[key]
-            index = next(i for i, rule in enumerate(resource["replace"]) if rule["id"] == previous["id"])
-            resource["replace"][index] = deepcopy(previous)
-            restored.add(key)
-    assert len(restored) == 2
-    resource["coverage"]["mapping_methods"] = dict(
-        sorted(Counter(r["mapping_method"] for r in resource["replace"]).items())
-    )
-    resource["coverage"]["mean_confidence"] = round(
-        sum(r["confidence"] for r in resource["replace"]) / len(resource["replace"]), 6
-    )
-    dispositions = Counter(
-        "recipe" if "recipe_ref" in r["target"] else r.get("classification", "unclassified")
-        for r in resource["replace"]
-    )
-    dispositions["omitted"] = len(resource["delete"])
-    if resource["coverage"].get("unresolved_identities"):
-        dispositions["unresolved"] = resource["coverage"]["unresolved_identities"]
-    resource["coverage"]["dispositions"] = dict(dispositions)
-    return resource
 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["source"]["location"])
@@ -145,11 +93,28 @@ def test_hazardous_paint_keeps_route_stages_and_signed_uncertainty(row, amount, 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["source"]["location"])
 @pytest.mark.parametrize("version", ["3.7", "3.12"])
-def test_hazardous_paint_refuses_uninspected_source_versions(row, version):
+def test_hazardous_paint_respects_exact_reviewed_source_versions(row, version):
     source = BrightwayInventory.from_data(consumer(row["source"], -1), context=contexts("ecoinvent", version))
     before = deepcopy(source.data)
-    with pytest.raises(MigrationError):
-        source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+    extension = json.loads((DATA_DIR / "export/uvek_hydrogen_train_three_markets_312_review.json").read_text())
+    reviewed = next((r for r in extension["records"] if r["source"] == row["source"]), None)
+    if version == "3.12" and reviewed is not None:
+        converted = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert converted.data[0]["exchanges"][1]["amount"] == 1
+        helper = next(
+            a
+            for a in converted.data[1:]
+            if a.get("brightpath_conversion", {}).get("recipe_id") == reviewed["recipe_id"]
+        )
+        inputs = [e for e in helper["exchanges"] if e["type"] == "technosphere"]
+        assert len(inputs) == 12
+        assert [e["amount"] for e in inputs if e["unit"] == "kilogram"] == [0.5, 0.5]
+        assert all(
+            e["name"].startswith("Disposal, hazardous waste, 25% water") for e in inputs if e["unit"] == "kilogram"
+        )
+    else:
+        with pytest.raises(MigrationError):
+            source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert source.data == before
 
 

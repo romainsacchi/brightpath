@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import before_train_three_markets_312_review
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -140,7 +141,7 @@ def test_titanium_routes_and_grade_limits_are_explicit_without_new_omissions():
 def test_review_replay_is_atomic_and_checks_exact_freight_dependencies(drift):
     from scripts.review_uvek_battery_chemicals_39 import apply_battery_chemicals_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = before_train_three_markets_312_review(deepcopy(load_uvek_technosphere_resource()))
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == ROWS[0]["rule_id"])["conversion_factor"] = 2
     elif drift == "dependency":
