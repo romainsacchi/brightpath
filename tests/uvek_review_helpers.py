@@ -63,13 +63,15 @@ def hazardous_paint_authoring_stage_resource():
     return deepcopy(_hazardous_paint_authoring_stage())
 
 
-def before_train_three_markets_312_review(resource):
+def before_train_three_markets_312_review(
+    resource, review_path="export/uvek_hydrogen_train_three_markets_312_review.json"
+):
     """Restore frozen predecessors only for earlier authoring-stage tests."""
     import json
 
     from brightpath import DATA_DIR
 
-    review = json.loads((DATA_DIR / "export/uvek_hydrogen_train_three_markets_312_review.json").read_text())
+    review = json.loads((DATA_DIR / review_path).read_text())
     pending = []
     for row in review["records"]:
         parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
