@@ -1677,6 +1677,12 @@ def apply_pilot_reviews(technosphere: dict) -> None:
 
     apply_passenger_car_310_review(technosphere)
     if __package__:
+        from scripts.review_uvek_passenger_car_37_corrections import apply_passenger_car_37_corrections_review
+    else:
+        from review_uvek_passenger_car_37_corrections import apply_passenger_car_37_corrections_review
+
+    apply_passenger_car_37_corrections_review(technosphere)
+    if __package__:
         from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     else:
         from archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
