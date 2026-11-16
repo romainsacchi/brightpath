@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -190,10 +191,9 @@ def test_existing_approved_profiles_keep_the_same_full_physical_binding(prior):
     "drift", [None, "first_parent", "last_parent", "stock", "freight", "old_recipe", "freight_rule"]
 )
 def test_grouped_replay_builds_from_originals_atomically_and_is_idempotent(drift):
-    from scripts.archive_uvek_unreferenced_reviews import archive_unreferenced_reviews
     from scripts.review_uvek_polymer_carton_39 import apply_polymer_carton_39_review
 
-    expected = deepcopy(load_uvek_technosphere_resource())
+    expected = compiled_authoring_stage_resource("review_uvek_polymer_carton_39", "apply_polymer_carton_39_review")
     resource = deepcopy(expected)
     for row in ROWS:
         parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
@@ -222,8 +222,6 @@ def test_grouped_replay_builds_from_originals_atomically_and_is_idempotent(drift
         assert resource == before
     else:
         apply_polymer_carton_39_review(resource)
-        archive_unreferenced_reviews(resource)
         assert resource == expected
         apply_polymer_carton_39_review(resource)
-        archive_unreferenced_reviews(resource)
         assert resource == expected

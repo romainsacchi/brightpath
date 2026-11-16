@@ -2,6 +2,7 @@
 
 from copy import deepcopy
 from functools import lru_cache
+from importlib import import_module
 from pathlib import Path
 
 from scripts.generate_uvek_migration_resources import _build_historical_review_resources
@@ -21,6 +22,46 @@ def _historical_forward():
 def historical_forward_resource():
     """Return independent archived-review inputs without restoring runtime support."""
     return deepcopy(_historical_forward())
+
+
+@lru_cache(maxsize=None)
+def _compiled_authoring_stage(module_name, function_name):
+    """Capture a real generator stage before subsequent decisions alter its rules."""
+    from scripts.generate_uvek_migration_resources import build_resources
+
+    module = import_module(f"scripts.{module_name}")
+    original = getattr(module, function_name)
+    captured = {}
+
+    class StageCaptured(Exception):
+        pass
+
+    def capture(resource):
+        captured["resource"] = deepcopy(resource)
+        raise StageCaptured
+
+    root = Path(__file__).resolve().parents[1]
+    try:
+        setattr(module, function_name, capture)
+        try:
+            build_resources(
+                root / "brightpath/data/export/reference_catalogs",
+                root / "brightpath/data/export/ecoinvent_to_uvek_mapping.csv",
+                root / "brightpath/data/export/uvek_conversion_factors.yaml",
+            )
+        except StageCaptured:
+            pass
+    finally:
+        setattr(module, function_name, original)
+    if not captured:
+        raise AssertionError(f"The normal generator did not reach {module_name}.{function_name}.")
+    original(captured["resource"])
+    return captured["resource"]
+
+
+def compiled_authoring_stage_resource(module_name, function_name):
+    """Return independent compiled stage data for historical replay/drift tests."""
+    return deepcopy(_compiled_authoring_stage(module_name, function_name))
 
 
 @lru_cache(maxsize=1)

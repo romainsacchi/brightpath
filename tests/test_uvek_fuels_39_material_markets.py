@@ -7,6 +7,7 @@ from dataclasses import replace
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -137,7 +138,9 @@ def test_prior_nickel_312_selection_and_direct_native_output_are_unchanged():
 
 
 def minimal_resource():
-    full = load_uvek_technosphere_resource()
+    full = compiled_authoring_stage_resource(
+        "review_uvek_fuels_39_material_markets", "apply_fuels_39_material_markets_review"
+    )
     originals = {row["rule_id"]: row["original_rule"] for row in REVIEW["records"]}
     ids = set(originals) | {r["rule_id"] for r in REVIEW["component_bindings"]}
     ref = RECORDS[NICKEL]["original_rule"]["review_ref"]

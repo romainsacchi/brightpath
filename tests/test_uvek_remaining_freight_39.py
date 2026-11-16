@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -135,7 +136,9 @@ def test_rail_keeps_complete_european_service_with_explicit_traction_difference(
 def test_replay_refuses_unreviewed_weight_or_supplier_changes_atomically(drift):
     from scripts.review_uvek_remaining_freight_39 import apply_remaining_freight_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_remaining_freight_39", "apply_remaining_freight_39_review"
+    )
     row = next(r for r in ROWS if r["recipe_id"])
     if drift in ("parent", "direct_rail"):
         changed = row if drift == "parent" else next(r for r in ROWS if not r["recipe_id"])
