@@ -436,6 +436,7 @@ def validate_migration_resource(resource: dict) -> None:
         raise MigrationError("Every zero-burden recipe needs an approved direct source correspondence.")
     visiting, visited = set(), set()
     zero_scopes = {}
+    zero_dependencies = set(zero_recipes)
 
     def visit(recipe_id):
         if recipe_id in visiting:
@@ -476,6 +477,7 @@ def validate_migration_resource(resource: dict) -> None:
                         "Optional recipe omissions require a biosphere inventory indicator and explicit rationale."
                     )
             if "recipe" in exchange:
+                dependency_scopes = set()
                 if exchange["recipe"] in zero_recipes:
                     binding = exchange.get("zero_burden_supplier")
                     if not binding:
@@ -490,12 +492,23 @@ def validate_migration_resource(resource: dict) -> None:
                         != binding["profile_review_sha256"]
                     ):
                         raise MigrationError("Zero-burden dependency needs its exact approved direct supplier binding.")
-                    scopes.add(profile_key)
+                    dependency_scopes.add(profile_key)
                 elif "zero_burden_supplier" in exchange:
                     raise MigrationError("A zero-burden supplier binding applies only to a zero-burden dependency.")
                 if exchange["recipe"] not in resource["recipes"]:
                     raise MigrationError("Unknown dependent recipe.")
-                scopes.update(visit(exchange["recipe"]))
+                dependency_scopes.update(visit(exchange["recipe"]))
+                if exchange["recipe"] in zero_dependencies:
+                    zero_dependencies.add(recipe_id)
+                model_profile = exchange.get("inventory_source_profile")
+                if model_profile is not None:
+                    # Explicit historical models retain their own stock authority.
+                    # zero_dependencies still enforces an exact root approval.
+                    model_key = tuple(model_profile[k] for k in ("family", "version", "system_model"))
+                    if any(scope != model_key for scope in dependency_scopes):
+                        raise MigrationError("Nested zero-stock approval does not match its declared model profile.")
+                else:
+                    scopes.update(dependency_scopes)
             else:
                 if "zero_burden_supplier" in exchange:
                     raise MigrationError("A zero-burden supplier binding requires an explicit recipe dependency.")
@@ -513,7 +526,7 @@ def validate_migration_resource(resource: dict) -> None:
         review = rule.get("reference_flow_sign_review", {})
         profiles = review.get("profiles", [])
         targets = [rule["target"], *(entry.get("target", rule["target"]) for entry in profiles)]
-        if any(zero_scopes.get(target.get("recipe_ref")) for target in targets) and (
+        if any(target.get("recipe_ref") in zero_dependencies for target in targets) and (
             not profiles or review.get("status") != "unresolved"
         ):
             raise MigrationError("Nested zero-stock use requires exact profiles and an unresolved default.")
