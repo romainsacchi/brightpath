@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 286,
+      "proxy": 287,
       "recipe": 1115,
-      "unclassified": 29074
+      "unclassified": 29073
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 251,
       "followup_review": 163,
-      "heuristic_similarity": 26330,
+      "heuristic_similarity": 26329,
       "named_native_teos_proxy": 1,
       "pairwise_review": 2204,
       "product_checked": 35,
@@ -62,6 +62,7 @@
       "reviewed_deferred_xanthate": 1,
       "reviewed_delivered_low_voltage_proxy": 46,
       "reviewed_dmc_39_retained_source_manufacturing": 1,
+      "reviewed_dolomite_production_39_native": 1,
       "reviewed_ether_ethanol_rer": 1,
       "reviewed_ethyl_acetate_39_market_composition": 1,
       "reviewed_euro_v_conditional_fleet_39": 1,
@@ -232,7 +233,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.445147,
+    "mean_confidence": 0.445167,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -10211,6 +10212,199 @@
       "name": "market for sodium hydroxide, without water, in 50% solution state, reviewed native-derived supply and retained source interfaces",
       "rationale": "Only exact ecoinvent 3.9 cut-off is reviewed. Positive source references and target references have matching functional units; caller factor +1 preserves signed amounts, formulas, supported uncertainty and independent foreground emissions. Other versions, patches, system models and reverse routes gain no approval. All source-owned interface rows retained by the recipes keep their signed amounts and supported uncertainty/formulas separately, with no normalization or second reaction-yield, purity, concentration, freight, useful-heat or loss multiplier. Complete native upstream suppliers replace the source upstream inventories; their allocation, geography, vintage, technology, uncertainty, biosphere exclusions and modelling correlations differ. Score differences remain unquantified; neither LCI/LCIA nor stochastic equivalence is established. Caustic soda: the official ecoinvent methodology guide, printed page 60 (PDF page 68), explains the legacy sodium-hydroxide 50%-in-water name and its active-substance reference. The new and legacy labels both refer to one kg active NaOH, supplied in a 50% solution, not one kg total mixture. Native chlor-alkali descriptions and mass allocation are consistent with that basis. Keep factor +1; do not double alkali or add solvent as a separate chemical burden. Retain each of the seven original producer shares, selecting the corresponding native diaphragm, mercury or membrane technology, and retain all four freight entries. Native RER plants are geographic/vintage proxies for source RER, RoW and CA-QC. Preserve each complete native allocated cell inventory; allocation, electricity, brine treatment and emissions differ. Do not replace the source technology split with the native historical production mix, add chlorine/hydrogen credits, correct allocated brine coefficients stoichiometrically, or renormalize original rounded producer shares.",
       "reference product": "sodium hydroxide, without water, in 50% solution state",
+      "unit": "kilogram"
+    },
+    "battery-39-dolomite-delivery": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_dolomite_39_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Dolomite, at plant",
+          "reference product": "Dolomite, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.02002196268027392,
+          "loc": -3.9109254739225565,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.07226705908415267,
+          "loc": -2.627386867968235,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.005069979230388792,
+          "loc": -5.284418557957694,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0997008025230208,
+          "loc": -2.3055815526683974,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.07894019648216383,
+          "loc": -2.539064719744151,
+          "location": "US",
+          "name": "Transport, freight, rail, diesel",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail, diesel",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.047,
+          "loc": -3.0576076772720784,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0026517472267832613,
+          "loc": -5.932536525385497,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.12841101096034577,
+          "loc": -2.0525191362601585,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.016937241812870967,
+          "loc": -4.078240423978935,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 5,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.5744562646538028,
+          "scale without pedigree": 0.5744562646538028,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "RoW",
+      "name": "Reviewed source3.9dolomite supply and delivery",
+      "rationale": "Retain exact source3.9dolomite delivery around the complete native uncalcined-mineral supplier, preserving the independently reviewed3.8profile.",
+      "reference product": "dolomite",
       "unit": "kilogram"
     },
     "battery-39-hydrogen-fluoride-delivered-market": {
@@ -813073,7 +813267,7 @@
     {"confidence": 0.170854, "id": "bp-9e296b1ea09f406d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "dodecanol production, from coconut oil", "reference product": "dodecanol", "unit": "kilogram"}, "target": {"location": "RER", "name": "Fatty alcohol, from coconut oil, at plant", "reference product": "Fatty alcohol, from coconut oil, at plant", "unit": "kilogram"}},
     {"confidence": 0.157134, "id": "bp-05da19b1286fe05f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "dodecanol production, ziegler process", "reference product": "dodecanol", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Anode", "reference product": "Anode", "unit": "kilogram"}},
     {"confidence": 0.471097, "id": "bp-f46b13bc9ff0e3a7", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "dolomite production", "reference product": "dolomite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dolomite, at plant", "reference product": "Dolomite, at plant", "unit": "kilogram"}},
-    {"confidence": 0.391097, "id": "bp-3140d15674640776", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "dolomite production", "reference product": "dolomite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dolomite, at plant", "reference product": "Dolomite, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-3140d15674640776", "mapping_method": "reviewed_dolomite_production_39_native", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_dolomite_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_dolomite_39_review.json"], "reason": "Positive-reference raw dolomite production uses the complete native raw dolomite supplier at factor+1 for inspected source3.9cut-off only.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only inspected exact source3.9cut-off production qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-a962315fcc259261", "source": {"location": "RoW", "name": "dolomite production", "reference product": "dolomite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dolomite, at plant", "reference product": "Dolomite, at plant", "unit": "kilogram"}, "technosphere_information_loss": "Use the complete native milled raw dolomite process per signed kg, not calcined dolime or quicklime. Both references are positive1kg. Source95%yield is already embedded; add no yield, carbonate-carbon release or invented calcination multiplier. Native RER extraction/crushing/milling is a limestone-based screening approximation with weak process data and no water emissions. Source RoW geology, site water, production electricity mix, mining technology, allocation, moisture/grade, geography, vintage and internal uncertainty differ. Native upstream biosphere exclusions remain and score differences are unquantified. Only the inspected source3.9cut-off context gains a new conversion. The existing source3.8market profile, factor and complete helper remain unchanged. Other versions, patches, inverse and cross-system-model routes remain unapproved. Formula/parameter graphs and cross-exchange correlations are not transplanted; caller formulas and separate emissions remain unchanged."},
     {"confidence": 0.265962, "id": "bp-e44965a77f075fd6", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "dolomite quarry construction", "reference product": "dolomite quarry infrastructure", "unit": "unit"}, "target": {"location": "RER", "name": "Preservative treatment, infrastructure", "reference product": "Preservative treatment, infrastructure", "unit": "unit"}},
     {"confidence": 0.226863, "id": "bp-3e70d65038a466cc", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "dolomite quarry construction", "reference product": "dolomite quarry infrastructure", "unit": "unit"}, "target": {"location": "CH", "name": "Cable car infrastructure", "reference product": "Cable car infrastructure", "unit": "unit"}},
     {"confidence": 0.580439, "id": "bp-ba799c4728feb294", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "door production, inner, glass-wood", "reference product": "door, inner, glass-wood", "unit": "square meter"}, "target": {"location": "RER", "name": "xxx Door, inner, glass-wood, at plant", "reference product": "xxx Door, inner, glass-wood, at plant", "unit": "square meter"}},
@@ -821975,7 +822169,7 @@
     {"confidence": 0.361659, "id": "bp-f241056fab62d2f5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for dithiocarbamate-compound", "reference product": "dithiocarbamate-compound", "unit": "kilogram"}, "target": {"location": "CH", "name": "Dithiocarbamate-compounds, at regional storehouse", "reference product": "Dithiocarbamate-compounds, at regional storehouse", "unit": "kilogram"}},
     {"confidence": 0.164722, "id": "bp-3eb67dbea29bc212", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for dodecanol", "reference product": "dodecanol", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Anode", "reference product": "Anode", "unit": "kilogram"}},
     {"confidence": 1.0, "id": "bp-10b3c68ea03a4684", "mapping_method": "curated_legacy", "source": {"location": "RER", "name": "market for dolomite", "reference product": "dolomite", "unit": "kilogram"}, "target": {"location": "RER", "name": "Dolomite, at plant", "reference product": "Dolomite, at plant", "unit": "kilogram"}},
-    {"classification": "proxy", "confidence": 1.0, "conversion_factor": 1, "id": "bp-5943576bea71c0de", "mapping_method": "reviewed_ships_38_native_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "reason": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "ships-38-dolomite-market"}}], "reason": "Only independently inspected exact profiles are qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-08d2b3055a1c88e4", "source": {"location": "RoW", "name": "market for dolomite", "reference product": "dolomite", "unit": "kilogram"}, "target": {"recipe_ref": "ships-38-dolomite-market"}, "technosphere_information_loss": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."},
+    {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-5943576bea71c0de", "mapping_method": "reviewed_ships_38_native_market", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json", "brightpath/data/export/uvek_battery_dolomite_39_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_ships_38_remaining_review.json"], "reason": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step. Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases. Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted. Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}, "target": {"recipe_ref": "ships-38-dolomite-market"}}, {"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_dolomite_39_review.json"], "reason": "Retain exact source3.9dolomite delivery around the complete native uncalcined-mineral supplier, preserving the independently reviewed3.8profile.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "battery-39-dolomite-delivery"}}], "reason": "Only independently inspected exact source3.8and3.9cut-off profiles qualify.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-2e9706323c05c4b8", "source": {"location": "RoW", "name": "market for dolomite", "reference product": "dolomite", "unit": "kilogram"}, "target": {"recipe_ref": "ships-38-dolomite-market"}, "technosphere_information_loss": "Use the complete native milled raw dolomite process per signed kg, not calcined dolime or quicklime. Both references are positive1kg. Source95%yield is already embedded; add no yield, carbonate-carbon release or invented calcination multiplier. Native RER extraction/crushing/milling is a limestone-based screening approximation with weak process data and no water emissions. Source RoW geology, site water, production electricity mix, mining technology, allocation, moisture/grade, geography, vintage and internal uncertainty differ. Native upstream biosphere exclusions remain and score differences are unquantified. For the source3.9market retain its one1kg producer and every one of its nine original final-delivery entries separately, including five rail regions, one barge and three lorry portfolios. Preserve nominal quantities, supported marginal uncertainty and signed caller coordinates without normalization or added freight distance, payload or infrastructure multipliers. Native mining-internal transport remains internal; retained market delivery is a separate boundary. Freight uses complete reviewed native same-mode tonne-km services. Country, traction/fuel, fleet/loading, cargo allocation and infrastructure differ, including the Chinese rail to native European fleet approximation. Do not substitute road for rail, merge distinct source branches or invent missing route data. Only the inspected source3.9cut-off context gains a new conversion. The existing source3.8market profile, factor and complete helper remain unchanged. Other versions, patches, inverse and cross-system-model routes remain unapproved. Formula/parameter graphs and cross-exchange correlations are not transplanted; caller formulas and separate emissions remain unchanged."},
     {"confidence": 0.294906, "id": "bp-9857490d274fd89b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for dolomite quarry infrastructure", "reference product": "dolomite quarry infrastructure", "unit": "unit"}, "target": {"location": "CH", "name": "Cable car infrastructure", "reference product": "Cable car infrastructure", "unit": "unit"}},
     {"confidence": 0.511689, "id": "bp-d1fa79153f6a2211", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for door, inner, glass-wood", "reference product": "door, inner, glass-wood", "unit": "square meter"}, "target": {"location": "RER", "name": "xxx Door, inner, glass-wood, at plant", "reference product": "xxx Door, inner, glass-wood, at plant", "unit": "square meter"}},
     {"confidence": 0.439018, "id": "bp-d359a33101bb17cc", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for door, inner, wood", "reference product": "door, inner, wood", "unit": "square meter"}, "target": {"location": "RER", "name": "xxx Door, inner, wood, at plant", "reference product": "xxx Door, inner, wood, at plant", "unit": "square meter"}},
@@ -840477,18 +840671,6 @@
       ],
       "rationale": "Reviewed exact-profile inventory assembly with explicitly approved cut-off allocation supplies: retain every original processing, supply, freight and signed recovery coefficient. Independently inspected positive-reference Recycled Content cut-off stocks have production only and retain that allocation boundary as separate foreground suppliers. Negative stock inputs remain product credits with the source allocation burden; negative inputs to negative treatment references remain treatment demand and use their own sign factors. No actual recycling/treatment stage, uncharacterized inventory, unknown supplier or negative-reference empty service is assigned zero. Other resolved component correspondences retain their technology, geography, composition and allocation approximations; scientific and LCIA equivalence is not established. Internal background uncertainty/formulas are not reconstructed. Preserve caller signed quantities, uncertainty/formulas, foreground suppliers, production and separate emissions/credits. Export and score the entire returned helper hierarchy. Only the enumerated verified profiles are approved; explicitly pending counterpart profiles remain blocked and no reverse is inferred. Follow-up whole-freight review: in the enumerated cut-off profiles, preserve every signed freight coefficient while selecting complete same-mode and matching vehicle-class supplies. Light-commercial freight uses the inspected CH 3.5t light-duty fleet; generic heavy-diesel freight uses the complete RER multi-class/multi-duty diesel fleet; generic rail and inland barge use complete RER services. Vehicle manufacture, maintenance, end-of-life and road/track infrastructure are already included. Country, fuel, payload, vintage, EURO class and duty mixtures differ, including petrol/diesel versus the mixed CH light-duty fleet and global steam/diesel/electric rail versus RER rail. No payload or distance scaling, extra vehicle/infrastructure, arbitrary individual steam substitution, physical omission, recovered-material/energy policy change or inferred inverse is introduced. All other components, genuine credits, source quantities and source inventories remain unchanged. Historical consequential recipe bodies and coefficients are retained solely as provenance, not executable routes. Evidence: brightpath/data/export/uvek_whole_freight_review.json."
     },
-    "r-08d2b3055a1c88e4": {
-      "evidence": [
-        "brightpath/data/export/uvek_ships_38_remaining_review.json"
-      ],
-      "limitations": [
-        "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step.",
-        "Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases.",
-        "Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted.",
-        "Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."
-      ],
-      "rationale": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step."
-    },
     "r-099783a59cd9d806": {
       "evidence": [
         "Exact approved source/prior-target/profile whitelist in brightpath/data/export/uvek_feed_nutrient_omission_review.json: 95 normalized nutrient identities, 692 inspected positive-reference source/profile pairs, 45 gross-energy MJ references and 50 100%-crude-protein kg references. Existing heuristic factors are all 1 and do not document nutritional equivalence. Prior targets supply thermal/fuel energy, crop mass, crude oil or an unspecified protein concentrate, not a validated generic nutritional market.",
@@ -841919,6 +842101,19 @@
         "Branch review label includes a scripted rule, reuse or fix; not independent human validation."
       ],
       "rationale": "The candidate preserves the crop and explicit Swiss integrated-production (IP) system."
+    },
+    "r-2e9706323c05c4b8": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_dolomite_39_review.json"
+      ],
+      "limitations": [
+        "Use the complete native milled raw dolomite process per signed kg, not calcined dolime or quicklime. Both references are positive1kg. Source95%yield is already embedded; add no yield, carbonate-carbon release or invented calcination multiplier.",
+        "Native RER extraction/crushing/milling is a limestone-based screening approximation with weak process data and no water emissions. Source RoW geology, site water, production electricity mix, mining technology, allocation, moisture/grade, geography, vintage and internal uncertainty differ. Native upstream biosphere exclusions remain and score differences are unquantified.",
+        "For the source3.9market retain its one1kg producer and every one of its nine original final-delivery entries separately, including five rail regions, one barge and three lorry portfolios. Preserve nominal quantities, supported marginal uncertainty and signed caller coordinates without normalization or added freight distance, payload or infrastructure multipliers. Native mining-internal transport remains internal; retained market delivery is a separate boundary.",
+        "Freight uses complete reviewed native same-mode tonne-km services. Country, traction/fuel, fleet/loading, cargo allocation and infrastructure differ, including the Chinese rail to native European fleet approximation. Do not substitute road for rail, merge distinct source branches or invent missing route data.",
+        "Only the inspected source3.9cut-off context gains a new conversion. The existing source3.8market profile, factor and complete helper remain unchanged. Other versions, patches, inverse and cross-system-model routes remain unapproved. Formula/parameter graphs and cross-exchange correlations are not transplanted; caller formulas and separate emissions remain unchanged."
+      ],
+      "rationale": "Retain exact source3.9dolomite delivery around the complete native uncalcined-mineral supplier, preserving the independently reviewed3.8profile."
     },
     "r-2ee369fa860ee419": {
       "evidence": [
@@ -847146,6 +847341,17 @@
         "Reviewed cut-off hot-rolled 18/8 stainless material proxy. Source markets supply the inspected hot-rolled RER/RoW producers; each producer uses one kg of 18/8 stock and one kg of hot-rolling service. UVEK's RER material includes 0.63 kg converter stock, 0.37 kg electric stock and one kg of Hot rolling, steel per kg product. This is the full hot-rolled material, not the former Sheet rolling, chromium steel cold-rolling service, whose 0.0516 kg stock input covers rolling losses. Preserve incoming signed kg with factor +1; no separate rolling input is added. The RER average stock replaces source GLO/RoW supply, freight, production and technology mixes; geographic, vintage and background differences remain, and equal LCIA scores are not established. Preserve caller uncertainty, formulas, foreground suppliers and separate emissions. No treatment, recovery credit, omission, allocation reconstruction or inverse is inferred. Cross-system-model conversion remains unsupported; the existing reverse material rule is checked independently."
       ],
       "rationale": "Auto-approved under standing independently inspected matching-material, function, kg and geographic-proxy approvals. Reviewed cut-off hot-rolled 18/8 stainless material proxy. Source markets supply the inspected hot-rolled RER/RoW producers; each producer uses one kg of 18/8 stock and one kg of hot-rolling service. UVEK's RER material includes 0.63 kg converter stock, 0.37 kg electric stock and one kg of Hot rolling, steel per kg product. This is the full hot-rolled material, not the former Sheet rolling, chromium steel cold-rolling service, whose 0.0516 kg stock input covers rolling losses. Preserve incoming signed kg with factor +1; no separate rolling input is added. The RER average stock replaces source GLO/RoW supply, freight, production and technology mixes; geographic, vintage and background differences remain, and equal LCIA scores are not established. Preserve caller uncertainty, formulas, foreground suppliers and separate emissions. No treatment, recovery credit, omission, allocation reconstruction or inverse is inferred. Cross-system-model conversion remains unsupported; the existing reverse material rule is checked independently."
+    },
+    "r-a962315fcc259261": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_dolomite_39_review.json"
+      ],
+      "limitations": [
+        "Use the complete native milled raw dolomite process per signed kg, not calcined dolime or quicklime. Both references are positive1kg. Source95%yield is already embedded; add no yield, carbonate-carbon release or invented calcination multiplier.",
+        "Native RER extraction/crushing/milling is a limestone-based screening approximation with weak process data and no water emissions. Source RoW geology, site water, production electricity mix, mining technology, allocation, moisture/grade, geography, vintage and internal uncertainty differ. Native upstream biosphere exclusions remain and score differences are unquantified.",
+        "Only the inspected source3.9cut-off context gains a new conversion. The existing source3.8market profile, factor and complete helper remain unchanged. Other versions, patches, inverse and cross-system-model routes remain unapproved. Formula/parameter graphs and cross-exchange correlations are not transplanted; caller formulas and separate emissions remain unchanged."
+      ],
+      "rationale": "Positive-reference raw dolomite production uses the complete native raw dolomite supplier at factor+1 for inspected source3.9cut-off only."
     },
     "r-a99e528c138c43bb": {
       "evidence": [

@@ -119,6 +119,18 @@
         "Same finished LDPE packaging film per kg, not raw resin, a battery module or a forming-only service. Complete native film already includes LDPE feedstock, its transport to converting and film extrusion; add no second resin or extrusion process, scrap-yield correction, thickness or density multiplier. Exact inspected ecoinvent 3.8 cut-off only. Preserve signed caller kg, uncertainty, formula and properties; retain all two original producer entries and four separate final-freight entries in source order, with original amounts and supported marginal statistics, without aggregation, omission or normalization. Native European production replaces both RER and RoW inventories; RoW is an explicit geographic screening proxy. Complete native production and internal feedstock transport remain once; final market freight is additional and distinct. Four final freight legs retain tonne-km using native European generic road, European 3.5-tonne gross-weight fleet, European rail and ocean container services. Source global fleet mix, payload, empty return, size and technology are not reconstructed; the 3.5-tonne service is an explicit light-commercial fleet proxy. No payload or distance multiplier is invented. Native production inputs, allocation, geography, internal uncertainty, vintage and upstream biosphere exclusions differ; inventory and score differences remain unquantified. Separate caller processing and emissions remain unchanged."
       ],
       "rationale": "Exact 3.8 delivered-material helper, with two complete producer proxies and four retained freight legs. Only the enumerated 3.8 profile uses this helper; the separately approved 3.9 zeolite retains its original direct at-plant proxy."
+    },
+    "r-08d2b3055a1c88e4": {
+      "evidence": [
+        "brightpath/data/export/uvek_ships_38_remaining_review.json"
+      ],
+      "limitations": [
+        "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step.",
+        "Only the independently inspected ecoinvent3.8cutoff source is added. Preserve signed caller quantities, supported uncertainty, formulas and separate emissions at factor+1. No inverse route, cross-system-model mapping or permission for an uninspected source version is inferred. Other qualified profiles retain their supplier and reference bases.",
+        "Retain all original source producer quantities and final-market freight entries separately without renormalization. Each producer branch uses the complete native screening supplier once at its source weight. Native internal upstream transport remains internal; retained final market delivery is separate. Native geographic sourcing, production mix, allocation, age, emissions, land use and internal uncertainty differ, with unquantified score effects. No source/native LCI or LCIA equivalence is asserted.",
+        "Freight uses complete native same-mode tonne-km services. Vehicle/locomotive/vessel size, fleet, fuel, loading, cargo allocation, geography and emissions differ; Chinese rail may use the complete native coal-freight fleet as a bulk-mineral fleet proxy. Add no payload, distance, mode-substitution, infrastructure or moisture multiplier. Background parameter/formula graphs and correlations are not transplanted without their context; already-calculated nominal coefficients and supported marginal uncertainty are retained, and caller formulas remain unchanged."
+      ],
+      "rationale": "Use complete native milled dolomite per kg mineral, retaining the original producer and all nine final freight rows. Native carbonate extraction/crushing/milling is a European approximation based on lime-mining data with weak process evidence and no water emissions. Source RoW site water, geology, mining/milling technology, allocation and geographic fleet differ; those omissions within the native model and score effects remain explicit. Do not substitute calcined lime, CO2 release or add an invented calcination step."
     }
   },
   "additional_sources": {
@@ -133,6 +145,11 @@
     "r-24c3f1321c024c09": {
       "source_commit": "24d910702a94e301e633d6791dcc67d0d3d5b515",
       "retirement_review": "brightpath/data/export/uvek_polymer_carton_39_review.json"
+    },
+    "r-08d2b3055a1c88e4": {
+      "source_commit": "34e0c0228d54cd19a62244bf504ea34ec3cd3bc3",
+      "retirement_review": "brightpath/data/export/uvek_battery_dolomite_39_review.json",
+      "reason": "Rule now has a shared source3.8/source3.9review. Exact source3.8profile fields and helper are unchanged; its historical card is retained here and in the earlier shipping review."
     }
   }
 }
