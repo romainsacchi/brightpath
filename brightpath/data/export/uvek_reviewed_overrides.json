@@ -55923,13 +55923,16 @@
       }
     },
     {
-      "branch_method": "chemical_proxy",
-      "branch_reasoning": "[Rule chem-proxy] generic organic chemistry proxy | No specific BAFU dataset -> generic 'Chemicals organic/inorganic, at plant'. VERIFY (may over-apply).",
-      "confidence": 0.4,
+      "branch_method": "specific_native_inventory",
+      "branch_reasoning": "Exact named native chemical exists with positive one-kg reference in both inspected native releases. Its abbreviated three-input inventory remains an explicit screening limitation.",
+      "confidence": 0.75,
       "limitations": [
-        "Identity-level comparison only; inventory composition and LCIA equivalence are not verified."
+        "Replace the generic organic-chemicals candidate with the named native Tetraethylorthosilicat supply per one nominal kg. Native inventory explicitly contains metallurgical silicon0.135kg, ethanol0.885kg and electricity0.225797347kWh per kg, and no explicit emissions or factory input. Its process route, catalyst, coproduct, purity and emission coverage are not documented; do not infer chemical or performance equivalence to the source silicon-tetrachloride alcoholysis process. Source producer shares and final delivery are replaced. No extra silicon chlorination, acid credit, reaction yield or stoichiometric multiplier is invented.",
+        "Retain signed caller quantities, caller formulas and supported uncertainty. This is a complete published native-inventory screening proxy, not an inventory or LCIA-equivalence claim. No extra market transport, processing, credit or emissions are added around the native supply.",
+        "Native geography, technology, vintage, allocation, grade and internal uncertainty differ. BAFU reimported inventory excludes documented unsupported biosphere flows. Score effects remain unquantified.",
+        "Authorize only independently inspected ecoinvent cut-off source profiles enumerated here and the UVEK2025/native2026 route. No inverse or cross-system-model conversion is authorized."
       ],
-      "mapping_method": "clic_pairwise_review",
+      "mapping_method": "clic_named_native_teos_proxy",
       "previous_confidence": 0.150305,
       "previous_target": {
         "location": "GLO",
@@ -55937,8 +55940,8 @@
         "reference product": "Cathode",
         "unit": "kilogram"
       },
-      "reason": "Low-confidence named target does not preserve the source chemical identity; branch provides the correct broad chemical family. Coarse proxy only.",
-      "review_outcome": "accept_chemical_proxy",
+      "reason": "Same named tetraethyl orthosilicate chemical and nominal positive one-kg reference; replace a generic-chemicals match with the existing specific native product, while retaining native three-input inventory limitations. See export/uvek_battery_three_native_39_review.json.",
+      "review_outcome": "accept_named_native_screening_proxy",
       "source": {
         "location": "GLO",
         "name": "market for tetraethyl orthosilicate",
@@ -55946,9 +55949,9 @@
         "unit": "kilogram"
       },
       "target": {
-        "location": "GLO",
-        "name": "Chemicals organic, at plant",
-        "reference product": "Chemicals organic, at plant",
+        "name": "Tetraethylorthosilicat",
+        "reference product": "Tetraethylorthosilicat",
+        "location": "RER",
         "unit": "kilogram"
       }
     },

@@ -266,3 +266,29 @@ same generator helper, and regenerate the integrity manifest. The normal resourc
 generator always reapplies all 2,514 packaged decisions. The scoped follow-up
 rejects stale comparisons, previously reviewed choices, missing catalog targets,
 unsupported units and unexplained bundled quantities before emitting an overlay.
+
+
+### Three required source-3.9 native supplies — 16 November 2026
+
+The required battery import uses lithium hydroxide, PVC-product disposal and
+tetraethyl orthosilicate. The first two retain their existing native targets;
+the orthosilicate market now selects the named native `Tetraethylorthosilicat`
+instead of generic organic chemicals. The specific native inventory contains
+three inputs and sparse documentation. Its undocumented reaction route,
+catalyst, grade, coproducts and emission coverage remain explicit limitations,
+not proof of equivalence to the source silicon-tetrachloride route.
+
+LiOH retains the native nominal one-kg reference and published co-product
+allocation. Native versus source lithium-carbonate inputs differ substantially;
+allocation, hydration state, purity, yield and battery-grade performance are
+unquantified screening differences. No guessed concentration or yield factor
+is applied. PVC retains the verified factor minus one from negative waste
+reference to positive treatment-service reference. The complete native disposal
+model includes a demolition boundary and differs in route mix and moisture.
+
+No helper, source omission or production/generator Python change is needed. One
+existing override entry regenerates the changed rule and its review; all prior
+helper recipes and both biosphere resources are unchanged. Evidence and exact
+source-3.9 scopes are packaged in
+`brightpath/data/export/uvek_battery_three_native_39_review.json`. Other source
+releases do not gain approval merely because their nominal reference matches.
