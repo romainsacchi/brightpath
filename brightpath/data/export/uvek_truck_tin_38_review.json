@@ -1,0 +1,121 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-16",
+  "authorization": "Standing autonomous goal and auto-approval for analogous complete native supply proxies with explicit warnings.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.8",
+    "system_model": "cutoff"
+  },
+  "target_profile": {
+    "family": "uvek",
+    "system_model": "cutoff",
+    "version": "2025"
+  },
+  "tested_biosphere": {
+    "family": "ecoinvent",
+    "version": "3.10"
+  },
+  "records": [
+    {
+      "rule_id": "bp-3c4fc855bcc17210",
+      "category": "tin metal supply",
+      "source": {
+        "location": "GLO",
+        "name": "market for tin",
+        "reference product": "tin",
+        "unit": "kilogram"
+      },
+      "target": {
+        "location": "RER",
+        "name": "Tin, at regional storage",
+        "reference product": "Tin, at regional storage",
+        "unit": "kilogram"
+      },
+      "rule": {
+        "confidence": 1.0,
+        "id": "bp-3c4fc855bcc17210",
+        "mapping_method": "curated_legacy",
+        "source": {
+          "location": "GLO",
+          "name": "market for tin",
+          "reference product": "tin",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Tin, at regional storage",
+          "reference product": "Tin, at regional storage",
+          "unit": "kilogram"
+        }
+      },
+      "conversion_factor": 1,
+      "functional_basis": "Both supply tin metal per kg. Native supply includes primary mining, beneficiation, smelting, refining and delivery to European regional storage.",
+      "source_profile": {
+        "family": "ecoinvent",
+        "version": "3.8",
+        "system_model": "cutoff"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for tin",
+          "reference product": "tin",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 6,
+        "inventory_sha256": "c959f4963f79a4564ab0ac6bb8cf4f1bc48ffbd912888baf6f4a8c05534025a4",
+        "metadata_sha256": "b7109cfd4324e328517d9ad77bbc1eebc132fc3c4e6f2d4e4d7d596133967e48",
+        "comment_sha256": "f1c63e8af001873366894c9a6c7986078105689c5f9faa1ed9e88c6782ec0e82",
+        "product_information_sha256": "4c5d170c54817049ef07fe959e62faefc8d75b12979ef88be0f551cac53789a6"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Tin, at regional storage",
+            "reference product": "Tin, at regional storage",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 27,
+          "inventory_sha256": "1d613787d5f10dfb7e7435f4008c7493cf2168c8e0c2f22a05f9b4657d642e0d",
+          "metadata_sha256": "1362c660008a4cb6039d108cef3695e624778169cec83b1d5f5f51480e8b5cae",
+          "comment_sha256": "5750ac58ba3a64482402fa21f888a0b7e0292d6da54afbcfe788d18888e2b616",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Tin, at regional storage",
+            "reference product": "Tin, at regional storage",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1.0,
+          "nonproduction_count": 27,
+          "inventory_sha256": "4a95f681d3b1c006e6f809eac695e7537da945f8ddfadaab8ac4970469b5d345",
+          "metadata_sha256": "c1eae19192bec140066b3cef056eee4962ac0b693e68836b6e874cbd9fc58787",
+          "comment_sha256": "3bc1334cc119f5c698d5956070984e7074dfbc4e39a3208824f27394dabe7976",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "limitations": [
+        "Native historical primary tin and European delivery replace the source global producer, possible secondary and freight mix. Native data quality is explicitly poor; do not preserve or supplement the source market shares implicitly.",
+        "Approve only the actually required source ecoinvent3.8cut-off tin correspondence to the UVEK2025edge and native2026route with canonical ecoinvent3.10biosphere. The independently approved3.9scope is unchanged. No other new release, inverse or cross-system-model route is authorized.",
+        "Retain signed caller quantities, formulas and supported uncertainty. Each complete native inventory replaces the whole source service or supply boundary once; original internal producer shares, delivery, allocation and emissions are not claimed preserved. Do not append source-market transport or source emissions already inside the replaced supply.",
+        "Native geography, vintage, technology, allocation and internal uncertainty differ. The BAFU reimport also has documented excluded biosphere flows. Scores and functional-performance differences are unquantified; these are screening proxies. No new helper, physical foreground omission or runtime Python change is introduced."
+      ],
+      "actual_required_paths": [
+        "datasets[21].exchanges[36]"
+      ]
+    }
+  ],
+  "prior_source39_review": "brightpath/data/export/uvek_battery_native_direct_39_review.json",
+  "new_helpers": 0,
+  "new_foreground_omissions": [],
+  "runtime_Python_changes": 0,
+  "generator_Python_changes": 0,
+  "native_resource_unchanged": true,
+  "scope": "Only tin actually required by the current trucks source3.8cohort; not an extension to the rest of the source catalog."
+}
