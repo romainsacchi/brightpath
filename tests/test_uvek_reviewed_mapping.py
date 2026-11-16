@@ -2,6 +2,7 @@ import copy
 import json
 
 import pytest
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import DATA_DIR
 from brightpath.migrations.resources import load_uvek_technosphere_resource
@@ -80,7 +81,9 @@ def test_rejects_unit_changes():
 
 
 def test_packaged_overrides_are_idempotent_valid_and_preserve_unselected_rules():
-    resource = copy.deepcopy(load_uvek_technosphere_resource())
+    # This pass precedes later independent supplier reviews in the generator.
+    # Replay it at its authoring stage; final operational targets can differ.
+    resource = historical_forward_resource()
     overrides = json.loads((DATA_DIR / "export/uvek_reviewed_overrides.json").read_text())
     catalog = json.loads((DATA_DIR / "export/reference_catalogs/uvek__2025__cutoff.json").read_text())
     targets = {(row["name"], row["reference_product"], row["location"], row["unit"]) for row in catalog["technosphere"]}

@@ -292,3 +292,9 @@ helper recipes and both biosphere resources are unchanged. Evidence and exact
 source-3.9 scopes are packaged in
 `brightpath/data/export/uvek_battery_three_native_39_review.json`. Other source
 releases do not gain approval merely because their nominal reference matches.
+
+The historical override idempotence regression now uses the existing historical
+authoring-stage fixture. Replaying that early pass over final operational
+suppliers incorrectly rejected a later reviewed gas-cogeneration supplier; the
+same conflict is reproduced on baseline35307d9. The current data generator is
+unchanged. All36override and historical-decision regression checks pass.
