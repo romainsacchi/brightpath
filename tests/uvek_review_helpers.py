@@ -278,3 +278,43 @@ def before_polymer_carton_39_review(resource):
         parent.update(deepcopy(row["original_rule"]))
     resource["reviews"].update(deepcopy(review["previous_shared_reviews"]))
     return resource
+
+
+@lru_cache(maxsize=1)
+def _uncontrolled_market_authoring_stage():
+    """Capture the original generator stage, before later transport reviews."""
+    from scripts import review_uvek_pilot_uncontrolled_markets as stage
+    from scripts.generate_uvek_migration_resources import build_resources
+
+    class StageCaptured(Exception):
+        pass
+
+    captured = {}
+
+    def capture(resource):
+        captured["resource"] = deepcopy(resource)
+        raise StageCaptured
+
+    root = Path(__file__).resolve().parents[1]
+    original = stage.apply_pilot_uncontrolled_market_review
+    try:
+        stage.apply_pilot_uncontrolled_market_review = capture
+        try:
+            build_resources(
+                root / "brightpath/data/export/reference_catalogs",
+                root / "brightpath/data/export/ecoinvent_to_uvek_mapping.csv",
+                root / "brightpath/data/export/uvek_conversion_factors.yaml",
+            )
+        except StageCaptured:
+            pass
+    finally:
+        stage.apply_pilot_uncontrolled_market_review = original
+    if not captured:
+        raise AssertionError("The normal generator did not reach the uncontrolled-market authoring stage.")
+    original(captured["resource"])
+    return captured["resource"]
+
+
+def uncontrolled_market_authoring_stage_resource():
+    """Return independently compiled historical inputs for replay/drift tests."""
+    return deepcopy(_uncontrolled_market_authoring_stage())

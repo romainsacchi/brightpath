@@ -1,17 +1,17 @@
 """Mixed disposal markets preserve source fates, releases and marginal uncertainty."""
 
-from copy import deepcopy
 import json
+from copy import deepcopy
 
 import pytest
-
-from brightpath import BrightwayInventory, DATA_DIR
-from brightpath.core.policies import MigrationPolicy
-from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
-from scripts.review_uvek_pilot_uncontrolled_markets import apply_pilot_uncontrolled_market_review
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import uncontrolled_market_authoring_stage_resource
+
+from brightpath import DATA_DIR, BrightwayInventory
+from brightpath.core.policies import MigrationPolicy
+from brightpath.exceptions import MigrationError
+from scripts.review_uvek_pilot_uncontrolled_markets import apply_pilot_uncontrolled_market_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_uncontrolled_market_review.json").read_text())
 
@@ -104,6 +104,9 @@ def test_mixed_market_preserves_all_fates_source_releases_and_caller(row, amount
 def test_mixed_market_does_not_approve_other_versions(row):
     version = "3.9" if row["source_profile"]["version"] == "3.12" else "3.12"
     inventory = BrightwayInventory.from_data(consumer(row["source"], -1), context=contexts("ecoinvent", version))
+    # The exact RoW mixed-plastic 3.12 profile now has its own reviewed model.
+    if row["rule_id"] == "bp-b7606642f4256898":
+        inventory = BrightwayInventory.from_data(consumer(row["source"], -1), context=contexts("ecoinvent", "3.11"))
     before = deepcopy(inventory.data)
     with pytest.raises(MigrationError):
         inventory.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
@@ -111,7 +114,7 @@ def test_mixed_market_does_not_approve_other_versions(row):
 
 
 def test_mixed_market_authoring_is_idempotent_and_preserves_earlier_recipes():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = uncontrolled_market_authoring_stage_resource()
     expected = deepcopy(resource)
     by_id = {r["id"]: r for r in resource["replace"]}
     for row in REVIEW["records"]:
@@ -126,7 +129,7 @@ def test_mixed_market_authoring_is_idempotent_and_preserves_earlier_recipes():
 
 @pytest.mark.parametrize("change", ["source_helper", "operating_rule", "parent", "root_recipe"])
 def test_mixed_market_drift_refuses_before_mutation(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = uncontrolled_market_authoring_stage_resource()
     parent = next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])
     if change == "source_helper":
         resource["recipes"][next(iter(REVIEW["auxiliary_recipes"]))]["inputs"][0]["amount"] = 999
