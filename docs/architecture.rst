@@ -318,6 +318,16 @@ Every route needs independent technosphere/biosphere coverage and exact target
 catalog validation. Never copy proprietary background inventories into the
 repository.
 
+Required UVEK inventory reviews can depend on component mappings created late
+in the maintainer generator. Their final authoring stage is data driven:
+``data/export/uvek_required_inventory_reviews.json`` lists the packaged review
+files and their checksums. ``scripts/review_uvek_required_inventories.py`` checks
+parent rules, exact source profiles, component-rule fingerprints and borrowed
+recipe checksums before applying the reviews atomically. It validates the final
+migration schema and supports identical replay. This stage changes generated
+mapping data; it does not add a runtime conversion path or permit conversions
+between system models.
+
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
