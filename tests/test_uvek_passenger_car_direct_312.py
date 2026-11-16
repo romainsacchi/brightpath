@@ -15,7 +15,7 @@ from brightpath.migrations.resources import load_uvek_technosphere_resource
 REVIEW = json.loads((DATA_DIR / "export/uvek_passenger_car_direct_312_review.json").read_text())
 
 
-def policy():
+def policy(review=REVIEW):
     resource = load_uvek_technosphere_resource()
     indexed = {r["id"]: r for r in resource["replace"]}
     return MigrationPolicy(
@@ -24,10 +24,10 @@ def policy():
                 resource,
                 "replace",
                 indexed[row["rule_id"]],
-                TechnosphereProfile(**REVIEW["source_profile"]),
+                TechnosphereProfile(**review["source_profile"]),
                 TechnosphereProfile(**resource["target_profile"]),
             )
-            for row in REVIEW["rules"]
+            for row in review["rules"]
         ),
         on_information_loss=PolicyAction.WARN,
     )
@@ -35,13 +35,21 @@ def policy():
 
 @pytest.mark.parametrize("amount", [-2, 2])
 @pytest.mark.parametrize("release", ["2025", "2026"])
-def test_car_suppliers_preserve_quantities_uncertainty_and_ownership(amount, release):
-    rows = REVIEW["rules"]
+@pytest.mark.parametrize(
+    "review_file",
+    [
+        pytest.param("uvek_passenger_car_direct_312_review.json", id="direct-supplies"),
+        pytest.param("uvek_passenger_car_quicklime_312_review.json", id="quicklime"),
+    ],
+)
+def test_car_suppliers_preserve_quantities_uncertainty_and_ownership(amount, release, review_file):
+    review = json.loads((DATA_DIR / "export" / review_file).read_text())
+    rows = review["rules"]
     data = consumer(rows[0]["source"], amount, 3)
     data[0]["exchanges"].extend(consumer(r["source"], amount, 3)[0]["exchanges"][1] for r in rows[1:])
     before = deepcopy(data)
     converted = BrightwayInventory.from_data(data, context=contexts("ecoinvent", "3.12")).migrate_background(
-        contexts("uvek", release).background, policy=policy()
+        contexts("uvek", release).background, policy=policy(review)
     )
     assert data == before and len(converted.data) == 1
     for row, edge in zip(rows, converted.data[0]["exchanges"][1:], strict=True):
