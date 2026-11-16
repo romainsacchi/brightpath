@@ -19,6 +19,22 @@
     "reviews",
     "coverage"
   ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "axis": {"const": "technosphere"},
+          "source_profiles": {"items": {"properties": {"family": {"const": "ecoinvent"}}}},
+          "target_profile": {"properties": {"family": {"const": "uvek"}}}
+        }
+      },
+      "else": {
+        "properties": {
+          "recipes": {"additionalProperties": {"properties": {"inputs": {"items": {"properties": {"inventory_source_profile": false}}}}}}
+        }
+      }
+    }
+  ],
   "properties": {
     "schema": {
       "const": "brightpath.migration"
@@ -613,8 +629,14 @@
         "recipe": {
           "type": "string",
           "minLength": 1
+        },
+        "inventory_source_profile": {
+          "$ref": "#/$defs/profile"
         }
       },
+      "allOf": [
+        {"if": {"required": ["inventory_source_profile"]}, "then": {"required": ["recipe"]}}
+      ],
       "oneOf": [
         {
           "required": [

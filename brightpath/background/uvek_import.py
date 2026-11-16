@@ -7,6 +7,7 @@ from dataclasses import asdict
 
 from brightpath.background.catalogs import CatalogIntegrityError, CatalogNotFoundError
 from brightpath.background.reference_signs import select_profile_sign_rules
+from brightpath.core.context import TechnosphereProfile
 from brightpath.core.policies import PolicyAction
 from brightpath.core.reports import Change, Issue, Loss, Severity, StageKind, StageReport
 from brightpath.migrations.resources import load_uvek_technosphere_resource
@@ -267,11 +268,34 @@ def apply_uvek_import_recipes(
             )
         return zero_stock_ids[recipe_id]
 
-    def helper(recipe_id):
-        if recipe_id in helpers:
-            return helpers[recipe_id]
+    def helper(recipe_id, inventory_source_profile=None):
+        model_profile = source_profile if inventory_source_profile is None else inventory_source_profile
+        if isinstance(model_profile, dict):
+            model_profile = TechnosphereProfile(**model_profile)
+        historical = model_profile != source_profile
+        if historical and (
+            (model_profile.family, model_profile.system_model) != (source_profile.family, source_profile.system_model)
+            or asdict(model_profile) not in resource["source_profiles"]
+        ):
+            raise ValueError(
+                "Recipe inventory source profile cannot cross families/system models or use an undeclared profile."
+            )
+        cache_key = (recipe_id, model_profile.family, model_profile.version, model_profile.system_model)
+        if cache_key in helpers:
+            return helpers[cache_key]
         recipe = resource["recipes"][recipe_id]
         signature = recipe_signature(recipe_id)
+        if historical:
+            signature = hashlib.sha256(
+                json.dumps(
+                    {
+                        "recipe_signature": signature,
+                        "caller_source_profile": asdict(source_profile),
+                        "inventory_source_profile": asdict(model_profile),
+                    },
+                    sort_keys=True,
+                ).encode()
+            ).hexdigest()[:24]
         code = f"brightpath-uvek-import-{signature}"
         dataset = {
             **{f: recipe[f] for f in FIELDS},
@@ -296,18 +320,22 @@ def apply_uvek_import_recipes(
             dataset["brightpath_conversion"]["biosphere_binding_profile"] = asdict(target_biosphere)
         if "parameters" in recipe:
             dataset["parameters"] = deepcopy(recipe["parameters"])
+        if historical:
+            dataset["brightpath_conversion"].update(
+                inventory_source_profile=asdict(model_profile), caller_source_profile=asdict(source_profile)
+            )
         if code in codes or identity(dataset) in foreground:
             raise ValueError("Generated helper collides with a supplied foreground dataset.")
         codes.add(code)
         foreground.add(identity(dataset))
-        helpers[recipe_id] = dataset
+        helpers[cache_key] = dataset
         dataset["exchanges"].append(
             {**dict(zip(FIELDS, identity(dataset), strict=True)), "type": "production", "amount": 1}
         )
         if recipe.get("source_input_omissions"):
             dataset["brightpath_conversion"]["source_input_omissions"] = deepcopy(recipe["source_input_omissions"])
             for index, omission in enumerate(recipe["source_input_omissions"]):
-                if omission["source_profile"] != asdict(source_profile):
+                if omission["source_profile"] != asdict(model_profile):
                     raise ValueError("Recipe source omission belongs to a different source profile.")
                 path = f"helpers[{recipe_id}].source_input_omissions[{index}]"
                 details = {
@@ -315,9 +343,11 @@ def apply_uvek_import_recipes(
                     "recipe_id": recipe_id,
                     "omission_index": index,
                     "omission": omission,
-                    "source_profile": asdict(source_profile),
+                    "source_profile": asdict(model_profile),
                     "basis": {"amount": 1, "unit": recipe["unit"]},
                 }
+                if historical:
+                    details["caller_source_profile"] = asdict(source_profile)
                 severity = Severity.ERROR if policy.on_information_loss is PolicyAction.ERROR else Severity.WARNING
                 issues.append(
                     Issue(
@@ -434,7 +464,36 @@ def apply_uvek_import_recipes(
             exchange.pop("input", None)
             exchange.pop("database", None)
             if "recipe" in exchange:
-                dependency = helper(exchange.pop("recipe"))
+                declared_profile = exchange.pop("inventory_source_profile", None)
+                child_profile = model_profile if declared_profile is None else TechnosphereProfile(**declared_profile)
+                child_recipe = exchange.pop("recipe")
+                dependency = helper(child_recipe, child_profile)
+                if child_profile != model_profile:
+                    path = f"helpers[{recipe_id}].inputs[{len(dataset['exchanges']) - 1}]"
+                    message = (
+                        "Explicit recipe uses a different inventory source version as a technology/vintage proxy; "
+                        "original model audits are retained and score equivalence is not established."
+                    )
+                    details = {
+                        "recipe_id": child_recipe,
+                        "caller_source_profile": asdict(source_profile),
+                        "parent_inventory_source_profile": asdict(model_profile),
+                        "inventory_source_profile": asdict(child_profile),
+                    }
+                    severity = Severity.ERROR if policy.on_information_loss is PolicyAction.ERROR else Severity.WARNING
+                    issues.append(
+                        Issue(
+                            severity,
+                            "migration.technosphere_information_loss",
+                            message,
+                            STAGE,
+                            path=path,
+                            details=details,
+                        )
+                    )
+                    losses.append(
+                        Loss("migration.technosphere_information_loss", message, STAGE, path=path, details=details)
+                    )
                 exchange.update(dict(zip(FIELDS, identity(dependency), strict=True)))
                 exchange["type"] = "technosphere"
             dataset["exchanges"].append(exchange)
