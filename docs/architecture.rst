@@ -513,6 +513,18 @@ comparisons pass without database writes. Residual correction is confined to
 the private verification script; production solvers and model coefficients
 are unchanged. These checks do not qualify complete casting or battery updates.
 
+Two source-3.9 casting utility interfaces now use the same above-100kW useful-heat
+class and a complete native Canadian medium-voltage geographic proxy for
+Quebec. The latter preserves native grid losses and infrastructure while
+replacing provincial generation/import assumptions, with potentially substantial
+unquantified score differences. An existing verified source-3.9 new-aluminium
+cut-off stock is reused without changing its authority or recipe. See
+``data/export/uvek_casting_utilities_39_review.json``. No new helper, source
+omission or production Python change is introduced. Six signed no-write LCIs
+and three independent native/reference comparisons pass. The private heat
+comparison respects pre-existing float32 precision in the processed native
+matrix; source data, runtime solvers and conversion factors are unchanged.
+
 Resource governance
 -------------------
 
