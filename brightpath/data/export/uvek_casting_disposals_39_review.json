@@ -1,0 +1,3125 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-17",
+  "authorization": "Standing autonomous integration goal and automatic approval of inspected same-function native disposal and geographic screening proxies with explicit warnings.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.9",
+    "system_model": "cutoff"
+  },
+  "source_profiles": [
+    {
+      "family": "ecoinvent",
+      "version": "3.9",
+      "system_model": "cutoff"
+    }
+  ],
+  "target_profile": {
+    "family": "uvek",
+    "system_model": "cutoff",
+    "version": "2025"
+  },
+  "tested_biosphere": {
+    "family": "ecoinvent",
+    "version": "3.10"
+  },
+  "records": [
+    {
+      "rule_id": "bp-c26dc8d2b74cfc97",
+      "source": {
+        "location": "CH",
+        "name": "market for fly ash and scrubber sludge",
+        "reference product": "fly ash and scrubber sludge",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "casting-disposal-39-c26dc8d2b74cfc97"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "confidence": 0.234501,
+        "conversion_factor": -1,
+        "id": "bp-c26dc8d2b74cfc97",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-c26dc8d2b74cfc97"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "CH",
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "reference product": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.234501,
+        "conversion_factor": -1,
+        "id": "bp-c26dc8d2b74cfc97",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact independently reviewed source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_casting_disposals_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "casting-disposal-39-c26dc8d2b74cfc97"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_disposals_39_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "CH",
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "reference product": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-95a7461435bb61b2"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "CH",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 4,
+        "inventory_sha256": "3ad8aa3e2f597611ae9b70ff081f3186c583dca3b6de51bc2f8e4e9dbe9c89b3",
+        "metadata_sha256": "8eb415f12689467525e0f571797df36c951d80e118d217b922ab37cb96d32b33"
+      },
+      "source_component_checksums": [
+        {
+          "original_index": 1,
+          "source": {
+            "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+            "reference product": "fly ash and scrubber sludge",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "60fb0f4a61121cff87cd0859b36c4b85de54ce92e85bf95376de9ba1b490df84"
+        },
+        {
+          "original_index": 2,
+          "source": {
+            "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+            "reference product": "fly ash and scrubber sludge",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "4db1a6bf7cbe938ecc35b620ec82897135a02eb69030ef1ca4d9060b7b222fec"
+        },
+        {
+          "original_index": 3,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "CH",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "07829911294ddf47c7512f0d03bf6a353e544e3fca62bb8596b2d7365004933d"
+        },
+        {
+          "original_index": 4,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "f87342ac1833ff990504d1d3dcab756ad8fdb2b148beb7f1ce28246368fd2e75"
+        }
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred.",
+        "Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established.",
+        "Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented.",
+        "Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels.",
+        "Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally.",
+        "Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added.",
+        "No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed."
+      ]
+    },
+    {
+      "rule_id": "bp-bff3edbd14ec0e95",
+      "source": {
+        "location": "RoW",
+        "name": "market for fly ash and scrubber sludge",
+        "reference product": "fly ash and scrubber sludge",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "casting-disposal-39-bff3edbd14ec0e95"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "confidence": 0.154501,
+        "conversion_factor": -1,
+        "id": "bp-bff3edbd14ec0e95",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-bff3edbd14ec0e95"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "RoW",
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "reference product": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.154501,
+        "conversion_factor": -1,
+        "id": "bp-bff3edbd14ec0e95",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact independently reviewed source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_casting_disposals_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "casting-disposal-39-bff3edbd14ec0e95"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_disposals_39_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "RoW",
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "reference product": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-95a7461435bb61b2"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 10,
+        "inventory_sha256": "22915d061e59ea39f660faf56b6699f761b10f6376172c4c4f58e9dac7c8e7cf",
+        "metadata_sha256": "5390a04a9445bdb9ac08656cda2fdcce4c30a390383ceedd503d29a644f99e79"
+      },
+      "source_component_checksums": [
+        {
+          "original_index": 1,
+          "source": {
+            "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+            "reference product": "fly ash and scrubber sludge",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "fb6a5538409ebf98101ff94a2d8085c7e853d6b15fff23d0875f2e36e3ef2133"
+        },
+        {
+          "original_index": 2,
+          "source": {
+            "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+            "reference product": "fly ash and scrubber sludge",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "26aa2e1955cd77291b0f74b86fc846f4486ba3ab1ca97cd6b05fafc8af9124b6"
+        },
+        {
+          "original_index": 3,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "IN",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "d99e1f2921021733a2f8ba851d903b7345a3b8189afc2c772681a3cff9010a53"
+        },
+        {
+          "original_index": 4,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "CN",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "cf77ebb58e3a480f7000726e960a567a90912676679c6eb8c2ce18266e31065e"
+        },
+        {
+          "original_index": 5,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "ZA",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "85989400bbdff3e50e0ed2bad0c5bb5cc13bd66ae8cdf5819af6ab208d969d7c"
+        },
+        {
+          "original_index": 6,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "e7e9246e07b5e73855b002d7db46d68f868e7c94d7a37aa7ff8e13801afcdcf5"
+        },
+        {
+          "original_index": 7,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "US",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail, diesel",
+            "reference product": "Transport, freight, rail, diesel",
+            "location": "US",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "d76d2509f1864a6e2244f706c640bc16070888f44048a9d1f9f22121cb44a227"
+        },
+        {
+          "original_index": 8,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "ZA",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "fd2e1f739ea1371b935083e4702a5ff6e0d14a4db0c22ebd80c07d949b27f615"
+        },
+        {
+          "original_index": 9,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "d0e8f1cfbe3fef4e474bb6ca9b8edd4a1e6084e99f5f91398b0181b0a676295c"
+        },
+        {
+          "original_index": 10,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "BR",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "5b6963dc05f0ccbfe8306bb7941f85656789edc57da161a0c381daef5775a16d"
+        }
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred.",
+        "Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established.",
+        "Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented.",
+        "Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels.",
+        "Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally.",
+        "Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added.",
+        "No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed."
+      ]
+    },
+    {
+      "rule_id": "bp-dfd19ab20aef043f",
+      "source": {
+        "location": "Europe without Switzerland",
+        "name": "market for fly ash and scrubber sludge",
+        "reference product": "fly ash and scrubber sludge",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "casting-disposal-39-dfd19ab20aef043f"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "confidence": 0.154501,
+        "conversion_factor": -1,
+        "id": "bp-dfd19ab20aef043f",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-dfd19ab20aef043f"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "reference product": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.154501,
+        "conversion_factor": -1,
+        "id": "bp-dfd19ab20aef043f",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact independently reviewed source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_casting_disposals_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "casting-disposal-39-dfd19ab20aef043f"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_disposals_39_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "reference product": "Disposal, ash from paper prod. sludge, 0% water, to residual material landfill",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-95a7461435bb61b2"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for fly ash and scrubber sludge",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "Europe without Switzerland",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 4,
+        "inventory_sha256": "28f11edcea930c967a7bebe5a7bc39e22a32622ac679e20e5142b0bb6631131c",
+        "metadata_sha256": "be5f3120c6732b374b3535fc20282982e93297b9e4f0fd9e9577546c43c2bcc3"
+      },
+      "source_component_checksums": [
+        {
+          "original_index": 1,
+          "source": {
+            "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+            "reference product": "fly ash and scrubber sludge",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "69ec1e1e11864dbcd9162518b3e5d2506f8592cb4443af4344b3aa88c73a21b6"
+        },
+        {
+          "original_index": 2,
+          "source": {
+            "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+            "reference product": "fly ash and scrubber sludge",
+            "location": "Europe without Switzerland",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "b5b3d4dd3b0ef29e410205c157059a2c71a5962fc139e51d3609a3b88c9c1e1b"
+        },
+        {
+          "original_index": 3,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "Europe without Switzerland",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "e6474e99ca394b133b95998ccf0be57c27f0f44322aac90a532cd473bd5f9337"
+        },
+        {
+          "original_index": 4,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "37e0c58a0cf61574aa602f533eaf4778a97263b6ca5dfee39a7fc838d6d3c98f"
+        }
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred.",
+        "Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established.",
+        "Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented.",
+        "Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels.",
+        "Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally.",
+        "Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added.",
+        "No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed."
+      ]
+    },
+    {
+      "rule_id": "bp-aa056a9baa1ba455",
+      "source": {
+        "location": "RoW",
+        "name": "market for hazardous waste, for underground deposit",
+        "reference product": "hazardous waste, for underground deposit",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "casting-disposal-39-aa056a9baa1ba455"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "confidence": 0.521333,
+        "conversion_factor": -1,
+        "id": "bp-aa056a9baa1ba455",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-aa056a9baa1ba455"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "RoW",
+          "name": "market for hazardous waste, for underground deposit",
+          "reference product": "hazardous waste, for underground deposit",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "DE",
+          "name": "Disposal, hazardous waste, 0% water, to underground deposit",
+          "reference product": "Disposal, hazardous waste, 0% water, to underground deposit",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.521333,
+        "conversion_factor": -1,
+        "id": "bp-aa056a9baa1ba455",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact independently reviewed source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_casting_disposals_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "casting-disposal-39-aa056a9baa1ba455"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_disposals_39_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "RoW",
+          "name": "market for hazardous waste, for underground deposit",
+          "reference product": "hazardous waste, for underground deposit",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "DE",
+          "name": "Disposal, hazardous waste, 0% water, to underground deposit",
+          "reference product": "Disposal, hazardous waste, 0% water, to underground deposit",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-95a7461435bb61b2"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for hazardous waste, for underground deposit",
+          "reference product": "hazardous waste, for underground deposit",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 11,
+        "inventory_sha256": "8e27a704c96267ee4ffe6d190abb6e3ead4e76368b8cb19a887051c621b2594a",
+        "metadata_sha256": "64f339572149cbc4c31b0ab51ee7a8092794fba23bf90b94ff8df9d0782ac4be"
+      },
+      "source_component_checksums": [
+        {
+          "original_index": 1,
+          "source": {
+            "name": "treatment of hazardous waste, underground deposit",
+            "reference product": "hazardous waste, for underground deposit",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, hazardous waste, 0% water, to underground deposit",
+            "reference product": "Disposal, hazardous waste, 0% water, to underground deposit",
+            "location": "DE",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "d45eb86d5a8230a2ee1203e03d23f6efea66c282e9783c29789453a1012dfaf4"
+        },
+        {
+          "original_index": 2,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "IN",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "f8bbaa89a5490c47b7a1c58a2805cc23e487d6555a20f51c12057c07e1505beb"
+        },
+        {
+          "original_index": 3,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "CN",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "b0a5ff1b0a3d1f697bdf2755ba86ba1f12fc2576f348501f45291452a36e6262"
+        },
+        {
+          "original_index": 4,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "ZA",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "04cfe78f3c9243f93740af90d419f2df94c60f4426ff88eda4e85f432e8062cd"
+        },
+        {
+          "original_index": 5,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "8f14725267a2cda9a4220b18e452cd4309e0c9d5e1e4c4bd4d5d952cb3934a14"
+        },
+        {
+          "original_index": 6,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "US",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail, diesel",
+            "reference product": "Transport, freight, rail, diesel",
+            "location": "US",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "9bfadad339aacb1eb77f53bc14471efa79d950140aeb153b354cb0e61fcac2bd"
+        },
+        {
+          "original_index": 7,
+          "source": {
+            "name": "market for transport, freight, inland waterways, barge",
+            "reference product": "transport, freight, inland waterways, barge",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, barge",
+            "reference product": "Transport, barge",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "01e2f379a36ca86978de8f9d4e690276344d7c3f35a7b8f0c5a22249c2f14e88"
+        },
+        {
+          "original_index": 8,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "ZA",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "645fa4f16904f71c83acc34b862936aabb80271e044471f41f2856b15a1408ff"
+        },
+        {
+          "original_index": 9,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "9329a646c9dc296e8ddb44d5c3beb49795cdcf191d27c93e55c6e5cc77c4f556"
+        },
+        {
+          "original_index": 10,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "BR",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "46268b1561bd34c1983fc6d2cee72371964194927800dd3cde8b738512526444"
+        },
+        {
+          "original_index": 11,
+          "source": {
+            "name": "market for transport, freight, sea, container ship",
+            "reference product": "transport, freight, sea, container ship",
+            "location": "GLO",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, transoceanic container ship",
+            "reference product": "Transport, transoceanic container ship",
+            "location": "OCE",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "157c6e7f366c6ef77c0b79ae53136ba7659c17cd62a6bd3db2b3c98090c883fe"
+        }
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred.",
+        "Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established.",
+        "Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented.",
+        "Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels.",
+        "Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally.",
+        "Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added.",
+        "No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed."
+      ]
+    },
+    {
+      "rule_id": "bp-237ca28caf78bdd8",
+      "source": {
+        "location": "GLO",
+        "name": "market for waste emulsion paint, separated",
+        "reference product": "waste emulsion paint, separated",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "casting-disposal-39-237ca28caf78bdd8"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "confidence": 0.281497,
+        "conversion_factor": -1,
+        "id": "bp-237ca28caf78bdd8",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-237ca28caf78bdd8"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "GLO",
+          "name": "market for waste emulsion paint, separated",
+          "reference product": "waste emulsion paint, separated",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, emulsion paint, 0% water, to construction waste landfill",
+          "reference product": "Disposal, emulsion paint, 0% water, to construction waste landfill",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.281497,
+        "conversion_factor": -1,
+        "id": "bp-237ca28caf78bdd8",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact independently reviewed source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_casting_disposals_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "casting-disposal-39-237ca28caf78bdd8"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_disposals_39_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "GLO",
+          "name": "market for waste emulsion paint, separated",
+          "reference product": "waste emulsion paint, separated",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, emulsion paint, 0% water, to construction waste landfill",
+          "reference product": "Disposal, emulsion paint, 0% water, to construction waste landfill",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-95a7461435bb61b2"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for waste emulsion paint, separated",
+          "reference product": "waste emulsion paint, separated",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 3,
+        "inventory_sha256": "050681ca4d819ef29986a53e5d6628372df2e36538d6943af890eb87e7230905",
+        "metadata_sha256": "132c8e590682d4d54bcf6c5e1a50a115fbb0cbebaa492d857a2ab762cccc7851"
+      },
+      "source_component_checksums": [
+        {
+          "original_index": 1,
+          "source": {
+            "name": "market group for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "GLO",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "92cd15a54cf4d495378362c34fa0f78880505d5b8095485051a9d774724516f9"
+        },
+        {
+          "original_index": 2,
+          "source": {
+            "name": "market group for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "GLO",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "e5c730bbc68eebe5bf05b6e9796b08975999d7882313a900dacfc38f59cf715b"
+        },
+        {
+          "original_index": 3,
+          "source": {
+            "name": "treatment of waste emulsion paint, collection for final disposal",
+            "reference product": "waste emulsion paint, separated",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, building, emulsion paint remains, to final disposal",
+            "reference product": "Disposal, building, emulsion paint remains, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "06d06a07ff1255a131abe87f63bc3c9f7b76a59724661b40bc08dabc03d6b1be"
+        }
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred.",
+        "Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established.",
+        "Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented.",
+        "Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels.",
+        "Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally.",
+        "Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added.",
+        "No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed."
+      ]
+    },
+    {
+      "rule_id": "bp-a479d4db4a109948",
+      "source": {
+        "location": "CH",
+        "name": "market for waste paint on metal",
+        "reference product": "waste paint on metal",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "casting-disposal-39-a479d4db4a109948"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "confidence": 0.370238,
+        "conversion_factor": -1,
+        "id": "bp-a479d4db4a109948",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-a479d4db4a109948"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "CH",
+          "name": "market for waste paint on metal",
+          "reference product": "waste paint on metal",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, building, paint on metal, to final disposal",
+          "reference product": "Disposal, building, paint on metal, to final disposal",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.370238,
+        "conversion_factor": -1,
+        "id": "bp-a479d4db4a109948",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact independently reviewed source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_casting_disposals_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "casting-disposal-39-a479d4db4a109948"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_disposals_39_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "CH",
+          "name": "market for waste paint on metal",
+          "reference product": "waste paint on metal",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, building, paint on metal, to final disposal",
+          "reference product": "Disposal, building, paint on metal, to final disposal",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-95a7461435bb61b2"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for waste paint on metal",
+          "reference product": "waste paint on metal",
+          "location": "CH",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 4,
+        "inventory_sha256": "4e8b47449ec296cc91b6e8b9ae8e805b0277beabcd1f0b2176bf952f2c986fcc",
+        "metadata_sha256": "e664c6bb6a63adfe7bc0d66ec83afc85731249a7703fec5116c671c47a486a6c"
+      },
+      "source_component_checksums": [
+        {
+          "original_index": 1,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "CH",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "f09aa83cacf2dd578a5251766ca3153d7839ccffba0cde4b2c0f6d0cad5219c0"
+        },
+        {
+          "original_index": 2,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "1de2598073631f2dc19fcdebf2930dfadb52ec297a464f9c75be6b79da4bea57"
+        },
+        {
+          "original_index": 3,
+          "source": {
+            "name": "treatment of waste paint on metal, collection for final disposal",
+            "reference product": "waste paint on metal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, building, paint on metal, to final disposal",
+            "reference product": "Disposal, building, paint on metal, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "c14dc03350ff9a080d85b699adf5f44e748aa5546760ad1a32663cd6caf0f2d0"
+        },
+        {
+          "original_index": 4,
+          "source": {
+            "name": "treatment of waste paint on metal, sorting plant",
+            "reference product": "waste paint on metal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, building, paint on metal, to sorting plant",
+            "reference product": "Disposal, building, paint on metal, to sorting plant",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "63dc3c73a2663c374335c66242e60db610d09793b86606fca185f39fc838e77f"
+        }
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred.",
+        "Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established.",
+        "Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented.",
+        "Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels.",
+        "Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally.",
+        "Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added.",
+        "No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed."
+      ]
+    },
+    {
+      "rule_id": "bp-f89c94deef675ba1",
+      "source": {
+        "location": "RoW",
+        "name": "market for waste paint on metal",
+        "reference product": "waste paint on metal",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "casting-disposal-39-f89c94deef675ba1"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "confidence": 0.290238,
+        "conversion_factor": -1,
+        "id": "bp-f89c94deef675ba1",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-f89c94deef675ba1"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "RoW",
+          "name": "market for waste paint on metal",
+          "reference product": "waste paint on metal",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, building, paint on metal, to final disposal",
+          "reference product": "Disposal, building, paint on metal, to final disposal",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.290238,
+        "conversion_factor": -1,
+        "id": "bp-f89c94deef675ba1",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact independently reviewed source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_casting_disposals_39_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.9",
+                "system_model": "cutoff"
+              },
+              "target": {
+                "recipe_ref": "casting-disposal-39-f89c94deef675ba1"
+              },
+              "conversion_factor": -1,
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_disposals_39_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "RoW",
+          "name": "market for waste paint on metal",
+          "reference product": "waste paint on metal",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, building, paint on metal, to final disposal",
+          "reference product": "Disposal, building, paint on metal, to final disposal",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-95a7461435bb61b2"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for waste paint on metal",
+          "reference product": "waste paint on metal",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 11,
+        "inventory_sha256": "ac1080231ab6b76c114a5d003a96298b64e207f0c0467935fbbc29f6daae79b4",
+        "metadata_sha256": "b8ff32522f53ac095e6445da2bae65d523e3c732d67b26dd16877fad444c3445"
+      },
+      "source_component_checksums": [
+        {
+          "original_index": 1,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "IN",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "83fe287ee5d6b11205db5749954d1715015aa559554f736d343476d145f2aa0e"
+        },
+        {
+          "original_index": 2,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "CN",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "8a6f7160aea81243d321feaed31abcfb52e81ba9124315fa7f967fb157c1e1c6"
+        },
+        {
+          "original_index": 3,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "ZA",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "1bbbcff48547bad921e6312d0bda0ce8ea63485a4676cdb455ea19f262743dfb"
+        },
+        {
+          "original_index": 4,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "554871d09f8e3efee729b900eacbf56d62cf42a094347889b9b1e626cdc42a0e"
+        },
+        {
+          "original_index": 5,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "US",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail, diesel",
+            "reference product": "Transport, freight, rail, diesel",
+            "location": "US",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "06862e21a5d450b0db64d000130653c36ef3ddc46e40446a1eba50bf87edcd29"
+        },
+        {
+          "original_index": 6,
+          "source": {
+            "name": "market for transport, freight train",
+            "reference product": "transport, freight train",
+            "location": "Europe without Switzerland",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "4aaf0b91ab33a17bfc99b7f244e66800377dd78134ecb6d956bae7506871cd8f"
+        },
+        {
+          "original_index": 7,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "ZA",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "f550a09887c326a6b501395c57c3cf48a362f60cce985fed6492518e6f4cc6b6"
+        },
+        {
+          "original_index": 8,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "6b62c8e034376ae28b332cd70d3efd80285fd678bde937bf5fa94f0118e84abf"
+        },
+        {
+          "original_index": 9,
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, unspecified",
+            "location": "BR",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "conversion_factor": 1,
+          "source_exchange_sha256": "4139fbae3f2926ce0a7dc90d04f2ddcfb66dc75eee83d9ba94225e4123371974"
+        },
+        {
+          "original_index": 10,
+          "source": {
+            "name": "treatment of waste paint on metal, sorting plant",
+            "reference product": "waste paint on metal",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, building, paint on metal, to sorting plant",
+            "reference product": "Disposal, building, paint on metal, to sorting plant",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "0b6bc399b0ae5802b6e9a126da4081d9fd7f4ad58f213424c951a76f6d97079a"
+        },
+        {
+          "original_index": 11,
+          "source": {
+            "name": "treatment of waste paint on metal, collection for final disposal",
+            "reference product": "waste paint on metal",
+            "location": "RoW",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, building, paint on metal, to final disposal",
+            "reference product": "Disposal, building, paint on metal, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "conversion_factor": -1,
+          "source_exchange_sha256": "21f41cb1146ac736f82474d961509f0fbe50551e4a36de586bb8cf129db5ba9a"
+        }
+      ],
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred.",
+        "Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established.",
+        "Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented.",
+        "Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels.",
+        "Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally.",
+        "Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added.",
+        "No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed."
+      ]
+    }
+  ],
+  "recipes": {
+    "casting-disposal-39-c26dc8d2b74cfc97": {
+      "location": "CH",
+      "name": "market for fly ash and scrubber sludge, retained source3.9treatment shares and delivery",
+      "reference product": "fly ash and scrubber sludge",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.5,
+          "uncertainty type": 0,
+          "loc": 0.5
+        },
+        {
+          "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.5,
+          "uncertainty type": 0,
+          "loc": 0.5
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0036,
+          "uncertainty type": 2,
+          "loc": -5.626821433520073,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0258,
+          "uncertainty type": 2,
+          "loc": -3.6573807870545654,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        }
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+      "evidence": [
+        "brightpath/data/export/uvek_casting_disposals_39_review.json"
+      ]
+    },
+    "casting-disposal-39-bff3edbd14ec0e95": {
+      "location": "RoW",
+      "name": "market for fly ash and scrubber sludge, retained source3.9treatment shares and delivery",
+      "reference product": "fly ash and scrubber sludge",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.5,
+          "uncertainty type": 0,
+          "loc": 0.5
+        },
+        {
+          "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.5,
+          "uncertainty type": 0,
+          "loc": 0.5
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0008124854420980722,
+          "uncertainty type": 2,
+          "loc": -7.115412561338657,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0029325763106612677,
+          "uncertainty type": 2,
+          "loc": -5.831873955384336,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.00020573828760997995,
+          "uncertainty type": 2,
+          "loc": -8.488905645373796,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0040458296676008434,
+          "uncertainty type": 2,
+          "loc": -5.510068640084499,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, rail, diesel",
+          "reference product": "Transport, freight, rail, diesel",
+          "location": "US",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.003203370292029836,
+          "uncertainty type": 2,
+          "loc": -5.7435518071602525,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0003461605163611663,
+          "uncertainty type": 2,
+          "loc": -7.96860797036524,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.016762842782120813,
+          "uncertainty type": 2,
+          "loc": -4.0885905812399015,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.002210996701518021,
+          "uncertainty type": 2,
+          "loc": -6.114311868958677,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        }
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+      "evidence": [
+        "brightpath/data/export/uvek_casting_disposals_39_review.json"
+      ]
+    },
+    "casting-disposal-39-dfd19ab20aef043f": {
+      "location": "Europe without Switzerland",
+      "name": "market for fly ash and scrubber sludge, retained source3.9treatment shares and delivery",
+      "reference product": "fly ash and scrubber sludge",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.5,
+          "uncertainty type": 0,
+          "loc": 0.5
+        },
+        {
+          "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.5,
+          "uncertainty type": 0,
+          "loc": 0.5
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0112,
+          "uncertainty type": 2,
+          "loc": -4.491841500681089,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.01932,
+          "uncertainty type": 2,
+          "loc": -3.946614450197765,
+          "scale": 0.4074309757492673,
+          "pedigree": {
+            "reliability": 3,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.5
+        }
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+      "evidence": [
+        "brightpath/data/export/uvek_casting_disposals_39_review.json"
+      ]
+    },
+    "casting-disposal-39-aa056a9baa1ba455": {
+      "location": "RoW",
+      "name": "market for hazardous waste, for underground deposit, retained source3.9treatment shares and delivery",
+      "reference product": "hazardous waste, for underground deposit",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "Disposal, hazardous waste, 0% water, to underground deposit",
+          "reference product": "Disposal, hazardous waste, 0% water, to underground deposit",
+          "location": "DE",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 1.0,
+          "uncertainty type": 0,
+          "loc": 1.0
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.008124854420980722,
+          "uncertainty type": 2,
+          "loc": -4.812827468344612,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.029325763106612675,
+          "uncertainty type": 2,
+          "loc": -3.5292888623902905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0020573828760997994,
+          "uncertainty type": 2,
+          "loc": -6.18632055237975,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.04045829667600844,
+          "uncertainty type": 2,
+          "loc": -3.207483547090453,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail, diesel",
+          "reference product": "Transport, freight, rail, diesel",
+          "location": "US",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.03203370292029836,
+          "uncertainty type": 2,
+          "loc": -3.4409667141662066,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, barge",
+          "reference product": "Transport, barge",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0199,
+          "uncertainty type": 2,
+          "loc": -3.9170355472516905,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0034616051636116633,
+          "uncertainty type": 2,
+          "loc": -5.666022877371194,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.16762842782120813,
+          "uncertainty type": 2,
+          "loc": -1.786005488245856,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.022109967015180212,
+          "uncertainty type": 2,
+          "loc": -3.8117267759646314,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "location": "OCE",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.2115,
+          "uncertainty type": 2,
+          "loc": -1.5535302804958044,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        }
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+      "evidence": [
+        "brightpath/data/export/uvek_casting_disposals_39_review.json"
+      ]
+    },
+    "casting-disposal-39-237ca28caf78bdd8": {
+      "location": "GLO",
+      "name": "market for waste emulsion paint, separated, retained source3.9treatment shares and delivery",
+      "reference product": "waste emulsion paint, separated",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0112,
+          "uncertainty type": 2,
+          "loc": -4.491841500681089,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.01932,
+          "uncertainty type": 2,
+          "loc": -3.946614450197765,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Disposal, building, emulsion paint remains, to final disposal",
+          "reference product": "Disposal, building, emulsion paint remains, to final disposal",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 1.0,
+          "uncertainty type": 0,
+          "loc": 1.0
+        }
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+      "evidence": [
+        "brightpath/data/export/uvek_casting_disposals_39_review.json"
+      ]
+    },
+    "casting-disposal-39-a479d4db4a109948": {
+      "location": "CH",
+      "name": "market for waste paint on metal, retained source3.9treatment shares and delivery",
+      "reference product": "waste paint on metal",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.00356,
+          "uncertainty type": 2,
+          "loc": -5.637994734118198,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.02577,
+          "uncertainty type": 2,
+          "loc": -3.6585442543178632,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Disposal, building, paint on metal, to final disposal",
+          "reference product": "Disposal, building, paint on metal, to final disposal",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.0200000035799773,
+          "uncertainty type": 0,
+          "loc": 0.0200000035799773
+        },
+        {
+          "name": "Disposal, building, paint on metal, to sorting plant",
+          "reference product": "Disposal, building, paint on metal, to sorting plant",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.979999996420023,
+          "uncertainty type": 0,
+          "loc": 0.979999996420023
+        }
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+      "evidence": [
+        "brightpath/data/export/uvek_casting_disposals_39_review.json"
+      ]
+    },
+    "casting-disposal-39-f89c94deef675ba1": {
+      "location": "RoW",
+      "name": "market for waste paint on metal, retained source3.9treatment shares and delivery",
+      "reference product": "waste paint on metal",
+      "unit": "kilogram",
+      "inputs": [
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0007675684181920615,
+          "uncertainty type": 2,
+          "loc": -7.172282938251848,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0027704532824479535,
+          "uncertainty type": 2,
+          "loc": -5.888744332297526,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.00019436435879336528,
+          "uncertainty type": 2,
+          "loc": -8.545776022286985,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0038221621180260434,
+          "uncertainty type": 2,
+          "loc": -5.566939016997688,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail, diesel",
+          "reference product": "Transport, freight, rail, diesel",
+          "location": "US",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0030262768297576337,
+          "uncertainty type": 2,
+          "loc": -5.800422184073443,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.000619174992782942,
+          "uncertainty type": 2,
+          "loc": -7.387122622836765,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.0003461605163611663,
+          "uncertainty type": 2,
+          "loc": -7.96860797036524,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.016762842782120813,
+          "uncertainty type": 2,
+          "loc": -4.0885905812399015,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "location": "RER",
+          "unit": "ton kilometer",
+          "type": "technosphere",
+          "amount": 0.002210996701518021,
+          "uncertainty type": 2,
+          "loc": -6.114311868958677,
+          "scale": 0.4049691346263318,
+          "pedigree": {
+            "reliability": 1,
+            "completeness": 1,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 4
+          },
+          "scale without pedigree": 0.4959838707054898
+        },
+        {
+          "name": "Disposal, building, paint on metal, to sorting plant",
+          "reference product": "Disposal, building, paint on metal, to sorting plant",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.173209335304642,
+          "uncertainty type": 0,
+          "loc": 0.173209335304642
+        },
+        {
+          "name": "Disposal, building, paint on metal, to final disposal",
+          "reference product": "Disposal, building, paint on metal, to final disposal",
+          "location": "CH",
+          "unit": "kilogram",
+          "type": "technosphere",
+          "amount": 0.826790664695358,
+          "uncertainty type": 0,
+          "loc": 0.826790664695358
+        }
+      ],
+      "rationale": "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred. Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established. Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented. Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels. Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally. Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added. No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed.",
+      "evidence": [
+        "brightpath/data/export/uvek_casting_disposals_39_review.json"
+      ]
+    }
+  },
+  "reviews": [
+    {
+      "evidence": [
+        "brightpath/data/export/uvek_casting_disposals_39_review.json"
+      ],
+      "rationale": "Inspected negative-reference waste portfolios, same separator-sludge/water and paint mass bases, distinct sorting/final-disposal routes and full native salt-mine disposal. Reject dry paper ash and mismatched paint landfill. Retain all source shares and delivery with no omissions or recovery credits.",
+      "limitations": [
+        "Only exact independently inspected ecoinvent3.9cut-off market interfaces gain permission. Negative source waste references become positive target treatment services once at each corresponding caller. Preserve signed caller quantities, formulas, uncertainty and separate caller operations/emissions. No inverse, other version or cross-system-model permission is inferred.",
+        "Retain every original treatment branch and final-delivery leg separately with original kg/tkm and marginal uncertainty, without regrouping or renormalizing. Complete native operations replace source treatment internals, technology, emissions, infrastructure, allocation, geography, vintage and internal uncertainty. These source/native impact differences remain unquantified; source/native functional, stochastic or LCIA equivalence is not established.",
+        "Complete same-mode rail, road, barge and ocean-container freight use original tkm without distance, payload, traction or load correction. Keep nativeUSdiesel rail for the sourceUSleg and explicitRER/CH/OCEgeographic and fleet proxies otherwise. Final market delivery remains separate from the inspected collection service's own transport; no additional collection trip is invented.",
+        "Fly ash and scrubber sludge is explicitly100%separator sludge with90%water in the inspected source, matching complete native90%-water hazardous incineration. Exclude the former dry paper-sludge-ash landfill match. No0.1dry-mass, moisture or heating-value factor is applied. All source incineration burden remains allocated to disposal; source/native recovered-energy documentation has inconsistent thermal/electric labels. Do not infer a recovery ratio or add heat, electricity or substitution credits from those labels.",
+        "Paint wastes are100%paint at0%water per source kg, not kg of a painted metal substrate or paint area. Preserve sorting and collection-for-final-disposal shares independently using their corresponding complete native paint services. Sorting remains the source cut-off handover boundary; no unlisted final treatment, recovered metal or recovery credit is added after it. Emulsion-paint remains use the corresponding hazardous-incineration collection service, not the former construction-landfill suggestion. Preserve native collection transport internally.",
+        "Underground disposal uses complete native0%-water hazardous-waste salt-mine disposal. Its documented model excludes emissions from the deposited waste material, while acknowledging nonzero flooding risk. This inherited source/native modelling boundary is not proof of absolute long-term safety or zero physical releases. No new speculative release model or avoided credit is added.",
+        "No source exchange is omitted, no zero-burden helper or new omission authority is created, and no production/generator Python module is changed."
+      ]
+    }
+  ],
+  "source_rule_dependency_scopes": [],
+  "recipe_dependency_sha256": {},
+  "native_suppliers": [
+    {
+      "identity": {
+        "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+        "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 115,
+          "inventory_sha256": "30d064f1e83e335e40084718ec0c407a119dc685a17bda82d639184b68500e82",
+          "metadata_sha256": "4d62786b4d28941892c6f2e0d6454b908a476eff809004098dd85f81d0174f3d"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "reference product": "Disposal, separator sludge, 90% water, to hazardous waste incineration",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 117,
+          "inventory_sha256": "28ab4784ae9ee939934cc8d2a79c8512abae294b0e3cb2a36050b1945bdc3f74",
+          "metadata_sha256": "96bdd1cd0151a2fb150fb7ff189771f8ad35c45900b3c987c4079605672c7acd"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, rail",
+        "reference product": "Transport, freight, rail",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 66,
+          "inventory_sha256": "4af095b1c680e50755cc7969de9c7b096ce871af491062204697dd4d3c617400",
+          "metadata_sha256": "bf0b92330f5550e4ff8ca6fb8c07a5e36f231d0ece20aeda1672d032024f8d92"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, rail",
+            "reference product": "Transport, freight, rail",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 66,
+          "inventory_sha256": "d21630645414a88763748d1e1cae72eaa78561f67bae72f1dfa2024d292bad81",
+          "metadata_sha256": "a086e7cd14dc8078d57f5caaa5dc4fa25a8cd4b4dcac023249504ba59e713476"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, lorry, fleet average",
+        "reference product": "Transport, freight, lorry, fleet average",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 4,
+          "inventory_sha256": "22d4f5fe504956cb8774ee629f64ea5799f0eba27e825034f8a6ad6e2076e32c",
+          "metadata_sha256": "1712dcc1e47789fd051de828c7fa8576057a018e81bae15590c87e3285c8eae6"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 4,
+          "inventory_sha256": "1dce512cce0f49d845545ea0ed7d0a6e9f64ed59e5583c9ad0185f0fd4d6c0fd",
+          "metadata_sha256": "2e25c36bfe498c028ee90845bf35d49ed777fb811dc4c2353e70e567f87d5c35"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, freight, rail, diesel",
+        "reference product": "Transport, freight, rail, diesel",
+        "location": "US",
+        "unit": "ton kilometer"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Transport, freight, rail, diesel",
+            "reference product": "Transport, freight, rail, diesel",
+            "location": "US",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 9,
+          "inventory_sha256": "6c3a3a7967e503d7ec8e67f0a02d26b5678d38785adf5097fac54db8548d750b",
+          "metadata_sha256": "2ef01f09150b303576d30707b5505e5353917db6123f82a29ad0b4970f7d3124"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, freight, rail, diesel",
+            "reference product": "Transport, freight, rail, diesel",
+            "location": "US",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 9,
+          "inventory_sha256": "9a62ba3f827a33f72c102cdd064a2ce01ea1b5b95cc78e56bcd1e48eec1bc34f",
+          "metadata_sha256": "4d7a6093af2c23c0335708f0578067cef03fc6acf630d404f7e7e183a6b2bbba"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Disposal, hazardous waste, 0% water, to underground deposit",
+        "reference product": "Disposal, hazardous waste, 0% water, to underground deposit",
+        "location": "DE",
+        "unit": "kilogram"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, hazardous waste, 0% water, to underground deposit",
+            "reference product": "Disposal, hazardous waste, 0% water, to underground deposit",
+            "location": "DE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 15,
+          "inventory_sha256": "d4aa171da4bc964632bc2d8f11e6bf265e278f19eda77028e1c458186b08f5b8",
+          "metadata_sha256": "b8c8cb805ab565ecd8d30273b2763a116289369cb1628cb3f42dea3b2f82d9aa"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, hazardous waste, 0% water, to underground deposit",
+            "reference product": "Disposal, hazardous waste, 0% water, to underground deposit",
+            "location": "DE",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 15,
+          "inventory_sha256": "80712eed65e9f1f264a35df9404c1c9804f3acf5cf6e1b3e42951d754d8c9f04",
+          "metadata_sha256": "469f4e239ee3805b58399c85d9ea55c36bca7792c9a27c02e656557795660442"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, barge",
+        "reference product": "Transport, barge",
+        "location": "RER",
+        "unit": "ton kilometer"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Transport, barge",
+            "reference product": "Transport, barge",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 43,
+          "inventory_sha256": "8496871de053ce8a70b39531f4eda4f8532a235e4881aaf8a6f393b149c6efb0",
+          "metadata_sha256": "8c795eea4f351dabbfc92de69dc20492da53a616acb47ae1319acec310385b08"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, barge",
+            "reference product": "Transport, barge",
+            "location": "RER",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 43,
+          "inventory_sha256": "8dfd99174434709ec317338ef637fa8e6841898accea4770d7910de7c89fa7b0",
+          "metadata_sha256": "22ea7909644698e64590db4af0a206286fd10a828f7fe381e5cc2f53db6991c3"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Transport, transoceanic container ship",
+        "reference product": "Transport, transoceanic container ship",
+        "location": "OCE",
+        "unit": "ton kilometer"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Transport, transoceanic container ship",
+            "reference product": "Transport, transoceanic container ship",
+            "location": "OCE",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 35,
+          "inventory_sha256": "bfc7d9e7e4cf300178df599162a669f5cf889b3409d343999efc6753bc484459",
+          "metadata_sha256": "03407e29c161b23e19c2f7a40a63ccb0c6af3ae75e1b15a8411f63a9094c58ed"
+        },
+        "2026": {
+          "identity": {
+            "name": "Transport, transoceanic container ship",
+            "reference product": "Transport, transoceanic container ship",
+            "location": "OCE",
+            "unit": "ton kilometer"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 36,
+          "inventory_sha256": "6a8e016af6d8fbbff8b883f346e2b5367df5253ee6338761be535dee06f96a44",
+          "metadata_sha256": "2bb3d84c656e7c5472dbea11260c1e0c451d2dcdc94dabd28b55aca2165a51ce"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Disposal, building, emulsion paint remains, to final disposal",
+        "reference product": "Disposal, building, emulsion paint remains, to final disposal",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, building, emulsion paint remains, to final disposal",
+            "reference product": "Disposal, building, emulsion paint remains, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 2,
+          "inventory_sha256": "f927f87f9b40733f3f78a248c6bf9a1a38cc6b4d8532197648b6829206655253",
+          "metadata_sha256": "afe16420c44ed0b52b8a3353d7a33662e50c50a2f188618ac1e4dcd726f72437"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, building, emulsion paint remains, to final disposal",
+            "reference product": "Disposal, building, emulsion paint remains, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 2,
+          "inventory_sha256": "7edec75f4b0003664dc9debf346f0da160e374ab189062609dd53d20ab892cb3",
+          "metadata_sha256": "9ecf8682afab2ffc626c541647ab4e433f041273adbe742fcc443bc7f0b16cc2"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Disposal, building, paint on metal, to final disposal",
+        "reference product": "Disposal, building, paint on metal, to final disposal",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, building, paint on metal, to final disposal",
+            "reference product": "Disposal, building, paint on metal, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 2,
+          "inventory_sha256": "6836028f9361efade5bd8e71f6c35bbe7106f5611ac418a3aade1abade44a01e",
+          "metadata_sha256": "0973582c1a7779e5c01f6ca3ea7029b97234f59e2dd8a69b5cffc75714a312ea"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, building, paint on metal, to final disposal",
+            "reference product": "Disposal, building, paint on metal, to final disposal",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 2,
+          "inventory_sha256": "1015fa81c0c046ae65fdbdd1c109dcb6ee5f23eac60d1c2ee7c2b9e61aff8faa",
+          "metadata_sha256": "87f0342c396e7eaccdd5fd33b94f72373286447d936ebebc36f67a2bd6d8b5d6"
+        }
+      }
+    },
+    {
+      "identity": {
+        "name": "Disposal, building, paint on metal, to sorting plant",
+        "reference product": "Disposal, building, paint on metal, to sorting plant",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "releases": {
+        "2025": {
+          "identity": {
+            "name": "Disposal, building, paint on metal, to sorting plant",
+            "reference product": "Disposal, building, paint on metal, to sorting plant",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1
+          ],
+          "nonproduction_count": 5,
+          "inventory_sha256": "0d2223fa47796c41e771a81e424aacb664e567020bdd38f91dfb4b4556a3d346",
+          "metadata_sha256": "07629eafb6729cf58f2691d8ef902677e2a42b45ef4629289f4191b73df8c0c2"
+        },
+        "2026": {
+          "identity": {
+            "name": "Disposal, building, paint on metal, to sorting plant",
+            "reference product": "Disposal, building, paint on metal, to sorting plant",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amounts": [
+            1.0
+          ],
+          "nonproduction_count": 5,
+          "inventory_sha256": "b8c2a3f373eae7a3c3a6de6688bb8fcd265246c9a3b6a731ba527874d87f8899",
+          "metadata_sha256": "1fc02c4d461bc0bcba0f6e84071eac9459cd768b15c69f6679f79270dfbf3301"
+        }
+      }
+    }
+  ],
+  "source_treatment_witnesses": [
+    {
+      "identity": {
+        "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+        "reference product": "fly ash and scrubber sludge",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 116,
+      "inventory_sha256": "f62f160e0206253bb83243686da79a24f1e58379a1cebd6fdf203f904d7ad7f6",
+      "metadata_sha256": "5f41f593059bd7ab9a65d95b34cccea6c069c374a4f91073f572bb085e0c08ed"
+    },
+    {
+      "identity": {
+        "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+        "reference product": "fly ash and scrubber sludge",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 116,
+      "inventory_sha256": "1500ca4237c0883dedc7ac4388d79e08d7d86c134e6627d7f92d57621f827848",
+      "metadata_sha256": "0f0a87b16eb3f11355b37368a2a14df683e6ec46fb8290db15bdd40007d47300"
+    },
+    {
+      "identity": {
+        "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+        "reference product": "fly ash and scrubber sludge",
+        "location": "RoW",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 131,
+      "inventory_sha256": "b18db5fb63b3e4dffccf1a1c06c47fe64db6fc56aeb9eb88bafe5f57bdcb1676",
+      "metadata_sha256": "58b62446741e35b5262173286e6325d8dae6c26c686d6377b5b1d53266811233"
+    },
+    {
+      "identity": {
+        "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+        "reference product": "fly ash and scrubber sludge",
+        "location": "RoW",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 131,
+      "inventory_sha256": "43a1fa686207dfbe28d6c4c58576683880525ac9aa3bad60314c2e2e2db0854a",
+      "metadata_sha256": "d5ac1131a48d7c81b15146a5be4e89762a1eb6867dfc02a619716e7f635b3a90"
+    },
+    {
+      "identity": {
+        "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+        "reference product": "fly ash and scrubber sludge",
+        "location": "Europe without Switzerland",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 116,
+      "inventory_sha256": "288c886c5ee940f271b6ebdfb5abd449e4deda0833a26e6efe73a064d3fa6218",
+      "metadata_sha256": "818e0804172989c11e0c460788d263dda7be4e8bb29f6c496746344dc568cd30"
+    },
+    {
+      "identity": {
+        "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+        "reference product": "fly ash and scrubber sludge",
+        "location": "Europe without Switzerland",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 116,
+      "inventory_sha256": "7845b2b91ecd21fdf7a627ebda70b7cac950acab31fb15ed520f7c1ca00bfa9d",
+      "metadata_sha256": "24f0e9bd45c39a8027ee2eb5ef7f7912324d304841c23e3f9e8220b6255259e4"
+    },
+    {
+      "identity": {
+        "name": "treatment of hazardous waste, underground deposit",
+        "reference product": "hazardous waste, for underground deposit",
+        "location": "RoW",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 64,
+      "inventory_sha256": "9ff5b37722581bba562c70ae1e864834e299635a7a23ca0cbde0b403f2b1596f",
+      "metadata_sha256": "b5d9323360b70da29c50f3f542ef61c0f0b66c0286d354b83dbe5fa7c527b7b5"
+    },
+    {
+      "identity": {
+        "name": "treatment of waste emulsion paint, collection for final disposal",
+        "reference product": "waste emulsion paint, separated",
+        "location": "RoW",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 2,
+      "inventory_sha256": "02a1231ac445ca78d07463edc2e0ef5449a7c48640ededb650d2ec16fbd1a98f",
+      "metadata_sha256": "eb3455e04f5e5f75d6e5bbfeab873f09043b2bd98721b7bd6455b34ac3e2978e"
+    },
+    {
+      "identity": {
+        "name": "treatment of waste paint on metal, collection for final disposal",
+        "reference product": "waste paint on metal",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 1,
+      "inventory_sha256": "0faf7d04fa10b3e9031f2d390e18f5789dfa340b39dad648ad54f1e843239c63",
+      "metadata_sha256": "652ebb69eccbc306f2bd8064bc531c568dc50b7fcc516bd1284236a93f8179d9"
+    },
+    {
+      "identity": {
+        "name": "treatment of waste paint on metal, sorting plant",
+        "reference product": "waste paint on metal",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 3,
+      "inventory_sha256": "c5f09dbcd06f37a2402c036986087c888c66350f16e5f4d13f2d72defb5bd5f8",
+      "metadata_sha256": "eb0815a4cca14765227988c380a66ffb1fb5c8a3f175557171b2bd5ce1e10840"
+    },
+    {
+      "identity": {
+        "name": "treatment of waste paint on metal, sorting plant",
+        "reference product": "waste paint on metal",
+        "location": "RoW",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 10,
+      "inventory_sha256": "e24629295cb4eb4e65dadef525b2021cc861816f673ba85378160105779505e5",
+      "metadata_sha256": "e4a569a732b7fe4d70790bcf412e06d8628b4bc46603e5e7502f8766b1eb0629"
+    },
+    {
+      "identity": {
+        "name": "treatment of waste paint on metal, collection for final disposal",
+        "reference product": "waste paint on metal",
+        "location": "RoW",
+        "unit": "kilogram"
+      },
+      "reference_amounts": [
+        -1.0
+      ],
+      "nonproduction_count": 2,
+      "inventory_sha256": "13d0fe5fb45e236c64d1f49b7ec6e5365519bb5ce803a66a2e47db50a50c8e6d",
+      "metadata_sha256": "2220d6713efc6abff947c50a2641deb1db5fe747221d13a10cf315d8f3d80aa8"
+    }
+  ],
+  "identical_energy_recovery_label_checks": [
+    {
+      "source_identities": [
+        {
+          "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "CH",
+          "unit": "kilogram"
+        },
+        {
+          "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "CH",
+          "unit": "kilogram"
+        }
+      ],
+      "nonproduction_exchange_count": 116,
+      "identical_nominal_exchange_vectors": true,
+      "uncertainty_equivalence_claimed": false
+    },
+    {
+      "source_identities": [
+        {
+          "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "RoW",
+          "unit": "kilogram"
+        },
+        {
+          "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "RoW",
+          "unit": "kilogram"
+        }
+      ],
+      "nonproduction_exchange_count": 131,
+      "identical_nominal_exchange_vectors": true,
+      "uncertainty_equivalence_claimed": false
+    },
+    {
+      "source_identities": [
+        {
+          "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration, with energy recovery",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "Europe without Switzerland",
+          "unit": "kilogram"
+        },
+        {
+          "name": "treatment of fly ash and scrubber sludge, hazardous waste incineration",
+          "reference product": "fly ash and scrubber sludge",
+          "location": "Europe without Switzerland",
+          "unit": "kilogram"
+        }
+      ],
+      "nonproduction_exchange_count": 116,
+      "identical_nominal_exchange_vectors": true,
+      "uncertainty_equivalence_claimed": false
+    }
+  ],
+  "new_helpers": 7,
+  "new_foreground_omissions": [],
+  "zero_burden_helpers_created": 0,
+  "runtime_Python_changes": 0,
+  "generator_Python_changes": 0,
+  "licensing": "Original inventories/comments remain private; publish derived native-facing portfolios, identity/reference/hash witnesses, binding checksums and proxy limitations."
+}

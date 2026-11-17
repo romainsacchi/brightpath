@@ -525,6 +525,20 @@ and three independent native/reference comparisons pass. The private heat
 comparison respects pre-existing float32 precision in the processed native
 matrix; source data, runtime solvers and conversion factors are unchanged.
 
+Seven source-3.9 casting-disposal markets retain all twelve treatment entries
+and thirty-five freight entries. The inspected fly-ash/scrubber-sludge waste
+is 90%-water separator sludge and uses its complete native hazardous
+incinerator, excluding a dry paper-ash landfill mismatch. Paint sorting,
+collection and final-disposal shares stay distinct with the source cut-off
+handover boundaries. Emulsion-paint remains use native hazardous-incineration
+collection; underground waste uses native salt-mine disposal with its documented
+long-term-release exclusions. No moisture correction, extra recovery credit,
+source omission or new zero authority is introduced. See
+``data/export/uvek_casting_disposals_39_review.json``. Fourteen signed no-write
+LCIs and seven independent source-quantity/native-demand comparisons pass;
+source/native impact equivalence and complete casting qualification remain
+unproven. Production and generator Python modules are unchanged.
+
 Resource governance
 -------------------
 
