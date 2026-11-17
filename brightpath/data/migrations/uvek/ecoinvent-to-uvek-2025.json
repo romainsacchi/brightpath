@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 298,
-      "recipe": 1118,
-      "unclassified": 29059
+      "recipe": 1119,
+      "unclassified": 29058
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 250,
       "followup_review": 163,
-      "heuristic_similarity": 26317,
+      "heuristic_similarity": 26316,
       "named_native_teos_proxy": 1,
       "pairwise_review": 2202,
       "product_checked": 35,
@@ -25,6 +25,7 @@
       "reviewed_battery_chemical_supply_39": 5,
       "reviewed_battery_fluoride_39": 3,
       "reviewed_battery_last_two_38_reactor_and_delivery": 2,
+      "reviewed_battery_lto_312": 1,
       "reviewed_battery_material_boundary_39": 5,
       "reviewed_battery_native_basic_312": 5,
       "reviewed_battery_native_material_39": 7,
@@ -242,7 +243,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.445355,
+    "mean_confidence": 0.445375,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -10051,6 +10052,183 @@
       "name": "market for sewage sludge, 97% water, WWT, WW, average, composed from resolved suppliers, RoW",
       "rationale": "Reviewed complete landfarming and delivery per kilogram of average municipal wastewater sludge containing 97% water. A source waste reference of -1 kg and a generated treatment-service reference of +1 kg require factor -1, preserving both treatment demand and genuine signed credits. Retain every source biosphere row: 44 rows in 3.10–3.12 and 45 in 3.9/3.9.1, including legacy soil carbon. These are 43 or 44 physical releases and one separately marked waste-accounting indicator. Same-UUID Calcium, Sodium and Strontium label refinements preserve their original receiving compartments, units and masses; no native ionic-metal proxy is inferred. Only that indicator may be omitted with warning when unavailable. Native physical gaps require strict refusal or explicit permissive retention of unlinked physical rows; no ionic-metal or receiving-compartment proxy is added. Keep the exact canonical definitions, signed quantities, units, air and groundwater water releases, and 0.00097087 m3 of mechanical vacuum-tanker service per kg wet sludge. Do not normalize to dry matter, multiply by 97%, or derive a density correction. The complete Swiss mechanical service includes pumping, spreading, fuel, tractor, tanker and shed but explicitly excludes sludge production and sludge releases. Its geography, fuel demand, travel, vintage and 5 m3 equipment differ from the global machinery mix, including 24.7 m3 North American equipment. Preserve the markets' original treatment and separate freight coefficients. Regional all-sizes heavy-road freight uses the reviewed complete RER heavy-diesel fleet, with explicit regional, EURO-class, load and Swiss-2020 fleet-share limitations. Swiss rail retains the exact source electric/filtered-diesel shares through reviewed complete CH rail services; energy intensity, shunting, assets and vintage differ. Add no second spreading, transport, vehicle, infrastructure or energy credit. Preserve caller-owned quantities, uncertainty, formulas, foreground suppliers and separate emissions. Internal source parameter formulas and component uncertainty are not reconstructed. Only the enumerated cut-off profiles are approved; unknown profiles and consequential routes remain unsupported. No reverse correspondence is inferred and LCIA equivalence is not established.",
       "reference product": "sewage sludge, 97% water, WWT, WW, average",
+      "unit": "kilogram"
+    },
+    "battery-312-lithium-titanate-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_lto_312_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "battery-312-lithium-titanate-production",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.042750000953674316,
+          "loc": -3.15238618850708,
+          "location": "RER",
+          "name": "Transport, aircraft, freight",
+          "reference product": "Transport, aircraft, freight",
+          "scale": 0.5744562745094299,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 3.190999984741211,
+          "loc": 1.1603343486785889,
+          "location": "CH",
+          "name": "Transport, freight, lorry, 16t-32t gross weight, fleet average",
+          "reference product": "Transport, freight, lorry, 16t-32t gross weight, fleet average",
+          "scale": 0.5744562745094299,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.766700029373169,
+          "loc": -0.2656596899032593,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "scale": 0.5744562745094299,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "UN-EASIA",
+      "name": "market for lithium titanate spinel, reviewed native supply",
+      "rationale": "Retain the immediate LTO synthesis and delivered-market quantities; use complete native material, refractory, infrastructure-stock, utility, treatment and freight screening proxies. No remote upstream inventory reconstruction.",
+      "reference product": "lithium titanate spinel",
+      "unit": "kilogram"
+    },
+    "battery-312-lithium-titanate-production": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_lto_312_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.04800000041723251,
+          "loc": -3.0365543365478516,
+          "location": "DE",
+          "name": "Refractory, high aluminium oxide, packed, at plant",
+          "reference product": "Refractory, high aluminium oxide, packed, at plant",
+          "scale": 0.11575836688280106,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 4.000000053405728e-10,
+          "loc": -21.639556884765625,
+          "location": "RER",
+          "name": "Facilities, chemical production",
+          "reference product": "Facilities, chemical production",
+          "scale": 0.7141428589820862,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.07999999821186066,
+          "loc": -2.525728702545166,
+          "location": "DE",
+          "name": "Disposal, hazardous waste, 0% water, to underground deposit",
+          "negative": false,
+          "reference product": "Disposal, hazardous waste, 0% water, to underground deposit",
+          "scale": 0.11489125341176987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.2199999988079071,
+          "loc": -1.5141277313232422,
+          "location": "GLO",
+          "name": "Lithium hydroxide, at plant",
+          "reference product": "Lithium hydroxide, at plant",
+          "scale": 0.11575836688280106,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.75,
+          "loc": -0.28768208622932434,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.11575836688280106,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.8999999761581421,
+          "loc": -0.10536051541566849,
+          "location": "RER",
+          "name": "Titanium dioxide, production mix, at plant",
+          "reference product": "Titanium dioxide, production mix, at plant",
+          "scale": 0.11575836688280106,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.9200000173877925e-05,
+          "loc": -10.146833419799805,
+          "location": "CH",
+          "name": "Treatment, sewage, to wastewater treatment, class 1",
+          "negative": false,
+          "reference product": "Treatment, sewage, to wastewater treatment, class 1",
+          "scale": 0.11489125341176987,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 1.9700000286102295,
+          "categories": [
+            "air"
+          ],
+          "loc": 0.6780335307121277,
+          "name": "Heat, waste",
+          "scale": 0.11575836688280106,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "megajoule"
+        },
+        {
+          "amount": 0.75,
+          "categories": [
+            "air"
+          ],
+          "loc": -0.28768208622932434,
+          "name": "Nitrogen",
+          "scale": 0.11575836688280106,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 3.2499999629799277,
+          "loc": 1.1786549849508545,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.13711309432983398,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        }
+      ],
+      "location": "UN-EASIA",
+      "name": "lithium titanate spinel production, reviewed native supply",
+      "rationale": "Retain the immediate LTO synthesis and delivered-market quantities; use complete native material, refractory, infrastructure-stock, utility, treatment and freight screening proxies. No remote upstream inventory reconstruction.",
+      "reference product": "lithium titanate spinel",
       "unit": "kilogram"
     },
     "battery-312-rer-precipitated-carbonate-reviewed-market": {
@@ -959314,7 +959492,7 @@
     {"confidence": 0.357733, "id": "bp-368e4f09a082fa33", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for lithium sulfate", "reference product": "lithium sulfate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cobalt sulfate", "reference product": "Cobalt sulfate", "unit": "kilogram"}},
     {"confidence": 0.215556, "id": "bp-e980b39988838308", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for lithium titanate spinel", "reference product": "lithium titanate spinel", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium carbonate, at plant", "reference product": "Lithium carbonate, at plant", "unit": "kilogram"}},
     {"confidence": 0.215556, "id": "bp-79f3e0e42243c745", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for lithium titanate spinel", "reference product": "lithium titanate spinel", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium carbonate, at plant", "reference product": "Lithium carbonate, at plant", "unit": "kilogram"}},
-    {"confidence": 0.215556, "id": "bp-3d42ad5090eb09e4", "mapping_method": "heuristic_similarity", "source": {"location": "UN-EASIA", "name": "market for lithium titanate spinel", "reference product": "lithium titanate spinel", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium carbonate, at plant", "reference product": "Lithium carbonate, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.8, "conversion_factor": 1, "id": "bp-3d42ad5090eb09e4", "mapping_method": "reviewed_battery_lto_312", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_lto_312_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_lto_312_review.json"], "reason": "Retain the immediate lithium titanate Li4Ti5O12 synthesis and delivered-market inventory, using complete native inputs rather than lithium carbonate as a product substitute. Preserve all ten producer positions and four market positions, including signed biosphere emissions, quantities, formulas and supported uncertainty.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the inspected exact source-3.12 cut-off identity qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-f076777630f7017d", "source": {"location": "UN-EASIA", "name": "market for lithium titanate spinel", "reference product": "lithium titanate spinel", "unit": "kilogram"}, "target": {"recipe_ref": "battery-312-lithium-titanate-market"}, "technosphere_information_loss": "Retain the immediate lithium titanate Li4Ti5O12 synthesis and delivered-market inventory, using complete native inputs rather than lithium carbonate as a product substitute. Preserve all ten producer positions and four market positions, including signed biosphere emissions, quantities, formulas and supported uncertainty. Native high-aluminium-oxide refractory replaces the alumina saggar per signed kg; composition, forming, vessel geometry and service-life differences are unquantified. Do not add a saggar lifetime/yield factor. Chemical-factory stock is measured in kg, not plant units. Complete native Facilities, chemical production has the same kg basis, already documented in the fuels material-stock review. Preserve 4.000000053405728e-10 kg without plant-count, lifetime, throughput, capacity or plant-mass conversion. Retain 0.2199999988079071 kg lithium hydroxide, 0.8999999761581421 kg titanium dioxide, 0.75 kg liquid nitrogen and 3.2499999629799277 kWh electricity. Native production mixes, allocation, geography, vintage and internal uncertainty replace source details. No stoichiometric fit, extra calcination energy or yield correction is introduced. Native positive treatment services replace negative source underground hazardous-waste and wastewater inputs with factor -1. Swiss class-1 treatment per m3 replaces the source wastewater market, including its internal route, loading and untreated shares. No COD, water-balance or recovery multiplier is added. Retain each source freight row and quantity. European rail/air and Swiss fleet-average 16–32t road transport replace World/East-Asia transport portfolios with explicit fleet, traction and geography differences. The two direct air flows are mapped through the existing canonical ecoinvent 3.12 to 3.10 biosphere route with the same quantities; inferred reverse-route warnings use the existing public pragmatic policy. Unresolved/ambiguous/invalid mappings remain errors, with full coverage required. No source-code change, new foreground omission, zero-burden authority, extra recovery credit or system-model conversion. Only the inspected ecoinvent 3.12 cut-off identity qualifies. Source process is retained only at the immediate synthesis/delivery level; native input inventories are not scientifically equivalent. Documented BAFU biosphere exclusions and impact-score differences remain unquantified."},
     {"confidence": 0.215556, "id": "bp-2a9328cd7b3c83c3", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "market for lithium titanate spinel", "reference product": "lithium titanate spinel", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium carbonate, at plant", "reference product": "Lithium carbonate, at plant", "unit": "kilogram"}},
     {"confidence": 0.7725, "id": "bp-f0ea84b691223768", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for locomotive", "reference product": "locomotive", "unit": "unit"}, "target": {"location": "RER", "name": "Locomotive", "reference product": "Locomotive", "unit": "unit"}},
     {"confidence": 0.210862, "id": "bp-0e8a51d93889084b", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for long liner maintenance, steel", "reference product": "long liner maintenance, steel", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Crude oil, market mix, at long distance transport", "reference product": "Crude oil, market mix, at long distance transport", "unit": "kilogram"}},
@@ -985469,6 +985647,22 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of bottom ash, MSWI[F]-WWT, WW from concrete production, slag compartment / CH / kg external exchange with a warning. All inspected direct service comments for concrete production document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-f076777630f7017d": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_lto_312_review.json"
+      ],
+      "limitations": [
+        "Retain the immediate lithium titanate Li4Ti5O12 synthesis and delivered-market inventory, using complete native inputs rather than lithium carbonate as a product substitute. Preserve all ten producer positions and four market positions, including signed biosphere emissions, quantities, formulas and supported uncertainty.",
+        "Native high-aluminium-oxide refractory replaces the alumina saggar per signed kg; composition, forming, vessel geometry and service-life differences are unquantified. Do not add a saggar lifetime/yield factor.",
+        "Chemical-factory stock is measured in kg, not plant units. Complete native Facilities, chemical production has the same kg basis, already documented in the fuels material-stock review. Preserve 4.000000053405728e-10 kg without plant-count, lifetime, throughput, capacity or plant-mass conversion.",
+        "Retain 0.2199999988079071 kg lithium hydroxide, 0.8999999761581421 kg titanium dioxide, 0.75 kg liquid nitrogen and 3.2499999629799277 kWh electricity. Native production mixes, allocation, geography, vintage and internal uncertainty replace source details. No stoichiometric fit, extra calcination energy or yield correction is introduced.",
+        "Native positive treatment services replace negative source underground hazardous-waste and wastewater inputs with factor -1. Swiss class-1 treatment per m3 replaces the source wastewater market, including its internal route, loading and untreated shares. No COD, water-balance or recovery multiplier is added.",
+        "Retain each source freight row and quantity. European rail/air and Swiss fleet-average 16–32t road transport replace World/East-Asia transport portfolios with explicit fleet, traction and geography differences.",
+        "The two direct air flows are mapped through the existing canonical ecoinvent 3.12 to 3.10 biosphere route with the same quantities; inferred reverse-route warnings use the existing public pragmatic policy. Unresolved/ambiguous/invalid mappings remain errors, with full coverage required.",
+        "No source-code change, new foreground omission, zero-burden authority, extra recovery credit or system-model conversion. Only the inspected ecoinvent 3.12 cut-off identity qualifies. Source process is retained only at the immediate synthesis/delivery level; native input inventories are not scientifically equivalent. Documented BAFU biosphere exclusions and impact-score differences remain unquantified."
+      ],
+      "rationale": "Retain the immediate lithium titanate Li4Ti5O12 synthesis and delivered-market inventory, using complete native inputs rather than lithium carbonate as a product substitute. Preserve all ten producer positions and four market positions, including signed biosphere emissions, quantities, formulas and supported uncertainty."
     },
     "r-f08d15b5477d7fbb": {
       "evidence": [
