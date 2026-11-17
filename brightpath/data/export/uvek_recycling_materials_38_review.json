@@ -27,6 +27,11 @@
       "family": "ecoinvent",
       "system_model": "cutoff",
       "version": "3.12"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.10",
+      "system_model": "cutoff"
     }
   ],
   "target_profile": {
@@ -1230,6 +1235,71 @@
         "confidence": 1.0,
         "id": "bp-b80976e787fd9cd2",
         "mapping_method": "curated_legacy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_recycling_materials_38_review.json",
+            "brightpath/data/export/uvek_battery_final_310_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_recycling_materials_38_review.json"
+                ],
+                "reason": "Carry forward the independently approved existing physical correspondence without changing target, factor or recipe; only explicit sign-scope metadata is added. The original caller decision and its mixed-fleet approximation remain authoritative for this older profile.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_recycling_materials_38_review.json"
+                ],
+                "reason": "Both databases state that one kg of this processing service gives 0.994kg of moulded plastics and excludes the baseline converted plastic. Factor +1 preserves that existing processing basis; do not divide by0.994. Native compensatory losses/auxiliary plastics remain included. Separate caller resin purchases remain unchanged and are not added into the service. Technology, polymer mix, energy and internal uncertainty differ. Only exact inspected source ecoinvent 3.8 cut-off gains the new global permissions for native UVEK 2025/2026 cut-off and ecoinvent 3.10 biosphere. Prior independently approved physical targets, quantities and existing recipe contents remain unchanged. No patch, inverse or consequential route is inferred. Positive source and native unit references give factor +1 in the original unit. Preserve caller signs, supported uncertainty, formulas and separate emissions. Preserve every source-market producer entry, final-delivery leg and its marginal statistics without regrouping or renormalization. Native complete production internals replace source technology, energy, allocation, upstream delivery, emissions and internal uncertainty; retaining producer shares does not preserve their original allocated burdens. Use complete native manufacturing or processing services once. Retain source-owned base resin/metal purchases and do not add them again. Processing losses, auxiliaries, native infrastructure, upstream supply, releases and end-of-life remain inside the complete native model. Native grade, geography, vintage, allocation, market/plant boundary and biosphere exclusions differ. LCI, LCIA, stochastic and functional-performance equivalence and quantified score effects are not established. Same-mode final-delivery proxies retain each original tkm. Use complete native rail, heavy/light road, barge, aircraft, container-ship and bulk-freight services; retain US diesel rail for US entries and explicit RER/CH/OCE proxies otherwise. Fuel/traction mix, vehicle/ship class, payload, route, country, infrastructure, vintage and internal uncertainty differ. No invented distance, payload, density or emissions multiplier and no duplicate transport infrastructure.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "recycling-38-material-market-b80976e787fd9cd2"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.10",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1.0,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Use the complete already reviewed source-3.9 supply/service for this exact same named product, geography and reference unit as an explicit source-3.10 version screening proxy. Replace source-3.10 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor 1.0. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.10 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
+                "evidence": [
+                  "brightpath/data/export/uvek_battery_final_310_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Only individually reviewed exact source profiles qualify; every profile retains its own inventory source and reference coordinates.",
+          "status": "unresolved"
+        },
+        "review_ref": "r-ec2da2ad5cb73b6f",
         "source": {
           "location": "GLO",
           "name": "market for injection moulding",
@@ -1241,53 +1311,6 @@
           "name": "Injection moulding",
           "reference product": "Injection moulding",
           "unit": "kilogram"
-        },
-        "review_ref": "r-ec2da2ad5cb73b6f",
-        "reference_flow_sign_review": {
-          "status": "unresolved",
-          "reason": "Only the enumerated inspected source profiles have a reviewed positive-unit material basis; no other version or system model is inferred.",
-          "evidence": [
-            "brightpath/data/export/uvek_recycling_materials_38_review.json"
-          ],
-          "profiles": [
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.9",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Carry forward the independently approved existing physical correspondence without changing target, factor or recipe; only explicit sign-scope metadata is added. The original caller decision and its mixed-fleet approximation remain authoritative for this older profile.",
-                "evidence": [
-                  "brightpath/data/export/uvek_recycling_materials_38_review.json"
-                ]
-              }
-            },
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.8",
-                "system_model": "cutoff"
-              },
-              "target": {
-                "recipe_ref": "recycling-38-material-market-b80976e787fd9cd2"
-              },
-              "conversion_factor": 1,
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Both databases state that one kg of this processing service gives 0.994kg of moulded plastics and excludes the baseline converted plastic. Factor +1 preserves that existing processing basis; do not divide by0.994. Native compensatory losses/auxiliary plastics remain included. Separate caller resin purchases remain unchanged and are not added into the service. Technology, polymer mix, energy and internal uncertainty differ. Only exact inspected source ecoinvent 3.8 cut-off gains the new global permissions for native UVEK 2025/2026 cut-off and ecoinvent 3.10 biosphere. Prior independently approved physical targets, quantities and existing recipe contents remain unchanged. No patch, inverse or consequential route is inferred. Positive source and native unit references give factor +1 in the original unit. Preserve caller signs, supported uncertainty, formulas and separate emissions. Preserve every source-market producer entry, final-delivery leg and its marginal statistics without regrouping or renormalization. Native complete production internals replace source technology, energy, allocation, upstream delivery, emissions and internal uncertainty; retaining producer shares does not preserve their original allocated burdens. Use complete native manufacturing or processing services once. Retain source-owned base resin/metal purchases and do not add them again. Processing losses, auxiliaries, native infrastructure, upstream supply, releases and end-of-life remain inside the complete native model. Native grade, geography, vintage, allocation, market/plant boundary and biosphere exclusions differ. LCI, LCIA, stochastic and functional-performance equivalence and quantified score effects are not established. Same-mode final-delivery proxies retain each original tkm. Use complete native rail, heavy/light road, barge, aircraft, container-ship and bulk-freight services; retain US diesel rail for US entries and explicit RER/CH/OCE proxies otherwise. Fuel/traction mix, vehicle/ship class, payload, route, country, infrastructure, vintage and internal uncertainty differ. No invented distance, payload, density or emissions multiplier and no duplicate transport infrastructure.",
-                "evidence": [
-                  "brightpath/data/export/uvek_recycling_materials_38_review.json"
-                ]
-              }
-            }
-          ]
         }
       },
       "source_component_checksums": [
@@ -6135,5 +6158,35 @@
   "new_foreground_omissions": [],
   "runtime_Python_changes": 0,
   "generator_Python_changes": 0,
-  "licensing": "Full original source/native inventories, source-market vectors and comments remain private. Publish only mapping decisions, exact source/reference/hash witnesses and derived native-facing market recipes; source-component checksums allow licensed local reproduction."
+  "licensing": "Full original source/native inventories, source-market vectors and comments remain private. Publish only mapping decisions, exact source/reference/hash witnesses and derived native-facing market recipes; source-component checksums allow licensed local reproduction.",
+  "source310_scope_extensions": {
+    "bp-b80976e787fd9cd2": {
+      "review_path": "brightpath/data/export/uvek_battery_final_310_review.json",
+      "source_witness": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.10",
+          "system_model": "cutoff"
+        },
+        "identity": {
+          "location": "GLO",
+          "name": "market for injection moulding",
+          "reference product": "injection moulding",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 3,
+        "inventory_sha256": "a0be2524a1d8bd087dcf4465aa335ff3d2da14c88857af1817b5b50a850dc8e3",
+        "metadata_sha256": "caf6477796ded08d66287eb2f023608c5e64e4a80d0f2bec866a374b24761359",
+        "comment_sha256": "c141a8b613e5df8e1186abbda9cf9ae6f4d903003ba34320ee96048624517063",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }

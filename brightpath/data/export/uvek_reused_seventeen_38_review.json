@@ -2963,7 +2963,8 @@
         "reference_flow_sign_review": {
           "evidence": [
             "brightpath/data/export/uvek_ships_312_remaining_review.json",
-            "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+            "brightpath/data/export/uvek_reused_seventeen_38_review.json",
+            "brightpath/data/export/uvek_battery_final_310_review.json"
           ],
           "profiles": [
             {
@@ -2984,27 +2985,47 @@
               }
             },
             {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.8",
-                "system_model": "cutoff"
-              },
               "conversion_factor": -1,
               "review": {
-                "status": "verified",
-                "source_sign": -1.0,
-                "target_sign": 1,
-                "reason": "Reuse the complete reviewed source-3.12 treatment service model for used Li-ion battery as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved. The source reference is negative one unit and the delegated treatment reference is positive one unit. Factor -1 turns negative waste demand into positive treatment demand and preserves the opposite credit sign; do not add a second sign flip.",
                 "evidence": [
                   "brightpath/data/export/uvek_reused_seventeen_38_review.json"
-                ]
+                ],
+                "reason": "Reuse the complete reviewed source-3.12 treatment service model for used Li-ion battery as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved. The source reference is negative one unit and the delegated treatment reference is positive one unit. Factor -1 turns negative waste demand into positive treatment demand and preserves the opposite credit sign; do not add a second sign flip.",
+                "source_sign": -1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
               },
               "target": {
                 "recipe_ref": "battery-38-reviewed-model-11eb77f35655db2a"
               }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.10",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": -1.0,
+              "review": {
+                "status": "verified",
+                "source_sign": -1.0,
+                "target_sign": 1,
+                "reason": "Use the complete already reviewed source-3.12 supply/service for this exact same named product, geography and reference unit as an explicit source-3.10 version screening proxy. Replace source-3.10 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor -1.0. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.10 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
+                "evidence": [
+                  "brightpath/data/export/uvek_battery_final_310_review.json"
+                ]
+              },
+              "target": {
+                "recipe_ref": "battery-310-reviewed-model-11eb77f35655db2a"
+              }
             }
           ],
-          "reason": "Only individually reviewed exact source profiles qualify; each profile retains its own model and reference coordinates.",
+          "reason": "Only individually reviewed exact source profiles qualify; every profile retains its own inventory source and reference coordinates.",
           "status": "unresolved"
         },
         "report_correspondence": true,
@@ -5456,6 +5477,36 @@
       "model_source_profile": {
         "family": "ecoinvent",
         "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "new_foreground_omissions": []
+    }
+  },
+  "source310_scope_extensions": {
+    "bp-11eb77f35655db2a": {
+      "review_path": "brightpath/data/export/uvek_battery_final_310_review.json",
+      "source_witness": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.10",
+          "system_model": "cutoff"
+        },
+        "identity": {
+          "location": "GLO",
+          "name": "market for used Li-ion battery",
+          "reference product": "used Li-ion battery",
+          "unit": "kilogram"
+        },
+        "reference_amount": -1.0,
+        "nonproduction_count": 6,
+        "inventory_sha256": "95fba9749afd190972ecd4e5917c51506d3b70c291698302b630a21ada6cf17c",
+        "metadata_sha256": "a34c71d909208fc77dce2e6e7ed2df97e11c366a8f11608dfeb3fcaa04ebc592",
+        "comment_sha256": "d25685669bf6ed22ba5bed42fda640dfa079b701aac691f2105c64572c023635",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "version": "3.12",
         "system_model": "cutoff"
       },
       "new_foreground_omissions": []
