@@ -1,0 +1,3063 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-17",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.12",
+    "system_model": "cutoff"
+  },
+  "source_profiles": [
+    {
+      "family": "ecoinvent",
+      "version": "3.12",
+      "system_model": "cutoff"
+    },
+    {
+      "family": "ecoinvent",
+      "system_model": "cutoff",
+      "version": "3.9"
+    },
+    {
+      "family": "ecoinvent",
+      "system_model": "cutoff",
+      "version": "3.8"
+    }
+  ],
+  "target_profile": {
+    "family": "uvek",
+    "system_model": "cutoff",
+    "version": "2025"
+  },
+  "tested_biosphere": {
+    "family": "ecoinvent",
+    "version": "3.10"
+  },
+  "authorization": "Standing autonomous complete-source treatment-helper and same-function native incineration/operating proxy approval, with explicit warnings and unchanged original disposal shares.",
+  "records": [
+    {
+      "rule_id": "bp-1308b656f1d6a3e7",
+      "source": {
+        "location": "RoW",
+        "name": "market for waste polyurethane",
+        "reference product": "waste polyurethane",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "trucks-312-waste-market-1308b656f1d6a3e7"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "confidence": 0.355776,
+        "conversion_factor": -1,
+        "id": "bp-1308b656f1d6a3e7",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-1308b656f1d6a3e7"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "RoW",
+          "name": "market for waste polyurethane",
+          "reference product": "waste polyurethane",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, polyurethane foam, as building waste",
+          "reference product": "Disposal, polyurethane foam, as building waste",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.355776,
+        "conversion_factor": -1,
+        "id": "bp-1308b656f1d6a3e7",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact independently reviewed cut-off source profiles are qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_trucks_waste_312_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": -1,
+              "target": {
+                "recipe_ref": "trucks-312-waste-market-1308b656f1d6a3e7"
+              },
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only the independently inspected exact ecoinvent 3.12 cut-off parent markets gain new permission. Preserve signed caller kg, formulas, marginal uncertainty and independent caller operations/emissions. No patch, reverse or cross-system conversion or direct uncontrolled-treatment interface permission is inferred. Retain all twelve original disposal shares and the original road delivery separately, with their quantities/statistics and without regrouping or renormalization. One open-burning route, five open-dump and five unsanitary-landfill infiltration classes retain the exact inspected source-3.12 signed direct emissions through the existing canonical ecoinvent-3.10 biosphere route. Keep their original separate diesel-MJ and excavation-m3 demands where present, using complete native CH average building-machine combustion and RER skid-steer excavation; machinery, control, upstream supply, geography, fuel and vintage are proxies. No extra machinery/fuel input or energy, density or efficiency multiplier. Use complete generic same-material native incineration only for the original incineration share. Do not use the polyurethane building-waste disposal aggregate: it adds deconstruction and construction sorting absent from this source market and changes disposal fates. Native incinerator composition, moisture, energy/ash/recovery allocation, emissions control, technology, country and vintage replace the source incineration inventory. No invented recovered-energy/metals credit or extra demolition burden. Native polyurethane and polyethylene incinerators state0.2% and0.4% water respectively. Native glass has a0%-water label but a2%-water composition comment; this metadata inconsistency is explicitly unresolved. Preserve nominal source kg without an unsupported dry-mass, moisture, composition or heating-value correction. No exact waste-composition or score equivalence is inferred. Negative source market and treatment references become positive treatment services once at their respective callers. Positive original freight and operating demands stay positive; original signed emissions stay signed. Complete native road freight keeps the original0.077tkm per kg as a geographic/fleet/vintage proxy, without a distance/payload multiplier or duplicate transport. Existing older selected suppliers, factors and helper contents remain unchanged. The earlier source-3.8 PE authoring record is extended with this new exact3.12 profile so full chronological and idempotent data replay remain valid; its older approvals are not broadened to other profiles. No new physical omission, production/generator Python change, source/native LCI/LCIA equivalence or quantified score effect.",
+                "evidence": [
+                  "brightpath/data/export/uvek_trucks_waste_312_review.json",
+                  "brightpath/data/export/uvek_trucks_waste_312_models_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "RoW",
+          "name": "market for waste polyurethane",
+          "reference product": "waste polyurethane",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, polyurethane foam, as building waste",
+          "reference product": "Disposal, polyurethane foam, as building waste",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-61f0faeea70e029c"
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for waste polyurethane",
+          "reference product": "waste polyurethane",
+          "unit": "kilogram",
+          "location": "RoW"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 13,
+        "inventory_sha256": "283e4c961f257a35c2f825ab0f98fb4817cee05a2dd63ec3de7c17bfceca08dc",
+        "metadata_sha256": "9c3381ea95091f9abe4a91252bdfa8ecce4448688bb32b78a266ed87b22b3cbc"
+      },
+      "limitations": [
+        "Only the independently inspected exact ecoinvent 3.12 cut-off parent markets gain new permission. Preserve signed caller kg, formulas, marginal uncertainty and independent caller operations/emissions. No patch, reverse or cross-system conversion or direct uncontrolled-treatment interface permission is inferred.",
+        "Retain all twelve original disposal shares and the original road delivery separately, with their quantities/statistics and without regrouping or renormalization. One open-burning route, five open-dump and five unsanitary-landfill infiltration classes retain the exact inspected source-3.12 signed direct emissions through the existing canonical ecoinvent-3.10 biosphere route. Keep their original separate diesel-MJ and excavation-m3 demands where present, using complete native CH average building-machine combustion and RER skid-steer excavation; machinery, control, upstream supply, geography, fuel and vintage are proxies. No extra machinery/fuel input or energy, density or efficiency multiplier.",
+        "Use complete generic same-material native incineration only for the original incineration share. Do not use the polyurethane building-waste disposal aggregate: it adds deconstruction and construction sorting absent from this source market and changes disposal fates. Native incinerator composition, moisture, energy/ash/recovery allocation, emissions control, technology, country and vintage replace the source incineration inventory. No invented recovered-energy/metals credit or extra demolition burden.",
+        "Native polyurethane and polyethylene incinerators state0.2% and0.4% water respectively. Native glass has a0%-water label but a2%-water composition comment; this metadata inconsistency is explicitly unresolved. Preserve nominal source kg without an unsupported dry-mass, moisture, composition or heating-value correction. No exact waste-composition or score equivalence is inferred.",
+        "Negative source market and treatment references become positive treatment services once at their respective callers. Positive original freight and operating demands stay positive; original signed emissions stay signed. Complete native road freight keeps the original0.077tkm per kg as a geographic/fleet/vintage proxy, without a distance/payload multiplier or duplicate transport.",
+        "Existing older selected suppliers, factors and helper contents remain unchanged. The earlier source-3.8 PE authoring record is extended with this new exact3.12 profile so full chronological and idempotent data replay remain valid; its older approvals are not broadened to other profiles. No new physical omission, production/generator Python change, source/native LCI/LCIA equivalence or quantified score effect."
+      ],
+      "source_component_checksums": [
+        {
+          "native_input_index": 0,
+          "source_exchange_sha256": "e2204d3e0cfb9b93e9e674c07ea4d4c0924336daf12e7c9cc5c7e53685ac82b9",
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, diesel, unspecified",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "unit": "ton kilometer",
+            "location": "RER"
+          },
+          "conversion_factor": 1,
+          "source_witness": {
+            "identity": {
+              "name": "market for transport, freight, lorry, unspecified",
+              "reference product": "transport, freight, lorry, diesel, unspecified",
+              "unit": "ton kilometer",
+              "location": "RoW"
+            },
+            "reference_amounts": [
+              1.0
+            ],
+            "nonproduction_count": 4,
+            "inventory_sha256": "d48fa2e7e95bedb6e60b97ae5aad85d4693a6bb8988c1e8e6b9c301afa9448c9",
+            "metadata_sha256": "53a3534b1aa45869af0e7bbab604130045179db04b0e88f40f913471f43ea0ba"
+          }
+        },
+        {
+          "native_input_index": 1,
+          "source_exchange_sha256": "9a869e9b32faf36f99e044abed24a8d831cbcacc82e6622a5cbd22aaf87efa2e",
+          "source": {
+            "name": "treatment of waste polyurethane, unsanitary landfill, hyperarid infiltration class (-250mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-a6ce8539832fc9c2"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, unsanitary landfill, hyperarid infiltration class (-250mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 103,
+            "inventory_sha256": "9fdbc5f5241771a383fc98bd5130831797ea6f17904ea8a120fb45e0d4cac01d",
+            "metadata_sha256": "25f59491034ee9ac6741632b20c050e86cd7f0df70f4c1332ad2eac4f32cafa3"
+          }
+        },
+        {
+          "native_input_index": 2,
+          "source_exchange_sha256": "e10cf8002750835e9eea93666dc46b09966d310814b615e914371493ae295d50",
+          "source": {
+            "name": "treatment of waste polyurethane, open dump, dry infiltration class (100mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-1d2b8594038696db"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, open dump, dry infiltration class (100mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 107,
+            "inventory_sha256": "1addc675d79c1ac1f8f9474facd1f8867c95553523ea0f117ff7fa90e15f8a1c",
+            "metadata_sha256": "2ce8404aefa009d56158a7c1190d87af0214f0879b14783327f99be317e6d16e"
+          }
+        },
+        {
+          "native_input_index": 3,
+          "source_exchange_sha256": "f8872c4b0dd982a2dc9bf72de3ba7e552814cf59b42a8dae9b144913f198c3c1",
+          "source": {
+            "name": "treatment of waste polyurethane, unsanitary landfill, wet infiltration class (500mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-ceaeb41b9808bba6"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, unsanitary landfill, wet infiltration class (500mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 109,
+            "inventory_sha256": "0946f04027828ed0361f0674c9c26a100b5db8978839e7421bdb0028ca584e84",
+            "metadata_sha256": "327941e19f86d50a58671a3cb77a49e45813ea184e28fa160a3fcac459d4e14b"
+          }
+        },
+        {
+          "native_input_index": 4,
+          "source_exchange_sha256": "b1367cf92f18b606d08a25de9ceaa5eb162f3ea5a256c4eed5ab12802d8e14f4",
+          "source": {
+            "name": "treatment of waste polyurethane, unsanitary landfill, moist infiltration class (300mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-44140c64ff867e96"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, unsanitary landfill, moist infiltration class (300mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 109,
+            "inventory_sha256": "17565760b59901df3f318d3a63b5a80207f8e8b14e7aaa65fb6fdb80420da43d",
+            "metadata_sha256": "97c55d91b434b9b6c3637bc62d6abddc2c30cdfb89e60d4dce7764282bc083d6"
+          }
+        },
+        {
+          "native_input_index": 5,
+          "source_exchange_sha256": "71ecda9e05318c900731dee58ab5c0f23343e15cb5a6a7521c9f90c6a4696b3f",
+          "source": {
+            "name": "treatment of waste polyurethane, unsanitary landfill, very wet infiltration class (1000mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-2a8dd562b72b58c8"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, unsanitary landfill, very wet infiltration class (1000mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 109,
+            "inventory_sha256": "c4c189b93636a5e4510458b3fc13a3e5c9c68359735c5cd90dc0c55b03bf9fb9",
+            "metadata_sha256": "99626ac9c07cf6bc092f7c483807e06ba8ba005eb6d426e3efa757ec57cd4082"
+          }
+        },
+        {
+          "native_input_index": 6,
+          "source_exchange_sha256": "60c2e27568626b7eb4cea92b73fb40defb7dd33e454a9155f4b2281800c0f553",
+          "source": {
+            "name": "treatment of waste polyurethane, unsanitary landfill, dry infiltration class (100mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-f17385479d3b8f6f"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, unsanitary landfill, dry infiltration class (100mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 109,
+            "inventory_sha256": "e571bfb445ae0cf6686ee5d3541e0b1e844457f8f1cd683c54099e3c38bd9e67",
+            "metadata_sha256": "5481bc65f6b7ffd0a9ba871920f7aee6b28766a8feead9192aad031a106903ca"
+          }
+        },
+        {
+          "native_input_index": 7,
+          "source_exchange_sha256": "72d5ff76f3bc300bedf81fcd607e513e49775879b98521065d65964ea41089a4",
+          "source": {
+            "name": "treatment of waste polyurethane, open dump, moist infiltration class (300mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-7f20a97488f85be2"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, open dump, moist infiltration class (300mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 107,
+            "inventory_sha256": "7d6deaf9f802a308efbc6dbe378a71538b95b10848ae524f20c687e6c8035e78",
+            "metadata_sha256": "c038a0527dfb80e5747316c4a6adead0ec2d7b2778267fe9b7cafaa030d6dda4"
+          }
+        },
+        {
+          "native_input_index": 8,
+          "source_exchange_sha256": "4e98dd599b6bae20278245d49eef8c15bcfc53b29056402a4ba78c4b8849534f",
+          "source": {
+            "name": "treatment of waste polyurethane, open dump, hyperarid infiltration class (-250mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-1eb94c22a876d6a1"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, open dump, hyperarid infiltration class (-250mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 101,
+            "inventory_sha256": "4cdbd05ad4c821acfe7291f77333e8951277826ccc03f3901a7d06a3048e36eb",
+            "metadata_sha256": "2486cd5edc683f51a761554167e2bd654e586050d1c74a8758a6875181f2cfea"
+          }
+        },
+        {
+          "native_input_index": 9,
+          "source_exchange_sha256": "2643edfe6ae74925edaf281eae5657e4b1c8234c59bf411d357fb39f964a9b80",
+          "source": {
+            "name": "treatment of waste polyurethane, open dump, very wet infiltration class (1000mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-7b991774a9fdc365"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, open dump, very wet infiltration class (1000mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 107,
+            "inventory_sha256": "85a3a1d9efc9a0c19970d08e5de9118c4404e7fb09fe29d7511de2412629ba24",
+            "metadata_sha256": "35e4b87f1bbbb75fc765bc5bbe2f2b23bdc41aa0d7a3d4d1df49a9c9adeba979"
+          }
+        },
+        {
+          "native_input_index": 10,
+          "source_exchange_sha256": "7f8b7fa818ba3eff9be7e543841d77134e1bd4b2f1dbbf5b69502ff6881ee2ab",
+          "source": {
+            "name": "treatment of waste polyurethane, open burning",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-c95bce7e5f95374a"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, open burning",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 79,
+            "inventory_sha256": "b892645a01e93832b530dd5099df443a024ea0fbb4920f47133f41f57c124f43",
+            "metadata_sha256": "df2e7fa5c7d8ba1b5a9faf0a872a813ef570b030967ab1bc0182e797e2e9a6e3"
+          }
+        },
+        {
+          "native_input_index": 11,
+          "source_exchange_sha256": "31c212e41fbfc22fb8515fd45a0c3209b9f329379d9b3fb57a61868657281b88",
+          "source": {
+            "name": "treatment of waste polyurethane, open dump, wet infiltration class (500mm)",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-fbd7a78fd7668c9c"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, open dump, wet infiltration class (500mm)",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 107,
+            "inventory_sha256": "3381561be51097c464b60b3d81a995a74af55ac8f448f6b2212adc2b1793f532",
+            "metadata_sha256": "03f87a627bbc37b1c29045e2be427ec5116739f046a4542e44dee96ecbc748c9"
+          }
+        },
+        {
+          "native_input_index": 12,
+          "source_exchange_sha256": "4db2253e521fdb16b10bb50f94ab0e0b2220bfca2327b43c5829476d2666936e",
+          "source": {
+            "name": "treatment of waste polyurethane, municipal incineration",
+            "reference product": "waste polyurethane",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, polyurethane, 0.2% water, to municipal incineration",
+            "reference product": "Disposal, polyurethane, 0.2% water, to municipal incineration",
+            "unit": "kilogram",
+            "location": "CH"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyurethane, municipal incineration",
+              "reference product": "waste polyurethane",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 115,
+            "inventory_sha256": "2d5eadde8b3bde9cfd0593375ec3f85a8baccdd64a6286cc2466ac51ba0291c4",
+            "metadata_sha256": "ce15299fbbfc728c05a1fefb72a1bcb2ceddf42b2690096c930b2de2a40b8347"
+          }
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-1472e083e5590d89",
+      "source": {
+        "location": "RoW",
+        "name": "market for waste glass",
+        "reference product": "waste glass",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "trucks-312-waste-market-1472e083e5590d89"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": -1,
+        "id": "bp-1472e083e5590d89",
+        "mapping_method": "reviewed_pilot_nitrate_glass",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_nitrate_glass_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": -1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_nitrate_glass_review.json#ecoinvent-3.9-cutoff/ebf5f168a537e4b0c7f6f4d04f54791d051ea5b7d8113995c45d209d3492c044"
+                ],
+                "reason": "Retain every original ecoinvent3.9cutoff regional glass treatment share, elementary exchange and individual collection quantity at its signed amount and uncertainty, including zeros. Eleven shared source-preserving helpers retain open burning, open dumps and all five unsanitary/open-dump infiltration classes, including hyperarid-250mm. Do not substitute controlled incineration, a wetter class or empty recycling for those source fates. Exact publisher UUID, unit, complete compartment and emission/resource role bind45elementary definitions to installed canonical ecoinvent3.10. Publisher label/CAS changes remain warnings without molecular/speciation/compartment factors. Preserve all146direct source elementary terms and the10original diesel-combustion/skid-steer operating entries across the shared helpers. Whole native operating technology, fuel, machinery, geography, allocation, internal uncertainty and vintage remain screened differences; do not add source machinery/fuel a second time. Ordinary incineration alone uses the specific complete native glass municipal-incineration process, whose44documentedwet-composition coordinates match the inspected ordinary source and prior reviewed source3.6. Do not use building-demolition wrappers. Reserved source water content is0 whereas the documented wet waste model is2%water and matches44native coordinates; do not infer a carbon, water, density or energy multiplier. Native incineration emissions, energy/ash/residue management, allocation, infrastructure, geography and vintage remain complete-service limitations, not LCIA equivalence. Keep every original freight entry at its signedtkm/uncertainty through the previously reviewed complete genericRERrail/heavy-road services, without aggregation, renormalization, coal-only/diesel-only train substitution, loading/distance scaling or duplicate infrastructure/logistics. Preserve caller ownership, signed quantities/formulas/uncertainty, foreground suppliers and separate emissions/purchases. Negative waste references-1map to positive helper services through factor-1. No physical omission, new disposal/recovery credit, moisture/drymass factor, inverse or cross-system-model route. Native biosphere exclusions and all score effects remain warned/unquantified. Only seven enumerated exact3.9cutoff parent closures qualify forUVEK2026cutoff/ecoinvent3.10biosphere. The European group and SwissFAE branch remain outside this review; their separate pending modelling decision is not applied. Raw component bindings guard drift and grant no standalone service or other-version approval.",
+                "source_sign": -1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "pilot-nitrate-glass-ebf0055d841484e7d091"
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-d8818f47cc4ededd",
+        "source": {
+          "location": "RoW",
+          "name": "market for waste glass",
+          "reference product": "waste glass",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "pilot-nitrate-glass-ebf0055d841484e7d091"
+        },
+        "technosphere_information_loss": "Retain every original ecoinvent3.9cutoff regional glass treatment share, elementary exchange and individual collection quantity at its signed amount and uncertainty, including zeros. Eleven shared source-preserving helpers retain open burning, open dumps and all five unsanitary/open-dump infiltration classes, including hyperarid-250mm. Do not substitute controlled incineration, a wetter class or empty recycling for those source fates. Exact publisher UUID, unit, complete compartment and emission/resource role bind45elementary definitions to installed canonical ecoinvent3.10. Publisher label/CAS changes remain warnings without molecular/speciation/compartment factors. Preserve all146direct source elementary terms and the10original diesel-combustion/skid-steer operating entries across the shared helpers. Whole native operating technology, fuel, machinery, geography, allocation, internal uncertainty and vintage remain screened differences; do not add source machinery/fuel a second time. Ordinary incineration alone uses the specific complete native glass municipal-incineration process, whose44documentedwet-composition coordinates match the inspected ordinary source and prior reviewed source3.6. Do not use building-demolition wrappers. Reserved source water content is0 whereas the documented wet waste model is2%water and matches44native coordinates; do not infer a carbon, water, density or energy multiplier. Native incineration emissions, energy/ash/residue management, allocation, infrastructure, geography and vintage remain complete-service limitations, not LCIA equivalence. Keep every original freight entry at its signedtkm/uncertainty through the previously reviewed complete genericRERrail/heavy-road services, without aggregation, renormalization, coal-only/diesel-only train substitution, loading/distance scaling or duplicate infrastructure/logistics. Preserve caller ownership, signed quantities/formulas/uncertainty, foreground suppliers and separate emissions/purchases. Negative waste references-1map to positive helper services through factor-1. No physical omission, new disposal/recovery credit, moisture/drymass factor, inverse or cross-system-model route. Native biosphere exclusions and all score effects remain warned/unquantified. Only seven enumerated exact3.9cutoff parent closures qualify forUVEK2026cutoff/ecoinvent3.10biosphere. The European group and SwissFAE branch remain outside this review; their separate pending modelling decision is not applied. Raw component bindings guard drift and grant no standalone service or other-version approval."
+      },
+      "compiled_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": -1,
+        "id": "bp-1472e083e5590d89",
+        "mapping_method": "reviewed_pilot_nitrate_glass",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_nitrate_glass_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": -1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_nitrate_glass_review.json#ecoinvent-3.9-cutoff/ebf5f168a537e4b0c7f6f4d04f54791d051ea5b7d8113995c45d209d3492c044"
+                ],
+                "reason": "Retain every original ecoinvent3.9cutoff regional glass treatment share, elementary exchange and individual collection quantity at its signed amount and uncertainty, including zeros. Eleven shared source-preserving helpers retain open burning, open dumps and all five unsanitary/open-dump infiltration classes, including hyperarid-250mm. Do not substitute controlled incineration, a wetter class or empty recycling for those source fates. Exact publisher UUID, unit, complete compartment and emission/resource role bind45elementary definitions to installed canonical ecoinvent3.10. Publisher label/CAS changes remain warnings without molecular/speciation/compartment factors. Preserve all146direct source elementary terms and the10original diesel-combustion/skid-steer operating entries across the shared helpers. Whole native operating technology, fuel, machinery, geography, allocation, internal uncertainty and vintage remain screened differences; do not add source machinery/fuel a second time. Ordinary incineration alone uses the specific complete native glass municipal-incineration process, whose44documentedwet-composition coordinates match the inspected ordinary source and prior reviewed source3.6. Do not use building-demolition wrappers. Reserved source water content is0 whereas the documented wet waste model is2%water and matches44native coordinates; do not infer a carbon, water, density or energy multiplier. Native incineration emissions, energy/ash/residue management, allocation, infrastructure, geography and vintage remain complete-service limitations, not LCIA equivalence. Keep every original freight entry at its signedtkm/uncertainty through the previously reviewed complete genericRERrail/heavy-road services, without aggregation, renormalization, coal-only/diesel-only train substitution, loading/distance scaling or duplicate infrastructure/logistics. Preserve caller ownership, signed quantities/formulas/uncertainty, foreground suppliers and separate emissions/purchases. Negative waste references-1map to positive helper services through factor-1. No physical omission, new disposal/recovery credit, moisture/drymass factor, inverse or cross-system-model route. Native biosphere exclusions and all score effects remain warned/unquantified. Only seven enumerated exact3.9cutoff parent closures qualify forUVEK2026cutoff/ecoinvent3.10biosphere. The European group and SwissFAE branch remain outside this review; their separate pending modelling decision is not applied. Raw component bindings guard drift and grant no standalone service or other-version approval.",
+                "source_sign": -1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "pilot-nitrate-glass-ebf0055d841484e7d091"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": -1,
+              "target": {
+                "recipe_ref": "trucks-312-waste-market-1472e083e5590d89"
+              },
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only the independently inspected exact ecoinvent 3.12 cut-off parent markets gain new permission. Preserve signed caller kg, formulas, marginal uncertainty and independent caller operations/emissions. No patch, reverse or cross-system conversion or direct uncontrolled-treatment interface permission is inferred. Retain all twelve original disposal shares and the original road delivery separately, with their quantities/statistics and without regrouping or renormalization. One open-burning route, five open-dump and five unsanitary-landfill infiltration classes retain the exact inspected source-3.12 signed direct emissions through the existing canonical ecoinvent-3.10 biosphere route. Keep their original separate diesel-MJ and excavation-m3 demands where present, using complete native CH average building-machine combustion and RER skid-steer excavation; machinery, control, upstream supply, geography, fuel and vintage are proxies. No extra machinery/fuel input or energy, density or efficiency multiplier. Use complete generic same-material native incineration only for the original incineration share. Do not use the polyurethane building-waste disposal aggregate: it adds deconstruction and construction sorting absent from this source market and changes disposal fates. Native incinerator composition, moisture, energy/ash/recovery allocation, emissions control, technology, country and vintage replace the source incineration inventory. No invented recovered-energy/metals credit or extra demolition burden. Native polyurethane and polyethylene incinerators state0.2% and0.4% water respectively. Native glass has a0%-water label but a2%-water composition comment; this metadata inconsistency is explicitly unresolved. Preserve nominal source kg without an unsupported dry-mass, moisture, composition or heating-value correction. No exact waste-composition or score equivalence is inferred. Negative source market and treatment references become positive treatment services once at their respective callers. Positive original freight and operating demands stay positive; original signed emissions stay signed. Complete native road freight keeps the original0.077tkm per kg as a geographic/fleet/vintage proxy, without a distance/payload multiplier or duplicate transport. Existing older selected suppliers, factors and helper contents remain unchanged. The earlier source-3.8 PE authoring record is extended with this new exact3.12 profile so full chronological and idempotent data replay remain valid; its older approvals are not broadened to other profiles. No new physical omission, production/generator Python change, source/native LCI/LCIA equivalence or quantified score effect.",
+                "evidence": [
+                  "brightpath/data/export/uvek_trucks_waste_312_review.json",
+                  "brightpath/data/export/uvek_trucks_waste_312_models_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-d8818f47cc4ededd",
+        "source": {
+          "location": "RoW",
+          "name": "market for waste glass",
+          "reference product": "waste glass",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "pilot-nitrate-glass-ebf0055d841484e7d091"
+        },
+        "technosphere_information_loss": "Retain every original ecoinvent3.9cutoff regional glass treatment share, elementary exchange and individual collection quantity at its signed amount and uncertainty, including zeros. Eleven shared source-preserving helpers retain open burning, open dumps and all five unsanitary/open-dump infiltration classes, including hyperarid-250mm. Do not substitute controlled incineration, a wetter class or empty recycling for those source fates. Exact publisher UUID, unit, complete compartment and emission/resource role bind45elementary definitions to installed canonical ecoinvent3.10. Publisher label/CAS changes remain warnings without molecular/speciation/compartment factors. Preserve all146direct source elementary terms and the10original diesel-combustion/skid-steer operating entries across the shared helpers. Whole native operating technology, fuel, machinery, geography, allocation, internal uncertainty and vintage remain screened differences; do not add source machinery/fuel a second time. Ordinary incineration alone uses the specific complete native glass municipal-incineration process, whose44documentedwet-composition coordinates match the inspected ordinary source and prior reviewed source3.6. Do not use building-demolition wrappers. Reserved source water content is0 whereas the documented wet waste model is2%water and matches44native coordinates; do not infer a carbon, water, density or energy multiplier. Native incineration emissions, energy/ash/residue management, allocation, infrastructure, geography and vintage remain complete-service limitations, not LCIA equivalence. Keep every original freight entry at its signedtkm/uncertainty through the previously reviewed complete genericRERrail/heavy-road services, without aggregation, renormalization, coal-only/diesel-only train substitution, loading/distance scaling or duplicate infrastructure/logistics. Preserve caller ownership, signed quantities/formulas/uncertainty, foreground suppliers and separate emissions/purchases. Negative waste references-1map to positive helper services through factor-1. No physical omission, new disposal/recovery credit, moisture/drymass factor, inverse or cross-system-model route. Native biosphere exclusions and all score effects remain warned/unquantified. Only seven enumerated exact3.9cutoff parent closures qualify forUVEK2026cutoff/ecoinvent3.10biosphere. The European group and SwissFAE branch remain outside this review; their separate pending modelling decision is not applied. Raw component bindings guard drift and grant no standalone service or other-version approval."
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for waste glass",
+          "reference product": "waste glass",
+          "unit": "kilogram",
+          "location": "RoW"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 13,
+        "inventory_sha256": "489b061e13e862fa4db5ee4b4f9862e50f494434e25d03d9165117eedac90588",
+        "metadata_sha256": "b48ebed4176ef3efb6249a39e42138e924e128245b437e7bfc039b6a57cb82bc"
+      },
+      "limitations": [
+        "Only the independently inspected exact ecoinvent 3.12 cut-off parent markets gain new permission. Preserve signed caller kg, formulas, marginal uncertainty and independent caller operations/emissions. No patch, reverse or cross-system conversion or direct uncontrolled-treatment interface permission is inferred.",
+        "Retain all twelve original disposal shares and the original road delivery separately, with their quantities/statistics and without regrouping or renormalization. One open-burning route, five open-dump and five unsanitary-landfill infiltration classes retain the exact inspected source-3.12 signed direct emissions through the existing canonical ecoinvent-3.10 biosphere route. Keep their original separate diesel-MJ and excavation-m3 demands where present, using complete native CH average building-machine combustion and RER skid-steer excavation; machinery, control, upstream supply, geography, fuel and vintage are proxies. No extra machinery/fuel input or energy, density or efficiency multiplier.",
+        "Use complete generic same-material native incineration only for the original incineration share. Do not use the polyurethane building-waste disposal aggregate: it adds deconstruction and construction sorting absent from this source market and changes disposal fates. Native incinerator composition, moisture, energy/ash/recovery allocation, emissions control, technology, country and vintage replace the source incineration inventory. No invented recovered-energy/metals credit or extra demolition burden.",
+        "Native polyurethane and polyethylene incinerators state0.2% and0.4% water respectively. Native glass has a0%-water label but a2%-water composition comment; this metadata inconsistency is explicitly unresolved. Preserve nominal source kg without an unsupported dry-mass, moisture, composition or heating-value correction. No exact waste-composition or score equivalence is inferred.",
+        "Negative source market and treatment references become positive treatment services once at their respective callers. Positive original freight and operating demands stay positive; original signed emissions stay signed. Complete native road freight keeps the original0.077tkm per kg as a geographic/fleet/vintage proxy, without a distance/payload multiplier or duplicate transport.",
+        "Existing older selected suppliers, factors and helper contents remain unchanged. The earlier source-3.8 PE authoring record is extended with this new exact3.12 profile so full chronological and idempotent data replay remain valid; its older approvals are not broadened to other profiles. No new physical omission, production/generator Python change, source/native LCI/LCIA equivalence or quantified score effect."
+      ],
+      "source_component_checksums": [
+        {
+          "native_input_index": 0,
+          "source_exchange_sha256": "e2204d3e0cfb9b93e9e674c07ea4d4c0924336daf12e7c9cc5c7e53685ac82b9",
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, diesel, unspecified",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "unit": "ton kilometer",
+            "location": "RER"
+          },
+          "conversion_factor": 1,
+          "source_witness": {
+            "identity": {
+              "name": "market for transport, freight, lorry, unspecified",
+              "reference product": "transport, freight, lorry, diesel, unspecified",
+              "unit": "ton kilometer",
+              "location": "RoW"
+            },
+            "reference_amounts": [
+              1.0
+            ],
+            "nonproduction_count": 4,
+            "inventory_sha256": "d48fa2e7e95bedb6e60b97ae5aad85d4693a6bb8988c1e8e6b9c301afa9448c9",
+            "metadata_sha256": "53a3534b1aa45869af0e7bbab604130045179db04b0e88f40f913471f43ea0ba"
+          }
+        },
+        {
+          "native_input_index": 1,
+          "source_exchange_sha256": "165eef77a51ba8fb1b3b0f544691f9b8286abacc99b2ce938a0a09bf25bcf13f",
+          "source": {
+            "name": "treatment of waste glass, unsanitary landfill, dry infiltration class (100mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-82c13f150733d0f7"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, unsanitary landfill, dry infiltration class (100mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 33,
+            "inventory_sha256": "47a83bb9591c313b61bbc2122afb50b3b8abc1f33bdec11db59181a0c47c2f9a",
+            "metadata_sha256": "a597e5fc8b141598b8ddafea0b1843f701c71a64769df085367e3a801b128592"
+          }
+        },
+        {
+          "native_input_index": 2,
+          "source_exchange_sha256": "27d08d87a5f449e2308addc220f20ed509db5c78bd57e92e03310af573dd9d3d",
+          "source": {
+            "name": "treatment of waste glass, unsanitary landfill, hyperarid infiltration class (-250mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-0b01109d873417f6"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, unsanitary landfill, hyperarid infiltration class (-250mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 40,
+            "inventory_sha256": "b5cafcdbe779cfb6e3b3bdfc74fb686293d13f9d27af6a90c25072f5ff2f105e",
+            "metadata_sha256": "0c0a9df59576a32db74a6d92ddaff94a804fcae2bf39826b95c7b815c3973b43"
+          }
+        },
+        {
+          "native_input_index": 3,
+          "source_exchange_sha256": "034f85e04a1069e68bcf4af343559d084d8a9f7865bcc3682986a38a93840320",
+          "source": {
+            "name": "treatment of waste glass, open dump, very wet infiltration class (1000mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-ab53026fe7e90058"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, open dump, very wet infiltration class (1000mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 31,
+            "inventory_sha256": "0c176fd9e10c27b9c5c01eae2f21dca1ddd63a3dc674581e8091ac81c463ae75",
+            "metadata_sha256": "89363df3f722477b803a05a1a8dda34cfe2e8634e5d8722c74049d5f7151cc81"
+          }
+        },
+        {
+          "native_input_index": 4,
+          "source_exchange_sha256": "27325b19ffffd63433b8d3a0fa65e1bd7453d7f80671cf276c84029c277354d7",
+          "source": {
+            "name": "treatment of waste glass, unsanitary landfill, wet infiltration class (500mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-a007183189fdebe2"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, unsanitary landfill, wet infiltration class (500mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 33,
+            "inventory_sha256": "41fbc3e9ea4a5d883cde6edfca665004ea15a52af67a7e2202acc46e4e26e5e4",
+            "metadata_sha256": "063d17a46199122f50cb465d0b6254c76b1bbe1500df8e4d5b07eb1811d67ccb"
+          }
+        },
+        {
+          "native_input_index": 5,
+          "source_exchange_sha256": "bb41ea9300c8b468221ed1a9ef11c3d7eac836571577a0ea96fb18632afd53cf",
+          "source": {
+            "name": "treatment of waste glass, open dump, wet infiltration class (500mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-e258069ead699b91"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, open dump, wet infiltration class (500mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 31,
+            "inventory_sha256": "8e55b08857797b977d5eb55543a7af784ced453de47f7418834018f2002b24c9",
+            "metadata_sha256": "ef6ca7604a9c1f1d718f370fc498bf2650f01720b3d5b3cd99667431c3569c80"
+          }
+        },
+        {
+          "native_input_index": 6,
+          "source_exchange_sha256": "3b8c568177374e886005e95af01396a03abd06b7d67fa7592c285625f8243fd0",
+          "source": {
+            "name": "treatment of waste glass, unsanitary landfill, moist infiltration class (300mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-3883acd78e9bbe9f"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, unsanitary landfill, moist infiltration class (300mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 33,
+            "inventory_sha256": "95e24d3cbc7fb8bf5b539a1f11297c1e72268ca36e2370574a3fe4d802ad2e51",
+            "metadata_sha256": "f2a0eab02a5e924c86b0348e59b359e5fac8270f35a186c114ab42e7db2f86f3"
+          }
+        },
+        {
+          "native_input_index": 7,
+          "source_exchange_sha256": "1291c96aed06c5d4414617da6ee2c603038fe3e586ed78228a50a901b7c6f4be",
+          "source": {
+            "name": "treatment of waste glass, unsanitary landfill, very wet infiltration class (1000mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-92545eb713a2e901"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, unsanitary landfill, very wet infiltration class (1000mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 33,
+            "inventory_sha256": "f06ec09e7ab52d69f99292ca09583024edb975d34bc33d7940a8ecb63c302b72",
+            "metadata_sha256": "64eab9fd09cd5f31ec5ee636b6ed802466f2db980f79709ffa32499ca85e387e"
+          }
+        },
+        {
+          "native_input_index": 8,
+          "source_exchange_sha256": "c21408f312afe1b53e07f96d561e9ddcedacf4891411b9e390081e26781be489",
+          "source": {
+            "name": "treatment of waste glass, open burning",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-c6457f02b9d021c8"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, open burning",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 27,
+            "inventory_sha256": "b0d10e2bb2e262c83d382c248a30fd6108c69dbbaeafa8cbd94b95eca1f109d9",
+            "metadata_sha256": "3ca42d93e791f20efedb01e1d97b394f957f5c5bd71b1e9073b317551d8e8a01"
+          }
+        },
+        {
+          "native_input_index": 9,
+          "source_exchange_sha256": "9e75c1366353aa3b5888fda8834cd345035baacbd35216eb85ed55d83e3ffc4f",
+          "source": {
+            "name": "treatment of waste glass, open dump, hyperarid infiltration class (-250mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-69bd140520d972f5"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, open dump, hyperarid infiltration class (-250mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 38,
+            "inventory_sha256": "0ce81b66fab83d2b1f80deace2a6fb86c31f3c78ecc12ec43415cf7d9dd48d3a",
+            "metadata_sha256": "80b030a22f19f7e62be8993e56e0f60b678d3804cbb23bf40600b95f347a78df"
+          }
+        },
+        {
+          "native_input_index": 10,
+          "source_exchange_sha256": "5dc3fac20098aef00b37c50e65fb9fbc4bfeec8d4c2da0c34cdbc4d42f168967",
+          "source": {
+            "name": "treatment of waste glass, municipal incineration",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, glass, 0% water, to municipal incineration",
+            "reference product": "Disposal, glass, 0% water, to municipal incineration",
+            "unit": "kilogram",
+            "location": "CH"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, municipal incineration",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 45,
+            "inventory_sha256": "d696480422cc1569ad32c3820da119e69fad186b8348f4b63b5b094925b9b02f",
+            "metadata_sha256": "b9a8408b382aecd409e3862989d36690aec0326f171d9374db58b85f5961b668"
+          }
+        },
+        {
+          "native_input_index": 11,
+          "source_exchange_sha256": "5ec98342660ca0c7153aaee26e1cf52bed211e25f7906fc716b6ba923866b065",
+          "source": {
+            "name": "treatment of waste glass, open dump, moist infiltration class (300mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-9b1a8c3b4095e474"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, open dump, moist infiltration class (300mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 31,
+            "inventory_sha256": "dd58307e13f7dee3786ba22c0e218e69b0ccf15d41327a2a5aec957ebb42cacf",
+            "metadata_sha256": "b27ad9d0ea7009ac2a7417f8eaa6946f455c541d9470fdff2d31a074501dc56d"
+          }
+        },
+        {
+          "native_input_index": 12,
+          "source_exchange_sha256": "5aabd1737ad943b9f1fcef5834c59bba6fe596cad6e37877677675d6796270cf",
+          "source": {
+            "name": "treatment of waste glass, open dump, dry infiltration class (100mm)",
+            "reference product": "waste glass",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-11ec72321067a04c"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste glass, open dump, dry infiltration class (100mm)",
+              "reference product": "waste glass",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 31,
+            "inventory_sha256": "78063be900dee0a19b8f81491e35ff7eb76791d4ccc993fa4740f84b337625c1",
+            "metadata_sha256": "e60ab0bd3dc2dc4fac68b69efeac91c6ce1884ca1d41ef37aaffc60baed43351"
+          }
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-38a8afc636bbea5a",
+      "source": {
+        "location": "RoW",
+        "name": "market for waste polyethylene",
+        "reference product": "waste polyethylene",
+        "unit": "kilogram"
+      },
+      "target": {
+        "recipe_ref": "trucks-312-waste-market-38a8afc636bbea5a"
+      },
+      "conversion_factor": -1,
+      "original_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": -1,
+        "id": "bp-38a8afc636bbea5a",
+        "mapping_method": "reviewed_pilot_nitrate_pe_row",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_nitrate_pe_row_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": -1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_nitrate_pe_row_review.json#ecoinvent-3.9-cutoff/16998876e5a61f70a6e04788bcb7dd8e5162c5c9885f760a9999b917842bc5a6"
+                ],
+                "reason": "Preserve all12 original rest-of-world polyethylene-treatment shares and4 separate original collection-freight entries with signed quantities and supported uncertainty, without aggregation or renormalization. Nine exact previously reviewed uncontrolled-treatment recipes remain unchanged; two new hyperarid(-250mm) helpers retain their complete101-flow source inventories, original operating inputs and separately inspected canonical3.10 definition metadata. Open burning, open dumps and five infiltration classes remain their source fates rather than controlled incineration or an empty allocation. All1145 foreground elementary exchanges are retained across11 shared treatment helpers, including signed/zero amounts, uncertainty, full compartments and emission/resource roles. Publisher UUID/unit/context/role identify canonical definitions; Ca/Na/Sr names, sodium CAS changes and removal of an individual CAS for generic NOx remain metadata warnings without molecular/speciation/compartment factors. The ordinary-incineration portion uses the exact complete native polyethylene0.4%-water incinerator from the prior44-coordinate composition review, not the raw genericPE/PP wrapper with additional collection. Native energy, ash/residue treatment, internal residue transport, infrastructure, allocation and emissions remain once, with geographic, technology, vintage, biosphere-exclusion and unquantified-score limitations. Original country-allocated rail entries use the complete generic RER freight-rail service from the already inspected whole-freight authority; do not select the raw coal-only CN train or diesel-only US target. Keep road freight at its original tkm through the inspected complete RER heavy fleet. Source-specific quantities/uncertainty remain separate even where native suppliers coincide. Native traction, wagon/fleet, loading, fuel, infrastructure, geography and vintage differences remain screening warnings. Retain as-received kg and net tkm; introduce no moisture, dry-mass, density, heating-value, distance, payload, capacity, lifetime, recovery or avoided-production factor. Source market/treatments have no parameters/formulas. Preserve caller-owned signed quantities, formulas, uncertainty, production, foreground suppliers and separate emissions. Negative waste reference-1 maps to positive helper treatment via factor-1. Raw child hashes freeze drift and do not grant standalone approvals. No new treatment model, polymer blend, FAE assumption, physical omission, inverse or cross-system-model conversion is inferred. Only the exact3.9cutoff RoW parent closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; other profiles and European/Swiss branches remain unapproved.",
+                "source_sign": -1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "pilot-nitrate-pe-row-b52c1e019b7b28fe43a8"
+              }
+            },
+            {
+              "conversion_factor": -1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_trucks_two_waste_markets_38_review.json"
+                ],
+                "reason": "Use the existing complete reviewed 3.9 treatment models as screening proxies for the same source-3.8 waste type, treatment technology and infiltration class. This is an explicit inventory-version substitution, not an exact source-inventory reconstruction. Treatment emissions, operating inputs, temporal modelling, geography, allocation, uncertainty and score effects differ and remain unquantified. The source municipal-incineration inventory is replaced by the already-reviewed complete native incinerator; no additional recovery or energy credit is invented. Retain all twelve original source-3.8 treatment shares and all seven original collection-transport entries without renormalization, grouping or changing nominal quantities. Retain market transport uncertainty and its supported constant formula. Source negative treatment inputs and the negative market reference each change sign once at their own boundary; no absolute-value operation is used. Use complete existing same-mode native collection services: RER heavy-lorry fleet, US diesel rail for the US entry and RER rail for other entries. The original country entries remain separate. Geography, fuel, fleet, payload, vintage and infrastructure differ; no distance multiplier or extra infrastructure is added. Preserve caller quantities, signs, formulas, uncertainty and separately listed emissions. Reused uncontrolled-treatment models remain nonempty and retain their complete reviewed elemental releases and operating services. No paid treatment is replaced by an empty recycling handover, zero burden or omission. Existing canonical-biosphere screening correspondences and their limitations remain in force. Only the exact ecoinvent 3.8 cut-off context gains permission. Existing reviewed source profiles and all their recipe bodies remain unchanged; no consequential, reverse or patch-release permission is inferred.",
+                "source_sign": -1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "trucks-38-waste-pe-market"
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-e2c04dba0aa2621d",
+        "source": {
+          "location": "RoW",
+          "name": "market for waste polyethylene",
+          "reference product": "waste polyethylene",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "pilot-nitrate-pe-row-b52c1e019b7b28fe43a8"
+        },
+        "technosphere_information_loss": "Preserve all12 original rest-of-world polyethylene-treatment shares and4 separate original collection-freight entries with signed quantities and supported uncertainty, without aggregation or renormalization. Nine exact previously reviewed uncontrolled-treatment recipes remain unchanged; two new hyperarid(-250mm) helpers retain their complete101-flow source inventories, original operating inputs and separately inspected canonical3.10 definition metadata. Open burning, open dumps and five infiltration classes remain their source fates rather than controlled incineration or an empty allocation. All1145 foreground elementary exchanges are retained across11 shared treatment helpers, including signed/zero amounts, uncertainty, full compartments and emission/resource roles. Publisher UUID/unit/context/role identify canonical definitions; Ca/Na/Sr names, sodium CAS changes and removal of an individual CAS for generic NOx remain metadata warnings without molecular/speciation/compartment factors. The ordinary-incineration portion uses the exact complete native polyethylene0.4%-water incinerator from the prior44-coordinate composition review, not the raw genericPE/PP wrapper with additional collection. Native energy, ash/residue treatment, internal residue transport, infrastructure, allocation and emissions remain once, with geographic, technology, vintage, biosphere-exclusion and unquantified-score limitations. Original country-allocated rail entries use the complete generic RER freight-rail service from the already inspected whole-freight authority; do not select the raw coal-only CN train or diesel-only US target. Keep road freight at its original tkm through the inspected complete RER heavy fleet. Source-specific quantities/uncertainty remain separate even where native suppliers coincide. Native traction, wagon/fleet, loading, fuel, infrastructure, geography and vintage differences remain screening warnings. Retain as-received kg and net tkm; introduce no moisture, dry-mass, density, heating-value, distance, payload, capacity, lifetime, recovery or avoided-production factor. Source market/treatments have no parameters/formulas. Preserve caller-owned signed quantities, formulas, uncertainty, production, foreground suppliers and separate emissions. Negative waste reference-1 maps to positive helper treatment via factor-1. Raw child hashes freeze drift and do not grant standalone approvals. No new treatment model, polymer blend, FAE assumption, physical omission, inverse or cross-system-model conversion is inferred. Only the exact3.9cutoff RoW parent closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; other profiles and European/Swiss branches remain unapproved."
+      },
+      "compiled_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": -1,
+        "id": "bp-38a8afc636bbea5a",
+        "mapping_method": "reviewed_pilot_nitrate_pe_row",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_pilot_nitrate_pe_row_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": -1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_pilot_nitrate_pe_row_review.json#ecoinvent-3.9-cutoff/16998876e5a61f70a6e04788bcb7dd8e5162c5c9885f760a9999b917842bc5a6"
+                ],
+                "reason": "Preserve all12 original rest-of-world polyethylene-treatment shares and4 separate original collection-freight entries with signed quantities and supported uncertainty, without aggregation or renormalization. Nine exact previously reviewed uncontrolled-treatment recipes remain unchanged; two new hyperarid(-250mm) helpers retain their complete101-flow source inventories, original operating inputs and separately inspected canonical3.10 definition metadata. Open burning, open dumps and five infiltration classes remain their source fates rather than controlled incineration or an empty allocation. All1145 foreground elementary exchanges are retained across11 shared treatment helpers, including signed/zero amounts, uncertainty, full compartments and emission/resource roles. Publisher UUID/unit/context/role identify canonical definitions; Ca/Na/Sr names, sodium CAS changes and removal of an individual CAS for generic NOx remain metadata warnings without molecular/speciation/compartment factors. The ordinary-incineration portion uses the exact complete native polyethylene0.4%-water incinerator from the prior44-coordinate composition review, not the raw genericPE/PP wrapper with additional collection. Native energy, ash/residue treatment, internal residue transport, infrastructure, allocation and emissions remain once, with geographic, technology, vintage, biosphere-exclusion and unquantified-score limitations. Original country-allocated rail entries use the complete generic RER freight-rail service from the already inspected whole-freight authority; do not select the raw coal-only CN train or diesel-only US target. Keep road freight at its original tkm through the inspected complete RER heavy fleet. Source-specific quantities/uncertainty remain separate even where native suppliers coincide. Native traction, wagon/fleet, loading, fuel, infrastructure, geography and vintage differences remain screening warnings. Retain as-received kg and net tkm; introduce no moisture, dry-mass, density, heating-value, distance, payload, capacity, lifetime, recovery or avoided-production factor. Source market/treatments have no parameters/formulas. Preserve caller-owned signed quantities, formulas, uncertainty, production, foreground suppliers and separate emissions. Negative waste reference-1 maps to positive helper treatment via factor-1. Raw child hashes freeze drift and do not grant standalone approvals. No new treatment model, polymer blend, FAE assumption, physical omission, inverse or cross-system-model conversion is inferred. Only the exact3.9cutoff RoW parent closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; other profiles and European/Swiss branches remain unapproved.",
+                "source_sign": -1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "pilot-nitrate-pe-row-b52c1e019b7b28fe43a8"
+              }
+            },
+            {
+              "conversion_factor": -1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_trucks_two_waste_markets_38_review.json"
+                ],
+                "reason": "Use the existing complete reviewed 3.9 treatment models as screening proxies for the same source-3.8 waste type, treatment technology and infiltration class. This is an explicit inventory-version substitution, not an exact source-inventory reconstruction. Treatment emissions, operating inputs, temporal modelling, geography, allocation, uncertainty and score effects differ and remain unquantified. The source municipal-incineration inventory is replaced by the already-reviewed complete native incinerator; no additional recovery or energy credit is invented. Retain all twelve original source-3.8 treatment shares and all seven original collection-transport entries without renormalization, grouping or changing nominal quantities. Retain market transport uncertainty and its supported constant formula. Source negative treatment inputs and the negative market reference each change sign once at their own boundary; no absolute-value operation is used. Use complete existing same-mode native collection services: RER heavy-lorry fleet, US diesel rail for the US entry and RER rail for other entries. The original country entries remain separate. Geography, fuel, fleet, payload, vintage and infrastructure differ; no distance multiplier or extra infrastructure is added. Preserve caller quantities, signs, formulas, uncertainty and separately listed emissions. Reused uncontrolled-treatment models remain nonempty and retain their complete reviewed elemental releases and operating services. No paid treatment is replaced by an empty recycling handover, zero burden or omission. Existing canonical-biosphere screening correspondences and their limitations remain in force. Only the exact ecoinvent 3.8 cut-off context gains permission. Existing reviewed source profiles and all their recipe bodies remain unchanged; no consequential, reverse or patch-release permission is inferred.",
+                "source_sign": -1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "trucks-38-waste-pe-market"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": -1,
+              "target": {
+                "recipe_ref": "trucks-312-waste-market-38a8afc636bbea5a"
+              },
+              "review": {
+                "status": "verified",
+                "source_sign": -1,
+                "target_sign": 1,
+                "reason": "Only the independently inspected exact ecoinvent 3.12 cut-off parent markets gain new permission. Preserve signed caller kg, formulas, marginal uncertainty and independent caller operations/emissions. No patch, reverse or cross-system conversion or direct uncontrolled-treatment interface permission is inferred. Retain all twelve original disposal shares and the original road delivery separately, with their quantities/statistics and without regrouping or renormalization. One open-burning route, five open-dump and five unsanitary-landfill infiltration classes retain the exact inspected source-3.12 signed direct emissions through the existing canonical ecoinvent-3.10 biosphere route. Keep their original separate diesel-MJ and excavation-m3 demands where present, using complete native CH average building-machine combustion and RER skid-steer excavation; machinery, control, upstream supply, geography, fuel and vintage are proxies. No extra machinery/fuel input or energy, density or efficiency multiplier. Use complete generic same-material native incineration only for the original incineration share. Do not use the polyurethane building-waste disposal aggregate: it adds deconstruction and construction sorting absent from this source market and changes disposal fates. Native incinerator composition, moisture, energy/ash/recovery allocation, emissions control, technology, country and vintage replace the source incineration inventory. No invented recovered-energy/metals credit or extra demolition burden. Native polyurethane and polyethylene incinerators state0.2% and0.4% water respectively. Native glass has a0%-water label but a2%-water composition comment; this metadata inconsistency is explicitly unresolved. Preserve nominal source kg without an unsupported dry-mass, moisture, composition or heating-value correction. No exact waste-composition or score equivalence is inferred. Negative source market and treatment references become positive treatment services once at their respective callers. Positive original freight and operating demands stay positive; original signed emissions stay signed. Complete native road freight keeps the original0.077tkm per kg as a geographic/fleet/vintage proxy, without a distance/payload multiplier or duplicate transport. Existing older selected suppliers, factors and helper contents remain unchanged. The earlier source-3.8 PE authoring record is extended with this new exact3.12 profile so full chronological and idempotent data replay remain valid; its older approvals are not broadened to other profiles. No new physical omission, production/generator Python change, source/native LCI/LCIA equivalence or quantified score effect.",
+                "evidence": [
+                  "brightpath/data/export/uvek_trucks_waste_312_review.json",
+                  "brightpath/data/export/uvek_trucks_waste_312_models_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Select an exact inspected market profile; no unreviewed component or profile fallback is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-e2c04dba0aa2621d",
+        "source": {
+          "location": "RoW",
+          "name": "market for waste polyethylene",
+          "reference product": "waste polyethylene",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "pilot-nitrate-pe-row-b52c1e019b7b28fe43a8"
+        },
+        "technosphere_information_loss": "Preserve all12 original rest-of-world polyethylene-treatment shares and4 separate original collection-freight entries with signed quantities and supported uncertainty, without aggregation or renormalization. Nine exact previously reviewed uncontrolled-treatment recipes remain unchanged; two new hyperarid(-250mm) helpers retain their complete101-flow source inventories, original operating inputs and separately inspected canonical3.10 definition metadata. Open burning, open dumps and five infiltration classes remain their source fates rather than controlled incineration or an empty allocation. All1145 foreground elementary exchanges are retained across11 shared treatment helpers, including signed/zero amounts, uncertainty, full compartments and emission/resource roles. Publisher UUID/unit/context/role identify canonical definitions; Ca/Na/Sr names, sodium CAS changes and removal of an individual CAS for generic NOx remain metadata warnings without molecular/speciation/compartment factors. The ordinary-incineration portion uses the exact complete native polyethylene0.4%-water incinerator from the prior44-coordinate composition review, not the raw genericPE/PP wrapper with additional collection. Native energy, ash/residue treatment, internal residue transport, infrastructure, allocation and emissions remain once, with geographic, technology, vintage, biosphere-exclusion and unquantified-score limitations. Original country-allocated rail entries use the complete generic RER freight-rail service from the already inspected whole-freight authority; do not select the raw coal-only CN train or diesel-only US target. Keep road freight at its original tkm through the inspected complete RER heavy fleet. Source-specific quantities/uncertainty remain separate even where native suppliers coincide. Native traction, wagon/fleet, loading, fuel, infrastructure, geography and vintage differences remain screening warnings. Retain as-received kg and net tkm; introduce no moisture, dry-mass, density, heating-value, distance, payload, capacity, lifetime, recovery or avoided-production factor. Source market/treatments have no parameters/formulas. Preserve caller-owned signed quantities, formulas, uncertainty, production, foreground suppliers and separate emissions. Negative waste reference-1 maps to positive helper treatment via factor-1. Raw child hashes freeze drift and do not grant standalone approvals. No new treatment model, polymer blend, FAE assumption, physical omission, inverse or cross-system-model conversion is inferred. Only the exact3.9cutoff RoW parent closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; other profiles and European/Swiss branches remain unapproved."
+      },
+      "source_witness": {
+        "identity": {
+          "name": "market for waste polyethylene",
+          "reference product": "waste polyethylene",
+          "unit": "kilogram",
+          "location": "RoW"
+        },
+        "reference_amounts": [
+          -1.0
+        ],
+        "nonproduction_count": 13,
+        "inventory_sha256": "0d9534469c461dff55322975fbaf0b5cb798b9f879cdad99a9a132f0d090232f",
+        "metadata_sha256": "fa9497fa89074a3f88900014f883e8fd0450104ad3f12a78e4fc55a9f6883413"
+      },
+      "limitations": [
+        "Only the independently inspected exact ecoinvent 3.12 cut-off parent markets gain new permission. Preserve signed caller kg, formulas, marginal uncertainty and independent caller operations/emissions. No patch, reverse or cross-system conversion or direct uncontrolled-treatment interface permission is inferred.",
+        "Retain all twelve original disposal shares and the original road delivery separately, with their quantities/statistics and without regrouping or renormalization. One open-burning route, five open-dump and five unsanitary-landfill infiltration classes retain the exact inspected source-3.12 signed direct emissions through the existing canonical ecoinvent-3.10 biosphere route. Keep their original separate diesel-MJ and excavation-m3 demands where present, using complete native CH average building-machine combustion and RER skid-steer excavation; machinery, control, upstream supply, geography, fuel and vintage are proxies. No extra machinery/fuel input or energy, density or efficiency multiplier.",
+        "Use complete generic same-material native incineration only for the original incineration share. Do not use the polyurethane building-waste disposal aggregate: it adds deconstruction and construction sorting absent from this source market and changes disposal fates. Native incinerator composition, moisture, energy/ash/recovery allocation, emissions control, technology, country and vintage replace the source incineration inventory. No invented recovered-energy/metals credit or extra demolition burden.",
+        "Native polyurethane and polyethylene incinerators state0.2% and0.4% water respectively. Native glass has a0%-water label but a2%-water composition comment; this metadata inconsistency is explicitly unresolved. Preserve nominal source kg without an unsupported dry-mass, moisture, composition or heating-value correction. No exact waste-composition or score equivalence is inferred.",
+        "Negative source market and treatment references become positive treatment services once at their respective callers. Positive original freight and operating demands stay positive; original signed emissions stay signed. Complete native road freight keeps the original0.077tkm per kg as a geographic/fleet/vintage proxy, without a distance/payload multiplier or duplicate transport.",
+        "Existing older selected suppliers, factors and helper contents remain unchanged. The earlier source-3.8 PE authoring record is extended with this new exact3.12 profile so full chronological and idempotent data replay remain valid; its older approvals are not broadened to other profiles. No new physical omission, production/generator Python change, source/native LCI/LCIA equivalence or quantified score effect."
+      ],
+      "source_component_checksums": [
+        {
+          "native_input_index": 0,
+          "source_exchange_sha256": "e2204d3e0cfb9b93e9e674c07ea4d4c0924336daf12e7c9cc5c7e53685ac82b9",
+          "source": {
+            "name": "market for transport, freight, lorry, unspecified",
+            "reference product": "transport, freight, lorry, diesel, unspecified",
+            "location": "RoW",
+            "unit": "ton kilometer"
+          },
+          "target": {
+            "name": "Transport, freight, lorry, fleet average",
+            "reference product": "Transport, freight, lorry, fleet average",
+            "unit": "ton kilometer",
+            "location": "RER"
+          },
+          "conversion_factor": 1,
+          "source_witness": {
+            "identity": {
+              "name": "market for transport, freight, lorry, unspecified",
+              "reference product": "transport, freight, lorry, diesel, unspecified",
+              "unit": "ton kilometer",
+              "location": "RoW"
+            },
+            "reference_amounts": [
+              1.0
+            ],
+            "nonproduction_count": 4,
+            "inventory_sha256": "d48fa2e7e95bedb6e60b97ae5aad85d4693a6bb8988c1e8e6b9c301afa9448c9",
+            "metadata_sha256": "53a3534b1aa45869af0e7bbab604130045179db04b0e88f40f913471f43ea0ba"
+          }
+        },
+        {
+          "native_input_index": 1,
+          "source_exchange_sha256": "dfb73c1806a1248498846292074e25c0dd5bfa368cb76f91560fd521d5578e6e",
+          "source": {
+            "name": "treatment of waste polyethylene, unsanitary landfill, dry infiltration class (100mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-3e1356a36f529063"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, unsanitary landfill, dry infiltration class (100mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 115,
+            "inventory_sha256": "3458fd991502d880e0e8bfa5d82bd68e68cbdbc8d4a12a70b6eec78e78e7168f",
+            "metadata_sha256": "673e5075045fc37abcb05b7c72f80c75109a1e7cba42528f2d66b7b10d86bbda"
+          }
+        },
+        {
+          "native_input_index": 2,
+          "source_exchange_sha256": "ffec97c3c0cc50c3339f3489971e0ef24b55c024a2b0f4445f939d40ad7ada4a",
+          "source": {
+            "name": "treatment of waste polyethylene, open dump, wet infiltration class (500mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-9449ec29e5e40eab"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, open dump, wet infiltration class (500mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 113,
+            "inventory_sha256": "6cfab2cba498c5e86c04978c344fed189338574014c967c5760d3433f8aab179",
+            "metadata_sha256": "fb35a1f81bacad80c563a53624371b13654e42644c937c447cf2dbdfe350c164"
+          }
+        },
+        {
+          "native_input_index": 3,
+          "source_exchange_sha256": "97c46bdaf7af50d4cb3d4f06061a02c96a2d41f1f518bde32aa681e9aaf66bd3",
+          "source": {
+            "name": "treatment of waste polyethylene, open dump, moist infiltration class (300mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-6f56f3b5c39768e3"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, open dump, moist infiltration class (300mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 113,
+            "inventory_sha256": "ccd0e5ec53cc35a85b11b818c81e5d45f05939d38cf3220b552f06dd6a2aa88d",
+            "metadata_sha256": "64709949baf4aa42fb7bac023d5378e0ce66a70577442a367a9a4c0506e8f90e"
+          }
+        },
+        {
+          "native_input_index": 4,
+          "source_exchange_sha256": "da025951d643f38fc3f72f8f35d311ed1deb2eaab0e7b238ab504b335cf79302",
+          "source": {
+            "name": "treatment of waste polyethylene, unsanitary landfill, moist infiltration class (300mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-d62def2cad9f5bf5"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, unsanitary landfill, moist infiltration class (300mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 115,
+            "inventory_sha256": "34203446e52fde300c66572b142c4557ae22e4e0742d6b65b4989f9bf5f2c721",
+            "metadata_sha256": "a04c04077eecc9fb882a4be3a7f884fd014492b633e62311a36cd1cc587f0137"
+          }
+        },
+        {
+          "native_input_index": 5,
+          "source_exchange_sha256": "f175fbe8b547b8746c13cebea6365a6e90ceb82b1bbb4705d428c15b0765d135",
+          "source": {
+            "name": "treatment of waste polyethylene, unsanitary landfill, hyperarid infiltration class (-250mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-b4462c59aa1a7e1b"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, unsanitary landfill, hyperarid infiltration class (-250mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 109,
+            "inventory_sha256": "7dad40fc5f827032370e82b31ffc09bead5848f65aed331344bb3d45def8738d",
+            "metadata_sha256": "b5c80ca7206fc008fba307d45bfdea5909123bd4a93e36e16716df50580b265f"
+          }
+        },
+        {
+          "native_input_index": 6,
+          "source_exchange_sha256": "b98b0058e190b5b143ed2598ad43d4788c947e8aa706d4ab83ca6f6bc6a02f1a",
+          "source": {
+            "name": "treatment of waste polyethylene, open dump, hyperarid infiltration class (-250mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-b5d965ce648273a1"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, open dump, hyperarid infiltration class (-250mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 107,
+            "inventory_sha256": "56aaebd31e8cdb667ca2ae8a02719e4667ac3c2d28d6a78733097f4c45bf9092",
+            "metadata_sha256": "d3c326f935cad97cb7b2166f294a871029dc02951aca0ffebfea5a3a83de5e00"
+          }
+        },
+        {
+          "native_input_index": 7,
+          "source_exchange_sha256": "0b27ce95963ef203aeff0413aa88c2ae01d7f7384905444d49f3b2273c5d58cc",
+          "source": {
+            "name": "treatment of waste polyethylene, open dump, dry infiltration class (100mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-e8c10fce14318f39"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, open dump, dry infiltration class (100mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 113,
+            "inventory_sha256": "cf99362ae5d6922b0fa93edd984a78740d31040f18e9ee94bb11f1dcee2a2cce",
+            "metadata_sha256": "1f05fc8f3a9c6f236b36d5de675a1e8979654ae2ed467d71ca8ab5cd4c45b75a"
+          }
+        },
+        {
+          "native_input_index": 8,
+          "source_exchange_sha256": "0fe897850baf32d967d9ddd8ef0b7e061287176690c2330dfbb855700acef6f1",
+          "source": {
+            "name": "treatment of waste polyethylene, open burning",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-53485d839e312cc1"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, open burning",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 83,
+            "inventory_sha256": "c553976022447e18aef222b377e89686ac70325ae4d1c230648b4749c9ebacfe",
+            "metadata_sha256": "05fd261347e930618a87645706146a662c81e9cd0ce161e5e0259a59801ef1b5"
+          }
+        },
+        {
+          "native_input_index": 9,
+          "source_exchange_sha256": "7c62aa2c80ba89f831331743557f19d6b148dbb15c1c5a4f817e3c1b3cb29806",
+          "source": {
+            "name": "treatment of waste polyethylene, unsanitary landfill, very wet infiltration class (1000mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-7edb3867ff27438b"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, unsanitary landfill, very wet infiltration class (1000mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 115,
+            "inventory_sha256": "d1bf8a666be182de8a8bdf20beef6561d6ef9d362231906c6c07ecd0121d58a9",
+            "metadata_sha256": "48f828604ffcb0d5b8b1b02198362c41ab4e5d316da3bf6ab65ba6157111ca3f"
+          }
+        },
+        {
+          "native_input_index": 10,
+          "source_exchange_sha256": "4847ad88e6c105f0e0375f0b90f12ef15171600b9da90db5260f222accbb4444",
+          "source": {
+            "name": "treatment of waste polyethylene, municipal incineration",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "name": "Disposal, polyethylene, 0.4% water, to municipal incineration",
+            "reference product": "Disposal, polyethylene, 0.4% water, to municipal incineration",
+            "unit": "kilogram",
+            "location": "CH"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, municipal incineration",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 119,
+            "inventory_sha256": "1071360bfb6e4e144437cf4341dc48d9abf2afd14c2a83af3bfe8fabf60a5183",
+            "metadata_sha256": "058949bdc5719c712e86e96837559c79312740adc00171a824aae0536243d1c1"
+          }
+        },
+        {
+          "native_input_index": 11,
+          "source_exchange_sha256": "b9cf1217c4ef38b7bc00205f0e716ea645e23f38510f993b6274ed23b176c107",
+          "source": {
+            "name": "treatment of waste polyethylene, open dump, very wet infiltration class (1000mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-84e8c19c88d894c7"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, open dump, very wet infiltration class (1000mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 113,
+            "inventory_sha256": "692bba7643a4732a24505193933f46fe3e1dc8d35e4d26ac8048590a7f68ff89",
+            "metadata_sha256": "145cf8929cd20d794b980e511a599e349d76c421d19fbbb9a8bf9a7cf8be2205"
+          }
+        },
+        {
+          "native_input_index": 12,
+          "source_exchange_sha256": "1e53f86cd44f98c3aa50fdecc98cb38225c2d84a48b18724e90dd8d7b7670eb3",
+          "source": {
+            "name": "treatment of waste polyethylene, unsanitary landfill, wet infiltration class (500mm)",
+            "reference product": "waste polyethylene",
+            "location": "GLO",
+            "unit": "kilogram"
+          },
+          "target": {
+            "recipe_ref": "trucks-312-treatment-338da188518fa5e9"
+          },
+          "conversion_factor": -1,
+          "source_witness": {
+            "identity": {
+              "name": "treatment of waste polyethylene, unsanitary landfill, wet infiltration class (500mm)",
+              "reference product": "waste polyethylene",
+              "unit": "kilogram",
+              "location": "GLO"
+            },
+            "reference_amounts": [
+              -1.0
+            ],
+            "nonproduction_count": 115,
+            "inventory_sha256": "0750c979c7b1d0744b6c25b34db2948b647ede01907a4d86bc31d14f554dc470",
+            "metadata_sha256": "d282626891417b9e53fc02bf6aebec54b60c4fed222f2152a065d14081b3bcb5"
+          }
+        }
+      ]
+    }
+  ],
+  "recipes": {},
+  "reviews": [
+    {
+      "evidence": [
+        "brightpath/data/export/uvek_trucks_waste_312_review.json",
+        "brightpath/data/export/uvek_trucks_waste_312_models_review.json"
+      ],
+      "rationale": "Retain current source waste portfolios and exact uncontrolled emissions, with explicit native operating and generic incineration proxies. Exclude unrelated construction services and preserve negative-reference treatment conventions.",
+      "limitations": [
+        "Only the independently inspected exact ecoinvent 3.12 cut-off parent markets gain new permission. Preserve signed caller kg, formulas, marginal uncertainty and independent caller operations/emissions. No patch, reverse or cross-system conversion or direct uncontrolled-treatment interface permission is inferred.",
+        "Retain all twelve original disposal shares and the original road delivery separately, with their quantities/statistics and without regrouping or renormalization. One open-burning route, five open-dump and five unsanitary-landfill infiltration classes retain the exact inspected source-3.12 signed direct emissions through the existing canonical ecoinvent-3.10 biosphere route. Keep their original separate diesel-MJ and excavation-m3 demands where present, using complete native CH average building-machine combustion and RER skid-steer excavation; machinery, control, upstream supply, geography, fuel and vintage are proxies. No extra machinery/fuel input or energy, density or efficiency multiplier.",
+        "Use complete generic same-material native incineration only for the original incineration share. Do not use the polyurethane building-waste disposal aggregate: it adds deconstruction and construction sorting absent from this source market and changes disposal fates. Native incinerator composition, moisture, energy/ash/recovery allocation, emissions control, technology, country and vintage replace the source incineration inventory. No invented recovered-energy/metals credit or extra demolition burden.",
+        "Native polyurethane and polyethylene incinerators state0.2% and0.4% water respectively. Native glass has a0%-water label but a2%-water composition comment; this metadata inconsistency is explicitly unresolved. Preserve nominal source kg without an unsupported dry-mass, moisture, composition or heating-value correction. No exact waste-composition or score equivalence is inferred.",
+        "Negative source market and treatment references become positive treatment services once at their respective callers. Positive original freight and operating demands stay positive; original signed emissions stay signed. Complete native road freight keeps the original0.077tkm per kg as a geographic/fleet/vintage proxy, without a distance/payload multiplier or duplicate transport.",
+        "Existing older selected suppliers, factors and helper contents remain unchanged. The earlier source-3.8 PE authoring record is extended with this new exact3.12 profile so full chronological and idempotent data replay remain valid; its older approvals are not broadened to other profiles. No new physical omission, production/generator Python change, source/native LCI/LCIA equivalence or quantified score effect."
+      ]
+    }
+  ],
+  "source_rule_dependency_scopes": [],
+  "recipe_dependency_sha256": {
+    "pilot-glass-treatment-27ad656678927fbec417": "892466987e19e59c212b50cd73a642c14db7849f7b9c474f5a39b3acdd1f5059",
+    "pilot-glass-treatment-2bbcfc07744b7592fbda": "ff43b8a765e5ee766f645107ad5ba46f1d3b510f0ccd8715f7b0aa768a743c02",
+    "pilot-glass-treatment-4fddf816faedcd26458a": "cf67f23d75015a6a8e0625839995c53c63d89ea65c671a051b170865c41f15c2",
+    "pilot-glass-treatment-66c1dca6a61baacaa542": "aa246bfc61b3aea21a90d614b859278b92bf0a3210382c5f7fec6a5a900896c3",
+    "pilot-glass-treatment-c07fdad0ce14ee35949d": "e48fa6d1891d296eb13ae53a2bb9395db5f9b7bc74405bba5be5221978941f4b",
+    "pilot-glass-treatment-c95e296237f3a3aa349c": "d480bbeb9da015855c5fd64a67e3ce86de4ec25df0ee25c79d2cd4b0874ec14d",
+    "pilot-glass-treatment-dcad833c16afdde91509": "e299cb40f5837fb8f14e47ed36eb228c1de1af2b31ed28475a0125030ff95e49",
+    "pilot-glass-treatment-dd8ae0e970eace24c2c9": "b06be9d77f4fe7923af190213d1ae84cfc55de7a6e70ef22a5fdc04c01f00b1f",
+    "pilot-glass-treatment-e4d5f82688c8f3976eba": "73e689740eb7ba5efa67ecfa4b357390986ceb5518652111890211db6832e9fe",
+    "pilot-glass-treatment-ed29c4d741a32ed90f62": "5e8baaa62c3ead15b4ad02961b2d94b5b782433a358cfe45f5a9e6819148c150",
+    "pilot-glass-treatment-ee5c2a9f79a0a14c44f1": "34f159d1390344ec60249e0bdfa5775acf292fc81e6f8b6aeec97b4044ac2885",
+    "pilot-nitrate-glass-ebf0055d841484e7d091": "5b83f6b63e23e3230d531a0ab865283b1190c552f3d6cd64883e92bf9c740bd5",
+    "pilot-nitrate-pe-row-b52c1e019b7b28fe43a8": "b3d9884d6a7967eab207f8da806300ad5e586e988dff4884896f5ebf0d0a1b63",
+    "pilot-pe-hyperarid-653e959b8bc1da533593": "bf048d890eb6c81d9a43361fb9b90454c3615329ea2948f8390c7ac8012df91b",
+    "pilot-pe-hyperarid-a4ceab02f7c4cbdfe516": "5a954ec32f80eaee5cfbbab6d53dd18f76e925daff6df968c5319da5045b3b58",
+    "pilot-pe-source-06b7f29c226120635a7c": "8e79e2413f08871bd30fea08a3b843916b86dbb5d95edab16249d72e11a31578",
+    "pilot-pe-source-35f5d7ff61367ee67e8a": "567d75df8debc023344a1f3cc230608bccffb9267105d8fd941defffd6f362d4",
+    "pilot-pe-source-48c9a85cfdad8677efd8": "f7793f292ca5e7330218f3273f5b850893fe87cee07e2ee968c2d2e678892a37",
+    "pilot-pe-source-499bb2ae8576686d306e": "1fe147286f10de9c578678f6573a7397429834edc288071234b94bdf127e3087",
+    "pilot-pe-source-8a814b40565e94e693aa": "f74542980f4bc07a6ed663bb979c4ace7638aa1106e7f7bff76fba875689e020",
+    "pilot-pe-source-bfa3c6f7649d405fcd0c": "11f025e789fd3494e16b1611aef8673995451ff9ed1abea43b38f8f9688d17df",
+    "pilot-pe-source-c7eb736495925d6465db": "e8a2eed45b311953adb27219417bcbc07aa8c42d1dfe331280435dcbf5088edd",
+    "pilot-pe-source-d5863cdcbae6852c4ba7": "cd2b25d428f3c7d5632e40fdaa92179894fa83a547cb6a2d1c15cb345425e99b",
+    "pilot-pe-source-d788d494110fafb7e0a4": "2e8a0976330944dcb0cf462670097d485fdb8a36de4e8ff0d049372b89e59a4a",
+    "trucks-38-waste-pe-market": "95c3febabbbdb8a96d86859d4ad0736be8eb3caa9b41a7ebf2119e3c9783204a",
+    "trucks-312-treatment-a6ce8539832fc9c2": "142f60fd0a46b51c160f5fd53b13e79f05ca4de89b229dd1b5e4f9da48f738ef",
+    "trucks-312-treatment-1d2b8594038696db": "53946e676cbb77049f44b483f328532ce572cc5d9e940a4977253df94d911955",
+    "trucks-312-treatment-ceaeb41b9808bba6": "64bf64e147b884c8dd2059c9e5678a78a614425373a4f06271713be2ec9fc89b",
+    "trucks-312-treatment-44140c64ff867e96": "32fc81e2c64b42c7c04c1b044feaa54bdaf6396c948dd0087c8c4894ee5511b5",
+    "trucks-312-treatment-2a8dd562b72b58c8": "57079bff16cbced2ad6f1c3db7ed39eab16feeb65c4402477d500b8cad1e1f4c",
+    "trucks-312-treatment-f17385479d3b8f6f": "fb3b3964b0ac4ec16c33471f5a6752dde785cf1d4a671c2c2477f4065f3e8efd",
+    "trucks-312-treatment-7f20a97488f85be2": "28fb358a857d32a2f900985adbae58eaf44843d7bd16b38ac6f6f92ce8ca5d8d",
+    "trucks-312-treatment-1eb94c22a876d6a1": "8c074c33f119ef4996cea9bd7f152dc79ecd70e486e0d0f5ab0028a69f7a723c",
+    "trucks-312-treatment-7b991774a9fdc365": "d82221ee17bfd17810e328e7c21d49eac9f45d7d6643aad2ed181a00c240b53e",
+    "trucks-312-treatment-c95bce7e5f95374a": "3be52beda2860b0c811348b8d9302e0b0bdb4327cb5615e31efceb98076179a3",
+    "trucks-312-treatment-fbd7a78fd7668c9c": "21673ea6ae8c1d671062b6b02bb6d1a4886c30b3c89bd08c5348c237eb9043c6",
+    "trucks-312-treatment-82c13f150733d0f7": "eff22107287f1423ade8d694c88980418e7d5ab2f7732c4305aae5182d42fc40",
+    "trucks-312-treatment-0b01109d873417f6": "5085794774f0ebced1c1deb309f2a1c31db008074109b7b0deb8455000cb8096",
+    "trucks-312-treatment-ab53026fe7e90058": "af913d16b6dc04584024f40a01be09cb1711db7ca37b8be35cca9d2018d8ebfd",
+    "trucks-312-treatment-a007183189fdebe2": "23e4c2835e3dab5c4591724fc120a0ae33b3482cad29510004e83b365aa84542",
+    "trucks-312-treatment-e258069ead699b91": "61a6ac690b3f672cbff05761808b9e6041c4b66a99023a3a7038c6ef2faa1d22",
+    "trucks-312-treatment-3883acd78e9bbe9f": "dd841f43564a06ab2ad96aca26483b6a00ddf556f2cca80fe62483ee5d51081d",
+    "trucks-312-treatment-92545eb713a2e901": "4c449c8e1dd317a67d3fe6171b9f366d1f3313e9f5db051f7c8e747bba2ab3bb",
+    "trucks-312-treatment-c6457f02b9d021c8": "98b73930333ad560128657f8bdd1e975a936c372d71f20f60ac99af2b0293e89",
+    "trucks-312-treatment-69bd140520d972f5": "0c088d8a4458f2f61ae8e8acc2156ac14ccc324a0901cbea95e117bdd9710d3f",
+    "trucks-312-treatment-9b1a8c3b4095e474": "b959d0758e95504200d74fe3068e1fa6a84660804e655818f17d68d5c38b719d",
+    "trucks-312-treatment-11ec72321067a04c": "bd5bad4e49658ba4c7dc855d48db191d26e7313675b5bfa2ec150e2d5d6ace1e",
+    "trucks-312-treatment-3e1356a36f529063": "1d4f02fc3faff200e84087c0e8346f199d9fb6f44983cfa7e865dbfd09b52889",
+    "trucks-312-treatment-9449ec29e5e40eab": "9200ed3cdacfc46b68d72a5c8b25f8665de7254d32e5690c2d2fc3673c865dbf",
+    "trucks-312-treatment-6f56f3b5c39768e3": "dbc2b22756ff475f235ca4e5a8393f0b55241a56155625fd3c5e423cb74c5e1b",
+    "trucks-312-treatment-d62def2cad9f5bf5": "74da77bc736ca45a90074ca1deb1da0ef21aeec6ad5b644122e2814692b609bc",
+    "trucks-312-treatment-b4462c59aa1a7e1b": "3c9f5d573edd162ebb6410d5b81bd9742177b658a04c9d3a54000fddae5f9b0b",
+    "trucks-312-treatment-b5d965ce648273a1": "29dc73b2646acfc1e05fea7b43db699aa9c9141c69a2a4a0163053045065d4dd",
+    "trucks-312-treatment-e8c10fce14318f39": "0769fdefb75be9ffe28186fae22e4379f21eba7b1906b6bfe7884867b628550b",
+    "trucks-312-treatment-53485d839e312cc1": "b6bfb9017e250cae20b4aa8de779a897e583ad23ccf26ccd92e93fd22416506b",
+    "trucks-312-treatment-7edb3867ff27438b": "642fdc29e7527cb8428618d48630672a1268070cc4680f62392755693559703e",
+    "trucks-312-treatment-84e8c19c88d894c7": "8895e9e630199be81efd2538745b3107cb34aaa104593a40d4ecf990b40753d3",
+    "trucks-312-treatment-338da188518fa5e9": "3d1db793fd02e25f311ef4362d36d23d02b20a43e04ee3797847ec5f894642b5",
+    "trucks-312-waste-market-1308b656f1d6a3e7": "4a8cecaf8dd451fd62c2a3ee40ad820c5cd70f23a831755662f347798c8629a0",
+    "trucks-312-waste-market-1472e083e5590d89": "65f9669d1e3f7486ba4eef0a29133f5d9d287913cfa6bc0e298636f2ba4af92e",
+    "trucks-312-waste-market-38a8afc636bbea5a": "66d5c245b2e8898c2d24e7a982e7e80d518c0d7a419386089570257ca4b61fe3"
+  },
+  "model_review_path": "export/uvek_trucks_waste_312_models_review.json",
+  "model_review_sha256": "b0fc0d53bdbc5654bc074ee7f20a1a541fa1b6f04c2514a2bdaa32b335b1df02",
+  "preserved_prior_approval_operations": [
+    {
+      "rule_id": "bp-38a8afc636bbea5a",
+      "operation": "replace",
+      "mapping_method": "reviewed_pilot_nitrate_pe_row",
+      "review_path": "export/uvek_pilot_nitrate_pe_row_review.json",
+      "review_sha256": "8f00cd5bd185067ca4527b9b59aa9c743fa883be4122d0932e0c3e57dbe91772",
+      "authorization": "Standing complete source-preserving helper composition, exact prior whole-waste/operating/freight reuse and publisher-identity conventions. Hyperarid source inventories are retained rather than approximated by wetter classes; fresh full source/installed target elementary definitions establish the same publisher UUID, signed unit, complete compartment and role. No new modelling primitive, disposal fate, physical omission, allocation/recovery credit or cross-model correspondence.",
+      "inspection": {
+        "rule_id": "bp-38a8afc636bbea5a",
+        "source": {
+          "location": "RoW",
+          "name": "market for waste polyethylene",
+          "reference product": "waste polyethylene",
+          "unit": "kilogram"
+        },
+        "previous_target": {
+          "location": "CH",
+          "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+          "unit": "kilogram"
+        },
+        "previous_rule": {
+          "confidence": 0.6,
+          "conversion_factor": -1,
+          "id": "bp-38a8afc636bbea5a",
+          "mapping_method": "pairwise_review",
+          "reference_flow_sign_review": {
+            "evidence": [
+              "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-38a8afc636bbea5a"
+            ],
+            "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+            "source_sign": -1,
+            "status": "verified",
+            "target_sign": 1
+          },
+          "review_ref": "r-c722d5b67b2c4523",
+          "source": {
+            "location": "RoW",
+            "name": "market for waste polyethylene",
+            "reference product": "waste polyethylene",
+            "unit": "kilogram"
+          },
+          "target": {
+            "location": "CH",
+            "name": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+            "reference product": "Disposal, polyethylene/polypropylene products, to municipal waste incineration",
+            "unit": "kilogram"
+          }
+        },
+        "previous_rule_sha256": "efee92928b3661e4fa2fc29c71c84b7fd62ac1e95f30e46e9f590464e178ff51",
+        "previous_review": {
+          "limitations": [
+            "Identity-level comparison only; inventory composition and LCIA equivalence are not verified.",
+            "Geographic proxy."
+          ],
+          "rationale": "Branch supplies waste handling for the named material rather than an unrelated supplied product/material."
+        },
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.9",
+          "system_model": "cutoff"
+        },
+        "source_reference_amount": -1,
+        "source_metadata_sha256": "4e194053ee7888267a076f620af789d36868fa9ce874b37a27873dc96de8e4d8",
+        "source_inventory_sha256": "16998876e5a61f70a6e04788bcb7dd8e5162c5c9885f760a9999b917842bc5a6",
+        "source_fates": [
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, unsanitary landfill, very wet infiltration class (1000mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "9494ab280288c206d01c41792babc903a3d1064883b7379ee7793386e7453624",
+              "inventory_sha256": "a153f3c941d065132ef12a8b3140500b4063a947d6eb8640a7a5a95aee4b8642"
+            },
+            "source_exchange": {
+              "amount": -0.0792268474637746,
+              "uncertainty type": 0,
+              "loc": -0.0792268474637746
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-499bb2ae8576686d306e"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, municipal incineration",
+                "reference product": "waste polyethylene",
+                "location": "RoW",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "f5324a9e675b7c1b8daeb585f6c92157dc7c14c31f2a777365b33c54e84aa137",
+              "inventory_sha256": "6192f08c570740ca0a2f4cb9d656bf4ce366498ceabdd44f28d2c6e77e22271c"
+            },
+            "source_exchange": {
+              "amount": -0.107643629912986,
+              "uncertainty type": 0,
+              "loc": -0.107643629912986
+            },
+            "reference_factor": -1,
+            "target": {
+              "name": "Disposal, polyethylene, 0.4% water, to municipal incineration",
+              "reference product": "Disposal, polyethylene, 0.4% water, to municipal incineration",
+              "location": "CH",
+              "unit": "kilogram"
+            },
+            "declared_wet_composition_coordinates_matching_prior_review": 44,
+            "raw_child_heuristic_target_not_used": true
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, unsanitary landfill, wet infiltration class (500mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "9181717f67c54284c03175d1d079aeb7742fce95510006529f7dd943a10aa36a",
+              "inventory_sha256": "49508e8507993f797e68568006cc2af6e2235b43bcb7cf007de57f36ebcb14c3"
+            },
+            "source_exchange": {
+              "amount": -0.234923821966288,
+              "uncertainty type": 0,
+              "loc": -0.234923821966288
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-d5863cdcbae6852c4ba7"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, open dump, moist infiltration class (300mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "829239b3476b7d9c3505b981fad027fecb0967470756f8e8a0b28b4329c13d73",
+              "inventory_sha256": "e8c85b2aa43b328dd77a74a1a2b9768eb64b59b70cb96072c33bbe915cd46d3e"
+            },
+            "source_exchange": {
+              "amount": -0.0250926981761765,
+              "uncertainty type": 0,
+              "loc": -0.0250926981761765
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-35f5d7ff61367ee67e8a"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, unsanitary landfill, hyperarid infiltration class (-250mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "11208cd40395ff49cb6cb5762d692bd7eb8b970f002d1a8f5d7f4b7eb3abc792",
+              "inventory_sha256": "ec3bdbb27f4c6b5901474ec7edb1022161bb418dece9f7b96ffe6346d76e99f5"
+            },
+            "source_exchange": {
+              "amount": -0.035073452155838,
+              "uncertainty type": 0,
+              "loc": -0.035073452155838
+            },
+            "reference_factor": -1,
+            "new_hyperarid_recipe": "pilot-pe-hyperarid-653e959b8bc1da533593"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, unsanitary landfill, moist infiltration class (300mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "e02da5c79224ba39458a486245dac4dab141f669cbc20526621586780cbf58a7",
+              "inventory_sha256": "1dfed7958c65f4adf8d56b4c2c45edb41b9061c69ddec88b5c267a75d1ddc112"
+            },
+            "source_exchange": {
+              "amount": -0.0623369227600257,
+              "uncertainty type": 0,
+              "loc": -0.0623369227600257
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-bfa3c6f7649d405fcd0c"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, open dump, very wet infiltration class (1000mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "343df0e18b2cd704e52d3926e35c5937736210a59dd9a8a2714bec243ea5c037",
+              "inventory_sha256": "feac46b5137b80702e70243c3b6db32b091508e3d9e8b123a82abd01e847d065"
+            },
+            "source_exchange": {
+              "amount": -0.0581108636290239,
+              "uncertainty type": 0,
+              "loc": -0.0581108636290239
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-c7eb736495925d6465db"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, open dump, dry infiltration class (100mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "41e3b23af66a0a9884245ba9a381bf6b6204b7a7edacd1bc56cf424918a66bb8",
+              "inventory_sha256": "9797c139d3fe0a3f18ca5c929dd182c85eff2ff25a1b04977c0a50d5f1d958c7"
+            },
+            "source_exchange": {
+              "amount": -0.0499944695133922,
+              "uncertainty type": 0,
+              "loc": -0.0499944695133922
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-06b7f29c226120635a7c"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, open dump, hyperarid infiltration class (-250mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "f902b7a3258a8a70711e240404d1d7d45c544811caef693840bc941e160e696d",
+              "inventory_sha256": "39e1a3e1280ea23687b2f10b34640280a29f330994d95b6803ef7082e00afd66"
+            },
+            "source_exchange": {
+              "amount": -0.0241530148866973,
+              "uncertainty type": 0,
+              "loc": -0.0241530148866973
+            },
+            "reference_factor": -1,
+            "new_hyperarid_recipe": "pilot-pe-hyperarid-a4ceab02f7c4cbdfe516"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, unsanitary landfill, dry infiltration class (100mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "21b510772a2843b3f5228e36e90334ea7b8f6137bef8087cb844860a94a7dfe8",
+              "inventory_sha256": "88a248515197307d8e29032cd0f87cadb2812ec799a180569b37d5ac6362de9d"
+            },
+            "source_exchange": {
+              "amount": -0.0717986390931305,
+              "uncertainty type": 0,
+              "loc": -0.0717986390931305
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-d788d494110fafb7e0a4"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, open dump, wet infiltration class (500mm)",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "08e6ac12f41f90938e1988fd02719cdcdfc6d4ebafb68d39d77194ac007e4e44",
+              "inventory_sha256": "d4ccd8089d06c7449f08d8886e281dfe8b96bc007cc6b837627ea2813cd99c9b"
+            },
+            "source_exchange": {
+              "amount": -0.154202153568209,
+              "uncertainty type": 0,
+              "loc": -0.154202153568209
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-48c9a85cfdad8677efd8"
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "treatment of waste polyethylene, open burning",
+                "reference product": "waste polyethylene",
+                "location": "GLO",
+                "unit": "kilogram"
+              },
+              "metadata_sha256": "cc0194992f5741770017ac281db67f259bd4ac15293528d1c102489e5d6ab676",
+              "inventory_sha256": "aba343ccdb658e3655631ea6156a5fbec73bd2fe8ae36a3628e568b7a2afe54c"
+            },
+            "source_exchange": {
+              "amount": -0.0974434868744583,
+              "uncertainty type": 0,
+              "loc": -0.0974434868744583
+            },
+            "reference_factor": -1,
+            "prior_unchanged_recipe": "pilot-pe-source-8a814b40565e94e693aa"
+          }
+        ],
+        "freight_witnesses": [
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "market for transport, freight train",
+                "reference product": "transport, freight train",
+                "location": "CN",
+                "unit": "ton kilometer"
+              },
+              "metadata_sha256": "5eec92f28619a465ce59cbbbe58bba9499d8a8475c5561584dcc6c13f4d47a7a",
+              "inventory_sha256": "3c28b1e438bb511e15353f4199305e3a02619cb4fcc5a07bd26effc9254ceef6"
+            },
+            "target": {
+              "name": "Transport, freight, rail",
+              "reference product": "Transport, freight, rail",
+              "location": "RER",
+              "unit": "ton kilometer"
+            },
+            "authority": "export/uvek_pilot_nitrate_goods_review.json",
+            "selected_from_prior_whole_freight_review_not_raw_child_heuristic": true
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "market for transport, freight train",
+                "reference product": "transport, freight train",
+                "location": "RoW",
+                "unit": "ton kilometer"
+              },
+              "metadata_sha256": "9242044d72ee67df879c1ce100501eb5bb9c534759f95c078b9c25e745c3897a",
+              "inventory_sha256": "5ac20dbc0e8c4c4569e64ce7ff03a4673924f8e0f8cdf9a19becd1f6ec8f16da"
+            },
+            "target": {
+              "name": "Transport, freight, rail",
+              "reference product": "Transport, freight, rail",
+              "location": "RER",
+              "unit": "ton kilometer"
+            },
+            "authority": "export/uvek_pilot_nitrate_goods_review.json",
+            "selected_from_prior_whole_freight_review_not_raw_child_heuristic": true
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "market for transport, freight train",
+                "reference product": "transport, freight train",
+                "location": "US",
+                "unit": "ton kilometer"
+              },
+              "metadata_sha256": "6bdd38a9de2e0bb427c64623a8de9d7bbc03ff96a3a946c89aafa18366d60169",
+              "inventory_sha256": "eff4aa8da2ab2ba685be7955d6c66a23aeb987934a65d6fd66243553be0f516e"
+            },
+            "target": {
+              "name": "Transport, freight, rail",
+              "reference product": "Transport, freight, rail",
+              "location": "RER",
+              "unit": "ton kilometer"
+            },
+            "authority": "export/uvek_pilot_nitrate_goods_review.json",
+            "selected_from_prior_whole_freight_review_not_raw_child_heuristic": true
+          },
+          {
+            "source_witness": {
+              "version": "3.9",
+              "identity": {
+                "name": "market for transport, freight, lorry, unspecified",
+                "reference product": "transport, freight, lorry, unspecified",
+                "location": "RoW",
+                "unit": "ton kilometer"
+              },
+              "metadata_sha256": "ee4483351124f67842363308e01fd9a0d8a5081b3b16f128978938eab15fbd14",
+              "inventory_sha256": "8091673d53531942ff0716d8fdf3b6594a5264de58d13074f49aac7be049924e"
+            },
+            "target": {
+              "name": "Transport, freight, lorry, fleet average",
+              "reference product": "Transport, freight, lorry, fleet average",
+              "location": "RER",
+              "unit": "ton kilometer"
+            },
+            "authority": "export/uvek_pilot_nitrate_goods_review.json",
+            "selected_from_prior_whole_freight_review_not_raw_child_heuristic": true
+          }
+        ],
+        "source_treatment_share_sum": -1.0,
+        "previous_native_flow_type": "WASTE_FLOW",
+        "original_factor": -1,
+        "authorized_system_model": "cutoff",
+        "profiles": [
+          {
+            "label": "ecoinvent-3.9-cutoff",
+            "source_sign": -1,
+            "inventory_sha256": "16998876e5a61f70a6e04788bcb7dd8e5162c5c9885f760a9999b917842bc5a6",
+            "inputs": [
+              {
+                "amount": 0.003225847220316541,
+                "uncertainty type": 2,
+                "loc": -5.7365596592609265,
+                "scale": 0.4074309757492673,
+                "pedigree": {
+                  "reliability": 3,
+                  "completeness": 1,
+                  "temporal correlation": 5,
+                  "geographical correlation": 5,
+                  "further technological correlation": 4
+                },
+                "scale without pedigree": 0.5,
+                "name": "Transport, freight, rail",
+                "reference product": "Transport, freight, rail",
+                "location": "RER",
+                "unit": "ton kilometer",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.004450430953717091,
+                "uncertainty type": 2,
+                "loc": -5.414754343961089,
+                "scale": 0.4074309757492673,
+                "pedigree": {
+                  "reliability": 3,
+                  "completeness": 1,
+                  "temporal correlation": 5,
+                  "geographical correlation": 5,
+                  "further technological correlation": 4
+                },
+                "scale without pedigree": 0.5,
+                "name": "Transport, freight, rail",
+                "reference product": "Transport, freight, rail",
+                "location": "RER",
+                "unit": "ton kilometer",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.0035237218259663665,
+                "uncertainty type": 2,
+                "loc": -5.648237511036843,
+                "scale": 0.4074309757492673,
+                "pedigree": {
+                  "reliability": 3,
+                  "completeness": 1,
+                  "temporal correlation": 5,
+                  "geographical correlation": 5,
+                  "further technological correlation": 4
+                },
+                "scale without pedigree": 0.5,
+                "name": "Transport, freight, rail",
+                "reference product": "Transport, freight, rail",
+                "location": "RER",
+                "unit": "ton kilometer",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.01932,
+                "uncertainty type": 2,
+                "loc": -3.946614450197765,
+                "scale": 0.4074309757492673,
+                "pedigree": {
+                  "reliability": 3,
+                  "completeness": 1,
+                  "temporal correlation": 5,
+                  "geographical correlation": 5,
+                  "further technological correlation": 4
+                },
+                "scale without pedigree": 0.5,
+                "name": "Transport, freight, lorry, fleet average",
+                "reference product": "Transport, freight, lorry, fleet average",
+                "location": "RER",
+                "unit": "ton kilometer",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.0792268474637746,
+                "uncertainty type": 0,
+                "loc": 0.0792268474637746,
+                "recipe": "pilot-pe-source-499bb2ae8576686d306e"
+              },
+              {
+                "amount": 0.107643629912986,
+                "uncertainty type": 0,
+                "loc": 0.107643629912986,
+                "name": "Disposal, polyethylene, 0.4% water, to municipal incineration",
+                "reference product": "Disposal, polyethylene, 0.4% water, to municipal incineration",
+                "location": "CH",
+                "unit": "kilogram",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.234923821966288,
+                "uncertainty type": 0,
+                "loc": 0.234923821966288,
+                "recipe": "pilot-pe-source-d5863cdcbae6852c4ba7"
+              },
+              {
+                "amount": 0.0250926981761765,
+                "uncertainty type": 0,
+                "loc": 0.0250926981761765,
+                "recipe": "pilot-pe-source-35f5d7ff61367ee67e8a"
+              },
+              {
+                "amount": 0.035073452155838,
+                "uncertainty type": 0,
+                "loc": 0.035073452155838,
+                "recipe": "pilot-pe-hyperarid-653e959b8bc1da533593"
+              },
+              {
+                "amount": 0.0623369227600257,
+                "uncertainty type": 0,
+                "loc": 0.0623369227600257,
+                "recipe": "pilot-pe-source-bfa3c6f7649d405fcd0c"
+              },
+              {
+                "amount": 0.0581108636290239,
+                "uncertainty type": 0,
+                "loc": 0.0581108636290239,
+                "recipe": "pilot-pe-source-c7eb736495925d6465db"
+              },
+              {
+                "amount": 0.0499944695133922,
+                "uncertainty type": 0,
+                "loc": 0.0499944695133922,
+                "recipe": "pilot-pe-source-06b7f29c226120635a7c"
+              },
+              {
+                "amount": 0.0241530148866973,
+                "uncertainty type": 0,
+                "loc": 0.0241530148866973,
+                "recipe": "pilot-pe-hyperarid-a4ceab02f7c4cbdfe516"
+              },
+              {
+                "amount": 0.0717986390931305,
+                "uncertainty type": 0,
+                "loc": 0.0717986390931305,
+                "recipe": "pilot-pe-source-d788d494110fafb7e0a4"
+              },
+              {
+                "amount": 0.154202153568209,
+                "uncertainty type": 0,
+                "loc": 0.154202153568209,
+                "recipe": "pilot-pe-source-48c9a85cfdad8677efd8"
+              },
+              {
+                "amount": 0.0974434868744583,
+                "uncertainty type": 0,
+                "loc": 0.0974434868744583,
+                "recipe": "pilot-pe-source-8a814b40565e94e693aa"
+              }
+            ],
+            "bindings": [
+              {
+                "source": [
+                  "market for diesel, burned in building machine",
+                  "diesel, burned in building machine",
+                  "GLO",
+                  "megajoule"
+                ],
+                "binding_sha256": "3b1861c3274945480ca2e0fb9dc4545ab816ea4f7c42d5e3da617e18157bf677"
+              },
+              {
+                "source": [
+                  "market for excavation, skid-steer loader",
+                  "excavation, skid-steer loader",
+                  "GLO",
+                  "cubic meter"
+                ],
+                "binding_sha256": "6a40382a88bea7f6e7ffe0e14cb4b89ccab08cd1846702631265a2ef7e9a03d5"
+              },
+              {
+                "source": [
+                  "market for transport, freight train",
+                  "transport, freight train",
+                  "CN",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "d46aef23fff44037150a3dbba425a0a576c0bd41f781827ff25bffb4a2ab84db"
+              },
+              {
+                "source": [
+                  "market for transport, freight train",
+                  "transport, freight train",
+                  "RoW",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "65daeb9709326706d1483db81c837f98391e55ce60de20cc1c7ec0c937a50c98"
+              },
+              {
+                "source": [
+                  "market for transport, freight train",
+                  "transport, freight train",
+                  "US",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "0902700ae508f9039ad1299a4bec8801b919686a03e7a2791a6781484bb2cff9"
+              },
+              {
+                "source": [
+                  "market for transport, freight, lorry, unspecified",
+                  "transport, freight, lorry, unspecified",
+                  "RoW",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "8c05935945592db59d34fa92d8b4d9a8baa248978d5ab15e353020e54bbb6955"
+              },
+              {
+                "source": [
+                  "treatment of waste polyethylene, municipal incineration",
+                  "waste polyethylene",
+                  "RoW",
+                  "kilogram"
+                ],
+                "binding_sha256": "7b576ccee434760629e776a1149f3efe436bdeffe846b4829893a4e4aa334982"
+              }
+            ]
+          }
+        ],
+        "limitations": "Preserve all12 original rest-of-world polyethylene-treatment shares and4 separate original collection-freight entries with signed quantities and supported uncertainty, without aggregation or renormalization. Nine exact previously reviewed uncontrolled-treatment recipes remain unchanged; two new hyperarid(-250mm) helpers retain their complete101-flow source inventories, original operating inputs and separately inspected canonical3.10 definition metadata. Open burning, open dumps and five infiltration classes remain their source fates rather than controlled incineration or an empty allocation. All1145 foreground elementary exchanges are retained across11 shared treatment helpers, including signed/zero amounts, uncertainty, full compartments and emission/resource roles. Publisher UUID/unit/context/role identify canonical definitions; Ca/Na/Sr names, sodium CAS changes and removal of an individual CAS for generic NOx remain metadata warnings without molecular/speciation/compartment factors. The ordinary-incineration portion uses the exact complete native polyethylene0.4%-water incinerator from the prior44-coordinate composition review, not the raw genericPE/PP wrapper with additional collection. Native energy, ash/residue treatment, internal residue transport, infrastructure, allocation and emissions remain once, with geographic, technology, vintage, biosphere-exclusion and unquantified-score limitations. Original country-allocated rail entries use the complete generic RER freight-rail service from the already inspected whole-freight authority; do not select the raw coal-only CN train or diesel-only US target. Keep road freight at its original tkm through the inspected complete RER heavy fleet. Source-specific quantities/uncertainty remain separate even where native suppliers coincide. Native traction, wagon/fleet, loading, fuel, infrastructure, geography and vintage differences remain screening warnings. Retain as-received kg and net tkm; introduce no moisture, dry-mass, density, heating-value, distance, payload, capacity, lifetime, recovery or avoided-production factor. Source market/treatments have no parameters/formulas. Preserve caller-owned signed quantities, formulas, uncertainty, production, foreground suppliers and separate emissions. Negative waste reference-1 maps to positive helper treatment via factor-1. Raw child hashes freeze drift and do not grant standalone approvals. No new treatment model, polymer blend, FAE assumption, physical omission, inverse or cross-system-model conversion is inferred. Only the exact3.9cutoff RoW parent closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; other profiles and European/Swiss branches remain unapproved.",
+        "source38_waste_market_extension": {
+          "review_path": "export/uvek_trucks_two_waste_markets_38_review.json",
+          "review_sha256": "72375bf71642b768eacd0f127f29c0bd66dfb90d698a4812ed6d2c4359dd1f6b",
+          "selected_prior_rule_and_recipe_unchanged": true
+        }
+      },
+      "limitations": [
+        "Preserve all12 original rest-of-world polyethylene-treatment shares and4 separate original collection-freight entries with signed quantities and supported uncertainty, without aggregation or renormalization. Nine exact previously reviewed uncontrolled-treatment recipes remain unchanged; two new hyperarid(-250mm) helpers retain their complete101-flow source inventories, original operating inputs and separately inspected canonical3.10 definition metadata. Open burning, open dumps and five infiltration classes remain their source fates rather than controlled incineration or an empty allocation. All1145 foreground elementary exchanges are retained across11 shared treatment helpers, including signed/zero amounts, uncertainty, full compartments and emission/resource roles. Publisher UUID/unit/context/role identify canonical definitions; Ca/Na/Sr names, sodium CAS changes and removal of an individual CAS for generic NOx remain metadata warnings without molecular/speciation/compartment factors. The ordinary-incineration portion uses the exact complete native polyethylene0.4%-water incinerator from the prior44-coordinate composition review, not the raw genericPE/PP wrapper with additional collection. Native energy, ash/residue treatment, internal residue transport, infrastructure, allocation and emissions remain once, with geographic, technology, vintage, biosphere-exclusion and unquantified-score limitations. Original country-allocated rail entries use the complete generic RER freight-rail service from the already inspected whole-freight authority; do not select the raw coal-only CN train or diesel-only US target. Keep road freight at its original tkm through the inspected complete RER heavy fleet. Source-specific quantities/uncertainty remain separate even where native suppliers coincide. Native traction, wagon/fleet, loading, fuel, infrastructure, geography and vintage differences remain screening warnings. Retain as-received kg and net tkm; introduce no moisture, dry-mass, density, heating-value, distance, payload, capacity, lifetime, recovery or avoided-production factor. Source market/treatments have no parameters/formulas. Preserve caller-owned signed quantities, formulas, uncertainty, production, foreground suppliers and separate emissions. Negative waste reference-1 maps to positive helper treatment via factor-1. Raw child hashes freeze drift and do not grant standalone approvals. No new treatment model, polymer blend, FAE assumption, physical omission, inverse or cross-system-model conversion is inferred. Only the exact3.9cutoff RoW parent closure qualifies for UVEK2026cutoff/ecoinvent3.10biosphere; other profiles and European/Swiss branches remain unapproved."
+      ],
+      "scopes": [
+        {
+          "source": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "target": {
+            "family": "uvek",
+            "version": "2025",
+            "system_model": "cutoff"
+          },
+          "fingerprint": "99c670c23b67fb95aa9ac4fd73814a807e86ebb0645789c96f8a81138eb05ee9"
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-1472e083e5590d89",
+      "operation": "replace",
+      "mapping_method": "reviewed_pilot_nitrate_glass",
+      "review_path": "export/uvek_pilot_nitrate_glass_review.json",
+      "review_sha256": "b18737d17178d3de6330c951d8fd2d3c0e0082c59941afb3c72090e9f9af0493",
+      "authorization": "Standing inspected source-preserving helpers, exact publisher-definition and complete matching-function/unit operating/freight/incineration approvals. Fresh source/native inventories bind all original regional fates, quantities and uncertainty. Ordinary glass incineration reuses the prior44coordinate wet-composition authority after exact3.9comment/directCO2/native-metadata checks. No FAE substitution or new quantity/recovery model.",
+      "inspection": {
+        "rule_id": "bp-1472e083e5590d89",
+        "source": {
+          "location": "RoW",
+          "name": "market for waste glass",
+          "reference product": "waste glass",
+          "unit": "kilogram"
+        },
+        "previous_target": {
+          "location": "CH",
+          "name": "Disposal, flat glass, as building waste",
+          "reference product": "Disposal, flat glass, as building waste",
+          "unit": "kilogram"
+        },
+        "previous_rule": {
+          "confidence": 0.256604,
+          "conversion_factor": -1,
+          "id": "bp-1472e083e5590d89",
+          "mapping_method": "heuristic_similarity",
+          "reference_flow_sign_review": {
+            "evidence": [
+              "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-1472e083e5590d89"
+            ],
+            "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+            "source_sign": -1,
+            "status": "verified",
+            "target_sign": 1
+          },
+          "source": {
+            "location": "RoW",
+            "name": "market for waste glass",
+            "reference product": "waste glass",
+            "unit": "kilogram"
+          },
+          "target": {
+            "location": "CH",
+            "name": "Disposal, flat glass, as building waste",
+            "reference product": "Disposal, flat glass, as building waste",
+            "unit": "kilogram"
+          }
+        },
+        "previous_rule_sha256": "17f9102a21fdd880e12566ef05506865efec12d77d8bdc048d8d83e26728f0e4",
+        "previous_review": {},
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.9",
+          "system_model": "cutoff"
+        },
+        "source_reference_amount": -1,
+        "source_metadata_sha256": "98ce804b2e7c8400345b248ba0815e88474ce2d3c98d7a0792676f3154c88475",
+        "source_inventory_sha256": "ebf5f168a537e4b0c7f6f4d04f54791d051ea5b7d8113995c45d209d3492c044",
+        "source_fates": [
+          {
+            "source": {
+              "name": "treatment of waste glass, open dump, moist infiltration class (300mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-e4d5f82688c8f3976eba"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, unsanitary landfill, dry infiltration class (100mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-c95e296237f3a3aa349c"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, unsanitary landfill, moist infiltration class (300mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-27ad656678927fbec417"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, unsanitary landfill, wet infiltration class (500mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-dd8ae0e970eace24c2c9"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, unsanitary landfill, hyperarid infiltration class (-250mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-ee5c2a9f79a0a14c44f1"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, open dump, wet infiltration class (500mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-2bbcfc07744b7592fbda"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, unsanitary landfill, very wet infiltration class (1000mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-4fddf816faedcd26458a"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, municipal incineration",
+              "reference product": "waste glass",
+              "location": "RoW",
+              "unit": "kilogram"
+            },
+            "ordinary_incinerator": true
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, open dump, hyperarid infiltration class (-250mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-ed29c4d741a32ed90f62"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, open dump, dry infiltration class (100mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-c07fdad0ce14ee35949d"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, open burning",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-66c1dca6a61baacaa542"
+          },
+          {
+            "source": {
+              "name": "treatment of waste glass, open dump, very wet infiltration class (1000mm)",
+              "reference product": "waste glass",
+              "location": "GLO",
+              "unit": "kilogram"
+            },
+            "recipe": "pilot-glass-treatment-dcad833c16afdde91509"
+          }
+        ],
+        "freight_witnesses": [
+          {
+            "source": {
+              "name": "market for transport, freight train",
+              "reference product": "transport, freight train",
+              "location": "CN",
+              "unit": "ton kilometer"
+            },
+            "source_inventory_sha256": "3c28b1e438bb511e15353f4199305e3a02619cb4fcc5a07bd26effc9254ceef6",
+            "target": {
+              "name": "Transport, freight, rail",
+              "reference product": "Transport, freight, rail",
+              "location": "RER",
+              "unit": "ton kilometer"
+            }
+          },
+          {
+            "source": {
+              "name": "market for transport, freight train",
+              "reference product": "transport, freight train",
+              "location": "RoW",
+              "unit": "ton kilometer"
+            },
+            "source_inventory_sha256": "5ac20dbc0e8c4c4569e64ce7ff03a4673924f8e0f8cdf9a19becd1f6ec8f16da",
+            "target": {
+              "name": "Transport, freight, rail",
+              "reference product": "Transport, freight, rail",
+              "location": "RER",
+              "unit": "ton kilometer"
+            }
+          },
+          {
+            "source": {
+              "name": "market for transport, freight train",
+              "reference product": "transport, freight train",
+              "location": "US",
+              "unit": "ton kilometer"
+            },
+            "source_inventory_sha256": "eff4aa8da2ab2ba685be7955d6c66a23aeb987934a65d6fd66243553be0f516e",
+            "target": {
+              "name": "Transport, freight, rail",
+              "reference product": "Transport, freight, rail",
+              "location": "RER",
+              "unit": "ton kilometer"
+            }
+          },
+          {
+            "source": {
+              "name": "market for transport, freight, lorry, unspecified",
+              "reference product": "transport, freight, lorry, unspecified",
+              "location": "RoW",
+              "unit": "ton kilometer"
+            },
+            "source_inventory_sha256": "8091673d53531942ff0716d8fdf3b6594a5264de58d13074f49aac7be049924e",
+            "target": {
+              "name": "Transport, freight, lorry, fleet average",
+              "reference product": "Transport, freight, lorry, fleet average",
+              "location": "RER",
+              "unit": "ton kilometer"
+            }
+          }
+        ],
+        "previous_native_flow_type": "WASTE_FLOW",
+        "original_factor": -1,
+        "authorized_system_model": "cutoff",
+        "expected_foreground_records": 13,
+        "expected_foreground_biosphere_exchanges": 146,
+        "profiles": [
+          {
+            "label": "ecoinvent-3.9-cutoff",
+            "source_sign": -1,
+            "inventory_sha256": "ebf5f168a537e4b0c7f6f4d04f54791d051ea5b7d8113995c45d209d3492c044",
+            "inputs": [
+              {
+                "amount": 0.003225847220316541,
+                "uncertainty type": 2,
+                "loc": -5.7365596592609265,
+                "scale": 0.4049691346263318,
+                "pedigree": {
+                  "reliability": 1,
+                  "completeness": 1,
+                  "temporal correlation": 5,
+                  "geographical correlation": 5,
+                  "further technological correlation": 4
+                },
+                "scale without pedigree": 0.4959838707054898,
+                "name": "Transport, freight, rail",
+                "reference product": "Transport, freight, rail",
+                "location": "RER",
+                "unit": "ton kilometer",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.004450430953717091,
+                "uncertainty type": 2,
+                "loc": -5.414754343961089,
+                "scale": 0.4049691346263318,
+                "pedigree": {
+                  "reliability": 1,
+                  "completeness": 1,
+                  "temporal correlation": 5,
+                  "geographical correlation": 5,
+                  "further technological correlation": 4
+                },
+                "scale without pedigree": 0.4959838707054898,
+                "name": "Transport, freight, rail",
+                "reference product": "Transport, freight, rail",
+                "location": "RER",
+                "unit": "ton kilometer",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.0035237218259663665,
+                "uncertainty type": 2,
+                "loc": -5.648237511036843,
+                "scale": 0.4049691346263318,
+                "pedigree": {
+                  "reliability": 1,
+                  "completeness": 1,
+                  "temporal correlation": 5,
+                  "geographical correlation": 5,
+                  "further technological correlation": 4
+                },
+                "scale without pedigree": 0.4959838707054898,
+                "name": "Transport, freight, rail",
+                "reference product": "Transport, freight, rail",
+                "location": "RER",
+                "unit": "ton kilometer",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.01932,
+                "uncertainty type": 2,
+                "loc": -3.946614450197765,
+                "scale": 0.4049691346263318,
+                "pedigree": {
+                  "reliability": 1,
+                  "completeness": 1,
+                  "temporal correlation": 5,
+                  "geographical correlation": 5,
+                  "further technological correlation": 4
+                },
+                "scale without pedigree": 0.4959838707054898,
+                "name": "Transport, freight, lorry, fleet average",
+                "reference product": "Transport, freight, lorry, fleet average",
+                "location": "RER",
+                "unit": "ton kilometer",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.023662237452226,
+                "uncertainty type": 0,
+                "loc": 0.023662237452226,
+                "recipe": "pilot-glass-treatment-e4d5f82688c8f3976eba"
+              },
+              {
+                "amount": 0.0750884351572832,
+                "uncertainty type": 0,
+                "loc": 0.0750884351572832,
+                "recipe": "pilot-glass-treatment-c95e296237f3a3aa349c"
+              },
+              {
+                "amount": 0.0768726245762464,
+                "uncertainty type": 0,
+                "loc": 0.0768726245762464,
+                "recipe": "pilot-glass-treatment-27ad656678927fbec417"
+              },
+              {
+                "amount": 0.258622556115927,
+                "uncertainty type": 0,
+                "loc": 0.258622556115927,
+                "recipe": "pilot-glass-treatment-dd8ae0e970eace24c2c9"
+              },
+              {
+                "amount": 0.0337819715299597,
+                "uncertainty type": 0,
+                "loc": 0.0337819715299597,
+                "recipe": "pilot-glass-treatment-ee5c2a9f79a0a14c44f1"
+              },
+              {
+                "amount": 0.153727935616123,
+                "uncertainty type": 0,
+                "loc": 0.153727935616123,
+                "recipe": "pilot-glass-treatment-2bbcfc07744b7592fbda"
+              },
+              {
+                "amount": 0.0609226871729106,
+                "uncertainty type": 0,
+                "loc": 0.0609226871729106,
+                "recipe": "pilot-glass-treatment-4fddf816faedcd26458a"
+              },
+              {
+                "amount": 0.126083373049048,
+                "uncertainty type": 0,
+                "loc": 0.126083373049048,
+                "name": "Disposal, glass, 0% water, to municipal incineration",
+                "reference product": "Disposal, glass, 0% water, to municipal incineration",
+                "location": "CH",
+                "unit": "kilogram",
+                "type": "technosphere"
+              },
+              {
+                "amount": 0.0208443807352204,
+                "uncertainty type": 0,
+                "loc": 0.0208443807352204,
+                "recipe": "pilot-glass-treatment-ed29c4d741a32ed90f62"
+              },
+              {
+                "amount": 0.0517910479865242,
+                "uncertainty type": 0,
+                "loc": 0.0517910479865242,
+                "recipe": "pilot-glass-treatment-c07fdad0ce14ee35949d"
+              },
+              {
+                "amount": 0.0794462428184695,
+                "uncertainty type": 0,
+                "loc": 0.0794462428184695,
+                "recipe": "pilot-glass-treatment-66c1dca6a61baacaa542"
+              },
+              {
+                "amount": 0.0391565077900618,
+                "uncertainty type": 0,
+                "loc": 0.0391565077900618,
+                "recipe": "pilot-glass-treatment-dcad833c16afdde91509"
+              }
+            ],
+            "bindings": [
+              {
+                "source": [
+                  "market for diesel, burned in building machine",
+                  "diesel, burned in building machine",
+                  "GLO",
+                  "megajoule"
+                ],
+                "binding_sha256": "3b1861c3274945480ca2e0fb9dc4545ab816ea4f7c42d5e3da617e18157bf677"
+              },
+              {
+                "source": [
+                  "market for excavation, skid-steer loader",
+                  "excavation, skid-steer loader",
+                  "GLO",
+                  "cubic meter"
+                ],
+                "binding_sha256": "6a40382a88bea7f6e7ffe0e14cb4b89ccab08cd1846702631265a2ef7e9a03d5"
+              },
+              {
+                "source": [
+                  "market for transport, freight train",
+                  "transport, freight train",
+                  "CN",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "d46aef23fff44037150a3dbba425a0a576c0bd41f781827ff25bffb4a2ab84db"
+              },
+              {
+                "source": [
+                  "market for transport, freight train",
+                  "transport, freight train",
+                  "RoW",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "65daeb9709326706d1483db81c837f98391e55ce60de20cc1c7ec0c937a50c98"
+              },
+              {
+                "source": [
+                  "market for transport, freight train",
+                  "transport, freight train",
+                  "US",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "0902700ae508f9039ad1299a4bec8801b919686a03e7a2791a6781484bb2cff9"
+              },
+              {
+                "source": [
+                  "market for transport, freight, lorry, unspecified",
+                  "transport, freight, lorry, unspecified",
+                  "BR",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "f4256492cf3ec98c076c78ac87d4f8c0daffd5045d37e8df6a92f548a08d0bd9"
+              },
+              {
+                "source": [
+                  "market for transport, freight, lorry, unspecified",
+                  "transport, freight, lorry, unspecified",
+                  "RoW",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "8c05935945592db59d34fa92d8b4d9a8baa248978d5ab15e353020e54bbb6955"
+              },
+              {
+                "source": [
+                  "market for transport, freight, lorry, unspecified",
+                  "transport, freight, lorry, unspecified",
+                  "ZA",
+                  "ton kilometer"
+                ],
+                "binding_sha256": "39a5612f3092475ae935aba83a208ae096110b469b622d56248a5629d7e64703"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, municipal incineration",
+                  "waste glass",
+                  "RoW",
+                  "kilogram"
+                ],
+                "binding_sha256": "67bebe477488221096acd01f43542193bac74dfdcd137f6f4bacfc998a4f8e4b"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, open burning",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "2a4f6d534c8a69c645057d592262f0c3ccf63318f9351893d6ae371796e36124"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, open dump, dry infiltration class (100mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "b7d043018f6a70d24cc88d6b95c2e1e8cf1f462feaf18979b1e8516b31769a4e"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, open dump, hyperarid infiltration class (-250mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "c6fe3f815d9ae9b359111f833b1a8e48ce603c85d82d9c4e3307289b0253c0f3"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, open dump, moist infiltration class (300mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "74e55c5c15075e563339f7f46d9d70b30feed0b3af81a7e1c9b35bd7f22e3953"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, open dump, very wet infiltration class (1000mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "8958969ae8ed8eb765a98af0cbaf94b8b69af7c150d93327d5ab0ba89b4dfc32"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, open dump, wet infiltration class (500mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "4368af5cd5c80b3bf9bfc5636eac0ffa3c792c7fe0da85378844b98ef0fdd4a9"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, unsanitary landfill, dry infiltration class (100mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "e237ad65c20d2a97f7cf597bf47a5b3ea912062525972b61ebfabc1da73eec26"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, unsanitary landfill, hyperarid infiltration class (-250mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "d765c54ce85aacbb77021440489fcef1511f052b24769871511aed5ee28805ae"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, unsanitary landfill, moist infiltration class (300mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "6b02e6dd7e76d882b2d6a968f27f9606dd133caf9535a44546bcf2e82afac2bc"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, unsanitary landfill, very wet infiltration class (1000mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "ad0ee6ddbb49c1961666058ad4b7536d4418810aceb0fde232be45fe44bcc101"
+              },
+              {
+                "source": [
+                  "treatment of waste glass, unsanitary landfill, wet infiltration class (500mm)",
+                  "waste glass",
+                  "GLO",
+                  "kilogram"
+                ],
+                "binding_sha256": "14ec08fe949230ae234b3a4a57be7f79a564bd8d08272de5a0900024827044ad"
+              }
+            ]
+          }
+        ],
+        "limitations": "Retain every original ecoinvent3.9cutoff regional glass treatment share, elementary exchange and individual collection quantity at its signed amount and uncertainty, including zeros. Eleven shared source-preserving helpers retain open burning, open dumps and all five unsanitary/open-dump infiltration classes, including hyperarid-250mm. Do not substitute controlled incineration, a wetter class or empty recycling for those source fates. Exact publisher UUID, unit, complete compartment and emission/resource role bind45elementary definitions to installed canonical ecoinvent3.10. Publisher label/CAS changes remain warnings without molecular/speciation/compartment factors. Preserve all146direct source elementary terms and the10original diesel-combustion/skid-steer operating entries across the shared helpers. Whole native operating technology, fuel, machinery, geography, allocation, internal uncertainty and vintage remain screened differences; do not add source machinery/fuel a second time. Ordinary incineration alone uses the specific complete native glass municipal-incineration process, whose44documentedwet-composition coordinates match the inspected ordinary source and prior reviewed source3.6. Do not use building-demolition wrappers. Reserved source water content is0 whereas the documented wet waste model is2%water and matches44native coordinates; do not infer a carbon, water, density or energy multiplier. Native incineration emissions, energy/ash/residue management, allocation, infrastructure, geography and vintage remain complete-service limitations, not LCIA equivalence. Keep every original freight entry at its signedtkm/uncertainty through the previously reviewed complete genericRERrail/heavy-road services, without aggregation, renormalization, coal-only/diesel-only train substitution, loading/distance scaling or duplicate infrastructure/logistics. Preserve caller ownership, signed quantities/formulas/uncertainty, foreground suppliers and separate emissions/purchases. Negative waste references-1map to positive helper services through factor-1. No physical omission, new disposal/recovery credit, moisture/drymass factor, inverse or cross-system-model route. Native biosphere exclusions and all score effects remain warned/unquantified. Only seven enumerated exact3.9cutoff parent closures qualify forUVEK2026cutoff/ecoinvent3.10biosphere. The European group and SwissFAE branch remain outside this review; their separate pending modelling decision is not applied. Raw component bindings guard drift and grant no standalone service or other-version approval."
+      },
+      "limitations": [
+        "Retain every original ecoinvent3.9cutoff regional glass treatment share, elementary exchange and individual collection quantity at its signed amount and uncertainty, including zeros. Eleven shared source-preserving helpers retain open burning, open dumps and all five unsanitary/open-dump infiltration classes, including hyperarid-250mm. Do not substitute controlled incineration, a wetter class or empty recycling for those source fates. Exact publisher UUID, unit, complete compartment and emission/resource role bind45elementary definitions to installed canonical ecoinvent3.10. Publisher label/CAS changes remain warnings without molecular/speciation/compartment factors. Preserve all146direct source elementary terms and the10original diesel-combustion/skid-steer operating entries across the shared helpers. Whole native operating technology, fuel, machinery, geography, allocation, internal uncertainty and vintage remain screened differences; do not add source machinery/fuel a second time. Ordinary incineration alone uses the specific complete native glass municipal-incineration process, whose44documentedwet-composition coordinates match the inspected ordinary source and prior reviewed source3.6. Do not use building-demolition wrappers. Reserved source water content is0 whereas the documented wet waste model is2%water and matches44native coordinates; do not infer a carbon, water, density or energy multiplier. Native incineration emissions, energy/ash/residue management, allocation, infrastructure, geography and vintage remain complete-service limitations, not LCIA equivalence. Keep every original freight entry at its signedtkm/uncertainty through the previously reviewed complete genericRERrail/heavy-road services, without aggregation, renormalization, coal-only/diesel-only train substitution, loading/distance scaling or duplicate infrastructure/logistics. Preserve caller ownership, signed quantities/formulas/uncertainty, foreground suppliers and separate emissions/purchases. Negative waste references-1map to positive helper services through factor-1. No physical omission, new disposal/recovery credit, moisture/drymass factor, inverse or cross-system-model route. Native biosphere exclusions and all score effects remain warned/unquantified. Only seven enumerated exact3.9cutoff parent closures qualify forUVEK2026cutoff/ecoinvent3.10biosphere. The European group and SwissFAE branch remain outside this review; their separate pending modelling decision is not applied. Raw component bindings guard drift and grant no standalone service or other-version approval."
+      ],
+      "scopes": [
+        {
+          "source": {
+            "family": "ecoinvent",
+            "version": "3.9",
+            "system_model": "cutoff"
+          },
+          "target": {
+            "family": "uvek",
+            "version": "2025",
+            "system_model": "cutoff"
+          },
+          "fingerprint": "80e1c79b6422a02a04b22dbc5a0ca808d83d83634ec2098702cf6b20608c6826"
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-5c29c14c8825b76f",
+      "operation": "replace",
+      "mapping_method": "reviewed_pilot_uncontrolled_market",
+      "review_path": "export/uvek_trucks_two_waste_markets_38_review.json",
+      "review_sha256": "72375bf71642b768eacd0f127f29c0bd66dfb90d698a4812ed6d2c4359dd1f6b",
+      "authorization": "Standing autonomous goal and automatic approval of inspected screening proxies with explicit warnings; no new physical omissions.",
+      "inspection": {
+        "source_witness": {
+          "identity": {
+            "name": "market for waste wood, untreated",
+            "reference product": "waste wood, untreated",
+            "unit": "kilogram",
+            "location": "RoW"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 19,
+          "inventory_sha256": "eb18bc21dbd3f43b84051a8a4c25ca607eda4fa131e5681d8e983e284e683eea",
+          "metadata_sha256": "a59a077881ac2750ba026ffddb00ccd89598e4b39dbf58d868926136487ed2c1"
+        },
+        "adopted_source_versions": [
+          "3.12"
+        ],
+        "source38_treatment_shares_retained": 12,
+        "source38_transport_entries_retained": 7
+      },
+      "limitations": [
+        "Use the existing complete reviewed 3.12 treatment models as screening proxies for the same source-3.8 waste type, treatment technology and infiltration class. This is an explicit inventory-version substitution, not an exact source-inventory reconstruction. Treatment emissions, operating inputs, temporal modelling, geography, allocation, uncertainty and score effects differ and remain unquantified. The source municipal-incineration inventory is replaced by the already-reviewed complete native incinerator; no additional recovery or energy credit is invented.",
+        "Retain all twelve original source-3.8 treatment shares and all seven original collection-transport entries without renormalization, grouping or changing nominal quantities. Retain market transport uncertainty and its supported constant formula. Source negative treatment inputs and the negative market reference each change sign once at their own boundary; no absolute-value operation is used.",
+        "Use complete existing same-mode native collection services: RER heavy-lorry fleet, US diesel rail for the US entry and RER rail for other entries. The original country entries remain separate. Geography, fuel, fleet, payload, vintage and infrastructure differ; no distance multiplier or extra infrastructure is added.",
+        "Preserve caller quantities, signs, formulas, uncertainty and separately listed emissions. Reused uncontrolled-treatment models remain nonempty and retain their complete reviewed elemental releases and operating services. No paid treatment is replaced by an empty recycling handover, zero burden or omission. Existing canonical-biosphere screening correspondences and their limitations remain in force.",
+        "Only the exact ecoinvent 3.8 cut-off context gains permission. Existing reviewed source profiles and all their recipe bodies remain unchanged; no consequential, reverse or patch-release permission is inferred."
+      ],
+      "scopes": [
+        {
+          "source": {
+            "family": "ecoinvent",
+            "version": "3.8",
+            "system_model": "cutoff"
+          },
+          "target": {
+            "family": "uvek",
+            "system_model": "cutoff",
+            "version": "2025"
+          },
+          "fingerprint": "e8a22bcae518071df2157e43dc861730e0891be9e647df8f05fb530087d5335f"
+        }
+      ]
+    },
+    {
+      "rule_id": "bp-38a8afc636bbea5a",
+      "operation": "replace",
+      "mapping_method": "reviewed_pilot_nitrate_pe_row",
+      "review_path": "export/uvek_trucks_two_waste_markets_38_review.json",
+      "review_sha256": "72375bf71642b768eacd0f127f29c0bd66dfb90d698a4812ed6d2c4359dd1f6b",
+      "authorization": "Standing autonomous goal and automatic approval of inspected screening proxies with explicit warnings; no new physical omissions.",
+      "inspection": {
+        "source_witness": {
+          "identity": {
+            "name": "market for waste polyethylene",
+            "reference product": "waste polyethylene",
+            "unit": "kilogram",
+            "location": "RoW"
+          },
+          "reference_amounts": [
+            -1.0
+          ],
+          "nonproduction_count": 19,
+          "inventory_sha256": "f7ac63e9b145a9269d20ea5b480173d268c8146c051896d2998404c290c4b39d",
+          "metadata_sha256": "34235079012a255b56aac670409379c6f878c8ea73a660ef11afb0a745517580"
+        },
+        "adopted_source_versions": [
+          "3.9"
+        ],
+        "source38_treatment_shares_retained": 12,
+        "source38_transport_entries_retained": 7
+      },
+      "limitations": [
+        "Use the existing complete reviewed 3.9 treatment models as screening proxies for the same source-3.8 waste type, treatment technology and infiltration class. This is an explicit inventory-version substitution, not an exact source-inventory reconstruction. Treatment emissions, operating inputs, temporal modelling, geography, allocation, uncertainty and score effects differ and remain unquantified. The source municipal-incineration inventory is replaced by the already-reviewed complete native incinerator; no additional recovery or energy credit is invented.",
+        "Retain all twelve original source-3.8 treatment shares and all seven original collection-transport entries without renormalization, grouping or changing nominal quantities. Retain market transport uncertainty and its supported constant formula. Source negative treatment inputs and the negative market reference each change sign once at their own boundary; no absolute-value operation is used.",
+        "Use complete existing same-mode native collection services: RER heavy-lorry fleet, US diesel rail for the US entry and RER rail for other entries. The original country entries remain separate. Geography, fuel, fleet, payload, vintage and infrastructure differ; no distance multiplier or extra infrastructure is added.",
+        "Preserve caller quantities, signs, formulas, uncertainty and separately listed emissions. Reused uncontrolled-treatment models remain nonempty and retain their complete reviewed elemental releases and operating services. No paid treatment is replaced by an empty recycling handover, zero burden or omission. Existing canonical-biosphere screening correspondences and their limitations remain in force.",
+        "Only the exact ecoinvent 3.8 cut-off context gains permission. Existing reviewed source profiles and all their recipe bodies remain unchanged; no consequential, reverse or patch-release permission is inferred."
+      ],
+      "scopes": [
+        {
+          "source": {
+            "family": "ecoinvent",
+            "version": "3.8",
+            "system_model": "cutoff"
+          },
+          "target": {
+            "family": "uvek",
+            "system_model": "cutoff",
+            "version": "2025"
+          },
+          "fingerprint": "2e1b621cf0bdb5d8fb6e1ce01730e81aa378cae5bfdf6ae702d135de94a24a78"
+        }
+      ]
+    }
+  ],
+  "earlier_authoring_review_extension": {
+    "path": "export/uvek_trucks_two_waste_markets_38_review.json",
+    "previous_sha256": "72375bf71642b768eacd0f127f29c0bd66dfb90d698a4812ed6d2c4359dd1f6b",
+    "current_sha256": "ce0ea405358241eeddbdb12f3e92f0ce5c9899c48a055168da5b7d06834a5f92"
+  },
+  "new_helpers": 36,
+  "source_uncontrolled_models": 33,
+  "new_foreground_omissions": [],
+  "runtime_Python_changes": 0,
+  "generator_Python_changes": 0,
+  "licensing": "Original source inventories/comments and unconverted binding vectors stay private. This parent review publishes derived target identities, exchange checksums, reference/hash witnesses and explicit decision limits; target model definitions are in the separate referenced authoring artifact."
+}

@@ -1084,22 +1084,43 @@
               }
             },
             {
+              "conversion_factor": -1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_trucks_two_waste_markets_38_review.json"
+                ],
+                "reason": "Use the existing complete reviewed 3.9 treatment models as screening proxies for the same source-3.8 waste type, treatment technology and infiltration class. This is an explicit inventory-version substitution, not an exact source-inventory reconstruction. Treatment emissions, operating inputs, temporal modelling, geography, allocation, uncertainty and score effects differ and remain unquantified. The source municipal-incineration inventory is replaced by the already-reviewed complete native incinerator; no additional recovery or energy credit is invented. Retain all twelve original source-3.8 treatment shares and all seven original collection-transport entries without renormalization, grouping or changing nominal quantities. Retain market transport uncertainty and its supported constant formula. Source negative treatment inputs and the negative market reference each change sign once at their own boundary; no absolute-value operation is used. Use complete existing same-mode native collection services: RER heavy-lorry fleet, US diesel rail for the US entry and RER rail for other entries. The original country entries remain separate. Geography, fuel, fleet, payload, vintage and infrastructure differ; no distance multiplier or extra infrastructure is added. Preserve caller quantities, signs, formulas, uncertainty and separately listed emissions. Reused uncontrolled-treatment models remain nonempty and retain their complete reviewed elemental releases and operating services. No paid treatment is replaced by an empty recycling handover, zero burden or omission. Existing canonical-biosphere screening correspondences and their limitations remain in force. Only the exact ecoinvent 3.8 cut-off context gains permission. Existing reviewed source profiles and all their recipe bodies remain unchanged; no consequential, reverse or patch-release permission is inferred.",
+                "source_sign": -1,
+                "status": "verified",
+                "target_sign": 1
+              },
               "source_profile": {
                 "family": "ecoinvent",
-                "version": "3.8",
-                "system_model": "cutoff"
+                "system_model": "cutoff",
+                "version": "3.8"
               },
               "target": {
                 "recipe_ref": "trucks-38-waste-pe-market"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
+                "system_model": "cutoff"
               },
               "conversion_factor": -1,
+              "target": {
+                "recipe_ref": "trucks-312-waste-market-38a8afc636bbea5a"
+              },
               "review": {
                 "status": "verified",
                 "source_sign": -1,
                 "target_sign": 1,
-                "reason": "Use the existing complete reviewed 3.9 treatment models as screening proxies for the same source-3.8 waste type, treatment technology and infiltration class. This is an explicit inventory-version substitution, not an exact source-inventory reconstruction. Treatment emissions, operating inputs, temporal modelling, geography, allocation, uncertainty and score effects differ and remain unquantified. The source municipal-incineration inventory is replaced by the already-reviewed complete native incinerator; no additional recovery or energy credit is invented. Retain all twelve original source-3.8 treatment shares and all seven original collection-transport entries without renormalization, grouping or changing nominal quantities. Retain market transport uncertainty and its supported constant formula. Source negative treatment inputs and the negative market reference each change sign once at their own boundary; no absolute-value operation is used. Use complete existing same-mode native collection services: RER heavy-lorry fleet, US diesel rail for the US entry and RER rail for other entries. The original country entries remain separate. Geography, fuel, fleet, payload, vintage and infrastructure differ; no distance multiplier or extra infrastructure is added. Preserve caller quantities, signs, formulas, uncertainty and separately listed emissions. Reused uncontrolled-treatment models remain nonempty and retain their complete reviewed elemental releases and operating services. No paid treatment is replaced by an empty recycling handover, zero burden or omission. Existing canonical-biosphere screening correspondences and their limitations remain in force. Only the exact ecoinvent 3.8 cut-off context gains permission. Existing reviewed source profiles and all their recipe bodies remain unchanged; no consequential, reverse or patch-release permission is inferred.",
+                "reason": "Only the independently inspected exact ecoinvent 3.12 cut-off parent markets gain new permission. Preserve signed caller kg, formulas, marginal uncertainty and independent caller operations/emissions. No patch, reverse or cross-system conversion or direct uncontrolled-treatment interface permission is inferred. Retain all twelve original disposal shares and the original road delivery separately, with their quantities/statistics and without regrouping or renormalization. One open-burning route, five open-dump and five unsanitary-landfill infiltration classes retain the exact inspected source-3.12 signed direct emissions through the existing canonical ecoinvent-3.10 biosphere route. Keep their original separate diesel-MJ and excavation-m3 demands where present, using complete native CH average building-machine combustion and RER skid-steer excavation; machinery, control, upstream supply, geography, fuel and vintage are proxies. No extra machinery/fuel input or energy, density or efficiency multiplier. Use complete generic same-material native incineration only for the original incineration share. Do not use the polyurethane building-waste disposal aggregate: it adds deconstruction and construction sorting absent from this source market and changes disposal fates. Native incinerator composition, moisture, energy/ash/recovery allocation, emissions control, technology, country and vintage replace the source incineration inventory. No invented recovered-energy/metals credit or extra demolition burden. Native polyurethane and polyethylene incinerators state0.2% and0.4% water respectively. Native glass has a0%-water label but a2%-water composition comment; this metadata inconsistency is explicitly unresolved. Preserve nominal source kg without an unsupported dry-mass, moisture, composition or heating-value correction. No exact waste-composition or score equivalence is inferred. Negative source market and treatment references become positive treatment services once at their respective callers. Positive original freight and operating demands stay positive; original signed emissions stay signed. Complete native road freight keeps the original0.077tkm per kg as a geographic/fleet/vintage proxy, without a distance/payload multiplier or duplicate transport. Existing older selected suppliers, factors and helper contents remain unchanged. The earlier source-3.8 PE authoring record is extended with this new exact3.12 profile so full chronological and idempotent data replay remain valid; its older approvals are not broadened to other profiles. No new physical omission, production/generator Python change, source/native LCI/LCIA equivalence or quantified score effect.",
                 "evidence": [
-                  "brightpath/data/export/uvek_trucks_two_waste_markets_38_review.json"
+                  "brightpath/data/export/uvek_trucks_waste_312_review.json",
+                  "brightpath/data/export/uvek_trucks_waste_312_models_review.json"
                 ]
               }
             }
@@ -3615,5 +3636,11 @@
   "new_foreground_omissions": [],
   "runtime_Python_changes": 0,
   "generator_Python_changes": 0,
-  "licensing": "Full licensed inventories and comments remain private; publish decisions, identity/hash witnesses and derived native-facing market demands only."
+  "licensing": "Full licensed inventories and comments remain private; publish decisions, identity/hash witnesses and derived native-facing market demands only.",
+  "source_312_authoring_extension": {
+    "review_path": "export/uvek_trucks_waste_312_review.json",
+    "model_review_path": "export/uvek_trucks_waste_312_models_review.json",
+    "existing_physical_targets_factors_and_recipes_unchanged": true,
+    "reason": "Carry the final exact3.12 profile in the earlier compiled PE authoring result; separate new source312 evidence and admission live in the cited review."
+  }
 }
