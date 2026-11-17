@@ -450,6 +450,25 @@ migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
 rollback cannot be skipped.
 
+Two inspected source-3.9 markets shared by battery and final-energy preparation
+retain their original producer entries and freight. The petroleum-refinery
+pitch route uses complete native European refinery bitumen as a nominal-kg
+production proxy, with explicit grade, allocation and refinery-vintage limits;
+paper pitch dispersants and coal-tar routes are excluded. Nickel sulfate keeps
+its two source supply shares. All 290 exchanges in its cobalt-production
+coproduct inventory equal 0.11337491313401228 times the corresponding source
+cobalt-metal inventory. That ratio scales the complete native cobalt burden,
+without asserting physical cobalt consumption to synthesize nickel sulfate.
+The native cobalt model's documented tailings and further-treatment-emission
+exclusions remain explicit limitations. The separate chemical-production branch
+retains its fifteen operations and eight signed elementary flows through
+existing reviewed suppliers and canonical biosphere links. No hydration,
+stoichiometric or assay correction is inferred, and cobalt sulfate is excluded
+as a different chemical. See
+``data/export/uvek_shared_pitch_nickel_39_review.json``. Four closed helpers,+eight signed LCIs and four independent native-demand comparisons establish
+native-model consistency; they do not qualify the complete battery sector or
+establish source/native impact equivalence.
+
 Resource governance
 -------------------
 
