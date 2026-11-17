@@ -17,6 +17,11 @@
       "family": "ecoinvent",
       "version": "3.8",
       "system_model": "cutoff"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.12",
+      "system_model": "cutoff"
     }
   ],
   "target_profile": {
@@ -65,7 +70,8 @@
         "reference_flow_sign_review": {
           "evidence": [
             "brightpath/data/export/uvek_shared_pitch_nickel_39_review.json",
-            "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+            "brightpath/data/export/uvek_reused_seventeen_38_review.json",
+            "brightpath/data/export/uvek_battery_reused_312_review.json"
           ],
           "profiles": [
             {
@@ -89,9 +95,29 @@
               }
             },
             {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+                ],
+                "reason": "Reuse the complete reviewed source-3.9 material supply model for nickel sulfate as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved. Reuse the existing reconstructed nickel-sulfate supply, never the unselected raw cobalt-sulfate candidate.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
               "source_profile": {
                 "family": "ecoinvent",
-                "version": "3.8",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "battery-38-reviewed-model-c18af03acca016b9"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
                 "system_model": "cutoff"
               },
               "conversion_factor": 1,
@@ -99,17 +125,17 @@
                 "status": "verified",
                 "source_sign": 1.0,
                 "target_sign": 1,
-                "reason": "Reuse the complete reviewed source-3.9 material supply model for nickel sulfate as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved. Reuse the existing reconstructed nickel-sulfate supply, never the unselected raw cobalt-sulfate candidate.",
+                "reason": "Use the complete already reviewed source-3.9 supply/service for this exact same named product, geography and reference unit as an explicit source-3.12 version screening proxy. Replace source-3.12 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor 1. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.12 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
                 "evidence": [
-                  "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+                  "brightpath/data/export/uvek_battery_reused_312_review.json"
                 ]
               },
               "target": {
-                "recipe_ref": "battery-38-reviewed-model-c18af03acca016b9"
+                "recipe_ref": "battery-312-reviewed-model-c18af03acca016b9"
               }
             }
           ],
-          "reason": "Only individually reviewed exact source profiles qualify; each profile retains its own model and reference coordinates.",
+          "reason": "Only individually reviewed exact source profiles qualify; every profile retains its own inventory source and reference coordinates.",
           "status": "unresolved"
         },
         "review_ref": "r-847ac78ea154ce6d",
@@ -1568,6 +1594,36 @@
         "family": "ecoinvent",
         "system_model": "cutoff",
         "version": "3.9"
+      },
+      "new_foreground_omissions": []
+    }
+  },
+  "source312_scope_extensions": {
+    "bp-c18af03acca016b9": {
+      "review_path": "brightpath/data/export/uvek_battery_reused_312_review.json",
+      "source_witness": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.12",
+          "system_model": "cutoff"
+        },
+        "identity": {
+          "location": "GLO",
+          "name": "market for nickel sulfate",
+          "reference product": "nickel sulfate",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 6,
+        "inventory_sha256": "514c457e35b54aa72003ced790d9b4ff8b62c9fc6019d8dd95b4672748f5bab6",
+        "metadata_sha256": "56ab6df435a2a7adc08bcf4d05978f321a95fe1ee6f39a776df7364828cad548",
+        "comment_sha256": "273222eb6bc10281e493020fda68fab29f6cfaad18e9b1b48098a957fab3668d",
+        "product_information_sha256": "2e718186b01c658b85311917440e43035aff20852119c98a8a2a73aa42f952a8"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
       },
       "new_foreground_omissions": []
     }

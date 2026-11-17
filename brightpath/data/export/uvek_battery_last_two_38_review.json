@@ -57,9 +57,60 @@
         }
       },
       "compiled_rule": {
+        "classification": "proxy",
         "confidence": 0.8,
+        "conversion_factor": 1,
         "id": "bp-8fa6bb43a07f3b4e",
         "mapping_method": "reviewed_battery_last_two_38_reactor_and_delivery",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_battery_last_two_38_review.json",
+            "brightpath/data/export/uvek_battery_reused_312_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_battery_last_two_38_review.json"
+                ],
+                "reason": "Retain the immediate manganese sulfate manufacturing operations and final-market quantities using complete functional native and previously reviewed backgrounds. This supplies the actual named chemical per positive nominal kg, instead of the previous chemically wrong heuristic candidate.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Use the complete already reviewed source-3.8 supply/service for this exact same named product, geography and reference unit as an explicit source-3.12 version screening proxy. Replace source-3.12 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor 1. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.12 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
+                "evidence": [
+                  "brightpath/data/export/uvek_battery_reused_312_review.json"
+                ]
+              },
+              "target": {
+                "recipe_ref": "battery-312-reviewed-model-8fa6bb43a07f3b4e"
+              }
+            }
+          ],
+          "reason": "Only individually reviewed exact source profiles qualify; every profile retains its own inventory source and reference coordinates.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-9836093c34adeec2",
         "source": {
           "location": "GLO",
           "name": "market for manganese sulfate",
@@ -69,37 +120,7 @@
         "target": {
           "recipe_ref": "battery-38-manganese-sulfate-delivered-supply"
         },
-        "conversion_factor": 1,
-        "classification": "proxy",
-        "report_correspondence": true,
-        "review_ref": "r-9836093c34adeec2",
-        "technosphere_information_loss": "Only the two required exact ecoinvent 3.8 cut-off global chemical markets are newly qualified. Use their immediate documented chemical manufacturing inventories and already reviewed complete backgrounds. No cobalt-sulfate, lithium-carbonate, amine-functionalized silica or arbitrary amine substitution is allowed. Preserve every retained source operation position, stored numerical quantity, formula and supported uncertainty, and all 34 biosphere positions mapped exactly through the existing strict ecoinvent 3.8 to 3.10 biosphere route. Source formula variables are not fully defined in the imported source metadata; retain the available definitions and stored numerical amounts without inventing or fitting missing values. The manganese-sulfate market keeps both original supplier quantities, but its allocated manganese-dioxide co-product branch uses the complete dedicated sulfate manufacturer as a manufacturing/allocation screening proxy. The original co-product inventory and allocation are replaced, not claimed preserved. Native concentrate remains ore feedstock; the retained reactor makes the sulfate. Source and native ore grade, beneficiation and suitability for battery manufacture remain uncertain; use nominal concentrate kg with no invented ore-content or yield multiplier. Both triethylamine-market regional quantities use the complete inspected European ethanol-amination inventory. The RoW internal electricity/ammonia portfolio is replaced by that European process, not reconstructed or claimed preserved. Existing fossil-ethylene ethanol supply is retained as a complete model; no substitution with biogenic alcohol, methylamines or an amine sorbent. No guessed reaction yield or co-product credit. Native chlorine and liquid nitrogen, ammonia, tap water, organic-plant infrastructure, electricity grids and overburden disposal are complete functional screening proxies. Their internal technology, delivery, allocation, geography, vintage and uncertainty replace the corresponding source backgrounds. Retain every source final-market freight position with native ocean-container, rail, barge and lorry-fleet proxies, without distance, payload or fleet renormalization. The native non-sulfidic overburden identity has contradictory sulphidic-tailings wording in its prose; retain this contradiction and its complete recorded land-use inventory. Do not infer acid-rock emissions, rehabilitation, recovery credits or an alternative disposal process. Negative waste inputs use their reviewed negative-to-positive treatment-coordinate factor; caller material kg keep factor +1. Existing steam, sulfur-dioxide, wastewater, ethylene-carbonate and fossil-ethanol recipes remain unchanged, with explicit model-source profiles and all inherited limitations. Native supplies occur once; separate reactor emissions, utilities and disposal stay separate. Add no efficiency, density, concentration, metal recovery, balancing or avoided-emission factor. No new physical omission, zero-burden authority or source-code edit. BAFU biosphere exclusions and every geographic, technological, allocation and internal-uncertainty substitution remain screening limitations with unquantified impact-score effects. No LCIA equivalence, reverse, consequential or uninspected release is authorized.",
-        "reference_flow_sign_review": {
-          "status": "unresolved",
-          "reason": "Only the independently inspected exact ecoinvent 3.8 cut-off source is qualified.",
-          "evidence": [
-            "brightpath/data/export/uvek_battery_last_two_38_review.json"
-          ],
-          "profiles": [
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.8",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Retain the immediate manganese sulfate manufacturing operations and final-market quantities using complete functional native and previously reviewed backgrounds. This supplies the actual named chemical per positive nominal kg, instead of the previous chemically wrong heuristic candidate.",
-                "evidence": [
-                  "brightpath/data/export/uvek_battery_last_two_38_review.json"
-                ]
-              }
-            }
-          ]
-        }
+        "technosphere_information_loss": "Only the two required exact ecoinvent 3.8 cut-off global chemical markets are newly qualified. Use their immediate documented chemical manufacturing inventories and already reviewed complete backgrounds. No cobalt-sulfate, lithium-carbonate, amine-functionalized silica or arbitrary amine substitution is allowed. Preserve every retained source operation position, stored numerical quantity, formula and supported uncertainty, and all 34 biosphere positions mapped exactly through the existing strict ecoinvent 3.8 to 3.10 biosphere route. Source formula variables are not fully defined in the imported source metadata; retain the available definitions and stored numerical amounts without inventing or fitting missing values. The manganese-sulfate market keeps both original supplier quantities, but its allocated manganese-dioxide co-product branch uses the complete dedicated sulfate manufacturer as a manufacturing/allocation screening proxy. The original co-product inventory and allocation are replaced, not claimed preserved. Native concentrate remains ore feedstock; the retained reactor makes the sulfate. Source and native ore grade, beneficiation and suitability for battery manufacture remain uncertain; use nominal concentrate kg with no invented ore-content or yield multiplier. Both triethylamine-market regional quantities use the complete inspected European ethanol-amination inventory. The RoW internal electricity/ammonia portfolio is replaced by that European process, not reconstructed or claimed preserved. Existing fossil-ethylene ethanol supply is retained as a complete model; no substitution with biogenic alcohol, methylamines or an amine sorbent. No guessed reaction yield or co-product credit. Native chlorine and liquid nitrogen, ammonia, tap water, organic-plant infrastructure, electricity grids and overburden disposal are complete functional screening proxies. Their internal technology, delivery, allocation, geography, vintage and uncertainty replace the corresponding source backgrounds. Retain every source final-market freight position with native ocean-container, rail, barge and lorry-fleet proxies, without distance, payload or fleet renormalization. The native non-sulfidic overburden identity has contradictory sulphidic-tailings wording in its prose; retain this contradiction and its complete recorded land-use inventory. Do not infer acid-rock emissions, rehabilitation, recovery credits or an alternative disposal process. Negative waste inputs use their reviewed negative-to-positive treatment-coordinate factor; caller material kg keep factor +1. Existing steam, sulfur-dioxide, wastewater, ethylene-carbonate and fossil-ethanol recipes remain unchanged, with explicit model-source profiles and all inherited limitations. Native supplies occur once; separate reactor emissions, utilities and disposal stay separate. Add no efficiency, density, concentration, metal recovery, balancing or avoided-emission factor. No new physical omission, zero-burden authority or source-code edit. BAFU biosphere exclusions and every geographic, technological, allocation and internal-uncertainty substitution remain screening limitations with unquantified impact-score effects. No LCIA equivalence, reverse, consequential or uninspected release is authorized."
       },
       "functional_basis": "Retain the immediate manganese sulfate manufacturing operations and final-market quantities using complete functional native and previously reviewed backgrounds. This supplies the actual named chemical per positive nominal kg, instead of the previous chemically wrong heuristic candidate.",
       "limitations": [
@@ -2940,5 +2961,47 @@
   "retained_existing_omission_contexts": [],
   "new_physical_omissions": [],
   "new_zero_burden_authority": false,
-  "new_source_code_changes": 0
+  "new_source_code_changes": 0,
+  "source_profiles": [
+    {
+      "family": "ecoinvent",
+      "version": "3.8",
+      "system_model": "cutoff"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.12",
+      "system_model": "cutoff"
+    }
+  ],
+  "source312_scope_extensions": {
+    "bp-8fa6bb43a07f3b4e": {
+      "review_path": "brightpath/data/export/uvek_battery_reused_312_review.json",
+      "source_witness": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.12",
+          "system_model": "cutoff"
+        },
+        "identity": {
+          "location": "GLO",
+          "name": "market for manganese sulfate",
+          "reference product": "manganese sulfate",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 6,
+        "inventory_sha256": "66f4b72baba5547f08b48e10622875c8f4fb4c2c334ac49b8759dd911a44b440",
+        "metadata_sha256": "7ef6daf39d435a0ddda84a823d34aad21db8eefee4cd66755a91397e55585691",
+        "comment_sha256": "97b9088213c747e652feeeab7e9ae527db6035faa4e57343644e41d1694a73fb",
+        "product_information_sha256": "f896167faf7c5e6243a03530d587f609c7202700830581964cbb66d797816df0"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "version": "3.8",
+        "system_model": "cutoff"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }

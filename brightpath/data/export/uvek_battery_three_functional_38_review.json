@@ -12,6 +12,11 @@
       "family": "ecoinvent",
       "system_model": "cutoff",
       "version": "3.10"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.12",
+      "system_model": "cutoff"
     }
   ],
   "target_profile": {
@@ -275,9 +280,57 @@
         }
       },
       "compiled_rule": {
+        "classification": "proxy",
         "confidence": 0.65,
+        "conversion_factor": 1,
         "id": "bp-82479bd5f6b8b893",
         "mapping_method": "reviewed_native_battery_grade_carbon_function",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_battery_three_functional_38_review.json",
+            "brightpath/data/export/uvek_battery_reused_312_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_battery_three_functional_38_review.json"
+                ],
+                "reason": "Use complete native Chinese battery-grade graphite per signed kg as a functional screening proxy for synthetic battery-grade graphite. The source graphitizes amorphous carbon; native documentation instead approximates graphite mining/crushing/milling and adds hard-coal coke and electricity for the battery grade. These manufacturing routes are not equivalent. Battery-grade carbon function is the matching basis, not a claim that mining represents synthetic graphitization. Source synthesis, purification, morphology, performance, delivery and internal uncertainty are replaced; energy and impact differences remain unquantified. Do not add a guessed graphitization process, electricity multiplier or a second graphite inventory.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Use the complete already reviewed source-3.8 supply/service for this exact same named product, geography and reference unit as an explicit source-3.12 version screening proxy. Replace source-3.12 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor 1. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.12 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
+                "evidence": [
+                  "brightpath/data/export/uvek_battery_reused_312_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Only individually reviewed exact source profiles qualify; every profile retains its own inventory source and reference coordinates.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-819fba868288d7f2",
         "source": {
           "location": "CN",
           "name": "market for synthetic graphite, battery grade",
@@ -289,36 +342,6 @@
           "name": "Graphite, battery grade, at plant",
           "reference product": "Graphite, battery grade, at plant",
           "unit": "kilogram"
-        },
-        "review_ref": "r-819fba868288d7f2",
-        "classification": "proxy",
-        "report_correspondence": true,
-        "conversion_factor": 1,
-        "reference_flow_sign_review": {
-          "status": "unresolved",
-          "reason": "Only individually reviewed exact source profiles qualify; no fallback across releases or system models.",
-          "evidence": [
-            "brightpath/data/export/uvek_battery_three_functional_38_review.json"
-          ],
-          "profiles": [
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.8",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Use complete native Chinese battery-grade graphite per signed kg as a functional screening proxy for synthetic battery-grade graphite. The source graphitizes amorphous carbon; native documentation instead approximates graphite mining/crushing/milling and adds hard-coal coke and electricity for the battery grade. These manufacturing routes are not equivalent. Battery-grade carbon function is the matching basis, not a claim that mining represents synthetic graphitization. Source synthesis, purification, morphology, performance, delivery and internal uncertainty are replaced; energy and impact differences remain unquantified. Do not add a guessed graphitization process, electricity multiplier or a second graphite inventory.",
-                "evidence": [
-                  "brightpath/data/export/uvek_battery_three_functional_38_review.json"
-                ]
-              }
-            }
-          ]
         },
         "technosphere_information_loss": "Use exact declared source-profile decisions. For source 3.8: Use complete native Chinese battery-grade graphite per signed kg as a functional screening proxy for synthetic battery-grade graphite. The source graphitizes amorphous carbon; native documentation instead approximates graphite mining/crushing/milling and adds hard-coal coke and electricity for the battery grade. These manufacturing routes are not equivalent. Battery-grade carbon function is the matching basis, not a claim that mining represents synthetic graphitization. Source synthesis, purification, morphology, performance, delivery and internal uncertainty are replaced; energy and impact differences remain unquantified. Do not add a guessed graphitization process, electricity multiplier or a second graphite inventory. Preserve caller signed kg, formulas, supported uncertainty, separate manufacturing and emissions with factor +1. Native technology, allocation, geography, delivery, vintage and internal uncertainty replace source internals; impact-score differences and the BAFU reimport biosphere exclusions remain unquantified. Authorize only the independently inspected exact ecoinvent 3.8 cut-off source for this additional scope. Earlier declared source profiles retain their effective targets, factors and sign decisions. No uninspected release, inverse, consequential or general downstream-refining equivalence is granted. No new helper, reconstructed upstream inventory, foreground exchange omission or source-code change. These are operational screening proxies, not source/native inventory or LCIA equivalence."
       },
@@ -558,5 +581,35 @@
   "recipe_dependency_sha256": {},
   "new_helpers": 0,
   "new_foreground_omissions": [],
-  "source_code_changes": 0
+  "source_code_changes": 0,
+  "source312_scope_extensions": {
+    "bp-82479bd5f6b8b893": {
+      "review_path": "brightpath/data/export/uvek_battery_reused_312_review.json",
+      "source_witness": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.12",
+          "system_model": "cutoff"
+        },
+        "identity": {
+          "location": "CN",
+          "name": "market for synthetic graphite, battery grade",
+          "reference product": "synthetic graphite, battery grade",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 3,
+        "inventory_sha256": "30401b9d8ee78b57a5947ba42d7dd90ee7a7d69adef84edbb373b80cb5c63569",
+        "metadata_sha256": "2c61c3aa2af0fe9f7fa16d1ededacefd70a3b3caef3028a81670722bd9b3725c",
+        "comment_sha256": "f38502e0d8cd14e21b7a74c9561d129267140567343cd46e7fa6711d101c0202",
+        "product_information_sha256": "3e87b48cb573fc0627a69e8379809fc1d25a7d38470d62f41c18fa4bd4a9d1f4"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "version": "3.8",
+        "system_model": "cutoff"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }

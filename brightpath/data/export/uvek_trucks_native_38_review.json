@@ -1520,7 +1520,8 @@
         "mapping_method": "reviewed_heat_dependency_proxy",
         "reference_flow_sign_review": {
           "evidence": [
-            "brightpath/data/export/uvek_heat_dependency_batch_review.json#bp-508c267844c98459"
+            "brightpath/data/export/uvek_heat_dependency_batch_review.json#bp-508c267844c98459",
+            "brightpath/data/export/uvek_battery_reused_312_review.json"
           ],
           "profiles": [
             {
@@ -1541,24 +1542,41 @@
               }
             },
             {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_trucks_native_38_review.json"
+                ],
+                "reason": "Same neat acrylonitrile monomer, CAS107-13-1/C3H3N. Complete native Sohio ammoxidation retains mass allocation to acrylonitrile/hydrogen cyanide/acetonitrile. No reactant overlay, coproduct credit or yield adjustment; source market shares and final delivery are replaced. New permission covers only the actually required exact ecoinvent3.8cut-off inputs to UVEK2025/native2026 with canonical ecoinvent3.10biosphere. Other releases/patches, inverse and consequential routes gain no new permission. Existing independently approved source profiles retain their effective supplier, factor, review and complete recipe closure. Use each complete native process/service once within its stated boundary. Except the explicitly retained reinforced-concrete market, whole native production/storage/service replaces source internal producer shares, final delivery, utilities, emissions, allocation and internal uncertainty; those internals are not claimed preserved or appended. No new foreground exchange omission, zero-inventory stock or invented recovery credit. Preserve signed caller quantities, supported marginal uncertainty, formulas, ownership and separately listed materials, freight and emissions. Negative-reference source waste and wear inputs use factor-1 exactly once to the positive native treatment-service reference; positive product/service references use factor+1. Do not force all target exchanges positive. Formula/parameter graphs and cross-exchange correlations are not reconstructed. Native geography, technology/fleet, grade/performance, primary/recycled mix, allocation, delivery, vintage, internal uncertainty and the BAFU mapped-export biosphere exclusions remain limitations. Source/native LCI, LCIA, performance and stochastic equivalence are not established; score differences are unquantified.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
               "source_profile": {
                 "family": "ecoinvent",
-                "version": "3.8",
+                "system_model": "cutoff",
+                "version": "3.8"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
                 "system_model": "cutoff"
               },
               "conversion_factor": 1,
               "review": {
                 "status": "verified",
-                "source_sign": 1,
+                "source_sign": 1.0,
                 "target_sign": 1,
-                "reason": "Same neat acrylonitrile monomer, CAS107-13-1/C3H3N. Complete native Sohio ammoxidation retains mass allocation to acrylonitrile/hydrogen cyanide/acetonitrile. No reactant overlay, coproduct credit or yield adjustment; source market shares and final delivery are replaced. New permission covers only the actually required exact ecoinvent3.8cut-off inputs to UVEK2025/native2026 with canonical ecoinvent3.10biosphere. Other releases/patches, inverse and consequential routes gain no new permission. Existing independently approved source profiles retain their effective supplier, factor, review and complete recipe closure. Use each complete native process/service once within its stated boundary. Except the explicitly retained reinforced-concrete market, whole native production/storage/service replaces source internal producer shares, final delivery, utilities, emissions, allocation and internal uncertainty; those internals are not claimed preserved or appended. No new foreground exchange omission, zero-inventory stock or invented recovery credit. Preserve signed caller quantities, supported marginal uncertainty, formulas, ownership and separately listed materials, freight and emissions. Negative-reference source waste and wear inputs use factor-1 exactly once to the positive native treatment-service reference; positive product/service references use factor+1. Do not force all target exchanges positive. Formula/parameter graphs and cross-exchange correlations are not reconstructed. Native geography, technology/fleet, grade/performance, primary/recycled mix, allocation, delivery, vintage, internal uncertainty and the BAFU mapped-export biosphere exclusions remain limitations. Source/native LCI, LCIA, performance and stochastic equivalence are not established; score differences are unquantified.",
+                "reason": "Use the complete already reviewed source-3.9 supply/service for this exact same named product, geography and reference unit as an explicit source-3.12 version screening proxy. Replace source-3.12 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor 1. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.12 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
                 "evidence": [
-                  "brightpath/data/export/uvek_trucks_native_38_review.json"
+                  "brightpath/data/export/uvek_battery_reused_312_review.json"
                 ]
               }
             }
           ],
-          "reason": "Only the independently inspected exact cut-off profile is qualified.",
+          "reason": "Only individually reviewed exact source profiles qualify; every profile retains its own inventory source and reference coordinates.",
           "status": "unresolved"
         },
         "report_correspondence": true,
@@ -11344,5 +11362,35 @@
   "new_foreground_omissions": [],
   "runtime_Python_changes": 0,
   "generator_Python_changes": 0,
-  "licensing": "Full licensed source/native inventories, comments and parameter graphs remain private. Publish only mapping decisions, hashes, bounded reference facts and derived native-facing collection/treatment demands."
+  "licensing": "Full licensed source/native inventories, comments and parameter graphs remain private. Publish only mapping decisions, hashes, bounded reference facts and derived native-facing collection/treatment demands.",
+  "source312_scope_extensions": {
+    "bp-508c267844c98459": {
+      "review_path": "brightpath/data/export/uvek_battery_reused_312_review.json",
+      "source_witness": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.12",
+          "system_model": "cutoff"
+        },
+        "identity": {
+          "location": "GLO",
+          "name": "market for acrylonitrile",
+          "reference product": "acrylonitrile",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 6,
+        "inventory_sha256": "4e3efc2e0c74285989772461cf9c073e647040c96b90d59e18595b5d7778d08e",
+        "metadata_sha256": "01594b204046ea49f3c464eb65713c75c3714137b7edcdce4010dd06e7938f36",
+        "comment_sha256": "2247c28b4d730267e440ddaeb6b519b4b0745f1b6e628825ee83fe0d9e87548f",
+        "product_information_sha256": "899417a8b23b1c3ab324903e2f73968e6aee74d37fd32d267d6ba8101acb48d5"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }

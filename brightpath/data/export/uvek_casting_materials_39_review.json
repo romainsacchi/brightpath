@@ -4685,7 +4685,8 @@
         "reference_flow_sign_review": {
           "evidence": [
             "brightpath/data/export/uvek_casting_materials_39_review.json",
-            "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+            "brightpath/data/export/uvek_reused_seventeen_38_review.json",
+            "brightpath/data/export/uvek_battery_reused_312_review.json"
           ],
           "profiles": [
             {
@@ -4709,9 +4710,29 @@
               }
             },
             {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+                ],
+                "reason": "Reuse the complete reviewed source-3.9 material supply model for ammonia, anhydrous, liquid as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
               "source_profile": {
                 "family": "ecoinvent",
-                "version": "3.8",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "battery-38-reviewed-model-2d2b80140d7f768a"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.12",
                 "system_model": "cutoff"
               },
               "conversion_factor": 1,
@@ -4719,17 +4740,17 @@
                 "status": "verified",
                 "source_sign": 1.0,
                 "target_sign": 1,
-                "reason": "Reuse the complete reviewed source-3.9 material supply model for ammonia, anhydrous, liquid as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved.",
+                "reason": "Use the complete already reviewed source-3.9 supply/service for this exact same named product, geography and reference unit as an explicit source-3.12 version screening proxy. Replace source-3.12 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor 1. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.12 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
                 "evidence": [
-                  "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+                  "brightpath/data/export/uvek_battery_reused_312_review.json"
                 ]
               },
               "target": {
-                "recipe_ref": "battery-38-reviewed-model-2d2b80140d7f768a"
+                "recipe_ref": "battery-312-reviewed-model-2d2b80140d7f768a"
               }
             }
           ],
-          "reason": "Only individually reviewed exact source profiles qualify; each profile retains its own model and reference coordinates.",
+          "reason": "Only individually reviewed exact source profiles qualify; every profile retains its own inventory source and reference coordinates.",
           "status": "unresolved"
         },
         "review_ref": "r-468752f3a7b82635",
@@ -10987,6 +11008,36 @@
         "family": "ecoinvent",
         "system_model": "cutoff",
         "version": "3.9"
+      },
+      "new_foreground_omissions": []
+    }
+  },
+  "source312_scope_extensions": {
+    "bp-2d2b80140d7f768a": {
+      "review_path": "brightpath/data/export/uvek_battery_reused_312_review.json",
+      "source_witness": {
+        "source_profile": {
+          "family": "ecoinvent",
+          "version": "3.12",
+          "system_model": "cutoff"
+        },
+        "identity": {
+          "location": "CN",
+          "name": "market for ammonia, anhydrous, liquid",
+          "reference product": "ammonia, anhydrous, liquid",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 6,
+        "inventory_sha256": "7ec59abf8e0bef2795a595fbb441b5e01f6dda1ded283e843136ae5b6cbe58e4",
+        "metadata_sha256": "982b7952cb6253a6bdad9673aa1b15cb9245268f307aa13aaad2c9379a9eb598",
+        "comment_sha256": "3d6036b5ab1cbee302ec4a0be410fabc9d1dc1001f6d9b2437bcd89080a31b86",
+        "product_information_sha256": "c50a4d721cb0227fd2261a4644c4a5ef119f78149b26670b26e5e1379c4fb583"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "version": "3.9",
+        "system_model": "cutoff"
       },
       "new_foreground_omissions": []
     }
