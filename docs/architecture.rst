@@ -465,7 +465,7 @@ retains its fifteen operations and eight signed elementary flows through
 existing reviewed suppliers and canonical biosphere links. No hydration,
 stoichiometric or assay correction is inferred, and cobalt sulfate is excluded
 as a different chemical. See
-``data/export/uvek_shared_pitch_nickel_39_review.json``. Four closed helpers,+eight signed LCIs and four independent native-demand comparisons establish
+``data/export/uvek_shared_pitch_nickel_39_review.json``. Four closed helpers, eight signed LCIs and four independent native-demand comparisons establish
 native-model consistency; they do not qualify the complete battery sector or
 establish source/native impact equivalence.
 
@@ -482,6 +482,22 @@ supplier or clinker-production burden is invented. The earlier requested-3.7
 waste-oil recipe and selected rule remain unchanged. See
 ``data/export/uvek_battery_waste_markets_39_review.json``. Native disposal,
 geography, controls, recovery and allocation remain explicit screening limits.
+
+Two required source-3.9 municipal-waste markets retain thirty-seven country
+market models and nine uncontrolled-treatment models. Country locations are
+preserved for ordinary consumer transport relinking. All 1,008 uncontrolled
+emission entries use the existing canonical biosphere mapping; diesel machinery,
+excavation and two existing signed recovered-metal cut-off stocks remain.
+Controlled treatment uses complete native Swiss same-waste incineration and
+sanitary-landfill screening proxies, including an explicitly warned
+fly-ash-extraction approximation. No new zero authority, source omission,
+renormalization, moisture correction or recovery credit is introduced. See
+``data/export/uvek_msw_39_models_review.json`` and
+``data/export/uvek_msw_markets_39_review.json``. Ninety-two signed LCIs and
+forty-six independently reconstructed native-demand comparisons pass without
+writing a Brightway database. Earlier source-3.8 routes remain unchanged;
+source/native impact equivalence and complete battery qualification are not
+established by these checks.
 
 Resource governance
 -------------------
