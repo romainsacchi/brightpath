@@ -348,6 +348,18 @@ correct inventory to match stale prose, identify a compound by an inconsistent
 CAS, or silently replace fossil supply with a blend. None of these checks
 establishes source/native LCIA or functional-performance equivalence.
 
+Market recipes can also vary between source releases even when names and units
+match. ``data/export/uvek_trucks_five_markets_38_review.json`` keeps the inspected
+Swiss gas reference at 39 MJ per source cubic metre in ecoinvent 3.8, while the
+existing source-3.9 recipe remains at 36 MJ. Neither number establishes an equal
+standard-volume or carbon-content basis. The complete native delivered-fuel
+inventory supplies network losses; do not add source loss or combustion burdens
+again. The same review keeps pure-kg KOH shares without a second concentration
+correction, retains source-specific delivery uncertainty, and requires nonempty
+WEEE shredding rather than an empty recycling handover. It reuses an existing
+wafer recipe only after checking every coefficient and metadata field; its two
+adjacent-float uncertainty-scale differences are explicitly recorded.
+
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
