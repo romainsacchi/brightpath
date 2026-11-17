@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 293,
-      "recipe": 1115,
-      "unclassified": 29067
+      "recipe": 1117,
+      "unclassified": 29065
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 250,
       "followup_review": 163,
-      "heuristic_similarity": 26324,
+      "heuristic_similarity": 26322,
       "named_native_teos_proxy": 1,
       "pairwise_review": 2203,
       "product_checked": 35,
@@ -24,6 +24,7 @@
       "reviewed_average_sludge_landfarming_service": 8,
       "reviewed_battery_chemical_supply_39": 5,
       "reviewed_battery_fluoride_39": 3,
+      "reviewed_battery_last_two_38_reactor_and_delivery": 2,
       "reviewed_battery_material_boundary_39": 5,
       "reviewed_battery_native_material_39": 7,
       "reviewed_borohydride_39_product_and_allocation_basis": 1,
@@ -239,7 +240,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.445253,
+    "mean_confidence": 0.445284,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -10050,6 +10051,576 @@
       "reference product": "sewage sludge, 97% water, WWT, WW, average",
       "unit": "kilogram"
     },
+    "battery-38-manganese-sulfate-dedicated-production": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_last_two_38_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5567764362830022,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.906474200078657,
+          "formula": "((1/ process_efficiency)*(86.936/ manganese_sulfate_output_MW))*(1/ (manganese_concentrate_input_Mn_content*(86.936/55)))",
+          "loc": -0.09819271021965946,
+          "location": "GLO",
+          "name": "Manganese concentrate, at beneficiation",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 3,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "reference product": "Manganese concentrate, at beneficiation",
+          "scale": 0.15748015748023622,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.026,
+          "loc": -3.649658740960655,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Tap water, at user",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.15,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": 0.7654678421395714,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "steel-39-global-natural-gas-production-heat-mix",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.384585186449265,
+          "formula": "((manganese_concentrate_input*(1-(86.936/151)))*-1) * (-1.0)",
+          "loc": -0.9555899633418296,
+          "location": "GLO",
+          "name": "Disposal, non-sulfidic overburden, off-site",
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 3,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "reference product": "Disposal, non-sulfidic overburden, off-site",
+          "scale": 0.15748015748023622,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.416,
+          "loc": -0.8770700187208739,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 8.43645524060307e-07,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": -13.985533425762346,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-wastewater-routes-bd88b9549e9e5edabb3e",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 9.12666307020198e-08,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": -16.20948060682139,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "pilot-wastewater-routes-eff76270716fb3e521c0",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.76508784523767e-06,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          },
+          "loc": -13.247310098144633,
+          "negative": false,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "battery-38-reviewed-model-3c10f9aaee8ffe42",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.127993243605173,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": -2.055777800790248,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 3,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "recipe": "pulp-heat-39-so2-native-market-rer",
+          "scale": 0.15748015748023622,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.318597375154589,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": -1.1438271202262884,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 3,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "recipe": "pulp-heat-39-so2-native-market-row",
+          "scale": 0.15748015748023622,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.029977153056,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          },
+          "loc": -3.5073197522577693,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.170022846944,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          },
+          "loc": -1.771822457173676,
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "recipe": "fuels-38-chemical-heat-uq-b79ce56ce460b47414a9",
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.00086,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.05857816871672,
+          "name": "Water, river",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 6.59601054356573e-05,
+          "categories": [
+            "air"
+          ],
+          "formula": "(0.002*0.1*manganese_concentrate_input* (86.936/151))*(manganese_emissions_air_MW/86.936)",
+          "loc": -9.62646046179542,
+          "name": "Manganese II",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 3,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "scale": 0.15748015748023622,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.000893181237519524,
+          "categories": [
+            "air"
+          ],
+          "formula": "0.002* sulfur_dioxide_input",
+          "loc": -7.020721044130761,
+          "name": "Sulfur dioxide",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 3,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "scale": 0.15748015748023622,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0164,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -4.110473944151984,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00339087347701061,
+          "categories": [
+            "water"
+          ],
+          "formula": "((((1/process_efficiency)-1)*sulfur_dioxide_input)- sulfur_dioxide_emissions_air)*(sulfate_emissions_water_MW/ sulfur_dioxide_input_MW)*0.1",
+          "loc": -5.686667727944157,
+          "name": "Sulfate",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 3,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "scale": 0.2533771891863985,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0167,
+          "categories": [
+            "water"
+          ],
+          "loc": -4.092346559559427,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00083,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.09408485717363,
+          "name": "Water, well, in ground",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0017291962377632,
+          "categories": [
+            "water"
+          ],
+          "formula": "(((((1/process_efficiency)-1)* manganese_concentrate_input*(86.936/151))*( manganese_emissions_water_MW/86.936))- manganese_emissions_air)*0.1",
+          "loc": -6.360098580882625,
+          "name": "Manganese II",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 3,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 2
+          },
+          "scale": 0.2533771891863985,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0014,
+          "categories": [
+            "air"
+          ],
+          "loc": -6.571283042360924,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 3,
+            "further technological correlation": 3,
+            "geographical correlation": 4,
+            "reliability": 2,
+            "temporal correlation": 2
+          },
+          "scale": 0.10295630140987,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        }
+      ],
+      "location": "GLO",
+      "name": "manganese sulfate production, reviewed UVEK supply",
+      "parameters": [
+        {
+          "amount": 0.95,
+          "loc": -0.05129,
+          "name": "process_efficiency",
+          "scale": 0.13674794331177342,
+          "uncertainty type": 2,
+          "unit": "dimensionless"
+        }
+      ],
+      "rationale": "Retain all immediate dedicated manganese-sulfate manufacturing operations and canonical biosphere releases. Native manganese concentrate remains concentrate, not sulfate; the reactor operation produces the sulfate. Existing sulfur-dioxide, steam and wastewater models remain unchanged. Preserve source stored quantities and uncertainty without fitting a stoichiometric or ore-grade factor.",
+      "reference product": "manganese sulfate",
+      "unit": "kilogram"
+    },
+    "battery-38-manganese-sulfate-delivered-supply": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_last_two_38_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.138175528006351,
+          "loc": 0.138175528006351,
+          "recipe": "battery-38-manganese-sulfate-dedicated-production",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.861824471993649,
+          "loc": 0.861824471993649,
+          "recipe": "battery-38-manganese-sulfate-dedicated-production",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "GLO",
+      "name": "market for manganese sulfate, reviewed UVEK supply",
+      "rationale": "Retain both original supplier quantities and all final freight positions. Use the complete dedicated sulfate manufacturer for the allocated manganese-dioxide co-product branch as a manufacturing/allocation screening proxy. Its original co-product inventory and allocation are replaced, not claimed preserved; no new metal recovery credit or allocation ratio.",
+      "reference product": "manganese sulfate",
+      "unit": "kilogram"
+    },
     "battery-38-reviewed-model-11eb77f35655db2a": {
       "evidence": [
         "brightpath/data/export/uvek_reused_seventeen_38_review.json",
@@ -10400,6 +10971,1177 @@
       "name": "market for graphite, battery grade, reviewed source-3.9 model for source 3.8",
       "rationale": "Reuse the complete reviewed source-3.9 material supply model for graphite, battery grade as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved.",
       "reference product": "graphite, battery grade",
+      "unit": "kilogram"
+    },
+    "battery-38-triethylamine-delivered-supply": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_last_two_38_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.44944410108488464,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.33,
+          "loc": 0.33,
+          "recipe": "battery-38-triethylamine-european-manufacturing",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.67,
+          "loc": 0.67,
+          "recipe": "battery-38-triethylamine-european-manufacturing",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "GLO",
+      "name": "market for triethyl amine, reviewed UVEK supply",
+      "rationale": "Retain both original regional producer shares and final freight positions; both use complete European manufacturing as a geographic screening proxy. RoW internal electricity and ammonia portfolios are replaced rather than reconstructed or claimed preserved.",
+      "reference product": "triethyl amine",
+      "unit": "kilogram"
+    },
+    "battery-38-triethylamine-european-manufacturing": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_last_two_38_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.5182,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          },
+          "loc": 0.41752542260053077,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "recipe": "mining-38-rer-fossil-ethanol-delivery",
+          "scale": 0.18303005217723128,
+          "scale without pedigree": 0.09746794344808964,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.76,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          },
+          "loc": 0.5653138090500605,
+          "pedigree": {
+            "completeness": 2,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "recipe": "chemical-heat-water-1ced12d9ab9a80752fd2",
+          "scale": 0.2039607805437114,
+          "scale without pedigree": 0.03872983346207417,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.35833,
+          "loc": -1.026300929457332,
+          "location": "RER",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 2,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 1,
+            "temporal correlation": 5
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.2039607805437114,
+          "scale without pedigree": 0.03872983346207417,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.3746998799039039,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 0.17718,
+          "loc": -1.7305891139982508,
+          "location": "CH",
+          "name": "Ammonia, liquid, at regional storehouse",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "reference product": "Ammonia, liquid, at regional storehouse",
+          "scale": 0.18303005217723128,
+          "scale without pedigree": 0.09746794344808964,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0147,
+          "categories": [
+            "water"
+          ],
+          "formula": "water_cooling_UNO_input*(1-fraction_CW_to_air)",
+          "loc": -4.219907785197447,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.3605897946420558,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.024,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -3.7297014486341915,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 1,
+            "geographical correlation": 1,
+            "reliability": 4,
+            "temporal correlation": 4
+          },
+          "scale": 0.18303005217723128,
+          "scale without pedigree": 0.09746794344808964,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.029761,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -3.5145564674312477,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.25616,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -1.3619530297337326,
+          "name": "Carbon dioxide, fossil",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0093,
+          "categories": [
+            "air"
+          ],
+          "formula": "water_cooling_UNO_input*fraction_CW_to_air",
+          "loc": -4.677740878822926,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 2,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.3605897946420558,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.0030363,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -5.797115610101309,
+          "name": "Ethanol",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0042522,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -5.460318782920009,
+          "name": "Ammonium",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.00035435,
+          "categories": [
+            "air",
+            "urban air close to ground"
+          ],
+          "loc": -7.945225432708009,
+          "name": "Ammonia",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0077579,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -4.85904359996752,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0077579,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -4.85904359996752,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.014878,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -4.207871667212987,
+          "name": "Ethanol",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.5642694391866354,
+          "scale without pedigree": 0.3746998799039039,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.029761,
+          "categories": [
+            "water",
+            "surface water"
+          ],
+          "loc": -3.5145564674312477,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 5,
+            "geographical correlation": 5,
+            "reliability": 4,
+            "temporal correlation": 5
+          },
+          "scale": 0.4226109321823088,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "RER",
+      "name": "triethyl amine production, reviewed UVEK supply",
+      "parameters": [
+        {
+          "amount": 0.3875,
+          "loc": -0.948,
+          "name": "fraction_CW_to_air",
+          "scale": 0.30335622624235026,
+          "uncertainty type": 2,
+          "unit": "dimensionless"
+        },
+        {
+          "amount": 0.004,
+          "loc": -5.521,
+          "name": "fraction_CW_OT_to_air",
+          "scale": 0.20322401432901577,
+          "uncertainty type": 2,
+          "unit": "dimensionless"
+        },
+        {
+          "amount": 0.771,
+          "loc": -0.2601,
+          "name": "fraction_CW_R_to_air",
+          "scale": 0.20322401432901577,
+          "uncertainty type": 2,
+          "unit": "dimensionless"
+        },
+        {
+          "amount": 0.032,
+          "loc": -3.442,
+          "name": "fraction_CW_CP_to_air",
+          "scale": 0.20322401432901577,
+          "uncertainty type": 2,
+          "unit": "dimensionless"
+        }
+      ],
+      "rationale": "Retain all immediate European ethanol-amination operations and canonical emissions. Reuse reviewed fossil-ethylene ethanol and chemical steam backgrounds, complete native ammonia, grid and chemical plant. This is triethylamine, not methylamine, amine-functionalized silica or an arbitrary amine. No guessed reaction yield or extra co-product credit.",
+      "reference product": "triethyl amine",
+      "unit": "kilogram"
+    },
+    "battery-38-vinylene-carbonate-delivered-supply": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_last_two_38_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.599,
+          "loc": -0.5124936808666878,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, transoceanic container ship",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.2088,
+          "loc": -1.5663784229736533,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, lorry, fleet average",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3091,
+          "loc": -1.1740904298440664,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, freight, rail",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.0246,
+          "loc": -3.70500883604382,
+          "location": "RER",
+          "name": "Transport, barge",
+          "pedigree": {
+            "completeness": 1,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 1,
+            "temporal correlation": 4
+          },
+          "reference product": "Transport, barge",
+          "scale": 0.41231056256176607,
+          "scale without pedigree": 0.34641016151377546,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "battery-38-vinylene-carbonate-manufacturing",
+          "uncertainty type": 0
+        }
+      ],
+      "location": "GLO",
+      "name": "market for vinyl carbonate, reviewed UVEK supply",
+      "rationale": "Retain the original manufacturer quantity and all four final freight positions. The complete vinylene-carbonate manufacturer is supplied once; no lithium-carbonate substitution.",
+      "reference product": "vinyl carbonate",
+      "unit": "kilogram"
+    },
+    "battery-38-vinylene-carbonate-manufacturing": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_last_two_38_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.026,
+          "loc": -3.649658740960655,
+          "location": "CH",
+          "name": "Tap water, at user",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Tap water, at user",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.416,
+          "loc": -0.8770700187208739,
+          "location": "GLO",
+          "name": "Electricity, medium voltage, at grid",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Electricity, medium voltage, at grid",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 4e-10,
+          "loc": -21.639556568820566,
+          "location": "RER",
+          "name": "Chemical plant, organics",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Chemical plant, organics",
+          "scale": 0.589915248150105,
+          "scale without pedigree": 0.5477225575051661,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "unit"
+        },
+        {
+          "amount": 2.35,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": 0.8544153281560676,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "steel-39-global-natural-gas-production-heat-mix",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.23826772231672,
+          "formula": "(101.19)*(1/ process_efficiency)*1/86.02",
+          "loc": 0.21371340477362927,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "recipe": "battery-38-triethylamine-delivered-supply",
+          "scale": 0.14560219778561037,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.07735043257994,
+          "formula": " (88.04)*(1/process_efficiency)*1/86.02",
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          },
+          "loc": 0.07450472369022243,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "recipe": "battery-38-reviewed-model-365d5afb2cddee67",
+          "scale": 0.14560219778561037,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.00409211487463271,
+          "loc": -5.4986933583071504,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0149078851253673,
+          "loc": -4.2058650029644875,
+          "location": "RER",
+          "name": "Nitrogen, liquid, at plant",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "reference product": "Nitrogen, liquid, at plant",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 8.43645524060307e-07,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": -13.985533425762346,
+          "negative": false,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "pilot-wastewater-routes-bd88b9549e9e5edabb3e",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 9.12666307020198e-08,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": -16.20948060682139,
+          "negative": false,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "pilot-wastewater-routes-eff76270716fb3e521c0",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 1.76508784523767e-06,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.8"
+          },
+          "loc": -13.247310098144633,
+          "negative": false,
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "recipe": "battery-38-reviewed-model-3c10f9aaee8ffe42",
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.0032378916563019,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": -5.732832884353851,
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "recipe": "steel-39-swiss-inert-disposal-with-collection",
+          "scale": 0.14560219778561037,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.497352108343698,
+          "inventory_source_profile": {
+            "family": "ecoinvent",
+            "system_model": "cutoff",
+            "version": "3.9"
+          },
+          "loc": -0.6984570362377823,
+          "negative": false,
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "recipe": "pilot-nitrate-inert39-d57b978a0c8dd5e40b8c",
+          "scale": 0.14560219778561037,
+          "scale without pedigree": 0.02449489742783178,
+          "uncertainty type": 2
+        },
+        {
+          "amount": 0.144590178265634,
+          "loc": -1.9338518950385535,
+          "location": "RER",
+          "name": "Chlorine, liquid, production mix, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "reference product": "Chlorine, liquid, production mix, at plant",
+          "scale": 0.14560219778561037,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.722815434790717,
+          "loc": -0.32460136632670783,
+          "location": "RER",
+          "name": "Chlorine, liquid, production mix, at plant",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "reference product": "Chlorine, liquid, production mix, at plant",
+          "scale": 0.14560219778561037,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "technosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.421607018324867,
+          "categories": [
+            "water"
+          ],
+          "loc": -0.8636816350129278,
+          "name": "BOD5, Biological Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "scale": 0.31622776601683794,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.446163071011637,
+          "categories": [
+            "water"
+          ],
+          "formula": "(36.46)*(1/ process_efficiency)*1/86.02",
+          "loc": -0.8070707637175237,
+          "name": "Hydrochloric acid",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "scale": 0.24617067250182342,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.112,
+          "categories": [
+            "water"
+          ],
+          "loc": -2.1892564076870427,
+          "name": "DOC, Dissolved Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "scale": 0.31622776601683794,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.019,
+          "categories": [
+            "air"
+          ],
+          "loc": -3.9633162998156966,
+          "name": "Nitrogen",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "scale": 0.2966479394838265,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0014,
+          "categories": [
+            "air"
+          ],
+          "loc": -6.571283042360924,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.112,
+          "categories": [
+            "water"
+          ],
+          "loc": -2.1892564076870427,
+          "name": "TOC, Total Organic Carbon",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "scale": 0.31622776601683794,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0167,
+          "categories": [
+            "water"
+          ],
+          "loc": -4.092346559559427,
+          "name": "Water",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.433803644195352,
+          "categories": [
+            "water"
+          ],
+          "formula": "35.45*(1/process_efficiency)/86.02",
+          "loc": -0.835163279989904,
+          "name": "Chloride",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "scale": 0.24617067250182342,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.0164,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -4.110473944151984,
+          "name": "Water, cooling, unspecified natural origin",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00086,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.05857816871672,
+          "name": "Water, river",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.00083,
+          "categories": [
+            "natural resource",
+            "in water"
+          ],
+          "loc": -7.09408485717363,
+          "name": "Water, well, in ground",
+          "pedigree": {
+            "completeness": 4,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 3
+          },
+          "scale": 0.220454076850486,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "cubic meter"
+        },
+        {
+          "amount": 0.421607018324867,
+          "categories": [
+            "water"
+          ],
+          "loc": -0.8636816350129278,
+          "name": "COD, Chemical Oxygen Demand",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 4,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "scale": 0.31622776601683794,
+          "scale without pedigree": 0.2,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.250627149133,
+          "categories": [
+            "water"
+          ],
+          "formula": "102.2*(1/process_efficiency)/86.02",
+          "loc": 0.22364514480156078,
+          "name": "Triethylammonium",
+          "pedigree": {
+            "completeness": 5,
+            "further technological correlation": 2,
+            "geographical correlation": 5,
+            "reliability": 3,
+            "temporal correlation": 4
+          },
+          "scale": 0.14560219778561037,
+          "scale without pedigree": 0.02449489742783178,
+          "type": "biosphere",
+          "uncertainty type": 2,
+          "unit": "kilogram"
+        }
+      ],
+      "location": "GLO",
+      "name": "vinyl carbonate production, reviewed UVEK supply",
+      "parameters": [
+        {
+          "amount": 0.95,
+          "loc": 0.95,
+          "name": "process_efficiency",
+          "uncertainty type": 0,
+          "unit": "dimensionless"
+        }
+      ],
+      "rationale": "Retain all immediate vinylene-carbonate manufacturing operations and canonical biosphere releases, including chloride, triethylammonium and oxygen-demand flows. Triethylamine supply is explicitly manufactured; ethylene carbonate remains a reagent, not the finished vinylene carbonate. Retain chlorine, liquid nitrogen, utilities and disposal; no extra chlorine, nitrogen or avoided-emission credit.",
+      "reference product": "vinyl carbonate",
       "unit": "kilogram"
     },
     "battery-39-caustic-soda-cell-mix-delivered-market": {
@@ -957427,7 +959169,7 @@
     {"confidence": 0.320991, "id": "bp-c033fafafc7360fe", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for manganese carbonate", "reference product": "manganese carbonate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Manganese concentrate, at beneficiation", "reference product": "Manganese concentrate, at beneficiation", "unit": "kilogram"}},
     {"confidence": 0.578111, "id": "bp-0a0e296a60383232", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for manganese concentrate", "reference product": "manganese concentrate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Manganese concentrate, at beneficiation", "reference product": "Manganese concentrate, at beneficiation", "unit": "kilogram"}},
     {"classification": "proxy", "confidence": 1, "conversion_factor": 1, "id": "bp-12872d805d95ab97", "mapping_method": "reviewed_manganese_dioxide_complete_supply", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_manganese_dioxide_39_review.json: independently inspected exact source/native references, inventory hashes and component bindings; mapped target-model coefficients only."], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_manganese_dioxide_39_review.json: independently inspected exact source/native references, inventory hashes and component bindings; mapped target-model coefficients only."], "reason": "Preserve the complete source3.9MnO2supply model, correcting the distinct Mn2O3precursor and retaining its allocated recycled coproduct.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}, "target": {"recipe_ref": "battery-39-manganese-dioxide-delivery"}}], "reason": "Only the explicitly inspected source3.9cut-off reference and inventory model are approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-e38af0cb21a11b61", "source": {"location": "GLO", "name": "market for manganese dioxide", "reference product": "manganese dioxide", "unit": "kilogram"}, "target": {"recipe_ref": "battery-39-manganese-dioxide-delivery"}, "technosphere_information_loss": "Reconstruct the inspected source3.9cut-off semisynthetic manganese-dioxide model at its already allocated coefficients. Preserve all13technosphere and9biosphere entries, both market producer shares and all four final-delivery entries. Do not rebalance this allocated inventory as an unallocated chemical reaction or add a manganese-sulfate coproduct credit. The source technology is a semisynthetic route with stated95%yield, not the dominant electrolytic battery-grade route. Preserve the source yield already embedded in its coefficients; infer no extra electrolysis, reaction yield, purity, capacity or grade multiplier. Source grade/performance, co-product allocation and representativeness remain limitations. Use the native Mn2O3 process only as the actual consumed precursor, never as a direct substitute for MnO2 or lithium manganese oxide. Both precursor references are positive one kg and both identify Mn2O3/CAS1317-34-6. The native CN-labelled patent-based carbonate-roasting process, energy and background geography replace the source global precursor supply mix and delivery. Grade, vintage, production route, allocation and score differences are unquantified. Retain the positive-reference production-only recovered-MnO2 coproduct as a distinct allocated stock. The inspected paired negative-reference battery-treatment service contains processing burdens. Do not add a native pyroprocessing inventory or avoided-primary credit to the empty allocated coproduct; this is not a claim that physical recycling is burden-free. Reuse the independently reviewed source3.9heat, steam, wastewater, factory, electricity, sulfuric-acid, tap-water and freight correspondences. Native operating technology, grid/fleet mix, delivery, geography, allocation, vintage, internal uncertainty and BAFU excluded biosphere flows remain screening differences. Caller signs, uncertainty, formulas and separate emissions remain unchanged; score effects are unquantified. Approve only the exact source ecoinvent3.9cut-off context and the UVEK2025/native2026 route with the tested canonical ecoinvent3.10biosphere. Other source versions, patches, inverse and cross-system-model routes remain unapproved."},
-    {"confidence": 0.345976, "id": "bp-8fa6bb43a07f3b4e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for manganese sulfate", "reference product": "manganese sulfate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Cobalt sulfate", "reference product": "Cobalt sulfate", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.8, "conversion_factor": 1, "id": "bp-8fa6bb43a07f3b4e", "mapping_method": "reviewed_battery_last_two_38_reactor_and_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_last_two_38_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_last_two_38_review.json"], "reason": "Retain the immediate manganese sulfate manufacturing operations and final-market quantities using complete functional native and previously reviewed backgrounds. This supplies the actual named chemical per positive nominal kg, instead of the previous chemically wrong heuristic candidate.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only the independently inspected exact ecoinvent 3.8 cut-off source is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-9836093c34adeec2", "source": {"location": "GLO", "name": "market for manganese sulfate", "reference product": "manganese sulfate", "unit": "kilogram"}, "target": {"recipe_ref": "battery-38-manganese-sulfate-delivered-supply"}, "technosphere_information_loss": "Only the two required exact ecoinvent 3.8 cut-off global chemical markets are newly qualified. Use their immediate documented chemical manufacturing inventories and already reviewed complete backgrounds. No cobalt-sulfate, lithium-carbonate, amine-functionalized silica or arbitrary amine substitution is allowed. Preserve every retained source operation position, stored numerical quantity, formula and supported uncertainty, and all 34 biosphere positions mapped exactly through the existing strict ecoinvent 3.8 to 3.10 biosphere route. Source formula variables are not fully defined in the imported source metadata; retain the available definitions and stored numerical amounts without inventing or fitting missing values. The manganese-sulfate market keeps both original supplier quantities, but its allocated manganese-dioxide co-product branch uses the complete dedicated sulfate manufacturer as a manufacturing/allocation screening proxy. The original co-product inventory and allocation are replaced, not claimed preserved. Native concentrate remains ore feedstock; the retained reactor makes the sulfate. Source and native ore grade, beneficiation and suitability for battery manufacture remain uncertain; use nominal concentrate kg with no invented ore-content or yield multiplier. Both triethylamine-market regional quantities use the complete inspected European ethanol-amination inventory. The RoW internal electricity/ammonia portfolio is replaced by that European process, not reconstructed or claimed preserved. Existing fossil-ethylene ethanol supply is retained as a complete model; no substitution with biogenic alcohol, methylamines or an amine sorbent. No guessed reaction yield or co-product credit. Native chlorine and liquid nitrogen, ammonia, tap water, organic-plant infrastructure, electricity grids and overburden disposal are complete functional screening proxies. Their internal technology, delivery, allocation, geography, vintage and uncertainty replace the corresponding source backgrounds. Retain every source final-market freight position with native ocean-container, rail, barge and lorry-fleet proxies, without distance, payload or fleet renormalization. The native non-sulfidic overburden identity has contradictory sulphidic-tailings wording in its prose; retain this contradiction and its complete recorded land-use inventory. Do not infer acid-rock emissions, rehabilitation, recovery credits or an alternative disposal process. Negative waste inputs use their reviewed negative-to-positive treatment-coordinate factor; caller material kg keep factor +1. Existing steam, sulfur-dioxide, wastewater, ethylene-carbonate and fossil-ethanol recipes remain unchanged, with explicit model-source profiles and all inherited limitations. Native supplies occur once; separate reactor emissions, utilities and disposal stay separate. Add no efficiency, density, concentration, metal recovery, balancing or avoided-emission factor. No new physical omission, zero-burden authority or source-code edit. BAFU biosphere exclusions and every geographic, technological, allocation and internal-uncertainty substitution remain screening limitations with unquantified impact-score effects. No LCIA equivalence, reverse, consequential or uninspected release is authorized."},
     {"classification": "proxy", "confidence": 0.85, "conversion_factor": 1, "id": "bp-853511a523eb9ea1", "mapping_method": "reviewed_manganese_iii_oxide_precursor", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_manganese_dioxide_39_review.json: independently inspected exact source/native references, inventory hashes and component bindings; mapped target-model coefficients only."], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_manganese_dioxide_39_review.json: independently inspected exact source/native references, inventory hashes and component bindings; mapped target-model coefficients only."], "reason": "Same Mn2O3chemical precursor, verified positive one-kg references in source3.9and both native releases.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.9"}}], "reason": "Only the explicitly inspected source3.9cut-off reference and inventory model are approved.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-afaf39524f07ebdc", "source": {"location": "GLO", "name": "market for manganese(III) oxide", "reference product": "manganese(III) oxide", "unit": "kilogram"}, "target": {"location": "CN", "name": "Manganese oxide (Mn2O3), at plant", "reference product": "Manganese oxide (Mn2O3), at plant", "unit": "kilogram"}, "technosphere_information_loss": "Use the native Mn2O3 process only as the actual consumed precursor, never as a direct substitute for MnO2 or lithium manganese oxide. Both precursor references are positive one kg and both identify Mn2O3/CAS1317-34-6. The native CN-labelled patent-based carbonate-roasting process, energy and background geography replace the source global precursor supply mix and delivery. Grade, vintage, production route, allocation and score differences are unquantified. Reuse the independently reviewed source3.9heat, steam, wastewater, factory, electricity, sulfuric-acid, tap-water and freight correspondences. Native operating technology, grid/fleet mix, delivery, geography, allocation, vintage, internal uncertainty and BAFU excluded biosphere flows remain screening differences. Caller signs, uncertainty, formulas and separate emissions remain unchanged; score effects are unquantified. Approve only the exact source ecoinvent3.9cut-off context and the UVEK2025/native2026 route with the tested canonical ecoinvent3.10biosphere. Other source versions, patches, inverse and cross-system-model routes remain unapproved."},
     {"confidence": 0.117636, "id": "bp-0307a670f430b938", "mapping_method": "heuristic_similarity", "source": {"location": "BR", "name": "market for mango", "reference product": "mango", "unit": "kilogram"}, "target": {"location": "BR", "name": "Crude oil, market mix, at long distance transport", "reference product": "Crude oil, market mix, at long distance transport", "unit": "kilogram"}},
     {"confidence": 0.049385, "id": "bp-6448ab176b2ac1ed", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for mango", "reference product": "mango", "unit": "kilogram"}, "target": {"location": "CH", "name": "Acrylic render, matured", "reference product": "Acrylic render, matured", "unit": "kilogram"}},
@@ -960953,7 +962695,7 @@
     {"confidence": 0.488939, "id": "bp-2eeefdde5619e4a5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for vinyl acetate", "reference product": "vinyl acetate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Vinyl acetate, at plant", "reference product": "Vinyl acetate, at plant", "unit": "kilogram"}},
     {"confidence": 0.568939, "id": "bp-0c4dd75b84c3ddbb", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for vinyl acetate", "reference product": "vinyl acetate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Vinyl acetate, at plant", "reference product": "Vinyl acetate, at plant", "unit": "kilogram"}},
     {"confidence": 0.488939, "id": "bp-38ea0167e439b693", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for vinyl acetate", "reference product": "vinyl acetate", "unit": "kilogram"}, "target": {"location": "RER", "name": "Vinyl acetate, at plant", "reference product": "Vinyl acetate, at plant", "unit": "kilogram"}},
-    {"confidence": 0.302447, "id": "bp-fc047c72b6020ab2", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for vinyl carbonate", "reference product": "vinyl carbonate", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium carbonate, at plant", "reference product": "Lithium carbonate, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.8, "conversion_factor": 1, "id": "bp-fc047c72b6020ab2", "mapping_method": "reviewed_battery_last_two_38_reactor_and_delivery", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_last_two_38_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_last_two_38_review.json"], "reason": "Retain the immediate vinylene carbonate manufacturing operations and final-market quantities using complete functional native and previously reviewed backgrounds. This supplies the actual named chemical per positive nominal kg, instead of the previous chemically wrong heuristic candidate.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only the independently inspected exact ecoinvent 3.8 cut-off source is qualified.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-30f32295cf06943d", "source": {"location": "GLO", "name": "market for vinyl carbonate", "reference product": "vinyl carbonate", "unit": "kilogram"}, "target": {"recipe_ref": "battery-38-vinylene-carbonate-delivered-supply"}, "technosphere_information_loss": "Only the two required exact ecoinvent 3.8 cut-off global chemical markets are newly qualified. Use their immediate documented chemical manufacturing inventories and already reviewed complete backgrounds. No cobalt-sulfate, lithium-carbonate, amine-functionalized silica or arbitrary amine substitution is allowed. Preserve every retained source operation position, stored numerical quantity, formula and supported uncertainty, and all 34 biosphere positions mapped exactly through the existing strict ecoinvent 3.8 to 3.10 biosphere route. Source formula variables are not fully defined in the imported source metadata; retain the available definitions and stored numerical amounts without inventing or fitting missing values. The manganese-sulfate market keeps both original supplier quantities, but its allocated manganese-dioxide co-product branch uses the complete dedicated sulfate manufacturer as a manufacturing/allocation screening proxy. The original co-product inventory and allocation are replaced, not claimed preserved. Native concentrate remains ore feedstock; the retained reactor makes the sulfate. Source and native ore grade, beneficiation and suitability for battery manufacture remain uncertain; use nominal concentrate kg with no invented ore-content or yield multiplier. Both triethylamine-market regional quantities use the complete inspected European ethanol-amination inventory. The RoW internal electricity/ammonia portfolio is replaced by that European process, not reconstructed or claimed preserved. Existing fossil-ethylene ethanol supply is retained as a complete model; no substitution with biogenic alcohol, methylamines or an amine sorbent. No guessed reaction yield or co-product credit. Native chlorine and liquid nitrogen, ammonia, tap water, organic-plant infrastructure, electricity grids and overburden disposal are complete functional screening proxies. Their internal technology, delivery, allocation, geography, vintage and uncertainty replace the corresponding source backgrounds. Retain every source final-market freight position with native ocean-container, rail, barge and lorry-fleet proxies, without distance, payload or fleet renormalization. The native non-sulfidic overburden identity has contradictory sulphidic-tailings wording in its prose; retain this contradiction and its complete recorded land-use inventory. Do not infer acid-rock emissions, rehabilitation, recovery credits or an alternative disposal process. Negative waste inputs use their reviewed negative-to-positive treatment-coordinate factor; caller material kg keep factor +1. Existing steam, sulfur-dioxide, wastewater, ethylene-carbonate and fossil-ethanol recipes remain unchanged, with explicit model-source profiles and all inherited limitations. Native supplies occur once; separate reactor emissions, utilities and disposal stay separate. Add no efficiency, density, concentration, metal recovery, balancing or avoided-emission factor. No new physical omission, zero-burden authority or source-code edit. BAFU biosphere exclusions and every geographic, technological, allocation and internal-uncertainty substitution remain screening limitations with unquantified impact-score effects. No LCIA equivalence, reverse, consequential or uninspected release is authorized."},
     {"confidence": 0.501167, "id": "bp-5aeff3ecf756c5ce", "mapping_method": "heuristic_similarity", "source": {"location": "Asia without China", "name": "market for vinyl chloride", "reference product": "vinyl chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Vinyl chloride, at plant", "reference product": "Vinyl chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.501167, "id": "bp-9fd8856f6a365bc0", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for vinyl chloride", "reference product": "vinyl chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Vinyl chloride, at plant", "reference product": "Vinyl chloride, at plant", "unit": "kilogram"}},
     {"confidence": 0.581167, "id": "bp-c91d55c954ef320c", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "market for vinyl chloride", "reference product": "vinyl chloride", "unit": "kilogram"}, "target": {"location": "RER", "name": "Vinyl chloride, at plant", "reference product": "Vinyl chloride, at plant", "unit": "kilogram"}},
@@ -975020,6 +976762,22 @@
       ],
       "rationale": "User-approved disposal service per kg of HFC-134a: 0.999 kg of CH average hazardous-waste incineration plus the source assumption of 0.001 kg direct HFC-134a air release. Approved refrigerant-disposal proxy: CH average hazardous-waste incineration at 25% water replaces the source regional hazardous-waste treatment mix for 0.999 kg per kg accepted. Preserve the separately modelled 0.001 kg refrigerant air release, without claiming that it establishes destruction efficiency. Geography, average waste composition, plant operation, emissions control, residues, energy recovery, allocation and background supplies may differ. No moisture or heating-value scaling is inferred. Refrigerant-specific destruction performance, fluorine/chlorine balances and LCIA-score equivalence are not established or quantified. Collection, reclamation and treatment-market freight are outside this direct-service approval."
     },
+    "r-30f32295cf06943d": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_last_two_38_review.json"
+      ],
+      "limitations": [
+        "Only the two required exact ecoinvent 3.8 cut-off global chemical markets are newly qualified. Use their immediate documented chemical manufacturing inventories and already reviewed complete backgrounds. No cobalt-sulfate, lithium-carbonate, amine-functionalized silica or arbitrary amine substitution is allowed.",
+        "Preserve every retained source operation position, stored numerical quantity, formula and supported uncertainty, and all 34 biosphere positions mapped exactly through the existing strict ecoinvent 3.8 to 3.10 biosphere route. Source formula variables are not fully defined in the imported source metadata; retain the available definitions and stored numerical amounts without inventing or fitting missing values.",
+        "The manganese-sulfate market keeps both original supplier quantities, but its allocated manganese-dioxide co-product branch uses the complete dedicated sulfate manufacturer as a manufacturing/allocation screening proxy. The original co-product inventory and allocation are replaced, not claimed preserved. Native concentrate remains ore feedstock; the retained reactor makes the sulfate. Source and native ore grade, beneficiation and suitability for battery manufacture remain uncertain; use nominal concentrate kg with no invented ore-content or yield multiplier.",
+        "Both triethylamine-market regional quantities use the complete inspected European ethanol-amination inventory. The RoW internal electricity/ammonia portfolio is replaced by that European process, not reconstructed or claimed preserved. Existing fossil-ethylene ethanol supply is retained as a complete model; no substitution with biogenic alcohol, methylamines or an amine sorbent. No guessed reaction yield or co-product credit.",
+        "Native chlorine and liquid nitrogen, ammonia, tap water, organic-plant infrastructure, electricity grids and overburden disposal are complete functional screening proxies. Their internal technology, delivery, allocation, geography, vintage and uncertainty replace the corresponding source backgrounds. Retain every source final-market freight position with native ocean-container, rail, barge and lorry-fleet proxies, without distance, payload or fleet renormalization.",
+        "The native non-sulfidic overburden identity has contradictory sulphidic-tailings wording in its prose; retain this contradiction and its complete recorded land-use inventory. Do not infer acid-rock emissions, rehabilitation, recovery credits or an alternative disposal process. Negative waste inputs use their reviewed negative-to-positive treatment-coordinate factor; caller material kg keep factor +1.",
+        "Existing steam, sulfur-dioxide, wastewater, ethylene-carbonate and fossil-ethanol recipes remain unchanged, with explicit model-source profiles and all inherited limitations. Native supplies occur once; separate reactor emissions, utilities and disposal stay separate. Add no efficiency, density, concentration, metal recovery, balancing or avoided-emission factor.",
+        "No new physical omission, zero-burden authority or source-code edit. BAFU biosphere exclusions and every geographic, technological, allocation and internal-uncertainty substitution remain screening limitations with unquantified impact-score effects. No LCIA equivalence, reverse, consequential or uninspected release is authorized."
+      ],
+      "rationale": "Retain the immediate vinylene carbonate manufacturing operations and final-market quantities using complete functional native and previously reviewed backgrounds. This supplies the actual named chemical per positive nominal kg, instead of the previous chemically wrong heuristic candidate."
+    },
     "r-313b83d2bc43da5c": {
       "evidence": [
         "Exact approved source/prior-target/profile whitelist in brightpath/data/export/uvek_feed_nutrient_omission_review.json: 95 normalized nutrient identities, 692 inspected positive-reference source/profile pairs, 45 gross-energy MJ references and 50 100%-crude-protein kg references. Existing heuristic factors are all 1 and do not document nutritional equivalence. Prior targets supply thermal/fuel energy, crop mass, crude oil or an unspecified protein concentrate, not a validated generic nutritional market.",
@@ -979729,6 +981487,22 @@
         "The complete background-residue contribution and associated credits are omitted, not assigned zero impact or treated as scientifically equivalent. Preserve full caller-owned exchange details in the loss report, including sign, uncertainty and formula. Foreground suppliers, production and separate emissions remain intact. No moisture-based scaling, broad keyword omission or reverse reconstruction is inferred."
       ],
       "rationale": "Auto-approved under the existing unsupported nonbiogenic industrial wastewater-residue omission policy: omit the exact treatment of sewage sludge, 75% water, WWT, WW from wafer fabrication, sanitary landfill / GLO / kg external exchange with a warning. All inspected direct service comments for wafer fabrication document 0% biogenic carbon. No dedicated complete UVEK counterpart for this residue and route was established. Manufacturing, municipal/pulp-paper or other-industry sludge, mechanical screen recycling and standalone landfill-operation components do not establish the same residue-specific fate model. This direct industrial residue treatment has active operation inputs and releases; preserve separately listed foreground treatment and emissions. Exclude treatment burdens, metal/leachate releases, downstream residue handling and any associated energy/fertilizer credits. Score effects are method-dependent and unquantified."
+    },
+    "r-9836093c34adeec2": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_last_two_38_review.json"
+      ],
+      "limitations": [
+        "Only the two required exact ecoinvent 3.8 cut-off global chemical markets are newly qualified. Use their immediate documented chemical manufacturing inventories and already reviewed complete backgrounds. No cobalt-sulfate, lithium-carbonate, amine-functionalized silica or arbitrary amine substitution is allowed.",
+        "Preserve every retained source operation position, stored numerical quantity, formula and supported uncertainty, and all 34 biosphere positions mapped exactly through the existing strict ecoinvent 3.8 to 3.10 biosphere route. Source formula variables are not fully defined in the imported source metadata; retain the available definitions and stored numerical amounts without inventing or fitting missing values.",
+        "The manganese-sulfate market keeps both original supplier quantities, but its allocated manganese-dioxide co-product branch uses the complete dedicated sulfate manufacturer as a manufacturing/allocation screening proxy. The original co-product inventory and allocation are replaced, not claimed preserved. Native concentrate remains ore feedstock; the retained reactor makes the sulfate. Source and native ore grade, beneficiation and suitability for battery manufacture remain uncertain; use nominal concentrate kg with no invented ore-content or yield multiplier.",
+        "Both triethylamine-market regional quantities use the complete inspected European ethanol-amination inventory. The RoW internal electricity/ammonia portfolio is replaced by that European process, not reconstructed or claimed preserved. Existing fossil-ethylene ethanol supply is retained as a complete model; no substitution with biogenic alcohol, methylamines or an amine sorbent. No guessed reaction yield or co-product credit.",
+        "Native chlorine and liquid nitrogen, ammonia, tap water, organic-plant infrastructure, electricity grids and overburden disposal are complete functional screening proxies. Their internal technology, delivery, allocation, geography, vintage and uncertainty replace the corresponding source backgrounds. Retain every source final-market freight position with native ocean-container, rail, barge and lorry-fleet proxies, without distance, payload or fleet renormalization.",
+        "The native non-sulfidic overburden identity has contradictory sulphidic-tailings wording in its prose; retain this contradiction and its complete recorded land-use inventory. Do not infer acid-rock emissions, rehabilitation, recovery credits or an alternative disposal process. Negative waste inputs use their reviewed negative-to-positive treatment-coordinate factor; caller material kg keep factor +1.",
+        "Existing steam, sulfur-dioxide, wastewater, ethylene-carbonate and fossil-ethanol recipes remain unchanged, with explicit model-source profiles and all inherited limitations. Native supplies occur once; separate reactor emissions, utilities and disposal stay separate. Add no efficiency, density, concentration, metal recovery, balancing or avoided-emission factor.",
+        "No new physical omission, zero-burden authority or source-code edit. BAFU biosphere exclusions and every geographic, technological, allocation and internal-uncertainty substitution remain screening limitations with unquantified impact-score effects. No LCIA equivalence, reverse, consequential or uninspected release is authorized."
+      ],
+      "rationale": "Retain the immediate manganese sulfate manufacturing operations and final-market quantities using complete functional native and previously reviewed backgrounds. This supplies the actual named chemical per positive nominal kg, instead of the previous chemically wrong heuristic candidate."
     },
     "r-985f65b505ada730": {
       "evidence": [
