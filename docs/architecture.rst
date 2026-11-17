@@ -328,6 +328,26 @@ migration schema and supports identical replay. This stage changes generated
 mapping data; it does not add a runtime conversion path or permit conversions
 between system models.
 
+Some required-inventory evidence also contains ``additional_approvals`` for
+unchanged correspondences. These are caller-owned scientific decisions, not
+instructions to compile another rule or infer permissions for other releases.
+Premise binds each decision to its exact source/target context and fingerprint,
+and carries its limitations into fresh and cached conversion provenance.
+
+Names and comments alone do not establish a quantity or composition basis.
+The source-3.8 truck evidence in
+``data/export/uvek_trucks_native_40_review.json`` records four examples:
+nitric acid labelled as a 50% solution still references one kg of pure acid;
+the inspected glass-filled-polyamide inventories already use Nylon 66 despite
+a stale melamine comment; butyl acetate has an inconsistent CAS field, while
+its formula, route and actual reactants identify the named compound; and
+ordinary regional diesel contains biodiesel whereas the separately named
+fossil supply does not. Preserve these discrepancies and functional screening
+limitations in review evidence. Do not invent concentration factors, change a
+correct inventory to match stale prose, identify a compound by an inconsistent
+CAS, or silently replace fossil supply with a blend. None of these checks
+establishes source/native LCIA or functional-performance equivalence.
+
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
