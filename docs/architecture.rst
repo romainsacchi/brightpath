@@ -360,6 +360,20 @@ WEEE shredding rather than an empty recycling handover. It reuses an existing
 wafer recipe only after checking every coefficient and metadata field; its two
 adjacent-float uncertainty-scale differences are explicitly recorded.
 
+The source-3.8 recycling transport review selects complete native diesel
+services with the source EURO standard and gross-weight band. Its new mixtures
+condition and normalize only positive native size/duty weights, never caller
+tonne-kilometres. The native Swiss-2020 fleet evidence, including under RER
+labels, remains a historical screening proxy. The 7.5t model represents the
+3.5--7.5t band, 18/26/32t models represent 16--32t, and a 40t model approximates
+the open-ended >32t class. Review evidence records those limits, matching nominal
+2025/2026 subsets, excluded propulsion/standards and preserved older physical
+mappings. Repeated source countries share the same reviewed mixture. The
+Chinese rail component is explicitly reserved for the required parent recipes;
+it does not grant a global source-3.8 rail correspondence or change the existing
+source-3.9 dolomite dependency. See
+``data/export/uvek_recycling_transport_38_review.json``.
+
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
