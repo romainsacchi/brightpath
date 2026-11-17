@@ -3,15 +3,15 @@
   "coverage": {
     "dispositions": {
       "omitted": 257,
-      "proxy": 293,
+      "proxy": 296,
       "recipe": 1118,
-      "unclassified": 29064
+      "unclassified": 29061
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 250,
       "followup_review": 163,
-      "heuristic_similarity": 26322,
+      "heuristic_similarity": 26319,
       "named_native_teos_proxy": 1,
       "pairwise_review": 2202,
       "product_checked": 35,
@@ -26,6 +26,7 @@
       "reviewed_battery_fluoride_39": 3,
       "reviewed_battery_last_two_38_reactor_and_delivery": 2,
       "reviewed_battery_material_boundary_39": 5,
+      "reviewed_battery_native_basic_312": 3,
       "reviewed_battery_native_material_39": 7,
       "reviewed_battery_regional_supply_312": 1,
       "reviewed_borohydride_39_product_and_allocation_basis": 1,
@@ -241,7 +242,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.445296,
+    "mean_confidence": 0.445329,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -951131,7 +951132,7 @@
     {"confidence": 0.188367, "id": "bp-46616b8f3f5b1746", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "electrolysis of magnesium chloride, from zirconium sponge production", "reference product": "magnesium, for reuse in zirconium sponge production", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium carbonate from ammonium chloride production, at plant", "reference product": "Sodium carbonate from ammonium chloride production, at plant", "unit": "kilogram"}},
     {"confidence": 0.188367, "id": "bp-b8fa8d7910a88c1c", "mapping_method": "heuristic_similarity", "source": {"location": "US", "name": "electrolysis of magnesium chloride, from zirconium sponge production", "reference product": "magnesium, for reuse in zirconium sponge production", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Sodium carbonate from ammonium chloride production, at plant", "reference product": "Sodium carbonate from ammonium chloride production, at plant", "unit": "kilogram"}},
     {"confidence": 0.716038, "id": "bp-5c9bdf4fe5fb4cbb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "electrolyte production, KOH, LiOH additive", "reference product": "electrolyte, KOH, LiOH additive", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Electrolyte, KOH, LiOH additive, at plant", "reference product": "Electrolyte, KOH, LiOH additive, at plant", "unit": "kilogram"}},
-    {"confidence": 0.488882, "id": "bp-6d218293ccf08998", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "electrolyte production, for Li-ion battery", "reference product": "electrolyte, for Li-ion battery", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Anode, graphite, for Li-ion battery", "reference product": "Anode, graphite, for Li-ion battery", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.8, "conversion_factor": 1.0, "id": "bp-6d218293ccf08998", "mapping_method": "reviewed_battery_native_basic_312", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_basic_312_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_battery_basic_312_review.json"], "reason": "Correct graphite anode to complete native lithium-battery electrolyte. Native mixture is 0.88 kg ethylene carbonate plus 0.12 kg LiPF6 per kg electrolyte, with its own facility. Retain this native solvent/salt recipe as an explicit composition proxy; add no second solvent, salt or fabrication inventory.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected exact source-3.12 cut-off identity qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-57b6b8d0dc504f56", "source": {"location": "GLO", "name": "electrolyte production, for Li-ion battery", "reference product": "electrolyte, for Li-ion battery", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Electrolyte", "reference product": "Electrolyte", "unit": "kilogram"}, "technosphere_information_loss": "Correct graphite anode to complete native lithium-battery electrolyte. Native mixture is 0.88 kg ethylene carbonate plus 0.12 kg LiPF6 per kg electrolyte, with its own facility. Retain this native solvent/salt recipe as an explicit composition proxy; add no second solvent, salt or fabrication inventory. Complete native technology, geography, supply/delivery, grade/composition, vintage, allocation and internal uncertainty replace source details. Documented BAFU biosphere exclusions remain. Inventory and impact-score equivalence are not established. Preserve signed caller quantities, formulas, uncertainty and separately listed inputs/emissions. No additional upstream inventory, scaling, recovery credit, foreground omission or zero-burden authority. Only this exact ecoinvent 3.12 cut-off identity is approved."},
     {"confidence": 0.298442, "id": "bp-e136ab90ac5ea66b", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "electrolyte production, for Na-ion battery", "reference product": "electrolyte, for Na-ion battery", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Electrolyte", "reference product": "Electrolyte", "unit": "kilogram"}},
     {"confidence": 0.239738, "id": "bp-cd93b72f94e6dd62", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "electrolyte, copper-rich to generic market for copper-rich materials", "reference product": "copper-rich materials", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Tab Copper", "reference product": "Tab Copper", "unit": "kilogram"}},
     {"confidence": 0.221292, "id": "bp-63cd9f5251934792", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "electrolyte, nickel-rich to generic market for nickel-rich materials", "reference product": "nickel-rich materials", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Nickel, 99.5%, at plant", "reference product": "Nickel, 99.5%, at plant", "unit": "kilogram"}},
@@ -955273,7 +955274,7 @@
     {"confidence": 0.21803, "id": "bp-dbae3190203b1dc9", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for N2O retained, by regenerative thermal oxidation", "reference product": "N2O retained, by regenerative thermal oxidation", "unit": "kilogram"}, "target": {"location": "GLO", "name": "NOx retained, in SCR", "reference product": "NOx retained, in SCR", "unit": "kilogram"}},
     {"confidence": 0.231176, "id": "bp-8627d598dbaca7c9", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for NCA hydroxide", "reference product": "NCA hydroxide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium hydroxide, at plant", "reference product": "Lithium hydroxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.231176, "id": "bp-481eb130e0fdecf0", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for NCA hydroxide", "reference product": "NCA hydroxide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Lithium hydroxide, at plant", "reference product": "Lithium hydroxide, at plant", "unit": "kilogram"}},
-    {"confidence": 0.246174, "id": "bp-71160c84c9244bfa", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for NCA oxide", "reference product": "NCA oxide", "unit": "kilogram"}, "target": {"location": "CN", "name": "Neodymium oxide, at plant", "reference product": "Neodymium oxide, at plant", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.8, "conversion_factor": 1.0, "id": "bp-71160c84c9244bfa", "mapping_method": "reviewed_battery_native_basic_312", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_basic_312_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_battery_basic_312_review.json"], "reason": "Correct neodymium oxide to native NCA electrode material LiNi0.8Co0.15Al0.05O2. This is active material, not the complete electrode or cell; no binder, foil or assembly is added.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected exact source-3.12 cut-off identity qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-25de83af54e4ff2e", "source": {"location": "CN", "name": "market for NCA oxide", "reference product": "NCA oxide", "unit": "kilogram"}, "target": {"location": "JP", "name": "NCA electrode material (LiNi0.8Co0.15Al0.05O2)", "reference product": "NCA electrode material (LiNi0.8Co0.15Al0.05O2)", "unit": "kilogram"}, "technosphere_information_loss": "Correct neodymium oxide to native NCA electrode material LiNi0.8Co0.15Al0.05O2. This is active material, not the complete electrode or cell; no binder, foil or assembly is added. Complete native technology, geography, supply/delivery, grade/composition, vintage, allocation and internal uncertainty replace source details. Documented BAFU biosphere exclusions remain. Inventory and impact-score equivalence are not established. Preserve signed caller quantities, formulas, uncertainty and separately listed inputs/emissions. No additional upstream inventory, scaling, recovery credit, foreground omission or zero-burden authority. Only this exact ecoinvent 3.12 cut-off identity is approved."},
     {"confidence": 0.182251, "id": "bp-59cf03fac500162f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for NCA oxide", "reference product": "NCA oxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Zinc oxide, at plant", "reference product": "Zinc oxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.36, "id": "bp-156dcc00590d49d9", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "market for NMC111 hydroxide", "reference product": "NMC111 hydroxide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Hydroxide, for Li-ion NMC111 battery", "reference product": "Hydroxide, for Li-ion NMC111 battery", "unit": "kilogram"}},
     {"confidence": 0.36, "id": "bp-d593f0fca669aeb2", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "market for NMC111 hydroxide", "reference product": "NMC111 hydroxide", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Hydroxide, for Li-ion NMC111 battery", "reference product": "Hydroxide, for Li-ion NMC111 battery", "unit": "kilogram"}},
@@ -955673,7 +955674,7 @@
     {"confidence": 0.635322, "id": "bp-d047e80fee36b0c8", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery cell, Li-ion, NCA", "reference product": "battery cell, Li-ion, NCA", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery cell, Li-ion, NMC111", "reference product": "Battery cell, Li-ion, NMC111", "unit": "kilogram"}},
     {"confidence": 0.9125, "id": "bp-0aaaee69e91d80e5", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery cell, Li-ion, NMC111", "reference product": "battery cell, Li-ion, NMC111", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery cell, Li-ion, NMC111", "reference product": "Battery cell, Li-ion, NMC111", "unit": "kilogram"}},
     {"confidence": 0.662727, "id": "bp-0b2806df82b6b2ce", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery cell, Li-ion, NMC532", "reference product": "battery cell, Li-ion, NMC532", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery cell, Li-ion, NMC111", "reference product": "Battery cell, Li-ion, NMC111", "unit": "kilogram"}},
-    {"confidence": 0.662727, "id": "bp-2164b416522ac0c4", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery cell, Li-ion, NMC622", "reference product": "battery cell, Li-ion, NMC622", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery cell, Li-ion, NMC111", "reference product": "Battery cell, Li-ion, NMC111", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.8, "conversion_factor": 1.0, "id": "bp-2164b416522ac0c4", "mapping_method": "reviewed_battery_native_basic_312", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_basic_312_review.json"], "profiles": [{"conversion_factor": 1.0, "review": {"evidence": ["brightpath/data/export/uvek_battery_basic_312_review.json"], "reason": "Correct the NMC111 candidate to the complete native NMC622 cell. This is a cell, not a pack, cathode powder or assembled battery system. Add no second electrode, electrolyte, foil or cell-production inventory.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.12"}}], "reason": "Only the independently inspected exact source-3.12 cut-off identity qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-f6edd538e6d64699", "source": {"location": "GLO", "name": "market for battery cell, Li-ion, NMC622", "reference product": "battery cell, Li-ion, NMC622", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery cell, NMC-622", "reference product": "Battery cell, NMC-622", "unit": "kilogram"}, "technosphere_information_loss": "Correct the NMC111 candidate to the complete native NMC622 cell. This is a cell, not a pack, cathode powder or assembled battery system. Add no second electrode, electrolyte, foil or cell-production inventory. Complete native technology, geography, supply/delivery, grade/composition, vintage, allocation and internal uncertainty replace source details. Documented BAFU biosphere exclusions remain. Inventory and impact-score equivalence are not established. Preserve signed caller quantities, formulas, uncertainty and separately listed inputs/emissions. No additional upstream inventory, scaling, recovery credit, foreground omission or zero-burden authority. Only this exact ecoinvent 3.12 cut-off identity is approved."},
     {"confidence": 0.729485, "id": "bp-1083a30344f2d1f3", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery cell, Li-ion, NMC811", "reference product": "battery cell, Li-ion, NMC811", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery cell, Li-ion, NMC111", "reference product": "Battery cell, Li-ion, NMC111", "unit": "kilogram"}},
     {"confidence": 0.63925, "id": "bp-1025bf562a45b1ee", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery management system, for Li-ion battery", "reference product": "battery management system, for Li-ion battery", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery management system", "reference product": "Battery management system", "unit": "kilogram"}},
     {"confidence": 0.923333, "id": "bp-a770388f8dc9114f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery module packaging, Li-ion", "reference product": "battery module packaging, Li-ion", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery module packaging, Li-ion", "reference product": "Battery module packaging, Li-ion", "unit": "kilogram"}},
@@ -976717,6 +976718,17 @@
       ],
       "rationale": "Independently inspected native voltage, solid-product and incinerator endpoint corrections for shared Premise fuels."
     },
+    "r-25de83af54e4ff2e": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_basic_312_review.json"
+      ],
+      "limitations": [
+        "Correct neodymium oxide to native NCA electrode material LiNi0.8Co0.15Al0.05O2. This is active material, not the complete electrode or cell; no binder, foil or assembly is added.",
+        "Complete native technology, geography, supply/delivery, grade/composition, vintage, allocation and internal uncertainty replace source details. Documented BAFU biosphere exclusions remain. Inventory and impact-score equivalence are not established.",
+        "Preserve signed caller quantities, formulas, uncertainty and separately listed inputs/emissions. No additional upstream inventory, scaling, recovery credit, foreground omission or zero-burden authority. Only this exact ecoinvent 3.12 cut-off identity is approved."
+      ],
+      "rationale": "Correct neodymium oxide to native NCA electrode material LiNi0.8Co0.15Al0.05O2. This is active material, not the complete electrode or cell; no binder, foil or assembly is added."
+    },
     "r-266a63c97e24af15": {
       "evidence": [
         "brightpath/data/export/uvek_wwt_residue_omission_review.json: exact inspected source/profile fingerprints. Source references are -1 kg; all direct service comments document 0% biogenic carbon, and markets supply 100% treatment of their own residue plus freight. The target catalogs and candidate inventories were inspected for the relevant industrial function and disposal boundary.",
@@ -978904,6 +978916,17 @@
         "Approved matching-material/function regional disposal screening proxy: Use the dedicated alloyed/chromium EAF dust residual-material landfill. Source H2O is 105410 ppm (10.541%); the target specifies 15.4% water. Both include cement solidification. The target also includes freight which can overlap separately represented transport. Apply factor -1 and preserve incoming wet kg without moisture, dry-mass or heating-value scaling. The inspected CH/RER service represents RoW/GLO where applicable. Plant technology, electricity, freight, composition, metal speciation, leaching, short- and long-term releases, recovery yields and allocation models can differ; scientific and LCIA equivalence are not established. Dedicated disposal replaces neither recovered-material production nor source-specific substitution credits. Preserve caller-owned signed quantities, uncertainty, formulas, production, matching foreground suppliers, separate credits, transport and foreground emissions. Only enumerated exact profiles are approved; missing and patch profiles remain blocked. No reverse correspondence is inferred."
       ],
       "rationale": "Auto-approved under the independently inspected matching-material/function/unit disposal, vehicle-dismantling and geographic-proxy authorizations. Use the dedicated disposal service instead of material or equipment manufacture. Approved matching-material/function regional disposal screening proxy: Use the dedicated alloyed/chromium EAF dust residual-material landfill. Source H2O is 105410 ppm (10.541%); the target specifies 15.4% water. Both include cement solidification. The target also includes freight which can overlap separately represented transport. Apply factor -1 and preserve incoming wet kg without moisture, dry-mass or heating-value scaling. The inspected CH/RER service represents RoW/GLO where applicable. Plant technology, electricity, freight, composition, metal speciation, leaching, short- and long-term releases, recovery yields and allocation models can differ; scientific and LCIA equivalence are not established. Dedicated disposal replaces neither recovered-material production nor source-specific substitution credits. Preserve caller-owned signed quantities, uncertainty, formulas, production, matching foreground suppliers, separate credits, transport and foreground emissions. Only enumerated exact profiles are approved; missing and patch profiles remain blocked. No reverse correspondence is inferred."
+    },
+    "r-57b6b8d0dc504f56": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_basic_312_review.json"
+      ],
+      "limitations": [
+        "Correct graphite anode to complete native lithium-battery electrolyte. Native mixture is 0.88 kg ethylene carbonate plus 0.12 kg LiPF6 per kg electrolyte, with its own facility. Retain this native solvent/salt recipe as an explicit composition proxy; add no second solvent, salt or fabrication inventory.",
+        "Complete native technology, geography, supply/delivery, grade/composition, vintage, allocation and internal uncertainty replace source details. Documented BAFU biosphere exclusions remain. Inventory and impact-score equivalence are not established.",
+        "Preserve signed caller quantities, formulas, uncertainty and separately listed inputs/emissions. No additional upstream inventory, scaling, recovery credit, foreground omission or zero-burden authority. Only this exact ecoinvent 3.12 cut-off identity is approved."
+      ],
+      "rationale": "Correct graphite anode to complete native lithium-battery electrolyte. Native mixture is 0.88 kg ethylene carbonate plus 0.12 kg LiPF6 per kg electrolyte, with its own facility. Retain this native solvent/salt recipe as an explicit composition proxy; add no second solvent, salt or fabrication inventory."
     },
     "r-581bc179f5fb1e74": {
       "evidence": [
@@ -985616,6 +985639,17 @@
         "Only inspected ecoinvent3.9cutoff is qualified. Other releases, inverse and cross-system-model requests cannot borrow this approval."
       ],
       "rationale": "Standing autonomous modelling approval and prior auto-approval of similar whole-product/service screening proxies; independently inspect exact source/native identities and reference quantities, preserve caller ownership and log material limitations."
+    },
+    "r-f6edd538e6d64699": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_basic_312_review.json"
+      ],
+      "limitations": [
+        "Correct the NMC111 candidate to the complete native NMC622 cell. This is a cell, not a pack, cathode powder or assembled battery system. Add no second electrode, electrolyte, foil or cell-production inventory.",
+        "Complete native technology, geography, supply/delivery, grade/composition, vintage, allocation and internal uncertainty replace source details. Documented BAFU biosphere exclusions remain. Inventory and impact-score equivalence are not established.",
+        "Preserve signed caller quantities, formulas, uncertainty and separately listed inputs/emissions. No additional upstream inventory, scaling, recovery credit, foreground omission or zero-burden authority. Only this exact ecoinvent 3.12 cut-off identity is approved."
+      ],
+      "rationale": "Correct the NMC111 candidate to the complete native NMC622 cell. This is a cell, not a pack, cathode powder or assembled battery system. Add no second electrode, electrolyte, foil or cell-production inventory."
     },
     "r-f7b03d7d450ffb8e": {
       "evidence": [
