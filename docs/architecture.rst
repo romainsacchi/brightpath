@@ -374,6 +374,18 @@ it does not grant a global source-3.8 rail correspondence or change the existing
 source-3.9 dolomite dependency. See
 ``data/export/uvek_recycling_transport_38_review.json``.
 
+The recycling material review keeps source-market delivery and producer entries
+separate while using complete native production models. Soap retains its common
+13% moisture basis; injection moulding and film extrusion retain their common
+processing bases of 0.994 and 0.976 kg output per kg service. None needs a second
+yield or moisture multiplier. The plated chromium-steel sheet remains per square
+metre, with its source mass of 15.6365 kg/m2; do not turn that into an additional
+area/mass correction. Corrugated boxes use complete packaging rather than base
+paper. The reserved acid-market recipe has no global source-3.8 permission and
+leaves the existing manganese dependency unchanged. Full original market vectors
+remain local; checksums support licensed reproduction of the derived native
+recipes. See ``data/export/uvek_recycling_materials_38_review.json``.
+
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
