@@ -593,7 +593,7 @@ def apply_uvek_import_recipes(
                         )
                     )
             message = f"Apply reviewed physical recipe {rule['id']}: {review['rationale']}"
-            exchange["comment"] = "\n".join(filter(None, (exchange.get("comment"), message)))
+            exchange["comment"] = "\n".join(str(part) for part in (exchange.get("comment"), message) if part)
             issues.append(
                 Issue(Severity.INFO, "migration.foreground_recipe", message, STAGE, path=path, details=details)
             )
