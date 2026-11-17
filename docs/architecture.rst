@@ -403,6 +403,15 @@ identity/reference/hash witnesses. See
 ``data/export/uvek_recycling_ch_38_review.json``. These mappings do not qualify
 the complete truck sector or establish source/native impact equivalence.
 
+Nine ecoinvent-3.12 truck interfaces reuse existing complete native maintenance,
+disposal and wear-emission services. Their independently inspected unit
+references retain positive maintenance quantities and the negative-source to
+positive-native treatment convention. Only exact approval evidence is added;
+transformation rules, helpers and runtime behavior remain unchanged. Vehicle
+design/lifetime, recovery, wear composition, release compartments and vintage
+differences remain explicit screening limitations. See
+``data/export/uvek_trucks_native_services_312_review.json``.
+
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
