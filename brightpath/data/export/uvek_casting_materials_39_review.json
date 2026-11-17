@@ -4682,6 +4682,57 @@
         "confidence": 0.293742,
         "id": "bp-2d2b80140d7f768a",
         "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_casting_materials_39_review.json",
+            "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_materials_39_review.json"
+                ],
+                "reason": "Retain every original positive product-supply entry and final-delivery leg separately, with its original kg/tkm and uncertainty. Use complete native production rather than recursively reconstructing its upstream database. Geography, source import internals, coproduct allocation, technology, emissions, vintage and internal uncertainty differ; their score effects are unquantified. Preserve steam-reforming and partial-oxidation producer shares using their separate native liquid-ammonia models, not the delivered storehouse mix, which would duplicate final delivery. The RAFcoal/Fischer-Tropsch ammonia coproduct uses native heavy-fuel-oil partial-oxidation ammonia as a complete production screening proxy; coal feedstock and source coproduct allocation are replaced, with no synthetic-fuel inventory or avoided-fuel credit added. Factor+1kgNH3; no aqueous-ammonia dilution or nitrogen-content correction. Only the independently inspected exact ecoinvent 3.9 cut-off source gains new permission. Preserve original caller signs, units, supported uncertainty, formulas and independent operations/emissions. Existing independently approved physical targets, factors and recipe bodies stay unchanged. No inverse, patch or cross-system-model permission is inferred. The thirty-four market helpers retain every original producer entry and final-delivery leg, its source quantity and marginal uncertainty, without grouping or renormalization. Complete native production replaces source internal technology, energy, feedstock, geography, infrastructure, emissions, allocation and uncertainty. Retaining producer shares does not retain their original allocated burdens, coproduct routes or regional production technology. No extra upstream production, invented recovered-product credit, purity/density/yield/strength/assay correction or added energy calibration. Use complete same-mode freight proxies with each original tkm unchanged: native barge, light/heavy road, ocean bulk/container and rail; retain US diesel rail for the US leg and explicit RER/CH/OCE proxies otherwise. Geography, fuel mix, payload, technology, traction, infrastructure, fleet and vintage differ, including Swiss fleet weights inside European road services. No guessed distance, load or transport multiplier and no duplicate upstream delivery. Native grade, technology, allocation, background/biosphere exclusions, vintage and internal uncertainty differ. Preserve independent caller operations and emissions. Functional-performance, stochastic and LCI/LCIA equivalence and quantified score differences are not established. No new physical omission or runtime/generator Python change.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "casting-39-delivered-2d2b80140d7f768a"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.8",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Reuse the complete reviewed source-3.9 material supply model for ammonia, anhydrous, liquid as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved.",
+                "evidence": [
+                  "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+                ]
+              },
+              "target": {
+                "recipe_ref": "battery-38-reviewed-model-2d2b80140d7f768a"
+              }
+            }
+          ],
+          "reason": "Only individually reviewed exact source profiles qualify; each profile retains its own model and reference coordinates.",
+          "status": "unresolved"
+        },
+        "review_ref": "r-468752f3a7b82635",
         "source": {
           "location": "CN",
           "name": "market for ammonia, anhydrous, liquid",
@@ -4694,36 +4745,7 @@
           "reference product": "Ammonia, liquid, at regional storehouse",
           "unit": "kilogram"
         },
-        "review_ref": "r-468752f3a7b82635",
-        "reference_flow_sign_review": {
-          "status": "unresolved",
-          "reason": "Only exact independently reviewed source profiles are qualified.",
-          "evidence": [
-            "brightpath/data/export/uvek_casting_materials_39_review.json"
-          ],
-          "profiles": [
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.9",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "target": {
-                "recipe_ref": "casting-39-delivered-2d2b80140d7f768a"
-              },
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Retain every original positive product-supply entry and final-delivery leg separately, with its original kg/tkm and uncertainty. Use complete native production rather than recursively reconstructing its upstream database. Geography, source import internals, coproduct allocation, technology, emissions, vintage and internal uncertainty differ; their score effects are unquantified. Preserve steam-reforming and partial-oxidation producer shares using their separate native liquid-ammonia models, not the delivered storehouse mix, which would duplicate final delivery. The RAFcoal/Fischer-Tropsch ammonia coproduct uses native heavy-fuel-oil partial-oxidation ammonia as a complete production screening proxy; coal feedstock and source coproduct allocation are replaced, with no synthetic-fuel inventory or avoided-fuel credit added. Factor+1kgNH3; no aqueous-ammonia dilution or nitrogen-content correction. Only the independently inspected exact ecoinvent 3.9 cut-off source gains new permission. Preserve original caller signs, units, supported uncertainty, formulas and independent operations/emissions. Existing independently approved physical targets, factors and recipe bodies stay unchanged. No inverse, patch or cross-system-model permission is inferred. The thirty-four market helpers retain every original producer entry and final-delivery leg, its source quantity and marginal uncertainty, without grouping or renormalization. Complete native production replaces source internal technology, energy, feedstock, geography, infrastructure, emissions, allocation and uncertainty. Retaining producer shares does not retain their original allocated burdens, coproduct routes or regional production technology. No extra upstream production, invented recovered-product credit, purity/density/yield/strength/assay correction or added energy calibration. Use complete same-mode freight proxies with each original tkm unchanged: native barge, light/heavy road, ocean bulk/container and rail; retain US diesel rail for the US leg and explicit RER/CH/OCE proxies otherwise. Geography, fuel mix, payload, technology, traction, infrastructure, fleet and vintage differ, including Swiss fleet weights inside European road services. No guessed distance, load or transport multiplier and no duplicate upstream delivery. Native grade, technology, allocation, background/biosphere exclusions, vintage and internal uncertainty differ. Preserve independent caller operations and emissions. Functional-performance, stochastic and LCI/LCIA equivalence and quantified score differences are not established. No new physical omission or runtime/generator Python change.",
-                "evidence": [
-                  "brightpath/data/export/uvek_casting_materials_39_review.json"
-                ]
-              }
-            }
-          ]
-        }
+        "technosphere_information_loss": "Use only exact declared source-profile decisions. Earlier source releases retain their models and limitations. For source 3.8: Reuse the complete reviewed source-3.9 material supply model for ammonia, anhydrous, liquid as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved. Preserve caller quantities, formulas, ownership, separate emissions and supported signed uncertainty with factor 1. Existing model production, delivery and treatment occur once; no extra density, energy-content, concentration, yield, efficiency or recovery multiplier is added. Retain every existing delegated-model limitation and previously approved internal omission audit. This adds no new foreground omission or new omission authority. Source-3.8 internal balances are replaced by the complete proxy; existing model inventories and biosphere exclusions remain, with unquantified impact-score differences. Authorize only this exact ecoinvent 3.8 cut-off scope in addition to earlier reviewed releases. No inverse, consequential, uninspected release or claim of source/model or LCIA equivalence. No source-code change or reconstructed inventory model. Declarative one-to-one aliases retain the delegated model source profile."
       }
     },
     {
@@ -10943,5 +10965,30 @@
   "new_foreground_omissions": [],
   "runtime_Python_changes": 0,
   "generator_Python_changes": 0,
-  "licensing": "Full original inventories, comments and binding vectors remain private. Packaged data contain derived native-facing recipes, identity/reference/hash witnesses, explicit limitations and source-exchange checksums."
+  "licensing": "Full original inventories, comments and binding vectors remain private. Packaged data contain derived native-facing recipes, identity/reference/hash witnesses, explicit limitations and source-exchange checksums.",
+  "source38_scope_extensions": {
+    "bp-2d2b80140d7f768a": {
+      "review_path": "brightpath/data/export/uvek_reused_seventeen_38_review.json",
+      "source_witness": {
+        "identity": {
+          "name": "market for ammonia, anhydrous, liquid",
+          "reference product": "ammonia, anhydrous, liquid",
+          "location": "CN",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 6,
+        "inventory_sha256": "1ec3b644c86aed2faa299d8f5c26da4d7d9b65355c6767bfb8fc9fd0d1b588e9",
+        "metadata_sha256": "b2a43a621938170b0abce76143d4618b06b0b7b0242560e165f6f4953aa4dc6f",
+        "comment_sha256": "10f8f62446ff044eeadd95a3c8a53bf39b3abe6a9411f594ad47d505c60cc39a",
+        "product_information_sha256": "551c60530f90651fc99be9819d418544aa2b384452b78e80546d586197ccadb7"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "system_model": "cutoff",
+        "version": "3.9"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }

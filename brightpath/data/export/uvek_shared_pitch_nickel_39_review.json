@@ -12,6 +12,11 @@
       "family": "ecoinvent",
       "version": "3.9",
       "system_model": "cutoff"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.8",
+      "system_model": "cutoff"
     }
   ],
   "target_profile": {
@@ -57,6 +62,57 @@
         "confidence": 0.365238,
         "id": "bp-c18af03acca016b9",
         "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_shared_pitch_nickel_39_review.json",
+            "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_shared_pitch_nickel_39_review.json"
+                ],
+                "reason": "Only the two exact inspected ecoinvent3.9cut-off market interfaces gain permission. Preserve caller signs, kg basis, supported uncertainty, formulas and independent caller operations/emissions. No inverse, other source version or cross-system permission is inferred. No source inventory or biosphere database is changed. Keep each source producer entry and freight leg separate at its original quantity and marginal statistics, without regrouping or renormalization. Complete native same-mode rail, road, barge and container-shipping supplies are geographic/fleet/technology/vintage proxies; no guessed payload, distance or transport multiplier. Use all exchanges of the selected native models. Native process assumptions, allocation, background/biosphere exclusions and internal uncertainty replace corresponding source internals; their limitations and unquantified impact differences remain. No LCI/LCIA, stochastic, grade or functional-performance equivalence is established. No physical omission, new zero-burden handover, production/generator Python change or extra recovery credit. Retain the source nickel-sulfate market shares:0.918092492672566 from allocated cobalt production and0.0819075073274339 from separate nickel-sulfate production, plus all four freight legs. Source references pure solid NiSO4 per kg; native cobalt sulfate is a different chemical and is excluded. No hydration, solution, contained-nickel or molecular-mass conversion is added. All290nonproduction exchanges of the source nickel-sulfate cobalt coproduct equal0.11337491313401228times the corresponding same-source cobalt-metal inventory, with identical exchange identities. Use that independently checked uniform inventory ratio to scale the complete native Cobalt, at plant inventory. It is an allocation-scaled burden proxy, not physical cobalt metal consumed to manufacture NiSO4, nor proof that source/native allocation or production is identical. Native cobalt is a weak-data global mining/beneficiation and reduction approximation. Its documentation excludes further-treatment emissions and overburden/tailings/losses. Those native exclusions and estimated95%reduction yield remain explicit; the allocation ratio does not repair them. No invented emissions, residues, recovery credit or separately added nickel-sulfate plant is attached to this allocated coproduct branch. The separate nickel-sulfate production branch retains all23original nonproduction operations/emissions and statistics through existing reviewed native suppliers and canonical ecoinvent3.10biosphere correspondences. Its nickel feed0.399240739928257kg, sulfuric-acid entries, heat/electricity/water/nitrogen/factory inputs, wastewater routes and eight signed elementary flows remain explicit. Native chemical-plant, heat, fuel, utility, wastewater, geography and vintage differences remain reviewed proxies; no stoichiometric replacement, chemical resynthesis, calibrating energy factor or added avoided-emission credit.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "shared-39-nickel-sulfate-delivered"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.8",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Reuse the complete reviewed source-3.9 material supply model for nickel sulfate as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved. Reuse the existing reconstructed nickel-sulfate supply, never the unselected raw cobalt-sulfate candidate.",
+                "evidence": [
+                  "brightpath/data/export/uvek_reused_seventeen_38_review.json"
+                ]
+              },
+              "target": {
+                "recipe_ref": "battery-38-reviewed-model-c18af03acca016b9"
+              }
+            }
+          ],
+          "reason": "Only individually reviewed exact source profiles qualify; each profile retains its own model and reference coordinates.",
+          "status": "unresolved"
+        },
+        "review_ref": "r-847ac78ea154ce6d",
         "source": {
           "location": "GLO",
           "name": "market for nickel sulfate",
@@ -69,36 +125,7 @@
           "reference product": "Cobalt sulfate",
           "unit": "kilogram"
         },
-        "review_ref": "r-847ac78ea154ce6d",
-        "reference_flow_sign_review": {
-          "status": "unresolved",
-          "reason": "Only the exact independently reviewed cut-off source profile is qualified.",
-          "evidence": [
-            "brightpath/data/export/uvek_shared_pitch_nickel_39_review.json"
-          ],
-          "profiles": [
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.9",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "target": {
-                "recipe_ref": "shared-39-nickel-sulfate-delivered"
-              },
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Only the two exact inspected ecoinvent3.9cut-off market interfaces gain permission. Preserve caller signs, kg basis, supported uncertainty, formulas and independent caller operations/emissions. No inverse, other source version or cross-system permission is inferred. No source inventory or biosphere database is changed. Keep each source producer entry and freight leg separate at its original quantity and marginal statistics, without regrouping or renormalization. Complete native same-mode rail, road, barge and container-shipping supplies are geographic/fleet/technology/vintage proxies; no guessed payload, distance or transport multiplier. Use all exchanges of the selected native models. Native process assumptions, allocation, background/biosphere exclusions and internal uncertainty replace corresponding source internals; their limitations and unquantified impact differences remain. No LCI/LCIA, stochastic, grade or functional-performance equivalence is established. No physical omission, new zero-burden handover, production/generator Python change or extra recovery credit. Retain the source nickel-sulfate market shares:0.918092492672566 from allocated cobalt production and0.0819075073274339 from separate nickel-sulfate production, plus all four freight legs. Source references pure solid NiSO4 per kg; native cobalt sulfate is a different chemical and is excluded. No hydration, solution, contained-nickel or molecular-mass conversion is added. All290nonproduction exchanges of the source nickel-sulfate cobalt coproduct equal0.11337491313401228times the corresponding same-source cobalt-metal inventory, with identical exchange identities. Use that independently checked uniform inventory ratio to scale the complete native Cobalt, at plant inventory. It is an allocation-scaled burden proxy, not physical cobalt metal consumed to manufacture NiSO4, nor proof that source/native allocation or production is identical. Native cobalt is a weak-data global mining/beneficiation and reduction approximation. Its documentation excludes further-treatment emissions and overburden/tailings/losses. Those native exclusions and estimated95%reduction yield remain explicit; the allocation ratio does not repair them. No invented emissions, residues, recovery credit or separately added nickel-sulfate plant is attached to this allocated coproduct branch. The separate nickel-sulfate production branch retains all23original nonproduction operations/emissions and statistics through existing reviewed native suppliers and canonical ecoinvent3.10biosphere correspondences. Its nickel feed0.399240739928257kg, sulfuric-acid entries, heat/electricity/water/nitrogen/factory inputs, wastewater routes and eight signed elementary flows remain explicit. Native chemical-plant, heat, fuel, utility, wastewater, geography and vintage differences remain reviewed proxies; no stoichiometric replacement, chemical resynthesis, calibrating energy factor or added avoided-emission credit.",
-                "evidence": [
-                  "brightpath/data/export/uvek_shared_pitch_nickel_39_review.json"
-                ]
-              }
-            }
-          ]
-        }
+        "technosphere_information_loss": "Use only exact declared source-profile decisions. Earlier source releases retain their models and limitations. For source 3.8: Reuse the complete reviewed source-3.9 material supply model for nickel sulfate as a version screening proxy for this exact source-3.8 cut-off identity, per signed kilogram. Source and model represent the same named functional reference, not merely a similar chemical name. Replace source-3.8 internal producer/treatment shares, freight, losses, technology, allocation and uncertainty with the already reviewed model; those internal quantities are not claimed preserved. Reuse the existing reconstructed nickel-sulfate supply, never the unselected raw cobalt-sulfate candidate. Preserve caller quantities, formulas, ownership, separate emissions and supported signed uncertainty with factor 1. Existing model production, delivery and treatment occur once; no extra density, energy-content, concentration, yield, efficiency or recovery multiplier is added. Retain every existing delegated-model limitation and previously approved internal omission audit. This adds no new foreground omission or new omission authority. Source-3.8 internal balances are replaced by the complete proxy; existing model inventories and biosphere exclusions remain, with unquantified impact-score differences. Authorize only this exact ecoinvent 3.8 cut-off scope in addition to earlier reviewed releases. No inverse, consequential, uninspected release or claim of source/model or LCIA equivalence. No source-code change or reconstructed inventory model. Declarative one-to-one aliases retain the delegated model source profile."
       },
       "source_witness": {
         "identity": {
@@ -1519,5 +1546,30 @@
   "new_foreground_omissions": [],
   "runtime_Python_changes": 0,
   "generator_Python_changes": 0,
-  "licensing": "Original inventories, comments, producer allocation vectors and conversion reports remain private. Publish derived native-facing models, closed dependencies, reference/hash witnesses, binding checksums, quantitative allocation facts and explicit proxy decisions."
+  "licensing": "Original inventories, comments, producer allocation vectors and conversion reports remain private. Publish derived native-facing models, closed dependencies, reference/hash witnesses, binding checksums, quantitative allocation facts and explicit proxy decisions.",
+  "source38_scope_extensions": {
+    "bp-c18af03acca016b9": {
+      "review_path": "brightpath/data/export/uvek_reused_seventeen_38_review.json",
+      "source_witness": {
+        "identity": {
+          "name": "market for nickel sulfate",
+          "reference product": "nickel sulfate",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 6,
+        "inventory_sha256": "2f54b60ce9babf231c4343f5b7a5275b3491cb865d8ba264d93fb1f9becf3083",
+        "metadata_sha256": "1038d0039b9703d830229a054ef58d12395d7f902e7b9eb34bbea9fb1fa140b5",
+        "comment_sha256": "b059caf4015d971c9ad4ecb286314e87b926e5e69d74395d772457835502c003",
+        "product_information_sha256": "44da54db0c92c8cf1fa555eb68dbc1a1d354da0cdd06123861bdf20c6407ff99"
+      },
+      "model_source_profile": {
+        "family": "ecoinvent",
+        "system_model": "cutoff",
+        "version": "3.9"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }
