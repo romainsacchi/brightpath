@@ -499,6 +499,20 @@ writing a Brightway database. Earlier source-3.8 routes remain unchanged;
 source/native impact equivalence and complete battery qualification are not
 established by these checks.
 
+Thirty-four required source-3.9 casting-material markets retain producer entries
+and final delivery while using complete native production. Separate ammonia
+routes, all three AE7 feedstocks, TiO2 production routes and virgin/recovered
+SiC remain explicit. Nitric acid is documented per kg pure HNO3 in both
+sources, so the native 50%-solution label does not imply doubling. Zircon
+retains its mineral basis, not contained zirconium or zirconium oxide. Native
+low-alloy steel already includes hot rolling. Coproduct, grade, geography,
+technology, allocation and score differences remain screening limitations.
+See ``data/export/uvek_casting_materials_39_review.json``. Sixty-eight signed
+finite LCIs and thirty-four independent source-quantity/native-demand
+comparisons pass without database writes. Residual correction is confined to
+the private verification script; production solvers and model coefficients
+are unchanged. These checks do not qualify complete casting or battery updates.
+
 Resource governance
 -------------------
 
