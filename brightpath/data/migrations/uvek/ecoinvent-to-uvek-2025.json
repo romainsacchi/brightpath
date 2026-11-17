@@ -11,7 +11,7 @@
     "mapping_methods": {
       "curated_legacy": 250,
       "followup_review": 163,
-      "heuristic_similarity": 26327,
+      "heuristic_similarity": 26326,
       "named_native_teos_proxy": 1,
       "pairwise_review": 2203,
       "product_checked": 35,
@@ -123,6 +123,7 @@
       "reviewed_mixed_butene_39_delivered_market": 1,
       "reviewed_named_product_and_market_boundary_39": 4,
       "reviewed_native_nongas_industrial_heat_proxy": 1,
+      "reviewed_native_primary_aluminium_relabelling": 1,
       "reviewed_natural_gas_heat_region_wrappers_39": 3,
       "reviewed_nmc532_battery_312": 1,
       "reviewed_older_pet_whole_freight": 1,
@@ -236,7 +237,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.445226,
+    "mean_confidence": 0.445237,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -942827,7 +942828,7 @@
     {"confidence": 0.562158, "id": "bp-a2673c8b0e7f0c21", "mapping_method": "heuristic_similarity", "source": {"location": "UN-OCEANIA", "name": "aluminium hydroxide production", "reference product": "aluminium hydroxide", "unit": "kilogram"}, "target": {"location": "RER", "name": "Aluminium hydroxide, at plant", "reference product": "Aluminium hydroxide, at plant", "unit": "kilogram"}},
     {"confidence": 0.56531, "id": "bp-15879446dcce9300", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "aluminium hydroxide production", "reference product": "gallium, in Bayer liquor from aluminium production", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Gallium, in Bayer liquor from aluminium production, at plant", "reference product": "Gallium, in Bayer liquor from aluminium production, at plant", "unit": "kilogram"}},
     {"confidence": 0.36756, "id": "bp-613abfdc8cde925f", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "aluminium ingot, primary, to aluminium, cast alloy market", "reference product": "aluminium, cast alloy", "unit": "kilogram"}, "target": {"location": "RER", "name": "Aluminium, production mix, cast alloy, at plant", "reference product": "Aluminium, production mix, cast alloy, at plant", "unit": "kilogram"}},
-    {"confidence": 0.391148, "id": "bp-f0ba995aa8a02a6e", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "aluminium ingot, primary, to aluminium, wrought alloy market", "reference product": "aluminium, wrought alloy", "unit": "kilogram"}, "target": {"location": "RER", "name": "Aluminium, production mix, wrought alloy, at plant", "reference product": "Aluminium, production mix, wrought alloy, at plant", "unit": "kilogram"}},
+    {"confidence": 0.75, "id": "bp-f0ba995aa8a02a6e", "mapping_method": "reviewed_native_primary_aluminium_relabelling", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_primary_aluminium_adapter_38_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_primary_aluminium_adapter_38_review.json"], "reason": "The inspected source is only a relabelling of one kg of primary aluminium ingot into the wrought-alloy market. Its three positive primary-ingot purchases sum to one kg; it contains no alloying, forming or secondary-metal operation. Use complete native primary aluminium per signed nominal kg, rather than a whole wrought-alloy production mix.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.8"}}], "reason": "Only the independently inspected exact source-3.8 cut-off relabelling boundary is qualified.", "status": "unresolved"}, "review_ref": "r-b65020b66ee1ea71", "source": {"location": "GLO", "name": "aluminium ingot, primary, to aluminium, wrought alloy market", "reference product": "aluminium, wrought alloy", "unit": "kilogram"}, "target": {"location": "RER", "name": "Aluminium, primary, at plant", "reference product": "Aluminium, primary, at plant", "unit": "kilogram"}},
     {"confidence": 0.915, "id": "bp-a27eb0db5a98ae34", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "aluminium melting furnace production", "reference product": "aluminium melting furnace", "unit": "unit"}, "target": {"location": "RER", "name": "Aluminium melting furnace", "reference product": "Aluminium melting furnace", "unit": "unit"}},
     {"confidence": 0.835, "id": "bp-3ef3f00478e3e51f", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "aluminium melting furnace production", "reference product": "aluminium melting furnace", "unit": "unit"}, "target": {"location": "RER", "name": "Aluminium melting furnace", "reference product": "Aluminium melting furnace", "unit": "unit"}},
     {"confidence": 0.693561, "id": "bp-9be95cb50b7c60c0", "mapping_method": "heuristic_similarity", "source": {"location": "RER", "name": "aluminium milling, average", "reference product": "aluminium removed by milling, average", "unit": "kilogram"}, "target": {"location": "RER", "name": "xx Milling, aluminium, average", "reference product": "xx Milling, aluminium, average", "unit": "kilogram"}},
@@ -980533,6 +980534,18 @@
         "Approved CRT-cullet landfill screening proxy: glass cullet, lead containing, from used cathode ray tube is represented by ordinary construction-waste glass in CH at the same kilogram basis. The ecoinvent direct landfill model explicitly excludes direct leachate emissions as negligible; UVEK includes generic-glass metal releases, including chromium, copper, lead and zinc. These are proxy metal releases, not a reconstruction of this cullet's lead or other metal content. Composition, leaching, metal speciation, landfill design, hydrology, infrastructure, energy, allocation and background supplies may differ. LCIA equivalence, including toxicity impacts, is not established or quantified; the proxy may introduce direct metal-emission contributions absent from the source landfill inventory. Preserve the original waste mass without composition or leaching-based scaling. The source market supplies 100% landfill of the same cullet. Additional market-level freight is omitted: four suppliers through 3.9 and one from 3.10. Foreground freight is preserved. Production, separately listed foreground emissions/treatment and recovered-glass references are preserved."
       ],
       "rationale": "Approved on 2026-11-05: replace screen manufacturing for the exact GLO/kg market for glass cullet, lead containing, from used cathode ray tube waste reference with the CH ordinary-glass construction-waste landfill service and factor -1. Preserve waste mass. The source explicitly excludes direct leachate emissions as negligible, while the proxy includes generic-glass metal releases. Composition, geography and this broader emission model are disclosed screening approximations. The source market supplies 100% landfill of the same cullet. Additional market-level freight is omitted: four suppliers through 3.9 and one from 3.10. Foreground freight is preserved."
+    },
+    "r-b65020b66ee1ea71": {
+      "evidence": [
+        "brightpath/data/export/uvek_primary_aluminium_adapter_38_review.json"
+      ],
+      "limitations": [
+        "Replace the three source primary-ingot regional shares with complete European native primary aluminium as an explicit screening proxy. Source shares, upstream electricity, liquid-metal production, casting, geography, vintage, allocation, internal uncertainty and delivery are replaced, not claimed preserved. Source metal grade and functional performance are not established as equivalent; score differences remain unquantified.",
+        "Native primary aluminium includes upstream liquid metal and casting. Do not add a second liquid-metal, alloying, sheet-rolling or casting service. Do not introduce recycled metal, recovery credits or a whole wrought-alloy production mix merely because the relabelled reference product says wrought alloy.",
+        "Preserve signed caller kg, formulas and supported uncertainty with factor +1. No new helper, foreground omission, native-inventory edit or runtime/generator Python change. The BAFU reimport has documented excluded biosphere flows.",
+        "Authorize only the inspected ecoinvent 3.8 cut-off source and UVEK 2025/native 2026 route. All other source releases remain unresolved. No inverse or cross-system-model conversion is authorized."
+      ],
+      "rationale": "The inspected source is only a relabelling of one kg of primary aluminium ingot into the wrought-alloy market. Its three positive primary-ingot purchases sum to one kg; it contains no alloying, forming or secondary-metal operation. Use complete native primary aluminium per signed nominal kg, rather than a whole wrought-alloy production mix."
     },
     "r-b7ada2cd3754949b": {
       "evidence": [

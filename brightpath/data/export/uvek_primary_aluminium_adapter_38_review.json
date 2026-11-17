@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-17",
+  "authorization": "Standing autonomous mapping goal and auto-approval of modelling decisions with warnings and a review log.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.8",
+    "system_model": "cutoff"
+  },
+  "target_profile": {
+    "family": "uvek",
+    "system_model": "cutoff",
+    "version": "2025"
+  },
+  "source_rule_dependency_scopes": [],
+  "recipe_dependency_sha256": {},
+  "reviews": [
+    {
+      "evidence": [
+        "brightpath/data/export/uvek_primary_aluminium_adapter_38_review.json"
+      ],
+      "rationale": "The inspected source is only a relabelling of one kg of primary aluminium ingot into the wrought-alloy market. Its three positive primary-ingot purchases sum to one kg; it contains no alloying, forming or secondary-metal operation. Use complete native primary aluminium per signed nominal kg, rather than a whole wrought-alloy production mix.",
+      "limitations": [
+        "Replace the three source primary-ingot regional shares with complete European native primary aluminium as an explicit screening proxy. Source shares, upstream electricity, liquid-metal production, casting, geography, vintage, allocation, internal uncertainty and delivery are replaced, not claimed preserved. Source metal grade and functional performance are not established as equivalent; score differences remain unquantified.",
+        "Native primary aluminium includes upstream liquid metal and casting. Do not add a second liquid-metal, alloying, sheet-rolling or casting service. Do not introduce recycled metal, recovery credits or a whole wrought-alloy production mix merely because the relabelled reference product says wrought alloy.",
+        "Preserve signed caller kg, formulas and supported uncertainty with factor +1. No new helper, foreground omission, native-inventory edit or runtime/generator Python change. The BAFU reimport has documented excluded biosphere flows.",
+        "Authorize only the inspected ecoinvent 3.8 cut-off source and UVEK 2025/native 2026 route. All other source releases remain unresolved. No inverse or cross-system-model conversion is authorized."
+      ]
+    }
+  ],
+  "recipes": {},
+  "records": [
+    {
+      "rule_id": "bp-f0ba995aa8a02a6e",
+      "source": {
+        "location": "GLO",
+        "name": "aluminium ingot, primary, to aluminium, wrought alloy market",
+        "reference product": "aluminium, wrought alloy",
+        "unit": "kilogram"
+      },
+      "target": {
+        "name": "Aluminium, primary, at plant",
+        "reference product": "Aluminium, primary, at plant",
+        "location": "RER",
+        "unit": "kilogram"
+      },
+      "original_rule": {
+        "confidence": 0.391148,
+        "id": "bp-f0ba995aa8a02a6e",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "GLO",
+          "name": "aluminium ingot, primary, to aluminium, wrought alloy market",
+          "reference product": "aluminium, wrought alloy",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Aluminium, production mix, wrought alloy, at plant",
+          "reference product": "Aluminium, production mix, wrought alloy, at plant",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.75,
+        "id": "bp-f0ba995aa8a02a6e",
+        "mapping_method": "reviewed_native_primary_aluminium_relabelling",
+        "source": {
+          "location": "GLO",
+          "name": "aluminium ingot, primary, to aluminium, wrought alloy market",
+          "reference product": "aluminium, wrought alloy",
+          "unit": "kilogram"
+        },
+        "target": {
+          "name": "Aluminium, primary, at plant",
+          "reference product": "Aluminium, primary, at plant",
+          "location": "RER",
+          "unit": "kilogram"
+        },
+        "review_ref": "r-b65020b66ee1ea71",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only the independently inspected exact source-3.8 cut-off relabelling boundary is qualified.",
+          "evidence": [
+            "brightpath/data/export/uvek_primary_aluminium_adapter_38_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.8",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "The inspected source is only a relabelling of one kg of primary aluminium ingot into the wrought-alloy market. Its three positive primary-ingot purchases sum to one kg; it contains no alloying, forming or secondary-metal operation. Use complete native primary aluminium per signed nominal kg, rather than a whole wrought-alloy production mix.",
+                "evidence": [
+                  "brightpath/data/export/uvek_primary_aluminium_adapter_38_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "source_witness": {
+        "identity": {
+          "name": "aluminium ingot, primary, to aluminium, wrought alloy market",
+          "reference product": "aluminium, wrought alloy",
+          "location": "GLO",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1,
+        "nonproduction_count": 3,
+        "inventory_sha256": "a0210a3b5977e8c1b7f092ce82a1931ef7b4eba778ba50556e20b73f59284aa3",
+        "metadata_sha256": "8e53b9911288d2ade2c1e71b32e24f9886af025d30040183bb0944085d05fe2a",
+        "comment_sha256": "a999437469e85176b9597e65efa97bd0bf2f644df58add55ba5d3069266e38ee",
+        "product_information_sha256": "4c5d170c54817049ef07fe959e62faefc8d75b12979ef88be0f551cac53789a6"
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Aluminium, primary, at plant",
+            "reference product": "Aluminium, primary, at plant",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 24,
+          "inventory_sha256": "53207f3ef6cc5a7c4c65c6f26ea8812a744a465065a953a9c25904a9613140a8",
+          "metadata_sha256": "9c2da65149859c157127c43de436593efcfa8f345ad68d300fa29877a2ab4946",
+          "comment_sha256": "918daccfae252775aad5a2355c2a37752ccf39670aa218c9d8d2fe7c3448b572",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Aluminium, primary, at plant",
+            "reference product": "Aluminium, primary, at plant",
+            "location": "RER",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 25,
+          "inventory_sha256": "24812803d907623c496515d04b471eac3b3dc94b8d46e088f4be4231ffa92fe3",
+          "metadata_sha256": "a682de8c13696f65a075664168a128481379b1e0c2f5f70a32ffb275662db1d8",
+          "comment_sha256": "540fca24440abafdee4a28f3d3fd849608530bc4ee340cc6d6034ea929e04cbd",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "conversion_factor": 1,
+      "functional_basis": "The inspected source is only a relabelling of one kg of primary aluminium ingot into the wrought-alloy market. Its three positive primary-ingot purchases sum to one kg; it contains no alloying, forming or secondary-metal operation. Use complete native primary aluminium per signed nominal kg, rather than a whole wrought-alloy production mix.",
+      "limitations": [
+        "Replace the three source primary-ingot regional shares with complete European native primary aluminium as an explicit screening proxy. Source shares, upstream electricity, liquid-metal production, casting, geography, vintage, allocation, internal uncertainty and delivery are replaced, not claimed preserved. Source metal grade and functional performance are not established as equivalent; score differences remain unquantified.",
+        "Native primary aluminium includes upstream liquid metal and casting. Do not add a second liquid-metal, alloying, sheet-rolling or casting service. Do not introduce recycled metal, recovery credits or a whole wrought-alloy production mix merely because the relabelled reference product says wrought alloy.",
+        "Preserve signed caller kg, formulas and supported uncertainty with factor +1. No new helper, foreground omission, native-inventory edit or runtime/generator Python change. The BAFU reimport has documented excluded biosphere flows.",
+        "Authorize only the inspected ecoinvent 3.8 cut-off source and UVEK 2025/native 2026 route. All other source releases remain unresolved. No inverse or cross-system-model conversion is authorized."
+      ],
+      "inspected_positive_primary_ingot_inputs": 3,
+      "inspected_total_input_kg": 1.0000000000000007
+    }
+  ],
+  "new_helpers": 0,
+  "new_foreground_omissions": [],
+  "runtime_or_generator_Python_changes": 0
+}

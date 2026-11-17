@@ -555,6 +555,21 @@ scientific transformations. All 81 new models pass independent graph
 comparisons and 162 signed no-write LCIs; complete battery qualification and
 source/native impact equivalence remain unproven.
 
+The required battery source-3.8 cohort now reuses fourteen independently
+inspected native supplies/services with exact profile-scoped permissions and
+no extra helper. The WEEE shredder-residue treatment changes sign once because
+its source waste reference is negative and its native service is positive.
+A separate primary-aluminium relabelling correction buys native primary metal
+instead of a whole wrought-alloy mix; it introduces no new casting operation
+or recycled metal. See ``data/export/uvek_battery_native_direct_38_review.json``,
+``data/export/uvek_battery_reused_native_38_review.json`` and
+``data/export/uvek_primary_aluminium_adapter_38_review.json``. Nominal reference
+bases, internal market replacement, native model inconsistencies, geography,
+vintage and allocation limits remain explicit. Nylon and ethylene-glycol
+inventories contain embedded upstream energy that ordinary supplier relinking
+cannot update. No full battery qualification or impact equivalence is claimed.
+Production and generator Python modules are unchanged in this mapping group.
+
 Resource governance
 -------------------
 
