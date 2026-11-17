@@ -4,14 +4,14 @@
     "dispositions": {
       "omitted": 257,
       "proxy": 298,
-      "recipe": 1119,
-      "unclassified": 29058
+      "recipe": 1121,
+      "unclassified": 29056
     },
     "mapped_identities": 30732,
     "mapping_methods": {
       "curated_legacy": 250,
       "followup_review": 163,
-      "heuristic_similarity": 26316,
+      "heuristic_similarity": 26314,
       "named_native_teos_proxy": 1,
       "pairwise_review": 2202,
       "product_checked": 35,
@@ -27,6 +27,7 @@
       "reviewed_battery_last_two_38_reactor_and_delivery": 2,
       "reviewed_battery_lto_312": 1,
       "reviewed_battery_material_boundary_39": 5,
+      "reviewed_battery_nacl_310": 2,
       "reviewed_battery_native_basic_312": 5,
       "reviewed_battery_native_material_39": 7,
       "reviewed_battery_regional_supply_312": 1,
@@ -243,7 +244,7 @@
       "reviewed_waste_concrete_inert_reconstruction": 2,
       "uvek_inventory_review": 62
     },
-    "mean_confidence": 0.445375,
+    "mean_confidence": 0.445403,
     "omitted_identities": 257,
     "source_identities": 30732,
     "target_identities": 11747,
@@ -10074,6 +10075,202 @@
       "name": "market for used Li-ion battery, reviewed source-3.12 model for source 3.10",
       "rationale": "Use the complete already reviewed source-3.12 supply/service for this exact same named product, geography and reference unit as an explicit source-3.10 version screening proxy. Replace source-3.10 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved.",
       "reference product": "used Li-ion battery",
+      "unit": "kilogram"
+    },
+    "battery-310-sodium-nickel-chloride-market": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_nacl_310_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "recipe": "battery-310-sodium-nickel-chloride-production",
+          "uncertainty type": 0
+        },
+        {
+          "amount": 0.015300000086426735,
+          "loc": 0.015300000086426735,
+          "location": "RER",
+          "name": "Transport, freight, rail",
+          "reference product": "Transport, freight, rail",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.009600000455975533,
+          "loc": 0.009600000455975533,
+          "location": "CH",
+          "name": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "reference product": "Transport, freight, lorry, 3.5t gross weight, fleet average",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.3100000023841858,
+          "loc": 0.3100000023841858,
+          "location": "RER",
+          "name": "Transport, freight, lorry, fleet average",
+          "reference product": "Transport, freight, lorry, fleet average",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "ton kilometer"
+        },
+        {
+          "amount": 0.7368000149726868,
+          "loc": 0.7368000149726868,
+          "location": "OCE",
+          "name": "Transport, transoceanic container ship",
+          "reference product": "Transport, transoceanic container ship",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "ton kilometer"
+        }
+      ],
+      "location": "GLO",
+      "name": "market for battery, NaCl, reviewed native supply",
+      "rationale": "Retain the complete immediate Na-NiCl battery assembly and source freight; supporting Battery BoP or a lithium-ion battery alone cannot represent this chemistry or complete sealed high-temperature battery. Complete native stock, metal-working, utilities and freight are explicit screening proxies.",
+      "reference product": "battery, NaCl",
+      "unit": "kilogram"
+    },
+    "battery-310-sodium-nickel-chloride-production": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_nacl_310_review.json"
+      ],
+      "inputs": [
+        {
+          "amount": 0.16615384817123413,
+          "loc": 0.16615384817123413,
+          "location": "RER",
+          "name": "Aluminium oxide, at plant",
+          "reference product": "Aluminium oxide, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.005494505632668734,
+          "loc": 0.005494505632668734,
+          "location": "RER",
+          "name": "Electronics for control units",
+          "reference product": "Electronics for control units",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 5.57280181965325e-05,
+          "loc": 5.57280181965325e-05,
+          "location": "GLO",
+          "name": "Helium, at plant",
+          "reference product": "Helium, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 1.0,
+          "loc": 1.0,
+          "location": "RER",
+          "name": "Metal product manufacturing, average metal working",
+          "reference product": "Metal product manufacturing, average metal working",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.16615384817123413,
+          "loc": 0.16615384817123413,
+          "location": "RER",
+          "name": "Pig iron, at plant",
+          "reference product": "Pig iron, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.021978022530674934,
+          "loc": 0.021978022530674934,
+          "location": "RER",
+          "name": "Polyethylene, HDPE, granulate, at plant",
+          "reference product": "Polyethylene, HDPE, granulate, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.041208792477846146,
+          "loc": 0.041208792477846146,
+          "location": "RER",
+          "name": "Silicone product, at plant",
+          "reference product": "Silicone product, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.2610988914966583,
+          "loc": 0.2610988914966583,
+          "location": "RER",
+          "name": "Sodium chloride, powder, at plant",
+          "reference product": "Sodium chloride, powder, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.09890110045671463,
+          "loc": 0.09890110045671463,
+          "location": "RER",
+          "name": "Steel, electric, chromium steel 18/8, at plant",
+          "reference product": "Steel, electric, chromium steel 18/8, at plant",
+          "type": "technosphere",
+          "uncertainty type": 0,
+          "unit": "kilogram"
+        },
+        {
+          "amount": 2.3439559936523438,
+          "loc": 2.3439559936523438,
+          "location": "CH",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "type": "technosphere",
+          "unit": "kilowatt hour"
+        },
+        {
+          "amount": 0.041208792477846146,
+          "loc": 0.041208792477846146,
+          "location": "RER",
+          "name": "Steel, low-alloyed, at plant",
+          "reference product": "Steel, low-alloyed, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.03560439497232437,
+          "loc": 0.03560439497232437,
+          "location": "RER",
+          "name": "Copper, at regional storage",
+          "reference product": "Copper, at regional storage",
+          "type": "technosphere",
+          "unit": "kilogram"
+        },
+        {
+          "amount": 0.17802198231220245,
+          "loc": 0.17802198231220245,
+          "location": "GLO",
+          "name": "Nickel, 99.5%, at plant",
+          "reference product": "Nickel, 99.5%, at plant",
+          "type": "technosphere",
+          "unit": "kilogram"
+        }
+      ],
+      "location": "CH",
+      "name": "battery production, Na-NiCl, rechargeable, reviewed native supply",
+      "rationale": "Retain the complete immediate Na-NiCl battery assembly and source freight; supporting Battery BoP or a lithium-ion battery alone cannot represent this chemistry or complete sealed high-temperature battery. Complete native stock, metal-working, utilities and freight are explicit screening proxies.",
+      "reference product": "battery, NaCl",
       "unit": "kilogram"
     },
     "battery-312-lithium-titanate-market": {
@@ -945967,7 +946164,7 @@
     {"confidence": 0.729903, "id": "bp-06f98ac57db844c4", "mapping_method": "heuristic_similarity", "source": {"location": "CN", "name": "battery production, NMC811, Li-ion, rechargeable, prismatic", "reference product": "battery, Li-ion, NMC811, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.729903, "id": "bp-b006462038ffd8f7", "mapping_method": "heuristic_similarity", "source": {"location": "RoW", "name": "battery production, NMC811, Li-ion, rechargeable, prismatic", "reference product": "battery, Li-ion, NMC811, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.411136, "id": "bp-f10ecc29612d937c", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "battery production, Na-NiCl, rechargeable", "reference product": "battery, Na-NiCl, rechargeable", "unit": "kilogram"}, "target": {"location": "CH", "name": "Battery, LiIo, rechargeable, prismatic,LiFePO4", "reference product": "Battery, LiIo, rechargeable, prismatic,LiFePO4", "unit": "kilogram"}},
-    {"confidence": 0.315638, "id": "bp-c3afd6ec403a68c4", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "battery production, Na-NiCl, rechargeable", "reference product": "battery, NaCl", "unit": "kilogram"}, "target": {"location": "CH", "name": "Battery, LiIo, rechargeable, prismatic,LiFePO4", "reference product": "Battery, LiIo, rechargeable, prismatic,LiFePO4", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.8, "conversion_factor": 1, "id": "bp-c3afd6ec403a68c4", "mapping_method": "reviewed_battery_nacl_310", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_nacl_310_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_nacl_310_review.json"], "reason": "Retain the complete inspected source-3.10 Na-NiCl high-temperature rechargeable battery assembly and delivered market per kg. Replace the incorrect Battery BoP and LiFePO4 candidates: supporting equipment or a different cell chemistry cannot represent a complete Na-NiCl battery.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}], "reason": "Only the exact inspected source-3.10 cut-off identity qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-79158c598e388084", "source": {"location": "CH", "name": "battery production, Na-NiCl, rechargeable", "reference product": "battery, NaCl", "unit": "kilogram"}, "target": {"recipe_ref": "battery-310-sodium-nickel-chloride-production"}, "technosphere_information_loss": "Retain the complete inspected source-3.10 Na-NiCl high-temperature rechargeable battery assembly and delivered market per kg. Replace the incorrect Battery BoP and LiFePO4 candidates: supporting equipment or a different cell chemistry cannot represent a complete Na-NiCl battery. Preserve all thirteen manufacturing positions and five market positions, their quantities, formulas and supported uncertainty. The source represents a sealed battery with cells and supporting components together; do not add separate cells, Battery BoP, a second metal-working step or extra battery assembly. Retain the documented source nominal energy density 116 Wh/kg only as source evidence, not a conversion factor. These recipes output one kg. Preserve the existing Premise capacity wrapper and its mass-basis logic; introduce no lifetime, capacity, temperature, yield, stoichiometric or efficiency multiplier, and add no operating/standby heat to manufacturing. Use complete native aluminium oxide, control electronics, helium, generic metal-working service, pig iron, HDPE granulate, silicone product, powdered NaCl, stainless steel 18/8, low-alloyed steel, copper and nickel metal. Source market portfolios/delivery and native grade, feedstock, allocation, vintage and internal uncertainty differ. Source class-1 nickel uses native 99.5% nickel as an explicit purity proxy, without a contained-metal multiplier. Native Swiss low-voltage electricity replaces the inspected NEU source mix at the Swiss producer. Native European metal/stock supply, European rail and road freight, Swiss 3.5t light commercial transport and transoceanic container shipping replace source regional portfolios. Preserve each freight quantity and add no payload or distance conversion. The native material and service inventories are complete input-process proxies; score and material-grade equivalence are not established. Source manufacturing quantities are retained, not fitted to native impacts or renormalized. No foreground input or biosphere omission is introduced; the source immediate producer has no separately listed biosphere exchanges. Documented BAFU biosphere exclusions remain. Only the exact inspected ecoinvent 3.10 cut-off manufacturer and market identities qualify. No uninspected release, cross-system-model route, new zero-burden authority, recovery credit or Python source/test change is authorized."},
     {"confidence": 0.337145, "id": "bp-3157d0772b636c5a", "mapping_method": "heuristic_similarity", "source": {"location": "CH", "name": "battery production, NaCl, rechargeable", "reference product": "battery, NaCl", "unit": "kilogram"}, "target": {"location": "CH", "name": "Battery, LiIo, rechargeable, prismatic,LiFePO4", "reference product": "Battery, LiIo, rechargeable, prismatic,LiFePO4", "unit": "kilogram"}},
     {"confidence": 0.576823, "id": "bp-01b3de1bddd10a97", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "battery production, NiMH, rechargeable", "reference product": "battery, NiMH, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, NiMH, rechargeable, prismatic, at plant", "reference product": "Battery, NiMH, rechargeable, prismatic, at plant", "unit": "kilogram"}},
     {"confidence": 0.752737, "id": "bp-1e5fe3b3d395b4cb", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "battery production, NiMH, rechargeable, prismatic", "reference product": "battery, NiMH, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, NiMH, rechargeable, prismatic, at plant", "reference product": "Battery, NiMH, rechargeable, prismatic, at plant", "unit": "kilogram"}},
@@ -955893,7 +956090,7 @@
     {"confidence": 0.807986, "id": "bp-a310b0e1a45bb3e0", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, NMC811, rechargeable, prismatic", "reference product": "battery, Li-ion, NMC811, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.784377, "id": "bp-11e2cf83e35e7756", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Li-ion, rechargeable, prismatic", "reference product": "battery, Li-ion, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, Li-ion, NMC111, rechargeable, prismatic", "reference product": "Battery, Li-ion, NMC111, rechargeable, prismatic", "unit": "kilogram"}},
     {"confidence": 0.413709, "id": "bp-7a38e8a58e458e09", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, Na-NiCl, rechargeable", "reference product": "battery, Na-NiCl, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, NiMH, rechargeable, prismatic, at plant", "reference product": "Battery, NiMH, rechargeable, prismatic, at plant", "unit": "kilogram"}},
-    {"confidence": 0.401251, "id": "bp-aebd2c144de03181", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, NaCl", "reference product": "battery, NaCl", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery BoP", "reference product": "Battery BoP", "unit": "kilogram"}},
+    {"classification": "proxy", "confidence": 0.8, "conversion_factor": 1, "id": "bp-aebd2c144de03181", "mapping_method": "reviewed_battery_nacl_310", "reference_flow_sign_review": {"evidence": ["brightpath/data/export/uvek_battery_nacl_310_review.json"], "profiles": [{"conversion_factor": 1, "review": {"evidence": ["brightpath/data/export/uvek_battery_nacl_310_review.json"], "reason": "Retain the complete inspected source-3.10 Na-NiCl high-temperature rechargeable battery assembly and delivered market per kg. Replace the incorrect Battery BoP and LiFePO4 candidates: supporting equipment or a different cell chemistry cannot represent a complete Na-NiCl battery.", "source_sign": 1, "status": "verified", "target_sign": 1}, "source_profile": {"family": "ecoinvent", "system_model": "cutoff", "version": "3.10"}}], "reason": "Only the exact inspected source-3.10 cut-off identity qualifies.", "status": "unresolved"}, "report_correspondence": true, "review_ref": "r-79158c598e388084", "source": {"location": "GLO", "name": "market for battery, NaCl", "reference product": "battery, NaCl", "unit": "kilogram"}, "target": {"recipe_ref": "battery-310-sodium-nickel-chloride-market"}, "technosphere_information_loss": "Retain the complete inspected source-3.10 Na-NiCl high-temperature rechargeable battery assembly and delivered market per kg. Replace the incorrect Battery BoP and LiFePO4 candidates: supporting equipment or a different cell chemistry cannot represent a complete Na-NiCl battery. Preserve all thirteen manufacturing positions and five market positions, their quantities, formulas and supported uncertainty. The source represents a sealed battery with cells and supporting components together; do not add separate cells, Battery BoP, a second metal-working step or extra battery assembly. Retain the documented source nominal energy density 116 Wh/kg only as source evidence, not a conversion factor. These recipes output one kg. Preserve the existing Premise capacity wrapper and its mass-basis logic; introduce no lifetime, capacity, temperature, yield, stoichiometric or efficiency multiplier, and add no operating/standby heat to manufacturing. Use complete native aluminium oxide, control electronics, helium, generic metal-working service, pig iron, HDPE granulate, silicone product, powdered NaCl, stainless steel 18/8, low-alloyed steel, copper and nickel metal. Source market portfolios/delivery and native grade, feedstock, allocation, vintage and internal uncertainty differ. Source class-1 nickel uses native 99.5% nickel as an explicit purity proxy, without a contained-metal multiplier. Native Swiss low-voltage electricity replaces the inspected NEU source mix at the Swiss producer. Native European metal/stock supply, European rail and road freight, Swiss 3.5t light commercial transport and transoceanic container shipping replace source regional portfolios. Preserve each freight quantity and add no payload or distance conversion. The native material and service inventories are complete input-process proxies; score and material-grade equivalence are not established. Source manufacturing quantities are retained, not fitted to native impacts or renormalized. No foreground input or biosphere omission is introduced; the source immediate producer has no separately listed biosphere exchanges. Documented BAFU biosphere exclusions remain. Only the exact inspected ecoinvent 3.10 cut-off manufacturer and market identities qualify. No uninspected release, cross-system-model route, new zero-burden authority, recovery credit or Python source/test change is authorized."},
     {"confidence": 0.569459, "id": "bp-8cf502e77494b01a", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, NiMH, rechargeable", "reference product": "battery, NiMH, rechargeable", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, NiMH, rechargeable, prismatic, at plant", "reference product": "Battery, NiMH, rechargeable, prismatic, at plant", "unit": "kilogram"}},
     {"confidence": 0.749668, "id": "bp-404366d04034f77d", "mapping_method": "heuristic_similarity", "source": {"location": "GLO", "name": "market for battery, NiMH, rechargeable, prismatic", "reference product": "battery, NiMH, rechargeable, prismatic", "unit": "kilogram"}, "target": {"location": "GLO", "name": "Battery, NiMH, rechargeable, prismatic, at plant", "reference product": "Battery, NiMH, rechargeable, prismatic, at plant", "unit": "kilogram"}},
     {"confidence": 0.4, "id": "bp-2aa95f1013b806b9", "mapping_method": "followup_review", "review_ref": "r-20bbf315e17b8d59", "source": {"location": "GLO", "name": "market for battery, lead acid, rechargeable, stationary", "reference product": "battery, lead acid, rechargeable, stationary", "unit": "kilogram"}, "target": {"location": "RER", "name": "Lead acid battery, for lorry", "reference product": "Lead acid battery, for lorry", "unit": "kilogram"}},
@@ -980604,6 +980801,21 @@
         "Reviewed processing-inventory composition: retain all inspected active technosphere inputs through the already resolved directional component correspondences for this exact profile. The source has one unit-magnitude self-linked production reference, no active direct biosphere exchanges and no unsupported exchange types. Retain processing inputs, freight and genuine recovered-product credits; apply each provider's reference-sign factor independently, distinguishing treatment demand from negative product credits. No component omission, empty allocation, new technology primitive or missing-provider fallback is used. The inherited component correspondences approximate technology, material composition, geography and allocation; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, supported uncertainty, formulas, foreground suppliers, production and separately listed emissions, including full original-exchange change records. Net impacts may legitimately be negative where recovery credits exceed processing burdens. Score and export all returned helpers. Only enumerated exact profiles are approved; no reverse mapping is inferred."
       ],
       "rationale": "Reviewed processing-inventory composition: retain all inspected active technosphere inputs through the already resolved directional component correspondences for this exact profile. The source has one unit-magnitude self-linked production reference, no active direct biosphere exchanges and no unsupported exchange types. Retain processing inputs, freight and genuine recovered-product credits; apply each provider's reference-sign factor independently, distinguishing treatment demand from negative product credits. No component omission, empty allocation, new technology primitive or missing-provider fallback is used. The inherited component correspondences approximate technology, material composition, geography and allocation; resolved signs do not establish scientific or LCIA equivalence. Internal component uncertainty and parameter formulas are not reconstructed. Preserve caller-owned signed quantities, supported uncertainty, formulas, foreground suppliers, production and separately listed emissions, including full original-exchange change records. Net impacts may legitimately be negative where recovery credits exceed processing burdens. Score and export all returned helpers. Only enumerated exact profiles are approved; no reverse mapping is inferred."
+    },
+    "r-79158c598e388084": {
+      "evidence": [
+        "brightpath/data/export/uvek_battery_nacl_310_review.json"
+      ],
+      "limitations": [
+        "Retain the complete inspected source-3.10 Na-NiCl high-temperature rechargeable battery assembly and delivered market per kg. Replace the incorrect Battery BoP and LiFePO4 candidates: supporting equipment or a different cell chemistry cannot represent a complete Na-NiCl battery.",
+        "Preserve all thirteen manufacturing positions and five market positions, their quantities, formulas and supported uncertainty. The source represents a sealed battery with cells and supporting components together; do not add separate cells, Battery BoP, a second metal-working step or extra battery assembly.",
+        "Retain the documented source nominal energy density 116 Wh/kg only as source evidence, not a conversion factor. These recipes output one kg. Preserve the existing Premise capacity wrapper and its mass-basis logic; introduce no lifetime, capacity, temperature, yield, stoichiometric or efficiency multiplier, and add no operating/standby heat to manufacturing.",
+        "Use complete native aluminium oxide, control electronics, helium, generic metal-working service, pig iron, HDPE granulate, silicone product, powdered NaCl, stainless steel 18/8, low-alloyed steel, copper and nickel metal. Source market portfolios/delivery and native grade, feedstock, allocation, vintage and internal uncertainty differ. Source class-1 nickel uses native 99.5% nickel as an explicit purity proxy, without a contained-metal multiplier.",
+        "Native Swiss low-voltage electricity replaces the inspected NEU source mix at the Swiss producer. Native European metal/stock supply, European rail and road freight, Swiss 3.5t light commercial transport and transoceanic container shipping replace source regional portfolios. Preserve each freight quantity and add no payload or distance conversion.",
+        "The native material and service inventories are complete input-process proxies; score and material-grade equivalence are not established. Source manufacturing quantities are retained, not fitted to native impacts or renormalized. No foreground input or biosphere omission is introduced; the source immediate producer has no separately listed biosphere exchanges. Documented BAFU biosphere exclusions remain.",
+        "Only the exact inspected ecoinvent 3.10 cut-off manufacturer and market identities qualify. No uninspected release, cross-system-model route, new zero-burden authority, recovery credit or Python source/test change is authorized."
+      ],
+      "rationale": "Retain the complete inspected source-3.10 Na-NiCl high-temperature rechargeable battery assembly and delivered market per kg. Replace the incorrect Battery BoP and LiFePO4 candidates: supporting equipment or a different cell chemistry cannot represent a complete Na-NiCl battery."
     },
     "r-7918d010c61069a0": {
       "evidence": [
