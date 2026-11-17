@@ -469,6 +469,20 @@ as a different chemical. See
 native-model consistency; they do not qualify the complete battery sector or
 establish source/native impact equivalence.
 
+Four further source-3.9 waste markets retain eight nonempty treatment entries
+and fourteen freight entries. The steel portfolio preserves inert landfill and
+municipal incineration; solvent and oil portfolios preserve separate entries
+for their differently labelled incinerators. The inspected with/without-energy
+recovery source vectors are numerically identical (69, 69 and 53 exchanges).
+Three clinker-kiln receipts contain production only and therefore contribute
+zero to the inspected allocated source inventory. Only those empty terminals
+are omitted with signed source audits, without renormalizing incineration
+shares or asserting that physical kiln treatment is burden-free. No zero-burden
+supplier or clinker-production burden is invented. The earlier requested-3.7
+waste-oil recipe and selected rule remain unchanged. See
+``data/export/uvek_battery_waste_markets_39_review.json``. Native disposal,
+geography, controls, recovery and allocation remain explicit screening limits.
+
 Resource governance
 -------------------
 
