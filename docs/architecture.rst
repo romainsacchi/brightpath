@@ -422,8 +422,28 @@ native stibnite proxy does not establish the source concentrate assay or equate
 Antimony and Stibnite resource definitions. Existing approved physical targets,
 factors and recipes remain unchanged; the unavailable licensed source-3.6 salt
 record is carried forward without claiming fresh extraction. See
-``data/export/uvek_trucks_materials_312_review.json``. Three disposal portfolios
-and complete truck-sector qualification remain separate work.
+``data/export/uvek_trucks_materials_312_review.json``.
+
+Three source-3.12 waste markets retain all twelve original treatment shares
+and their separate road delivery. Thirty-three uncontrolled-treatment models
+retain the inspected signed emissions through the existing ecoinvent-3.10
+biosphere route. The fifteen unsanitary-landfill models also retain diesel
+machinery and skid-steer excavation through complete native operations. Only
+the municipal-incineration branch uses the corresponding complete native
+incinerator. The polyurethane building-waste aggregate is excluded because its
+deconstruction, construction sorting and disposal shares do not match these
+markets. No new recovery credit, omission or zero-burden treatment is added.
+The native glass incinerator's zero-water label conflicts with its documented
+two-percent water composition; this remains an explicit screening limitation,
+without an invented moisture correction. See
+``data/export/uvek_trucks_waste_312_models_review.json`` and
+``data/export/uvek_trucks_waste_312_review.json``.
+
+The thirty-six closed recipes pass seventy-two signed LCI solves against
+thirty-six independently reconstructed source/native demand graphs, without
+writing a Brightway database. Earlier source-3.8 and source-3.9 physical waste
+routes remain unchanged. These mapping checks do not by themselves qualify
+Premise's complete truck transformation, regional consumer links or export.
 
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
