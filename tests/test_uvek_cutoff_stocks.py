@@ -274,6 +274,36 @@ def test_pending_assembly_counterparts_remain_visible_in_queue_and_cannot_execut
     approval["pending_profiles"] = [p for p in approval["pending_profiles"] if p["label"] != "ecoinvent-3.9-cutoff"]
     approval["profiles"].append({"label": "ecoinvent-3.9-cutoff"})
     current_approvals[source] = approval
+    # Later frozen reviews independently resolve these two source-3.9 residues.
+    # Every other pending profile must still refuse; do not infer permission
+    # from the current generated resource itself.
+    later_reviews = (
+        (
+            "uvek_pulp_heat_limestone_review.json",
+            "2f9ae67a9304dd9dfdec0c81ea651a752638c37752b9ddc6232dcbe0e7acf3f2",
+            "bp-d0ba52e7d658a135",
+        ),
+        (
+            "uvek_steel_39_remaining_residue_review.json",
+            "e0115a9ea48dfb514ad5fce1e19e308c12d1b49e3724881930e13945c7f50d98",
+            "bp-4f6f1d647b03cd3d",
+        ),
+    )
+    for filename, digest, rule_id in later_reviews:
+        raw = (ROOT / "brightpath/data/export" / filename).read_bytes()
+        assert hashlib.sha256(raw).hexdigest() == digest
+        reviewed = json.loads(raw)
+        row = next(r for r in reviewed["records"] if r["rule_id"] == rule_id)
+        profile = row.get("source_profile", reviewed.get("source_profile"))
+        assert profile == {"family": "ecoinvent", "version": "3.9", "system_model": "cutoff"}
+        source = tuple(row["source_witness"]["identity"][field] for field in FIELDS)
+        assert rules[source] == row["compiled_rule"]
+        assert row["source_witness"]["reference_amounts"] == [-1]
+        approval = deepcopy(current_approvals[source])
+        assert sum(p["label"] == "ecoinvent-3.9-cutoff" for p in approval["pending_profiles"]) == 1
+        approval["pending_profiles"] = [p for p in approval["pending_profiles"] if p["label"] != "ecoinvent-3.9-cutoff"]
+        approval["profiles"].append({"label": "ecoinvent-3.9-cutoff"})
+        current_approvals[source] = approval
     queue = json.loads((ROOT / "docs/uvek_forward_review_queue.json").read_text())
     pending_ids = {r["id"] for r in queue["rules"] if r["review_state"] == "partially_approved"}
     count = 0
