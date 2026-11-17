@@ -412,6 +412,19 @@ design/lifetime, recovery, wear composition, release compartments and vintage
 differences remain explicit screening limitations. See
 ``data/export/uvek_trucks_native_services_312_review.json``.
 
+Thirteen source-3.12 truck material markets retain original producer entries
+and delivery with complete native suppliers. Salt, fluorspar and pig-iron
+coproduct quantities remain separate, while native production replaces their
+allocated inventories. Flexible-foam MDI/TDI/density differences remain explicit
+whole-product proxies. Ferrochromium and fluorspar retain their stated alloy or
+purity mass basis; the 6.34g transistor remains referenced per kg. The nominal-kg
+native stibnite proxy does not establish the source concentrate assay or equate
+Antimony and Stibnite resource definitions. Existing approved physical targets,
+factors and recipes remain unchanged; the unavailable licensed source-3.6 salt
+record is carried forward without claiming fresh extraction. See
+``data/export/uvek_trucks_materials_312_review.json``. Three disposal portfolios
+and complete truck-sector qualification remain separate work.
+
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
