@@ -386,6 +386,23 @@ leaves the existing manganese dependency unchanged. Full original market vectors
 remain local; checksums support licensed reproduction of the derived native
 recipes. See ``data/export/uvek_recycling_materials_38_review.json``.
 
+The required source-3.8 truck recycling parents use complete Swiss mechanical
+recycling of the same recycled HDPE and amorphous-PET products. Original market
+shares and final delivery remain separate; Swiss operation, yield, utilities,
+residues and emissions replace the other regions' production as explicit
+geographic and operating-data proxies. Collection, sorting, washing, containers,
+infrastructure and paid processing remain nonempty. Thirty closed helper recipes
+retain heat portfolios, uncontrolled waste-treatment tails and independent
+biosphere flows. Negative treatment references change sign once. Five verified
+empty cut-off stocks and two zero-allocated waste-wood heat outputs retain their
+explicit zero authority, without zeroing nonempty treatment. Existing stock
+bindings and historical-model audit contexts are reused; four inherited tiny
+HDPE-supply omissions retain their prior review. The original source component
+vectors remain local; public data contain derived native-facing recipes and
+identity/reference/hash witnesses. See
+``data/export/uvek_recycling_ch_38_review.json``. These mappings do not qualify
+the complete truck sector or establish source/native impact equivalence.
+
 The low-level legacy ``migrate_inventory`` function remains internal to the
 migration engine and is not exported from ``brightpath.migrations``. Public
 workflows use the transactional executor or facades so endpoint validation and
