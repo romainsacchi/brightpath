@@ -539,6 +539,22 @@ LCIs and seven independent source-quantity/native-demand comparisons pass;
 source/native impact equivalence and complete casting qualification remain
 unproven. Production and generator Python modules are unchanged.
 
+The source-3.9 lost-wax aluminium-casting root closes eighteen source foreground
+processes and all 350 original operating/emission entries, excluding final
+incorporated metal while retaining original loss inputs and regional shares.
+Eighty-one new definitions retain source country waste portfolios and 1,335
+newly canonicalized uncontrolled emissions. All 154 existing dependency recipes
+remain unchanged. One new allocated-empty clinker receipt and sixty prior
+omissions retain exact audits without renormalization. Only the casting root
+gains a Premise approval; a child correspondence binds the empty-receipt audit.
+See ``data/export/uvek_closed_casting_39_models_review.json`` and
+``data/export/uvek_closed_casting_39_review.json``. Source gas naming and native
+technology/geography/allocation limits remain explicit. A separate one-line
+annotation fix accepts numeric source comments without changing quantities or
+scientific transformations. All 81 new models pass independent graph
+comparisons and 162 signed no-write LCIs; complete battery qualification and
+source/native impact equivalence remain unproven.
+
 Resource governance
 -------------------
 
