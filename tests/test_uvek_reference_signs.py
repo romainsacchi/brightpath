@@ -750,7 +750,7 @@ def test_used_li_ion_market_keeps_exact_reviewed_profile_treatment_mix_and_deliv
     data = consumer(dict(zip(FIELDS, LI_ION_MARKET_SOURCE, strict=True)), amount, uncertainty)
     before = deepcopy(data)
     inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
-    if version != "3.12":
+    if version not in {"3.8", "3.10", "3.12"}:
         with pytest.raises(MigrationError) as caught:
             inventory.migrate_background(contexts("uvek", "2025").background, policy=MigrationPolicy.permissive())
         assert "migration.reference_flow_sign_unresolved" in {issue.code for issue in caught.value.report.issues}
@@ -774,6 +774,20 @@ def test_used_li_ion_market_keeps_exact_reviewed_profile_treatment_mix_and_deliv
     production = [e for e in helper["exchanges"] if e["type"] == "production"]
     assert len(production) == 1 and production[0]["amount"] == 1
     inputs = [e for e in helper["exchanges"] if e["type"] == "technosphere"]
+    if version in {"3.8", "3.10"}:
+        # Approved historical profiles retain one +1 kg handover to the reviewed
+        # source-3.12 shipping/treatment inventory; verify that boundary as well.
+        assert len(inputs) == 1 and inputs[0]["amount"] == 1
+        assert inputs[0]["name"].startswith("Reviewed source3.12 shipping used supply ")
+        suppliers = [
+            activity
+            for activity in converted.data[1:]
+            if tuple(activity[field] for field in FIELDS) == tuple(inputs[0][field] for field in FIELDS)
+        ]
+        assert len(suppliers) == 1
+        production = [e for e in suppliers[0]["exchanges"] if e["type"] == "production"]
+        assert len(production) == 1 and production[0]["amount"] == 1
+        inputs = [e for e in suppliers[0]["exchanges"] if e["type"] == "technosphere"]
     assert len(inputs) == 6
     actual = {e["name"]: e["amount"] for e in inputs}
     assert actual == {
