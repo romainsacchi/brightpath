@@ -1,0 +1,318 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "authorization": "Standing autonomous modelling approval with logged warnings. Correct direct native product/service boundaries through mapping data only, without upstream reconstruction or source-code changes.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.10",
+    "system_model": "cutoff"
+  },
+  "target_profile": {
+    "family": "uvek",
+    "system_model": "cutoff",
+    "version": "2025"
+  },
+  "records": [
+    {
+      "rule_id": "bp-e575db86887e6563",
+      "source": {
+        "location": "Europe without Switzerland",
+        "name": "heat production, natural gas, at boiler condensing modulating <100kW",
+        "reference product": "heat, central or small-scale, natural gas",
+        "unit": "megajoule"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "Europe without Switzerland",
+          "name": "heat production, natural gas, at boiler condensing modulating <100kW",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "reference_amount": 1,
+        "nonproduction_count": 1,
+        "inventory_sha256": "2a1033e1715195e3253635fc22a0d22318636b0c9b2eb83f1431800d0e066973",
+        "metadata_sha256": "6557b9326a96477845154bbbaa86f9e8966fd157faab1e05d3249be922949d71",
+        "comment_sha256": "66c465e22181b2f87fc4896d8a85a9dfcff4e7c1f42c5843bd40b32f8eec8b69",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "name": "Heat, natural gas, at boiler condensing modulating 15kW",
+        "reference product": "Heat, natural gas, at boiler condensing modulating 15kW",
+        "location": "CH",
+        "unit": "megajoule"
+      },
+      "conversion_factor": 1,
+      "original_rule": {
+        "confidence": 0.487171,
+        "id": "bp-e575db86887e6563",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "heat production, natural gas, at boiler condensing modulating <100kW",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Heat, natural gas, at boiler condensing modulating >100kW",
+          "reference product": "Heat, natural gas, at boiler condensing modulating >100kW",
+          "unit": "megajoule"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.8,
+        "id": "bp-e575db86887e6563",
+        "mapping_method": "reviewed_final_energy_retained_boundary_310",
+        "source": {
+          "location": "Europe without Switzerland",
+          "name": "heat production, natural gas, at boiler condensing modulating <100kW",
+          "reference product": "heat, central or small-scale, natural gas",
+          "unit": "megajoule"
+        },
+        "target": {
+          "name": "Heat, natural gas, at boiler condensing modulating 15kW",
+          "reference product": "Heat, natural gas, at boiler condensing modulating 15kW",
+          "location": "CH",
+          "unit": "megajoule"
+        },
+        "conversion_factor": 1,
+        "classification": "proxy",
+        "review_ref": "r-c50697504a44b7ff",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Replace the incorrect >100kW native boiler with complete native 15kW condensing/modulating natural-gas useful heat. Both the source <100kW capacity class and this native technology describe small boilers, per positive-one MJ. Retain useful-heat quantity with factor +1, without a power ratio or added fuel/boiler/electricity burden. Native 15kW is a representative small-boiler proxy within the source <100kW class; it is not claimed to reproduce the exact source fleet rating. Swiss plant/design and supply replace the European source mix; efficiency, operating emissions, lifetime, allocation and vintage differ. Do not use the separately named atmospheric low-NOx non-modulating boiler or a bare burned-fuel MJ reference. Preserve caller signs, separately listed operations/emissions and supported uncertainty. Complete native inventories and their BAFU biosphere exclusions remain as supplied. No foreground omission, new helper or upstream manufacturing reconstruction. Inventory/LCIA equivalence is not established. Only the exact inspected source-3.10 cut-off identity is newly approved. No inverse, consequential or uninspected source route, and no Python source/test modification.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact inspected source3.10 cut-off profile qualifies; concentration assumptions remain explicit in the proxy review.",
+          "evidence": [
+            "brightpath/data/export/uvek_final_energy_retained_boundaries_310_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.10",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Replace the incorrect >100kW native boiler with complete native 15kW condensing/modulating natural-gas useful heat. Both the source <100kW capacity class and this native technology describe small boilers, per positive-one MJ. Retain useful-heat quantity with factor +1, without a power ratio or added fuel/boiler/electricity burden. Native 15kW is a representative small-boiler proxy within the source <100kW class; it is not claimed to reproduce the exact source fleet rating. Swiss plant/design and supply replace the European source mix; efficiency, operating emissions, lifetime, allocation and vintage differ. Do not use the separately named atmospheric low-NOx non-modulating boiler or a bare burned-fuel MJ reference. Preserve caller signs, separately listed operations/emissions and supported uncertainty. Complete native inventories and their BAFU biosphere exclusions remain as supplied. No foreground omission, new helper or upstream manufacturing reconstruction. Inventory/LCIA equivalence is not established. Only the exact inspected source-3.10 cut-off identity is newly approved. No inverse, consequential or uninspected source route, and no Python source/test modification.",
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_retained_boundaries_310_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Heat, natural gas, at boiler condensing modulating 15kW",
+            "reference product": "Heat, natural gas, at boiler condensing modulating 15kW",
+            "location": "CH",
+            "unit": "megajoule"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 1,
+          "inventory_sha256": "eb072b2cd933d00400a9a1f712399831211aa68d2b56dbd7564ccec1a51d7f9b",
+          "metadata_sha256": "1d5303d3249ab297115af65477039d4835bf0dcd60d65ccc6f269459b532ae43",
+          "comment_sha256": "901c76b50454e4a6667601469debc906613c80ad11f5566d271e91f02d28f5db",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Heat, natural gas, at boiler condensing modulating 15kW",
+            "reference product": "Heat, natural gas, at boiler condensing modulating 15kW",
+            "location": "CH",
+            "unit": "megajoule"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 1,
+          "inventory_sha256": "8c899f72297c50b34162feab04a5b3dcad5d576521863839f80f820a4e267aee",
+          "metadata_sha256": "4c966996095994da3aa63c1385a3b9c43aabd69634157721b570830e01e10898",
+          "comment_sha256": "7a426965cbc43f7f5cbb556c4a6a5202c80601f3fd313353fcbf6db46251f2c3",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "functional_basis": "Replace the incorrect >100kW native boiler with complete native 15kW condensing/modulating natural-gas useful heat. Both the source <100kW capacity class and this native technology describe small boilers, per positive-one MJ. Retain useful-heat quantity with factor +1, without a power ratio or added fuel/boiler/electricity burden.",
+      "limitations": [
+        "Replace the incorrect >100kW native boiler with complete native 15kW condensing/modulating natural-gas useful heat. Both the source <100kW capacity class and this native technology describe small boilers, per positive-one MJ. Retain useful-heat quantity with factor +1, without a power ratio or added fuel/boiler/electricity burden.",
+        "Native 15kW is a representative small-boiler proxy within the source <100kW class; it is not claimed to reproduce the exact source fleet rating. Swiss plant/design and supply replace the European source mix; efficiency, operating emissions, lifetime, allocation and vintage differ. Do not use the separately named atmospheric low-NOx non-modulating boiler or a bare burned-fuel MJ reference.",
+        "Preserve caller signs, separately listed operations/emissions and supported uncertainty. Complete native inventories and their BAFU biosphere exclusions remain as supplied. No foreground omission, new helper or upstream manufacturing reconstruction. Inventory/LCIA equivalence is not established.",
+        "Only the exact inspected source-3.10 cut-off identity is newly approved. No inverse, consequential or uninspected source route, and no Python source/test modification."
+      ],
+      "concentration_mass_basis_assumed": false
+    },
+    {
+      "rule_id": "bp-c47f7f644521097c",
+      "source": {
+        "location": "CH",
+        "name": "market for ethanol, without water, in 99.7% solution state, from fermentation, vehicle grade",
+        "reference product": "ethanol, without water, in 99.7% solution state, from fermentation, vehicle grade",
+        "unit": "kilogram"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "CH",
+          "name": "market for ethanol, without water, in 99.7% solution state, from fermentation, vehicle grade",
+          "reference product": "ethanol, without water, in 99.7% solution state, from fermentation, vehicle grade",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1,
+        "nonproduction_count": 15,
+        "inventory_sha256": "ffa6647e92ceff5df731da58317e655b02b5d0dd899aca0284468f88dbf48749",
+        "metadata_sha256": "6783ddca57905d3beaa76a83f5c0c6e7089feb9ed1c70a7300d95abdb6ab8c63",
+        "comment_sha256": "2dee595a899e461cdcfeabb9b849920f0050ae274acc94fc9310ec9a00558df7",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "name": "Ethanol, 99.7% in H2O, from biomass, at service station",
+        "reference product": "Ethanol, 99.7% in H2O, from biomass, at service station",
+        "location": "CH",
+        "unit": "kilogram"
+      },
+      "conversion_factor": 1.0030090270812437,
+      "original_rule": {
+        "confidence": 0.4,
+        "id": "bp-c47f7f644521097c",
+        "mapping_method": "pairwise_review",
+        "review_ref": "r-bcdfbb52f671a691",
+        "source": {
+          "location": "CH",
+          "name": "market for ethanol, without water, in 99.7% solution state, from fermentation, vehicle grade",
+          "reference product": "ethanol, without water, in 99.7% solution state, from fermentation, vehicle grade",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Ethanol, 99.7% in H2O, from biomass, at distillation",
+          "reference product": "Ethanol, 99.7% in H2O, from biomass, at distillation",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.8,
+        "id": "bp-c47f7f644521097c",
+        "mapping_method": "reviewed_final_energy_retained_boundary_310",
+        "review_ref": "r-3c18ded260cac4c2",
+        "source": {
+          "location": "CH",
+          "name": "market for ethanol, without water, in 99.7% solution state, from fermentation, vehicle grade",
+          "reference product": "ethanol, without water, in 99.7% solution state, from fermentation, vehicle grade",
+          "unit": "kilogram"
+        },
+        "target": {
+          "name": "Ethanol, 99.7% in H2O, from biomass, at service station",
+          "reference product": "Ethanol, 99.7% in H2O, from biomass, at service station",
+          "location": "CH",
+          "unit": "kilogram"
+        },
+        "conversion_factor": 1.0030090270812437,
+        "classification": "proxy",
+        "report_correspondence": true,
+        "technosphere_information_loss": "Replace the at-distillation candidate with complete native Swiss biomass ethanol at service station, matching the vehicle-grade delivery boundary. Source ethanol is named without water in 99.7% solution state. For this screening proxy treat the native nominal 99.7% mixture as mass concentration and supply 1/0.997 kg native mixture per signed source kg ethanol without water, scaling all supported caller uncertainty and formulas consistently. The native label states 99.7% in H2O but does not independently state its percentage basis in the available metadata. The mass-fraction interpretation is an explicit modelling assumption, not a measured concentration or proven reference-basis identity. A different publisher basis would require revising this small concentration correction. Native feedstock mix, dewatering, delivery losses, station operation, allocation, geography and vintage replace source internals. The complete station includes its original ethanol supply and 0.05% delivery loss once; add no further ethanol, water, drying, transport, loss or avoided-solvent credit. Score effects and residual basis differences remain unquantified. Preserve caller signs, separately listed operations/emissions and supported uncertainty. Complete native inventories and their BAFU biosphere exclusions remain as supplied. No foreground omission, new helper or upstream manufacturing reconstruction. Inventory/LCIA equivalence is not established. Only the exact inspected source-3.10 cut-off identity is newly approved. No inverse, consequential or uninspected source route, and no Python source/test modification.",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact inspected source3.10 cut-off profile qualifies; concentration assumptions remain explicit in the proxy review.",
+          "evidence": [
+            "brightpath/data/export/uvek_final_energy_retained_boundaries_310_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.10",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1.0030090270812437,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "Replace the at-distillation candidate with complete native Swiss biomass ethanol at service station, matching the vehicle-grade delivery boundary. Source ethanol is named without water in 99.7% solution state. For this screening proxy treat the native nominal 99.7% mixture as mass concentration and supply 1/0.997 kg native mixture per signed source kg ethanol without water, scaling all supported caller uncertainty and formulas consistently. The native label states 99.7% in H2O but does not independently state its percentage basis in the available metadata. The mass-fraction interpretation is an explicit modelling assumption, not a measured concentration or proven reference-basis identity. A different publisher basis would require revising this small concentration correction. Native feedstock mix, dewatering, delivery losses, station operation, allocation, geography and vintage replace source internals. The complete station includes its original ethanol supply and 0.05% delivery loss once; add no further ethanol, water, drying, transport, loss or avoided-solvent credit. Score effects and residual basis differences remain unquantified. Preserve caller signs, separately listed operations/emissions and supported uncertainty. Complete native inventories and their BAFU biosphere exclusions remain as supplied. No foreground omission, new helper or upstream manufacturing reconstruction. Inventory/LCIA equivalence is not established. Only the exact inspected source-3.10 cut-off identity is newly approved. No inverse, consequential or uninspected source route, and no Python source/test modification.",
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_retained_boundaries_310_review.json"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Ethanol, 99.7% in H2O, from biomass, at service station",
+            "reference product": "Ethanol, 99.7% in H2O, from biomass, at service station",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 13,
+          "inventory_sha256": "25812323d1f5e0fb59e41cf4009cadc2e130c33a37120d906db927f91efab51a",
+          "metadata_sha256": "29dfbe25286e5df07df4a65a63c3d4a4dd6340c27a378f38de2ce7771b493b1d",
+          "comment_sha256": "95ce0d990b938c2d7305e5249890c87ad20032f5b111b9d21ba8e5614d3a0cd3",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Ethanol, 99.7% in H2O, from biomass, at service station",
+            "reference product": "Ethanol, 99.7% in H2O, from biomass, at service station",
+            "location": "CH",
+            "unit": "kilogram"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 13,
+          "inventory_sha256": "52227bc27d2bb36a696936b09370324dc731b386058b8009413e01436894d9ef",
+          "metadata_sha256": "f72a780b353037c16a1a186ab75b172609a0a11f34619642e206aba785a8b04e",
+          "comment_sha256": "9f8480e4d8af4607b2069295aea08a73782bad1991efea6c989ddd0700a05e8b",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "functional_basis": "Replace the at-distillation candidate with complete native Swiss biomass ethanol at service station, matching the vehicle-grade delivery boundary. Source ethanol is named without water in 99.7% solution state. For this screening proxy treat the native nominal 99.7% mixture as mass concentration and supply 1/0.997 kg native mixture per signed source kg ethanol without water, scaling all supported caller uncertainty and formulas consistently.",
+      "limitations": [
+        "Replace the at-distillation candidate with complete native Swiss biomass ethanol at service station, matching the vehicle-grade delivery boundary. Source ethanol is named without water in 99.7% solution state. For this screening proxy treat the native nominal 99.7% mixture as mass concentration and supply 1/0.997 kg native mixture per signed source kg ethanol without water, scaling all supported caller uncertainty and formulas consistently.",
+        "The native label states 99.7% in H2O but does not independently state its percentage basis in the available metadata. The mass-fraction interpretation is an explicit modelling assumption, not a measured concentration or proven reference-basis identity. A different publisher basis would require revising this small concentration correction. Native feedstock mix, dewatering, delivery losses, station operation, allocation, geography and vintage replace source internals. The complete station includes its original ethanol supply and 0.05% delivery loss once; add no further ethanol, water, drying, transport, loss or avoided-solvent credit. Score effects and residual basis differences remain unquantified.",
+        "Preserve caller signs, separately listed operations/emissions and supported uncertainty. Complete native inventories and their BAFU biosphere exclusions remain as supplied. No foreground omission, new helper or upstream manufacturing reconstruction. Inventory/LCIA equivalence is not established.",
+        "Only the exact inspected source-3.10 cut-off identity is newly approved. No inverse, consequential or uninspected source route, and no Python source/test modification."
+      ],
+      "concentration_mass_basis_assumed": true
+    }
+  ],
+  "native_scope_records": [],
+  "reviews": [
+    {
+      "rationale": "Replace the incorrect >100kW native boiler with complete native 15kW condensing/modulating natural-gas useful heat. Both the source <100kW capacity class and this native technology describe small boilers, per positive-one MJ. Retain useful-heat quantity with factor +1, without a power ratio or added fuel/boiler/electricity burden.",
+      "evidence": [
+        "brightpath/data/export/uvek_final_energy_retained_boundaries_310_review.json"
+      ],
+      "limitations": [
+        "Replace the incorrect >100kW native boiler with complete native 15kW condensing/modulating natural-gas useful heat. Both the source <100kW capacity class and this native technology describe small boilers, per positive-one MJ. Retain useful-heat quantity with factor +1, without a power ratio or added fuel/boiler/electricity burden.",
+        "Native 15kW is a representative small-boiler proxy within the source <100kW class; it is not claimed to reproduce the exact source fleet rating. Swiss plant/design and supply replace the European source mix; efficiency, operating emissions, lifetime, allocation and vintage differ. Do not use the separately named atmospheric low-NOx non-modulating boiler or a bare burned-fuel MJ reference.",
+        "Preserve caller signs, separately listed operations/emissions and supported uncertainty. Complete native inventories and their BAFU biosphere exclusions remain as supplied. No foreground omission, new helper or upstream manufacturing reconstruction. Inventory/LCIA equivalence is not established.",
+        "Only the exact inspected source-3.10 cut-off identity is newly approved. No inverse, consequential or uninspected source route, and no Python source/test modification."
+      ]
+    },
+    {
+      "rationale": "Replace the at-distillation candidate with complete native Swiss biomass ethanol at service station, matching the vehicle-grade delivery boundary. Source ethanol is named without water in 99.7% solution state. For this screening proxy treat the native nominal 99.7% mixture as mass concentration and supply 1/0.997 kg native mixture per signed source kg ethanol without water, scaling all supported caller uncertainty and formulas consistently.",
+      "evidence": [
+        "brightpath/data/export/uvek_final_energy_retained_boundaries_310_review.json"
+      ],
+      "limitations": [
+        "Replace the at-distillation candidate with complete native Swiss biomass ethanol at service station, matching the vehicle-grade delivery boundary. Source ethanol is named without water in 99.7% solution state. For this screening proxy treat the native nominal 99.7% mixture as mass concentration and supply 1/0.997 kg native mixture per signed source kg ethanol without water, scaling all supported caller uncertainty and formulas consistently.",
+        "The native label states 99.7% in H2O but does not independently state its percentage basis in the available metadata. The mass-fraction interpretation is an explicit modelling assumption, not a measured concentration or proven reference-basis identity. A different publisher basis would require revising this small concentration correction. Native feedstock mix, dewatering, delivery losses, station operation, allocation, geography and vintage replace source internals. The complete station includes its original ethanol supply and 0.05% delivery loss once; add no further ethanol, water, drying, transport, loss or avoided-solvent credit. Score effects and residual basis differences remain unquantified.",
+        "Preserve caller signs, separately listed operations/emissions and supported uncertainty. Complete native inventories and their BAFU biosphere exclusions remain as supplied. No foreground omission, new helper or upstream manufacturing reconstruction. Inventory/LCIA equivalence is not established.",
+        "Only the exact inspected source-3.10 cut-off identity is newly approved. No inverse, consequential or uninspected source route, and no Python source/test modification."
+      ]
+    }
+  ],
+  "recipes": {},
+  "source_rule_dependency_scopes": [],
+  "recipe_dependency_sha256": {},
+  "exact_source_scopes_added": 2,
+  "new_foreground_omissions": [],
+  "new_helpers": 0,
+  "source_code_changes": 0
+}

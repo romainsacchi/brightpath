@@ -17,6 +17,11 @@
       "family": "ecoinvent",
       "version": "3.7",
       "system_model": "cutoff"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.10",
+      "system_model": "cutoff"
     }
   ],
   "target_profile": {
@@ -128,7 +133,8 @@
         "reference_flow_sign_review": {
           "evidence": [
             "brightpath/data/export/uvek_trucks_native_40_review.json",
-            "brightpath/data/export/uvek_final_energy_native_37_review.json"
+            "brightpath/data/export/uvek_final_energy_native_37_review.json",
+            "brightpath/data/export/uvek_final_energy_retained_native_310_review.json"
           ],
           "profiles": [
             {
@@ -149,9 +155,26 @@
               }
             },
             {
+              "conversion_factor": 1.0,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_native_37_review.json"
+                ],
+                "reason": "Complete native Swiss fossil diesel distribution per kg as a source-3.7 low-sulfur diesel screening proxy, using the same complete supplier already reviewed for source 3.8. Native fuel grade/sulfur and refining allocation, Swiss import mix, final-delivery/storage boundary, vintage and internal uncertainty differ. Preserve caller fuel mass and separate combustion; no LHV, density, sulfur-emission correction or extra retail supply burden. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.7 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
               "source_profile": {
                 "family": "ecoinvent",
-                "version": "3.7",
+                "system_model": "cutoff",
+                "version": "3.7"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.10",
                 "system_model": "cutoff"
               },
               "conversion_factor": 1.0,
@@ -159,9 +182,9 @@
                 "status": "verified",
                 "source_sign": 1.0,
                 "target_sign": 1,
-                "reason": "Complete native Swiss fossil diesel distribution per kg as a source-3.7 low-sulfur diesel screening proxy, using the same complete supplier already reviewed for source 3.8. Native fuel grade/sulfur and refining allocation, Swiss import mix, final-delivery/storage boundary, vintage and internal uncertainty differ. Preserve caller fuel mass and separate combustion; no LHV, density, sulfur-emission correction or extra retail supply burden. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.7 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
+                "reason": "Complete native petroleum-fuel supply per kg at its named storage/refinery boundary. Native refining allocation, grade/sulfur, transport/storage, Swiss/import mix and vintage replace source supply. Generic diesel may use a different fossil/biogenic portfolio; do not claim a preserved blend or carbon balance. Keep separate caller combustion/emissions, add no fuel-energy, density, sulfur or extra-delivery correction or avoided-product credit. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.10 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
                 "evidence": [
-                  "brightpath/data/export/uvek_final_energy_native_37_review.json"
+                  "brightpath/data/export/uvek_final_energy_retained_native_310_review.json"
                 ]
               }
             }
@@ -1859,5 +1882,25 @@
   "earlier_effective_profile_checks": 1,
   "new_foreground_omissions": [],
   "new_manufacturing_models": 0,
-  "source_code_changes": 0
+  "source_code_changes": 0,
+  "final_energy_retained_source310_scope_extensions": {
+    "bp-565489cccf0b67ff": {
+      "review_path": "brightpath/data/export/uvek_final_energy_retained_native_310_review.json",
+      "source_witness": {
+        "identity": {
+          "location": "Europe without Switzerland",
+          "name": "market for diesel, low-sulfur",
+          "reference product": "diesel, low-sulfur",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 1,
+        "inventory_sha256": "2ba9272c03cb02f7b1ee6fb88bbe05eb6b217fdd7d18577b49e3c2f4e3f4335b",
+        "metadata_sha256": "3723eb340de90b108c12c115a6c143693d623e00a2ce8360b8baa9fc7c8aed1b",
+        "comment_sha256": "5859c901271075f540e7945418f0c372d6bbe92a58ea897fa3c5856c690b89c7",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }

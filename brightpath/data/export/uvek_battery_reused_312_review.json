@@ -390,7 +390,8 @@
           "evidence": [
             "brightpath/data/export/uvek_gfrp_handlayup_39_review.json",
             "brightpath/data/export/uvek_reused_seventeen_38_review.json",
-            "brightpath/data/export/uvek_battery_reused_312_review.json"
+            "brightpath/data/export/uvek_battery_reused_312_review.json",
+            "brightpath/data/export/uvek_final_energy_retained_native_310_review.json"
           ],
           "profiles": [
             {
@@ -434,27 +435,44 @@
               }
             },
             {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.12",
-                "system_model": "cutoff"
-              },
               "conversion_factor": 1,
               "review": {
-                "status": "verified",
-                "source_sign": 1.0,
-                "target_sign": 1,
-                "reason": "Use the complete already reviewed source-3.9 supply/service for this exact same named product, geography and reference unit as an explicit source-3.12 version screening proxy. Replace source-3.12 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor 1. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.12 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
                 "evidence": [
                   "brightpath/data/export/uvek_battery_reused_312_review.json"
-                ]
+                ],
+                "reason": "Use the complete already reviewed source-3.9 supply/service for this exact same named product, geography and reference unit as an explicit source-3.12 version screening proxy. Replace source-3.12 internal production/treatment mix, delivery, technology, allocation and uncertainty with the reviewed model; those source internals are not claimed preserved. Preserve caller quantities, formulas, ownership, separate purchases/emissions and supported signed uncertainty with the existing reference-coordinate factor 1. Material demand and opposite credits retain their respective signs; negative waste demand becomes positive treatment demand. No new density, energy, yield, concentration, recovery or efficiency multiplier. Retain every inherited model/native limitation and existing omission audit, including BAFU biosphere exclusions and geographic, grade, allocation, technology, vintage and internal-uncertainty differences. Impact-score effects remain unquantified. No new foreground omission, zero-burden authority or reconstructed manufacturing process. Only the exact inspected ecoinvent 3.12 cut-off source scope is added. Older target choices, factors, sign decisions and recipe inventories remain unchanged. No uninspected release, inverse or cross-system-model route or inventory/LCIA equivalence is authorized.",
+                "source_sign": 1.0,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
               },
               "target": {
                 "recipe_ref": "battery-312-reviewed-model-5a066f5db7e68d53"
               }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.10",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1.0,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Complete native polyester-resin glass-fibre reinforced plastic made by hand lay-up per kg. Retain polymer/fibre and fabrication class; native fibre/resin fractions, losses, curing, allocation, geography and at-plant delivery replace source market. No bare-fibre/resin substitute, extra fabrication or composition multiplier. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.10 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_retained_native_310_review.json"
+                ]
+              }
             }
           ],
-          "reason": "Only individually reviewed exact source profiles qualify; every profile retains its own inventory source and reference coordinates.",
+          "reason": "Only independently inspected exact source profiles qualify; each retains its original reference coordinates and native inventory.",
           "status": "unresolved"
         },
         "review_ref": "r-ff4c1d9ddecbc14b",
@@ -8414,5 +8432,25 @@
       }
     }
   ],
-  "earlier_selected_rules_including_warning_text_unchanged": true
+  "earlier_selected_rules_including_warning_text_unchanged": true,
+  "final_energy_retained_source310_scope_extensions": {
+    "bp-5a066f5db7e68d53": {
+      "review_path": "brightpath/data/export/uvek_final_energy_retained_native_310_review.json",
+      "source_witness": {
+        "identity": {
+          "location": "GLO",
+          "name": "market for glass fibre reinforced plastic, polyester resin, hand lay-up",
+          "reference product": "glass fibre reinforced plastic, polyester resin, hand lay-up",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 5,
+        "inventory_sha256": "f6f69952efe22e59ea1fdddc8e7cc8600f753b62dd0f9872caf23ababc9c720e",
+        "metadata_sha256": "0722bd41ba4d0d505fb7fd5f3c6c6fcfcda54cff0d892363f2123c7fa13a3e64",
+        "comment_sha256": "7d0a4ffd91948c4349af612df83511ab4317f81afa517185c710be903531473d",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }

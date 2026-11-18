@@ -27,6 +27,11 @@
       "family": "ecoinvent",
       "version": "3.7",
       "system_model": "cutoff"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.10",
+      "system_model": "cutoff"
     }
   ],
   "target_profile": {
@@ -4296,6 +4301,88 @@
         "confidence": 1.0,
         "id": "bp-d21d0bac2a023032",
         "mapping_method": "curated_legacy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_casting_materials_39_review.json",
+            "brightpath/data/export/uvek_final_energy_retained_native_310_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_materials_39_review.json"
+                ],
+                "reason": "Preserve existing independently approved physical target, quantity and recipe unchanged; only explicit source-scope metadata is added.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_materials_39_review.json"
+                ],
+                "reason": "Preserve existing independently approved physical target, quantity and recipe unchanged; only explicit source-scope metadata is added.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.7"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_casting_materials_39_review.json"
+                ],
+                "reason": "Retain every original positive product-supply entry and final-delivery leg separately, with its original kg/tkm and uncertainty. Use complete native production rather than recursively reconstructing its upstream database. Geography, source import internals, coproduct allocation, technology, emissions, vintage and internal uncertainty differ; their score effects are unquantified. NativeSteel,low-alloyed explicitly includes steel production mix and one kg hot rolling per reference kg. Do not add hot rolling again. Preserve both regional source producer entries; regional steelmaking shares and allocation are replaced by the native production mix. Only the independently inspected exact ecoinvent 3.9 cut-off source gains new permission. Preserve original caller signs, units, supported uncertainty, formulas and independent operations/emissions. Existing independently approved physical targets, factors and recipe bodies stay unchanged. No inverse, patch or cross-system-model permission is inferred. The thirty-four market helpers retain every original producer entry and final-delivery leg, its source quantity and marginal uncertainty, without grouping or renormalization. Complete native production replaces source internal technology, energy, feedstock, geography, infrastructure, emissions, allocation and uncertainty. Retaining producer shares does not retain their original allocated burdens, coproduct routes or regional production technology. No extra upstream production, invented recovered-product credit, purity/density/yield/strength/assay correction or added energy calibration. Use complete same-mode freight proxies with each original tkm unchanged: native barge, light/heavy road, ocean bulk/container and rail; retain US diesel rail for the US leg and explicit RER/CH/OCE proxies otherwise. Geography, fuel mix, payload, technology, traction, infrastructure, fleet and vintage differ, including Swiss fleet weights inside European road services. No guessed distance, load or transport multiplier and no duplicate upstream delivery. Native grade, technology, allocation, background/biosphere exclusions, vintage and internal uncertainty differ. Preserve independent caller operations and emissions. Functional-performance, stochastic and LCI/LCIA equivalence and quantified score differences are not established. No new physical omission or runtime/generator Python change.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "casting-39-delivered-d21d0bac2a023032"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.10",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1.0,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Complete native low-alloyed steel at plant per kg as a screening proxy for the source hot-rolled low-alloyed steel market. Grade/rolling and delivered-market boundaries, production mix, allocation, geography and vintage differ. No added rolling inventory, steel mass/yield correction or recovered-metal credit. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.10 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_retained_native_310_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Only independently inspected exact source profiles qualify; each retains its original reference coordinates and native inventory.",
+          "status": "unresolved"
+        },
+        "review_ref": "r-468752f3a7b82635",
         "source": {
           "location": "GLO",
           "name": "market for steel, low-alloyed, hot rolled",
@@ -4307,70 +4394,6 @@
           "name": "Steel, low-alloyed, at plant",
           "reference product": "Steel, low-alloyed, at plant",
           "unit": "kilogram"
-        },
-        "review_ref": "r-468752f3a7b82635",
-        "reference_flow_sign_review": {
-          "status": "unresolved",
-          "reason": "Only exact independently reviewed source profiles are qualified.",
-          "evidence": [
-            "brightpath/data/export/uvek_casting_materials_39_review.json"
-          ],
-          "profiles": [
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.12",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Preserve existing independently approved physical target, quantity and recipe unchanged; only explicit source-scope metadata is added.",
-                "evidence": [
-                  "brightpath/data/export/uvek_casting_materials_39_review.json"
-                ]
-              }
-            },
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.7",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Preserve existing independently approved physical target, quantity and recipe unchanged; only explicit source-scope metadata is added.",
-                "evidence": [
-                  "brightpath/data/export/uvek_casting_materials_39_review.json"
-                ]
-              }
-            },
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.9",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "target": {
-                "recipe_ref": "casting-39-delivered-d21d0bac2a023032"
-              },
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Retain every original positive product-supply entry and final-delivery leg separately, with its original kg/tkm and uncertainty. Use complete native production rather than recursively reconstructing its upstream database. Geography, source import internals, coproduct allocation, technology, emissions, vintage and internal uncertainty differ; their score effects are unquantified. NativeSteel,low-alloyed explicitly includes steel production mix and one kg hot rolling per reference kg. Do not add hot rolling again. Preserve both regional source producer entries; regional steelmaking shares and allocation are replaced by the native production mix. Only the independently inspected exact ecoinvent 3.9 cut-off source gains new permission. Preserve original caller signs, units, supported uncertainty, formulas and independent operations/emissions. Existing independently approved physical targets, factors and recipe bodies stay unchanged. No inverse, patch or cross-system-model permission is inferred. The thirty-four market helpers retain every original producer entry and final-delivery leg, its source quantity and marginal uncertainty, without grouping or renormalization. Complete native production replaces source internal technology, energy, feedstock, geography, infrastructure, emissions, allocation and uncertainty. Retaining producer shares does not retain their original allocated burdens, coproduct routes or regional production technology. No extra upstream production, invented recovered-product credit, purity/density/yield/strength/assay correction or added energy calibration. Use complete same-mode freight proxies with each original tkm unchanged: native barge, light/heavy road, ocean bulk/container and rail; retain US diesel rail for the US leg and explicit RER/CH/OCE proxies otherwise. Geography, fuel mix, payload, technology, traction, infrastructure, fleet and vintage differ, including Swiss fleet weights inside European road services. No guessed distance, load or transport multiplier and no duplicate upstream delivery. Native grade, technology, allocation, background/biosphere exclusions, vintage and internal uncertainty differ. Preserve independent caller operations and emissions. Functional-performance, stochastic and LCI/LCIA equivalence and quantified score differences are not established. No new physical omission or runtime/generator Python change.",
-                "evidence": [
-                  "brightpath/data/export/uvek_casting_materials_39_review.json"
-                ]
-              }
-            }
-          ]
         }
       }
     },
@@ -11038,6 +11061,26 @@
         "family": "ecoinvent",
         "version": "3.9",
         "system_model": "cutoff"
+      },
+      "new_foreground_omissions": []
+    }
+  },
+  "final_energy_retained_source310_scope_extensions": {
+    "bp-d21d0bac2a023032": {
+      "review_path": "brightpath/data/export/uvek_final_energy_retained_native_310_review.json",
+      "source_witness": {
+        "identity": {
+          "location": "GLO",
+          "name": "market for steel, low-alloyed, hot rolled",
+          "reference product": "steel, low-alloyed, hot rolled",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 1,
+        "inventory_sha256": "608091af927df1dea8bb8b1b3f6cfd5c9374fd46131c665a3f216e05ea2f905d",
+        "metadata_sha256": "2fad8af542a3e4cd6c3422c07a17e9b2c46e9aa17abf712e922b2fa929e3a56f",
+        "comment_sha256": "d38ae69bf4d1d625efd8e8db9db9d1a778cdf70a9fc836fff73c0d6159aba447",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
       },
       "new_foreground_omissions": []
     }

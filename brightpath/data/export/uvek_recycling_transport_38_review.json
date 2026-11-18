@@ -1812,7 +1812,8 @@
         "mapping_method": "heuristic_similarity",
         "reference_flow_sign_review": {
           "evidence": [
-            "brightpath/data/export/uvek_remaining_freight_39_review.json"
+            "brightpath/data/export/uvek_remaining_freight_39_review.json",
+            "brightpath/data/export/uvek_final_energy_retained_native_310_review.json"
           ],
           "profiles": [
             {
@@ -1836,27 +1837,44 @@
               }
             },
             {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_recycling_transport_38_review.json"
+                ],
+                "reason": "Use only complete positive native diesel services matching EURO VI, conditional on the source weight band. Normalize the native size/duty evidence within that subset only; do not normalize the source inventory or caller tkm. Exclude electric, gas and other EURO-standard supplies. The same nominal subsets and weights exist in native 2025 and 2026. Historical Swiss-2020 size/duty evidence is a screening proxy even for RER labels, not a projected IAM fleet. Geographic, payload, empty-running, routing, SCR/EGR, emissions, technology-year, infrastructure and internal-uncertainty differences remain unquantified. The 7.5t native model represents the source 3.5-7.5t range; native 18/26/32t models represent 16-32t. The 40t model represents the open-ended >32t class and does not cover larger lorries. Preserve each source tkm without a capacity or mass multiplier. Only the exact inspected source ecoinvent 3.8 cut-off context gains a new approval for UVEK 2025/native 2026 cut-off with ecoinvent 3.10 biosphere. No patch, inverse or consequential route is inferred. Prior approved physical targets, factors and existing recipe contents are preserved. Source and native services have positive one-unit references. Factor +1 preserves signed caller quantities, supported uncertainty and formulas, foreground ownership and separate emissions. Freight remains tkm and car transport remains vehicle-km. Do not rescale payload, gross vehicle weight, distance, occupancy, fuel consumption, efficiency or lifetime. Use complete native services with their upstream fuel, vehicle/infrastructure, operation, maintenance, releases and end-of-life inputs once. Do not add those source service inputs or credits on top. Native biosphere exclusions, technology vintage, allocation and internal uncertainty differ. Source/native LCI, LCIA and stochastic equivalence and quantified score effects are not established.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
               "source_profile": {
                 "family": "ecoinvent",
-                "version": "3.8",
-                "system_model": "cutoff"
+                "system_model": "cutoff",
+                "version": "3.8"
               },
               "target": {
                 "recipe_ref": "recycling-38-road-rer-16-32-euro-vi"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.10",
+                "system_model": "cutoff"
               },
-              "conversion_factor": 1,
+              "conversion_factor": 1.0,
               "review": {
                 "status": "verified",
-                "source_sign": 1,
+                "source_sign": 1.0,
                 "target_sign": 1,
-                "reason": "Use only complete positive native diesel services matching EURO VI, conditional on the source weight band. Normalize the native size/duty evidence within that subset only; do not normalize the source inventory or caller tkm. Exclude electric, gas and other EURO-standard supplies. The same nominal subsets and weights exist in native 2025 and 2026. Historical Swiss-2020 size/duty evidence is a screening proxy even for RER labels, not a projected IAM fleet. Geographic, payload, empty-running, routing, SCR/EGR, emissions, technology-year, infrastructure and internal-uncertainty differences remain unquantified. The 7.5t native model represents the source 3.5-7.5t range; native 18/26/32t models represent 16-32t. The 40t model represents the open-ended >32t class and does not cover larger lorries. Preserve each source tkm without a capacity or mass multiplier. Only the exact inspected source ecoinvent 3.8 cut-off context gains a new approval for UVEK 2025/native 2026 cut-off with ecoinvent 3.10 biosphere. No patch, inverse or consequential route is inferred. Prior approved physical targets, factors and existing recipe contents are preserved. Source and native services have positive one-unit references. Factor +1 preserves signed caller quantities, supported uncertainty and formulas, foreground ownership and separate emissions. Freight remains tkm and car transport remains vehicle-km. Do not rescale payload, gross vehicle weight, distance, occupancy, fuel consumption, efficiency or lifetime. Use complete native services with their upstream fuel, vehicle/infrastructure, operation, maintenance, releases and end-of-life inputs once. Do not add those source service inputs or credits on top. Native biosphere exclusions, technology vintage, allocation and internal uncertainty differ. Source/native LCI, LCIA and stochastic equivalence and quantified score effects are not established.",
+                "reason": "Complete native European 16-32 tonne gross-weight lorry fleet-average freight per tonne-km. Size class matches; EURO6 emissions, fuel efficiency, loading, fleet mix and vintage are not preserved. Retain caller tonne-km without payload/distance or emission-class multiplier. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.10 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
                 "evidence": [
-                  "brightpath/data/export/uvek_recycling_transport_38_review.json"
+                  "brightpath/data/export/uvek_final_energy_retained_native_310_review.json"
                 ]
               }
             }
           ],
-          "reason": "The conditioned Euro-VI service is reviewed only for the exact source3.9 cut-off profile.",
+          "reason": "Only independently inspected exact source profiles qualify; each retains its original reference coordinates and native inventory.",
           "status": "unresolved"
         },
         "review_ref": "r-f9e9bd1ccb9569b5",
@@ -12389,5 +12407,25 @@
   "new_foreground_omissions": [],
   "runtime_Python_changes": 0,
   "generator_Python_changes": 0,
-  "licensing": "Full source/native inventories and comments remain local. Publish decisions, identity/hash witnesses, nominal native mixture weights and derived target demands only."
+  "licensing": "Full source/native inventories and comments remain local. Publish decisions, identity/hash witnesses, nominal native mixture weights and derived target demands only.",
+  "final_energy_retained_source310_scope_extensions": {
+    "bp-dcfa2d2a1b36367a": {
+      "review_path": "brightpath/data/export/uvek_final_energy_retained_native_310_review.json",
+      "source_witness": {
+        "identity": {
+          "location": "RER",
+          "name": "market for transport, freight, lorry 16-32 metric ton, EURO6",
+          "reference product": "transport, freight, lorry 16-32 metric ton, EURO6",
+          "unit": "ton kilometer"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 1,
+        "inventory_sha256": "ffd1bd148ed6e09ebf1eaeb0465ca6951a17fc59e09bb56749de24413ba94344",
+        "metadata_sha256": "7f847baf4281d3697c9e88b54914d9b13cdd09510245b22ab7e872b070e20ec9",
+        "comment_sha256": "cd6e6fd1243d5415099e93c3d52708af1e147e5f414560e03aaf21eace283e7a",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }
