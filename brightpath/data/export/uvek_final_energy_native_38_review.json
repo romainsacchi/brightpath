@@ -1,0 +1,958 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "authorization": "Standing autonomous modelling approval with warnings; mapping-only operationalization using complete native services, without new upstream reconstruction or source-code changes.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.8",
+    "system_model": "cutoff"
+  },
+  "source_profiles": [
+    {
+      "family": "ecoinvent",
+      "system_model": "cutoff",
+      "version": "3.9"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.8",
+      "system_model": "cutoff"
+    },
+    {
+      "family": "ecoinvent",
+      "system_model": "cutoff",
+      "version": "3.6"
+    },
+    {
+      "family": "ecoinvent",
+      "system_model": "cutoff",
+      "version": "3.12"
+    }
+  ],
+  "target_profile": {
+    "family": "uvek",
+    "system_model": "cutoff",
+    "version": "2025"
+  },
+  "records": [
+    {
+      "rule_id": "bp-abce5674d268a95a",
+      "source": {
+        "location": "GLO",
+        "name": "market for hydrogen, gaseous",
+        "reference product": "hydrogen, gaseous",
+        "unit": "kilogram"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "GLO",
+          "name": "market for hydrogen, gaseous",
+          "reference product": "hydrogen, gaseous",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 7,
+        "inventory_sha256": "d09bd11f88f73e9d3e210f62cc16d8287bbcf0296125931c61d6fd0aabd93700",
+        "metadata_sha256": "2b8167c75a6290b9a98d4e2342d40a68d1d8cd56db18eecf77e497c6723356f0",
+        "comment_sha256": "0de8c461208462169be2b6993daa721437a1a0ccd1d381b8b38dac5f8a7ddebe",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "location": "CH",
+        "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+        "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+        "unit": "kilogram"
+      },
+      "conversion_factor": 1.0,
+      "original_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-abce5674d268a95a",
+        "mapping_method": "reviewed_heat_fossil_hydrogen_proxy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_heat_hydrogen_market_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_heat_hydrogen_market_review.json"
+                ],
+                "reason": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            }
+          ],
+          "reason": "Only the exact inspected3.9cutoff hydrogen-market profile is reviewed.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-7f53bc1c25ec306c",
+        "source": {
+          "location": "GLO",
+          "name": "market for hydrogen, gaseous",
+          "reference product": "hydrogen, gaseous",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+          "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported."
+      },
+      "earlier_effective_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-abce5674d268a95a",
+        "mapping_method": "reviewed_heat_fossil_hydrogen_proxy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_heat_hydrogen_market_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_heat_hydrogen_market_review.json"
+                ],
+                "reason": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            }
+          ],
+          "reason": "Only the exact inspected3.9cutoff hydrogen-market profile is reviewed.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-7f53bc1c25ec306c",
+        "source": {
+          "location": "GLO",
+          "name": "market for hydrogen, gaseous",
+          "reference product": "hydrogen, gaseous",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+          "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported."
+      },
+      "compiled_rule": {
+        "confidence": 1.0,
+        "conversion_factor": 1,
+        "id": "bp-abce5674d268a95a",
+        "mapping_method": "reviewed_heat_fossil_hydrogen_proxy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_heat_hydrogen_market_review.json",
+            "brightpath/data/export/uvek_final_energy_native_38_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_heat_hydrogen_market_review.json"
+                ],
+                "reason": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.8",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1.0,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Complete Swiss fossil steam-methane-reforming hydrogen at 25 bar is a screening proxy per kg of the inspected global gaseous-hydrogen market. Source market contains refinery-hydrogen suppliers; dedicated SMR replaces refinery feedstock/integration, coproduct allocation, utilities, emissions, vintage and regional shares. This is neither electrolysis nor an IAM future mix. Source delivery pressure is not verified as 25 bar; preserve kg without pressure, density, yield, compressor or expansion-credit adjustments. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.8 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_native_38_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Only independently inspected exact source profiles qualify; each retains its original reference coordinates and native inventory.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-7f53bc1c25ec306c",
+        "source": {
+          "location": "GLO",
+          "name": "market for hydrogen, gaseous",
+          "reference product": "hydrogen, gaseous",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+          "reference product": "Hydrogen production, steam methane reforming of natural gas, 25 bar",
+          "unit": "kilogram"
+        },
+        "technosphere_information_loss": "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix. Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed. Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies. Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported."
+      },
+      "native_witnesses": {
+        "2025": {
+          "reference_amount": 1,
+          "nonproduction_count": 37,
+          "inventory_sha256": "d573f6d8933dfced3fe84b84c46c4ad330d28ed20d172cee9f44079605f18ca4",
+          "metadata_sha256": "8ab8ea758e78e3d6593d87258e96c4b8cfe6570641ac569280c8fe8fb626f43a",
+          "comment_sha256": "ee833d58bc72699c0b1abe38c48cbeb645e82d9fb9deed9ce143e851ca97c04d",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "reference_amount": 1,
+          "nonproduction_count": 37,
+          "inventory_sha256": "7f6a302eb2c59f54e7cb1a5c1c3b26a0da97a7e2f1803b774bf727cf85f64bec",
+          "metadata_sha256": "f36018c05912f67c01a0568827ff98dc5e86f414899fb65cac76fcf00f62817b",
+          "comment_sha256": "5de783bf56b4b28d83ce53c58a66512b20567846a348e3255cf67eeb3981385c",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "functional_basis": "Complete Swiss fossil steam-methane-reforming hydrogen at 25 bar is a screening proxy per kg of the inspected global gaseous-hydrogen market. Source market contains refinery-hydrogen suppliers; dedicated SMR replaces refinery feedstock/integration, coproduct allocation, utilities, emissions, vintage and regional shares. This is neither electrolysis nor an IAM future mix. Source delivery pressure is not verified as 25 bar; preserve kg without pressure, density, yield, compressor or expansion-credit adjustments.",
+      "limitations": [
+        "Complete Swiss fossil steam-methane-reforming hydrogen at 25 bar is a screening proxy per kg of the inspected global gaseous-hydrogen market. Source market contains refinery-hydrogen suppliers; dedicated SMR replaces refinery feedstock/integration, coproduct allocation, utilities, emissions, vintage and regional shares. This is neither electrolysis nor an IAM future mix. Source delivery pressure is not verified as 25 bar; preserve kg without pressure, density, yield, compressor or expansion-credit adjustments.",
+        "Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed.",
+        "Only the exact independently inspected ecoinvent 3.8 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit."
+      ],
+      "generic_authoring_owners": []
+    },
+    {
+      "rule_id": "bp-f757d6fac62c8228",
+      "source": {
+        "location": "CN",
+        "name": "market group for electricity, low voltage",
+        "reference product": "electricity, low voltage",
+        "unit": "kilowatt hour"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "CN",
+          "name": "market group for electricity, low voltage",
+          "reference product": "electricity, low voltage",
+          "unit": "kilowatt hour"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 1,
+        "inventory_sha256": "356a9e4d4d45d0da92a20e8603827340b95021dd784a5249a200a3e49d56e7ad",
+        "metadata_sha256": "2b5c308f9e06b1730f454a1e11131acb50275e746b6b4c3012556fae82be9106",
+        "comment_sha256": "84e2a578c19eebed599fac7631648f18abcd6f18cd602af817c80a325786ddf3",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "location": "CN",
+        "name": "Electricity, low voltage, at grid",
+        "reference product": "Electricity, low voltage, at grid",
+        "unit": "kilowatt hour"
+      },
+      "conversion_factor": 1.0,
+      "original_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": 1,
+        "id": "bp-f757d6fac62c8228",
+        "mapping_method": "reviewed_delivered_low_voltage_proxy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              }
+            }
+          ],
+          "reason": "Only independently inspected exact source profiles qualify. No version or geographic fallback.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-155261c9f7ea9868",
+        "source": {
+          "location": "CN",
+          "name": "market group for electricity, low voltage",
+          "reference product": "electricity, low voltage",
+          "unit": "kilowatt hour"
+        },
+        "target": {
+          "location": "CN",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "unit": "kilowatt hour"
+        },
+        "technosphere_information_loss": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix."
+      },
+      "earlier_effective_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": 1,
+        "id": "bp-f757d6fac62c8228",
+        "mapping_method": "reviewed_delivered_low_voltage_proxy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              }
+            }
+          ],
+          "reason": "Only independently inspected exact source profiles qualify. No version or geographic fallback.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-155261c9f7ea9868",
+        "source": {
+          "location": "CN",
+          "name": "market group for electricity, low voltage",
+          "reference product": "electricity, low voltage",
+          "unit": "kilowatt hour"
+        },
+        "target": {
+          "location": "CN",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "unit": "kilowatt hour"
+        },
+        "technosphere_information_loss": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix."
+      },
+      "compiled_rule": {
+        "classification": "proxy",
+        "confidence": 1,
+        "conversion_factor": 1,
+        "id": "bp-f757d6fac62c8228",
+        "mapping_method": "reviewed_delivered_low_voltage_proxy",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_ferrosilicon_voltage_review.json",
+            "brightpath/data/export/uvek_final_energy_native_38_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+                ],
+                "reason": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.8",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1.0,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Use the complete native Chinese low-voltage grid per kWh. Preserve native voltage hierarchy, signed inputs, historical generation, losses and infrastructure; its historical portfolio/network assumptions replace the source market-group composition. No extra loss multiplier or busbar-generation substitution. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.8 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_native_38_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Only independently inspected exact source profiles qualify; each retains its original reference coordinates and native inventory.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-155261c9f7ea9868",
+        "source": {
+          "location": "CN",
+          "name": "market group for electricity, low voltage",
+          "reference product": "electricity, low voltage",
+          "unit": "kilowatt hour"
+        },
+        "target": {
+          "location": "CN",
+          "name": "Electricity, low voltage, at grid",
+          "reference product": "Electricity, low voltage, at grid",
+          "unit": "kilowatt hour"
+        },
+        "technosphere_information_loss": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved. Source CN -> native CN: matching country/region label; native mix replaces source mix."
+      },
+      "native_witnesses": {
+        "2025": {
+          "reference_amount": 1,
+          "nonproduction_count": 6,
+          "inventory_sha256": "967c7d68f8ae0835142246f0f6a2218bb1196b84cdea2b2e244db4f10adc996c",
+          "metadata_sha256": "67775b7ec51d25418646f15b092f209d362ed20dff3c7d343257a636c74dba69",
+          "comment_sha256": "5ac7469195fa3dc0015ab869c48c92d695715d379f574beaa3d006bd0ab04164",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "reference_amount": 1,
+          "nonproduction_count": 6,
+          "inventory_sha256": "5525e72af5d444a3747e184d07745c1826d2313fe35e33c10c12e9f059adefe8",
+          "metadata_sha256": "3c7917bfa98b8b8ff9d6ce4091b78ede204b8a5b12633d63ee5ddaec25db9ec8",
+          "comment_sha256": "250802b987ae2e1a9cdfc5757b319514d9c1581991b997914b87b454079d3740",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "functional_basis": "Use the complete native Chinese low-voltage grid per kWh. Preserve native voltage hierarchy, signed inputs, historical generation, losses and infrastructure; its historical portfolio/network assumptions replace the source market-group composition. No extra loss multiplier or busbar-generation substitution.",
+      "limitations": [
+        "Use the complete native Chinese low-voltage grid per kWh. Preserve native voltage hierarchy, signed inputs, historical generation, losses and infrastructure; its historical portfolio/network assumptions replace the source market-group composition. No extra loss multiplier or busbar-generation substitution.",
+        "Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed.",
+        "Only the exact independently inspected ecoinvent 3.8 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit."
+      ],
+      "generic_authoring_owners": []
+    }
+  ],
+  "native_scope_records": [
+    {
+      "rule_id": "bp-e122827a829df0db",
+      "source": {
+        "location": "CH",
+        "name": "treatment of used bus",
+        "reference product": "used bus",
+        "unit": "unit"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "CH",
+          "name": "treatment of used bus",
+          "reference product": "used bus",
+          "unit": "unit"
+        },
+        "reference_amount": -1.0,
+        "nonproduction_count": 4,
+        "inventory_sha256": "9132aca42a3a6a66743b07cb97630a9972994a2ec26268fa8a594ba66c0d9325",
+        "metadata_sha256": "aca7df71ccbed1a43064a5628dd18a100041f06c902d557a8b4142a49839b6de",
+        "comment_sha256": "ceaaf8d07524f3d5c1bae25e313100cebeb22da8af8102e22e37bf81adaa1b0e",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "location": "CH",
+        "name": "Disposal, bus",
+        "reference product": "Disposal, bus",
+        "unit": "unit"
+      },
+      "conversion_factor": -1.0,
+      "original_rule": {
+        "confidence": 0.6,
+        "conversion_factor": -1,
+        "id": "bp-e122827a829df0db",
+        "mapping_method": "pairwise_review",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-e122827a829df0db"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "review_ref": "r-79ab4583a027a05e",
+        "source": {
+          "location": "CH",
+          "name": "treatment of used bus",
+          "reference product": "used bus",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, bus",
+          "reference product": "Disposal, bus",
+          "unit": "unit"
+        }
+      },
+      "earlier_effective_rule": {
+        "confidence": 0.6,
+        "conversion_factor": -1,
+        "id": "bp-e122827a829df0db",
+        "mapping_method": "pairwise_review",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-e122827a829df0db"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "review_ref": "r-79ab4583a027a05e",
+        "source": {
+          "location": "CH",
+          "name": "treatment of used bus",
+          "reference product": "used bus",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, bus",
+          "reference product": "Disposal, bus",
+          "unit": "unit"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.6,
+        "conversion_factor": -1,
+        "id": "bp-e122827a829df0db",
+        "mapping_method": "pairwise_review",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-e122827a829df0db"
+          ],
+          "reason": "Ecoinvent's negative waste reference and UVEK's positive treatment-service reference require opposite exchange signs.",
+          "source_sign": -1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "review_ref": "r-79ab4583a027a05e",
+        "source": {
+          "location": "CH",
+          "name": "treatment of used bus",
+          "reference product": "used bus",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, bus",
+          "reference product": "Disposal, bus",
+          "unit": "unit"
+        }
+      },
+      "native_witnesses": {
+        "2025": {
+          "reference_amount": 1,
+          "nonproduction_count": 5,
+          "inventory_sha256": "1b836848fc620142559a773899e1836f460da6ac9799a88dad4e40fa31cfb7c2",
+          "metadata_sha256": "1ea1f203967f61083ca2a5a1dba08239bf37a8fcae6354f7a423c4636600d021",
+          "comment_sha256": "67d9daa4969347faee50b5acc969863582fa30b35b086e9689772863e32cc9ef",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "reference_amount": 1,
+          "nonproduction_count": 5,
+          "inventory_sha256": "b3bcfc0b2aa82b674638db2646fdb6809ec05ac85ce1c7665fa4c337a7132652",
+          "metadata_sha256": "68dd8ce29db34ab6477666fe9de761f89a4fce3d32df8eadb3d69bceab9732e5",
+          "comment_sha256": "8767b9d3003b7b44d14a1f8de4e7a69be5f8b8041050150fddad0ce1f7ece05e",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "functional_basis": "Use complete native Swiss bus disposal per bus. Source -1 waste reference and native +1 service reference require factor -1. Both describe cut-off handling of bulk metals and tyres; historic fleet size/material composition, residue routing, transport and vintage differ. Add no recovery, tyre or metal substitution credit, vehicle mass scaling or missing disposal inventory.",
+      "limitations": [
+        "Use complete native Swiss bus disposal per bus. Source -1 waste reference and native +1 service reference require factor -1. Both describe cut-off handling of bulk metals and tyres; historic fleet size/material composition, residue routing, transport and vintage differ. Add no recovery, tyre or metal substitution credit, vehicle mass scaling or missing disposal inventory.",
+        "Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed.",
+        "Only the exact independently inspected ecoinvent 3.8 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit."
+      ],
+      "generic_authoring_owners": []
+    },
+    {
+      "rule_id": "bp-4149fad47652889a",
+      "source": {
+        "location": "CH",
+        "name": "maintenance, bus",
+        "reference product": "maintenance, bus",
+        "unit": "unit"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "CH",
+          "name": "maintenance, bus",
+          "reference product": "maintenance, bus",
+          "unit": "unit"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 13,
+        "inventory_sha256": "f9885aad44fe9d148e11aacf160795e5bfbdc6d415818770ca83823db097564f",
+        "metadata_sha256": "940e63e8c952b63294970993aeefb02c3bd65b118d3e20e5781e1ead8c5d8016",
+        "comment_sha256": "6204f40ce1d39f0b89d9a6b6577cdfbcabe41ad0851cdd50465510f6e152a22b",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "location": "CH",
+        "name": "Maintenance, bus",
+        "reference product": "Maintenance, bus",
+        "unit": "unit"
+      },
+      "conversion_factor": 1.0,
+      "original_rule": {
+        "confidence": 1.0,
+        "id": "bp-4149fad47652889a",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "CH",
+          "name": "maintenance, bus",
+          "reference product": "maintenance, bus",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Maintenance, bus",
+          "reference product": "Maintenance, bus",
+          "unit": "unit"
+        }
+      },
+      "earlier_effective_rule": {
+        "confidence": 1.0,
+        "id": "bp-4149fad47652889a",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "CH",
+          "name": "maintenance, bus",
+          "reference product": "maintenance, bus",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Maintenance, bus",
+          "reference product": "Maintenance, bus",
+          "unit": "unit"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1.0,
+        "id": "bp-4149fad47652889a",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "CH",
+          "name": "maintenance, bus",
+          "reference product": "maintenance, bus",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Maintenance, bus",
+          "reference product": "Maintenance, bus",
+          "unit": "unit"
+        }
+      },
+      "native_witnesses": {
+        "2025": {
+          "reference_amount": 1,
+          "nonproduction_count": 16,
+          "inventory_sha256": "3cea1a42248342545c679916f440f22a8032215d7ecb0349e53e7a402f225dca",
+          "metadata_sha256": "9f1692f16e63a9623f9349e548d301fc898e1a9c921ed66af9f7bc78531cdc42",
+          "comment_sha256": "45006a7a9b4b8c2c3d37717c09e001c578dab9a3f872be80d7539a7d4ef5ef93",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "reference_amount": 1,
+          "nonproduction_count": 16,
+          "inventory_sha256": "518a4dc12217ddebec88ba403bfb3d63b0cb067c1e9c3f78c2ee5431c80fdb68",
+          "metadata_sha256": "d2957827700818da27a125a537d1c0205e2a478a42495bfa9feaeeb926f20538",
+          "comment_sha256": "f79094a74a146f5a5d81ac12e3c4f0930494806998aac4734b1a5cf992390503",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "functional_basis": "Use complete native Swiss bus maintenance per bus service unit. Both source documentation and native records describe materials/replacement parts, garage energy, water and treatment based on historic Swiss bus maintenance. Retain full native inventory. Fleet/material consumption, lifetime/maintenance intensity and vintage differ; no bus-km, lifetime, tonnage or energy multiplier.",
+      "limitations": [
+        "Use complete native Swiss bus maintenance per bus service unit. Both source documentation and native records describe materials/replacement parts, garage energy, water and treatment based on historic Swiss bus maintenance. Retain full native inventory. Fleet/material consumption, lifetime/maintenance intensity and vintage differ; no bus-km, lifetime, tonnage or energy multiplier.",
+        "Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed.",
+        "Only the exact independently inspected ecoinvent 3.8 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit."
+      ],
+      "generic_authoring_owners": []
+    },
+    {
+      "rule_id": "bp-c0965066e2c4afc5",
+      "source": {
+        "location": "GLO",
+        "name": "market for inverter, for electric passenger car",
+        "reference product": "inverter, for electric passenger car",
+        "unit": "kilogram"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "GLO",
+          "name": "market for inverter, for electric passenger car",
+          "reference product": "inverter, for electric passenger car",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 1,
+        "inventory_sha256": "0b13360e88459095c83e929c3188678e3d4bb21aa0377c479171a68667e50f71",
+        "metadata_sha256": "e545bb02ae1d05c768427faebe49e00fc247edc8952dc0ae7bd926c38c8c8b93",
+        "comment_sha256": "9c4038c558b7d658c23560ff19995c87720a44d3a560e94184859db7d69816f9",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "location": "RER",
+        "name": "Inverter, for electric passenger car",
+        "reference product": "Inverter, for electric passenger car",
+        "unit": "kilogram"
+      },
+      "conversion_factor": 1.0,
+      "original_rule": {
+        "confidence": 0.868333,
+        "id": "bp-c0965066e2c4afc5",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "GLO",
+          "name": "market for inverter, for electric passenger car",
+          "reference product": "inverter, for electric passenger car",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Inverter, for electric passenger car",
+          "reference product": "Inverter, for electric passenger car",
+          "unit": "kilogram"
+        }
+      },
+      "earlier_effective_rule": {
+        "confidence": 0.868333,
+        "id": "bp-c0965066e2c4afc5",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "GLO",
+          "name": "market for inverter, for electric passenger car",
+          "reference product": "inverter, for electric passenger car",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Inverter, for electric passenger car",
+          "reference product": "Inverter, for electric passenger car",
+          "unit": "kilogram"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.868333,
+        "id": "bp-c0965066e2c4afc5",
+        "mapping_method": "heuristic_similarity",
+        "source": {
+          "location": "GLO",
+          "name": "market for inverter, for electric passenger car",
+          "reference product": "inverter, for electric passenger car",
+          "unit": "kilogram"
+        },
+        "target": {
+          "location": "RER",
+          "name": "Inverter, for electric passenger car",
+          "reference product": "Inverter, for electric passenger car",
+          "unit": "kilogram"
+        }
+      },
+      "native_witnesses": {
+        "2025": {
+          "reference_amount": 1,
+          "nonproduction_count": 25,
+          "inventory_sha256": "019bf0d5291cd22e54b9c4a1549c8b82f8e73d8638055d628c33834c84f7f4d4",
+          "metadata_sha256": "6d03fc1a54a1e14e5608db228dc468bee640371c4d897d87adbe8e391ac94950",
+          "comment_sha256": "93425ed11bf5d1056cdd99d481d7aa81dfa3f393a133a02f4c8aa5a31692243d",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "reference_amount": 1,
+          "nonproduction_count": 25,
+          "inventory_sha256": "b10af94d733f73c3b6eda736fd28b4c797d31ca5062c054766a80ffbe82a63b4",
+          "metadata_sha256": "afa6981a2131b07e49040ed6f4d1fb49c983bfaa4c72684e99f90c9eac4e65c2",
+          "comment_sha256": "b64366b12e4d5df282654d68e17e47be409f6a83bce93bd9728a61c519917176",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "functional_basis": "Use complete native European electric-passenger-car inverter per kg. Native documentation describes a 9.5 kg device suited to 100 kW but exchanges already reference 1 kg, so introduce no 9.5 kg or power multiplier. Native design, material allocation, delivery, geography, vintage and internal uncertainty replace the source global market model.",
+      "limitations": [
+        "Use complete native European electric-passenger-car inverter per kg. Native documentation describes a 9.5 kg device suited to 100 kW but exchanges already reference 1 kg, so introduce no 9.5 kg or power multiplier. Native design, material allocation, delivery, geography, vintage and internal uncertainty replace the source global market model.",
+        "Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed.",
+        "Only the exact independently inspected ecoinvent 3.8 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit."
+      ],
+      "generic_authoring_owners": []
+    }
+  ],
+  "reviews": [
+    {
+      "evidence": [
+        "brightpath/data/export/uvek_ferrosilicon_voltage_review.json"
+      ],
+      "limitations": [
+        "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved."
+      ],
+      "rationale": "Reviewed complete low-voltage electricity supply proxy, per signed1kWh. Source and native references are positive1kWh, with nonempty grid inventories. Reuse the complete existing native low-voltage grid, preserving its voltage hierarchy, network/infrastructure, losses, imports and signed inputs as provided; do not use high-voltage production, busbar generation, bare transformer hardware or an extra loss multiplier. Native generation/trade, historical consumption and older distribution assumptions, geography, region membership, infrastructure, biosphere exclusions and internal uncertainty differ; score effects are unquantified. Equal location codes for regional groups do not establish identical membership. For missing countries use only the explicitly inspected geographic proxy, not a claim of an actual transmission connection or an identical national fuel mix. Preserve caller signed quantities, uncertainty, formulas and metadata with factor+1. No new helper, omission, energy credit or caller-quantity renormalization is introduced. Only independently inspected3.6,3.9and3.12cutoff profiles qualify; other releases, consequential and reverse routes remain unapproved."
+    },
+    {
+      "evidence": [
+        "brightpath/data/export/uvek_heat_hydrogen_market_review.json"
+      ],
+      "limitations": [
+        "Complete Swiss fossil steam-methane-reforming hydrogen is a screening proxy for the inspected global refinery-hydrogen market, factor+1kg per signed source kg. The source contains seven positive refinery-hydrogen suppliers summing to one kg and no freight/loss extras; do not replace it with electrolysis or infer a future IAM hydrogen mix.",
+        "Refinery integration, crude/natural-gas feedstock, coproduct allocation, purification, utilities, infrastructure, emissions and regional supply shares differ from dedicated native SMR. Retain the complete native inventory once; source refinery burdens are not reconstructed. Score effects are unquantified and no production/LCIA equivalence is claimed.",
+        "Native hydrogen leaves production at25bar; the source gaseous market has no verified matching delivery pressure. Preserve mass without a pressure/density/yield factor, invented compressor, delivery leg or expansion credit. Geography and vintage remain explicit proxies.",
+        "Approval is restricted to the inspected ecoinvent3.9cutoff source through the UVEK2025native bridge to UVEK2026/biosphere3.10. Uninspected releases, inverse and cross-system-model routes remain unsupported."
+      ],
+      "rationale": "Standing user autonomous modelling approval. Review the actual fossil-hydrogen boundary; use the closest complete native fossil-H2 supply proxy with warnings, and reject the inherited electrolysis heuristic."
+    }
+  ],
+  "recipes": {},
+  "source_rule_dependency_scopes": [],
+  "recipe_dependency_sha256": {},
+  "exact_source_scopes_added": 5,
+  "compiled_rules_extended": 2,
+  "unchanged_native_rules": 3,
+  "earlier_effective_profile_checks": 4,
+  "new_foreground_omissions": [],
+  "new_manufacturing_models": 0,
+  "source_code_changes": 0
+}
