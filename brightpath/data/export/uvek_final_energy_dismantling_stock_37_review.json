@@ -1,0 +1,666 @@
+{
+  "schema_version": 1,
+  "date": "2026-11-18",
+  "authorization": "Standing autonomous modelling approval; mapping-only operationalization preserving the immediate dismantling-facility boundary and independently verified empty cut-off handover. No upstream reconstruction or source-code changes.",
+  "source_profile": {
+    "family": "ecoinvent",
+    "version": "3.7",
+    "system_model": "cutoff"
+  },
+  "target_profile": {
+    "family": "uvek",
+    "system_model": "cutoff",
+    "version": "2025"
+  },
+  "records": [
+    {
+      "rule_id": "bp-de7bbb22092c2263",
+      "source": {
+        "location": "GLO",
+        "name": "manual dismantling of used electric scooter",
+        "reference product": "manual dismantling of electric scooter",
+        "unit": "unit"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "GLO",
+          "name": "manual dismantling of used electric scooter",
+          "reference product": "manual dismantling of electric scooter",
+          "unit": "unit"
+        },
+        "reference_amount": 1,
+        "nonproduction_count": 1,
+        "inventory_sha256": "57136677d22eb55ae33b12f9a37e4e0441b37d67debc66949029a277a4269579",
+        "metadata_sha256": "84266bafa89506391202de70d9363af15eb8ab783ae753ae7fbae4e241bf35dd",
+        "comment_sha256": "90832fe9dc9264c087707aafde08943871c2cfcbeb24e8c0c37298841ecdab07",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "recipe_ref": "final-energy-37-scooter-manual-dismantling-facility"
+      },
+      "conversion_factor": 1,
+      "original_rule": {
+        "confidence": 0.386922,
+        "id": "bp-de7bbb22092c2263",
+        "mapping_method": "heuristic_similarity",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_reference_flow_sign_review.json#ecoinvent-3.x-to-uvek-2025-technosphere/bp-de7bbb22092c2263"
+          ],
+          "reason": "Both imported reference production amounts are positive; preserve their quantity direction despite differing native flow classifications. This does not establish scientific equivalence.",
+          "source_sign": 1,
+          "status": "verified",
+          "target_sign": 1
+        },
+        "source": {
+          "location": "GLO",
+          "name": "manual dismantling of used electric scooter",
+          "reference product": "manual dismantling of electric scooter",
+          "unit": "unit"
+        },
+        "target": {
+          "location": "CH",
+          "name": "Disposal, electric scooter",
+          "reference product": "Disposal, electric scooter",
+          "unit": "unit"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 0.8,
+        "id": "bp-de7bbb22092c2263",
+        "mapping_method": "reviewed_final_energy_facility_only_37",
+        "reference_flow_sign_review": {
+          "status": "unresolved",
+          "reason": "Only exact inspected source 3.7 cut-off facility-only service qualifies.",
+          "evidence": [
+            "brightpath/data/export/uvek_final_energy_dismantling_stock_37_review.json"
+          ],
+          "profiles": [
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.7",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1,
+              "review": {
+                "status": "verified",
+                "source_sign": 1,
+                "target_sign": 1,
+                "reason": "The inspected source manual-dismantling activity contains only 1.6e-8 units of manual WEEE treatment-facility infrastructure. The previous native complete electric-scooter disposal candidate includes vehicle residues, 32 kg of battery treatment and transport, beyond this source boundary. Replace that wrong full-disposal match with one immediate facility-only service helper.",
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_dismantling_stock_37_review.json"
+                ]
+              }
+            }
+          ]
+        },
+        "source": {
+          "location": "GLO",
+          "name": "manual dismantling of used electric scooter",
+          "reference product": "manual dismantling of electric scooter",
+          "unit": "unit"
+        },
+        "target": {
+          "recipe_ref": "final-energy-37-scooter-manual-dismantling-facility"
+        },
+        "conversion_factor": 1,
+        "classification": "proxy",
+        "review_ref": "r-4ad52bba37ab4f64",
+        "report_correspondence": true,
+        "technosphere_information_loss": "The inspected source manual-dismantling activity contains only 1.6e-8 units of manual WEEE treatment-facility infrastructure. The previous native complete electric-scooter disposal candidate includes vehicle residues, 32 kg of battery treatment and transport, beyond this source boundary. Replace that wrong full-disposal match with one immediate facility-only service helper. Retain the exact sole source facility amount, lognormal loc/scale, pedigree and supported uncertainty, using the complete native Manual treatment plant, WEEE scrap per plant unit. Both native releases have positive-one nonempty site references. Documentation describes 2500 tonnes/year for 25 years; this is consistent with the small source facility purchase, but introduces no new capacity or lifetime multiplier. The source documentation says per kg while its actual production unit is unit. Preserve its declared reference unit and all caller quantities and explicitly retain that source ambiguity. Do not infer a scooter mass, interpret one service as a full vehicle, or add kg-to-unit conversion. Keep separate caller module/battery treatment unchanged. The complete native plant replaces source infrastructure internals, design, allocation, geography, vintage and uncertainty. Source market delivery and manufacturing assumptions are not claimed identical; BAFU biosphere exclusions and unquantified impact-score differences remain. No extra labour, energy, dismantling waste, transport, recovery credit, foreground omission or upstream reconstruction is invented. Only the exact inspected ecoinvent 3.7 cut-off identity is approved. Other source releases, inverse and cross-system-model routes remain unapproved. No Python source or test changes."
+      },
+      "functional_basis": "The inspected source manual-dismantling activity contains only 1.6e-8 units of manual WEEE treatment-facility infrastructure. The previous native complete electric-scooter disposal candidate includes vehicle residues, 32 kg of battery treatment and transport, beyond this source boundary. Replace that wrong full-disposal match with one immediate facility-only service helper.",
+      "limitations": [
+        "The inspected source manual-dismantling activity contains only 1.6e-8 units of manual WEEE treatment-facility infrastructure. The previous native complete electric-scooter disposal candidate includes vehicle residues, 32 kg of battery treatment and transport, beyond this source boundary. Replace that wrong full-disposal match with one immediate facility-only service helper.",
+        "Retain the exact sole source facility amount, lognormal loc/scale, pedigree and supported uncertainty, using the complete native Manual treatment plant, WEEE scrap per plant unit. Both native releases have positive-one nonempty site references. Documentation describes 2500 tonnes/year for 25 years; this is consistent with the small source facility purchase, but introduces no new capacity or lifetime multiplier.",
+        "The source documentation says per kg while its actual production unit is unit. Preserve its declared reference unit and all caller quantities and explicitly retain that source ambiguity. Do not infer a scooter mass, interpret one service as a full vehicle, or add kg-to-unit conversion. Keep separate caller module/battery treatment unchanged.",
+        "The complete native plant replaces source infrastructure internals, design, allocation, geography, vintage and uncertainty. Source market delivery and manufacturing assumptions are not claimed identical; BAFU biosphere exclusions and unquantified impact-score differences remain. No extra labour, energy, dismantling waste, transport, recovery credit, foreground omission or upstream reconstruction is invented.",
+        "Only the exact inspected ecoinvent 3.7 cut-off identity is approved. Other source releases, inverse and cross-system-model routes remain unapproved. No Python source or test changes."
+      ],
+      "native_witnesses": {
+        "2025": {
+          "identity": {
+            "name": "Manual treatment plant, WEEE scrap",
+            "reference product": "Manual treatment plant, WEEE scrap",
+            "location": "GLO",
+            "unit": "unit"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 8,
+          "inventory_sha256": "da587bcca8d780da8b5025c691e07b4bcf6871eba332a03e185d01348a4b348c",
+          "metadata_sha256": "86b38ebfece95f7a356048e80ee4d8c56dae0abfbf354338fa5b08bdb8d7ba77",
+          "comment_sha256": "ce9c505e24ead2d460b063f39bcd52698c58a00784b9473d11cca294b03d19f2",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "2026": {
+          "identity": {
+            "name": "Manual treatment plant, WEEE scrap",
+            "reference product": "Manual treatment plant, WEEE scrap",
+            "location": "GLO",
+            "unit": "unit"
+          },
+          "reference_amount": 1,
+          "nonproduction_count": 8,
+          "inventory_sha256": "af85dc54078f93f29d09358114dff6e047af92c7c67c38a6c04dd33cef24acb6",
+          "metadata_sha256": "2e0edafec1790b70b9e58bf69ecca569d470e94efe478a10415fd5851d3cc4ee",
+          "comment_sha256": "83ac5cba7fe1a8c8273494b5e726daa65ed65b9d1b30f9ced74d94a22af05109",
+          "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      },
+      "retained_source_input_positions": 1,
+      "preserved_source_input_uncertainty": true
+    }
+  ],
+  "native_scope_records": [
+    {
+      "rule_id": "bp-37b9b46586e881e7",
+      "source": {
+        "location": "GLO",
+        "name": "aluminium scrap, new, Recycled Content cut-off",
+        "reference product": "aluminium scrap, new",
+        "unit": "kilogram"
+      },
+      "source_witness": {
+        "identity": {
+          "location": "GLO",
+          "name": "aluminium scrap, new, Recycled Content cut-off",
+          "reference product": "aluminium scrap, new",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1,
+        "nonproduction_count": 0,
+        "inventory_sha256": "2d07056666f7bbaf7cb8505a99728b69514c178eee160c93eee1a8e4ec74cb52",
+        "metadata_sha256": "c054e9ee0c3d1768a6640d18c4014c1d156fb8624014f61a8de5a8d076460292",
+        "comment_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "target": {
+        "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+      },
+      "conversion_factor": 1,
+      "original_rule": {
+        "confidence": 1,
+        "conversion_factor": 1,
+        "id": "bp-37b9b46586e881e7",
+        "mapping_method": "reviewed_cutoff_stock_recipe",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_cutoff_stock_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.10-cutoff/8f86c812ca04efcb2dd4f714b03008c163fa15a43ce08972e89681e0ef5f3f21"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.10.1-cutoff/f5e09e7a20d924ccde28d80b159fca0e16eb8d555532712c2052e741f4321041",
+                  "brightpath/data/export/uvek_complete_patch_boundary_review.json#ecoinvent-3.10.1-cutoff/f5e09e7a20d924ccde28d80b159fca0e16eb8d555532712c2052e741f4321041"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10.1"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.11-cutoff/f6f034faf3fa0630be0747775e70a3817377b8d88cd94e965cc4908d5458670a"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.11"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.12-cutoff/6f8babef34d2d1e1cfc54db38f6c7f1b9d3ff0bcf158f82a8aed0d6468ad3fea"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.6-cutoff/27a257bf2b0caa031560f98554737a495cb60ee26e0a7d6cb0dc99f7908b07dd"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.7-cutoff/2d07056666f7bbaf7cb8505a99728b69514c178eee160c93eee1a8e4ec74cb52"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.7"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.8-cutoff/226157ebf7052f1edac040ee0a32d546bbf1acfca44ffa515d4f13dec8f0e6c6"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.9-cutoff/887d2d84ba21f2eabb5b319ef17cc9b630ccaff6e0fad3ad61d889e7fe7d98c2"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.9.1-cutoff/d20203449674509b7a5dcf44d2f6a5ae9e0a7c390cd3f8629fc1a1b2682f970f",
+                  "brightpath/data/export/uvek_complete_patch_boundary_review.json#ecoinvent-3.9.1-cutoff/d20203449674509b7a5dcf44d2f6a5ae9e0a7c390cd3f8629fc1a1b2682f970f"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9.1"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            }
+          ],
+          "reason": "Select only an exact inspected positive cut-off stock profile; no other allocation or treatment context is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-67fdeecb5d1482a6",
+        "source": {
+          "location": "GLO",
+          "name": "aluminium scrap, new, Recycled Content cut-off",
+          "reference product": "aluminium scrap, new",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+        }
+      },
+      "compiled_rule": {
+        "confidence": 1,
+        "conversion_factor": 1,
+        "id": "bp-37b9b46586e881e7",
+        "mapping_method": "reviewed_cutoff_stock_recipe",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_cutoff_stock_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.10-cutoff/8f86c812ca04efcb2dd4f714b03008c163fa15a43ce08972e89681e0ef5f3f21"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.10.1-cutoff/f5e09e7a20d924ccde28d80b159fca0e16eb8d555532712c2052e741f4321041",
+                  "brightpath/data/export/uvek_complete_patch_boundary_review.json#ecoinvent-3.10.1-cutoff/f5e09e7a20d924ccde28d80b159fca0e16eb8d555532712c2052e741f4321041"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.10.1"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.11-cutoff/f6f034faf3fa0630be0747775e70a3817377b8d88cd94e965cc4908d5458670a"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.11"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.12-cutoff/6f8babef34d2d1e1cfc54db38f6c7f1b9d3ff0bcf158f82a8aed0d6468ad3fea"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.12"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.6-cutoff/27a257bf2b0caa031560f98554737a495cb60ee26e0a7d6cb0dc99f7908b07dd"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.6"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.7-cutoff/2d07056666f7bbaf7cb8505a99728b69514c178eee160c93eee1a8e4ec74cb52"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.7"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.8-cutoff/226157ebf7052f1edac040ee0a32d546bbf1acfca44ffa515d4f13dec8f0e6c6"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.9-cutoff/887d2d84ba21f2eabb5b319ef17cc9b630ccaff6e0fad3ad61d889e7fe7d98c2"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            },
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_cutoff_stock_review.json#ecoinvent-3.9.1-cutoff/d20203449674509b7a5dcf44d2f6a5ae9e0a7c390cd3f8629fc1a1b2682f970f",
+                  "brightpath/data/export/uvek_complete_patch_boundary_review.json#ecoinvent-3.9.1-cutoff/d20203449674509b7a5dcf44d2f6a5ae9e0a7c390cd3f8629fc1a1b2682f970f"
+                ],
+                "reason": "Reviewed production-only cut-off stock supply: the exact source supplier is explicitly marked Recycled Content cut-off and contains only self-linked production +1, with no processing, freight, biosphere or other exchanges. Preserve this observed allocation boundary through a production-only foreground supplier. Do not add the former UVEK production/disposal supplier's burdens, avoided primary-material credits or biogenic uptake. This is not a claim of zero life-cycle impact for actual recycling or treatment; those processes belong outside this allocated stock and remain separate. No uncharacterized or missing inventory is assigned zero. Preserve signed material quantities, uncertainty, formulas, foreground suppliers, production and separately listed emissions and credits. Only the enumerated exact positive-reference cut-off profiles are approved; other versions, patch releases, consequential supplies and negative-reference empty treatment stages remain outside this approval. Export and score all returned foreground helpers.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.9.1"
+              },
+              "target": {
+                "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+              }
+            }
+          ],
+          "reason": "Select only an exact inspected positive cut-off stock profile; no other allocation or treatment context is approved.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-67fdeecb5d1482a6",
+        "source": {
+          "location": "GLO",
+          "name": "aluminium scrap, new, Recycled Content cut-off",
+          "reference product": "aluminium scrap, new",
+          "unit": "kilogram"
+        },
+        "target": {
+          "recipe_ref": "cutoff-stock-c799837c419be7ab840f"
+        }
+      },
+      "functional_basis": "The exact source-3.7 new-aluminium-scrap Recycled Content cut-off handover has a positive-one kg reference and zero nonproduction exchanges, independently inspected in the local source database. Reuse its existing empty cut-off-stock recipe as that same empty handover. This is not permission to drop nonempty treatment, recycling, collection, transport or recovery burdens.",
+      "limitations": [
+        "The exact source-3.7 new-aluminium-scrap Recycled Content cut-off handover has a positive-one kg reference and zero nonproduction exchanges, independently inspected in the local source database. Reuse its existing empty cut-off-stock recipe as that same empty handover. This is not permission to drop nonempty treatment, recycling, collection, transport or recovery burdens.",
+        "Preserve signed caller kg, formula and supported uncertainty. Add no treatment process, recycled-material credit, primary-aluminium substitution or new zero-burden authority for other identities/profiles. The existing source/target allocation and BAFU biosphere limitations remain. Exact cut-off source3.7 only; no inverse or consequential route or source-code edit."
+      ],
+      "independently_verified_empty_source": true
+    }
+  ],
+  "reviews": [
+    {
+      "rationale": "The inspected source manual-dismantling activity contains only 1.6e-8 units of manual WEEE treatment-facility infrastructure. The previous native complete electric-scooter disposal candidate includes vehicle residues, 32 kg of battery treatment and transport, beyond this source boundary. Replace that wrong full-disposal match with one immediate facility-only service helper.",
+      "evidence": [
+        "brightpath/data/export/uvek_final_energy_dismantling_stock_37_review.json"
+      ],
+      "limitations": [
+        "The inspected source manual-dismantling activity contains only 1.6e-8 units of manual WEEE treatment-facility infrastructure. The previous native complete electric-scooter disposal candidate includes vehicle residues, 32 kg of battery treatment and transport, beyond this source boundary. Replace that wrong full-disposal match with one immediate facility-only service helper.",
+        "Retain the exact sole source facility amount, lognormal loc/scale, pedigree and supported uncertainty, using the complete native Manual treatment plant, WEEE scrap per plant unit. Both native releases have positive-one nonempty site references. Documentation describes 2500 tonnes/year for 25 years; this is consistent with the small source facility purchase, but introduces no new capacity or lifetime multiplier.",
+        "The source documentation says per kg while its actual production unit is unit. Preserve its declared reference unit and all caller quantities and explicitly retain that source ambiguity. Do not infer a scooter mass, interpret one service as a full vehicle, or add kg-to-unit conversion. Keep separate caller module/battery treatment unchanged.",
+        "The complete native plant replaces source infrastructure internals, design, allocation, geography, vintage and uncertainty. Source market delivery and manufacturing assumptions are not claimed identical; BAFU biosphere exclusions and unquantified impact-score differences remain. No extra labour, energy, dismantling waste, transport, recovery credit, foreground omission or upstream reconstruction is invented.",
+        "Only the exact inspected ecoinvent 3.7 cut-off identity is approved. Other source releases, inverse and cross-system-model routes remain unapproved. No Python source or test changes."
+      ]
+    }
+  ],
+  "recipes": {
+    "final-energy-37-scooter-manual-dismantling-facility": {
+      "name": "Manual dismantling of electric scooter, facility only, source 3.7",
+      "reference product": "manual dismantling of electric scooter",
+      "location": "GLO",
+      "unit": "unit",
+      "inputs": [
+        {
+          "name": "Manual treatment plant, WEEE scrap",
+          "reference product": "Manual treatment plant, WEEE scrap",
+          "location": "GLO",
+          "unit": "unit",
+          "type": "technosphere",
+          "amount": 1.6e-08,
+          "uncertainty type": 2,
+          "loc": -17.95067711470663,
+          "scale": 0.7602631123499285,
+          "scale without pedigree": 0.6324555320336759,
+          "pedigree": {
+            "reliability": 4,
+            "completeness": 5,
+            "temporal correlation": 5,
+            "geographical correlation": 5,
+            "further technological correlation": 5
+          },
+          "comment": "EcoSpold01Location=GLO"
+        }
+      ],
+      "rationale": "The inspected source manual-dismantling activity contains only 1.6e-8 units of manual WEEE treatment-facility infrastructure. The previous native complete electric-scooter disposal candidate includes vehicle residues, 32 kg of battery treatment and transport, beyond this source boundary. Replace that wrong full-disposal match with one immediate facility-only service helper. Retain the exact sole source facility amount, lognormal loc/scale, pedigree and supported uncertainty, using the complete native Manual treatment plant, WEEE scrap per plant unit. Both native releases have positive-one nonempty site references. Documentation describes 2500 tonnes/year for 25 years; this is consistent with the small source facility purchase, but introduces no new capacity or lifetime multiplier. The source documentation says per kg while its actual production unit is unit. Preserve its declared reference unit and all caller quantities and explicitly retain that source ambiguity. Do not infer a scooter mass, interpret one service as a full vehicle, or add kg-to-unit conversion. Keep separate caller module/battery treatment unchanged. The complete native plant replaces source infrastructure internals, design, allocation, geography, vintage and uncertainty. Source market delivery and manufacturing assumptions are not claimed identical; BAFU biosphere exclusions and unquantified impact-score differences remain. No extra labour, energy, dismantling waste, transport, recovery credit, foreground omission or upstream reconstruction is invented. Only the exact inspected ecoinvent 3.7 cut-off identity is approved. Other source releases, inverse and cross-system-model routes remain unapproved. No Python source or test changes.",
+      "evidence": [
+        "brightpath/data/export/uvek_final_energy_dismantling_stock_37_review.json"
+      ]
+    }
+  },
+  "new_recipe_ids": [
+    "final-energy-37-scooter-manual-dismantling-facility"
+  ],
+  "source_rule_dependency_scopes": [],
+  "recipe_dependency_sha256": {
+    "cutoff-stock-c799837c419be7ab840f": "14997b1a448a05c5ae1773a2339f6e9f97822460879c879c4a114a52f776b745"
+  },
+  "new_foreground_omissions": [],
+  "new_recipe_source_omissions": [],
+  "new_manufacturing_models": 0,
+  "source_code_changes": 0
+}

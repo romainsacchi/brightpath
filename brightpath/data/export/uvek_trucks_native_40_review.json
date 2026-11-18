@@ -12,6 +12,11 @@
       "family": "ecoinvent",
       "version": "3.8",
       "system_model": "cutoff"
+    },
+    {
+      "family": "ecoinvent",
+      "version": "3.7",
+      "system_model": "cutoff"
     }
   ],
   "target_profile": {
@@ -253,9 +258,57 @@
         }
       },
       "compiled_rule": {
+        "classification": "proxy",
         "confidence": 1,
+        "conversion_factor": 1,
         "id": "bp-565489cccf0b67ff",
         "mapping_method": "reviewed_truck_delivered_fossil_fuel_38",
+        "reference_flow_sign_review": {
+          "evidence": [
+            "brightpath/data/export/uvek_trucks_native_40_review.json",
+            "brightpath/data/export/uvek_final_energy_native_37_review.json"
+          ],
+          "profiles": [
+            {
+              "conversion_factor": 1,
+              "review": {
+                "evidence": [
+                  "brightpath/data/export/uvek_trucks_native_40_review.json"
+                ],
+                "reason": "Correct refinery-only diesel to complete native fossil diesel at regional storage. Native explicitly fossil supply contains its CH/RER refinery mix and distribution, without the roughly5.5%biodiesel in ordinary native Diesel-at-regional-storage. Use the Swiss2020supply as a geographic screening proxy for Europe-without-Switzerland. Source low-sulfur performance/assay is not established by the native label; preserve caller combustion/emissions rather than inventing a sulfur, LHV, density, yield or transport adjustment.",
+                "source_sign": 1,
+                "status": "verified",
+                "target_sign": 1
+              },
+              "source_profile": {
+                "family": "ecoinvent",
+                "system_model": "cutoff",
+                "version": "3.8"
+              }
+            },
+            {
+              "source_profile": {
+                "family": "ecoinvent",
+                "version": "3.7",
+                "system_model": "cutoff"
+              },
+              "conversion_factor": 1.0,
+              "review": {
+                "status": "verified",
+                "source_sign": 1.0,
+                "target_sign": 1,
+                "reason": "Complete native Swiss fossil diesel distribution per kg as a source-3.7 low-sulfur diesel screening proxy, using the same complete supplier already reviewed for source 3.8. Native fuel grade/sulfur and refining allocation, Swiss import mix, final-delivery/storage boundary, vintage and internal uncertainty differ. Preserve caller fuel mass and separate combustion; no LHV, density, sulfur-emission correction or extra retail supply burden. Complete native inventory replaces source internal supply/treatment routes, delivery, technology, allocation, geography, vintage and internal uncertainty. Preserve exact signed caller quantities, formulas, supported uncertainty and separately listed operations/emissions. Existing BAFU biosphere exclusions remain. Score effects are unquantified; no inventory/LCIA equality is claimed. Only the exact independently inspected ecoinvent 3.7 cut-off identity is newly approved. No new helper, upstream manufacturing reconstruction, foreground omission, zero-burden supplier, recovery credit, inverse or cross-system-model conversion, or Python module/test edit.",
+                "evidence": [
+                  "brightpath/data/export/uvek_final_energy_native_37_review.json"
+                ]
+              }
+            }
+          ],
+          "reason": "Only independently inspected exact source profiles qualify; each retains its original reference coordinates and native inventory.",
+          "status": "unresolved"
+        },
+        "report_correspondence": true,
+        "review_ref": "r-224c1307371dbd9b",
         "source": {
           "location": "Europe without Switzerland",
           "name": "market for diesel, low-sulfur",
@@ -263,42 +316,12 @@
           "unit": "kilogram"
         },
         "target": {
+          "location": "CH",
           "name": "Diesel, fossil, at regional storage",
           "reference product": "Diesel, fossil, at regional storage",
-          "location": "CH",
           "unit": "kilogram"
         },
-        "classification": "proxy",
-        "conversion_factor": 1,
-        "review_ref": "r-224c1307371dbd9b",
-        "report_correspondence": true,
-        "technosphere_information_loss": "Correct refinery-only diesel to complete native fossil diesel at regional storage. Native explicitly fossil supply contains its CH/RER refinery mix and distribution, without the roughly5.5%biodiesel in ordinary native Diesel-at-regional-storage. Use the Swiss2020supply as a geographic screening proxy for Europe-without-Switzerland. Source low-sulfur performance/assay is not established by the native label; preserve caller combustion/emissions rather than inventing a sulfur, LHV, density, yield or transport adjustment. New permission covers only these40actually required exact ecoinvent3.8cut-off inputs through UVEK2025to native2026with canonical ecoinvent3.10biosphere. No other release/patch, inverse or cross-system-model approval is inferred. Use the complete native material/component/service once at factor+1. Signed caller quantities, formulas, supported marginal uncertainty, ownership and separately listed inputs/emissions remain. Native internal producer/delivery weights, allocation and uncertainty replace source market/production internals; those internals are not claimed preserved or appended. No new foreground omission, zero-inventory stock, helper or invented recovery credit. Native geography, composition/grade/performance, processing/fleet, allocation, delivery, vintage, internal uncertainty and mapped-export biosphere exclusions remain explicit screening differences. Source/native LCI, LCIA, performance and stochastic equivalence are unverified; score effects are unquantified. Background parameter/formula graphs and correlations are not transplanted.",
-        "reference_flow_sign_review": {
-          "status": "unresolved",
-          "reason": "Only the independently inspected source3.8cut-off delivered fuel context qualifies.",
-          "evidence": [
-            "brightpath/data/export/uvek_trucks_native_40_review.json"
-          ],
-          "profiles": [
-            {
-              "source_profile": {
-                "family": "ecoinvent",
-                "version": "3.8",
-                "system_model": "cutoff"
-              },
-              "conversion_factor": 1,
-              "review": {
-                "status": "verified",
-                "source_sign": 1,
-                "target_sign": 1,
-                "reason": "Correct refinery-only diesel to complete native fossil diesel at regional storage. Native explicitly fossil supply contains its CH/RER refinery mix and distribution, without the roughly5.5%biodiesel in ordinary native Diesel-at-regional-storage. Use the Swiss2020supply as a geographic screening proxy for Europe-without-Switzerland. Source low-sulfur performance/assay is not established by the native label; preserve caller combustion/emissions rather than inventing a sulfur, LHV, density, yield or transport adjustment.",
-                "evidence": [
-                  "brightpath/data/export/uvek_trucks_native_40_review.json"
-                ]
-              }
-            }
-          ]
-        }
+        "technosphere_information_loss": "Correct refinery-only diesel to complete native fossil diesel at regional storage. Native explicitly fossil supply contains its CH/RER refinery mix and distribution, without the roughly5.5%biodiesel in ordinary native Diesel-at-regional-storage. Use the Swiss2020supply as a geographic screening proxy for Europe-without-Switzerland. Source low-sulfur performance/assay is not established by the native label; preserve caller combustion/emissions rather than inventing a sulfur, LHV, density, yield or transport adjustment. New permission covers only these40actually required exact ecoinvent3.8cut-off inputs through UVEK2025to native2026with canonical ecoinvent3.10biosphere. No other release/patch, inverse or cross-system-model approval is inferred. Use the complete native material/component/service once at factor+1. Signed caller quantities, formulas, supported marginal uncertainty, ownership and separately listed inputs/emissions remain. Native internal producer/delivery weights, allocation and uncertainty replace source market/production internals; those internals are not claimed preserved or appended. No new foreground omission, zero-inventory stock, helper or invented recovery credit. Native geography, composition/grade/performance, processing/fleet, allocation, delivery, vintage, internal uncertainty and mapped-export biosphere exclusions remain explicit screening differences. Source/native LCI, LCIA, performance and stochastic equivalence are unverified; score effects are unquantified. Background parameter/formula graphs and correlations are not transplanted."
       }
     }
   ],
@@ -4492,5 +4515,25 @@
   "new_foreground_omissions": [],
   "runtime_Python_changes": 0,
   "generator_Python_changes": 0,
-  "licensing": "Full source/native inventories, comments and parameter graphs remain private; only mapping decisions, hashes and bounded reference/basis facts are published."
+  "licensing": "Full source/native inventories, comments and parameter graphs remain private; only mapping decisions, hashes and bounded reference/basis facts are published.",
+  "final_energy_source37_scope_extensions": {
+    "bp-565489cccf0b67ff": {
+      "review_path": "brightpath/data/export/uvek_final_energy_native_37_review.json",
+      "source_witness": {
+        "identity": {
+          "location": "Europe without Switzerland",
+          "name": "market for diesel, low-sulfur",
+          "reference product": "diesel, low-sulfur",
+          "unit": "kilogram"
+        },
+        "reference_amount": 1.0,
+        "nonproduction_count": 16,
+        "inventory_sha256": "70977af845a57ad6567830f56ea7613ae5f77df2030b193f00feb92d24a321af",
+        "metadata_sha256": "97932ad4c9220d000595b8411c5e7dee8e09e3e953b0652fa677b403449237a3",
+        "comment_sha256": "fe79350eee8b7524ff01c84da42c1e15eaf2556c760d8d325c52053f7e317667",
+        "product_information_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "new_foreground_omissions": []
+    }
+  }
 }
