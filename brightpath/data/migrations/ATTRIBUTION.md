@@ -1849,3 +1849,22 @@ Only the two exact nonphysical waste indicators may be omitted when unavailable,
 with warnings. Physical releases are never omitted. Existing component and water
 proxy limitations remain explicit; no incineration-FAE, recovered-energy allocation,
 new system model or reverse correspondence is approved by this review.
+
+The `ecoinvent-3.12-cutoff-ecoinvent-3.13-cutoff.json` and
+`ecoinvent-3.12-biosphere-ecoinvent-3.13-biosphere.json` resources were generated on 2026-11-23
+with `ecoinvent_migrate` 0.7.1 (`generate_technosphere_mapping` and `generate_biosphere_mapping`,
+ecoinvent_interface 3.1, randonneur 0.7.2) from licensed ecoinvent 3.12 and 3.13 cut-off ecoSpold2
+releases and the official `Change Report Annex v3.12 - v3.13.xlsx` (SHA-256
+`baf0b170edd1be39cae9c860fec9346585ea3943ad382bd4060a5ca7b9746935`). The `EE Deletions` sheet is
+not empty (seven 2-Propen-1-ol flows), so the high-level biosphere generator returned rules and no
+direct supplemental call was needed. Technosphere rule content is unchanged from the generator
+(35 replacements, 29 disaggregations); the file is only re-serialized with LF line endings.
+Biosphere rule sources follow the enrichment convention above (exact Brightway identity resolved by
+UUID and verified by name against the exact 3.12 biosphere). The four 2-Propen-1-ol to Allyl alcohol
+rules, a CAS-based ecoinvent_migrate patch, carried ecoSpold `context` lists; these were replaced
+by the exact Brightway `categories` and `unit` of the same UUIDs in the exact 3.12 and 3.13
+biospheres, because target fields are copied onto exchanges. No rule was added, removed or
+re-targeted. The rule sets are identical to the `randonneur_data` 0.8 files of the same names.
+Every source and target identity was validated against the exact 3.12 and 3.13 catalogs, and the
+technosphere resource was cross-checked against ecoinvent's `Correspondence File v3.12 - v3.13.xlsx`.
+Generation scripts, source hashes and the validation report are kept with the contribution.

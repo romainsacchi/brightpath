@@ -49,6 +49,7 @@ def test_packaged_migrations_cover_forward_and_reverse_routes():
         "3.10",
         "3.11",
         "3.12",
+        "3.13",
     )
     assert [direction for _, _, direction in resolve_migration_route("3.6", "3.12", resources)] == ["forward"] * 6
     assert [direction for _, _, direction in resolve_migration_route("3.12", "3.6", resources)] == ["backward"] * 6

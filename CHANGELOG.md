@@ -7,6 +7,12 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+- Add ecoinvent 3.12 to 3.13 cut-off technosphere and biosphere migration resources
+  (ecoinvent_migrate 0.7.1; 35 replacements, 29 disaggregations, 9 biosphere
+  replacements and 3 deletions) and the exact ecoinvent 3.13 cut-off reference
+  catalog. Biosphere sources carry exact Brightway identities; every rule identity
+  is validated against the exact 3.12 and 3.13 catalogs.
+
 - Correct four inspected ecoinvent 3.6 cut-off municipal-incineration links to
   dedicated native glass, polyethylene, polypropylene and polystyrene services.
   Remove construction-waste transport wrappers, retain separately listed

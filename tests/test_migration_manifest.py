@@ -17,9 +17,11 @@ def test_packaged_migration_manifest_matches_every_resource():
     packaged = json.loads((directory / "RESOURCE_MANIFEST.json").read_text(encoding="utf-8"))
 
     assert packaged == expected
-    assert len(packaged["resources"]) == 23
+    assert len(packaged["resources"]) == 25
     assert {item["path"] for item in packaged["resources"]} >= {
-        "ecoinvent/biosphere/ecoinvent-3.11-biosphere-ecoinvent-3.12-biosphere.json"
+        "ecoinvent/biosphere/ecoinvent-3.11-biosphere-ecoinvent-3.12-biosphere.json",
+        "ecoinvent/biosphere/ecoinvent-3.12-biosphere-ecoinvent-3.13-biosphere.json",
+        "ecoinvent/cutoff/ecoinvent-3.12-cutoff-ecoinvent-3.13-cutoff.json",
     }
     uvek_resources = [item for item in packaged["resources"] if item["path"].startswith("uvek/")]
     assert {item["path"] for item in uvek_resources} == {

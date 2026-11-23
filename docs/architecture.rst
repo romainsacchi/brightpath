@@ -184,7 +184,7 @@ matches and removes an exchange. Rollback returns the source document and
 removes uncommitted changes from the report.
 
 Technosphere and biosphere resources connect adjacent ecoinvent release series
-from 3.5→3.6 through 3.11→3.12. Consequential version-to-version, cross-model,
+from 3.5→3.6 through 3.12→3.13. Consequential version-to-version, cross-model,
 and UVEK-version migration remain unavailable. A
 separate ecoinvent 3.6–3.12 to UVEK 2025 compatibility resource is explicitly
 heuristic, records a warning and loss, and is verified against the exact UVEK

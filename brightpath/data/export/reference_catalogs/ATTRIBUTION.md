@@ -36,3 +36,11 @@ UUID-bearing catalogs are enriched from extracted exact ecoSpold2 releases by
 adjacent version or system model. The manifest records UUID coverage separately
 from identity coverage; a zero or partial count means callers must supply an
 explicit exact ecoSpold2 reference catalog for that profile.
+
+The ecoinvent 3.13 cut-off catalog (2026-11-23) was generated from the licensed 3.13 cut-off
+ecoSpold2 release (`ecoinvent 3.13_cutoff_ecoSpold02.7z`, SHA-256
+`6d34eda584ef488aacc340e110381173f03d2fba7905aac5e2fafe9a6fe39819`) with a reader that applies the
+identity-relevant bw2io 0.9.17 strategies (`normalize_units`, `update_ecoinvent_locations`,
+reference product with non-zero amount; `Ecospold2BiosphereImporter` for the biosphere). The same
+reader reproduces the packaged `ecoinvent__3.12__cutoff.json` byte for byte. It contains 27,400
+technosphere and 9,893 biosphere identities, all with exact ecoSpold2 UUIDs, and no amounts.
