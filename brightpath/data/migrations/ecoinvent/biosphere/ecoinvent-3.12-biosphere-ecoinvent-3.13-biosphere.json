@@ -1,0 +1,265 @@
+{
+  "name": "ecoinvent-3.12-biosphere-ecoinvent-3.13-biosphere",
+  "description": "Data migration file from ecoinvent-3.12-biosphere to ecoinvent-3.13-biosphere generated with `ecoinvent_migrate` version 0.7.1; rule sources enriched with exact Brightway (name, categories, unit) identities resolved by UUID against the exact ecoinvent 3.12 biosphere (BrightPath convention); ecoSpold 'context' lists replaced by the exact Brightway categories of the same UUIDs",
+  "contributors": [
+    {
+      "title": "ecoinvent association",
+      "path": "https://ecoinvent.org/",
+      "roles": [
+        "author"
+      ]
+    },
+    {
+      "title": "Chris Mutel",
+      "path": "https://chris.mutel.org/",
+      "roles": [
+        "wrangler"
+      ]
+    }
+  ],
+  "created": "2026-11-23T14:55:32.204203+00:00",
+  "version": "2.0.0",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "title": "Creative Commons Attribution 4.0 International"
+    }
+  ],
+  "graph_context": [
+    "edges"
+  ],
+  "mapping": {
+    "source": {
+      "expression language": "XPath",
+      "labels": {
+        "name": "//*:elementaryExchange/*:name/text()",
+        "unit": "//*:elementaryExchange/*:unitName/text()",
+        "uuid": "//*:elementaryExchange/@elementaryExchangeId",
+        "formula": "//*:elementaryExchange/@formula",
+        "context": [
+          "//*:elementaryExchange/*:compartment/*:compartment/text()",
+          "//*:elementaryExchange/*:compartment/*:subcompartment/text()"
+        ]
+      }
+    },
+    "target": {
+      "expression language": "XPath",
+      "labels": {
+        "name": "//*:elementaryExchange/*:name/text()",
+        "unit": "//*:elementaryExchange/*:unitName/text()",
+        "uuid": "//*:elementaryExchange/@elementaryExchangeId",
+        "formula": "//*:elementaryExchange/@formula",
+        "context": [
+          "//*:elementaryExchange/*:compartment/*:compartment/text()",
+          "//*:elementaryExchange/*:compartment/*:subcompartment/text()"
+        ]
+      }
+    }
+  },
+  "source_id": "ecoinvent-3.12-biosphere",
+  "target_id": "ecoinvent-3.13-biosphere",
+  "homepage": "https://github.com/brightway-lca/ecoinvent_migrate",
+  "delete": [
+    {
+      "source": {
+        "name": "2-Propen-1-ol",
+        "categories": [
+          "soil",
+          "forestry"
+        ],
+        "unit": "kilogram",
+        "uuid": "f8191b10-313b-5ab3-8d1a-ada32893892c"
+      },
+      "comment": "Deleted flow not listed in change report"
+    },
+    {
+      "source": {
+        "name": "2-Propen-1-ol",
+        "categories": [
+          "soil",
+          "agricultural"
+        ],
+        "unit": "kilogram",
+        "uuid": "8a655fdc-5291-595a-a6b4-e24e65e86e7c"
+      },
+      "comment": "Deleted flow not listed in change report"
+    },
+    {
+      "source": {
+        "name": "2-Propen-1-ol",
+        "categories": [
+          "soil"
+        ],
+        "unit": "kilogram",
+        "uuid": "91015dad-db91-5b4b-86cb-fffc847ce542"
+      },
+      "comment": "Deleted flow not listed in change report"
+    }
+  ],
+  "replace": [
+    {
+      "source": {
+        "name": "2-Propen-1-ol",
+        "categories": [
+          "air",
+          "non-urban air or from high stacks"
+        ],
+        "unit": "kilogram",
+        "uuid": "0e1ad87f-928a-5f2e-990c-8f431f261416"
+      },
+      "target": {
+        "name": "Allyl alcohol",
+        "categories": [
+          "air"
+        ],
+        "unit": "kilogram",
+        "uuid": "c8d084b4-a980-49a3-a385-8476ed020c6b"
+      },
+      "comment": "Deleted in change report without replacement; same substance (CAS 107-18-6) as existing flow 'Allyl alcohol'; subcompartment 'non-urban air or from high stacks' not available, mapped to unspecified"
+    },
+    {
+      "source": {
+        "name": "2-Propen-1-ol",
+        "categories": [
+          "air"
+        ],
+        "unit": "kilogram",
+        "uuid": "f8828e44-6c1e-50ee-afa4-1b2f2a89590c"
+      },
+      "target": {
+        "name": "Allyl alcohol",
+        "categories": [
+          "air"
+        ],
+        "unit": "kilogram",
+        "uuid": "c8d084b4-a980-49a3-a385-8476ed020c6b"
+      },
+      "comment": "Deleted in change report without replacement; same substance (CAS 107-18-6) as existing flow 'Allyl alcohol'"
+    },
+    {
+      "source": {
+        "name": "2-Propen-1-ol",
+        "categories": [
+          "water",
+          "surface water"
+        ],
+        "unit": "kilogram",
+        "uuid": "13368c7b-d50e-5559-b4dc-9b7bf9ef32d0"
+      },
+      "target": {
+        "name": "Allyl alcohol",
+        "categories": [
+          "water"
+        ],
+        "unit": "kilogram",
+        "uuid": "3dbfcc62-4898-48a7-969b-74270615e36e"
+      },
+      "comment": "Deleted in change report without replacement; same substance (CAS 107-18-6) as existing flow 'Allyl alcohol'; subcompartment 'surface water' not available, mapped to unspecified"
+    },
+    {
+      "source": {
+        "name": "2-Propen-1-ol",
+        "categories": [
+          "water"
+        ],
+        "unit": "kilogram",
+        "uuid": "0d8d3729-7b68-5669-bc51-fa692e31c561"
+      },
+      "target": {
+        "name": "Allyl alcohol",
+        "categories": [
+          "water"
+        ],
+        "unit": "kilogram",
+        "uuid": "3dbfcc62-4898-48a7-969b-74270615e36e"
+      },
+      "comment": "Deleted in change report without replacement; same substance (CAS 107-18-6) as existing flow 'Allyl alcohol'"
+    },
+    {
+      "source": {
+        "name": "Dibutyltin",
+        "categories": [
+          "water",
+          "ocean"
+        ],
+        "unit": "kilogram",
+        "formula": "C8H18Sn",
+        "uuid": "9b84ef84-a567-48de-8dd5-24726bc6688d"
+      },
+      "target": {
+        "formula": "C8H18Sn+2",
+        "uuid": "9b84ef84-a567-48de-8dd5-24726bc6688d"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "Phenyltin",
+        "categories": [
+          "water",
+          "ocean"
+        ],
+        "unit": "kilogram",
+        "formula": "C6H8Sn",
+        "uuid": "cff46201-bfb0-486c-8f70-277a413c58a1"
+      },
+      "target": {
+        "formula": "C6H5Sn+3",
+        "uuid": "cff46201-bfb0-486c-8f70-277a413c58a1"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "Trioctyltin",
+        "categories": [
+          "water",
+          "ocean"
+        ],
+        "unit": "kilogram",
+        "formula": "C24H51Sn",
+        "uuid": "e2ee2329-8e3f-484a-a1a7-99316eb2762c"
+      },
+      "target": {
+        "formula": "C24H51Sn1+",
+        "uuid": "e2ee2329-8e3f-484a-a1a7-99316eb2762c"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "Diphenyltin",
+        "categories": [
+          "water",
+          "ocean"
+        ],
+        "unit": "kilogram",
+        "formula": "C12H12Sn",
+        "uuid": "8892f038-c4cf-4166-adeb-df61c4e32af0"
+      },
+      "target": {
+        "formula": "C12H10Sn+2",
+        "uuid": "8892f038-c4cf-4166-adeb-df61c4e32af0"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    },
+    {
+      "source": {
+        "name": "Triphenyltin",
+        "categories": [
+          "water",
+          "ocean"
+        ],
+        "unit": "kilogram",
+        "formula": "C18H15Sn",
+        "uuid": "ad5a58d5-6ccd-4693-96f4-e56554a81269"
+      },
+      "target": {
+        "formula": "C18H15Sn+",
+        "uuid": "ad5a58d5-6ccd-4693-96f4-e56554a81269"
+      },
+      "comment": "Flow attribute change not listed in change report"
+    }
+  ]
+}

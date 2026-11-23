@@ -329,8 +329,8 @@ OpenLCA Excel is not currently supported.
 
 ### Background data
 
-- Exact reference catalogs are available for ecoinvent 3.6–3.12 and UVEK 2025/2026.
-- Packaged ecoinvent cut-off migrations connect releases from 3.5 through 3.12.
+- Exact reference catalogs are available for ecoinvent 3.6–3.12, ecoinvent 3.13 cut-off, and UVEK 2025/2026.
+- Packaged ecoinvent cut-off migrations connect releases from 3.5 through 3.13.
 - Reverse migrations are inferred and require permissive review.
 - A heuristic ecoinvent-to-UVEK 2025 route is available and must be reviewed.
 - Reviewed UVEK 2025/2026 → ecoinvent 3.12 cut-off exports cover 1,516 supplier identities, including supporting recipes and policy-controlled proxies; coverage remains partial.

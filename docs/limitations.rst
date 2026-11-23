@@ -206,9 +206,9 @@ supported by this addition. No SimaPro sampling compatibility is implied.
 Migration boundaries
 --------------------
 
-* Packaged ecoinvent cut-off technosphere edges cover 3.5→3.12.
+* Packaged ecoinvent cut-off technosphere edges cover 3.5→3.13.
 * Packaged ecoinvent biosphere edges cover adjacent release series from
-  3.5→3.6 through 3.11→3.12.
+  3.5→3.6 through 3.12→3.13.
 * Reverse routes are inferred from forward data and fail under strict policy.
   Permissive policy records the inference and all known losses.
 * Forward resources can contain deletion rules. A route is not rejected merely

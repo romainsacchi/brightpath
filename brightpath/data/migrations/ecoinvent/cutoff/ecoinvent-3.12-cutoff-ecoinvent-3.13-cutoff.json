@@ -1,0 +1,1913 @@
+{
+  "name": "ecoinvent-3.12-cutoff-ecoinvent-3.13-cutoff",
+  "description": "Data migration file from ecoinvent-3.12-cutoff to ecoinvent-3.13-cutoff generated with `ecoinvent_migrate` version 0.7.1",
+  "contributors": [
+    {
+      "title": "ecoinvent association",
+      "path": "https://ecoinvent.org/",
+      "roles": [
+        "author"
+      ]
+    },
+    {
+      "title": "Chris Mutel",
+      "path": "https://chris.mutel.org/",
+      "roles": [
+        "wrangler"
+      ]
+    }
+  ],
+  "created": "2026-11-23T14:55:27.146114+00:00",
+  "version": "2.0.0",
+  "licenses": [
+    {
+      "name": "CC-BY-4.0",
+      "path": "https://creativecommons.org/licenses/by/4.0/legalcode",
+      "title": "Creative Commons Attribution 4.0 International"
+    }
+  ],
+  "graph_context": [
+    "edges"
+  ],
+  "mapping": {
+    "source": {
+      "expression language": "XPath",
+      "labels": {
+        "filename": "concat(//*:activity/@id, '_', //*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/@intermediateExchangeId, '.spold')",
+        "name": "//*:activityName/text()",
+        "location": "//*:geography/*:shortname/text()",
+        "reference product": "//*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/*:name/text()",
+        "unit": "//*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/*:unitName/text()"
+      }
+    },
+    "target": {
+      "expression language": "XPath",
+      "labels": {
+        "filename": "concat(//*:activity/@id, '_', //*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/@intermediateExchangeId, '.spold')",
+        "name": "//*:activityName/text()",
+        "location": "//*:geography/*:shortname/text()",
+        "reference product": "//*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/*:name/text()",
+        "unit": "//*:intermediateExchange[*:outputGroup = '0' and @amount != 0]/*:unitName/text()"
+      }
+    }
+  },
+  "source_id": "ecoinvent-3.12-cutoff",
+  "target_id": "ecoinvent-3.13-cutoff",
+  "homepage": "https://github.com/brightway-lca/ecoinvent_migrate",
+  "replace": [
+    {
+      "source": {
+        "unit": "kg",
+        "name": "calcined petroleum coke production",
+        "reference product": "calcined petroleum coke",
+        "location": "CN"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "calcined petroleum coke production, vertical shaft",
+        "reference product": "calcined petroleum coke",
+        "location": "CN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "folding boxboard carton production",
+        "reference product": "folding boxboard carton",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "cartonboard production, virgin",
+        "reference product": "cartonboard, virgin",
+        "location": "RoW"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "folding boxboard carton production",
+        "reference product": "folding boxboard carton",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "cartonboard production, virgin",
+        "reference product": "cartonboard, virgin",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "lithium brine inspissation",
+        "reference product": "lithium brine, 6.7 % Li",
+        "location": "GLO"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "lithium brine concentration",
+        "reference product": "lithium brine, concentrated, 6%Li",
+        "location": "CL"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "lithium carbonate production, from concentrated brine",
+        "reference product": "lithium carbonate",
+        "location": "GLO"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "lithium carbonate production, battery grade, from concentrated brine",
+        "reference product": "lithium carbonate, battery grade",
+        "location": "CL"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "lithium carbonate production, from spodumene",
+        "reference product": "lithium carbonate",
+        "location": "CN"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "lithium carbonate production, battery grade, from spodumene concentrate, Shehong",
+        "reference product": "lithium carbonate, battery grade",
+        "location": "CN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "lithium carbonate production, from spodumene",
+        "reference product": "lithium carbonate",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "lithium carbonate production, battery grade, from spodumene concentrate, Shehong",
+        "reference product": "lithium carbonate, battery grade",
+        "location": "CN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for folding boxboard carton",
+        "reference product": "folding boxboard carton",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for cartonboard, virgin",
+        "reference product": "cartonboard, virgin",
+        "location": "RoW"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for folding boxboard carton",
+        "reference product": "folding boxboard carton",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for cartonboard, virgin",
+        "reference product": "cartonboard, virgin",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for formaldehyde",
+        "reference product": "formaldehyde",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for formaldehyde",
+        "reference product": "formaldehyde",
+        "location": "RER w/o RU"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for lithium brine, 6.7 % Li",
+        "reference product": "lithium brine, 6.7 % Li",
+        "location": "GLO"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for lithium brine, concentrated, 6%Li",
+        "reference product": "lithium brine, concentrated, 6%Li",
+        "location": "CL"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for lithium carbonate",
+        "reference product": "lithium carbonate",
+        "location": "GLO"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for lithium carbonate, battery grade",
+        "reference product": "lithium carbonate, battery grade",
+        "location": "RoW"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for solid bleached and unbleached board carton",
+        "reference product": "solid bleached and unbleached board carton",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for solid bleached and unbleached board carton",
+        "reference product": "solid bleached and unbleached board carton",
+        "location": "GLO"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for solid bleached and unbleached board carton",
+        "reference product": "solid bleached and unbleached board carton",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for cartonboard, virgin",
+        "reference product": "cartonboard, virgin",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for spodumene",
+        "reference product": "spodumene",
+        "location": "GLO"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for spodumene concentrate",
+        "reference product": "spodumene concentrate",
+        "location": "CN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for white lined chipboard carton",
+        "reference product": "white lined chipboard carton",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for cartonboard, recycled",
+        "reference product": "cartonboard, recycled",
+        "location": "RoW"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for white lined chipboard carton",
+        "reference product": "white lined chipboard carton",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "market for cartonboard, recycled",
+        "reference product": "cartonboard, recycled",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "propylene oxide production, from isobutene, PO/TBA process",
+        "reference product": "propylene oxide, liquid",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "propylene oxide production, from isobutane, PO/TBA process",
+        "reference product": "propylene oxide, liquid",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "propylene oxide production, from isobutene, PO/TBA process",
+        "reference product": "propylene oxide, liquid",
+        "location": "US"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "propylene oxide production, from isobutane, PO/TBA process",
+        "reference product": "propylene oxide, liquid",
+        "location": "US"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "seed-cotton production, conventional",
+        "reference product": "seed-cotton",
+        "location": "IN-GJ"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "seed-cotton production, conventional",
+        "reference product": "seed-cotton",
+        "location": "IN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "seed-cotton production, organic",
+        "reference product": "seed-cotton, organic",
+        "location": "IN-OR"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "seed-cotton production, organic",
+        "reference product": "seed-cotton, organic",
+        "location": "IN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "solid bleached and unbleached board carton production",
+        "reference product": "solid bleached and unbleached board carton",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "cartonboard production, virgin",
+        "reference product": "cartonboard, virgin",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "spodumene production",
+        "reference product": "spodumene",
+        "location": "AU"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "spodumene concentrate production",
+        "reference product": "spodumene concentrate",
+        "location": "AU"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "spodumene production",
+        "reference product": "spodumene",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "spodumene concentrate production",
+        "reference product": "spodumene concentrate",
+        "location": "AU"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "white lined chipboard carton production",
+        "reference product": "white lined chipboard carton",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "cartonboard production, recycled",
+        "reference product": "cartonboard, recycled",
+        "location": "RoW"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "white lined chipboard carton production",
+        "reference product": "white lined chipboard carton",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "cartonboard production, recycled",
+        "reference product": "cartonboard, recycled",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "propylene oxide production, from isobutene, PO/TBA process",
+        "reference product": "tert-butanol",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "propylene oxide production, from isobutane, PO/TBA process",
+        "reference product": "tert-butanol",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "propylene oxide production, from isobutene, PO/TBA process",
+        "reference product": "tert-butanol",
+        "location": "US"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "propylene oxide production, from isobutane, PO/TBA process",
+        "reference product": "tert-butanol",
+        "location": "US"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "folding boxboard carton production",
+        "reference product": "turpentine",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "cartonboard production, virgin",
+        "reference product": "turpentine",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "folding boxboard carton production",
+        "reference product": "turpentine",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "cartonboard production, virgin",
+        "reference product": "turpentine",
+        "location": "RoW"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "solid bleached and unbleached board carton production",
+        "reference product": "turpentine",
+        "location": "RER"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "cartonboard production, virgin",
+        "reference product": "turpentine",
+        "location": "RER"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "calcined petroleum coke production",
+        "reference product": "gypsum, mineral",
+        "location": "CN"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "calcined petroleum coke production, vertical shaft",
+        "reference product": "gypsum, mineral",
+        "location": "CN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "lithium carbonate production, from spodumene",
+        "reference product": "sodium sulfate, anhydrite",
+        "location": "CN"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "lithium carbonate production, battery grade, from spodumene concentrate, Shehong",
+        "reference product": "sodium sulfate, anhydrite",
+        "location": "CN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "lithium carbonate production, from spodumene",
+        "reference product": "sodium sulfate, anhydrite",
+        "location": "RoW"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "lithium carbonate production, battery grade, from spodumene concentrate, Shehong",
+        "reference product": "sodium sulfate, anhydrite",
+        "location": "CN"
+      }
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "treatment of used Li-ion battery, hydrometallurgical treatment",
+        "reference product": "lithium carbonate",
+        "location": "GLO"
+      },
+      "target": {
+        "unit": "kg",
+        "name": "treatment of used Li-ion battery, hydrometallurgical treatment",
+        "reference product": "lithium carbonate, battery grade",
+        "location": "GLO"
+      }
+    }
+  ],
+  "disaggregate": [
+    {
+      "source": {
+        "unit": "kg",
+        "name": "acetaldehyde production, ethylene oxidation",
+        "reference product": "acetaldehyde",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "acetaldehyde production, ethylene oxidation",
+          "reference product": "acetaldehyde",
+          "location": "CN",
+          "allocation": 0.43909721612364977
+        },
+        {
+          "unit": "kg",
+          "name": "acetaldehyde production, ethylene oxidation",
+          "reference product": "acetaldehyde",
+          "location": "RoW",
+          "allocation": 0.05005708263809607
+        },
+        {
+          "unit": "kg",
+          "name": "acetaldehyde production, ethylene oxidation",
+          "reference product": "acetaldehyde",
+          "location": "IN",
+          "allocation": 0.06823570738561517
+        },
+        {
+          "unit": "kg",
+          "name": "acetaldehyde production, ethylene oxidation",
+          "reference product": "acetaldehyde",
+          "location": "JP",
+          "allocation": 0.31790638447352243
+        },
+        {
+          "unit": "kg",
+          "name": "acetaldehyde production, ethylene oxidation",
+          "reference product": "acetaldehyde",
+          "location": "US",
+          "allocation": 0.12470360937911654
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "MJ",
+        "name": "cottonseed to generic market for energy feed",
+        "reference product": "energy feed, gross",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "MJ",
+          "name": "cottonseed to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "BR",
+          "allocation": 0.14418138288567292
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "CN",
+          "allocation": 0.2844046614017641
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "RoW",
+          "allocation": 0.4538031407415706
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "TR",
+          "allocation": 0.0230439636971546
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "US",
+          "allocation": 0.09456685127383782
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "MJ",
+        "name": "cottonseed, organic to generic market for energy feed",
+        "reference product": "energy feed, gross",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "MJ",
+          "name": "cottonseed, organic to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "BR",
+          "allocation": 0.0013682462918029321
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed, organic to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "RoW",
+          "allocation": 0.5299141934704776
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed, organic to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "PE",
+          "allocation": 0.013122489248937651
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed, organic to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "TR",
+          "allocation": 0.29208257645848723
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed, organic to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "TZ",
+          "allocation": 0.12304027574744145
+        },
+        {
+          "unit": "MJ",
+          "name": "cottonseed, organic to generic market for energy feed",
+          "reference product": "energy feed, gross",
+          "location": "US",
+          "allocation": 0.04047221878285312
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kWh",
+        "name": "electricity production, hydro, pumped storage",
+        "reference product": "electricity, high voltage",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kWh",
+          "name": "electricity production, hydro, pumped storage",
+          "reference product": "electricity, high voltage",
+          "location": "CN-CQ",
+          "allocation": 0.11582681559384472
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, hydro, pumped storage",
+          "reference product": "electricity, high voltage",
+          "location": "CN-HL",
+          "allocation": 0.1518921497384841
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, hydro, pumped storage",
+          "reference product": "electricity, high voltage",
+          "location": "CN-SA",
+          "allocation": 0.2389002272785115
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, hydro, pumped storage",
+          "reference product": "electricity, high voltage",
+          "location": "CN-XJ",
+          "allocation": 0.4510379375700163
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, hydro, pumped storage",
+          "reference product": "electricity, high voltage",
+          "location": "RoW",
+          "allocation": 0.04234286981914337
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kWh",
+        "name": "electricity production, hydro, run-of-river",
+        "reference product": "electricity, high voltage",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kWh",
+          "name": "electricity production, hydro, run-of-river",
+          "reference product": "electricity, high voltage",
+          "location": "RoW",
+          "allocation": 0.99999974755347
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, hydro, run-of-river",
+          "reference product": "electricity, high voltage",
+          "location": "IN-GA",
+          "allocation": 2.5244653002493683e-07
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kWh",
+        "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+        "reference product": "electricity, low voltage",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kWh",
+          "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+          "reference product": "electricity, low voltage",
+          "location": "RoW",
+          "allocation": 0.997560453955231
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+          "reference product": "electricity, low voltage",
+          "location": "IN-GA",
+          "allocation": 0.001009116758572704
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+          "reference product": "electricity, low voltage",
+          "location": "IN-JK",
+          "allocation": 0.00027335828786351636
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+          "reference product": "electricity, low voltage",
+          "location": "IN-ML",
+          "allocation": 8.431405250300002e-06
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+          "reference product": "electricity, low voltage",
+          "location": "IN-MZ",
+          "allocation": 0.0009619831895104195
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+          "reference product": "electricity, low voltage",
+          "location": "IN-NL",
+          "allocation": 4.0149548810952404e-05
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, photovoltaic, 3kWp slanted-roof installation, multi-Si, panel, mounted",
+          "reference product": "electricity, low voltage",
+          "location": "IN-SK",
+          "allocation": 0.0001465068547611812
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kWh",
+        "name": "electricity production, wind, 1-3MW turbine, offshore",
+        "reference product": "electricity, high voltage",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kWh",
+          "name": "electricity production, wind, 1-3MW turbine, offshore",
+          "reference product": "electricity, high voltage",
+          "location": "CN-HE",
+          "allocation": 0.8483374409321242
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, wind, 1-3MW turbine, offshore",
+          "reference product": "electricity, high voltage",
+          "location": "RoW",
+          "allocation": 0.1516625590678759
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kWh",
+        "name": "electricity production, wind, 1-3MW turbine, onshore",
+        "reference product": "electricity, high voltage",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kWh",
+          "name": "electricity production, wind, 1-3MW turbine, onshore",
+          "reference product": "electricity, high voltage",
+          "location": "BR-South-eastern/Mid-western grid",
+          "allocation": 0.0009544902936012767
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, wind, 1-3MW turbine, onshore",
+          "reference product": "electricity, high voltage",
+          "location": "CN-XZ",
+          "allocation": 0.002005970083048229
+        },
+        {
+          "unit": "kWh",
+          "name": "electricity production, wind, 1-3MW turbine, onshore",
+          "reference product": "electricity, high voltage",
+          "location": "RoW",
+          "allocation": 0.9970395396233505
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "fibre production, cotton, ginning",
+        "reference product": "fibre, cotton",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, ginning",
+          "reference product": "fibre, cotton",
+          "location": "BR",
+          "allocation": 0.1742902708124157
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, ginning",
+          "reference product": "fibre, cotton",
+          "location": "CN",
+          "allocation": 0.31136230671176346
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, ginning",
+          "reference product": "fibre, cotton",
+          "location": "RoW",
+          "allocation": 0.38410224343860816
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, ginning",
+          "reference product": "fibre, cotton",
+          "location": "TR",
+          "allocation": 0.0274030601570302
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, ginning",
+          "reference product": "fibre, cotton",
+          "location": "US",
+          "allocation": 0.10284211888018252
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "fibre production, cotton, organic, ginning",
+        "reference product": "fibre, cotton, organic",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, organic, ginning",
+          "reference product": "fibre, cotton, organic",
+          "location": "BR",
+          "allocation": 0.0012332813299705861
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, organic, ginning",
+          "reference product": "fibre, cotton, organic",
+          "location": "RoW",
+          "allocation": 0.6069317347951828
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, organic, ginning",
+          "reference product": "fibre, cotton, organic",
+          "location": "PE",
+          "allocation": 0.00978994135747276
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, organic, ginning",
+          "reference product": "fibre, cotton, organic",
+          "location": "TR",
+          "allocation": 0.2589890792938231
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, organic, ginning",
+          "reference product": "fibre, cotton, organic",
+          "location": "TZ",
+          "allocation": 0.09268186274812079
+        },
+        {
+          "unit": "kg",
+          "name": "fibre production, cotton, organic, ginning",
+          "reference product": "fibre, cotton, organic",
+          "location": "US",
+          "allocation": 0.030374100475429953
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "formaldehyde production, methanol oxidation",
+        "reference product": "formaldehyde",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "AR",
+          "allocation": 0.005908016724231958
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "BR",
+          "allocation": 0.03272132339574623
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "CA",
+          "allocation": 0.02408652972186875
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "CL",
+          "allocation": 0.010725322668605708
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "CN",
+          "allocation": 0.46246137065988
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "ID",
+          "allocation": 0.03881112524995455
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "IN",
+          "allocation": 0.025359025631703325
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "JP",
+          "allocation": 0.061352481367024175
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "KR",
+          "allocation": 0.017360479912743136
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "MX",
+          "allocation": 0.007907653153972006
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "MY",
+          "allocation": 0.02272314124704599
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "RU",
+          "allocation": 0.07335029994546446
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "TH",
+          "allocation": 0.012997636793310308
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "TW",
+          "allocation": 0.01445191783312125
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "US",
+          "allocation": 0.1897836756953281
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "formaldehyde production, methanol oxidation",
+        "reference product": "formaldehyde",
+        "location": "RER"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "BE",
+          "allocation": 0.07330889703432189
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "DE",
+          "allocation": 0.3348883705431523
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "ES",
+          "allocation": 0.11162945684771743
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "GB",
+          "allocation": 0.09796734421859381
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "IT",
+          "allocation": 0.1546151282905698
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "NL",
+          "allocation": 0.11729423525491503
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "PL",
+          "allocation": 0.05798067310896368
+        },
+        {
+          "unit": "kg",
+          "name": "formaldehyde production, methanol conversion, average process",
+          "reference product": "formaldehyde",
+          "location": "SE",
+          "allocation": 0.05231589470176608
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "MJ",
+        "name": "heat and power co-generation, wood chips, 6667 kW",
+        "reference product": "heat, district or industrial, other than natural gas",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "MJ",
+          "name": "heat and power co-generation, wood chips, 6667 kW",
+          "reference product": "heat, district or industrial, other than natural gas",
+          "location": "RoW",
+          "allocation": 0.16666666666666666
+        },
+        {
+          "unit": "MJ",
+          "name": "heat and power co-generation, wood chips, 6667 kW",
+          "reference product": "heat, district or industrial, other than natural gas",
+          "location": "IN-AS",
+          "allocation": 0.16666666666666666
+        },
+        {
+          "unit": "MJ",
+          "name": "heat and power co-generation, wood chips, 6667 kW",
+          "reference product": "heat, district or industrial, other than natural gas",
+          "location": "IN-HP",
+          "allocation": 0.16666666666666666
+        },
+        {
+          "unit": "MJ",
+          "name": "heat and power co-generation, wood chips, 6667 kW",
+          "reference product": "heat, district or industrial, other than natural gas",
+          "location": "IN-JH",
+          "allocation": 0.16666666666666666
+        },
+        {
+          "unit": "MJ",
+          "name": "heat and power co-generation, wood chips, 6667 kW",
+          "reference product": "heat, district or industrial, other than natural gas",
+          "location": "IN-KL",
+          "allocation": 0.16666666666666666
+        },
+        {
+          "unit": "MJ",
+          "name": "heat and power co-generation, wood chips, 6667 kW",
+          "reference product": "heat, district or industrial, other than natural gas",
+          "location": "IN-ML",
+          "allocation": 0.16666666666666666
+        }
+      ],
+      "comment": "Equal allocation factors used because all target datasets have zero production volume"
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for acetaldehyde",
+        "reference product": "acetaldehyde",
+        "location": "GLO"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for acetaldehyde",
+          "reference product": "acetaldehyde",
+          "location": "RoW",
+          "allocation": 0.04220034056415192
+        },
+        {
+          "unit": "kg",
+          "name": "market for acetaldehyde",
+          "reference product": "acetaldehyde",
+          "location": "RAS",
+          "allocation": 0.6957133338269046
+        },
+        {
+          "unit": "kg",
+          "name": "market for acetaldehyde",
+          "reference product": "acetaldehyde",
+          "location": "RER",
+          "allocation": 0.15695565262456504
+        },
+        {
+          "unit": "kg",
+          "name": "market for acetaldehyde",
+          "reference product": "acetaldehyde",
+          "location": "US",
+          "allocation": 0.10513067298437848
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for cottonseed",
+        "reference product": "cottonseed",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for cottonseed",
+          "reference product": "cottonseed",
+          "location": "BR",
+          "allocation": 0.1708323272383157
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed",
+          "reference product": "cottonseed",
+          "location": "CN",
+          "allocation": 0.33697508760878114
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed",
+          "reference product": "cottonseed",
+          "location": "RoW",
+          "allocation": 0.35284215285501797
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed",
+          "reference product": "cottonseed",
+          "location": "TR",
+          "allocation": 0.02730348539386005
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed",
+          "reference product": "cottonseed",
+          "location": "US",
+          "allocation": 0.11204694690402515
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for cottonseed, organic",
+        "reference product": "cottonseed, organic",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for cottonseed, organic",
+          "reference product": "cottonseed, organic",
+          "location": "BR",
+          "allocation": 0.0009941740741322412
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed, organic",
+          "reference product": "cottonseed, organic",
+          "location": "RoW",
+          "allocation": 0.658432328293098
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed, organic",
+          "reference product": "cottonseed, organic",
+          "location": "PE",
+          "allocation": 0.009534869870497283
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed, organic",
+          "reference product": "cottonseed, organic",
+          "location": "TR",
+          "allocation": 0.21222856691421355
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed, organic",
+          "reference product": "cottonseed, organic",
+          "location": "TZ",
+          "allocation": 0.08940273406548521
+        },
+        {
+          "unit": "kg",
+          "name": "market for cottonseed, organic",
+          "reference product": "cottonseed, organic",
+          "location": "US",
+          "allocation": 0.029407326782573698
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for fibre, cotton",
+        "reference product": "fibre, cotton",
+        "location": "GLO"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton",
+          "reference product": "fibre, cotton",
+          "location": "BD",
+          "allocation": 0.0015455732201967458
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton",
+          "reference product": "fibre, cotton",
+          "location": "BR",
+          "allocation": 0.14322346030117955
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton",
+          "reference product": "fibre, cotton",
+          "location": "CN",
+          "allocation": 0.25586274418387805
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton",
+          "reference product": "fibre, cotton",
+          "location": "RoW",
+          "allocation": 0.315636966758357
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton",
+          "reference product": "fibre, cotton",
+          "location": "IN",
+          "allocation": 0.1767019581332463
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton",
+          "reference product": "fibre, cotton",
+          "location": "TR",
+          "allocation": 0.022518532332509673
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton",
+          "reference product": "fibre, cotton",
+          "location": "US",
+          "allocation": 0.08451076507063267
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for fibre, cotton, organic",
+        "reference product": "fibre, cotton, organic",
+        "location": "GLO"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton, organic",
+          "reference product": "fibre, cotton, organic",
+          "location": "BR",
+          "allocation": 0.0004578623551294892
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton, organic",
+          "reference product": "fibre, cotton, organic",
+          "location": "RoW",
+          "allocation": 0.2253266847903849
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton, organic",
+          "reference product": "fibre, cotton, organic",
+          "location": "IN",
+          "allocation": 0.6287445986550293
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton, organic",
+          "reference product": "fibre, cotton, organic",
+          "location": "PE",
+          "allocation": 0.0036345686078122766
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton, organic",
+          "reference product": "fibre, cotton, organic",
+          "location": "TR",
+          "allocation": 0.09615109457719273
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton, organic",
+          "reference product": "fibre, cotton, organic",
+          "location": "TZ",
+          "allocation": 0.03440864215195307
+        },
+        {
+          "unit": "kg",
+          "name": "market for fibre, cotton, organic",
+          "reference product": "fibre, cotton, organic",
+          "location": "US",
+          "allocation": 0.01127654886249821
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for formaldehyde",
+        "reference product": "formaldehyde",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for formaldehyde",
+          "reference product": "formaldehyde",
+          "location": "RoW",
+          "allocation": 0.13566176112826528
+        },
+        {
+          "unit": "kg",
+          "name": "market for formaldehyde",
+          "reference product": "formaldehyde",
+          "location": "RAS",
+          "allocation": 0.6458358245693069
+        },
+        {
+          "unit": "kg",
+          "name": "market for formaldehyde",
+          "reference product": "formaldehyde",
+          "location": "RNA",
+          "allocation": 0.21850241430242773
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for polystyrene, expandable",
+        "reference product": "polystyrene, expandable",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, expandable",
+          "reference product": "polystyrene, expandable",
+          "location": "RoW",
+          "allocation": 0.13859020310633352
+        },
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, expandable",
+          "reference product": "polystyrene, expandable",
+          "location": "RAS",
+          "allocation": 0.6583034647550765
+        },
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, expandable",
+          "reference product": "polystyrene, expandable",
+          "location": "RNA",
+          "allocation": 0.20310633213859
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for polystyrene, general purpose",
+        "reference product": "polystyrene, general purpose",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, general purpose",
+          "reference product": "polystyrene, general purpose",
+          "location": "RoW",
+          "allocation": 0.13859020310633352
+        },
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, general purpose",
+          "reference product": "polystyrene, general purpose",
+          "location": "RAS",
+          "allocation": 0.6583034647550765
+        },
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, general purpose",
+          "reference product": "polystyrene, general purpose",
+          "location": "RNA",
+          "allocation": 0.20310633213859
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for polystyrene, high impact",
+        "reference product": "polystyrene, high impact",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, high impact",
+          "reference product": "polystyrene, high impact",
+          "location": "RoW",
+          "allocation": 0.13859020310633352
+        },
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, high impact",
+          "reference product": "polystyrene, high impact",
+          "location": "RAS",
+          "allocation": 0.6583034647550765
+        },
+        {
+          "unit": "kg",
+          "name": "market for polystyrene, high impact",
+          "reference product": "polystyrene, high impact",
+          "location": "RNA",
+          "allocation": 0.20310633213859
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for seed-cotton",
+        "reference product": "seed-cotton",
+        "location": "GLO"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton",
+          "reference product": "seed-cotton",
+          "location": "BD",
+          "allocation": 0.0015603720344657354
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton",
+          "reference product": "seed-cotton",
+          "location": "BR",
+          "allocation": 0.12439577699028391
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton",
+          "reference product": "seed-cotton",
+          "location": "CN",
+          "allocation": 0.2355615447819138
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton",
+          "reference product": "seed-cotton",
+          "location": "RoW",
+          "allocation": 0.34637310432505714
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton",
+          "reference product": "seed-cotton",
+          "location": "IN",
+          "allocation": 0.19424680612582063
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton",
+          "reference product": "seed-cotton",
+          "location": "TR",
+          "allocation": 0.01974459012384846
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton",
+          "reference product": "seed-cotton",
+          "location": "US",
+          "allocation": 0.0781178056186104
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "market for seed-cotton, organic",
+        "reference product": "seed-cotton, organic",
+        "location": "GLO"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "BR",
+          "allocation": 0.0003929522595119634
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "RoW",
+          "allocation": 0.18706695420676714
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "IN",
+          "allocation": 0.6829677069754637
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "PE",
+          "allocation": 0.003492922844634765
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "TR",
+          "allocation": 0.08330587901653619
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "TZ",
+          "allocation": 0.03197508753281741
+        },
+        {
+          "unit": "kg",
+          "name": "market for seed-cotton, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "US",
+          "allocation": 0.010798497164268851
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "polystyrene production, expandable",
+        "reference product": "polystyrene, expandable",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "polystyrene production, expandable",
+          "reference product": "polystyrene, expandable",
+          "location": "RoW",
+          "allocation": 0.08960573476702657
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, expandable",
+          "reference product": "polystyrene, expandable",
+          "location": "RAS",
+          "allocation": 0.6583034647550765
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, expandable",
+          "reference product": "polystyrene, expandable",
+          "location": "RNA",
+          "allocation": 0.20310633213859
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, expandable",
+          "reference product": "polystyrene, expandable",
+          "location": "UN-SAMERICA",
+          "allocation": 0.04898446833930693
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "polystyrene production, general purpose",
+        "reference product": "polystyrene, general purpose",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "polystyrene production, general purpose",
+          "reference product": "polystyrene, general purpose",
+          "location": "RoW",
+          "allocation": 0.08960573476702657
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, general purpose",
+          "reference product": "polystyrene, general purpose",
+          "location": "RAS",
+          "allocation": 0.6583034647550765
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, general purpose",
+          "reference product": "polystyrene, general purpose",
+          "location": "RNA",
+          "allocation": 0.20310633213859
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, general purpose",
+          "reference product": "polystyrene, general purpose",
+          "location": "UN-SAMERICA",
+          "allocation": 0.04898446833930693
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "polystyrene production, high impact",
+        "reference product": "polystyrene, high impact",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "polystyrene production, high impact",
+          "reference product": "polystyrene, high impact",
+          "location": "RoW",
+          "allocation": 0.08960573476702657
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, high impact",
+          "reference product": "polystyrene, high impact",
+          "location": "RAS",
+          "allocation": 0.6583034647550765
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, high impact",
+          "reference product": "polystyrene, high impact",
+          "location": "RNA",
+          "allocation": 0.20310633213859
+        },
+        {
+          "unit": "kg",
+          "name": "polystyrene production, high impact",
+          "reference product": "polystyrene, high impact",
+          "location": "UN-SAMERICA",
+          "allocation": 0.04898446833930693
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "seed-cotton production, conventional",
+        "reference product": "seed-cotton",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, conventional",
+          "reference product": "seed-cotton",
+          "location": "BR",
+          "allocation": 0.15468401807602458
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, conventional",
+          "reference product": "seed-cotton",
+          "location": "CN",
+          "allocation": 0.2929167463129222
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, conventional",
+          "reference product": "seed-cotton",
+          "location": "RoW",
+          "allocation": 0.430709022661365
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, conventional",
+          "reference product": "seed-cotton",
+          "location": "TR",
+          "allocation": 0.024552059639931522
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, conventional",
+          "reference product": "seed-cotton",
+          "location": "US",
+          "allocation": 0.09713815330975674
+        }
+      ]
+    },
+    {
+      "source": {
+        "unit": "kg",
+        "name": "seed-cotton production, organic",
+        "reference product": "seed-cotton, organic",
+        "location": "RoW"
+      },
+      "targets": [
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "BR",
+          "allocation": 0.0012394707673816254
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "RoW",
+          "allocation": 0.5900564652878171
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "PE",
+          "allocation": 0.011017561685537157
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "TR",
+          "allocation": 0.26276780268490435
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "TZ",
+          "allocation": 0.10085750958810617
+        },
+        {
+          "unit": "kg",
+          "name": "seed-cotton production, organic",
+          "reference product": "seed-cotton, organic",
+          "location": "US",
+          "allocation": 0.03406118998625361
+        }
+      ]
+    }
+  ]
+}
