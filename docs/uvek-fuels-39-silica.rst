@@ -1,5 +1,5 @@
 Activated silica and reviewed native ingredients
-===============================================
+================================================
 
 The inspected ecoinvent 3.9 cut-off activated-silica process makes a dry,
 chemically precipitated product. Mined silica sand does not provide that
@@ -29,7 +29,7 @@ only inside the unchanged, fingerprinted native wastewater helper. They are not
 new zero-inventory substitutes, new zero-burden recipes or extra recovery credits.
 
 Three ingredient decisions
--------------------------
+--------------------------
 
 The RER solid-silicate market now uses complete furnace-process solid sodium
 silicate instead of 80% spray powder. Primary source/native inventories agree on

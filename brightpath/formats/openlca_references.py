@@ -59,7 +59,7 @@ class OpenLCATechnosphereReference:
 
 @dataclass(frozen=True)
 class OpenLCABiosphereReference:
-    """Existing characterized openLCA elementary-flow, quantity, and unit references."""
+    """Existing openLCA elementary-flow, quantity, and unit references."""
 
     flow_id: str
     flow_name: str
@@ -69,6 +69,7 @@ class OpenLCABiosphereReference:
     unit_name: str
     amount_factor: float = 1.0
     native_categories: tuple[str, ...] = ()
+    reference_unit_name: str | None = None
 
 
 @dataclass(frozen=True)

@@ -1,5 +1,5 @@
 Construction-waste treatment signs
-=================================
+==================================
 
 Two independently inspected ecoinvent 3.8 cut-off services use a negative
 one-kg waste reference, while native UVEK supplies a positive one-kg treatment

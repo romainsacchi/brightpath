@@ -1,8 +1,8 @@
 """The generic copper market keeps a complete metal supply and profile boundary."""
 
-from copy import deepcopy
 import hashlib
 import json
+from copy import deepcopy
 
 import pytest
 

@@ -1,5 +1,5 @@
 Molybdenum oxide for the UVEK fuel preparation
-============================================
+==============================================
 
 The inspected ecoinvent 3.9 cut-off oxide market previously selected unroasted
 molybdenum concentrate. The reviewed replacement retains three distinct stages:

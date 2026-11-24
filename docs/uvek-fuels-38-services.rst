@@ -1,5 +1,5 @@
 Native services for ecoinvent 3.8 fuel preparation
-=================================================
+==================================================
 
 Sixteen independently inspected cut-off correspondences cover three electricity
 grids, four freight services, five fuel/combustion services and four water or
@@ -9,7 +9,7 @@ No runtime Python module, alternative sector engine, source-input omission or
 recovery credit is introduced.
 
 Grids, freight and delivered stocks
-----------------------------------
+-----------------------------------
 
 Indonesian medium-voltage, United States low-voltage and ENTSO-E low-voltage
 supply use their complete native grids per delivered kWh, retaining native
@@ -58,7 +58,7 @@ This helper is not a reconstruction of the source ecoinvent engine inventory;
 it reproduces the selected native screening proxy.
 
 Irrigation reference and water boundary
---------------------------------------
+---------------------------------------
 
 Three source markets (rest-of-world, France and United States) use complete
 Swiss sprinkler irrigation per cubic metre supplied to the plant. Native

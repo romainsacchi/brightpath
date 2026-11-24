@@ -1,14 +1,14 @@
 """Keep source furnace shares and delivery at the low-alloyed casting boundary."""
 
+import json
 from collections import defaultdict
 from copy import deepcopy
-import json
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
 
-from brightpath import BrightwayInventory, DATA_DIR
+from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource

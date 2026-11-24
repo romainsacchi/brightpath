@@ -1,7 +1,7 @@
 """Closer suppliers keep dry-mass, unrolled steel and complete freight bases."""
 
-from copy import deepcopy
 import json
+from copy import deepcopy
 
 import pytest
 

@@ -1,5 +1,5 @@
 Rail, factory services and compressed-air supply
-===============================================
+================================================
 
 Four requested ecoinvent 3.7 cut-off references use explicitly limited 3.7.1
 functional evidence. The source context stays 3.7; unpatched vectors and

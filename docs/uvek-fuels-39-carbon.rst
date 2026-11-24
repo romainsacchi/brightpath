@@ -1,5 +1,5 @@
 Granular activated carbon and ash treatment
-==========================================
+===========================================
 
 The inspected ecoinvent 3.9 cut-off granular-carbon market must not map to
 carbon black, carbon fibre or mercury-bearing spent-carbon disposal. Its

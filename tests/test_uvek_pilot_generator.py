@@ -1,7 +1,7 @@
 """Fuel normalization stays exact-profile, positive-reference and reproducible."""
 
-from copy import deepcopy
 import json
+from copy import deepcopy
 
 import pytest
 

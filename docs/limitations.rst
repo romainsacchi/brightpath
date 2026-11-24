@@ -74,11 +74,24 @@ Format boundaries
   cannot be reconstructed automatically. Distinct generated IDs alone do not
   establish compatibility with a target database's LCIA methods.
 
-Local versioned ecoinvent method references
--------------------------------------------
+Versioned ecoinvent method references
+-------------------------------------
 
-Use an explicit local method mapping when exporting inventories intended for
-a version-matched ecoinvent openLCA method package::
+For a linked ecoinvent export, use the inventory's declared biosphere version::
+
+    from brightpath.formats.openlca_jsonld import write_ecoinvent_openlca_jsonld
+
+    write_ecoinvent_openlca_jsonld(document, "inventory.zip")
+
+Brightpath supplies source biosphere identities and the matching Nexus flow,
+flow-property, and unit references for ecoinvent 3.8, 3.9.1 (also selected by
+3.9), 3.10, 3.11, 3.12, and 3.13. The coverage report records the package name
+and SHA-256. Import that package into the openLCA database where you use the
+inventory. The actual LCIA methods and characterization factors are supplied
+by that package in openLCA.
+
+An explicit local mapping can override the target package, the source biosphere
+CSV, or both::
 
     from brightpath.formats.openlca_methods import OpenLCAMethodMapping
     from brightpath.formats.openlca_jsonld import write_openlca_jsonld
@@ -92,15 +105,14 @@ a version-matched ecoinvent openLCA method package::
     write_openlca_jsonld(document, "inventory.zip", method_mapping=mapping)
 
 The package may be a directory or a ZIP with ``flows``, ``flow_properties``,
-and ``unit_groups`` at its root. The source CSV uses Premise's headerless
-five-column layout: name, compartment, subcompartment, unit, UUID, using commas
-or semicolons. Neither
-licensed method data nor a dependency on a local Premise checkout is bundled.
-The caller supplies both files and an exact matching ecoinvent biosphere context;
-the technosphere profile remains independent. With ``InventoryPipeline.write``,
-pass the mapping through ``adapter_kwargs={"method_mapping": mapping}``.
+and ``unit_groups`` at its root. The optional source CSV uses a headerless
+five-column layout with name, compartment, subcompartment, unit, and UUID,
+using commas or semicolons. The ecoinvent biosphere context has to match the
+mapping's version. The technosphere profile remains independent. With
+``InventoryPipeline.write``, pass the mapping through
+``adapter_kwargs={"method_mapping": mapping}``.
 
-The mapping accepts explicit ecoinvent versions from 3.5 through 3.12, including
+The mapping accepts explicit ecoinvent versions from 3.5 through 3.13, including
 patch releases such as 3.9.1; patch versions are never silently collapsed.
 ``biosphere_version`` defaults to 3.12 for existing callers. The caller is
 responsible for choosing a matching package and CSV: shared flow UUIDs and entity
@@ -119,18 +131,37 @@ the two specific ecoinvent natural-gas
 and mine-gas flow UUIDs; this is not a general volume conversion. Exchange
 amounts remain unchanged. Conflicting identifiers or incompatible units fail.
 
-Local compatibility checks covered downloaded JSON-LD packages for 3.5, 3.6, 3.7,
-3.8, 3.9.1, 3.10, 3.11, and 3.12. Matching against independent Premise source
-CSVs produced these counts (unique source UUIDs / matched UUIDs): 3.7
-4,329 / 3,610; 3.9.1 4,709 / 1,960; 3.10 4,362 / 3,579; 3.11
-9,795 / 8,529; and 3.12 9,850 / 8,955. These are flow-reference checks, not
-numerical LCIA comparisons in openLCA.
+Brightpath bundles verified legacy Nexus UUID pairs for ecoinvent 3.8, 3.9,
+3.9.1, 3.10, and 3.11 from `GreenDelta's published crosswalk
+<https://nexus.openlca.org/ws/files/38956>`_. Direct matches take precedence.
+Each remap requires both UUIDs in their respective catalogs and compatible
+names, compartments, and reference units. The 3.12 and 3.13 Nexus releases
+use ecoinvent's original elementary-flow UUIDs.
 
-For 3.6 and 3.8, all 3,598 and 4,006 package flow/quantity definitions,
-respectively, passed schema checks using package-derived CSVs. Those checks do
-not establish compatibility with an independent inventory. Premise's 3.8 CSV
-contained eight conflicting UUID aliases; the corrected table retains the
-identities from the imported ecoinvent 3.8 XML biosphere definitions.
+To override the bundled crosswalk, pass ``flow_uuid_map`` with original
+ecoinvent UUIDs as keys and package UUIDs as values. Pass ``flow_uuid_map={}``
+for direct matches only. The coverage report counts validated remaps in
+``remapped_source_flows`` and lists the pairs used by the inventory in
+``inventory_uuid_remaps``.
+
+Local compatibility checks covered downloaded JSON-LD packages for 3.5, 3.6, 3.7,
+3.8, 3.9.1, 3.10, 3.11, 3.12, and 3.13. Direct matching against independent source
+tables produced 3,610 matches for 3.7, 3,741 for 3.8, 1,960 for 3.9.1, 3,579 for
+3.10, 8,529 for 3.11, 8,955 for 3.12 and 9,893 for 3.13. The bundled crosswalk
+adds 41 verified matches for 3.8, 232 for 3.9.1, and 373 each for 3.10 and 3.11.
+Numerical LCIA comparisons in openLCA are still pending for these mapped flows.
+
+The 3.13 check used the Elementary Exchanges sheet of the official ecoinvent
+database overview. The mapper recognizes the Nexus compartment label for the
+five economic primary production factors. It uses the package's ``EUR 2005``
+exchange unit for those flows and keeps their original amounts. The package's
+reference unit for these flows is ``EUR 2024``.
+
+For 3.6, 3,598 flow and quantity definitions passed schema checks using a
+package-derived CSV. The 3.8 check used Premise's corrected independent source
+table and found 210 conflicting definitions in the 2021-11-30 method package.
+The preserve policy described below keeps those flows in the export and records
+the conflicts in the coverage report.
 
 Conflicting package metadata normally raises an error. With the explicit
 ``conflict_policy="preserve"`` option, known source flows whose package name,

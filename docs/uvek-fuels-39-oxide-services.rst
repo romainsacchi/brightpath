@@ -1,5 +1,5 @@
 Oxide delivery and six native services
-=====================================
+======================================
 
 Nine independently inspected ecoinvent 3.9 cut-off correspondences extend
 UVEK fuel preparation. They introduce six oxide delivery helpers and direct
@@ -8,7 +8,7 @@ waste-treatment services. No runtime Python change, physical source-input
 omission, new zero-burden supplier or recovery credit is introduced.
 
 Alumina and copper/zinc oxides
------------------------------
+------------------------------
 
 All 35 market/import input identities, units and quantities independently match
 the older reviewed native delivery bindings. Uncertainty, formulas, pedigree,
@@ -30,7 +30,7 @@ freight, uncertainty and vintage remain screening limitations with unquantified
 score effects. These proxies do not reproduce the source production inventories.
 
 Grid, boiler and treatment references
-------------------------------------
+-------------------------------------
 
 * RER high-voltage electricity uses the complete native grid per kWh, retaining
   native signed exchanges, losses, network infrastructure and grid emissions.
@@ -67,7 +67,7 @@ native treatment, grid or boiler inventory. Signed caller quantities, formulas
 and uncertainty are preserved with their reviewed reference factors.
 
 Preserved approvals and verification
------------------------------------
+------------------------------------
 
 The earlier 3.8 oxide selected rules/shared reviews and all six earlier delivery
 recipes are unchanged, as is the 3.6 polypropylene selected rule. Four full-rule

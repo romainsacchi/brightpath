@@ -1,5 +1,5 @@
 Inspected 3.8 lime delivery
-==========================
+===========================
 
 The RoW lime market is qualified only for ecoinvent 3.8 cut-off. Its legacy
 quicklime description conflicts with the actual uncalcined limestone-grinding

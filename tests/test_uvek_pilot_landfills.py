@@ -1,7 +1,7 @@
 """Bare landfills must retain their stage and inspected reference profile."""
 
-from copy import deepcopy
 import json
+from copy import deepcopy
 
 import pytest
 

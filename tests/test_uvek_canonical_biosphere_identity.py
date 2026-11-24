@@ -6,11 +6,10 @@ from functools import lru_cache
 
 import pytest
 
+import brightpath.background.migration as planning
 from brightpath import DATA_DIR
-from brightpath.background import PackageCatalogProvider
+from brightpath.background import PackageCatalogProvider, plan_background_migration
 from brightpath.background.execution import execute_background_migration
-from brightpath.background import plan_background_migration
-from brightpath.background import migration as planning
 from brightpath.core import (
     BackgroundContext,
     BiosphereProfile,

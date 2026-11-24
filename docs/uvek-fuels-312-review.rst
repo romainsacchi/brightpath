@@ -1,5 +1,5 @@
 Fuel dependency mappings: cut-off 3.12
-====================================
+======================================
 
 This review corrects seven inventory dependencies used in the shared Premise
 fuel workflow. It changes mapping resources and their maintainer replay step,

@@ -1,5 +1,5 @@
 Cement treatment dependencies: cut-off 3.9
-========================================
+==========================================
 
 The frozen ``uvek_cement_treatment_39_review.json`` records two inspected
 correspondences used while preparing cement inventories for UVEK 2026 with
@@ -7,7 +7,7 @@ ecoinvent's 3.10 biosphere. The maintainer replay step modifies mapping resource
 it introduces no runtime conversion branch or Premise dependency.
 
 Polyethylene municipal incineration
-----------------------------------
+-----------------------------------
 
 The actual Swiss 3.9 source and native 2026 endpoint have matching 42 wet
 composition coordinates and two heating values. The source reference is -1 kg;
@@ -20,7 +20,7 @@ two separately inspected profiles; this changes the closed parent fingerprint.
 Independent consumers must verify the old projection before refreshing approval.
 
 Concrete inert landfill
-----------------------
+-----------------------
 
 The old European correspondence selected an empty disposal marker. The actual
 source requires a nonempty landfill operation and a share of its facility.

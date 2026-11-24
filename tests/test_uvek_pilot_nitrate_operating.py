@@ -1,17 +1,17 @@
 """The inspected nitrate services keep their complete native function and signed units."""
 
-from copy import deepcopy
 import hashlib
 import json
+from copy import deepcopy
 
 import pytest
+from test_uvek_reference_signs import consumer, contexts
+from test_uvek_refrigerant_disposal import target_context
 
-from brightpath import BrightwayInventory, DATA_DIR, TechnosphereProfile
+from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
 from brightpath.core.policies import MigrationPolicy
 from brightpath.migrations.resources import load_uvek_technosphere_resource
-from test_uvek_reference_signs import consumer, contexts
-from test_uvek_refrigerant_disposal import target_context
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_operating_review.json").read_text())
 

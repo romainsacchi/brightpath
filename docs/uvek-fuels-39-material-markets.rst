@@ -1,5 +1,5 @@
 Eight material markets for UVEK fuel preparation
-===============================================
+================================================
 
 The inspected ecoinvent 3.9 cut-off markets retain all 22 source producer rows
 and 29 delivery rows, without merging or normalizing them. Complete native

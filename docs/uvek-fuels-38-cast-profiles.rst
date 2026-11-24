@@ -1,5 +1,5 @@
 Cast-stock profile qualification
-===============================
+================================
 
 Two exact ecoinvent 3.8 cut-off profiles gain positive-reference sign reviews.
 Signed caller kg, uncertainty and formulas retain factor +1. Existing helper

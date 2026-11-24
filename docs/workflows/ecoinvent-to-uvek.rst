@@ -898,7 +898,7 @@ supplier, geography, cumulative-inventory and native biosphere limitations
 remain warnings. Other source versions and other omissions are not approved.
 
 Pilot natural-gas heat markets
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The exact RoW natural-gas heat markets from ecoinvent 3.9 and 3.12 cut-off
 retain their 43 original supplier entries individually, including coefficients,
@@ -926,7 +926,7 @@ standalone components, reverse routes and system-model changes remain outside
 this decision.
 
 Pilot mixed-fuel heat market
-~~~~~~~~~~~~~~~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Only the encountered ecoinvent 3.9 cut-off RoW other-than-natural-gas heat
 market receives this scope. Preserve all 188 supplier entries separately,

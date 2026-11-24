@@ -1,17 +1,17 @@
 """Sanitary disposal keeps its waste basis, sign, exact scope and limitations."""
 
+import json
 from copy import deepcopy
 from dataclasses import replace
-import json
 
 import pytest
+from test_uvek_reference_signs import consumer, contexts
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_sanitary_inert import apply_pilot_sanitary_inert_review
-from test_uvek_reference_signs import consumer, contexts
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_sanitary_inert_review.json").read_text())
 POLICY = replace(

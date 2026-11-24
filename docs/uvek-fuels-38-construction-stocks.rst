@@ -1,5 +1,5 @@
 Construction-stock screening proxies
-===================================
+====================================
 
 Three exact ecoinvent 3.8 cut-off references use complete native UVEK products
 without changing migration rules or native inventories. Signed caller quantities,

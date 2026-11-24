@@ -9,11 +9,7 @@ from brightpath.exceptions import MigrationError, MigrationUnavailableError
 from brightpath.models import BackgroundProfile, InventoryDocument, Issue
 from brightpath.units import normalize_unit
 
-from .canonical_biosphere import MARKER as CANONICAL_BIOSPHERE_MARKER
-from .canonical_biosphere import (
-    select_canonical_biosphere_rules,
-    unresolved_canonical_biosphere_issues,
-)
+from . import canonical_biosphere
 from .models import MigrationReport, MigrationStepReport
 from .resources import load_biosphere_resources, load_technosphere_resources
 from .scaling import scale_exchange
@@ -374,7 +370,7 @@ def _apply_biosphere_rules(
     source_biosphere_references=None,
     target_biosphere_references=None,
 ) -> None:
-    if CANONICAL_BIOSPHERE_MARKER in resource:
+    if canonical_biosphere.MARKER in resource:
         if direction != "forward":
             report.issues.append(
                 Issue(
@@ -384,8 +380,8 @@ def _apply_biosphere_rules(
                 )
             )
             return
-        resource = select_canonical_biosphere_rules(resource, report.source_version)
-        issues = unresolved_canonical_biosphere_issues(data, resource)
+        resource = canonical_biosphere.select_canonical_biosphere_rules(resource, report.source_version)
+        issues = canonical_biosphere.unresolved_canonical_biosphere_issues(data, resource)
         if issues:
             report.issues.extend(issues)
             return
@@ -494,7 +490,7 @@ def _apply_biosphere_rules(
                 report,
                 path=path,
             )
-            if CANONICAL_BIOSPHERE_MARKER in resource:
+            if canonical_biosphere.MARKER in resource:
                 source_ids = rule["biosphere_identity_review"]["profiles"][0]["source_flow_ids"]
                 for field in ("flow", "uuid"):
                     if exchange.get(field) in source_ids:

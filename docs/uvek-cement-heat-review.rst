@@ -1,5 +1,5 @@
 European gas heat for UVEK cement preparation
-============================================
+=============================================
 
 The inspected ecoinvent 3.9 cut-off market for natural-gas district/industrial heat
 in Europe without Switzerland supplies useful heat at the plant. Its former

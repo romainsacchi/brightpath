@@ -1,5 +1,5 @@
 Six 3.7 stock and processing-service proxies
-==========================================
+============================================
 
 The requested source context remains ecoinvent 3.7 cut-off. Reference/function
 witnesses were inspected in the local 3.7.1 archive for exact matching

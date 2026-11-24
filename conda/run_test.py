@@ -9,8 +9,14 @@ from brightpath.background.migration import plan_background_migration
 from brightpath.background.uvek_export import load_uvek_export_resource
 from brightpath.core import BackgroundContext, BiosphereProfile, FormatProfile, InventoryContext, TechnosphereProfile
 from brightpath.formats.openlca_jsonld import load_openlca_jsonld, write_openlca_jsonld
+from brightpath.formats.openlca_methods import OpenLCAMethodMapping
 from brightpath.migrations.resources import load_uvek_release_resources, load_uvek_technosphere_resource
 from brightpath.models import InventoryDocument
+
+for version in ("3.8", "3.9.1", "3.10", "3.11", "3.12", "3.13"):
+    mapping = OpenLCAMethodMapping(biosphere_version=version)
+    assert mapping.biosphere_version == version
+    assert len(mapping.method_package_sha256) == 64
 
 for resource in (load_uvek_technosphere_resource(), load_uvek_export_resource()):
     assert resource["schema"] == "brightpath.migration"

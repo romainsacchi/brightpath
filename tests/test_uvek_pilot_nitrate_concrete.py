@@ -1,18 +1,18 @@
 """The nitrate pilot reuses the complete reviewed Swiss concrete closure."""
 
-from copy import deepcopy
 import hashlib
 import json
+from copy import deepcopy
 
 import pytest
+from test_uvek_reference_signs import consumer, contexts
+from test_uvek_refrigerant_disposal import target_context
 
-from brightpath import BrightwayInventory, DATA_DIR, TechnosphereProfile
+from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
 from brightpath.core.policies import MigrationPolicy
 from brightpath.migrations.resources import load_uvek_technosphere_resource
-from test_uvek_reference_signs import consumer, contexts
-from test_uvek_refrigerant_disposal import target_context
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_concrete_review.json").read_text())
 (ROW,) = REVIEW["records"]
@@ -56,7 +56,10 @@ def test_concrete_waste_sign_and_collection_uncertainty_survive(amount, uncertai
 def test_nitrate_concrete_pins_existing_review_and_every_recipe_in_its_closure():
     resource = load_uvek_technosphere_resource()
     rule = next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])
-    digest = lambda value: hashlib.sha256(json.dumps(value, sort_keys=True).encode()).hexdigest()
+
+    def digest(value):
+        return hashlib.sha256(json.dumps(value, sort_keys=True).encode()).hexdigest()
+
     assert not REVIEW["raw_rules_changed"]
     assert digest(rule) == ROW["raw_rule_sha256"]
     assert ROW["conversion_factor"] == ROW["source_reference_amount"] == -1

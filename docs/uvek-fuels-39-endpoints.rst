@@ -1,5 +1,5 @@
 Reviewed native endpoints for ecoinvent 3.9 fuel dependencies
-==========================================================
+=============================================================
 
 Three corrections use complete native UVEK services instead of the previous
 mismatched targets. They apply only to the individually inspected ecoinvent 3.9

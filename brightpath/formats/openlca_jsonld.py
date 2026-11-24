@@ -389,6 +389,17 @@ def load_openlca_jsonld(
     return document
 
 
+def write_ecoinvent_openlca_jsonld(document: InventoryDocument, path: str | Path) -> Path:
+    """Export using the bundled method references for the document's ecoinvent biosphere."""
+    if not isinstance(document, InventoryDocument):
+        raise TypeError("document must be an InventoryDocument.")
+    biosphere = document.context.background.biosphere
+    if biosphere.family != "ecoinvent":
+        raise SerializationError("Bundled ecoinvent method references require an ecoinvent biosphere context.")
+    mapping = OpenLCAMethodMapping(biosphere_version=biosphere.version)
+    return write_openlca_jsonld(document, path, method_mapping=mapping)
+
+
 def write_openlca_jsonld(
     document: InventoryDocument,
     path: str | Path,
@@ -723,7 +734,10 @@ def _resolve_external_references(schema, raw_entities, context, flow_lookup):
             _check_external_ref(flow_ref, reference.flow_id, "flow", name=reference.flow_name, kind="Flow")
             if flow_ref.get("flowType", flow_type) != flow_type:
                 raise ValueError("External openLCA flow type conflicts with the exact reference catalog.")
-            if flow_ref.get("refUnit") and normalize_unit(flow_ref["refUnit"]) != normalize_unit(reference.unit_name):
+            reference_unit_name = (
+                reference.unit_name if is_technosphere else reference.reference_unit_name or reference.unit_name
+            )
+            if flow_ref.get("refUnit") and normalize_unit(flow_ref["refUnit"]) != normalize_unit(reference_unit_name):
                 raise ValueError("External openLCA reference unit conflicts with the exact reference catalog.")
             _check_external_ref(
                 exchange.get("flowProperty"),
@@ -1752,7 +1766,7 @@ class _OpenLCAPackageBuilder:
                 if is_technosphere
                 else self.schema.FlowType.ELEMENTARY_FLOW
             ),
-            ref_unit=reference.unit_name,
+            ref_unit=reference.unit_name if is_technosphere else reference.reference_unit_name or reference.unit_name,
             ref_type=self.schema.RefType.Flow,
         )
         flow_property_ref = self.schema.Ref(

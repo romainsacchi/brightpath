@@ -66,7 +66,7 @@ BrightPath requires Python 3.12.
 Pin the alpha version for reproducible workflows:
 
 ```bash
-python -m pip install "brightpath==1.0.0a14"
+python -m pip install "brightpath==1.0.0a15"
 ```
 
 Installation includes mandatory `olca-schema` and `pyecospold` dependencies for
@@ -224,6 +224,10 @@ brightpath convert-format foreground-uvek.xlsx foreground-uvek.zip \
 
 The openLCA output is a process-only exchange package. It references compatible
 background entities but does not copy the UVEK background database into the ZIP.
+
+For ecoinvent, [`write_ecoinvent_openlca_jsonld`](docs/limitations.rst#versioned-ecoinvent-method-references)
+uses the inventory's biosphere version and Brightpath's bundled Nexus flow
+references. Import the matching method package into openLCA for LCIA.
 
 ## Update ecoinvent links without changing format
 

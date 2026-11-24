@@ -1,5 +1,5 @@
 Three additional 3.8 chemical-stock proxies
-==========================================
+===========================================
 
 Exact ecoinvent 3.8 cut-off profiles for sodium methoxide, liquid nitrogen and
 anhydrous liquid ammonia use the existing complete native chemical inventories

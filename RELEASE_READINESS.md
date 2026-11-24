@@ -1,5 +1,31 @@
 # BrightPath release readiness
 
+## 1.0.0a15 preparation (2026-11-24)
+
+This candidate adds linked ecoinvent JSON-LD export with bundled Nexus reference
+metadata. It covers the audited method packages for 3.8, 3.9.1, 3.10, 3.11,
+3.12, and 3.13. The coverage report identifies the method ZIP and its checksum.
+Users supply the matching LCIA methods in openLCA. The release bundle contains
+reference metadata and the reviewed UUID crosswalk.
+
+The exact ecoinvent 3.10.1 consequential catalog now ships with its existing
+manifest and checksum. This restores catalog validation in clean checkouts.
+The Conda smoke checks load all six bundled openLCA reference sets. The Python
+package, build metadata, and changelog use version `1.0.0a15`.
+
+Local checks on Python 3.12 passed 555 targeted tests, strict Sphinx, Black,
+isort, Ruff, Bandit, and strict Twine checks on the wheel and source archive.
+Both distributions contain the six method reference sets and the exact patch
+catalog. The installed wheel passed all seven bundled-reference export checks.
+
+The broader test run stopped after three UVEK failures with 3,975 tests passed
+and one skipped. The failures concern nitrate scrap review replay, the 3.9
+acetoacetic-acid dependency review, and 3.9 cut-off waste-market recipe selection.
+
+Publication requires the release workflow's cross-platform suite and both
+installed-wheel migration audits. The derived reference metadata retains the
+project's `legal_review_required` status for a stable public release.
+
 ## 1.0.0a14 preparation (2026-11-01)
 
 Alpha14 succeeds the unpublished alpha13 candidate. Its migration and export

@@ -28,7 +28,7 @@ private. Existing migration rules and native inventories are unchanged. Passing
 these component checks does not qualify the complete fuel update or export.
 
 Separate water profile qualification
------------------------------------
+------------------------------------
 
 The later ``uvek_fuels_38_water_profile_review.json`` resolves that pending
 reference-sign decision for **ecoinvent 3.8 cut-off only**. The market, its

@@ -224,9 +224,9 @@ def test_retired_consequential_exchange_families_reject_conversion_without_omitt
 
 def test_all_compatible_catalog_profiles_preserve_historical_executable_rules_and_helper_coefficients():
     from uvek_review_helpers import historical_forward_resource
-    from scripts.generate_uvek_migration_resources import apply_pilot_reviews
 
     from brightpath import DATA_DIR
+    from scripts.generate_uvek_migration_resources import apply_pilot_reviews
 
     historical = historical_forward_resource()
     # Later approved pilot corrections are independent of the system-model

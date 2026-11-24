@@ -1,7 +1,7 @@
 """Secondary billets are product supplies even when the source says treatment."""
 
-from copy import deepcopy
 import json
+from copy import deepcopy
 
 import pytest
 

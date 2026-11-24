@@ -1,5 +1,5 @@
 Inspected 3.8 chemical-stock proxies
-===================================
+====================================
 
 Four exact ecoinvent 3.8 cut-off markets are reviewed against existing complete
 native inventories: European and rest-of-world hydrochloric acid, global

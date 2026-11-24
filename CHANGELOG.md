@@ -1,11 +1,22 @@
 # Changelog
-
-
-- Extend existing allocation-stock and recovery-handoff approvals to 61 independently inspected ecoinvent 3.9.1/3.10.1 cut-off profiles, retaining warnings and original-exchange audit records.
-
 All notable changes to this project will be documented in this file.
 
 ## Unreleased
+
+## 1.0.0a15 - 2026-11-24
+
+- Bundle versioned ecoinvent openLCA reference metadata for 3.8, 3.9.1, 3.10,
+  3.11, 3.12, and 3.13. Linked JSON-LD export selects the references from the
+  inventory's declared biosphere version. The coverage report identifies the
+  matching Nexus method package and records the UUID remaps used by the inventory.
+- Apply 374 verified legacy Nexus UUID pairs and preserve direct UUID matches.
+  Retain EUR 2005 amounts and units for the five ecoinvent 3.13 economic flows.
+  Users import the matching methods into openLCA to calculate impacts.
+- Include the exact ecoinvent 3.10.1 consequential reference catalog already
+  listed in the resource manifest.
+- Extend existing allocation-stock and recovery-handoff approvals to 61
+  independently inspected ecoinvent 3.9.1/3.10.1 cut-off profiles, retaining
+  warnings and original-exchange audit records.
 
 - Correct four inspected ecoinvent 3.6 cut-off municipal-incineration links to
   dedicated native glass, polyethylene, polypropylene and polystyrene services.

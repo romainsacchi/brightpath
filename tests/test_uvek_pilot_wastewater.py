@@ -1,7 +1,7 @@
 """Wastewater treatment must retain its class without extra residential collection."""
 
-from copy import deepcopy
 import json
+from copy import deepcopy
 
 import pytest
 

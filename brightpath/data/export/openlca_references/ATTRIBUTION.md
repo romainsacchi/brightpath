@@ -4,6 +4,41 @@ The JSON resources in this directory contain identity fields and openLCA UUID
 references only. It does not contain background exchange amounts, process
 descriptions, or complete UVEK or ecoinvent inventories.
 
+## ecoinvent legacy Nexus elementary-flow UUIDs
+
+`ecoinvent_legacy_nexus_flow_uuids.json` contains 374 verified pairs from
+[GreenDelta's published crosswalk](https://nexus.openlca.org/ws/files/38956),
+*Elementary flows with UUID differences in v3.11 or earlier.xlsx*. Column B
+provides the original ecoinvent UUID and column A provides the Nexus UUID. The
+source spreadsheet SHA-256 is
+`9daa2be6f47b1decec8a92c5d908712fd78878dbfa00d8be701b0aff1111b21b`.
+
+The bundled pairs are the union validated against independent Premise biosphere
+tables and the Nexus LCIA method packages for 3.8 (2021-11-30), 3.9.1, 3.10
+(2024-01-14), and 3.11 (2025-01-13). A pair had to link different UUIDs with
+compatible flow names, normalized compartments, and reference units. Runtime
+mapping validates those fields against the selected local method package. The
+resource contains UUID pairs only. The methods and characterization factors
+come from the local package supplied by the caller.
+
+## ecoinvent method reference sets
+
+`ecoinvent_methods_manifest.json` identifies the audited Nexus method ZIP and
+its checksum for each bundled biosphere version. Generate a reference set with
+`scripts/generate_openlca_method_references.py` using the matching source
+biosphere CSV and the Nexus method ZIP. The 3.8–3.12 source identities were
+verified against the independent biosphere tables in Premise. The 3.13 source
+identities come from the Elementary Exchanges sheet of the official
+[ecoinvent 3.13 database overview](https://ecoinvent.org/ecoinvent-v3-13/).
+
+The generated payload contains source flow identities and the target flow,
+flow-property, and unit fields needed to validate openLCA references. The
+method ZIPs, impact categories, characterization factors, and inventory data
+are absent from the payload. Its manifest carries the project’s
+`legal_review_required` release status for derived reference metadata.
+
+## UVEK 2025
+
 `uvek__2025__cutoff__ecoinvent__3.10.json` was generated with
 `scripts/generate_openlca_reference_catalog.py` from these locally installed
 sources:

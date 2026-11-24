@@ -1,5 +1,5 @@
 Heat, wastewater and recycled aluminium
-======================================
+=======================================
 
 Seven inspected ecoinvent 3.9 cut-off correspondences extend UVEK fuel
 preparation. Six direct matches change; the allocated sewage-gas rule remains

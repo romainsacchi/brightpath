@@ -1,8 +1,8 @@
 """Content-bound approvals for individual compatibility-resource operations."""
 
-from dataclasses import asdict
 import hashlib
 import json
+from dataclasses import asdict
 
 from brightpath.core.context import TechnosphereProfile
 from brightpath.migrations.schema import rule_review
