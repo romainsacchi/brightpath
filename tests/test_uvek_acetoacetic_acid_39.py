@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -167,7 +168,9 @@ def test_source_acid_recipe_retains_reactant_mass_water_and_separate_releases():
 def test_replay_preserves_all_parents_dependencies_and_omissions_atomically(drift):
     from scripts.review_uvek_acetoacetic_acid_39 import apply_acetoacetic_acid_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    # Later review stages extended the plant and water rules to 3.8. Replay
+    # this review against its own 3.9 authoring stage and frozen dependencies.
+    resource = compiled_authoring_stage_resource("review_uvek_acetoacetic_acid_39", "apply_acetoacetic_acid_39_review")
     if drift in ("parent", "last_water_parent", "authority"):
         rid = (
             ROWS[-1 if drift == "last_water_parent" else 0]["rule_id"]

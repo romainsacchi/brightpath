@@ -18,9 +18,12 @@ isort, Ruff, Bandit, and strict Twine checks on the wheel and source archive.
 Both distributions contain the six method reference sets and the exact patch
 catalog. The installed wheel passed all seven bundled-reference export checks.
 
-The broader test run stopped after three UVEK failures with 3,975 tests passed
-and one skipped. The failures concern nitrate scrap review replay, the 3.9
-acetoacetic-acid dependency review, and 3.9 cut-off waste-market recipe selection.
+The initial broader test run stopped after three UVEK failures with 3,975 tests
+passed and one skipped. The follow-up aligns the nitrate scrap and 3.9
+acetoacetic-acid replay tests with their generator stages, and checks the
+approved 3.9 cut-off waste-market recipes. The rejection checks still cover
+all 21 unreviewed profiles. All 637 targeted follow-up tests passed on Python
+3.12.
 
 Publication requires the release workflow's cross-platform suite and both
 installed-wheel migration audits. The derived reference metadata retains the

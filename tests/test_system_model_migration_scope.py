@@ -228,10 +228,9 @@ def test_all_compatible_catalog_profiles_preserve_historical_executable_rules_an
     from brightpath import DATA_DIR
     from scripts.generate_uvek_migration_resources import apply_pilot_reviews
 
-    historical = historical_forward_resource()
-    # Later approved pilot corrections are independent of the system-model
-    # restriction. Compare both sides with those corrections, keeping exact equality
-    # for every executable rule and every helper coefficient below.
+    historical = cutoff_uvek_resource(historical_forward_resource(), DATA_DIR / "export/reference_catalogs")
+    # The pilot reviews were authored on the cut-off stage. Replay them from
+    # that stage before comparing each executable rule and helper coefficient.
     apply_pilot_reviews(historical)
     active = load_uvek_technosphere_resource()
     fields = ("name", "reference product", "location", "unit")

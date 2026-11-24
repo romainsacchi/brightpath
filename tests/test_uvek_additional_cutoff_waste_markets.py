@@ -1,5 +1,6 @@
 """Keep waste-specific treatment, exact omitted handoffs and complete multimodal freight."""
 
+import json
 from collections import defaultdict
 from copy import deepcopy
 
@@ -7,7 +8,7 @@ import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
 
-from brightpath import BackgroundContext, BiosphereProfile, BrightwayInventory, TechnosphereProfile
+from brightpath import DATA_DIR, BackgroundContext, BiosphereProfile, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.exceptions import MigrationError
@@ -16,6 +17,22 @@ from scripts import review_uvek_additional_cutoff_waste_markets as review
 
 POLICY = MigrationPolicy(on_heuristic_mapping=PolicyAction.WARN, on_information_loss=PolicyAction.WARN)
 VERSIONS = ("3.7", "3.8", "3.9", "3.9.1", "3.10", "3.10.1", "3.11", "3.12")
+LATER_REVIEWS = tuple(
+    json.loads((DATA_DIR / f"export/uvek_{name}_review.json").read_text())
+    for name in ("steel_39_remaining_residue", "secondary_metallurgy_slag_39", "eaf_slag_market_39")
+)
+REVIEWED_MARKETS = {}
+for evidence in LATER_REVIEWS:
+    for record in evidence["records"]:
+        identity = record["source_witness"]["identity"]
+        if identity["name"].startswith("market for "):
+            scope = record.get("source_profile", evidence.get("source_profile"))
+            label = "{family}-{version}-{system_model}".format(**scope)
+            recipe_id = record["recipe_id"]
+            REVIEWED_MARKETS[label, tuple(identity[field] for field in FIELDS)] = (
+                recipe_id,
+                evidence["recipes"][recipe_id],
+            )
 
 
 def profiles(version):
@@ -66,13 +83,26 @@ def test_signed_markets_keep_original_treatment_fractions_freight_and_foreground
         else:
             assert after["loc"] == -before["loc"]
             assert (after["minimum"], after["maximum"]) == (-before["maximum"], -before["minimum"])
-        profile = profiles(version)[tuple(before[f] for f in FIELDS)]
+        supplier_identity = tuple(before[f] for f in FIELDS)
+        profile = profiles(version)[supplier_identity]
         parent = by_code[after["input"][1]]
-        assert parent["brightpath_conversion"]["recipe_id"].startswith("additional-cutoff-waste-market-")
+        conversion = parent["brightpath_conversion"]
+        reviewed = REVIEWED_MARKETS.get((profile["label"], supplier_identity))
+        if reviewed is None:
+            assert conversion["recipe_id"].startswith("additional-cutoff-waste-market-")
+            expected_inputs = profile["inputs"]
+            for omitted in profile["omissions"]:
+                assert "omit signed" in parent["comment"] and str(omitted["amount"]) in parent["comment"]
+                assert not any(e["name"] == omitted["source"][0] for e in parent["exchanges"])
+        else:
+            recipe_id, recipe = reviewed
+            assert conversion["recipe_id"] == recipe_id
+            expected_inputs = recipe["inputs"]
+            assert conversion.get("source_input_omissions", []) == recipe.get("source_input_omissions", [])
         assert not any(e["type"] == "biosphere" for e in parent["exchanges"])
         actual = [e for e in parent["exchanges"] if e["type"] != "production"]
-        assert len(actual) == len(profile["inputs"])
-        for expected, exchange in zip(profile["inputs"], actual, strict=True):
+        assert len(actual) == len(expected_inputs)
+        for expected, exchange in zip(expected_inputs, actual, strict=True):
             assert exchange["amount"] == expected["amount"]
             if "recipe" in expected:
                 supplier = by_recipe[expected["recipe"]]
@@ -81,9 +111,6 @@ def test_signed_markets_keep_original_treatment_fractions_freight_and_foreground
                     assert by_code[exchange["input"][1]] is supplier
             else:
                 assert tuple(exchange[f] for f in FIELDS) == tuple(expected[f] for f in FIELDS)
-        for omitted in profile["omissions"]:
-            assert "omit signed" in parent["comment"] and str(omitted["amount"]) in parent["comment"]
-            assert not any(e["name"] == omitted["source"][0] for e in parent["exchanges"])
         assert all(e["amount"] > 0 for e in actual)
     assert not any(
         "aircraft" in e["name"] or "steam" in e["name"] or "operation, lorry" in e["name"].lower()
@@ -132,12 +159,24 @@ def test_canonical_graph_keeps_independent_reverse_suppliers_and_all_generated_f
 
 
 @pytest.mark.parametrize("release", ("2025", "2026", "native2026"))
-def test_all_24_positive_steam_profiles_stay_blocked_transactionally_under_permissive_policy(release):
-    count = 0
+def test_unreviewed_positive_steam_profiles_stay_blocked_transactionally_under_permissive_policy(release):
+    resource = load_uvek_technosphere_resource()
+    rules = {tuple(rule["source"][field] for field in FIELDS): rule for rule in resource["replace"]}
+    blocked_count = reviewed_count = 0
     for source, row in review.SOURCES.items():
         for profile in row["pending_profiles"]:
-            count += 1
-            version = profile["label"].split("-")[1]
+            label = profile["label"]
+            version = label.split("-")[1]
+            reviewed = REVIEWED_MARKETS.get((label, source))
+            if reviewed is not None:
+                recipe_id, recipe = reviewed
+                [selected] = select_profile_sign_rules(
+                    {"replace": [rules[source]]}, TechnosphereProfile("ecoinvent", version, "cutoff")
+                )["replace"]
+                assert selected["target"] == {"recipe_ref": recipe_id}
+                assert resource["recipes"][recipe_id] == recipe
+                reviewed_count += 1
+                continue
             data = consumer(dict(zip(FIELDS, source, strict=True)), -1)
             original = deepcopy(data)
             inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
@@ -145,7 +184,8 @@ def test_all_24_positive_steam_profiles_stay_blocked_transactionally_under_permi
                 inventory.migrate_background(target_context(release), policy=MigrationPolicy.permissive())
             assert any(i.code == "migration.reference_flow_sign_unresolved" for i in caught.value.report.issues)
             assert inventory.data == original == data
-    assert count == 24
+            blocked_count += 1
+    assert (blocked_count, reviewed_count) == (21, 3)
 
 
 def test_native_physical_biosphere_gaps_reject_without_extending_other_flow_approvals():
