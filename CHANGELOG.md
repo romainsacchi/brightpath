@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 1.0.0a16 - 2026-11-24
+
+- Verify both exact source profiles when replaying biosphere bindings for
+  generated UVEK helpers that reuse an inventory from another ecoinvent release.
+- Update the historical migration and native UVEK 2026 audit baselines against
+  complete installed-wheel reports and record the reviewed changes.
+
 ## 1.0.0a15 - 2026-11-24
 
 - Bundle versioned ecoinvent openLCA reference metadata for 3.8, 3.9.1, 3.10,

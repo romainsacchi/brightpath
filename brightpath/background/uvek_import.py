@@ -46,6 +46,29 @@ def _recipe_signature(resource, recipe_id, target_biosphere, signatures):
     return signatures[recipe_id]
 
 
+def _historical_recipe_signature(signature, caller, model, declared_profiles):
+    """Bind a reused inventory to both exact source profiles."""
+    if (
+        model == caller
+        or caller not in declared_profiles
+        or model not in declared_profiles
+        or (model["family"], model["system_model"]) != (caller["family"], caller["system_model"])
+    ):
+        raise ValueError(
+            "Recipe inventory source profile cannot cross families/system models or use an undeclared profile."
+        )
+    return hashlib.sha256(
+        json.dumps(
+            {
+                "recipe_signature": signature,
+                "caller_source_profile": caller,
+                "inventory_source_profile": model,
+            },
+            sort_keys=True,
+        ).encode()
+    ).hexdigest()[:24]
+
+
 def apply_reviewed_recipe_biosphere_bindings(data, owners, target_profile, target_flows, policy):
     """Replay packaged contextual bindings only inside an identifiable generated helper.
 
@@ -73,6 +96,13 @@ def apply_reviewed_recipe_biosphere_bindings(data, owners, target_profile, targe
             original_profile = metadata["biosphere_binding_profile"]
             profile_key = json.dumps(original_profile, sort_keys=True)
             signature = _recipe_signature(resource, recipe_id, original_profile, signatures.setdefault(profile_key, {}))
+            if "caller_source_profile" in metadata or "inventory_source_profile" in metadata:
+                signature = _historical_recipe_signature(
+                    signature,
+                    metadata["caller_source_profile"],
+                    metadata["inventory_source_profile"],
+                    resource["source_profiles"],
+                )
             expected = {
                 **{f: recipe[f] for f in FIELDS},
                 "name": f"{recipe['name']} [BrightPath UVEK conversion {signature[:8]}]",
@@ -273,29 +303,15 @@ def apply_uvek_import_recipes(
         if isinstance(model_profile, dict):
             model_profile = TechnosphereProfile(**model_profile)
         historical = model_profile != source_profile
-        if historical and (
-            (model_profile.family, model_profile.system_model) != (source_profile.family, source_profile.system_model)
-            or asdict(model_profile) not in resource["source_profiles"]
-        ):
-            raise ValueError(
-                "Recipe inventory source profile cannot cross families/system models or use an undeclared profile."
-            )
         cache_key = (recipe_id, model_profile.family, model_profile.version, model_profile.system_model)
         if cache_key in helpers:
             return helpers[cache_key]
         recipe = resource["recipes"][recipe_id]
         signature = recipe_signature(recipe_id)
         if historical:
-            signature = hashlib.sha256(
-                json.dumps(
-                    {
-                        "recipe_signature": signature,
-                        "caller_source_profile": asdict(source_profile),
-                        "inventory_source_profile": asdict(model_profile),
-                    },
-                    sort_keys=True,
-                ).encode()
-            ).hexdigest()[:24]
+            signature = _historical_recipe_signature(
+                signature, asdict(source_profile), asdict(model_profile), resource["source_profiles"]
+            )
         code = f"brightpath-uvek-import-{signature}"
         dataset = {
             **{f: recipe[f] for f in FIELDS},

@@ -1,5 +1,23 @@
 # BrightPath release readiness
 
+## 1.0.0a16 preparation (2026-11-24)
+
+Alpha 16 supersedes the withdrawn alpha 15 GitHub prerelease. It carries
+forward the bundled ecoinvent openLCA references and fixes replay of reviewed
+biosphere bindings for helpers that reuse an inventory from a different
+ecoinvent release.
+
+Both complete installed-wheel audit reports match their reviewed baselines.
+The historical audit covers 52,920 probes and the native UVEK 2026 audit
+covers 621,242 probes. Both report zero audit errors. The native replay
+restores the alkyd-paint migration and records explicit missing native
+biosphere links for the other 18 formerly stale probes. See
+`docs/migration-audit-alpha15-review.md` for the evidence and report
+checksums.
+
+The report was generated with the corrected runtime before the version bump.
+The release workflow will rerun the platform test matrix and both audits.
+
 ## 1.0.0a15 preparation (2026-11-24)
 
 This candidate adds linked ecoinvent JSON-LD export with bundled Nexus reference

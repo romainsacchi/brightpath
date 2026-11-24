@@ -92,6 +92,44 @@ def test_explicit_model_profile_keeps_omission_owner_and_separate_helper_context
     assert boundaries[0].to_dict()["details"]["inventory_source_profile"] == MODEL
 
 
+@pytest.mark.parametrize("changed_profile", [None, "caller_source_profile", "inventory_source_profile"])
+def test_historical_helper_replays_only_its_reviewed_biosphere_binding(historical_proxy, monkeypatch, changed_profile):
+    target_profile = {"family": "uvek", "version": "2026"}
+    source_flow = {"name": "Original release", "categories": ["air"], "unit": "kilogram"}
+    target_flow = {**source_flow, "name": "Reviewed native release"}
+    historical_proxy["source_profiles"].append({**MODEL, "version": "3.8"})
+    historical_proxy["recipes"]["main"]["inputs"].append(
+        {
+            **source_flow,
+            "type": "biosphere",
+            "amount": 2.5,
+            "biosphere_targets": [
+                {"profile": target_profile, "target": target_flow, "reason": "Synthetic exact native correspondence"}
+            ],
+        }
+    )
+    report, helpers = materialize(historical_proxy, monkeypatch)
+    assert not report.has_errors
+    owner = next(h for h in helpers if h["brightpath_conversion"]["recipe_id"] == "main")
+    metadata = owner["brightpath_conversion"]
+    assert metadata["caller_source_profile"] == CALLER
+    assert metadata["inventory_source_profile"] == MODEL
+    if changed_profile:
+        metadata[changed_profile] = {**metadata[changed_profile], "version": "3.8"}
+    data = [{"exchanges": deepcopy(owner["exchanges"])}]
+    result = uvek_import.apply_reviewed_recipe_biosphere_bindings(
+        data, [owner], target_profile, {("Reviewed native release", ("air",), "kilogram")}, MigrationPolicy.strict()
+    )
+    if changed_profile:
+        assert [issue.code for issue in result.issues] == ["migration.recipe_biosphere_review_stale"]
+        assert data[0]["exchanges"] == owner["exchanges"]
+    else:
+        assert not result.has_errors
+        assert [change.code for change in result.changes] == ["migration.recipe_biosphere_binding"]
+        assert data[0]["exchanges"][-1] == {**target_flow, "type": "biosphere", "amount": 2.5}
+        assert owner["exchanges"][-1] == {**source_flow, "type": "biosphere", "amount": 2.5}
+
+
 def test_absent_explicit_model_profile_does_not_fall_back(historical_proxy, monkeypatch):
     historical_proxy["recipes"]["wrapper"]["inputs"][0].pop("inventory_source_profile")
     report, _ = materialize(historical_proxy, monkeypatch)

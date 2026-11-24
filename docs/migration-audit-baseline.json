@@ -9,6 +9,7 @@
     "sha256": "d9c52c852b6057b66073cecb6a6e3b1a7d292b2c2e567da0859acbf3c62b9d2b"
   },
   "policy": {
+    "approved_compatibility_rules": [],
     "minimum_coverage": 1.0,
     "on_ambiguous_rule": "error",
     "on_deletion": "error",
@@ -23,9 +24,9 @@
     "validate_target": true
   },
   "resources": {
-    "export/reference_catalogs/RESOURCE_MANIFEST.json": "88a0141ebe55b2ad2321392be1d699d2442d3407905e1143e6170aea54d1e6bf",
-    "migrations/RESOURCE_MANIFEST.json": "b5d3755c1bcb365ca2b6c9baa84d41c24b22f567adac2306d10cb9df6432cab1",
-    "schemas/migration-v3.schema.json": "8fff479dc0601aea5e8eae9c7f1a265aadfecb806c4b2e565aed26cc24055d3f"
+    "export/reference_catalogs/RESOURCE_MANIFEST.json": "f3c1e3fc63d946c406efb1e39d0aa7db811a74e39e8f98f8af96c115bdc073f7",
+    "migrations/RESOURCE_MANIFEST.json": "65bf4e4e948dc2782be4cf391112e1629c8d0d0c949efca915a1b08500269aff",
+    "schemas/migration-v3.schema.json": "d6c17728e257a8175bf09609cc5204003fa35616edec8c913468e7253f82ff1a"
   },
   "routes": {
     "uvek_biosphere/ecoinvent-3.10-cutoff": {
@@ -187,103 +188,156 @@
       ]
     },
     "uvek_suppliers/ecoinvent-3.10-cutoff": {
-      "cases_sha256": "db16ec70d475bd930e53b9fb4b18ec15071d749451cdffbff3ff4688e77a75b4",
-      "error_codes": {},
+      "cases_sha256": "da6e7ac0a3f73e13396da27f13fb947aa6dd5f6aee68ece31fd1c94d27ece98a",
+      "error_codes": {
+        "background.technosphere_link_unresolved": 1,
+        "migration.target_coverage_below_minimum": 1
+      },
       "loss_codes": [
         "migration.documented_proxy",
         "migration.reverse_aggregation",
         "migration.reverse_disaggregation",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ],
       "statuses": {
-        "supported": 1424
+        "blocked": 1,
+        "omitted_with_warning": 1,
+        "supported": 1516
       },
-      "total": 1424,
+      "total": 1518,
       "warning_codes": [
         "migration.documented_proxy",
         "migration.inferred_reverse",
         "migration.reverse_aggregation_lossy",
         "migration.reverse_aggregation_partial",
         "migration.reverse_disaggregation_loss",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ]
     },
     "uvek_suppliers/ecoinvent-3.10.1-cutoff": {
-      "cases_sha256": "db16ec70d475bd930e53b9fb4b18ec15071d749451cdffbff3ff4688e77a75b4",
-      "error_codes": {},
+      "cases_sha256": "591d670e93c6e0501373eebb8dfc7bd20b0df63c4577d2096167a3409b15d6d1",
+      "error_codes": {
+        "background.technosphere_link_unresolved": 1,
+        "migration.target_coverage_below_minimum": 1
+      },
       "loss_codes": [
         "migration.documented_proxy",
         "migration.reverse_aggregation",
         "migration.reverse_disaggregation",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ],
       "statuses": {
-        "supported": 1424
+        "blocked": 1,
+        "omitted_with_warning": 1,
+        "supported": 1516
       },
-      "total": 1424,
+      "total": 1518,
       "warning_codes": [
         "migration.documented_proxy",
         "migration.inferred_reverse",
         "migration.reverse_aggregation_lossy",
         "migration.reverse_aggregation_partial",
         "migration.reverse_disaggregation_loss",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ]
     },
     "uvek_suppliers/ecoinvent-3.11-cutoff": {
-      "cases_sha256": "e12d2e46c846ff12d93ad8edf05add76878f5b1abf6f41e3561a24cdd3b4407b",
+      "cases_sha256": "bce82bd1e01268dcda1b0d3cb120c9d7c0f28e2ff31d245edb3b148c5d159c55",
       "error_codes": {},
       "loss_codes": [
         "migration.documented_proxy",
         "migration.reverse_aggregation",
         "migration.reverse_disaggregation",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ],
       "statuses": {
-        "supported": 1424
+        "omitted_with_warning": 1,
+        "supported": 1517
       },
-      "total": 1424,
+      "total": 1518,
       "warning_codes": [
         "migration.documented_proxy",
         "migration.inferred_reverse",
         "migration.reverse_aggregation_lossy",
         "migration.reverse_aggregation_partial",
         "migration.reverse_disaggregation_loss",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ]
     },
     "uvek_suppliers/ecoinvent-3.12-cutoff": {
-      "cases_sha256": "b58a5411ce95fbf7303b575250d37cb8b0a49f7986cd7139b418b770aed8dd06",
+      "cases_sha256": "11ed3f8489d4bff9fa7ca3e11682bee8c5eda68d464d5e3b00485240145b4fbc",
       "error_codes": {},
       "loss_codes": [
-        "migration.documented_proxy"
+        "migration.documented_proxy",
+        "migration.technosphere_omission"
       ],
       "statuses": {
-        "supported": 1424
+        "omitted_with_warning": 1,
+        "supported": 1517
       },
-      "total": 1424,
+      "total": 1518,
       "warning_codes": [
-        "migration.documented_proxy"
+        "migration.documented_proxy",
+        "migration.technosphere_omission"
       ]
     },
     "uvek_suppliers/ecoinvent-3.6-cutoff": {
-      "cases_sha256": "809cf0b453f8c702954ab99263b095e224f0730ebfcf1f352db84a16502ff97f",
+      "cases_sha256": "459aa00abde74a41aef4f8a0dbaa07c02f6924f565b6a13b0180d85b627be710",
+      "error_codes": {
+        "background.technosphere_link_unresolved": 7,
+        "migration.replacement_ambiguous": 16,
+        "migration.target_coverage_below_minimum": 7
+      },
+      "loss_codes": [
+        "migration.documented_proxy",
+        "migration.reverse_aggregation",
+        "migration.reverse_disaggregation",
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
+      ],
+      "statuses": {
+        "blocked": 23,
+        "omitted_with_warning": 1,
+        "supported": 1494
+      },
+      "total": 1518,
+      "warning_codes": [
+        "migration.biosphere_reverse_route_notice",
+        "migration.documented_proxy",
+        "migration.inferred_reverse",
+        "migration.reverse_aggregation_lossy",
+        "migration.reverse_aggregation_partial",
+        "migration.reverse_disaggregation_loss",
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
+      ]
+    },
+    "uvek_suppliers/ecoinvent-3.7-cutoff": {
+      "cases_sha256": "2a0275950e858963f610b91803c8692656fd78648f6514ef260bc7bdf8e0dea4",
       "error_codes": {
         "background.technosphere_link_unresolved": 6,
-        "migration.replacement_ambiguous": 16,
+        "migration.replacement_ambiguous": 15,
         "migration.target_coverage_below_minimum": 6
       },
       "loss_codes": [
         "migration.documented_proxy",
         "migration.reverse_aggregation",
         "migration.reverse_disaggregation",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ],
       "statuses": {
-        "blocked": 22,
-        "supported": 1402
+        "blocked": 21,
+        "omitted_with_warning": 1,
+        "supported": 1496
       },
-      "total": 1424,
+      "total": 1518,
       "warning_codes": [
         "migration.biosphere_reverse_route_notice",
         "migration.documented_proxy",
@@ -291,55 +345,61 @@
         "migration.reverse_aggregation_lossy",
         "migration.reverse_aggregation_partial",
         "migration.reverse_disaggregation_loss",
-        "migration.reverse_proxy"
-      ]
-    },
-    "uvek_suppliers/ecoinvent-3.7-cutoff": {
-      "cases_sha256": "b82e06df1d75ec1469df34b680102daaad45c550600d955f2f03400516adef1e",
-      "error_codes": {
-        "background.technosphere_link_unresolved": 5,
-        "migration.replacement_ambiguous": 15,
-        "migration.target_coverage_below_minimum": 5
-      },
-      "loss_codes": [
-        "migration.documented_proxy",
-        "migration.reverse_aggregation",
-        "migration.reverse_disaggregation",
-        "migration.reverse_proxy"
-      ],
-      "statuses": {
-        "blocked": 20,
-        "supported": 1404
-      },
-      "total": 1424,
-      "warning_codes": [
-        "migration.biosphere_reverse_route_notice",
-        "migration.documented_proxy",
-        "migration.inferred_reverse",
-        "migration.reverse_aggregation_lossy",
-        "migration.reverse_aggregation_partial",
-        "migration.reverse_disaggregation_loss",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ]
     },
     "uvek_suppliers/ecoinvent-3.8-cutoff": {
-      "cases_sha256": "4b6a6b5788dcf2704535dcb5889a05519e837e94db3bf47fb4b409d677a152bc",
+      "cases_sha256": "298f112013e1fc9f59e44c459ac9992b04761a74313fc0a4a7e6d2b2866fd1f5",
+      "error_codes": {
+        "background.technosphere_link_unresolved": 6,
+        "migration.replacement_ambiguous": 15,
+        "migration.target_coverage_below_minimum": 6
+      },
+      "loss_codes": [
+        "migration.documented_proxy",
+        "migration.reverse_aggregation",
+        "migration.reverse_disaggregation",
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
+      ],
+      "statuses": {
+        "blocked": 21,
+        "omitted_with_warning": 1,
+        "supported": 1496
+      },
+      "total": 1518,
+      "warning_codes": [
+        "migration.biosphere_reverse_route_notice",
+        "migration.documented_proxy",
+        "migration.inferred_reverse",
+        "migration.reverse_aggregation_lossy",
+        "migration.reverse_aggregation_partial",
+        "migration.reverse_disaggregation_loss",
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
+      ]
+    },
+    "uvek_suppliers/ecoinvent-3.9-cutoff": {
+      "cases_sha256": "4510c685a2352a6033c3674cc0578afcbf31a2eee53daab2eb1a807eb053c5cb",
       "error_codes": {
         "background.technosphere_link_unresolved": 5,
-        "migration.replacement_ambiguous": 15,
+        "migration.replacement_ambiguous": 14,
         "migration.target_coverage_below_minimum": 5
       },
       "loss_codes": [
         "migration.documented_proxy",
         "migration.reverse_aggregation",
         "migration.reverse_disaggregation",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ],
       "statuses": {
-        "blocked": 20,
-        "supported": 1404
+        "blocked": 19,
+        "omitted_with_warning": 1,
+        "supported": 1498
       },
-      "total": 1424,
+      "total": 1518,
       "warning_codes": [
         "migration.biosphere_reverse_route_notice",
         "migration.documented_proxy",
@@ -347,55 +407,30 @@
         "migration.reverse_aggregation_lossy",
         "migration.reverse_aggregation_partial",
         "migration.reverse_disaggregation_loss",
-        "migration.reverse_proxy"
-      ]
-    },
-    "uvek_suppliers/ecoinvent-3.9-cutoff": {
-      "cases_sha256": "7d4656bd6107d7bab5e0d6fe6007da724e8f379ad4132ff0c9443efe459090e1",
-      "error_codes": {
-        "background.technosphere_link_unresolved": 4,
-        "migration.replacement_ambiguous": 14,
-        "migration.target_coverage_below_minimum": 4
-      },
-      "loss_codes": [
-        "migration.documented_proxy",
-        "migration.reverse_aggregation",
-        "migration.reverse_disaggregation",
-        "migration.reverse_proxy"
-      ],
-      "statuses": {
-        "blocked": 18,
-        "supported": 1406
-      },
-      "total": 1424,
-      "warning_codes": [
-        "migration.biosphere_reverse_route_notice",
-        "migration.documented_proxy",
-        "migration.inferred_reverse",
-        "migration.reverse_aggregation_lossy",
-        "migration.reverse_aggregation_partial",
-        "migration.reverse_disaggregation_loss",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ]
     },
     "uvek_suppliers/ecoinvent-3.9.1-cutoff": {
-      "cases_sha256": "00cc0d49e6bc22ae1e164ce395414392d8d279bc6cb216b60810126b66378d6d",
+      "cases_sha256": "1eefb71659e1bf21e9c5d5586e290f4f801d707a8282a2cf3cf3fdadf4355e0b",
       "error_codes": {
-        "background.technosphere_link_unresolved": 4,
+        "background.technosphere_link_unresolved": 5,
         "migration.replacement_ambiguous": 14,
-        "migration.target_coverage_below_minimum": 4
+        "migration.target_coverage_below_minimum": 5
       },
       "loss_codes": [
         "migration.documented_proxy",
         "migration.reverse_aggregation",
         "migration.reverse_disaggregation",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ],
       "statuses": {
-        "blocked": 18,
-        "supported": 1406
+        "blocked": 19,
+        "omitted_with_warning": 1,
+        "supported": 1498
       },
-      "total": 1424,
+      "total": 1518,
       "warning_codes": [
         "migration.biosphere_reverse_route_notice",
         "migration.documented_proxy",
@@ -403,10 +438,11 @@
         "migration.reverse_aggregation_lossy",
         "migration.reverse_aggregation_partial",
         "migration.reverse_disaggregation_loss",
-        "migration.reverse_proxy"
+        "migration.reverse_proxy",
+        "migration.technosphere_omission"
       ]
     }
   },
   "schema_version": 1,
-  "unresolved_uvek_suppliers": 10323
+  "unresolved_uvek_suppliers": 10229
 }
