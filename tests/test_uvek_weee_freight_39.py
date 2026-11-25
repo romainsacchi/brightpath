@@ -101,7 +101,8 @@ def test_unreviewed_profiles_do_not_receive_the_39_scope(version, model, row):
 
 
 def test_frozen_native_service_boundaries_and_unchanged_rules_are_explicit():
-    rules = {r["id"]: r for r in load_uvek_technosphere_resource()["replace"]}
+    resource = compiled_authoring_stage_resource("review_uvek_euro_v_freight_39", "apply_euro_v_freight_39_review")
+    rules = {r["id"]: r for r in resource["replace"]}
     for row in ACTIVE_ROWS:
         assert rules[row["rule_id"]] == row.get("compiled_rule", row["original_rule"])
         assert row["source_witness"]["reference_amounts"] == [row["conversion_factor"]]

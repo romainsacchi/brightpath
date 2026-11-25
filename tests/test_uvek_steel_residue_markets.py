@@ -5,7 +5,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
-from uvek_review_helpers import steel_39_reconstruction_sources
+from uvek_review_helpers import historical_forward_resource, steel_39_reconstruction_sources
 
 from brightpath import BackgroundContext, BiosphereProfile, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -157,20 +157,35 @@ def test_canonical_graph_has_independently_reviewed_reverse_suppliers(version):
 
 
 @pytest.mark.parametrize("release", ("2025", "2026", "native2026"))
-def test_clinker_and_steam_profiles_remain_transactionally_blocked_even_under_permissive_policy(release):
-    count = 0
+def test_clinker_and_steam_profiles_require_separate_review(release):
+    new_recipes = {
+        "CH": "steel-39-residue-market-ba539d2fcd32a665",
+        "Europe without Switzerland": "steel-39-residue-market-88290f4e677f4c43",
+    }
+    unresolved = 0
+    separately_reviewed = 0
     for source, row in SOURCES.items():
         for profile in row["pending_profiles"]:
-            count += 1
             version = profile["label"].split("-")[1]
             data = consumer(dict(zip(FIELDS, source, strict=True)), -1)
             original = deepcopy(data)
             inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
-            with pytest.raises(MigrationError) as caught:
-                inventory.migrate_background(target_context(release), policy=MigrationPolicy.permissive())
-            assert any(i.code == "migration.reference_flow_sign_unresolved" for i in caught.value.report.issues)
+            target = target_context(release)
+            policy = MigrationPolicy.permissive()
+            if version == "3.9" and source[0] == "market for blast furnace sludge" and source[2] in new_recipes:
+                result = inventory.migrate_background(target, policy=policy)
+                assert any(
+                    dataset.get("brightpath_conversion", {}).get("recipe_id") == new_recipes[source[2]]
+                    for dataset in result.data
+                )
+                separately_reviewed += 1
+            else:
+                with pytest.raises(MigrationError) as caught:
+                    inventory.migrate_background(target, policy=policy)
+                assert any(i.code == "migration.reference_flow_sign_unresolved" for i in caught.value.report.issues)
+                unresolved += 1
             assert inventory.data == data == original
-    assert count == 20
+    assert (unresolved, separately_reviewed) == (18, 2)
 
 
 def test_native_land_refinement_does_not_leak_from_36_previously_approved_contexts_to_new_steel_treatments():
@@ -247,7 +262,7 @@ def test_actual_inventory_and_exact_profile_guards_require_new_review_on_drift(m
 
 
 def test_omission_quantity_and_freight_scope_cannot_inherit_modified_review(monkeypatch):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_forward_resource()
     validate_bindings(resource)
     profile = next(p for row in APPROVAL["rules"] for p in row["profiles"] if p["omissions"])
     monkeypatch.setitem(profile["omissions"][0], "amount", 0)
@@ -279,14 +294,15 @@ def test_nested_regional_rail_shares_preserve_actual_diesel_and_electric_ton_km(
     assert diesel + electric == pytest.approx(1)
 
 
-def test_four_parent_patch_handoffs_have_separate_exact_profile_omission_approvals():
-    count = 0
+def test_parent_patch_handoffs_keep_their_independent_review_boundaries():
+    omitted = 0
+    unresolved = 0
+    superseded = steel_39_reconstruction_sources("recovery_handover")
     for row in APPROVAL["rules"]:
         for profile in row["profiles"]:
             for omission in profile["omissions"]:
                 if omission["authorization_label"] == profile["label"]:
                     continue
-                count += 1
                 data = consumer(dict(zip(FIELDS, omission["source"], strict=True)), -1)
                 inventory = BrightwayInventory.from_data(
                     data, context=contexts("ecoinvent", profile["label"].split("-")[1])
@@ -297,6 +313,13 @@ def test_four_parent_patch_handoffs_have_separate_exact_profile_omission_approva
                 approval = {**PATCH_CASES, **COMPLETION_CASES}[key]
                 assert approval["kind"] == "handoff"
                 assert approval["inventory_sha256"] and approval["endpoint_inventory_sha256"]
+                if tuple(omission["source"]) in superseded:
+                    with pytest.raises(MigrationError) as caught:
+                        inventory.migrate_background(target_context("2025"), policy=MigrationPolicy.permissive())
+                    assert any(i.code == "migration.reference_flow_sign_unresolved" for i in caught.value.report.issues)
+                    assert inventory.data == data
+                    unresolved += 1
+                    continue
                 result = inventory.migrate_background(target_context("2025"), policy=MigrationPolicy.permissive())
                 assert result.data[0]["exchanges"] == data[0]["exchanges"][:1]
                 report = result.last_migration_report
@@ -307,7 +330,8 @@ def test_four_parent_patch_handoffs_have_separate_exact_profile_omission_approva
                 assert losses[0].details["source_exchange"] == data[0]["exchanges"][1]
                 assert not any(i.code == "migration.reference_flow_sign_unresolved" for i in report.issues)
                 assert inventory.data == data
-    assert count == 4
+                omitted += 1
+    assert (unresolved, omitted) == (3, 1)
 
 
 @pytest.mark.parametrize("version", ("3.7", "3.8", "3.9", "3.9.1"))
