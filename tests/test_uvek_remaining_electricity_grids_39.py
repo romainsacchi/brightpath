@@ -6,6 +6,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -87,7 +88,9 @@ def test_earlier_European_38_grid_permission_keeps_supplier_quantity_and_authori
         hashlib.sha256((DATA_DIR / old["previous_review_path"]).read_bytes()).hexdigest()
         == old["previous_review_sha256"]
     )
-    resource = load_uvek_technosphere_resource()
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_remaining_electricity_grids_39", "apply_remaining_electricity_grids_39_review"
+    )
     rule = next(r for r in resource["replace"] if r["id"] == EUROPE["rule_id"])
     source = TechnosphereProfile(**old["source_profile"])
     target = TechnosphereProfile(**old["target_profile"])
@@ -126,7 +129,9 @@ def test_new_39_permission_does_not_widen_profiles(version, model):
 def test_frozen_profile_extension_refuses_drift_atomically(drift):
     from scripts.review_uvek_remaining_electricity_grids_39 import apply_remaining_electricity_grids_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_remaining_electricity_grids_39", "apply_remaining_electricity_grids_39_review"
+    )
     if drift:
         selected = EUROPE if drift == "Europe" else COBALT
         next(r for r in resource["replace"] if r["id"] == selected["rule_id"])["confidence"] = 0.001

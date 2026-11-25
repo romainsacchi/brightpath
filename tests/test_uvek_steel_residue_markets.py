@@ -5,6 +5,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import steel_39_reconstruction_sources
 
 from brightpath import BackgroundContext, BiosphereProfile, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -21,8 +22,9 @@ VERSIONS = ("3.7", "3.8", "3.9", "3.9.1", "3.10", "3.10.1", "3.11", "3.12")
 
 def batch(version, amount):
     data = None
+    superseded = steel_39_reconstruction_sources() if version == "3.9" else frozenset()
     for source, row in SOURCES.items():
-        if not any(p["label"] == f"ecoinvent-{version}-cutoff" for p in row["profiles"]):
+        if source in superseded or not any(p["label"] == f"ecoinvent-{version}-cutoff" for p in row["profiles"]):
             continue
         for kind, uncertainty in (("technosphere", 2), ("substitution", 3)):
             part = consumer(dict(zip(FIELDS, source, strict=True)), amount, uncertainty, kind)

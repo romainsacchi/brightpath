@@ -7,12 +7,12 @@ from dataclasses import replace
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_fuels_38_water_profile import apply_fuels_38_water_profile_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_fuels_38_water_profile_review.json").read_text())
@@ -40,16 +40,22 @@ def test_signed_kg_and_caller_statistics(amount, uncertainty):
 
 
 @pytest.mark.parametrize("version", ["3.7", "3.11", "3.12"])
-def test_uninspected_releases_still_refused(version):
+def test_other_releases_require_a_separate_review(version):
     source = BrightwayInventory.from_data(
         consumer(REVIEW["original_rule"]["source"], 1, 2), context=contexts("ecoinvent", version, "cutoff")
     )
+    if version == "3.12":
+        result = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert result.data[0]["exchanges"][1]["name"] == "Water, deionised, at plant"
+        return
     with pytest.raises(MigrationError):
         source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
 
 
 def test_replay_is_idempotent_and_old_profiles_unchanged():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_fuels_38_water_profile", "apply_fuels_38_water_profile_review"
+    )
     before = deepcopy(resource)
     apply_fuels_38_water_profile_review(resource)
     assert resource == before

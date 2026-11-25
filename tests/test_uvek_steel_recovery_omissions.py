@@ -5,7 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
-from uvek_review_helpers import historical_forward_resource
+from uvek_review_helpers import historical_forward_resource, steel_39_reconstruction_sources
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -22,10 +22,16 @@ PROFILES = [
     if profile[1] == "cutoff"
 ]
 
+LEGACY_OMISSIONS = tuple(
+    source
+    for source in APPROVED_STEEL_RECOVERY_OMISSIONS
+    if source not in steel_39_reconstruction_sources("recovery_handover")
+)
 
-def inventory_data(amount):
+
+def inventory_data(amount, *, sources=LEGACY_OMISSIONS):
     data = None
-    for source in APPROVED_STEEL_RECOVERY_OMISSIONS:
+    for source in sources:
         supplier = dict(zip(FIELDS, source, strict=True))
         for kind, uncertainty in (("technosphere", 2), ("substitution", 3)):
             batch = consumer(supplier, amount, uncertainty, kind)
@@ -66,7 +72,7 @@ def test_steel_recovery_omissions_preserve_original_data_and_warn_about_lost_cre
     report = result.last_migration_report
     warnings = [i for i in report.issues if i.code == "migration.technosphere_omission"]
     losses = [i for i in report.losses if i.code == "migration.technosphere_omission"]
-    assert len(warnings) == len(losses) == 32
+    assert len(warnings) == len(losses) == 2 * len(LEGACY_OMISSIONS) == 18
     assert all(i.severity.value == "warning" for i in warnings)
     assert all("recovery credits, which are excluded" in i.message for i in warnings)
     assert all("method-dependent and unquantified" in i.message for i in warnings)
@@ -119,12 +125,10 @@ def test_steel_omission_selection_preserves_local_suppliers_and_cached_resource(
         if r["id"] not in {x["id"] for x in resource["delete"]}
         and tuple(r["source"][f] for f in FIELDS) in APPROVED_STEEL_RECOVERY_OMISSIONS
     ]
-    assert {tuple(r["source"][f] for f in FIELDS) for r in added} == set(APPROVED_STEEL_RECOVERY_OMISSIONS)
-    assert not any(
-        tuple(r["source"][f] for f in FIELDS) in APPROVED_STEEL_RECOVERY_OMISSIONS for r in selected["replace"]
-    )
+    assert {tuple(r["source"][f] for f in FIELDS) for r in added} == set(LEGACY_OMISSIONS)
+    assert not any(tuple(r["source"][f] for f in FIELDS) in LEGACY_OMISSIONS for r in selected["replace"])
     assert resource == before
-    data = inventory_data(-10)
+    data = inventory_data(-10, sources=APPROVED_STEEL_RECOVERY_OMISSIONS)
     for source in APPROVED_STEEL_RECOVERY_OMISSIONS:
         supplier = dict(zip(FIELDS, source, strict=True))
         data.append({**supplier, "exchanges": [{**supplier, "type": "production", "amount": -1}]})

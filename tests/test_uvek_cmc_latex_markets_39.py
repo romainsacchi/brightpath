@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -115,7 +116,9 @@ def test_product_aggregate_is_not_an_empty_stock_or_an_extra_solids_factor():
 def test_delivered_market_replay_is_atomic_and_idempotent(drift):
     from scripts.review_uvek_cmc_latex_markets_39 import apply_cmc_latex_markets_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_cmc_latex_markets_39", "apply_cmc_latex_markets_39_review"
+    )
     if drift in ("first_parent", "last_parent"):
         rid = ROWS[0 if drift == "first_parent" else -1]["rule_id"]
         next(r for r in resource["replace"] if r["id"] == rid)["confidence"] = 0.01

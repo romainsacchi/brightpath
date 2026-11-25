@@ -6,6 +6,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -101,7 +102,7 @@ def test_other_profiles_cannot_inherit_the_corrections(row, version, model, poli
 
 @pytest.mark.parametrize("drift", [None, "last_rule", "sodium_recipe", "heat_dependency"])
 def test_replay_and_atomic_validation(drift):
-    r = deepcopy(load_uvek_technosphere_resource())
+    r = compiled_authoring_stage_resource("review_uvek_heat_salts", "apply_heat_salts_review")
     if drift == "last_rule":
         next(x for x in r["replace"] if x["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.1
     elif drift == "sodium_recipe":

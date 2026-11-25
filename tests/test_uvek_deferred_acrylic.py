@@ -6,11 +6,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_deferred_acrylic import apply_deferred_acrylic_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_deferred_acrylic_review.json").read_text())
@@ -109,7 +109,7 @@ def test_uninspected_releases_cannot_inherit_wet_recipe_qualification(version):
 
 @pytest.mark.parametrize("drift", ["none", "parent", "wet_binder", "waste_market", "dependency"])
 def test_replay_freezes_physical_recipe_and_inherited_audits_atomically(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_deferred_acrylic", "apply_deferred_acrylic_review")
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])["confidence"] = 0.123
     elif drift in ("wet_binder", "waste_market"):

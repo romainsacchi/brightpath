@@ -6,6 +6,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -73,7 +74,8 @@ def test_review_pins_corrected_rules_and_rejected_candidates():
         hashlib.sha256(REVIEW_PATH.read_bytes()).hexdigest()
         == "11e0a2208e869ae67dabc994377a71572ed3fb27feb05709de67db32339c4f42"
     )
-    indexed = {r["id"]: r for r in load_uvek_technosphere_resource()["replace"]}
+    resource = compiled_authoring_stage_resource("review_uvek_heat_310_routes", "apply_heat_310_routes_review")
+    indexed = {r["id"]: r for r in resource["replace"]}
     for row in REVIEW["records"]:
         assert indexed[row["rule_id"]] == compiled_route_rule(row)
         assert row["source_reference_amount"] == row["target_reference_amount"] == row["conversion_factor"] == 1

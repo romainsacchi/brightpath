@@ -6,12 +6,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
-from uvek_review_helpers import before_fuels_312_review, reviewed_fuels_312_record
+from uvek_review_helpers import compiled_authoring_stage_resource, reviewed_fuels_312_record
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_wastewater_routes import apply_pilot_wastewater_routes_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_wastewater_routes_review.json").read_text())
@@ -93,7 +92,7 @@ def test_wastewater_keeps_route_stages_and_signed_uncertainty(row, amount, uncer
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["source"]["location"])
 @pytest.mark.parametrize("version", ["3.7", "3.12"])
-def test_wastewater_refuses_uninspected_source_versions(row, version):
+def test_wastewater_requires_a_separate_review_for_other_versions(row, version):
     source = BrightwayInventory.from_data(consumer(row["source"], -1), context=contexts("ecoinvent", version))
     before = deepcopy(source.data)
     later = reviewed_fuels_312_record(row["rule_id"], version)
@@ -102,14 +101,23 @@ def test_wastewater_refuses_uninspected_source_versions(row, version):
         assert any(a.get("brightpath_conversion", {}).get("recipe_id") == later["new_recipe_id"] for a in actual.data)
         assert source.data == before
         return
-    with pytest.raises(MigrationError):
-        source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+    if version == "3.12" and row["rule_id"] == "bp-3c10f9aaee8ffe42":
+        result = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert any(
+            dataset.get("brightpath_conversion", {}).get("recipe_id") == "car-312-historical-3c10f9aaee8ffe42"
+            for dataset in result.data
+        )
+    else:
+        with pytest.raises(MigrationError):
+            source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert source.data == before
 
 
 @pytest.mark.parametrize("change", ["none", "late_parent", "new_helper", "component"])
 def test_wastewater_authoring_replay_is_atomic_and_freezes_all_helpers(change):
-    resource = before_fuels_312_review(deepcopy(load_uvek_technosphere_resource()), before_wastewater=True)
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_pilot_wastewater_routes", "apply_pilot_wastewater_routes_review"
+    )
     if change == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif change == "new_helper":

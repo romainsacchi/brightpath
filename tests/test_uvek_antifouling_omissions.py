@@ -5,6 +5,7 @@ import json
 import pickle
 import sqlite3
 from copy import deepcopy
+from dataclasses import replace
 
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
@@ -227,16 +228,16 @@ def test_paint_manufacturing_survives_and_only_retained_inventory_is_exported(tm
     paint = next(
         r
         for r in resource["replace"]
-        if r["source"]["name"] == "market for alkyd paint, white, without solvent, in 60% solution state"
+        if r["source"]["name"] == "alkyd paint production, white, water-based, product in 60% solution state"
         and r["source"]["location"] == "RER"
     )
     data = batch(-1)
     data[0]["exchanges"].append({**paint["source"], "amount": 2, "type": "technosphere"})
     result = BrightwayInventory.from_data(data, context=contexts("ecoinvent", "3.12", model)).migrate_background(
-        target_context(target_kind), policy=POLICY
+        target_context(target_kind), policy=replace(POLICY, on_information_loss=PolicyAction.WARN)
     )
     retained = [e for e in result.data[0]["exchanges"] if e["type"] == "technosphere"]
-    assert len(retained) == 1 and retained[0]["amount"] == 2
+    assert len(retained) == 1 and retained[0]["amount"] == pytest.approx(2 / 0.60)
     assert "paint" in retained[0]["name"].lower()
     excel = result.write_excel(tmp_path / "antifouling.xlsx")
     restored = BrightwayInventory.from_excel(excel)
@@ -254,5 +255,5 @@ def test_paint_manufacturing_survives_and_only_retained_inventory_is_exported(tm
     assert not loaded.validate().has_errors and len(loaded.data) == 1
     for inventory in (restored, loaded):
         inputs = [e for e in inventory.data[0]["exchanges"] if e["type"] == "technosphere"]
-        assert len(inputs) == 1 and inputs[0]["amount"] == 2
+        assert len(inputs) == 1 and inputs[0]["amount"] == pytest.approx(2 / 0.60)
         assert not any("antifouling" in e["name"].lower() for e in inventory.data[0]["exchanges"])

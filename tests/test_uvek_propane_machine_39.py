@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -101,7 +102,7 @@ def test_new_scope_does_not_authorize_other_profiles(row, version, model):
 def test_frozen_replay_is_atomic_and_idempotent(drift):
     from scripts.review_uvek_propane_machine_39 import apply_propane_machine_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_propane_machine_39", "apply_propane_machine_39_review")
     if drift is not None:
         next(r for r in resource["replace"] if r["id"] == ROWS[drift]["rule_id"])["confidence"] = 0.01
     before = deepcopy(resource)

@@ -8,12 +8,12 @@ from test_uvek_market_compositions import assert_composition_quantities, batch
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
 from test_uvek_reverse_industrial_gas import native_data
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BrightwayInventory, FormatProfile, InventoryContext, SimaProInventory
 from brightpath.background.uvek_export import load_uvek_export_resource
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.generate_uvek_export import legacy_export_projection
 from scripts.review_uvek_cutoff_slag_products import (
     APPROVAL,
@@ -162,7 +162,7 @@ def test_slag_product_boundary_requires_all_inventory_metadata_stock_and_native_
 
 @pytest.mark.parametrize("change", ["component", "recipe"])
 def test_slag_raw_supply_bindings_cannot_change_silently(change):
-    resource = load_uvek_technosphere_resource()
+    resource = historical_forward_resource()
     validate_bindings(resource)
     mutated = deepcopy(resource)
     if change == "recipe":

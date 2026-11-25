@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -141,7 +142,7 @@ def test_conditional_native_weights_keep_only_euro_v_and_their_size_duty_mix():
 def test_euro_v_replay_remains_atomic_and_idempotent(drift):
     from scripts.review_uvek_euro_v_freight_39 import apply_euro_v_freight_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_euro_v_freight_39", "apply_euro_v_freight_39_review")
     row = REFINEMENT["records"][0]
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == row["rule_id"])["confidence"] = 0.01

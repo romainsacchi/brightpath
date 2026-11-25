@@ -8,11 +8,11 @@ from dataclasses import replace
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy, PolicyAction
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_fuels_39_carbon import REVIEW_PATH, apply_fuels_39_carbon_review, digest
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_fuels_39_carbon_review.json").read_text())
@@ -181,7 +181,7 @@ def test_ash_services_keep_fates_without_renormalizing_empty_receivers(location,
 
 
 def minimal_resource():
-    full = load_uvek_technosphere_resource()
+    full = compiled_authoring_stage_resource("review_uvek_fuels_39_carbon", "apply_fuels_39_carbon_review", before=True)
     originals = {row["rule_id"]: row["original_rule"] for row in REVIEW["records"]}
     ids = set(originals) | {r["rule_id"] for r in REVIEW["component_bindings"]}
     return {

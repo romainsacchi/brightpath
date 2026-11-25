@@ -7,6 +7,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -97,7 +98,7 @@ def test_fae_refuses_uninspected_source_versions(row, version):
 
 @pytest.mark.parametrize("change", ["none", "late_parent", "new_helper", "component"])
 def test_fae_authoring_replay_is_atomic_and_freezes_all_helpers(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_pilot_fae_routes", "apply_pilot_fae_routes_review")
     if change == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif change == "new_helper":

@@ -1,5 +1,6 @@
 """Historical authoring evidence for tests; never used as an executable route."""
 
+import json
 from copy import deepcopy
 from functools import lru_cache
 from importlib import import_module
@@ -24,44 +25,58 @@ def historical_forward_resource():
     return deepcopy(_historical_forward())
 
 
-@lru_cache(maxsize=None)
-def _compiled_authoring_stage(module_name, function_name):
-    """Capture a real generator stage before subsequent decisions alter its rules."""
-    from scripts.generate_uvek_migration_resources import build_resources
+@lru_cache(maxsize=1)
+def _authoring_base():
+    from scripts.scope_uvek_system_models import cutoff_uvek_resource
+
+    catalogs = Path(__file__).resolve().parents[1] / "brightpath/data/export/reference_catalogs"
+    return cutoff_uvek_resource(_historical_forward(), catalogs)
+
+
+@lru_cache(maxsize=3)
+def _compiled_authoring_stage(module_name, function_name, before=False):
+    """Capture a real generator stage before later decisions alter its rules."""
+    from scripts.generate_uvek_migration_resources import apply_pilot_reviews
 
     module = import_module(f"scripts.{module_name}")
     original = getattr(module, function_name)
-    captured = {}
 
     class StageCaptured(Exception):
         pass
 
+    resource = deepcopy(_authoring_base())
+
     def capture(resource):
-        captured["resource"] = deepcopy(resource)
+        if not before:
+            original(resource)
         raise StageCaptured
 
-    root = Path(__file__).resolve().parents[1]
+    setattr(module, function_name, capture)
     try:
-        setattr(module, function_name, capture)
-        try:
-            build_resources(
-                root / "brightpath/data/export/reference_catalogs",
-                root / "brightpath/data/export/ecoinvent_to_uvek_mapping.csv",
-                root / "brightpath/data/export/uvek_conversion_factors.yaml",
-            )
-        except StageCaptured:
-            pass
+        apply_pilot_reviews(resource)
+    except StageCaptured:
+        return resource
     finally:
         setattr(module, function_name, original)
-    if not captured:
-        raise AssertionError(f"The normal generator did not reach {module_name}.{function_name}.")
-    original(captured["resource"])
-    return captured["resource"]
+    raise AssertionError(f"The normal generator did not reach {module_name}.{function_name}.")
 
 
-def compiled_authoring_stage_resource(module_name, function_name):
+def compiled_authoring_stage_resource(module_name, function_name, *, before=False):
     """Return independent compiled stage data for historical replay/drift tests."""
-    return deepcopy(_compiled_authoring_stage(module_name, function_name))
+    return deepcopy(_compiled_authoring_stage(module_name, function_name, before))
+
+
+@lru_cache(maxsize=2)
+def steel_39_reconstruction_sources(kind=None):
+    """Identify the suppliers superseded by the exact 3.9 reconstruction."""
+    review = Path(__file__).resolve().parents[1] / "brightpath/data/export/uvek_steel_39_remaining_residue_review.json"
+    records = json.loads(review.read_text(encoding="utf-8"))["records"]
+    fields = ("name", "reference product", "location", "unit")
+    return frozenset(
+        tuple(row["original_rule"]["source"][field] for field in fields)
+        for row in records
+        if kind is None or row["kind"] == kind
+    )
 
 
 @lru_cache(maxsize=1)

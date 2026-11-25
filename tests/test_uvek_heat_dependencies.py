@@ -64,11 +64,12 @@ def test_quantities_uncertainty_and_reference_supply_coordinate(row, amount, unc
 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["rule_id"])
-def test_uninspected_release_cannot_borrow_exact_scope(row, scoped_policy):
+def test_other_release_cannot_borrow_exact_scope(row, scoped_policy):
     resource = load_uvek_technosphere_resource()
     projected = select_profile_sign_rules(resource, TechnosphereProfile("ecoinvent", "3.10", "cutoff"))
     rule = next(r for r in projected["replace"] if r["id"] == row["rule_id"])
-    assert rule["reference_flow_sign_review"]["status"] == "unresolved"
+    status = "verified" if row["rule_id"] == "bp-f1bc637c4fcf6060" else "unresolved"
+    assert rule["reference_flow_sign_review"]["status"] == status
     inventory = BrightwayInventory.from_data(consumer(row["source"], -2), context=contexts("ecoinvent", "3.10"))
     before = inventory.data
     with pytest.raises(MigrationError):

@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -135,7 +136,7 @@ def test_unreviewed_profiles_do_not_gain_a_fluoride_route(version, model):
 
 @pytest.mark.parametrize("drift", [None, "parent", "new_recipe", "dependency"])
 def test_frozen_replay_is_atomic_and_idempotent(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_battery_fluoride_39", "apply_battery_fluoride_39_review")
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.01
     elif drift in ("new_recipe", "dependency"):

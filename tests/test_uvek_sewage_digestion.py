@@ -5,6 +5,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BackgroundContext, BiosphereProfile, BrightwayInventory, InventoryContext, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -219,7 +220,7 @@ def test_allocation_inventory_patch_or_native_role_changes_require_new_review(mu
 
 
 def test_changed_component_mapping_cannot_inherit_the_complete_helper_approval():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_forward_resource()
     validate_bindings(resource)
     component = next(r for r in resource["replace"] if r["source"]["name"] == "market for chemical, inorganic")
     component["target"]["name"] = "Another chemical"
@@ -419,7 +420,7 @@ def test_alias_source_drift_requires_repeat_scientific_review(change):
 
 
 def test_alias_child_inventory_cannot_change_without_new_review():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_forward_resource()
     validate_bindings(resource)
     recipe_id = next(iter(APPROVAL["market_recipe_dependencies"]))
     resource["recipes"][recipe_id]["inputs"][0]["amount"] *= 2

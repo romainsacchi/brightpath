@@ -5,6 +5,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BackgroundContext, BiosphereProfile, BrightwayInventory, InventoryContext, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -163,21 +164,33 @@ def test_complete_canonical_market_graph_has_independent_reverse_suppliers(versi
 
 
 @pytest.mark.parametrize("release", ("2025", "2026", "native2026"))
-def test_eight_older_clinker_dependent_profiles_cannot_inherit_newer_approval_or_omit_unresolved_inputs(release):
-    count = 0
+def test_clinker_dependent_profiles_require_separate_review(release):
+    unresolved = 0
+    separately_reviewed = 0
     for source, row in SOURCES.items():
         for profile in row["pending_profiles"]:
-            count += 1
             version = profile["label"].split("-")[1]
             data = batch(version, -1)
             data[0]["exchanges"].insert(1, consumer(dict(zip(FIELDS, source, strict=True)), -1)[0]["exchanges"][1])
             original = deepcopy(data)
             inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
-            with pytest.raises(MigrationError) as caught:
-                inventory.migrate_background(target_context(release), policy=MigrationPolicy.permissive())
-            assert any(i.code == "migration.reference_flow_sign_unresolved" for i in caught.value.report.issues)
+            target = target_context(release)
+            policy = MigrationPolicy.permissive()
+            if version == "3.9" and source[2] == "RoW":
+                result = inventory.migrate_background(target, policy=policy)
+                assert any(
+                    dataset.get("brightpath_conversion", {}).get("recipe_id")
+                    == "eaf-dust-39-row-retained-landfill-collection"
+                    for dataset in result.data
+                )
+                separately_reviewed += 1
+            else:
+                with pytest.raises(MigrationError) as caught:
+                    inventory.migrate_background(target, policy=policy)
+                assert any(i.code == "migration.reference_flow_sign_unresolved" for i in caught.value.report.issues)
+                unresolved += 1
             assert inventory.data == data == original
-    assert count == 8
+    assert (unresolved, separately_reviewed) == (7, 1)
 
 
 @pytest.mark.parametrize("version", ("3.6", *VERSIONS))
@@ -305,13 +318,13 @@ def test_inventory_boundary_patch_or_native_role_drift_requires_new_review(mutat
 
 
 def test_child_recipe_and_freight_choices_cannot_inherit_drifted_evidence(monkeypatch):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_forward_resource()
     validate_bindings(resource)
     rid = next(iter(APPROVAL["recipe_dependencies"]))
     resource["recipes"][rid]["inputs"][0]["amount"] *= 2
     with pytest.raises(ValueError, match="recipe dependency changed"):
         validate_bindings(resource)
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_forward_resource()
     monkeypatch.setitem(APPROVAL["freight_choices"][0], "target", {**ROAD, "name": "Wrong service"})
     with pytest.raises(ValueError, match="freight evidence"):
         validate_bindings(resource)

@@ -112,6 +112,13 @@ def test_hazardous_paint_respects_exact_reviewed_source_versions(row, version):
         assert all(
             e["name"].startswith("Disposal, hazardous waste, 25% water") for e in inputs if e["unit"] == "kilogram"
         )
+    elif version == "3.12" and row["rule_id"] == "bp-e0c46eb6a6d0891b":
+        converted = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert converted.data[0]["exchanges"][1]["amount"] == 1
+        assert any(
+            dataset.get("brightpath_conversion", {}).get("recipe_id") == "battery-312-reviewed-model-e0c46eb6a6d0891b"
+            for dataset in converted.data
+        )
     else:
         with pytest.raises(MigrationError):
             source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())

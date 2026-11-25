@@ -7,6 +7,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -70,11 +71,18 @@ def test_cast_stock_retains_furnace_shares_delivery_and_separate_caller_rolling(
 
 
 @pytest.mark.parametrize("version", ("3.10", "3.9.1"))
-def test_uninspected_profiles_cannot_inherit_cast_stock_helpers(version):
+def test_cast_stock_requires_a_separate_review_for_other_profiles(version):
     source = BrightwayInventory.from_data(consumer(ROW["source"], 1), context=contexts("ecoinvent", version))
     before = deepcopy(source.data)
-    with pytest.raises(MigrationError):
-        source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+    if version == "3.10":
+        result = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert any(
+            dataset.get("brightpath_conversion", {}).get("recipe_id") == "car-310-historical-9caeb1b3bd66b612"
+            for dataset in result.data
+        )
+    else:
+        with pytest.raises(MigrationError):
+            source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert source.data == before
 
 
@@ -101,7 +109,9 @@ def test_changed_component_parent_or_recipe_refuses_before_mutation(change):
 
 
 def test_complete_reviewed_parent_replays_idempotently():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_pilot_low_alloyed_cast_stock", "apply_pilot_low_alloyed_cast_stock_review"
+    )
     expected = deepcopy(resource)
     (parent,) = [r for r in resource["replace"] if r["id"] == ROW["rule_id"]]
     parent.clear()

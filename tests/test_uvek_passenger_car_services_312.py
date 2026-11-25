@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -74,7 +75,9 @@ def test_old_profile_decisions_and_existing_treatment_signs_are_unchanged():
 
 
 def test_replay_is_atomic_and_idempotent():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_passenger_car_services_312", "apply_passenger_car_services_312_review"
+    )
     apply_passenger_car_services_312_review(resource)
     once = deepcopy(resource)
     apply_passenger_car_services_312_review(resource)

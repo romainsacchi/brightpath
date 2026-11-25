@@ -9,6 +9,7 @@ from pathlib import Path
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -148,8 +149,8 @@ def test_stale_full_source_and_lifecycle_evidence_refuses(change):
 
 
 def test_treatment_and_whole_freight_bindings_cannot_change_silently():
-    review.validate_bindings(BASE)
-    changed = deepcopy(BASE)
+    changed = historical_forward_resource()
+    review.validate_bindings(changed)
     binding = next(b for b in review.APPROVAL["bindings"] if "internal_recipe" not in b)
     (rule,) = [r for r in changed["replace"] if key(r["source"]) == key(binding["source"])]
     rule["confidence"] = 0.123

@@ -4,6 +4,7 @@ import json
 from copy import deepcopy
 
 import pytest
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -56,7 +57,9 @@ def test_native_function_and_quantity_basis_keep_exact_profile_gate(
 
 
 def test_authoring_replay_changes_only_the_three_reviewed_suppliers():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_pilot_wood_steel_freight", "apply_pilot_wood_steel_freight_review"
+    )
     expected = deepcopy(resource)
     review = json.loads((DATA_DIR / "export/uvek_pilot_wood_steel_freight_review.json").read_text())
     assert len(review["rules"]) == 3

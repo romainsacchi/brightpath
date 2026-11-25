@@ -7,6 +7,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -114,7 +115,9 @@ def test_public_emissions_operations_and_scrap_outputs_all_remain():
 
 @pytest.mark.parametrize("drift", [None, "parent", "recipe", "stock", "stock_approval"])
 def test_replay_is_atomic_and_idempotent(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_mining_38_msw_portfolio", "apply_mining_38_msw_portfolio_review"
+    )
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])["confidence"] = 0.1
     elif drift == "recipe":

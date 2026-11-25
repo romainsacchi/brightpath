@@ -4,7 +4,7 @@ import json
 from copy import deepcopy
 
 import pytest
-from uvek_review_helpers import before_converter_steel_39_review
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -32,15 +32,9 @@ def test_complete_native_boundary_and_exact_source_profile(rule_id, version, nam
 
 
 def test_original_authoring_replay_changes_only_the_two_reviewed_suppliers():
-    resource = before_converter_steel_39_review(deepcopy(load_uvek_technosphere_resource()))
-    # Replay this historical stage before the later exact3.9 grid extension.
-    extension = json.loads((DATA_DIR / "export/uvek_remaining_electricity_grids_39_review.json").read_text())[
-        "records"
-    ][1]
-    current = next(r for r in resource["replace"] if r["id"] == extension["rule_id"])
-    assert current == extension["compiled_rule"]
-    current.clear()
-    current.update(deepcopy(extension["original_rule"]))
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_pilot_grid_converter", "apply_pilot_grid_converter_review"
+    )
     expected = deepcopy(resource)
     review = json.loads((DATA_DIR / "export/uvek_pilot_grid_converter_review.json").read_text())
     for decision in review["rules"]:

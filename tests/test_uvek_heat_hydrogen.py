@@ -51,12 +51,12 @@ def test_inspected_market_uses_fossil_smr_preserving_signed_kg_and_uncertainty(a
 
 
 @pytest.mark.parametrize("version,model", [("3.8", "cutoff"), ("3.10", "cutoff"), ("3.9", "consequential")])
-def test_uninspected_or_cross_model_route_does_not_borrow_scope(version, model):
+def test_other_routes_cannot_borrow_scope(version, model):
     resource = load_uvek_technosphere_resource()
     if model == "cutoff":
         selected = select_profile_sign_rules(resource, TechnosphereProfile("ecoinvent", version, model))
         rule = next(r for r in selected["replace"] if r["id"] == REVIEW["rule_id"])
-        assert rule["reference_flow_sign_review"]["status"] == "unresolved"
+        assert rule["reference_flow_sign_review"]["status"] == ("verified" if version == "3.8" else "unresolved")
     data = consumer(REVIEW["source"], 1)
     before = deepcopy(data)
     inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version, model))

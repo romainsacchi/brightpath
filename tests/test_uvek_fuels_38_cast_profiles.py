@@ -7,6 +7,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -51,17 +52,23 @@ def test_cast_stock_keeps_caller_statistics_and_original_helper(rid, amount, unc
 
 
 @pytest.mark.parametrize("rid", RECORDS)
-def test_uninspected_37_does_not_borrow_new_sign_decision(rid):
+def test_37_requires_a_separate_review(rid):
     source = BrightwayInventory.from_data(
         consumer(RECORDS[rid]["original_rule"]["source"], 1, 2), context=contexts("ecoinvent", "3.7", "cutoff")
     )
+    if rid == "bp-9caeb1b3bd66b612":
+        result = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert result.data[1]["brightpath_conversion"]["recipe_id"] == "fuels-37-cast-steel-route-mix"
+        return
     with pytest.raises(MigrationError) as caught:
         source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert "migration.reference_flow_sign_unresolved" in json.dumps(caught.value.report.to_dict())
 
 
 def test_old_profiles_and_helper_closure_unchanged_and_replay_idempotent():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_fuels_38_cast_profiles", "apply_fuels_38_cast_profiles_review"
+    )
     before = deepcopy(resource)
     apply_fuels_38_cast_profiles_review(resource)
     assert resource == before

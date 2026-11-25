@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import (
     DATA_DIR,
@@ -86,7 +87,9 @@ def test_current_market_keeps_source_statistics_and_historical_omission_ownershi
 def test_plastic_review_replay_is_idempotent_and_rejects_model_drift():
     from scripts.review_uvek_hydrogen_train_plastic_312 import apply_hydrogen_train_plastic_312_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_hydrogen_train_plastic_312", "apply_hydrogen_train_plastic_312_review"
+    )
     before = deepcopy(resource)
     apply_hydrogen_train_plastic_312_review(resource)
     assert resource == before

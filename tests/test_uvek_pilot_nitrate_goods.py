@@ -8,11 +8,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_nitrate_goods import apply_pilot_nitrate_goods_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_goods_review.json").read_text())
@@ -83,54 +83,23 @@ def test_review_keeps_all_supply_and_freight_entries_in_their_original_units():
 
 @pytest.mark.parametrize("version", ["3.6", "3.12"])
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["rule_id"])
-def test_material_compositions_refuse_uninspected_releases(version, row):
+def test_material_compositions_require_a_separate_review_for_other_releases(version, row):
     inventory = BrightwayInventory.from_data(consumer(row["source"], 1), context=contexts("ecoinvent", version))
     before = deepcopy(inventory.data)
-    with pytest.raises(MigrationError):
-        inventory.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+    if version == "3.12" and row["rule_id"] == "bp-a04e605696e65e2c":
+        result = inventory.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        assert any(
+            dataset.get("brightpath_conversion", {}).get("recipe_id") == "car-312-historical-a04e605696e65e2c"
+            for dataset in result.data
+        )
+    else:
+        with pytest.raises(MigrationError):
+            inventory.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert inventory.data == before
 
 
 def goods_stage_resource():
-    """Restore frozen parents superseded by independently reviewed later stages."""
-    resource = deepcopy(load_uvek_technosphere_resource())
-    later = json.loads((DATA_DIR / "export/uvek_metals_38_operating_services_review.json").read_text())
-    indexed = {r["id"]: r for r in resource["replace"]}
-    with pytest.raises(ValueError, match="generator basis changed"):
-        apply_pilot_nitrate_goods_review(resource)
-    for overlay in later["records"]:
-        rule = indexed[overlay["rule_id"]]
-        assert rule == overlay["compiled_rule"]
-        if overlay["kind"] == "burned_diesel_generator_service":
-            digest = hashlib.sha256(json.dumps(overlay["original_rule"], sort_keys=True).encode()).hexdigest()
-            assert digest == REVIEW["direct_records"][0]["raw_rule_sha256"]
-        rule.clear()
-        rule.update(deepcopy(overlay["original_rule"]))
-    for filename, rule_id in (
-        ("uvek_pulp_heat_so2_sulfite_review.json", "bp-46ffc4892be8fcb1"),
-        ("uvek_steel_39_product_corrections_review.json", "bp-8e691fdb86f7b1c6"),
-    ):
-        authority = json.loads((DATA_DIR / "export" / filename).read_text())
-        row = next(r for r in authority["records"] if r["rule_id"] == rule_id)
-        rule = indexed[rule_id]
-        assert rule == row["compiled_rule"]
-        rule.clear()
-        rule.update(deepcopy(row["original_rule"]))
-    resource["coverage"]["mapping_methods"] = dict(
-        sorted(Counter(r["mapping_method"] for r in resource["replace"]).items())
-    )
-    resource["coverage"]["mean_confidence"] = round(
-        sum(r["confidence"] for r in resource["replace"]) / len(resource["replace"]), 6
-    )
-    dispositions = Counter(
-        "recipe" if "recipe_ref" in r["target"] else r.get("classification", "unclassified")
-        for r in resource["replace"]
-    )
-    dispositions["omitted"] = len(resource["delete"])
-    if resource["coverage"].get("unresolved_identities"):
-        dispositions["unresolved"] = resource["coverage"]["unresolved_identities"]
-    resource["coverage"]["dispositions"] = dict(dispositions)
-    return resource
+    return compiled_authoring_stage_resource("review_uvek_pilot_nitrate_goods", "apply_pilot_nitrate_goods_review")
 
 
 def test_composition_authoring_is_atomic_and_idempotent():

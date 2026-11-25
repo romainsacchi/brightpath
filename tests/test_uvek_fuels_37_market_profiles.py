@@ -7,6 +7,7 @@ from dataclasses import replace
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -54,7 +55,9 @@ def test_signed_market_demand_keeps_statistics_and_exact_recipe(rid, amount, unc
 
 
 def test_scoped_author_preserves_prior_decisions_and_all_old_recipes():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_fuels_37_market_profiles", "apply_fuels_37_market_profiles_review"
+    )
     before = deepcopy(resource)
     apply_fuels_37_market_profiles_review(resource)
     assert resource == before

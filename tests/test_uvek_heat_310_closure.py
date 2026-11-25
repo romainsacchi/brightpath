@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -123,17 +124,7 @@ def test_other_profiles_cannot_inherit_the_new_permissions(row, version, model, 
 
 @pytest.mark.parametrize("drift", ["none", "late_rule", "treatment", "collection", "market"])
 def test_original_authoring_stage_is_idempotent_and_refuses_drift_atomically(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
-    # Replay this historical stage on its exact reviewed predecessor. The later
-    # source3.9 extension separately tests preservation of this3.10 binding.
-    extension = json.loads((DATA_DIR / "export/uvek_aluminium_europe_delivery_39_review.json").read_text())["records"][
-        0
-    ]
-    current = next(r for r in resource["replace"] if r["id"] == extension["rule_id"])
-    assert current == extension["compiled_rule"]
-    current.clear()
-    current.update(deepcopy(extension["original_rule"]))
-    apply_heat_310_closure_review(resource)
+    resource = compiled_authoring_stage_resource("review_uvek_heat_310_closure", "apply_heat_310_closure_review")
     if drift == "late_rule":
         next(r for r in resource["replace"] if r["id"] == CONDENSATE["rule_id"])["conversion_factor"] = 1
     elif drift != "none":

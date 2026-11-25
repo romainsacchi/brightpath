@@ -7,6 +7,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -102,7 +103,7 @@ def test_kcl_does_not_admit_uninspected_releases(version):
 
 
 def test_kcl_authoring_is_atomic_and_idempotent():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_pilot_kcl_site", "apply_pilot_kcl_site_review")
     expected = deepcopy(resource)
     rule = next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])
     rule.clear()

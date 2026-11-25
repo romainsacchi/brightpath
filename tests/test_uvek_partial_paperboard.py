@@ -6,6 +6,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -93,7 +94,7 @@ def test_partial_qualification_does_not_cross_release_or_system_model(version, m
 
 @pytest.mark.parametrize("drift", ["none", "late_profile", "omission", "component"])
 def test_partial_authoring_is_atomic_and_freezes_losses_and_transports(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_partial_paperboard", "apply_partial_paperboard_review")
     if drift == "late_profile":
         resource["recipes"][ROW["generated_recipe_ids"]["3.12"]]["inputs"][0]["amount"] += 1
     elif drift == "omission":

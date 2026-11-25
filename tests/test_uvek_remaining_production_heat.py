@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -66,7 +67,9 @@ def test_direct_1mwe_correction_selects_existing_exergy_product():
 
 @pytest.mark.parametrize("drift", [None, "parent", "recipe"])
 def test_replay_is_idempotent_and_refuses_drift_atomically(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_remaining_production_heat", "apply_remaining_production_heat_review"
+    )
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][0]["rule_id"])["confidence"] = 0.1
     if drift == "recipe":

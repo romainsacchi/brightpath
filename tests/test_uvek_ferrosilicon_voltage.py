@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -84,7 +85,9 @@ def test_every_source_and_native_reference_is_positive_and_nonempty():
 
 @pytest.mark.parametrize("drift", [None, 0, -1])
 def test_replay_is_atomic_and_rejects_parent_drift(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_ferrosilicon_voltage", "apply_ferrosilicon_voltage_review"
+    )
     if drift is not None:
         rid = REVIEW["records"][drift]["rule_id"]
         next(r for r in resource["replace"] if r["id"] == rid)["confidence"] = 0.123

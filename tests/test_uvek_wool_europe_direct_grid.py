@@ -7,11 +7,11 @@ from functools import lru_cache
 from unittest.mock import patch
 
 import pytest
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR
 from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_wool_europe_direct_grid import (
-    _digest,
     apply_wool_europe_direct_grid_review,
 )
 
@@ -21,19 +21,9 @@ def review():
 
 
 def before_review():
-    resource = deepcopy(load_uvek_technosphere_resource())
-    decision = review()
-    original = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_wool_europe_review.json").read_text())
-    for key in (decision["owner_recipe_id"], decision["retired_recipe_id"]):
-        resource["recipes"][key] = deepcopy(original["auxiliary_recipes"][key])
-    for row in decision["rules"]:
-        rule = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
-        old_review = next(
-            key for key, card in resource["reviews"].items() if _digest(card) == row["original_review_sha256"]
-        )
-        rule["review_ref"] = old_review
-        assert _digest(rule) == row["original_rule_sha256"]
-    return resource
+    return compiled_authoring_stage_resource(
+        "review_uvek_wool_europe_direct_grid", "apply_wool_europe_direct_grid_review", before=True
+    )
 
 
 def test_direct_european_grid_preserves_every_original_input_statistic():
@@ -50,7 +40,9 @@ def test_direct_european_grid_preserves_every_original_input_statistic():
         if key != "recipe":
             assert new["inputs"][index][key] == value
     assert {key: new["inputs"][index][key] for key in decision["native_supplier"]} == decision["native_supplier"]
-    assert resource == load_uvek_technosphere_resource()
+    assert resource == compiled_authoring_stage_resource(
+        "review_uvek_wool_europe_direct_grid", "apply_wool_europe_direct_grid_review"
+    )
 
 
 def test_direct_european_grid_replay_is_idempotent():

@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -121,7 +122,7 @@ def test_product_and_market_bases_are_independently_bounded():
             0.599,
         ],
     }
-    resource = load_uvek_technosphere_resource()
+    resource = compiled_authoring_stage_resource("review_uvek_chemical_markets_39", "apply_chemical_markets_39_review")
     for row in ROWS:
         assert row["source_profile"] == {"family": "ecoinvent", "version": "3.9", "system_model": "cutoff"}
         assert row["source_witness"]["reference_amounts"] == [1]
@@ -157,7 +158,7 @@ def test_product_and_market_bases_are_independently_bounded():
 def test_replay_from_frozen_inputs_is_atomic_and_idempotent(drift):
     from scripts.review_uvek_chemical_markets_39 import apply_chemical_markets_39_review
 
-    expected = deepcopy(load_uvek_technosphere_resource())
+    expected = compiled_authoring_stage_resource("review_uvek_chemical_markets_39", "apply_chemical_markets_39_review")
     resource = deepcopy(expected)
     for row in ROWS:
         parent = next(r for r in resource["replace"] if r["id"] == row["rule_id"])

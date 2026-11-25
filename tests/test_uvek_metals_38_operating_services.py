@@ -6,6 +6,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -114,7 +115,9 @@ def test_old_39_generator_supplier_and_MJ_basis_are_retained():
 def test_replay_is_atomic_idempotent_and_rejects_unreviewed_parent():
     from scripts.review_uvek_metals_38_operating_services import apply_metals_38_operating_services_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_metals_38_operating_services", "apply_metals_38_operating_services_review"
+    )
     before = deepcopy(resource)
     apply_metals_38_operating_services_review(resource)
     assert resource == before

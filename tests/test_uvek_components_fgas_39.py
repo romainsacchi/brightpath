@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -136,7 +137,7 @@ def test_foil_transport_lineage_and_component_reference_bases_are_explicit():
 def test_review_replay_is_atomic_and_checks_exact_freight_dependencies(drift):
     from scripts.review_uvek_components_fgas_39 import apply_components_fgas_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_components_fgas_39", "apply_components_fgas_39_review")
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == ROWS[0]["rule_id"])["conversion_factor"] = 2
     elif drift == "dependency":

@@ -6,6 +6,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -188,7 +189,7 @@ def test_foreground_ownership_and_uninspected_contexts_remain_protected(source):
 
 @pytest.mark.parametrize("mutation", ("factor", "target", "recipe"))
 def test_existing_component_mappings_and_allocated_stocks_cannot_change_without_review(mutation):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_forward_resource()
     review.validate_bindings(resource)
     profile = next(iter(review.SOURCES.values()))["profiles"][0]
     source = review.identity(profile["component_bindings"][0]["source"])

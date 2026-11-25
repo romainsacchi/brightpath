@@ -7,7 +7,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
-from uvek_review_helpers import historical_forward_resource
+from uvek_review_helpers import historical_forward_resource, steel_39_reconstruction_sources
 
 from brightpath import BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -48,6 +48,22 @@ def batch(version, amount):
 @pytest.mark.parametrize("amount", (-2, 0, 2))
 def test_exact_patch_profiles_preserve_stock_uncertainty_and_audit_every_omitted_handoff(version, release, amount):
     data = batch(version, amount)
+    inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
+    pending = {
+        index
+        for index, exchange in enumerate(data[0]["exchanges"])
+        if exchange["type"] in {"technosphere", "substitution"}
+        and review.identity(exchange) in steel_39_reconstruction_sources("recovery_handover")
+    }
+    assert pending
+    original = deepcopy(data)
+    with pytest.raises(MigrationError) as error:
+        inventory.migrate_background(target_context(release), policy=POLICY)
+    errors = {(issue.code, issue.path) for issue in error.value.report.issues if issue.severity.value == "error"}
+    assert errors == {("migration.reference_flow_sign_unresolved", f"datasets[0].exchanges[{i}]") for i in pending}
+    assert inventory.data == data == original
+
+    data[0]["exchanges"] = [exchange for index, exchange in enumerate(data[0]["exchanges"]) if index not in pending]
     before = deepcopy(data)
     inventory = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
     result = inventory.migrate_background(target_context(release), policy=POLICY)

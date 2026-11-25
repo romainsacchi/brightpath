@@ -5,7 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
-from uvek_review_helpers import before_mining_38_material_profiles
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -87,7 +87,9 @@ def test_reference_bases_and_all_original_market_rows_are_retained():
 
 @pytest.mark.parametrize("drift", [None, "parent", "recipe"])
 def test_replay_is_atomic(drift):
-    resource = before_mining_38_material_profiles(deepcopy(load_uvek_technosphere_resource()))
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_pulp_heat_ether_ethanol_rer", "apply_pulp_heat_ether_ethanol_rer_review"
+    )
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.1
     elif drift == "recipe":

@@ -6,6 +6,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
@@ -68,7 +69,7 @@ def test_teg_correspondences_do_not_inherit_unreviewed_releases(source, version)
 
 
 def test_teg_authoring_replay_is_idempotent():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_pilot_teg_supply", "apply_pilot_teg_supply_review")
     expected = deepcopy(resource)
     for row in (ROW, STOCK):
         rule = next(r for r in resource["replace"] if r["id"] == row["rule_id"])

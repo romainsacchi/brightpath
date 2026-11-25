@@ -6,12 +6,12 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_fuels_38_gas_wood import apply_fuels_38_gas_wood_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_fuels_38_gas_wood_review.json").read_text())
@@ -51,17 +51,22 @@ def test_gas_wood_keeps_caller_statistics_and_original_helper(rid, amount, uncer
 
 
 @pytest.mark.parametrize("rid", RECORDS)
-def test_uninspected_37_does_not_borrow_new_sign_decision(rid):
+def test_37_requires_a_separate_review(rid):
     source = BrightwayInventory.from_data(
         consumer(RECORDS[rid]["original_rule"]["source"], 1, 2), context=contexts("ecoinvent", "3.7", "cutoff")
     )
+    if rid == "bp-745c517f85a78ba7":
+        result = source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+        supplier = result.data[0]["exchanges"][1]
+        assert supplier["name"] == "Natural gas, from medium pressure network (0.1-1 bar), at service station"
+        return
     with pytest.raises(MigrationError) as caught:
         source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
     assert "migration.reference_flow_sign_unresolved" in json.dumps(caught.value.report.to_dict())
 
 
 def test_old_profiles_and_helper_closure_unchanged_and_replay_idempotent():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_fuels_38_gas_wood", "apply_fuels_38_gas_wood_review")
     before = deepcopy(resource)
     apply_fuels_38_gas_wood_review(resource)
     assert resource == before

@@ -63,7 +63,11 @@ def test_caller_stock_mass_uncertainty_and_formula_survive(rid, amount, uncertai
 
 @pytest.mark.parametrize("rid", RECORDS)
 @pytest.mark.parametrize("version,model", [("3.10", "cutoff"), ("3.9", "consequential")])
-def test_unreviewed_profiles_are_not_inferred(rid, version, model):
+def test_other_profiles_require_a_separate_review(rid, version, model):
+    if (rid, version, model) == ("bp-aa17e516d5f814ea", "3.10", "cutoff"):
+        result = migrate(rid, version=version, model=model)
+        assert result.data[0]["exchanges"][1]["name"] == "Electricity, high voltage, at grid"
+        return
     with pytest.raises(MigrationError):
         migrate(rid, version=version, model=model)
 

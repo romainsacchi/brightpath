@@ -186,7 +186,7 @@ def test_historical_packaged_resource_preserves_decisions_without_inventory_audi
         )
     ]
     assert polyester["mapping_method"] == "reviewed_polyester_pet_transfer" and polyester["confidence"] == 1
-    assert sum(row["confidence"] < 0.5 for row in resource["replace"]) == 20524
+    assert sum(row["confidence"] < 0.5 for row in resource["replace"]) == 20523
     for decision in decisions:
         current = indexed[identity(decision["source"])]
         assert current["target"] == decision["target"]

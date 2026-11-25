@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -131,7 +132,7 @@ def test_whole_market_scope_does_not_authorize_standalone_recycled_PET():
 def test_pet_profile_replay_is_atomic_and_idempotent(drift):
     from scripts.review_uvek_pet_market_39 import apply_pet_market_39_review
 
-    r = deepcopy(load_uvek_technosphere_resource())
+    r = compiled_authoring_stage_resource("review_uvek_pet_market_39", "apply_pet_market_39_review")
     if drift == "parent":
         next(a for a in r["replace"] if a["id"] == ROWS[0]["rule_id"])["confidence"] = 0.01
     elif drift in ("old_recipe", "new_recipe"):

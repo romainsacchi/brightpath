@@ -5,6 +5,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -181,7 +182,7 @@ def test_changed_full_inventory_or_parameter_boundary_requires_review(field):
 def test_changed_declared_local_component_cannot_reuse_approval(mutation):
     import json
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_forward_resource()
     prior = json.loads((review.ROOT / "brightpath/data/export/uvek_reference_flow_sign_review.json").read_text())[
         "resources"
     ][resource["name"]]

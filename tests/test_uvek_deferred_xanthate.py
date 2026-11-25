@@ -6,11 +6,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_deferred_xanthate import apply_deferred_xanthate_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_deferred_xanthate_review.json").read_text())
@@ -89,7 +89,7 @@ def test_other_versions_cannot_inherit_synthesis_and_purity_assumptions(version)
 
 @pytest.mark.parametrize("drift", ["none", "parent", "producer", "market", "dependency"])
 def test_replay_freezes_parent_native_graph_and_reviewed_waste_markets_atomically(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_deferred_xanthate", "apply_deferred_xanthate_review")
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])["confidence"] = 0.123
     elif drift == "producer":

@@ -7,6 +7,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -189,7 +190,7 @@ def test_full_source_and_native_role_evidence_drift_requires_review(change):
 
 @pytest.mark.parametrize("change", ("parent_binding", "parent_body", "protected_body"))
 def test_partial_propagation_or_changed_protected_recipe_requires_review(change):
-    value = resource()
+    value = historical_forward_resource()
     review.validate_bindings(value)
     if change == "parent_binding":
         row = review.APPROVAL["parent_rule_bindings"][0]

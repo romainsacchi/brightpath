@@ -6,11 +6,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_fuels_38_delivered_materials import apply_fuels_38_delivered_materials_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_fuels_38_delivered_materials_review.json").read_text())
@@ -66,9 +66,10 @@ def test_uninspected_311_is_not_given_the_38_helper(rid):
 
 
 def test_replay_is_idempotent_and_rejects_changed_delivery():
-    from uvek_review_helpers import before_polymer_carton_39_review
 
-    resource = before_polymer_carton_39_review(deepcopy(load_uvek_technosphere_resource()))
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_fuels_38_delivered_materials", "apply_fuels_38_delivered_materials_review"
+    )
     before = deepcopy(resource)
     apply_fuels_38_delivered_materials_review(resource)
     assert resource == before

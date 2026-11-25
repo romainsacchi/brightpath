@@ -6,6 +6,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -163,7 +164,9 @@ def test_older_permissions_keep_physical_suppliers_authority_and_factor(prior):
 def test_exact_replay_rejects_unreviewed_changes_without_partial_mutation(drift):
     from scripts.review_uvek_solvent_supply_markets_39 import apply_solvent_supply_markets_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_solvent_supply_markets_39", "apply_solvent_supply_markets_39_review"
+    )
     if drift in ("first_parent", "last_parent"):
         row = ROWS[0] if drift == "first_parent" else ROWS[-1]
         next(r for r in resource["replace"] if r["id"] == row["rule_id"])["confidence"] = 0.001

@@ -157,7 +157,7 @@ def physical_binding(resource, rid, profile):
     "prior", REVIEW["preserved_existing_scopes"], ids=lambda p: p["rule_id"] + p["source_profile"]["version"]
 )
 def test_existing_approved_profiles_keep_the_same_full_physical_binding(prior):
-    resource = load_uvek_technosphere_resource()
+    resource = compiled_authoring_stage_resource("review_uvek_polymer_carton_39", "apply_polymer_carton_39_review")
     assert physical_binding(resource, prior["rule_id"], prior["source_profile"]) == prior["unchanged_physical_binding"]
     row = next(r for r in ROWS if r["rule_id"] == prior["rule_id"])
     baseline = deepcopy(resource)
@@ -171,9 +171,10 @@ def test_existing_approved_profiles_keep_the_same_full_physical_binding(prior):
     rule = next(r for r in resource["replace"] if r["id"] == prior["rule_id"])
     assert compatibility_rule_fingerprint(baseline, "replace", parent, source, target) == prior["previous_fingerprint"]
     assert compatibility_rule_fingerprint(resource, "replace", rule, source, target) == prior["rebound_fingerprint"]
-    policy = MigrationPolicy(
-        approved_compatibility_rules=(prior["rebound_fingerprint"],), on_information_loss=PolicyAction.WARN
-    )
+    active = load_uvek_technosphere_resource()
+    active_rule = next(r for r in active["replace"] if r["id"] == prior["rule_id"])
+    active_fingerprint = compatibility_rule_fingerprint(active, "replace", active_rule, source, target)
+    policy = MigrationPolicy(approved_compatibility_rules=(active_fingerprint,), on_information_loss=PolicyAction.WARN)
     before = consumer(rule["source"], -2.5, 3)
     result = BrightwayInventory.from_data(before, context=contexts("ecoinvent", source.version)).migrate_background(
         contexts("uvek", "2026").background, policy=policy

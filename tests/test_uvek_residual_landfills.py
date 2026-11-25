@@ -5,6 +5,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import FIELDS, consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BackgroundContext, BiosphereProfile, BrightwayInventory, InventoryContext, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -294,7 +295,7 @@ def test_source_or_native_evidence_drift_requires_review(mutation):
 
 
 def test_used_component_bindings_are_frozen():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = historical_forward_resource()
     validate_bindings(resource)
     source = tuple(APPROVAL["rules"][0]["profiles"][0]["bindings"][0]["source"])
     rule = next(r for r in resource["replace"] if tuple(r["source"][f] for f in FIELDS) == source)

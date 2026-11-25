@@ -7,6 +7,7 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import historical_forward_resource
 
 from brightpath import BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -161,7 +162,7 @@ def test_full_source_target_and_parent_inventories_cannot_drift(mutation):
 
 @pytest.mark.parametrize("mutation", ("parent", "parent_recipe", "custom_recipe"))
 def test_partial_parent_propagation_or_custom_vector_changes_are_rejected(mutation):
-    resource = json.loads((review.ROOT / "brightpath/data/migrations/uvek/ecoinvent-to-uvek-2025.json").read_text())
+    resource = historical_forward_resource()
     review.validate_bindings(resource)
     if mutation == "parent":
         source = review.APPROVAL["parent_rule_bindings"][0]["source"]

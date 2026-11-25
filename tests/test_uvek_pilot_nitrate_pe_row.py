@@ -7,11 +7,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_nitrate_pe_row import apply_pilot_nitrate_pe_row_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_pe_row_review.json").read_text())
@@ -66,17 +66,28 @@ def test_row_market_preserves_all_fates_freight_and_signed_uncertainty(amount, u
 
 
 @pytest.mark.parametrize("version", ["3.6", "3.12"])
-def test_row_helper_refuses_uninspected_source_profiles(version):
+def test_row_helper_requires_a_separate_review_for_other_profiles(version):
     source = BrightwayInventory.from_data(consumer(ROW["source"], -1), context=contexts("ecoinvent", version))
     before = deepcopy(source.data)
-    with pytest.raises(MigrationError):
-        source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+    target = target_context("2026")
+    policy = MigrationPolicy.permissive()
+    if version == "3.12":
+        result = source.migrate_background(target, policy=policy)
+        assert any(
+            row.get("brightpath_conversion", {}).get("recipe_id") == "trucks-312-waste-market-38a8afc636bbea5a"
+            for row in result.data
+        )
+    else:
+        with pytest.raises(MigrationError):
+            source.migrate_background(target, policy=policy)
     assert source.data == before
 
 
 @pytest.mark.parametrize("change", ["none", "parent", "new_helper", "prior_helper"])
 def test_row_authoring_replay_is_atomic_and_freezes_old_and_new_helpers(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_pilot_nitrate_pe_row", "apply_pilot_nitrate_pe_row_review"
+    )
     if change == "parent":
         next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])["confidence"] = 0.123
     elif change == "new_helper":

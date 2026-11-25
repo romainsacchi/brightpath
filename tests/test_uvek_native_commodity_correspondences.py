@@ -10,6 +10,7 @@ from brightpath import DATA_DIR, BackgroundProfile
 from brightpath.background import PackageCatalogProvider
 from brightpath.background.execution import execute_background_migration
 from brightpath.background.migration import plan_background_migration
+from brightpath.background.reference_signs import select_profile_sign_rules
 from brightpath.core import (
     BackgroundContext,
     BiosphereProfile,
@@ -45,6 +46,8 @@ EXPECTED = {
     },
 }
 SOURCE = BackgroundContext(TechnosphereProfile("ecoinvent", "3.12", "cutoff"), BiosphereProfile("ecoinvent", "3.12"))
+SILICA_MARKET = "bp-dbd744f486420f56"
+SILICA_RECIPE = "train-312-silica-sand-market"
 TARGETS = {
     "2025": BackgroundContext(TechnosphereProfile("uvek", "2025", "cutoff"), BiosphereProfile("ecoinvent", "3.10")),
     "2026": BackgroundContext(TechnosphereProfile("uvek", "2026", "cutoff"), BiosphereProfile("uvek", "2026")),
@@ -60,7 +63,9 @@ def catalog_provider():
 def candidate_resource():
     # Exercise the normal manifest-backed production loader.
     resource = load_uvek_technosphere_resource()
-    assert {r["id"]: r["target"] for r in resource["replace"] if r["id"] in IDS} == EXPECTED
+    selected = select_profile_sign_rules(resource, SOURCE.technosphere)
+    expected = {**EXPECTED, SILICA_MARKET: {"recipe_ref": SILICA_RECIPE}}
+    assert {r["id"]: r["target"] for r in selected["replace"] if r["id"] in IDS} == expected
     before = json.dumps(resource, sort_keys=True)
     yield resource
     assert json.dumps(resource, sort_keys=True) == before
@@ -112,7 +117,7 @@ def test_consent_selects_exact_supplier_preserving_type2_and_original_profile(
     rule = next(r for r in candidate["replace"] if r["id"] == rule_id)
     original = document(rule)
     before, context = original.data, original.context
-    policy = MigrationPolicy(on_heuristic_mapping=PolicyAction.WARN)
+    policy = MigrationPolicy(on_heuristic_mapping=PolicyAction.WARN, on_information_loss=PolicyAction.WARN)
     result = execute_background_migration(original, TARGETS[version], catalog_provider, policy)
     assert result.succeeded
     assert result.lossy  # Market/regional-producer limits remain explicit.
@@ -120,14 +125,21 @@ def test_consent_selects_exact_supplier_preserving_type2_and_original_profile(
     assert original.context == context and original.context.background == SOURCE
     assert original.data == before
     exchange = result.value.data[0]["exchanges"][1]
-    assert {k: exchange[k] for k in ["name", "reference product", "location", "unit"]} == rule["target"]
+    if rule_id == SILICA_MARKET:
+        helper = next(row for row in result.value.data[1:] if row["code"] == exchange["input"][1])
+        assert helper["brightpath_conversion"]["recipe_id"] == SILICA_RECIPE
+    else:
+        assert {k: exchange[k] for k in ["name", "reference product", "location", "unit"]} == EXPECTED[rule_id]
     assert all(
         exchange[k] == value
         for k, value in before[0]["exchanges"][1].items()
         if k not in ["name", "reference product", "location", "unit"]
     )
     assert result.value.data[0]["parameters"] == before[0]["parameters"]
-    assert "migration.heuristic_mapping" in {issue.code for issue in result.report.issues}
+    expected_issue = (
+        "migration.technosphere_information_loss" if rule_id == SILICA_MARKET else "migration.heuristic_mapping"
+    )
+    assert expected_issue in {issue.code for issue in result.report.issues}
 
 
 @pytest.mark.parametrize("rule_id", IDS)
@@ -147,13 +159,13 @@ def test_without_consent_refuses_and_commits_no_changes(candidate, catalog_provi
 
 @pytest.mark.parametrize("rule_id", IDS)
 def test_native2025_metadata_has_exactly_one_distinct_provider_product_pair(candidate_resource, rule_id):
-    target = next(r["target"] for r in candidate_resource["replace"] if r["id"] == rule_id)
+    target = EXPECTED[rule_id]
     references = json.loads(
         (DATA_DIR / "export/openlca_references/uvek__2025__cutoff__ecoinvent__3.10.json").read_text()
     )
     pairs = []
     for chosen_id in IDS:
-        chosen = next(r["target"] for r in candidate_resource["replace"] if r["id"] == chosen_id)
+        chosen = EXPECTED[chosen_id]
         matches = [
             r
             for r in references["technosphere"]
@@ -181,10 +193,7 @@ def test_display_table_has_no_native_wire_collision(candidate_resource, catalog_
         )
         groups[(wire.casefold(), simapro._canonical_unit(unit))].add((name, product, location, unit))
     assert not [values for values in groups.values() if len(values) > 1]
-    for rule in candidate_resource["replace"]:
-        if rule["id"] not in IDS:
-            continue
-        target = rule["target"]
+    for target in EXPECTED.values():
         wire = simapro.format_simapro_technosphere_name(
             **dict(
                 name=target["name"],

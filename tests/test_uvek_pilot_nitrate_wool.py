@@ -7,11 +7,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_nitrate_wool import apply_pilot_nitrate_wool_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_nitrate_wool_review.json").read_text())
@@ -110,7 +110,7 @@ def test_wool_refuses_uninspected_source_versions(row, version):
 
 @pytest.mark.parametrize("change", ["none", "late_parent", "new_helper", "prior_helper"])
 def test_wool_authoring_replay_is_atomic_and_freezes_all_helpers(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_pilot_nitrate_wool", "apply_pilot_nitrate_wool_review")
     if change == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif change == "new_helper":

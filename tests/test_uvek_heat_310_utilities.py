@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -53,7 +54,7 @@ def test_same_unit_correspondence_keeps_all_caller_quantity_fields(row, amount, 
 
 @pytest.mark.parametrize("row", REVIEW["records"], ids=lambda r: r["rule_id"])
 def test_older_effective_profiles_and_methods_are_unchanged(row):
-    resource = load_uvek_technosphere_resource()
+    resource = compiled_authoring_stage_resource("review_uvek_heat_310_utilities", "apply_heat_310_utilities_review")
     current = next(r for r in resource["replace"] if r["id"] == row["rule_id"])
     for scope in row["previous_scopes"]:
         source = TechnosphereProfile(**scope["source"])

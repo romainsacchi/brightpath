@@ -6,6 +6,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -126,7 +127,7 @@ def test_derived_elemental_bounds_and_explicit_limitations():
 
 @pytest.mark.parametrize("drift", [None, "parent", "dependency", "recipe"])
 def test_atomic_and_idempotent_authoring(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_mdea_312", "apply_mdea_312_review")
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])["confidence"] = 0.01
     elif drift in ("dependency", "recipe"):

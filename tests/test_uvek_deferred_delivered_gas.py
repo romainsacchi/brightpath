@@ -6,12 +6,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
-from uvek_review_helpers import before_fuels_312_review, reviewed_fuels_312_record
+from uvek_review_helpers import compiled_authoring_stage_resource, reviewed_fuels_312_record
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_deferred_delivered_gas import apply_deferred_delivered_gas_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_deferred_delivered_gas_review.json").read_text())
@@ -58,7 +57,9 @@ def test_gas_uninspected_source_releases_remain_refused(row, version):
 
 @pytest.mark.parametrize("drift", ["none", "late_parent", "helper", "shared_review"])
 def test_replay_checks_both_parent_rules_and_energy_coefficients_atomically(drift):
-    resource = before_fuels_312_review(deepcopy(load_uvek_technosphere_resource()))
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_deferred_delivered_gas", "apply_deferred_delivered_gas_review"
+    )
     if drift == "late_parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.123
     elif drift == "helper":

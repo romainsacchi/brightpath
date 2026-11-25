@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -116,7 +117,7 @@ def test_new_profile_grants_do_not_cover_other_source_profiles(row, version, mod
 def test_replay_rejects_dependency_or_delivery_drift_atomically(drift):
     from scripts.review_uvek_argon_liquid_39 import apply_argon_liquid_39_review
 
-    r = deepcopy(load_uvek_technosphere_resource())
+    r = compiled_authoring_stage_resource("review_uvek_argon_liquid_39", "apply_argon_liquid_39_review")
     if drift in ("parent", "second_market"):
         row = ROWS[1] if drift == "parent" else ROWS[3]
         next(a for a in r["replace"] if a["id"] == row["rule_id"])["confidence"] = 0.01

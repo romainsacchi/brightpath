@@ -44,8 +44,14 @@ def test_direct_services_keep_signed_units_uncertainty_and_separate_emissions(ro
 
 
 def test_direct_service_evidence_binds_unchanged_rules_and_exact_prior_authorities():
-    resource = load_uvek_technosphere_resource()
+    resource = deepcopy(load_uvek_technosphere_resource())
     rules = {r["id"]: r for r in resource["replace"]}
+    extension = json.loads((DATA_DIR / "export/uvek_recycling_transport_38_review.json").read_text())
+    lorry = next(r for r in extension["records"] if r["rule_id"] == "bp-c5304556b418deab")
+    current = rules[lorry["rule_id"]]
+    assert current == lorry["compiled_rule"]
+    current.clear()
+    current.update(lorry["original_rule"])
     assert len(REVIEW["records"]) == 8
     assert len({r["fingerprint"] for r in REVIEW["records"]}) == 8
     for authority in REVIEW["authorization_evidence"]:

@@ -6,6 +6,7 @@ from copy import deepcopy
 import numpy as np
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -135,7 +136,9 @@ def test_source_matrix_retains_two_incinerators_eight_freights_and_empty_allocat
 def test_frozen_replay_refuses_unreviewed_changes_atomically(drift):
     from scripts.review_uvek_spent_solvent_market_39 import apply_spent_solvent_market_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_spent_solvent_market_39", "apply_spent_solvent_market_39_review"
+    )
     if drift in ("parent", "direct", "dependency"):
         rid = (
             MARKET["rule_id"]

@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import (
     DATA_DIR,
@@ -141,7 +142,9 @@ def test_proxy_boundaries_salt_reference_and_complete_source_rows_are_explicit()
 
 @pytest.mark.parametrize("drift", [None, "parent", "recipe", "dependency"])
 def test_replay_is_idempotent_or_refuses_atomically(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_pulp_heat_so2_sulfite", "apply_pulp_heat_so2_sulfite_review"
+    )
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][-1]["rule_id"])["confidence"] = 0.1
     elif drift == "recipe":

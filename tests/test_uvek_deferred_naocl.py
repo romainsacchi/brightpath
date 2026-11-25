@@ -6,11 +6,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_deferred_naocl import apply_deferred_naocl_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_deferred_naocl_review.json").read_text())
@@ -59,7 +59,7 @@ def test_other_profiles_cannot_inherit_the_chemical_reference_review(version):
 
 @pytest.mark.parametrize("drift", ["none", "parent", "producer", "market", "shared_review"])
 def test_replay_is_atomic_for_parent_and_both_helper_levels(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_deferred_naocl", "apply_deferred_naocl_review")
     rule = next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])
     if drift == "parent":
         rule["confidence"] = 0.123

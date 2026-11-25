@@ -110,23 +110,22 @@ def test_both_packaged_uvek_resources_use_one_schema():
                 if "recipe_ref" not in rule["target"]
             }
         )
-        == 4027
+        == 4035
     )
 
 
 @pytest.mark.parametrize(
     "filename,expected",
     [
-        # Three reviewed commodity targets changed; their identities, consent and
-        # quantity preservation are tested in test_uvek_native_commodity_correspondences.
-        ("ecoinvent-to-uvek-2025.json", "6eae7b664fec2e50437cb99084f734c3e342b5a44c625a54a4b7c2cfdead343d"),
+        # Compared with alpha 13, the projection differs only in the reviewed
+        # tetraethyl orthosilicate mapping from uvek_battery_three_native_39_review.json.
+        ("ecoinvent-to-uvek-2025.json", "f19a4453e54a6ce397fd9fa5216aa5d4b83dea10f55f5e939f5993f16c20635c"),
         ("uvek-2025-to-ecoinvent-3.12-cutoff.json", "74ad437135442bad5fe82055ab8b4fda188a46a22eabb7a9c49a88cb7340112e"),
     ],
 )
 def test_all_mapping_values_and_runtime_evidence_match_the_baseline(filename, expected):
     # Reverse: the pre-upgrade v2 file. Forward: the saved pre-cleanup file,
-    # projecting reviews to the retained rationale and limitations fields,
-    # with only the three reviewed forward commodity targets corrected.
+    # projecting reviews to the retained rationale and limitations fields.
     import hashlib
 
     migration_resource = json.loads((DATA_DIR / "migrations/uvek" / filename).read_text(encoding="utf-8"))
@@ -714,10 +713,7 @@ def test_packaged_uvek_resources_exclude_generation_and_audit_metadata():
     # invariant independent of an ever-growing handwritten rule whitelist;
     # correspondence-specific tests verify the exact authorities and decisions.
     for review in forward["reviews"].values():
-        assert review.keys() in (
-            {"rationale", "limitations"},
-            {"rationale", "limitations", "evidence"},
-        )
+        assert {"rationale"} <= review.keys() <= {"rationale", "limitations", "evidence"}
         if "evidence" in review:
             assert isinstance(review["evidence"], list) and review["evidence"]
             assert all(isinstance(item, str) and item.strip() for item in review["evidence"])

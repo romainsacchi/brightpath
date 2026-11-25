@@ -23,12 +23,27 @@ from scripts.review_uvek_market_compositions import (
 )
 from scripts.review_uvek_reference_signs import prior_recipe_review
 
-# Steel replacements are covered in test_uvek_steel_residue_markets; the
-# allocated-sludge market replacements are covered in test_uvek_digester_stock.
+# Tests for the newer reviews cover the superseded exact profiles.
+SUPERSEDED_COMPOSITION_PROFILES = {
+    ("market for waste electric and electronic equipment", "GLO", "ecoinvent-3.8-cutoff"),
+    ("market for aluminium scrap, new", "RoW", "ecoinvent-3.9-cutoff"),
+    ("market for blast furnace slag", "GLO", "ecoinvent-3.9-cutoff"),
+    ("market for mill scale", "RER", "ecoinvent-3.9-cutoff"),
+    ("market for scrap aluminium", "RoW", "ecoinvent-3.9-cutoff"),
+}
+
 COMPOSITIONS = {
-    s: row
-    for s, row in review_uvek_market_compositions.COMPOSITIONS.items()
-    if s not in (SUPERSEDED_STEEL_MARKETS | SUPERSEDED_DIGESTER_MARKETS)
+    source: {
+        **row,
+        "profiles": [
+            profile
+            for profile in row["profiles"]
+            if (source[0], source[2], profile["label"]) not in SUPERSEDED_COMPOSITION_PROFILES
+        ],
+    }
+    for source, row in review_uvek_market_compositions.COMPOSITIONS.items()
+    if source not in (SUPERSEDED_STEEL_MARKETS | SUPERSEDED_DIGESTER_MARKETS)
+    and (source[0], source[2]) != ("market group for waste polyethylene", "RER")
 }
 
 LABELS = [
@@ -110,11 +125,19 @@ def assert_composition_quantities(
     warnings = {
         i.path: i for i in result.last_migration_report.issues if i.code == "migration.technosphere_information_loss"
     }
-    assert all(
-        expected_warnings[path] in warnings[path].message
-        or "explicitly approved cut-off allocation supplies" in warnings[path].message
-        for path in changes
-    )
+    if definitions is COMPOSITIONS:
+        active_rules = {rule["id"]: rule for rule in load_uvek_technosphere_resource()["replace"]}
+        for path in changes:
+            warning = warnings[path]
+            rule = active_rules[warning.details["rule_id"]]
+            assert warning.message == rule["technosphere_information_loss"]
+            assert warning.to_dict()["details"]["source_exchange"] == changes[path].to_dict()["before"]
+    else:
+        assert all(
+            expected_warnings[path] in warnings[path].message
+            or "explicitly approved cut-off allocation supplies" in warnings[path].message
+            for path in changes
+        )
 
 
 @pytest.mark.parametrize("label", LABELS)

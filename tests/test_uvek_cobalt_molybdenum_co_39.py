@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -106,7 +107,9 @@ def test_new_39_permission_does_not_widen_profiles(version, model):
 def test_frozen_replay_is_idempotent_and_refuses_unreviewed_drift_atomically(drift):
     from scripts.review_uvek_cobalt_molybdenum_co_39 import apply_cobalt_molybdenum_co_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_cobalt_molybdenum_co_39", "apply_cobalt_molybdenum_co_39_review"
+    )
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == MOLYBDENUM["rule_id"])["confidence"] = 0.001
     elif drift == "delivery":

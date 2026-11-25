@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -135,7 +136,7 @@ def test_distinct_material_bases_are_not_erased():
 def test_four_market_replays_are_atomic_and_idempotent(drift):
     from scripts.review_uvek_material_markets_39 import apply_material_markets_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_material_markets_39", "apply_material_markets_39_review")
     if drift in ("first_parent", "last_parent"):
         rid = ROWS[0 if drift == "first_parent" else -1]["rule_id"]
         next(r for r in resource["replace"] if r["id"] == rid)["confidence"] = 0.01

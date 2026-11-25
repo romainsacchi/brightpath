@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -111,7 +112,7 @@ def test_mixed_butene_stays_a_chemical_mass_not_an_isomer_fuel_or_zero_stock():
 def test_mixed_butene_replay_is_atomic_and_idempotent(drift):
     from scripts.review_uvek_mixed_butene_39 import apply_mixed_butene_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_mixed_butene_39", "apply_mixed_butene_39_review")
     (row,) = ROWS
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == row["rule_id"])["confidence"] = 0.01

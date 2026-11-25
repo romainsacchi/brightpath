@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -111,7 +112,9 @@ def test_exact_permissions_do_not_expand_to_unreviewed_profiles(row, version, mo
 
 
 def test_chemical_and_facility_reference_bases_and_unchanged_direct_rules():
-    resource = load_uvek_technosphere_resource()
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_salts_generic_facility_39", "apply_salts_generic_facility_39_review"
+    )
     assert REVIEW["retained_salt_producer_entries"] == 2
     assert REVIEW["retained_final_delivery_entries"] == 8
     assert sum(len(r["inputs"]) for r in REVIEW["recipes"].values()) == 10
@@ -131,10 +134,12 @@ def test_chemical_and_facility_reference_bases_and_unchanged_direct_rules():
     assert REVIEW["new_source_omissions"] == []
 
 
-def test_previous_generic_36_approval_is_preserved_and_operational():
+def test_generic_36_approval_requires_the_current_rule_binding():
     import hashlib
 
-    resource = load_uvek_technosphere_resource()
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_salts_generic_facility_39", "apply_salts_generic_facility_39_review"
+    )
     prior = REVIEW["preserved_existing_operations"][0]["operation"]
     assert hashlib.sha256((DATA_DIR / prior["review_path"]).read_bytes()).hexdigest() == prior["review_sha256"]
     row = ROWS[2]
@@ -146,12 +151,25 @@ def test_previous_generic_36_approval_is_preserved_and_operational():
         )
         == scope["fingerprint"]
     )
+    inventory = BrightwayInventory.from_data(consumer(rule["source"], 1), context=contexts("ecoinvent", "3.6"))
+    target = contexts("uvek", "2026").background
     legacy_policy = MigrationPolicy(
         approved_compatibility_rules=(scope["fingerprint"],), on_information_loss=PolicyAction.WARN
     )
-    result = BrightwayInventory.from_data(
-        consumer(rule["source"], 1), context=contexts("ecoinvent", "3.6")
-    ).migrate_background(contexts("uvek", "2026").background, policy=legacy_policy)
+    with pytest.raises(MigrationError):
+        inventory.migrate_background(target, policy=legacy_policy)
+
+    active_resource = load_uvek_technosphere_resource()
+    active_rule = next(r for r in active_resource["replace"] if r["id"] == row["rule_id"])
+    fingerprint = compatibility_rule_fingerprint(
+        active_resource,
+        "replace",
+        active_rule,
+        TechnosphereProfile(**scope["source"]),
+        TechnosphereProfile(**scope["target"]),
+    )
+    current_policy = MigrationPolicy(approved_compatibility_rules=(fingerprint,), on_information_loss=PolicyAction.WARN)
+    result = inventory.migrate_background(target, policy=current_policy)
     assert len(result.data) == 1
     assert result.data[0]["exchanges"][1]["name"] == "Chemicals organic, at plant"
 
@@ -175,7 +193,9 @@ def test_generic_permission_never_admits_named_chemicals(source_name, product):
 def test_review_replay_is_atomic_and_checks_exact_freight_dependencies(drift):
     from scripts.review_uvek_salts_generic_facility_39 import apply_salts_generic_facility_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_salts_generic_facility_39", "apply_salts_generic_facility_39_review"
+    )
     if drift == "parent":
         next(r for r in resource["replace"] if r["id"] == ROWS[0]["rule_id"])["conversion_factor"] = 2
     elif drift == "dependency":

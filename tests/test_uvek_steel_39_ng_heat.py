@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -82,7 +83,7 @@ def test_exact_approval_does_not_authorize_another_source_release(row):
 
 @pytest.mark.parametrize("drift", [False, True])
 def test_inert_review_replay_is_atomic(drift):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_steel_39_ng_heat", "apply_steel_39_ng_heat_review")
     if drift:
         next(r for r in resource["replace"] if r["id"] == REVIEW["records"][0]["rule_id"])["confidence"] = 0.1
     before = deepcopy(resource)
@@ -95,7 +96,7 @@ def test_inert_review_replay_is_atomic(drift):
 
 
 def test_recipe_drift_is_refused_atomically():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_steel_39_ng_heat", "apply_steel_39_ng_heat_review")
     resource["recipes"]["steel-39-global-natural-gas-production-heat-mix"]["inputs"][0]["amount"] *= 2
     before = deepcopy(resource)
     with pytest.raises(ValueError, match="recipe changed"):

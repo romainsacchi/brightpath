@@ -46,9 +46,14 @@ def test_reviewed_profiles_keep_caller_sign_and_normal_uncertainty(rid, amount):
 
 
 @pytest.mark.parametrize("rid", RECORDS)
-def test_unreviewed_311_profiles_are_not_inferred(rid):
-    with pytest.raises(MigrationError):
-        migrate(rid, version="3.11")
+def test_311_requires_a_separate_review(rid):
+    if rid == "bp-cf83bb724223e5b7":
+        result, _ = migrate(rid, version="3.11")
+        supplier = result.data[0]["exchanges"][1]
+        assert supplier["name"] == "Hydrogen production, steam methane reforming of natural gas, 25 bar"
+    else:
+        with pytest.raises(MigrationError):
+            migrate(rid, version="3.11")
 
 
 @pytest.mark.parametrize("rid", ["bp-7fe8308839f735bb", "bp-76fe8c58029110f6"])

@@ -7,6 +7,7 @@ from dataclasses import replace
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.reference_signs import select_profile_sign_rules
@@ -81,7 +82,7 @@ def test_no_approval_inferred_for_other_source_releases(version):
 
 
 def test_author_replays_without_changing_existing_content():
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_fuels_37_waste_oil", "apply_fuels_37_waste_oil_review")
     before = deepcopy(resource)
     apply_fuels_37_waste_oil_review(resource)
     assert resource == before

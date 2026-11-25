@@ -7,10 +7,10 @@ from dataclasses import replace
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy, PolicyAction
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_fuels_37_oils_lto_review.json").read_text())
 RECORDS = {r["rule_id"]: r for r in REVIEW["records"]}
@@ -48,7 +48,7 @@ def test_complete_native_stock_keeps_signed_caller_statistics(rid, amount, uncer
 
 def test_reviews_do_not_change_any_of_the_scoped_extensions_preserve_previous_profiles():
     assert len(RECORDS) == 2
-    resource = load_uvek_technosphere_resource()
+    resource = compiled_authoring_stage_resource("review_uvek_fuels_37_oils_lto", "apply_fuels_37_oils_lto_review")
     for rid, row in RECORDS.items():
         assert next(r for r in resource["replace"] if r["id"] == rid) == row["compiled_rule"]
         assert row["source_witness"]["reference_amounts"] == [1]
@@ -80,7 +80,7 @@ def test_extension_author_is_idempotent_and_preserves_helpers():
     from brightpath.background.reference_signs import select_profile_sign_rules
     from scripts.review_uvek_fuels_37_oils_lto import apply_fuels_37_oils_lto_review, digest
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource("review_uvek_fuels_37_oils_lto", "apply_fuels_37_oils_lto_review")
     before = deepcopy(resource)
     apply_fuels_37_oils_lto_review(resource)
     assert resource == before

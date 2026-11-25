@@ -6,11 +6,11 @@ from copy import deepcopy
 import pytest
 from test_uvek_reference_signs import consumer, contexts
 from test_uvek_refrigerant_disposal import target_context
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory
 from brightpath.core.policies import MigrationPolicy
 from brightpath.exceptions import MigrationError
-from brightpath.migrations.resources import load_uvek_technosphere_resource
 from scripts.review_uvek_pilot_ng_heat_market import apply_pilot_ng_heat_market_review
 
 REVIEW = json.loads((DATA_DIR / "export/uvek_pilot_ng_heat_market_review.json").read_text())
@@ -48,17 +48,31 @@ def test_heat_preserves_signed_caller_demand_and_all_supplier_entries(profile, a
 
 
 @pytest.mark.parametrize("version", ["3.6", "3.7", "3.8", "3.10", "3.11"])
-def test_heat_does_not_admit_uninspected_source_releases(version):
+def test_heat_requires_a_separate_review_for_other_releases(version):
     data = consumer(ROW["source"], 1)
     source = BrightwayInventory.from_data(data, context=contexts("ecoinvent", version))
-    with pytest.raises(MigrationError):
-        source.migrate_background(target_context("2026"), policy=MigrationPolicy.permissive())
+    target = target_context("2026")
+    policy = MigrationPolicy.permissive()
+    if version == "3.8":
+        result = source.migrate_background(target, policy=policy)
+        assert result.data[0]["exchanges"][1]["name"] == "Heat, natural gas, at industrial furnace 1MW"
+    elif version == "3.10":
+        result = source.migrate_background(target, policy=policy)
+        assert any(
+            row.get("brightpath_conversion", {}).get("recipe_id") == "car-310-historical-f7dd94e542cba21d"
+            for row in result.data
+        )
+    else:
+        with pytest.raises(MigrationError):
+            source.migrate_background(target, policy=policy)
     assert source.data == data
 
 
 @pytest.mark.parametrize("change", ["none", "parent", "helper", "component"])
 def test_heat_authoring_is_idempotent_and_refuses_drift_before_mutation(change):
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_pilot_ng_heat_market", "apply_pilot_ng_heat_market_review"
+    )
     parent = next(r for r in resource["replace"] if r["id"] == ROW["rule_id"])
     if change == "parent":
         parent["confidence"] = 0.123

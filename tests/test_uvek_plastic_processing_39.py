@@ -5,6 +5,7 @@ from copy import deepcopy
 
 import pytest
 from test_uvek_reference_signs import consumer, contexts
+from uvek_review_helpers import compiled_authoring_stage_resource
 
 from brightpath import DATA_DIR, BrightwayInventory, TechnosphereProfile
 from brightpath.background.rule_approvals import compatibility_rule_fingerprint
@@ -140,7 +141,9 @@ def test_separate_bulk_polymer_is_not_consumed_or_duplicated_by_service_mapping(
 def test_authoring_replay_is_atomic_and_existing_recipe_is_frozen(drift):
     from scripts.review_uvek_plastic_processing_39 import apply_plastic_processing_39_review
 
-    resource = deepcopy(load_uvek_technosphere_resource())
+    resource = compiled_authoring_stage_resource(
+        "review_uvek_plastic_processing_39", "apply_plastic_processing_39_review"
+    )
     if drift == "recipe":
         resource["recipes"][ROWS[1]["recipe_id"]]["inputs"][0]["amount"] *= 2
     elif drift is not None:

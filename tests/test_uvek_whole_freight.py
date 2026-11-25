@@ -271,6 +271,8 @@ def test_explicit_scoped_namespace_forks_a_recipe_id_without_changing_any_signed
 
 @pytest.mark.parametrize("kind", ("market", "processing", "slag"))
 def test_current_profile_recipe_ids_and_bodies_reproduce_packaged_output(kind):
+    from test_uvek_market_compositions import SUPERSEDED_COMPOSITION_PROFILES
+
     from scripts.review_uvek_cutoff_slag_products import APPROVAL as slag
     from scripts.review_uvek_cutoff_slag_products import FORWARD_LIMITATIONS as slag_reason
     from scripts.review_uvek_cutoff_slag_products import REVIEW_PATH as slag_path
@@ -306,6 +308,8 @@ def test_current_profile_recipe_ids_and_bodies_reproduce_packaged_output(kind):
             if p["review"]["status"] == "verified" and p["source_profile"]["system_model"] == "cutoff"
         }
         for profile in row["profiles"]:
+            if kind == "market" and (source[0], source[2], profile["label"]) in SUPERSEDED_COMPOSITION_PROFILES:
+                continue
             entry = profiles.get(profile["label"])
             if entry is None:
                 continue
