@@ -15,7 +15,7 @@ from scripts.review_uvek_quizalofop_synonym import BASELINE_SHA256, build_extend
 def test_successor_preserves_baseline_and_every_unreviewed_decision():
     path = DATA_DIR / "migrations/uvek/ecoinvent-to-ecoinvent-3.10-biosphere.json"
     assert hashlib.sha256(path.read_bytes()).hexdigest() == BASELINE_SHA256
-    base = json.loads(path.read_text())
+    base = json.loads(path.read_text(encoding="utf-8"))
     before = deepcopy(base)
     active = build_extended_biosphere_resource(base)
     assert base == before

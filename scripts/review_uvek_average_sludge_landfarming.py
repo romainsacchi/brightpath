@@ -19,7 +19,7 @@ except ModuleNotFoundError:
 FIELDS = ("name", "reference product", "location", "unit")
 ROOT = Path(__file__).resolve().parents[1]
 REVIEW_PATH = "brightpath/data/export/uvek_average_sludge_landfarming_review.json"
-APPROVAL = json.loads((ROOT / REVIEW_PATH).read_text())
+APPROVAL = json.loads((ROOT / REVIEW_PATH).read_text(encoding="utf-8"))
 REVIEW_SHA256 = "81703d0ce16ee7a9b12df8964304cb0c4147cacc1deb020d79f0aff4542d8bfb"
 SOURCES = {tuple(r["source"][f] for f in FIELDS): r for r in APPROVAL["rules"]}
 VERSIONS = {"3.9", "3.9.1", "3.10", "3.10.1", "3.11", "3.12"}
@@ -178,7 +178,9 @@ def validate_bindings(resource):
     for path, expected in APPROVAL["shared_scientific_review_sha256"].items():
         if hashlib.sha256((ROOT / path).read_bytes()).hexdigest() != expected:
             raise ValueError("Shared average-sludge service review changed; repeat the scientific review.")
-    catalog = json.loads((ROOT / "brightpath/data/export/reference_catalogs/ecoinvent__3.10__cutoff.json").read_text())
+    catalog = json.loads(
+        (ROOT / "brightpath/data/export/reference_catalogs/ecoinvent__3.10__cutoff.json").read_text(encoding="utf-8")
+    )
     definitions = {r["flow_id"]: r for r in catalog["biosphere"]}
     for flow in APPROVAL["canonical_biosphere_definitions"]:
         if {f: definitions.get(flow["flow_id"], {}).get(f) for f in flow} != flow:
@@ -212,7 +214,9 @@ def validate_bindings(resource):
                 or any(e["location"] != "CH" or e["unit"] != "ton kilometer" for e in inputs)
             ):
                 raise ValueError("Average-sludge Swiss rail shares changed; repeat the scientific review.")
-    reverse = json.loads((ROOT / "brightpath/data/migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text())
+    reverse = json.loads(
+        (ROOT / "brightpath/data/migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text(encoding="utf-8")
+    )
     entry = APPROVAL["reverse_binding"]
     rule = next((r for r in reverse["replace"] if r["source"] == entry["source"]), None)
     if (

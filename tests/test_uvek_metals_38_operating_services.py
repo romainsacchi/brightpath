@@ -15,7 +15,7 @@ from brightpath.exceptions import MigrationError
 from brightpath.migrations.resources import load_uvek_technosphere_resource
 from brightpath.migrations.scaling import scale_exchange
 
-REVIEW = json.loads((DATA_DIR / "export/uvek_metals_38_operating_services_review.json").read_text())
+REVIEW = json.loads((DATA_DIR / "export/uvek_metals_38_operating_services_review.json").read_text(encoding="utf-8"))
 
 
 def policy(version="3.8"):

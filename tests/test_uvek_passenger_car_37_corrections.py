@@ -16,7 +16,7 @@ from brightpath.migrations.resources import load_uvek_technosphere_resource
 from brightpath.migrations.scaling import scale_exchange
 from scripts.review_uvek_passenger_car_37_corrections import apply_passenger_car_37_corrections_review
 
-REVIEW = json.loads((DATA_DIR / "export/uvek_passenger_car_37_corrections_review.json").read_text())
+REVIEW = json.loads((DATA_DIR / "export/uvek_passenger_car_37_corrections_review.json").read_text(encoding="utf-8"))
 
 
 def policy():

@@ -34,7 +34,9 @@ def build_extended_biosphere_resource(baseline):
         or review["source"]["categories"] != review["target"]["categories"]
     ):
         raise ValueError("Chemical identity or receiving context changed.")
-    catalog = json.loads((root / "brightpath/data/export/reference_catalogs/ecoinvent__3.10__cutoff.json").read_text())
+    catalog = json.loads(
+        (root / "brightpath/data/export/reference_catalogs/ecoinvent__3.10__cutoff.json").read_text(encoding="utf-8")
+    )
     target = next(r for r in catalog["biosphere"] if r["flow_id"] == review["target"]["flow_id"])
     if any(target.get(k) != v for k, v in review["target"].items()):
         raise ValueError("Registered target identity changed.")

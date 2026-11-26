@@ -171,7 +171,9 @@ def test_consent_foreground_ownership_unknown_profiles_and_consequential_refusal
         .data
         == data
     )
-    resource = json.loads((review.ROOT / "brightpath/data/migrations/uvek/ecoinvent-to-uvek-2025.json").read_text())
+    resource = json.loads(
+        (review.ROOT / "brightpath/data/migrations/uvek/ecoinvent-to-uvek-2025.json").read_text(encoding="utf-8")
+    )
     for version in ("3.8", "3.10.2", "3.13"):
         selected = select_profile_sign_rules(resource, TechnosphereProfile("ecoinvent", version, "cutoff"))
         for row in review.SOURCES.values():
@@ -226,7 +228,9 @@ def test_source_release_scoped_soil_carbon_and_stable_uuid_label_refinements():
         "Strontium",
     }
     assert len(review.APPROVAL["canonical_biosphere_definitions"]) == 45
-    resource = json.loads((review.ROOT / "brightpath/data/migrations/uvek/ecoinvent-to-uvek-2025.json").read_text())
+    resource = json.loads(
+        (review.ROOT / "brightpath/data/migrations/uvek/ecoinvent-to-uvek-2025.json").read_text(encoding="utf-8")
+    )
     review.validate_bindings(resource)
     dependency = next(iter(review.APPROVAL["recipe_dependencies"]))
     resource["recipes"][dependency]["inputs"][0]["amount"] += 1
@@ -261,7 +265,9 @@ def test_independent_reverse_mechanical_service_preserves_signed_caller_exchange
 
 def test_former_incineration_supplier_does_not_acquire_an_inferred_landfarming_inverse():
     resource = json.loads(
-        (review.ROOT / "brightpath/data/migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text()
+        (review.ROOT / "brightpath/data/migrations/uvek/uvek-2025-to-ecoinvent-3.12-cutoff.json").read_text(
+            encoding="utf-8"
+        )
     )
     former = ("Disposal, raw sewage sludge, to municipal incineration",) * 2 + ("CH", "kilogram")
     assert not any(review.identity(r["source"]) == former for r in resource["replace"])
