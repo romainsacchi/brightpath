@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 
 ## Unreleased
 
+## 1.0.0a17 - 2026-11-26
+
+- Carry forward bundled ecoinvent openLCA references for 3.8, 3.9.1, 3.10,
+  3.11, 3.12, and 3.13. The 3.9 profile uses the 3.9.1 Nexus method package.
+- Decode reviewed UVEK JSON as UTF-8 so verification uses identical text and
+  fingerprints on Windows, macOS, and Linux.
+- Exercise historical UVEK reviews at their original generator stages and
+  split the full test suite into eight groups per platform.
+
 ## 1.0.0a16 - 2026-11-24
 
 - Verify both exact source profiles when replaying biosphere bindings for

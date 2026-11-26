@@ -1,5 +1,13 @@
 # BrightPath release readiness
 
+## 1.0.0a17 preparation (2026-11-26)
+
+The [cross-platform CI run](https://github.com/romainsacchi/brightpath/actions/runs/45770086182)
+for `60cf9c6` passed all 26 jobs, including all 24 test groups and both
+installed-wheel migration audits. Alpha 17 packages that revision with updated
+version metadata. The release workflow verifies the candidate archives and
+reruns the platform tests and audits before publishing.
+
 ## 1.0.0a16 preparation (2026-11-24)
 
 Alpha 16 supersedes the withdrawn alpha 15 GitHub prerelease. It carries
