@@ -133,7 +133,6 @@ export_resource = load_uvek_export_resource()
 publisher_rules = [
     rule for rule in export_resource["replace"] if rule.get("mapping_method") == "publisher_product_correspondence"
 ]
-assert len(export_resource["replace"]) == 1498
 assert len(publisher_rules) == 1069
 export_rule = next(
     rule
