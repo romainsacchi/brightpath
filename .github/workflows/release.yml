@@ -270,8 +270,8 @@ jobs:
           python -m binstar_client.scripts.cli -t "${ANACONDA_API_TOKEN}" upload \
             -u "${ANACONDA_USER}" \
             "${CONDA_BLD_PATH}"/noarch/olca-schema-*.tar.bz2 \
-            --force
+            --skip-existing
           python -m binstar_client.scripts.cli -t "${ANACONDA_API_TOKEN}" upload \
             -u "${ANACONDA_USER}" \
             "${CONDA_BLD_PATH}/noarch/brightpath-${VERSION}-py_0.tar.bz2" \
-            --force
+            --skip-existing
